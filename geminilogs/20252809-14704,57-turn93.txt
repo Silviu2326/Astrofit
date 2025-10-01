@@ -1,0 +1,7 @@
+﻿I have created the basic structure for the "Permisos de Entrenadores - Control de Accesos" module, including the following files:
+
+*   `C:\Users\usuario\Documents\project-bolt-sb1-qekdxfwt\project\src\features\permisos-entrenadores\PermisosEntrenadoresPage.tsx`
+*   `C:\Users\usuario\Documents\project-bolt-sb1-qekdxfwt\project\src\features\permisos-entrenadores\permisosEntrenadoresApi.ts`
+*   `C:\Users\usuario\Documents\project-bolt-sb1-qekdxfwt\project\src\features\permisos-entrenadores\components\MatrizPermisos.tsx`
+
+These files include the specified content and adhere to the technical requirements (TypeScript, React, TailwindCSS, functional components with hooks, basic roles/permissions structure).

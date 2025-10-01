@@ -1,0 +1,1 @@
+﻿All new files have been created and `ReportesAsistenciaPage.tsx` has been updated to integrate the new BI dashboards. The `reportesAsistenciaApi.ts` file now includes the advanced analytics endpoints.

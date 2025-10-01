@@ -1,0 +1,5 @@
+﻿I have successfully created the basic structure for the "Convenios Corporativos - CRM Empresarial" module, including the following files:
+
+- `src/features/convenios-corporativos/ConveniosCorporativosPage.tsx`
+- `src/features/convenios-corporativos/conveniosCorporativosApi.ts`
+- `src/features/convenios-corporativos/components/TarjetasEmpresas.tsx`

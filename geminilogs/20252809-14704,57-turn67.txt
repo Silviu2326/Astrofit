@@ -1,0 +1,5 @@
+﻿He creado la estructura b├ísica para el m├│dulo "Dispositivos Conectados - Gesti├│n de Sensores" y los archivos solicitados:
+
+1.  `src/features/dispositivos-conectados/DispositivosConectadosPage.tsx`
+2.  `src/features/dispositivos-conectados/dispositivosConectadosApi.ts`
+3.  `src/features/dispositivos-conectados/components/TablaDispositivos.tsx`

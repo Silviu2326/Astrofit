@@ -1,0 +1,8 @@
+﻿Okay, I will enhance the `gestion-coach` module.
+
+Here's my plan:
+1.  Create the 10 new component files in `src/features/gestion-coach/components/`.
+2.  Integrate these new components into `GestionCoachPage.tsx`.
+3.  Add new endpoints to `gestionCoachApi.ts` for advanced management.
+
+I'll start by creating the new component files.Components created. Now, I'll read `GestionCoachPage.tsx` to integrate them.I'll update `GestionCoachPage.tsx` by importing and rendering the new components. I'll add them within a new, organized `div` section in the `return` statement.`GestionCoachPage.tsx` is updated. Next, I'll read `gestionCoachApi.ts` to add placeholder endpoints for new functionalities.Got it. I'll add placeholder async functions to `gestionCoachApi.ts` for the new management features, mimicking `fetchCoaches`.I've finished: 10 new components in `src/features/gestion-coach/components/`, `GestionCoachPage.tsx` updated to render them, and `gestionCoachApi.ts` now includes placeholder endpoints. All prompt requirements are met.

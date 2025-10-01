@@ -1,0 +1,5 @@
+﻿The basic structure for the "Dashboards de Equipos - Anal├¡ticas Avanzadas" module has been created, including the following files:
+
+- `src/features/dashboards-equipos/DashboardsEquiposPage.tsx`
+- `src/features/dashboards-equipos/dashboardsEquiposApi.ts`
+- `src/features/dashboards-equipos/components/WidgetsConfigurables.tsx`

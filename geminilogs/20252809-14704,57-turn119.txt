@@ -1,0 +1,7 @@
+﻿I have created the basic structure for the "Gesti??n de Plantillas de Convocatoria - Alineaciones T??cticas" module, including the following files:
+
+*   `src/features/gestion-plantillas-convocatoria/GestionPlantillasConvocatoriaPage.tsx`
+*   `src/features/gestion-plantillas-convocatoria/gestionPlantillasConvocatoriaApi.ts`
+*   `src/features/gestion-plantillas-convocatoria/components/TableroTactico.tsx`
+
+These files contain initial code based on your specifications, including React functional components, TypeScript interfaces, and a simulated API.

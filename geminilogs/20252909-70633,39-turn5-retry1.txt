@@ -1,0 +1,6 @@
+﻿Okay, I will start by locating the `NodosAcciones.tsx` file within the project.There are two files named `NodosAcciones.tsx`:
+
+1.  `C:\Users\usuario\Documents\project-bolt-sb1-qekdxfwt\project\src\features\constructor-visual\components\ui\NodosAcciones.tsx`
+2.  `C:\Users\usuario\Documents\project-bolt-sb1-qekdxfwt\project\src\features\plansolomax\automatizaciones\automatizaciones\crear-flujo\components\NodosAcciones.tsx`
+
+Which one should I modify?

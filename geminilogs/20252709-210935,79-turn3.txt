@@ -1,0 +1,9 @@
+﻿(node:33204) MaxListenersExceededWarning: Possible EventTarget memory leak detected. 11 abort listeners added to [AbortSignal]. Use events.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+All requested custom hooks have been created in the specified directory:
+
+- `src/features/agente-entrenador/hooks/useWorkoutBuilder.ts`
+- `src/features/agente-entrenador/hooks/useProgressTracking.ts`
+- `src/features/agente-entrenador/hooks/useExerciseLibrary.ts`
+
+These hooks include the specified functionalities for workout building, progress tracking, and exercise library management, along with API simulation, caching, and local persistence.

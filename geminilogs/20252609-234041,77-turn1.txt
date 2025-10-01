@@ -1,0 +1,1 @@
+﻿Okay, I will create the complete structure for the CRM module.I have created the complete file structure for the `clientes-listado` feature, including mock data and components as requested.

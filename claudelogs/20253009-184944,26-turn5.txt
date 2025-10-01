@@ -1,0 +1,20 @@
+﻿
+
+P├ígina de Dispositivos Conectados transformada completamente en un centro de gesti├│n de integraciones con wearables con:
+
+Ô£à **Header tech** con gradiente azul-verde, animaciones y botones de acci├│n
+Ô£à **5 tarjetas de estad├¡sticas** destacadas con m├®tricas en tiempo real
+Ô£à **7 plataformas** (Apple Health, Google Fit, Fitbit, Garmin, Whoop, Polar, Samsung Health) con logos, estados y configuraci├│n
+Ô£à **Tabla de clientes** con 65 clientes mockeados, filtros avanzados y b├║squeda
+Ô£à **5 tabs**: Resumen, Clientes, Logs, Analytics, Configuraci├│n
+Ô£à **Modal de conectar dispositivo** con flujo OAuth simulado y QR code
+Ô£à **Modal de datos del cliente** con 5 tabs (Actividad, Coraz├│n, Sue├▒o, Entrenamientos, Otros) y gr├íficos Recharts
+Ô£à **Modal de configuraci├│n** por plataforma con API keys y permisos
+Ô£à **Modal de sincronizaci├│n** con progreso animado y resultados
+Ô£à **Logs de sincronizaci├│n** con 150 registros y filtros
+Ô£à **Analytics** con gr├íficos de adopci├│n y distribuci├│n
+Ô£à **Panel de errores** activos con troubleshooting
+Ô£à **Configuraci├│n** con privacidad, webhooks y notificaciones
+Ô£à **Datos coherentes** mockeados (pasos, sue├▒o, HR, entrenamientos, etc.)
+Ô£à **Animaciones** con framer-motion
+Ô£à **Dise├▒o responsive** completo

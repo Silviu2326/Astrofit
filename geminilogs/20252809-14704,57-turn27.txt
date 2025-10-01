@@ -1,0 +1,5 @@
+﻿He creado la estructura b├ísica para el m├│dulo `Facturaci├│n Empresas - Gesti├│n de Cobros B2B` y los archivos especificados:
+
+1.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/facturacion-empresas/FacturacionEmpresasPage.tsx`
+2.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/facturacion-empresas/facturacionEmpresasApi.ts`
+3.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/facturacion-empresas/components/TablaFacturas.tsx`

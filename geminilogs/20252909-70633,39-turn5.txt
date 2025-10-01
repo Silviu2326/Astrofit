@@ -1,0 +1,34 @@
+﻿TIMEOUT: Prompt excediÃ³ 5 minutos de ejecuciÃ³n
+Prompt original:
+
+Mejora y completa el componente NodosAcciones.tsx para que sea un panel lateral completo con:
+
+1. **CategorÃ­as de acciones organizadas**:
+   - ðŸ“§ ComunicaciÃ³n (email, sms, push notification, WhatsApp)
+   - ðŸ‘¤ CRM (actualizar contacto, aÃ±adir tag, cambiar estado)
+   - ðŸ·ï¸ Marketing (aÃ±adir a lista, campaign, lead scoring)
+   - â° TemporizaciÃ³n (esperar X tiempo, programar tarea)
+   - ðŸ”— Integraciones (webhook, API call, Zapier)
+   - ðŸ“Š Analytics (track event, update metrics)
+   - âœ… Tareas (crear tarea, asignar usuario, recordatorio)
+
+2. **Cada acciÃ³n debe mostrar**:
+   - Icono distintivo y colorido
+   - Nombre descriptivo
+   - DescripciÃ³n de la funciÃ³n
+   - Badges con etiquetas (premium, bÃ¡sico, etc.)
+
+3. **DiseÃ±o visual profesional**:
+   - Grid layout responsive
+   - Hover effects elegantes
+   - Colores diferenciados por categorÃ­a
+   - Animaciones de microinteracciones
+   - Iconos de Lucide React
+
+4. **Funcionalidad avanzada**:
+   - BÃºsqueda en tiempo real
+   - Filtros por categorÃ­a
+   - Favoritos/mÃ¡s usados
+   - Drag & drop fluido
+
+

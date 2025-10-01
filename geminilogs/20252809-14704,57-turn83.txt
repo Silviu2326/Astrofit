@@ -1,0 +1,1 @@
+﻿I have successfully created the basic structure for the Historial de Scouting - Seguimiento Longitudinal module, including the `HistorialScoutingPage.tsx`, `historialScoutingApi.ts`, and `components/TimelineEvaluaciones.tsx` files, following the specified requirements and technical guidelines.

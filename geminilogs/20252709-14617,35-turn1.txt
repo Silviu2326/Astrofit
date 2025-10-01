@@ -1,0 +1,1 @@
+﻿He creado la estructura completa para el m├│dulo "Productos & Servicios - Cat├ílogo de Ofertas" y he escrito todos los archivos especificados con datos mock realistas, siguiendo los requisitos de TypeScript, React y TailwindCSS.

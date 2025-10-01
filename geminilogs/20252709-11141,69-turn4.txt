@@ -1,0 +1,1 @@
+﻿He creado la estructura completa para el m├│dulo CRM - Lead Detalle, incluyendo todos los archivos y carpetas especificados, y los he poblado con el contenido inicial.

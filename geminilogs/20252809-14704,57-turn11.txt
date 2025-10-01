@@ -1,0 +1,5 @@
+﻿I have successfully created the basic structure for the `Listado de Sedes - Gesti??n Multi-Centro` module, including the following files:
+
+- `src/features/listado-sedes/ListadoSedesPage.tsx`
+- `src/features/listado-sedes/listadoSedesApi.ts`
+- `src/features/listado-sedes/components/TarjetasSedes.tsx`

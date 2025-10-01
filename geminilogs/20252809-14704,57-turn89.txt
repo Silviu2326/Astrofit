@@ -1,0 +1,7 @@
+﻿(node:34096) MaxListenersExceededWarning: Possible EventTarget memory leak detected. 11 abort listeners added to [AbortSignal]. Use events.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+I have successfully created the following files and directories:
+
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/proyeccion-partido/ProyeccionPartidoPage.tsx`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/proyeccion-partido/proyeccionPartidoApi.ts`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/proyeccion-partido/components/ModeloPredictivo.tsx`

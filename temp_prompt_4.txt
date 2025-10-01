@@ -1,0 +1,29 @@
+﻿
+Crea la estructura completa para el mÃ³dulo CRM - Lead Detalle siguiendo el formato de src/features/. Necesito:
+
+1. Crear la carpeta src/features/lead-detalle/ con:
+   - LeadDetallePage.tsx (pÃ¡gina principal con informaciÃ³n del lead)
+   - leadDetalleApi.ts (API con datos mock del lead)
+   - components/LeadHeader.tsx (header con datos bÃ¡sicos)
+   - components/LeadQualification.tsx (formulario de cualificaciÃ³n)
+   - components/LeadTimeline.tsx (timeline de contactos)
+   - components/LeadConversion.tsx (botÃ³n convertir a cliente)
+
+La pÃ¡gina debe incluir:
+- Header con datos de contacto y estado actual
+- Formulario de cualificaciÃ³n: objetivo, disponibilidad, presupuesto, urgencia
+- Timeline de todas las interacciones: llamadas, emails, notas
+- SecciÃ³n de seguimiento con prÃ³ximas acciones
+- BotÃ³n prominente para convertir a cliente
+- Formulario de nueva interacciÃ³n (llamada, email, nota)
+
+Funcionalidades:
+- Editar informaciÃ³n del lead
+- AÃ±adir notas de contacto con timestamp
+- Programar seguimientos
+- Convertir lead a cliente (transferir toda la informaciÃ³n)
+- Historial completo de interacciones
+
+Usa TypeScript, React, TailwindCSS y sigue el patrÃ³n de los features existentes.
+
+

@@ -1,0 +1,6 @@
+﻿I have successfully created the basic structure for the "Lista de Convocatorias - Gesti├│n de Eventos" module.
+
+The following files and folders have been created:
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/lista-convocatorias/ListaConvocatoriasPage.tsx`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/lista-convocatorias/listaConvocatoriasApi.ts`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/lista-convocatorias/components/TablaEventos.tsx`

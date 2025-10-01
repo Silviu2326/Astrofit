@@ -1,0 +1,312 @@
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Productos & Servicios - Catálogo de Ofertas siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/productos-servicios/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/productos-servicios/ProductosServiciosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/productos-servicios/productosServiciosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/productos-servicios/components/SesionesIndividuales.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/productos-servicios/components/BonosClases.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/productos-servicios/components/MembresiasMenuales.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/productos-servicios/components/ProgramasOnline.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/productos-servicios/components/CatalogoCompleto.tsx
+
+
+ESPECIFICACIONES:
+- Catálogo completo de todo lo que ofreces como entrenador
+- Sesiones individuales: entrenamiento personal uno a uno
+- Bonos de 10 clases: paquetes de sesiones grupales o individuales
+- Membresías mensuales: suscripciones recurrentes de diferentes modalidades
+- Programas online o híbridos: entrenamientos digitales y mixtos
+- Cada producto tiene nombre, precio, descripción y modalidad
+- Gestión de disponibilidad y cupos por servicio
+- Categorización por tipo: presencial, online, grupal, individual
+- Duración y características específicas de cada servicio
+- Templates de productos más vendidos para replicar
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Planes & Precios - Estructuración de Ofertas siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/planes-precios/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/planes-precios/PlanesPreciosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/planes-precios/planesPreciosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/planes-precios/components/TarifasMensuales.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/planes-precios/components/PaquetesPromocionales.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/planes-precios/components/ModalidadesPrecios.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/planes-precios/components/ComparadorPlanes.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/planes-precios/components/ConfiguradorPrecios.tsx
+
+
+ESPECIFICACIONES:
+- Tarifas mensuales, trimestrales o anuales estructuradas
+- Precios especiales para packs y promociones limitadas
+- Diferentes modalidades: online, presencial, mixto con precios específicos
+- Comparador de planes para ayudar a clientes a elegir
+- Configurador de precios dinámico para ajustes rápidos
+- Descuentos por volumen y fidelización de clientes
+- Precios diferenciados por tipo de cliente (nuevo, recurrente, VIP)
+- Mostrar precios de manera profesional sin improvisar
+- Calculadora de rentabilidad por plan ofrecido
+- Historial de cambios de precios para análisis
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Cupones - Sistema de Descuentos siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/cupones/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/cupones/CuponesPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/cupones/cuponesApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/cupones/components/CrearCupones.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/cupones/components/GestionCaducidad.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/cupones/components/CampanasCaptacion.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/cupones/components/PremiosFidelidad.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/cupones/components/EstadisticasCupones.tsx
+
+
+ESPECIFICACIONES:
+- Crear cupones por porcentaje o importe fijo personalizable
+- Gestión de caducidad: fecha límite o número máximo de usos
+- Campañas de captación: cupones específicos para atraer nuevos clientes
+- Premios de fidelidad: descuentos para clientes recurrentes y leales
+- Estadísticas de cupones: uso, conversión y efectividad por código
+- Códigos únicos o reutilizables según la estrategia comercial
+- Restricciones por producto, cliente o fecha de aplicación
+- Validación automática de cupones en el proceso de compra
+- Alertas de cupones próximos a caducar sin usar
+- Templates de cupones exitosos para replicar en futuras campañas
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Cobros & Facturación - Centro de Pagos siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/cobros-facturacion/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/cobros-facturacion/CobrosFacturacionPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/cobros-facturacion/cobrosFacturacionApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/cobros-facturacion/components/RegistroCobros.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/cobros-facturacion/components/SuscripcionesActivas.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/cobros-facturacion/components/FacturasAutomaticas.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/cobros-facturacion/components/EstadoPagos.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/cobros-facturacion/components/ControlIngresos.tsx
+
+
+ESPECIFICACIONES:
+- Registro completo de todos los cobros realizados por fecha y cliente
+- Control de suscripciones activas: renovaciones automáticas y manuales
+- Facturas automáticas generadas para cada transacción realizada
+- Estado de cada cobro: pagado, pendiente, fallido o en proceso
+- Control de ingresos: verificar que el esfuerzo se traduce en ingresos reales
+- Gestión de pagos fraccionados y planes de financiación
+- Notificaciones automáticas de cobros pendientes o fallidos
+- Histórico de transacciones con filtros por período y cliente
+- Integración con pasarelas de pago como Stripe o PayPal
+- Recordatorios automáticos de renovación de suscripciones
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Impuestos - Configuración Fiscal siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/impuestos/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/impuestos/ImpuestosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/impuestos/impuestosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/impuestos/components/ConfiguracionIVA.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/impuestos/components/CalculoAutomatico.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/impuestos/components/ReportesTrimestral.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/impuestos/components/ExencionesEspeciales.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/impuestos/components/HistorialImpuestos.tsx
+
+
+ESPECIFICACIONES:
+- Configuración sencilla del IVA y otros impuestos aplicables
+- Cálculo automático que se añade a todos los cobros sin errores
+- Reportes trimestrales listos para presentar a Hacienda
+- Gestión de exenciones especiales según tipo de servicio o cliente
+- Historial de impuestos cobrados por período fiscal
+- Evitar errores y sorpresas fiscales a final de trimestre
+- Diferentes tipos impositivos según el servicio ofrecido
+- Integración automática con sistema de facturación
+- Alertas de cambios normativos y actualizaciones fiscales
+- Backup automático de datos fiscales para auditorías
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Conciliación de Pagos - Verificación de Transferencias siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/conciliacion-pagos/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/conciliacion-pagos/ConciliacionPagosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/conciliacion-pagos/conciliacionPagosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/conciliacion-pagos/components/ComparadorStripe.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/conciliacion-pagos/components/VerificacionTransferencias.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/conciliacion-pagos/components/DiscrepanciasDetectadas.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/conciliacion-pagos/components/ReporteConciliacion.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/conciliacion-pagos/components/AlertasInconsistencias.tsx
+
+
+ESPECIFICACIONES:
+- Comparar cobros registrados en Fitoffice con payouts reales de Stripe
+- Verificación de transferencias: lo que aparece en pantalla coincide con la cuenta
+- Detección automática de discrepancias entre sistemas
+- Reporte de conciliación mensual para control financiero
+- Alertas de inconsistencias para resolución inmediata
+- Nada peor que no cuadrar lo que entra con lo que se transfiere
+- Seguimiento de comisiones y tarifas de pasarelas de pago
+- Histórico de conciliaciones para auditorías futuras
+- Importación automática de datos bancarios para comparación
+- Dashboard de salud financiera con métricas de concordancia
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Gastos - Control de Costes siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/gastos/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/gastos/GastosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/gastos/gastosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/gastos/components/GastosFijos.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/gastos/components/GastosVariables.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/gastos/components/CategorizacionGastos.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/gastos/components/AnalisisGastos.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/gastos/components/PresupuestoMensual.tsx
+
+
+ESPECIFICACIONES:
+- Registro de gastos fijos: alquiler de sala, seguros, licencias de software
+- Gastos variables: material deportivo, publicidad, desplazamientos
+- Categorización por tipo: alimentación, alquiler, marketing, suministros
+- Análisis de gastos para entender en qué se va el dinero
+- Presupuesto mensual con alertas de sobrepasar límites establecidos
+- Control de costes para calcular margen real del negocio
+- Subida de recibos y facturas adjuntas a cada gasto
+- Recordatorios de gastos recurrentes como alquileres o suscripciones
+- Comparativa mensual de evolución de costes por categoría
+- Indicadores de eficiencia: gasto por cliente adquirido
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Panel Financiero - Dashboard del Negocio siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/panel-financiero/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/panel-financiero/PanelFinancieroPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/panel-financiero/panelFinancieroApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/panel-financiero/components/IngresosVsGastos.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/panel-financiero/components/EvolucionVentas.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/panel-financiero/components/MargenMensual.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/panel-financiero/components/VistazoRapido.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/panel-financiero/components/ProyeccionesFinancieras.tsx
+
+
+ESPECIFICACIONES:
+- Resumen visual completo del estado del negocio en tiempo real
+- Comparativa ingresos vs gastos con gráficos claros y entendibles
+- Evolución de ventas: tendencias mensuales y anuales de crecimiento
+- Margen aproximado del mes para saber la rentabilidad actual
+- Vistazo rápido: saber de un golpe de vista si el mes cierra en positivo
+- Proyecciones financieras basadas en tendencias actuales
+- KPIs fundamentales: ingresos recurrentes, crecimiento, rentabilidad
+- Alertas de problemas financieros: gastos excesivos, bajos ingresos
+- Comparativas con meses anteriores para medir progreso
+- Dashboard ejecutivo para toma de decisiones estratégicas
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Exportar Contabilidad - Herramientas para Gestores siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/exportar-contabilidad/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/exportar-contabilidad/ExportarContabilidadPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/exportar-contabilidad/exportarContabilidadApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/exportar-contabilidad/components/ExportarExcel.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/exportar-contabilidad/components/FormatosCSV.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/exportar-contabilidad/components/InformesGestor.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/exportar-contabilidad/components/AutomatizacionEnvios.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/exportar-contabilidad/components/ValidacionDatos.tsx
+
+
+ESPECIFICACIONES:
+- Exportar informes completos en formatos Excel y CSV
+- Herramientas para hablar el mismo idioma que tu gestor o asesoría
+- Informes específicos para gestores: ingresos, gastos, impuestos por período
+- Automatización de envíos mensuales o trimestrales a contabilidad
+- Validación de datos antes de exportar para evitar errores
+- Envío directo a la asesoría sin complicaciones manuales
+- Formatos estándar compatibles con software contable popular
+- Segmentación de datos por categorías fiscales requeridas
+- Histórico de exportaciones realizadas para control y auditoría
+- Templates personalizables según requerimientos del gestor
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks

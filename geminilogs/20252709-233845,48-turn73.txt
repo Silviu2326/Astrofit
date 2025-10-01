@@ -1,0 +1,11 @@
+﻿(node:20012) MaxListenersExceededWarning: Possible EventTarget memory leak detected. 11 abort listeners added to [AbortSignal]. Use events.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+He creado los siguientes archivos en `src/features/recorrido-cliente/hitos-clientes/`:
+
+1.  `src/features/recorrido-cliente/hitos-clientes/HitosClientesPage.tsx`
+2.  `src/features/recorrido-cliente/hitos-clientes/hitosClientesApi.ts`
+3.  `src/features/recorrido-cliente/hitos-clientes/components/TimelineHitos.tsx`
+4.  `src/features/recorrido-cliente/hitos-clientes/components/CalendarioEventos.tsx`
+5.  `src/features/recorrido-cliente/hitos-clientes/components/TarjetaHito.tsx`
+
+He tenido problemas para eliminar el archivo `dummy.txt` que se cre├│ para asegurar la creaci├│n de las carpetas, pero todos los archivos solicitados han sido creados.

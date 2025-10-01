@@ -1,0 +1,5 @@
+﻿He creado la estructura b├ísica para el m├│dulo "Reportes de Accesos - Analytics de Entrada" y los archivos especificados:
+
+- `src/features/reportes-accesos/ReportesAccesosPage.tsx`
+- `src/features/reportes-accesos/reportesAccesosApi.ts`
+- `src/features/reportes-accesos/components/HistorialEntradas.tsx`

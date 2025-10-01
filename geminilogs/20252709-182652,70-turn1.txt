@@ -1,0 +1,9 @@
+﻿He creado la estructura completa para el m├│dulo "Entrenamiento - Biblioteca de Ejercicios" en `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/biblioteca-ejercicios/`.
+
+Se han creado los siguientes archivos:
+1.  `project-bolt-sb1-qekdxfwt/project/src/features/biblioteca-ejercicios/BibliotecaEjerciciosPage.tsx`
+2.  `project-bolt-sb1-qekdxfwt/project/src/features/biblioteca-ejercicios/bibliotecaEjerciciosApi.ts`
+3.  `project-bolt-sb1-qekdxfwt/project/src/features/biblioteca-ejercicios/components/EjerciciosGrid.tsx`
+4.  `project-bolt-sb1-qekdxfwt/project/src/features/biblioteca-ejercicios/components/EjercicioCard.tsx`
+5.  `project-bolt-sb1-qekdxfwt/project/src/features/biblioteca-ejercicios/components/EjerciciosFilters.tsx`
+6.  `project-bolt-sb1-qekdxfwt/project/src/features/biblioteca-ejercicios/components/EjerciciosSearch.tsx`

@@ -1,0 +1,31 @@
+﻿TIMEOUT: Prompt excediÃ³ 5 minutos de ejecuciÃ³n
+Prompt original:
+
+Crea un sistema de validaciÃ³n completo para el mÃ³dulo crear-flujo que incluya:
+
+1. **Validador de flujo** (flujoValidator.ts):
+   - Validar que el flujo tenga al menos un disparador
+   - Verificar que no haya nodos huÃ©rfanos
+   - Detectar loops infinitos
+   - Validar configuraciones de nodos
+   - Verificar conectividad del flujo
+
+2. **Validador de nodos** (nodoValidator.ts):
+   - ValidaciÃ³n especÃ­fica por tipo de nodo
+   - Campos requeridos
+   - Formatos de datos (email, URL, etc.)
+   - Rangos de valores vÃ¡lidos
+
+3. **Sistema de testing** (testRunner.ts):
+   - Simular ejecuciÃ³n de flujos
+   - Test de nodos individuales
+   - Reportes de resultados
+   - Logs de ejecuciÃ³n
+
+4. **Mensajes de error/Ã©xito**:
+   - Mensajes informativos para usuarios
+   - Diferentes niveles (info, warning, error)
+   - Sugerencias de correcciÃ³n
+   - LocalizaciÃ³n en espaÃ±ol
+
+

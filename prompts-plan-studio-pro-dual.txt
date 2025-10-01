@@ -1,0 +1,728 @@
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+=== FASE 1: PROMPTS BÁSICOS (1-16) - CREAR ESTRUCTURAS ===
+
+PROMPT 1 - BÁSICO: Gestión de Clases - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/gestion-clases/ y ESCRIBE estos archivos:
+
+1. CalendarioClasesPage.tsx - Página principal con layout básico
+2. calendarioClasesApi.ts - API con datos mock simples (10 clases)
+3. components/CalendarioSemanal.tsx - Vista semanal básica con grid
+4. components/TarjetaClase.tsx - Tarjeta simple con info básica
+5. components/FiltroCategorias.tsx - Filtro básico por tipo de clase
+
+FUNCIONALIDADES BÁSICAS:
+- Vista semanal con 7 columnas
+- Tarjetas con: nombre, hora, instructor, capacidad
+- 4 colores base: fuerza (rojo), cardio (azul), yoga (verde), funcional (naranja)
+- Filtro simple por categoría
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 2 - BÁSICO: Reservas de Clase - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/reservas-clase/ y ESCRIBE estos archivos:
+
+1. ReservasClasePage.tsx - Página principal con tabla simple
+2. reservasClaseApi.ts - API con datos mock de reservas
+3. components/TablaReservas.tsx - Tabla básica con reservas
+4. components/GestorAforo.tsx - Contador simple de capacidad
+5. components/ListaEspera.tsx - Lista básica de espera
+
+FUNCIONALIDADES BÁSICAS:
+- Tabla con: cliente, clase, estado (confirmado/espera/cancelado)
+- Contador de capacidad actual vs máxima
+- Lista de espera simple
+- Estados visuales básicos con colores
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 3 - BÁSICO: Gestión de Coaches - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/gestion-coach/ y ESCRIBE estos archivos:
+
+1. GestionCoachPage.tsx - Página principal con grid de coaches
+2. gestionCoachApi.ts - API con datos mock de 6 coaches
+3. components/PanelEntrenadores.tsx - Grid básico con fotos y datos
+4. components/CalendarioDisponibilidad.tsx - Calendario simple semanal
+5. components/AsignacionClases.tsx - Lista básica de asignaciones
+
+FUNCIONALIDADES BÁSICAS:
+- Grid de coaches con foto, nombre, especialidad
+- Calendario semanal básico de disponibilidad
+- Lista simple de clases asignadas
+- Estados: disponible, ocupado, libre
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 4 - BÁSICO: Reportes de Asistencia - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/reportes-asistencia/ y ESCRIBE estos archivos:
+
+1. ReportesAsistenciaPage.tsx - Dashboard básico con métricas
+2. reportesAsistenciaApi.ts - API con datos mock de asistencia
+3. components/DashboardAsistencia.tsx - Panel con números básicos
+4. components/GraficoClases.tsx - Gráfico simple de barras
+5. components/RankingClientes.tsx - Lista básica top 10
+
+FUNCIONALIDADES BÁSICAS:
+- Dashboard con: total asistencias, % promedio, clases populares
+- Gráfico de barras simple con Chart.js
+- Ranking básico de clientes frecuentes
+- Datos mock realistas para la semana
+- TypeScript, React, TailwindCSS, Chart.js básico
+
+---
+
+PROMPT 5 - BÁSICO: WOD del Día - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/wod-dia/ y ESCRIBE estos archivos:
+
+1. WodDiaPage.tsx - Página principal estilo pizarra
+2. wodDiaApi.ts - API con datos mock de WODs
+3. components/PizarraDigital.tsx - Visualización básica del WOD
+4. components/EditorWod.tsx - Editor simple de texto
+5. components/VistaPrevia.tsx - Preview básico del WOD
+
+FUNCIONALIDADES BÁSICAS:
+- Pizarra digital con fondo oscuro estilo chalkboard
+- Editor de texto simple para crear WODs
+- Vista previa básica del WOD del día
+- 3 plantillas básicas: AMRAP, For Time, EMOM
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 6 - BÁSICO: Leaderboard - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/leaderboard/ y ESCRIBE estos archivos:
+
+1. LeaderboardPage.tsx - Página tipo marcador deportivo
+2. leaderboardApi.ts - API con datos mock de resultados
+3. components/TablaResultados.tsx - Tabla básica de ranking
+4. components/MedallasDigitales.tsx - Iconos simples de medallas
+5. components/FiltrosCompetencia.tsx - Filtros básicos
+
+FUNCIONALIDADES BÁSICAS:
+- Tabla de ranking con posición, nombre, resultado
+- Medallas oro/plata/bronce con iconos simples
+- Filtro básico por género y categoría
+- Datos mock de 20 atletas con resultados
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 7 - BÁSICO: Historial de Marcas - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/historial-marcas/ y ESCRIBE estos archivos:
+
+1. HistorialMarcasPage.tsx - Página principal con histórico
+2. historialMarcasApi.ts - API con datos mock de PRs
+3. components/GraficoEvolucion.tsx - Gráfico líneal básico
+4. components/TablaPRs.tsx - Tabla simple de records
+5. components/RegistroMarca.tsx - Formulario básico
+
+FUNCIONALIDADES BÁSICAS:
+- Gráfico de líneas simple con Chart.js
+- Tabla de PRs con fecha, ejercicio, marca
+- Formulario básico para registrar nueva marca
+- Datos mock de evolución por ejercicio
+- TypeScript, React, TailwindCSS, Chart.js básico
+
+---
+
+PROMPT 8 - BÁSICO: Escáner de Entrada - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/escaner-entrada/ y ESCRIBE estos archivos:
+
+1. EscanerEntradaPage.tsx - Página principal tipo escáner
+2. escanerEntradaApi.ts - API con simulación de QR
+3. components/LectorQR.tsx - Simulador básico de cámara
+4. components/FeedbackAcceso.tsx - Mensajes de resultado
+5. components/InfoCliente.tsx - Panel básico de info
+
+FUNCIONALIDADES BÁSICAS:
+- Simulador de escáner con botón "Simular QR"
+- Feedback básico: ✅ válido, ❌ inválido
+- Panel con info básica del cliente
+- Estados: acceso permitido, denegado, membresía vencida
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 9 - BÁSICO: Historial de Asistencias - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/historial-asistencias/ y ESCRIBE estos archivos:
+
+1. HistorialAsistenciasPage.tsx - Página con tabla de entradas
+2. historialAsistenciasApi.ts - API con datos mock de accesos
+3. components/TablaEntradas.tsx - Tabla básica cronológica
+4. components/FiltrosAvanzados.tsx - Filtros simples por fecha
+5. components/EstadisticasAcceso.tsx - Stats básicas
+
+FUNCIONALIDADES BÁSICAS:
+- Tabla cronológica: cliente, hora, clase
+- Filtro por fecha (hoy, ayer, semana)
+- Búsqueda simple por nombre
+- Estadísticas básicas: total entradas, pico de hora
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 10 - BÁSICO: Pases Virtuales - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/pases-virtuales/ y ESCRIBE estos archivos:
+
+1. PasesVirtualesPage.tsx - Página con tarjetas de bonos
+2. pasesVirtualesApi.ts - API con datos mock de bonos
+3. components/TarjetasDigitales.tsx - Tarjetas básicas tipo card
+4. components/ContadorSesiones.tsx - Contador simple
+5. components/AlertasBonos.tsx - Alertas básicas
+
+FUNCIONALIDADES BÁSICAS:
+- Tarjetas de bonos con tipo, sesiones restantes, vencimiento
+- Contador visual con barra de progreso simple
+- Alertas básicas cuando quedan ≤3 sesiones
+- Estados: activo, por vencer, vencido
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 11 - BÁSICO: Ventas Rápidas - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/ventas-rapidas/ y ESCRIBE estos archivos:
+
+1. VentasRapidasPage.tsx - Página tipo POS simple
+2. ventasRapidasApi.ts - API con catálogo de productos
+3. components/CuadriculaProductos.tsx - Grid básico de productos
+4. components/CarritoVenta.tsx - Carrito simple
+5. components/ProcesadorPago.tsx - Simulador de pago
+
+FUNCIONALIDADES BÁSICAS:
+- Grid de productos: agua, batidos, camisetas, suplementos
+- Carrito con cantidad y total
+- Botón "Cobrar" con simulación de pago
+- Productos con precio e imagen básica
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 12 - BÁSICO: Tickets Diarios - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/tickets-diarios/ y ESCRIBE estos archivos:
+
+1. TicketsDiariosPage.tsx - Página con lista de tickets
+2. ticketsDiariosApi.ts - API con datos mock de ventas
+3. components/TablaTransacciones.tsx - Tabla básica de ventas
+4. components/ResumenVentas.tsx - Resumen simple
+5. components/FiltroPeriodo.tsx - Filtro por días
+
+FUNCIONALIDADES BÁSICAS:
+- Tabla de transacciones: hora, producto, cantidad, total
+- Estados: pagado, pendiente, cancelado
+- Resumen con total del día
+- Filtro por día: hoy, ayer, semana
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 13 - BÁSICO: Caja Diaria - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/caja-diaria/ y ESCRIBE estos archivos:
+
+1. CajaDiariaPage.tsx - Dashboard de ingresos diarios
+2. cajaDiariaApi.ts - API con datos mock de caja
+3. components/DashboardIngresos.tsx - Panel con totales
+4. components/GraficoMediosPago.tsx - Gráfico circular básico
+5. components/ProcesoCierre.tsx - Proceso simple de cierre
+
+FUNCIONALIDADES BÁSICAS:
+- Dashboard con ingresos totales del día
+- Desglose: clases + productos
+- Gráfico circular: efectivo vs tarjeta
+- Proceso de cierre básico con validación
+- TypeScript, React, TailwindCSS, Chart.js básico
+
+---
+
+PROMPT 14 - BÁSICO: Listado de Pases - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/listado-pases/ y ESCRIBE estos archivos:
+
+1. ListadoPasesPage.tsx - Página con lista de membresías
+2. listadoPasesApi.ts - API con datos mock de pases
+3. components/TarjetasBonos.tsx - Tarjetas básicas de bonos
+4. components/BarrasProgreso.tsx - Barras de uso
+5. components/FiltroEstados.tsx - Filtro por estado
+
+FUNCIONALIDADES BÁSICAS:
+- Lista de bonos: 10 sesiones, mensual, trimestral
+- Tarjetas con cliente, tipo, progreso
+- Barras de progreso de uso
+- Filtro por estado: activo, vencido, pausado
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 15 - BÁSICO: Crear Contrato - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/crear-contrato/ y ESCRIBE estos archivos:
+
+1. CrearContratoPage.tsx - Página editor de contratos
+2. crearContratoApi.ts - API con plantillas básicas
+3. components/EditorContrato.tsx - Editor de texto simple
+4. components/PlantillasContrato.tsx - Selector de plantillas
+5. components/FirmaDigital.tsx - Simulador de firma
+
+FUNCIONALIDADES BÁSICAS:
+- Editor de texto para contrato
+- 3 plantillas básicas: mensual, trimestral, anual
+- Campos auto-completados: nombre, documento
+- Simulador de firma digital con canvas básico
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 16 - BÁSICO: Renovaciones - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/renovaciones/ y ESCRIBE estos archivos:
+
+1. RenovacionesPage.tsx - Página de vencimientos
+2. renovacionesApi.ts - API con datos mock de renovaciones
+3. components/AlertasVencimiento.tsx - Lista de alertas
+4. components/ProcesoRenovacion.tsx - Proceso básico
+5. components/HistorialRenovaciones.tsx - Historial simple
+
+FUNCIONALIDADES BÁSICAS:
+- Lista de contratos próximos a vencer
+- Alertas por colores: amarillo (30d), naranja (15d), rojo (7d)
+- Proceso básico de renovación en un clic
+- Historial simple de renovaciones pasadas
+- TypeScript, React, TailwindCSS básico
+
+---
+
+=== FASE 2: PROMPTS AVANZADOS (17-32) - COMPLETAR Y MEJORAR ===
+
+PROMPT 17 - AVANZADO: Gestión de Clases - Funcionalidades Premium
+
+Mejora el módulo gestion-clases con funcionalidades avanzadas:
+
+NUEVAS FUNCIONALIDADES:
+- Drag & drop para reasignar horarios y coaches (react-dnd)
+- Vista responsive móvil con scroll horizontal
+- Estados visuales avanzados: clase llena (rojo), disponible (verde), cancelada (gris)
+- Integración tiempo real con WebSocket simulado
+- Notificaciones push cuando se liberan cupos
+- Filtros avanzados: por instructor, horario, nivel de intensidad
+- Modo vista diaria con timeline detallado
+- Gestión de clases recurrentes y excepciones
+- Sistema de waitlist automático por clase
+- Métricas en tiempo real: ocupación promedio, tendencias
+
+MEJORAS UX/UI:
+- Animaciones CSS para transiciones suaves
+- Loading skeletons para mejor percepción
+- Tooltips informativos en hover
+- Temas claro/oscuro
+- Atajos de teclado para navegación rápida
+- Exportación de horarios a PDF/iCal
+
+---
+
+PROMPT 18 - AVANZADO: Reservas de Clase - Sistema Inteligente
+
+Mejora el módulo reservas-clase con sistema inteligente:
+
+NUEVAS FUNCIONALIDADES:
+- Check-in automático con geolocalización
+- Sistema de penalizaciones por no-shows
+- Reservas automáticas basadas en historial del cliente
+- Notificaciones multicanal: email, SMS, push, WhatsApp
+- Sistema de créditos y débitos automático
+- Integración con calendario personal (Google/Outlook)
+- Reservas familiares y grupales
+- Sistema de reviews post-clase
+- Predicción de demanda con IA mock
+- Gestión de cancelaciones con políticas flexibles
+
+MEJORAS UX/UI:
+- Chat en vivo para soporte de reservas
+- Onboarding interactivo para nuevos usuarios
+- Dashboards personalizados por tipo de cliente
+- Modo offline con sincronización posterior
+- Accessibility completo (WCAG 2.1)
+- Animaciones de feedback inmediato
+
+---
+
+PROMPT 19 - AVANZADO: Gestión de Coaches - Staff Manager Pro
+
+Mejora el módulo gestion-coach con funcionalidades profesionales:
+
+NUEVAS FUNCIONALIDADES:
+- Sistema de evaluaciones 360° (clientes + management)
+- Gestión automática de sustituciones con algoritmo
+- Tracking de horas extra y compensaciones
+- Sistema de metas y KPIs por entrenador
+- Planificación de vacaciones y ausencias
+- Certificaciones y renovaciones de licencias
+- Sistema de mentoring junior-senior coaches
+- Integración con nómina y pagos
+- Análisis de rentabilidad por entrenador
+- Sistema de bonus por performance
+
+MEJORAS UX/UI:
+- Dashboard personalizado por coach
+- Calendario compartido entre staff
+- Sistema de mensajería interna
+- Reportes automáticos de performance
+- Gamificación con badges y logros
+- App móvil específica para coaches
+
+---
+
+PROMPT 20 - AVANZADO: Reportes de Asistencia - Analytics BI
+
+Mejora el módulo reportes-asistencia con Business Intelligence:
+
+NUEVAS FUNCIONALIDADES:
+- Dashboards interactivos con drill-down
+- Análisis predictivo de abandonos
+- Segmentación avanzada de clientes
+- Comparativas con competencia (datos mock)
+- ROI por canal de marketing
+- Análisis de lifetime value por cliente
+- Mapas de calor de ocupación por zonas
+- Forecasting de demanda estacional
+- Alertas automáticas de métricas críticas
+- Integración con Google Analytics
+
+MEJORAS UX/UI:
+- Exportación a múltiples formatos
+- Dashboards compartibles con stakeholders
+- Reportes automáticos por email
+- Visualizaciones 3D interactivas
+- Modo presentación para meetings
+- Templates personalizables de reportes
+
+---
+
+PROMPT 21 - AVANZADO: WOD del Día - Plataforma Completa
+
+Mejora el módulo wod-dia con plataforma completa de entrenamientos:
+
+NUEVAS FUNCIONALIDADES:
+- IA que sugiere WODs basado en historial
+- Biblioteca de 500+ ejercicios con videos
+- Escalamientos automáticos por nivel
+- Sistema de comentarios y ratings de WODs
+- Integración con wearables (simulado)
+- Challenges semanales y mensuales
+- Progresión automática de dificultad
+- WODs colaborativos entre gimnasios
+- Sistema de badges por completar WODs
+- Análisis de patrones de entrenamiento
+
+MEJORAS UX/UI:
+- Editor visual drag & drop para WODs
+- Vista 3D de ejercicios
+- Timer integrado con sonidos motivacionales
+- Compartir WODs en redes sociales
+- Modo coach para broadcasting en vivo
+- Realidad aumentada para demostraciones
+
+---
+
+PROMPT 22 - AVANZADO: Leaderboard - Competencia Global
+
+Mejora el módulo leaderboard con sistema de competencia global:
+
+NUEVAS FUNCIONALIDADES:
+- Ligas y divisiones automáticas por nivel
+- Competencias inter-gimnasios
+- Sistema de handicap para equidad
+- Torneos bracket style automáticos
+- Streaming en vivo de competencias
+- Sistema de apuestas con créditos virtuales
+- Rankings históricos y records all-time
+- Sistema de equipos y competencias grupales
+- Integración con federaciones deportivas
+- API pública para desarrolladores externos
+
+MEJORAS UX/UI:
+- Efectos visuales de celebración
+- Comentarios en tiempo real estilo Twitch
+- Perfiles detallados de atletas
+- Galería de fotos de competencias
+- Sistema de fans y seguidores
+- Transmisión multi-cámara simulada
+
+---
+
+PROMPT 23 - AVANZADO: Historial de Marcas - Performance Tracker
+
+Mejora el módulo historial-marcas con tracking avanzado de performance:
+
+NUEVAS FUNCIONALIDADES:
+- IA predictiva para próximos PRs
+- Análisis biomecánico básico (simulado)
+- Comparativas con atletas élite
+- Sistema de coaching virtual con recomendaciones
+- Tracking de lesiones y recuperación
+- Integración con nutrición y sueño
+- Periodización automática de entrenamientos
+- Análisis de fatiga y overtraining
+- Sistema de metas SMART automatizado
+- Correlaciones entre diferentes métricas
+
+MEJORAS UX/UI:
+- Gráficos avanzados multi-variable
+- Heatmaps de performance por período
+- Predicciones visuales con intervalos de confianza
+- Comparador lado a lado con otros atletas
+- Celebraciones personalizadas por logro
+- Sharing automático de milestones
+
+---
+
+PROMPT 24 - AVANZADO: Escáner de Entrada - Sistema Biométrico
+
+Mejora el módulo escaner-entrada con tecnología biométrica simulada:
+
+NUEVAS FUNCIONALIDADES:
+- Reconocimiento facial simulado con IA
+- Multi-modal: QR + facial + huella + RFID
+- Sistema anti-fraude con machine learning
+- Integración con cámaras de seguridad
+- Control de aforo automático con semáforos
+- Alertas de seguridad y personas no autorizadas
+- Sistema de invitados temporales
+- Integración con control de temperatura
+- Logs forenses para auditorías
+- API para integración con sistemas externos
+
+MEJORAS UX/UI:
+- Interfaz futurista con efectos de scanner
+- Feedback háptico simulado
+- Múltiples idiomas con detección automática
+- Modo accesibilidad para personas con discapacidad
+- Dashboard de monitoreo en tiempo real
+- Alertas push para staff de seguridad
+
+---
+
+PROMPT 25 - AVANZADO: Historial de Asistencias - Big Data Analytics
+
+Mejora el módulo historial-asistencias con análisis de Big Data:
+
+NUEVAS FUNCIONALIDADES:
+- Machine Learning para predecir ausencias
+- Análisis de patrones estacionales complejos
+- Correlaciones con factores externos (clima, eventos)
+- Segmentación automática de comportamientos
+- Sistema de recomendaciones personalizadas
+- Análisis de sentiment de la experiencia
+- Predicción de churn con early warnings
+- Optimización automática de horarios
+- A/B testing de políticas del gimnasio
+- Data warehouse con historial de años
+
+MEJORAS UX/UI:
+- Dashboards tiempo real con auto-refresh
+- Visualizaciones interactivas con filtros dinámicos
+- Mapas de calor temporales animados
+- Exportación a herramientas BI externas
+- Alertas inteligentes con contexto
+- Storytelling automático de datos
+
+---
+
+PROMPT 26 - AVANZADO: Pases Virtuales - Blockchain & NFTs
+
+Mejora el módulo pases-virtuales con tecnología blockchain simulada:
+
+NUEVAS FUNCIONALIDADES:
+- Membresías NFT con beneficios únicos
+- Sistema de intercambio P2P de sesiones
+- Programa de lealtad con tokens virtuales
+- Smart contracts para auto-renovación
+- Marketplace de membresías premium
+- Sistema de referidos con criptomonedas virtuales
+- Membresías familiares compartidas
+- Seguros de cancelación automáticos
+- Sistema de herencias de membresías
+- Integración con wallets digitales simuladas
+
+MEJORAS UX/UI:
+- Wallet integrado en la app
+- Visualizaciones 3D de NFTs de membresía
+- Trading simulator para intercambios
+- Gamificación con coleccionables digitales
+- Realidad aumentada para visualizar beneficios
+- Social trading entre miembros
+
+---
+
+PROMPT 27 - AVANZADO: Ventas Rápidas - E-commerce Integrado
+
+Mejora el módulo ventas-rapidas con e-commerce completo:
+
+NUEVAS FUNCIONALIDADES:
+- Catálogo online con reserva y pickup
+- Sistema de inventario en tiempo real multi-ubicación
+- Programa de afiliados automático
+- Upselling inteligente basado en ML
+- Sistema de suscripciones recurrentes
+- Integración con proveedores para dropshipping
+- Cashback y programa de puntos
+- Sistema de reviews y ratings de productos
+- Chatbot para recomendaciones de productos
+- Marketplace para coaches que vendan productos
+
+MEJORAS UX/UI:
+- Realidad aumentada para probar productos
+- Búsqueda visual por imagen
+- Wishlist compartida y gifting
+- One-click checkout con biométrica
+- Live shopping sessions
+- Social commerce con influencers internos
+
+---
+
+PROMPT 28 - AVANZADO: Tickets Diarios - Contabilidad Inteligente
+
+Mejora el módulo tickets-diarios con contabilidad automatizada:
+
+NUEVAS FUNCIONALIDADES:
+- Integración directa con software contable
+- Facturación electrónica automática
+- Conciliación bancaria automática
+- Categorización inteligente de gastos
+- Reportes fiscales automáticos
+- Detección de fraudes con ML
+- Sistema de aprobaciones multinivel
+- Auditoría trail completa e inmutable
+- Forecasting de cash flow
+- Integración con bancos via Open Banking
+
+MEJORAS UX/UI:
+- Dashboard CFO con KPIs financieros
+- Alertas de anomalías contables
+- Reportes automáticos para stakeholders
+- Modo contador con vistas especializadas
+- Exportación a múltiples formatos contables
+- Wizards para configuración fiscal
+
+---
+
+PROMPT 29 - AVANZADO: Caja Diaria - Financial Command Center
+
+Mejora el módulo caja-diaria con centro de comando financiero:
+
+NUEVAS FUNCIONALIDADES:
+- Trading simulator para inversiones del gimnasio
+- Análisis de márgenes por producto/servicio
+- Optimización de precios con IA
+- Sistema de budgets y forecasting avanzado
+- Análisis de competencia automatizado
+- ROI calculator para nuevas inversiones
+- Sistema de alertas financieras inteligentes
+- Integración con mercados financieros
+- Multi-currency para expansión internacional
+- Blockchain para transparencia financiera
+
+MEJORAS UX/UI:
+- Command center estilo NASA
+- Gráficos financieros en tiempo real
+- Alertas críticas con escalación automática
+- Modo CEO con executive summary
+- Integración con assistant de voz
+- Realidad virtual para inmersión en datos
+
+---
+
+PROMPT 30 - AVANZADO: Listado de Pases - CRM Avanzado
+
+Mejora el módulo listado-pases con CRM de clase mundial:
+
+NUEVAS FUNCIONALIDADES:
+- Scoring automático de clientes con ML
+- Campañas de marketing automatizadas
+- Segmentación dinámica en tiempo real
+- Customer journey mapping automático
+- Sistema de tickets de soporte integrado
+- Net Promoter Score automático
+- Sistema de win-back para ex-clientes
+- Análisis de sentiment de comunicaciones
+- Integración con herramientas de marketing
+- Programa de embajadores automatizado
+
+MEJORAS UX/UI:
+- 360° customer view con timeline
+- Comunicación omnicanal desde una interfaz
+- Automation builder visual
+- Dashboards personalizados por rol
+- Mobile CRM para staff en movimiento
+- Voice notes y transcripción automática
+
+---
+
+PROMPT 31 - AVANZADO: Crear Contrato - LegalTech Platform
+
+Mejora el módulo crear-contrato con plataforma LegalTech:
+
+NUEVAS FUNCIONALIDADES:
+- IA para generar cláusulas personalizadas
+- Sistema de e-signatures con validez legal
+- Blockchain para inmutabilidad de contratos
+- Análisis automático de riesgos legales
+- Integración con bases de datos legales
+- Sistema de versioning inteligente
+- Traducción automática multiidioma
+- Compliance automático con regulaciones
+- Mediación automática para disputas
+- API para integración con sistemas legales
+
+MEJORAS UX/UI:
+- Editor colaborativo en tiempo real
+- Comentarios y sugerencias automáticas
+- Templates inteligentes que se adaptan
+- Preview 3D de contratos firmados
+- Vault digital para almacenamiento seguro
+- Negotiation tracker para modificaciones
+
+---
+
+PROMPT 32 - AVANZADO: Renovaciones - Customer Success Platform
+
+Mejora el módulo renovaciones con plataforma de Customer Success:
+
+NUEVAS FUNCIONALIDADES:
+- Health scores automáticos por cliente
+- Playbooks automatizados de retención
+- Predicción de churn con 90% precisión
+- Ofertas personalizadas en tiempo real
+- Sistema de escalación automática
+- Customer advocacy program automatizado
+- Análisis de touchpoints críticos
+- Sistema de rewards por lealtad
+- Integration con external data sources
+- Retention optimization con A/B testing
+
+MEJORAS UX/UI:
+- Customer success cockpit
+- Automated workflow builder
+- Predictive analytics dashboard
+- Communication timeline visual
+- Success milestone celebrations
+- Mobile-first customer experience
+
+🎯 RESUMEN FINAL: 32 prompts totales
+📊 16 features × 2 prompts cada una
+🏗️ Fase 1: Estructura básica funcional
+🚀 Fase 2: Funcionalidades premium y avanzadas

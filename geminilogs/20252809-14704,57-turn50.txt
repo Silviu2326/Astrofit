@@ -1,0 +1,29 @@
+﻿He completado las siguientes mejoras en el m├│dulo `project-bolt-sb1-qekdxfwt/project/src/features/leaderboard/`:
+
+1.  **Nuevos Componentes Creados:**
+    *   `components/LigasDivisiones.tsx`
+    *   `components/CompetenciasInterGyms.tsx`
+    *   `components/SistemaHandicap.tsx`
+    *   `components/TorneosBracket.tsx`
+    *   `components/StreamingVivo.tsx`
+    *   `components/ApuestasVirtuales.tsx`
+    *   `components/RankingsHistoricos.tsx`
+    *   `components/CompetenciasGrupales.tsx`
+    *   `components/IntegracionFederaciones.tsx`
+    *   `components/APIPublica.tsx`
+    *   `components/EfectosCelebracion.tsx`
+    *   `components/ComentariosTiempoReal.tsx`
+    *   `components/PerfilesAtletas.tsx`
+    *   `components/GaleriaFotos.tsx`
+    *   `components/SistemaFans.tsx`
+    *   `components/TransmisionMultiCamara.tsx`
+
+2.  **`LeaderboardPage.tsx` Actualizado:**
+    *   Se han importado e integrado todos los nuevos componentes en la estructura de la p├ígina, organiz├índolos en un dise├▒o de cuadr├¡cula para una mejor visualizaci├│n.
+    *   El t├¡tulo de la p├ígina se ha actualizado a "Leaderboard de Competencia Global".
+
+3.  **`leaderboardApi.ts` Actualizado:**
+    *   Se ha a├▒adido una nueva interfaz `AdvancedCompetition` para definir la estructura de datos de las competencias avanzadas.
+    *   Se ha implementado un nuevo hook `useAdvancedCompetitions` con datos simulados para representar los "Endpoints de competencias avanzadas".
+
+Todas las tareas solicitadas han sido completadas.

@@ -1,0 +1,1 @@
+﻿Okay, I will create the complete structure for the CRM module in `src/features/`. First, I will list the project files to better understand the context.The `ls -R` command is not available. I will use an alternative to list the files recursively and then create the directories and files as requested.

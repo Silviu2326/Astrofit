@@ -1,0 +1,715 @@
+# 🎨 PROMPTS DE ESTILIZACIÓN - FEATURES NUTRITION
+
+---
+
+## 📋 PROMPT 5: Biblioteca de Recetas
+
+Transforma completamente la página de Biblioteca de Recetas (src/features/nutrition/nutrition/recetas-biblioteca) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en `GUIA_ESTILOS_UI.md`
+- Crea una biblioteca visual e interactiva de recetas
+- Facilita búsqueda, filtrado y visualización de recetas saludables
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Biblioteca**
+   - Gradiente `from-pink-600 via-rose-600 to-red-600`
+   - Título "Biblioteca de Recetas Saludables"
+   - Barra de búsqueda destacada
+   - Contador de recetas disponibles
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Total de Recetas
+   - Recetas Favoritas
+   - Categorías Disponibles
+   - Recetas Más Usadas
+   - Cards con glassmorphism
+
+3. **BÚSQUEDA Y FILTROS** (RecetasFilters)
+   - Barra de búsqueda XL con autocomplete
+   - Panel de filtros:
+     * Tipo de comida (Desayuno, Almuerzo, Cena, Snack)
+     * Tiempo de preparación (0-15min, 15-30min, 30-60min, 60min+)
+     * Dificultad (Fácil, Media, Difícil)
+     * Restricciones (Vegano, Vegetariano, Sin gluten, Sin lactosa)
+     * Calorías por porción (rangos)
+     * Macros predominantes (Alta proteína, Baja en carbos, etc.)
+   - Pills activos con gradientes
+
+4. **GRID DE RECETAS** (RecetasGrid + RecetaCard)
+   - Grid responsive: 1-2-3-4 columnas
+   - Cards de receta con:
+     * Imagen grande de la receta
+     * Play overlay si tiene video
+     * Nombre de la receta
+     * Tipo de comida y dificultad (badges)
+     * Tiempo de preparación (icono reloj)
+     * Calorías por porción (destacado)
+     * Macros resumidos (P/C/G)
+     * Rating (estrellas)
+     * Botón corazón favorito
+     * Hover: lift + shimmer
+
+5. **MODAL VISOR DE RECETA** (RecetaViewer)
+   - Modal amplio tipo revista:
+     * **Hero**: Imagen grande de la receta
+     * **Header**: Nombre, rating, favorito
+     * **Info rápida**:
+       - Tiempo prep + cocción
+       - Porciones
+       - Dificultad
+       - Tipo de comida
+     * **Información nutricional**:
+       - Calorías por porción (grande)
+       - Macros (proteínas, carbos, grasas) con progress bars
+       - Micronutrientes destacados
+       - Gráfico de distribución
+     * **Ingredientes**:
+       - Lista con cantidades
+       - Checkboxes para marcar
+       - Botón "Ajustar porciones" (cambia cantidades)
+     * **Preparación**:
+       - Pasos numerados con iconos
+       - Tiempo estimado por paso
+       - Tips y notas del chef
+     * **Etiquetas y categorías**:
+       - Tags (vegano, sin gluten, etc.)
+       - Alergenos
+     * **Variaciones**:
+       - Sustituciones de ingredientes
+       - Versiones alternativas
+   - Botones: Agregar a dieta, Editar, Compartir, Imprimir
+
+6. **CATEGORÍAS VISUALES**
+   - Acceso rápido por categoría:
+     * Cards por tipo de comida
+     * Icono representativo
+     * Contador de recetas
+     * Click filtra automáticamente
+
+7. **RECETAS DESTACADAS**
+   - Carrusel de recetas populares
+   - Cards más grandes con preview
+   - Badges "Más Popular", "Nuevo", "Chef's Choice"
+
+8. **ACCIONES RÁPIDAS**
+   - Botón flotante "+ Nueva Receta"
+   - Opciones de ordenamiento:
+     * Alfabético
+     * Popularidad
+     * Menor tiempo
+     * Menores calorías
+   - Export a PDF
+
+9. **DATOS MOCKEADOS**
+   - 50-100 recetas variadas
+   - Imágenes placeholder atractivas
+   - Información nutricional completa
+   - Pasos de preparación detallados
+   - Ratings y reviews
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente pink-rose-red para hero
+- Cards: `bg-white/80 backdrop-blur-xl rounded-3xl`
+- Modal visor amplio tipo revista
+- Imágenes grandes de recetas
+- Progress bars de macros
+- Badges coloridos por categoría
+- Checkboxes estilizados en ingredientes
+
+**NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta.
+
+---
+
+## 📋 PROMPT 6: Nueva Receta
+
+Transforma completamente la página de Nueva Receta (src/features/nutrition/nutrition/receta-nueva) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en `GUIA_ESTILOS_UI.md`
+- Crea un editor visual para crear recetas
+- Facilita carga de fotos y cálculo nutricional
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Editor**
+   - Gradiente `from-purple-600 via-pink-600 to-rose-600`
+   - Título "Crear Nueva Receta"
+   - Breadcrumb: Recetas > Nueva
+
+2. **LAYOUT PRINCIPAL**
+   - Dos columnas (desktop):
+     * Izquierda: Formulario
+     * Derecha: Preview en vivo
+
+3. **FORMULARIO DE RECETA** (RecetaForm)
+   - Información básica:
+     * Nombre de la receta
+     * Tipo de comida (dropdown)
+     * Dificultad (selector visual)
+     * Tiempo de preparación
+     * Tiempo de cocción
+     * Número de porciones
+     * Descripción breve
+
+4. **UPLOAD DE FOTOS** (FotoUpload)
+   - Zona drag & drop grande:
+     * `border-dashed border-4`
+     * Icono cámara animado
+     * Soporte múltiples fotos
+   - Galería de fotos:
+     * Thumbnails con preview
+     * Hacer foto principal
+     * Eliminar foto
+     * Progress bar de upload
+
+5. **EDITOR DE INGREDIENTES** (IngredientesEditor)
+   - Lista dinámica de ingredientes:
+     * Input nombre ingrediente
+     * Cantidad (input numérico)
+     * Unidad (dropdown: g, ml, taza, etc.)
+     * Botón "+ Agregar ingrediente"
+     * Drag & drop para reordenar
+     * Botón eliminar por ingrediente
+   - Calculadora nutricional automática
+
+6. **EDITOR DE PASOS** (PasosEditor)
+   - Pasos de preparación:
+     * Textarea por cada paso
+     * Botón "+ Agregar paso"
+     * Numeración automática
+     * Drag & drop para reordenar
+     * Tiempo estimado por paso (opcional)
+     * Agregar foto por paso (opcional)
+
+7. **CALCULADORA NUTRICIONAL** (NutricionCalculator)
+   - Cálculo automático basado en ingredientes:
+     * Calorías totales y por porción
+     * Macros (P/C/G) en gramos y %
+     * Gráfico de dona
+     * Micronutrientes principales
+     * Ajuste manual si es necesario
+
+8. **ETIQUETAS Y CATEGORIZACIÓN**
+   - Multi-select de tags:
+     * Vegano, Vegetariano
+     * Sin gluten, Sin lactosa
+     * Baja en carbos, Alta proteína
+     * etc.
+   - Selección de alergenos
+   - Categorías (Mediterránea, Asiática, etc.)
+
+9. **PREVIEW EN VIVO**
+   - Card lateral mostrando:
+     * Vista previa como se verá
+     * Foto principal
+     * Info nutricional
+     * Lista de ingredientes
+     * Pasos
+     * Actualización en tiempo real
+
+10. **ACCIONES FINALES**
+    - Botones:
+      * Guardar (gradiente)
+      * Guardar y crear otra
+      * Cancelar
+      * Vista previa completa
+
+11. **DATOS MOCKEADOS**
+    - Base de datos de ingredientes (500+)
+    - Unidades de medida comunes
+    - Categorías predefinidas
+    - Tags populares
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente purple-pink-rose para hero
+- Formulario: `bg-white/80 backdrop-blur-xl rounded-3xl`
+- Upload zone con `border-dashed border-4`
+- Lista de ingredientes con drag handles
+- Preview lateral con glassmorphism
+- Calculadora nutricional con gráficos
+
+**NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta.
+
+---
+
+## 📋 PROMPT 7: Editar Receta
+
+Transforma completamente la página de Editar Receta (src/features/nutrition/nutrition/receta-editar) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en `GUIA_ESTILOS_UI.md`
+- Crea un editor completo con historial de versiones
+- Facilita actualización de ingredientes y valores nutricionales
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Editor**
+   - Gradiente `from-fuchsia-600 via-pink-600 to-rose-600`
+   - Título "Editar Receta"
+   - Breadcrumb: Recetas > [Nombre] > Editar
+   - Auto-save indicator
+
+2. **TABS PRINCIPALES**
+   - Tabs estilizados:
+     * Editar Contenido
+     * Actualizar Nutrición
+     * Historial de Versiones
+     * Estadísticas de Uso
+
+3. **EDITOR DE RECETA** (RecetaEditor)
+   - Similar a creación pero con datos cargados
+   - Edición inline de todos los campos
+   - Comparación con versión anterior (opcional)
+
+4. **MANAGER DE INGREDIENTES** (IngredientesManager)
+   - Lista editable de ingredientes:
+     * Editar cantidades inline
+     * Agregar nuevos ingredientes
+     * Eliminar ingredientes
+     * Sustituir ingredientes (sugerencias)
+     * Recalcular nutrición automáticamente
+   - Alertas si hay cambios significativos en calorías/macros
+
+5. **MANAGER DE PASOS** (PasosManager)
+   - Editor de pasos de preparación:
+     * Editar texto de pasos
+     * Agregar/eliminar pasos
+     * Reordenar con drag & drop
+     * Agregar/cambiar fotos por paso
+
+6. **ACTUALIZADOR DE NUTRICIÓN** (NutricionUpdater)
+   - Interfaz para ajustar valores nutricionales:
+     * Auto-calculado vs manual
+     * Comparación antes/después
+     * Gráfico de cambios en macros
+     * Validación de datos
+   - Botón "Recalcular automáticamente"
+
+7. **HISTORIAL DE VERSIONES** (HistorialVersiones)
+   - Timeline de cambios:
+     * Fecha y hora
+     * Usuario que editó
+     * Tipo de cambio
+     * Comparación (diff visual)
+     * Notas del cambio
+   - Opción "Restaurar versión"
+   - Vista de diferencias lado a lado
+
+8. **ESTADÍSTICAS DE USO**
+   - Métricas de la receta:
+     * Veces usada en dietas
+     * Clientes que la han consumido
+     * Rating promedio
+     * Comentarios/Feedback
+   - Gráfico de uso en el tiempo
+
+9. **ACCIONES FINALES**
+   - Botones:
+     * Guardar cambios
+     * Guardar como nueva versión
+     * Duplicar receta
+     * Eliminar receta
+     * Publicar cambios
+
+10. **DATOS MOCKEADOS**
+    - Receta completa con todos los datos
+    - Historial de 3-5 versiones
+    - Estadísticas de uso simuladas
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente fuchsia-pink-rose para hero
+- Editor: `bg-white/80 backdrop-blur-xl rounded-3xl`
+- Timeline de versiones con línea conectora
+- Diff visual con colores (verde añadido, rojo eliminado)
+- Gráficos de cambios con Recharts
+- Confirmaciones antes de eliminar
+
+**NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta.
+
+---
+
+## 📋 PROMPT 8: Calculadoras Nutricionales
+
+Transforma completamente la página de Calculadoras Nutricionales (src/features/nutrition/nutrition/calculadoras-nutricionales) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en `GUIA_ESTILOS_UI.md`
+- Crea calculadoras interactivas y precisas
+- Facilita cálculos nutricionales complejos
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Calculadoras**
+   - Gradiente `from-cyan-600 via-blue-600 to-indigo-600`
+   - Título "Calculadoras Nutricionales"
+   - Descripción de herramientas disponibles
+
+2. **NAVEGACIÓN POR CALCULADORAS**
+   - Tabs/Pills estilizados:
+     * TDEE Calculator
+     * Macros Calculator
+     * Hidratación Calculator
+     * Fibra Calculator
+   - Pills activos con gradiente
+
+3. **TDEE CALCULATOR** (TDEECalculator)
+   - Calculadora de gasto energético:
+     * **Inputs**:
+       - Edad, género
+       - Peso, altura
+       - Nivel de actividad (sedentario a atleta)
+       - Fórmula (Harris-Benedict, Mifflin-St Jeor, etc.)
+     * **Resultados**:
+       - BMR (metabolismo basal) destacado
+       - TDEE calculado (grande con gradiente)
+       - Gauge visual de nivel metabólico
+       - Calorías para déficit/superávit
+       - Recomendaciones según objetivo
+
+4. **MACROS CALCULATOR** (MacrosCalculator)
+   - Calculadora de distribución de macros:
+     * **Inputs**:
+       - TDEE o calorías objetivo
+       - Objetivo (pérdida, ganancia, mantenimiento)
+       - Preferencia de dieta (balanceada, keto, alta proteína)
+       - Actividad física
+     * **Resultados**:
+       - Gramos de proteína (destacado)
+       - Gramos de carbohidratos
+       - Gramos de grasas
+       - Gráfico de dona con distribución %
+       - Calorías por macro
+       - Ajuste manual con sliders
+
+5. **HIDRATACIÓN CALCULATOR** (HidratacionCalculator)
+   - Calculadora de agua diaria:
+     * **Inputs**:
+       - Peso corporal
+       - Nivel de actividad
+       - Clima (templado, caluroso)
+       - Duración de ejercicio
+     * **Resultados**:
+       - Litros de agua recomendados (grande)
+       - Vasos equivalentes (visual con iconos)
+       - Distribución durante el día
+       - Ajuste por sudoración
+       - Recordatorios sugeridos
+
+6. **FIBRA CALCULATOR** (FibraCalculator)
+   - Calculadora de fibra diaria:
+     * **Inputs**:
+       - Edad, género
+       - Calorías consumidas
+       - Objetivo de salud digestiva
+     * **Resultados**:
+       - Gramos de fibra recomendados
+       - Fuentes principales (tabla)
+       - Distribución en comidas
+       - Progreso vs objetivo (progress bar)
+
+7. **EXPORT DE RESULTADOS** (ResultadosExport)
+   - Botón "Exportar resultados"
+   - Formatos: PDF, imagen, copiar
+   - Template profesional con todos los cálculos
+
+8. **HISTORIAL DE CÁLCULOS**
+   - Cards de cálculos recientes:
+     * Tipo de calculadora
+     * Fecha
+     * Inputs y resultados resumidos
+     * Botón "Reutilizar"
+
+9. **INFORMACIÓN Y AYUDA**
+   - Tooltips explicativos (icono ?)
+   - Explicación de fórmulas (collapsible)
+   - Referencias científicas
+   - FAQs por calculadora
+
+10. **DATOS MOCKEADOS**
+    - Fórmulas de TDEE implementadas
+    - Presets de distribución de macros
+    - Historial de 5-10 cálculos
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente cyan-blue-indigo para hero
+- Cards: `bg-white/80 backdrop-blur-xl rounded-3xl`
+- Inputs grandes con unidades visuales
+- Resultados destacados con gradientes
+- Gráficos con Recharts
+- Gauge/medidores animados
+- Sliders modernos para ajustes
+
+**NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta.
+
+---
+
+## 📋 PROMPT 9: Adherencia Nutricional
+
+Transforma completamente la página de Adherencia Nutricional (src/features/nutrition/nutrition/adherencia-nutricional) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en `GUIA_ESTILOS_UI.md`
+- Crea un sistema de tracking de adherencia
+- Facilita el seguimiento diario del cliente
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Adherencia**
+   - Gradiente `from-teal-600 via-green-600 to-lime-600`
+   - Título "Seguimiento de Adherencia Nutricional"
+   - Métricas globales de adherencia
+
+2. **ESTADÍSTICAS RÁPIDAS** (EstadisticasAdherencia)
+   - Adherencia Semanal (%)
+   - Días Consecutivos
+   - Comidas Registradas
+   - Objetivo Calórico Cumplido
+   - Cards con glassmorphism y progress circular
+
+3. **CHECKLIST DIARIO** (ChecklistDiario)
+   - Calendario interactivo con heatmap:
+     * Días con alta adherencia (verde)
+     * Días con adherencia media (amarillo)
+     * Días con baja adherencia (rojo)
+     * Click en día muestra detalle
+   - Checklist del día actual:
+     * Desayuno ✓
+     * Media mañana ✓
+     * Almuerzo ✓
+     * Merienda ✓
+     * Cena ✓
+     * Hidratación ✓
+   - Checkboxes estilizados con animación
+
+4. **RESUMEN SEMANAL** (ResumenSemanal)
+   - Vista semanal de adherencia:
+     * Gráfico de barras por día
+     * Adherencia % por día
+     * Calorías consumidas vs objetivo
+     * Distribución de macros real vs objetivo
+   - Comparación con semana anterior
+   - Tendencias (mejorando, estable, declinando)
+
+5. **FEEDBACK DEL CLIENTE** (FeedbackCliente)
+   - Sección de notas del cliente:
+     * Cómo se sintió hoy (emojis)
+     * Nivel de energía (1-10)
+     * Nivel de hambre/saciedad
+     * Antojos experimentados
+     * Notas libres
+   - Timeline de feedback histórico
+
+6. **GRÁFICOS DE PROGRESO**
+   - Line chart: Adherencia semanal (últimas 8 semanas)
+   - Bar chart: Comidas registradas por día
+   - Heatmap: Adherencia mensual (calendario)
+   - Comparativa: Meta vs Real
+
+7. **ALERTAS Y RECORDATORIOS**
+   - Sistema de alertas:
+     * "3 días sin registrar comidas"
+     * "Adherencia bajó del 70%"
+     * "¡7 días consecutivos! 🎉"
+   - Sugerencias de mejora
+   - Motivación personalizada
+
+8. **ACCIONES RÁPIDAS**
+   - Botones:
+     * Registrar comida de hoy
+     * Ver dieta asignada
+     * Contactar nutricionista
+     * Ajustar recordatorios
+
+9. **DATOS MOCKEADOS**
+   - 30 días de datos de adherencia
+   - Variación realista (70-95%)
+   - Feedback del cliente simulado
+   - Tendencias de mejora
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente teal-green-lime para hero
+- Heatmap calendar colorido
+- Checkboxes animados con checkmark
+- Progress bars circulares
+- Gráficos con Recharts
+- Emojis para feedback
+- Badges de logros/streaks
+
+**NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta.
+
+---
+
+## 📋 PROMPT 10: Derivaciones a Nutrición
+
+Transforma completamente la página de Derivaciones a Nutrición (src/features/nutrition/nutrition/derivaciones-nutricion) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en `GUIA_ESTILOS_UI.md`
+- Crea un sistema de referidos a nutricionistas
+- Facilita la comunicación entre entrenadores y nutricionistas
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Derivaciones**
+   - Gradiente `from-indigo-600 via-blue-600 to-cyan-600`
+   - Título "Derivaciones a Nutrición"
+   - Descripción del sistema de referidos
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Derivaciones Realizadas
+   - Derivaciones Aceptadas
+   - Clientes en Seguimiento
+   - Nutricionistas Colaboradores
+   - Cards con glassmorphism
+
+3. **DERIVAR CLIENTE** (DerivarCliente)
+   - Formulario de derivación:
+     * Seleccionar cliente (búsqueda)
+     * Información del cliente:
+       - Objetivo
+       - Restricciones alimentarias
+       - Condiciones médicas
+       - Medicamentos
+     * Motivo de derivación (textarea)
+     * Urgencia (Normal, Alta, Urgente)
+     * Nutricionista sugerido (dropdown)
+     * Documentos adjuntos (upload)
+   - Preview de derivación
+   - Botón "Enviar derivación"
+
+4. **DIRECTORIO DE NUTRICIONISTAS** (NutricionistasDirectorio)
+   - Grid de nutricionistas colaboradores:
+     * Avatar grande
+     * Nombre y credenciales
+     * Especialidades (badges)
+     * Rating (estrellas)
+     * Disponibilidad
+     * Botón "Ver perfil"
+     * Botón "Derivar cliente"
+   - Filtros:
+     * Por especialidad
+     * Por disponibilidad
+     * Por ubicación
+
+5. **LISTA DE DERIVACIONES** (DerivacionesLista)
+   - Tabla/Cards de derivaciones:
+     * Cliente derivado
+     * Nutricionista asignado
+     * Fecha de derivación
+     * Estado (Pendiente, Aceptada, En proceso, Completada)
+     * Urgencia (badge colorido)
+     * Última actualización
+     * Acciones: Ver detalles, Seguimiento
+   - Filtros por estado
+   - Ordenar por fecha, urgencia
+
+6. **MODAL DE DETALLES DE DERIVACIÓN**
+   - Información completa:
+     * Datos del cliente
+     * Motivo de derivación
+     * Nutricionista asignado
+     * Estado actual
+     * Timeline de acciones:
+       - Derivación enviada
+       - Aceptada por nutricionista
+       - Primera consulta agendada
+       - Plan nutricional creado
+       - etc.
+     * Notas compartidas (entrenador ↔ nutricionista)
+     * Documentos compartidos
+
+7. **SEGUIMIENTO DE DERIVACIÓN** (SeguimientoDerivar)
+   - Panel de seguimiento:
+     * Estado actual del cliente
+     * Plan nutricional asignado (resumen)
+     * Progreso del cliente (peso, adherencia)
+     * Comunicación con nutricionista:
+       - Chat o notas compartidas
+       - Actualizaciones del caso
+     * Próxima revisión programada
+   - Botón "Solicitar actualización"
+
+8. **PERFIL DE NUTRICIONISTA**
+   - Modal con información detallada:
+     * Avatar grande
+     * Nombre completo y credenciales
+     * Bio profesional
+     * Especialidades y certificaciones
+     * Años de experiencia
+     * Rating y reviews
+     * Clientes derivados exitosamente
+     * Tarifas (si aplica)
+     * Horarios de disponibilidad
+     * Información de contacto
+   - Botones: Derivar cliente, Contactar
+
+9. **COMUNICACIÓN**
+   - Sistema de mensajería:
+     * Chat con nutricionista
+     * Notificaciones de actualizaciones
+     * Compartir documentos
+     * Videoconferencia (link)
+
+10. **DATOS MOCKEADOS**
+    - 5-10 nutricionistas en directorio
+    - 15-20 derivaciones con estados variados
+    - Timeline de seguimiento por derivación
+    - Mensajes de comunicación simulados
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente indigo-blue-cyan para hero
+- Cards de nutricionistas con avatares grandes
+- Timeline de seguimiento con línea conectora
+- Badges de estado coloridos (pendiente, aceptada, etc.)
+- Chat/mensajería estilizado
+- Modal de perfil amplio
+- Upload zone para documentos
+
+**NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta.
+
+---
+
+# 📝 NOTAS GENERALES PARA TODOS LOS PROMPTS
+
+## ⚠️ IMPORTANTE:
+1. **SIEMPRE** revisar `GUIA_ESTILOS_UI.md` antes de empezar
+2. **NO CREAR NUEVOS ARCHIVOS** - Solo editar existentes
+3. Usar **TypeScript** correctamente
+4. Implementar **framer-motion** para animaciones
+5. Incluir **Lucide React** para iconos
+6. Datos **mockeados realistas**
+7. **Responsive** completo (mobile-first)
+8. **Código limpio** y bien comentado
+
+## Checklist de Estilización:
+- [ ] `rounded-3xl` para cards principales
+- [ ] `bg-white/80 backdrop-blur-xl` para glassmorphism
+- [ ] `border border-white/50` para definición
+- [ ] Gradientes de 3 colores en headers
+- [ ] Patrones sutiles (dots/grid) en backgrounds
+- [ ] Animaciones de entrada con framer-motion
+- [ ] `whileHover` para interactividad
+- [ ] `shadow-xl` y `hover:shadow-2xl`
+- [ ] Iconos en contenedores con backdrop blur
+- [ ] Progress bars con gradientes animados
+
+## Paleta de Colores Principales:
+- **Green/Emerald/Teal**: Plantillas de dietas (natural, saludable)
+- **Lime/Green/Emerald**: Listado de dietas (energía, vida)
+- **Amber/Orange/Red**: Nueva dieta (creación, calor)
+- **Yellow/Amber/Orange**: Editar dieta (ajuste, refinamiento)
+- **Pink/Rose/Red**: Recetas biblioteca (pasión, sabor)
+- **Purple/Pink/Rose**: Nueva receta (creatividad)
+- **Fuchsia/Pink/Rose**: Editar receta (perfeccionamiento)
+- **Cyan/Blue/Indigo**: Calculadoras (precisión, ciencia)
+- **Teal/Green/Lime**: Adherencia (seguimiento, progreso)
+- **Indigo/Blue/Cyan**: Derivaciones (colaboración, profesional)
+
+---
+
+**Versión:** 1.0
+**Fecha:** Diciembre 2024
+**Sistema de Diseño:** Moderno con Glassmorphism
+**Área:** Nutrition Features

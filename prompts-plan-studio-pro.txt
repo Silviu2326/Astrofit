@@ -1,0 +1,780 @@
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+=== FASE 1: PROMPTS BÁSICOS (1-16) - CREAR ESTRUCTURAS ===
+
+PROMPT 1 - BÁSICO: Gestión de Clases - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/gestion-clases/ y ESCRIBE estos archivos:
+
+1. CalendarioClasesPage.tsx - Página principal con layout básico
+2. calendarioClasesApi.ts - API con datos mock simples (10 clases)
+3. components/CalendarioSemanal.tsx - Vista semanal básica con grid
+4. components/TarjetaClase.tsx - Tarjeta simple con info básica
+5. components/FiltroCategorias.tsx - Filtro básico por tipo de clase
+
+FUNCIONALIDADES BÁSICAS:
+- Vista semanal con 7 columnas
+- Tarjetas con: nombre, hora, instructor, capacidad
+- 4 colores base: fuerza (rojo), cardio (azul), yoga (verde), funcional (naranja)
+- Filtro simple por categoría
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 2 - BÁSICO: Reservas de Clase - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/reservas-clase/ y ESCRIBE estos archivos:
+
+1. ReservasClasePage.tsx - Página principal con tabla simple
+2. reservasClaseApi.ts - API con datos mock de reservas
+3. components/TablaReservas.tsx - Tabla básica con reservas
+4. components/GestorAforo.tsx - Contador simple de capacidad
+5. components/ListaEspera.tsx - Lista básica de espera
+
+FUNCIONALIDADES BÁSICAS:
+- Tabla con: cliente, clase, estado (confirmado/espera/cancelado)
+- Contador de capacidad actual vs máxima
+- Lista de espera simple
+- Estados visuales básicos con colores
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 3 - BÁSICO: Gestión de Coaches - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/gestion-coach/ y ESCRIBE estos archivos:
+
+1. GestionCoachPage.tsx - Página principal con grid de coaches
+2. gestionCoachApi.ts - API con datos mock de 6 coaches
+3. components/PanelEntrenadores.tsx - Grid básico con fotos y datos
+4. components/CalendarioDisponibilidad.tsx - Calendario simple semanal
+5. components/AsignacionClases.tsx - Lista básica de asignaciones
+
+FUNCIONALIDADES BÁSICAS:
+- Grid de coaches con foto, nombre, especialidad
+- Calendario semanal básico de disponibilidad
+- Lista simple de clases asignadas
+- Estados: disponible, ocupado, libre
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 4 - BÁSICO: Reportes de Asistencia - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/reportes-asistencia/ y ESCRIBE estos archivos:
+
+1. ReportesAsistenciaPage.tsx - Dashboard básico con métricas
+2. reportesAsistenciaApi.ts - API con datos mock de asistencia
+3. components/DashboardAsistencia.tsx - Panel con números básicos
+4. components/GraficoClases.tsx - Gráfico simple de barras
+5. components/RankingClientes.tsx - Lista básica top 10
+
+FUNCIONALIDADES BÁSICAS:
+- Dashboard con: total asistencias, % promedio, clases populares
+- Gráfico de barras simple con Chart.js
+- Ranking básico de clientes frecuentes
+- Datos mock realistas para la semana
+- TypeScript, React, TailwindCSS, Chart.js básico
+
+---
+
+PROMPT 5 - BÁSICO: WOD del Día - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/wod-dia/ y ESCRIBE estos archivos:
+
+1. WodDiaPage.tsx - Página principal estilo pizarra
+2. wodDiaApi.ts - API con datos mock de WODs
+3. components/PizarraDigital.tsx - Visualización básica del WOD
+4. components/EditorWod.tsx - Editor simple de texto
+5. components/VistaPrevia.tsx - Preview básico del WOD
+
+FUNCIONALIDADES BÁSICAS:
+- Pizarra digital con fondo oscuro estilo chalkboard
+- Editor de texto simple para crear WODs
+- Vista previa básica del WOD del día
+- 3 plantillas básicas: AMRAP, For Time, EMOM
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 6 - BÁSICO: Leaderboard - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/leaderboard/ y ESCRIBE estos archivos:
+
+1. LeaderboardPage.tsx - Página tipo marcador deportivo
+2. leaderboardApi.ts - API con datos mock de resultados
+3. components/TablaResultados.tsx - Tabla básica de ranking
+4. components/MedallasDigitales.tsx - Iconos simples de medallas
+5. components/FiltrosCompetencia.tsx - Filtros básicos
+
+FUNCIONALIDADES BÁSICAS:
+- Tabla de ranking con posición, nombre, resultado
+- Medallas oro/plata/bronce con iconos simples
+- Filtro básico por género y categoría
+- Datos mock de 20 atletas con resultados
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 7 - BÁSICO: Historial de Marcas - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/historial-marcas/ y ESCRIBE estos archivos:
+
+1. HistorialMarcasPage.tsx - Página principal con histórico
+2. historialMarcasApi.ts - API con datos mock de PRs
+3. components/GraficoEvolucion.tsx - Gráfico líneal básico
+4. components/TablaPRs.tsx - Tabla simple de records
+5. components/RegistroMarca.tsx - Formulario básico
+
+FUNCIONALIDADES BÁSICAS:
+- Gráfico de líneas simple con Chart.js
+- Tabla de PRs con fecha, ejercicio, marca
+- Formulario básico para registrar nueva marca
+- Datos mock de evolución por ejercicio
+- TypeScript, React, TailwindCSS, Chart.js básico
+
+---
+
+PROMPT 8 - BÁSICO: Escáner de Entrada - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/escaner-entrada/ y ESCRIBE estos archivos:
+
+1. EscanerEntradaPage.tsx - Página principal tipo escáner
+2. escanerEntradaApi.ts - API con simulación de QR
+3. components/LectorQR.tsx - Simulador básico de cámara
+4. components/FeedbackAcceso.tsx - Mensajes de resultado
+5. components/InfoCliente.tsx - Panel básico de info
+
+FUNCIONALIDADES BÁSICAS:
+- Simulador de escáner con botón "Simular QR"
+- Feedback básico: ✅ válido, ❌ inválido
+- Panel con info básica del cliente
+- Estados: acceso permitido, denegado, membresía vencida
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 9 - BÁSICO: Historial de Asistencias - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/historial-asistencias/ y ESCRIBE estos archivos:
+
+1. HistorialAsistenciasPage.tsx - Página con tabla de entradas
+2. historialAsistenciasApi.ts - API con datos mock de accesos
+3. components/TablaEntradas.tsx - Tabla básica cronológica
+4. components/FiltrosAvanzados.tsx - Filtros simples por fecha
+5. components/EstadisticasAcceso.tsx - Stats básicas
+
+FUNCIONALIDADES BÁSICAS:
+- Tabla cronológica: cliente, hora, clase
+- Filtro por fecha (hoy, ayer, semana)
+- Búsqueda simple por nombre
+- Estadísticas básicas: total entradas, pico de hora
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 10 - BÁSICO: Pases Virtuales - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/pases-virtuales/ y ESCRIBE estos archivos:
+
+1. PasesVirtualesPage.tsx - Página con tarjetas de bonos
+2. pasesVirtualesApi.ts - API con datos mock de bonos
+3. components/TarjetasDigitales.tsx - Tarjetas básicas tipo card
+4. components/ContadorSesiones.tsx - Contador simple
+5. components/AlertasBonos.tsx - Alertas básicas
+
+FUNCIONALIDADES BÁSICAS:
+- Tarjetas de bonos con tipo, sesiones restantes, vencimiento
+- Contador visual con barra de progreso simple
+- Alertas básicas cuando quedan ≤3 sesiones
+- Estados: activo, por vencer, vencido
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 11 - BÁSICO: Ventas Rápidas - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/ventas-rapidas/ y ESCRIBE estos archivos:
+
+1. VentasRapidasPage.tsx - Página tipo POS simple
+2. ventasRapidasApi.ts - API con catálogo de productos
+3. components/CuadriculaProductos.tsx - Grid básico de productos
+4. components/CarritoVenta.tsx - Carrito simple
+5. components/ProcesadorPago.tsx - Simulador de pago
+
+FUNCIONALIDADES BÁSICAS:
+- Grid de productos: agua, batidos, camisetas, suplementos
+- Carrito con cantidad y total
+- Botón "Cobrar" con simulación de pago
+- Productos con precio e imagen básica
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 12 - BÁSICO: Tickets Diarios - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/tickets-diarios/ y ESCRIBE estos archivos:
+
+1. TicketsDiariosPage.tsx - Página con lista de tickets
+2. ticketsDiariosApi.ts - API con datos mock de ventas
+3. components/TablaTransacciones.tsx - Tabla básica de ventas
+4. components/ResumenVentas.tsx - Resumen simple
+5. components/FiltroPeriodo.tsx - Filtro por días
+
+FUNCIONALIDADES BÁSICAS:
+- Tabla de transacciones: hora, producto, cantidad, total
+- Estados: pagado, pendiente, cancelado
+- Resumen con total del día
+- Filtro por día: hoy, ayer, semana
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 13 - BÁSICO: Caja Diaria - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/caja-diaria/ y ESCRIBE estos archivos:
+
+1. CajaDiariaPage.tsx - Dashboard de ingresos diarios
+2. cajaDiariaApi.ts - API con datos mock de caja
+3. components/DashboardIngresos.tsx - Panel con totales
+4. components/GraficoMediosPago.tsx - Gráfico circular básico
+5. components/ProcesoCierre.tsx - Proceso simple de cierre
+
+FUNCIONALIDADES BÁSICAS:
+- Dashboard con ingresos totales del día
+- Desglose: clases + productos
+- Gráfico circular: efectivo vs tarjeta
+- Proceso de cierre básico con validación
+- TypeScript, React, TailwindCSS, Chart.js básico
+
+---
+
+PROMPT 14 - BÁSICO: Listado de Pases - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/listado-pases/ y ESCRIBE estos archivos:
+
+1. ListadoPasesPage.tsx - Página con lista de membresías
+2. listadoPasesApi.ts - API con datos mock de pases
+3. components/TarjetasBonos.tsx - Tarjetas básicas de bonos
+4. components/BarrasProgreso.tsx - Barras de uso
+5. components/FiltroEstados.tsx - Filtro por estado
+
+FUNCIONALIDADES BÁSICAS:
+- Lista de bonos: 10 sesiones, mensual, trimestral
+- Tarjetas con cliente, tipo, progreso
+- Barras de progreso de uso
+- Filtro por estado: activo, vencido, pausado
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 15 - BÁSICO: Crear Contrato - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/crear-contrato/ y ESCRIBE estos archivos:
+
+1. CrearContratoPage.tsx - Página editor de contratos
+2. crearContratoApi.ts - API con plantillas básicas
+3. components/EditorContrato.tsx - Editor de texto simple
+4. components/PlantillasContrato.tsx - Selector de plantillas
+5. components/FirmaDigital.tsx - Simulador de firma
+
+FUNCIONALIDADES BÁSICAS:
+- Editor de texto para contrato
+- 3 plantillas básicas: mensual, trimestral, anual
+- Campos auto-completados: nombre, documento
+- Simulador de firma digital con canvas básico
+- TypeScript, React, TailwindCSS básico
+
+---
+
+PROMPT 16 - BÁSICO: Renovaciones - Estructura Base
+
+Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/renovaciones/ y ESCRIBE estos archivos:
+
+1. RenovacionesPage.tsx - Página de vencimientos
+2. renovacionesApi.ts - API con datos mock de renovaciones
+3. components/AlertasVencimiento.tsx - Lista de alertas
+4. components/ProcesoRenovacion.tsx - Proceso básico
+5. components/HistorialRenovaciones.tsx - Historial simple
+
+FUNCIONALIDADES BÁSICAS:
+- Lista de contratos próximos a vencer
+- Alertas por colores: amarillo (30d), naranja (15d), rojo (7d)
+- Proceso básico de renovación en un clic
+- Historial simple de renovaciones pasadas
+- TypeScript, React, TailwindCSS básico
+
+---
+
+=== FASE 2: PROMPTS AVANZADOS (17-32) - COMPLETAR Y MEJORAR ===
+
+PROMPT 17 - AVANZADO: Gestión de Clases - Funcionalidades Premium
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/gestion-clases/ añadiendo estos archivos:
+
+6. components/DragDropCalendario.tsx - Sistema drag & drop para horarios
+7. components/VistaResponsive.tsx - Vista móvil optimizada
+8. components/EstadosAvanzados.tsx - Estados visuales mejorados
+9. components/WebSocketManager.tsx - Conexión tiempo real
+10. components/SistemaNotificaciones.tsx - Push notifications
+11. components/FiltrosAvanzados.tsx - Filtros por instructor/intensidad
+12. components/VistaDiaria.tsx - Timeline diario detallado
+13. components/GestorRecurrentes.tsx - Clases recurrentes
+14. components/WaitlistAutomatico.tsx - Lista de espera automática
+15. components/MetricasTiempoReal.tsx - Analytics en vivo
+
+NUEVAS FUNCIONALIDADES:
+- Drag & drop para reasignar horarios y coaches (react-dnd)
+- Vista responsive móvil con scroll horizontal
+- Estados visuales avanzados: clase llena (rojo), disponible (verde), cancelada (gris)
+- Integración tiempo real con WebSocket simulado
+- Notificaciones push cuando se liberan cupos
+- Filtros avanzados: por instructor, horario, nivel de intensidad
+- Modo vista diaria con timeline detallado
+- Gestión de clases recurrentes y excepciones
+- Sistema de waitlist automático por clase
+- Métricas en tiempo real: ocupación promedio, tendencias
+
+MEJORAS UX/UI:
+- Animaciones CSS para transiciones suaves
+- Loading skeletons para mejor percepción
+- Tooltips informativos en hover
+- Temas claro/oscuro
+- Atajos de teclado para navegación rápida
+- Exportación de horarios a PDF/iCal
+
+ACTUALIZA TAMBIÉN:
+- CalendarioClasesPage.tsx - Integrar nuevos componentes
+- calendarioClasesApi.ts - Añadir endpoints avanzados
+
+---
+
+PROMPT 18 - AVANZADO: Reservas de Clase - Sistema Inteligente
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/reservas-clase/ añadiendo estos archivos:
+
+6. components/CheckinGeolocalizacion.tsx - Check-in automático con GPS
+7. components/SistemaPenalizaciones.tsx - Gestión de no-shows
+8. components/ReservasAutomaticas.tsx - IA para reservas recurrentes
+9. components/NotificacionesMulticanal.tsx - Email/SMS/Push/WhatsApp
+10. components/SistemaCreditosDebitos.tsx - Gestión automática de créditos
+11. components/IntegracionCalendarios.tsx - Google/Outlook sync
+12. components/ReservasFamiliares.tsx - Reservas grupales
+13. components/ReviewsPostClase.tsx - Sistema de calificaciones
+14. components/PrediccionDemanda.tsx - IA predictiva
+15. components/PoliticasCancelacion.tsx - Reglas flexibles
+
+NUEVAS FUNCIONALIDADES:
+- Check-in automático con geolocalización
+- Sistema de penalizaciones por no-shows
+- Reservas automáticas basadas en historial del cliente
+- Notificaciones multicanal: email, SMS, push, WhatsApp
+- Sistema de créditos y débitos automático
+- Integración con calendario personal (Google/Outlook)
+- Reservas familiares y grupales
+- Sistema de reviews post-clase
+- Predicción de demanda con IA mock
+- Gestión de cancelaciones con políticas flexibles
+
+MEJORAS UX/UI:
+- Chat en vivo para soporte de reservas
+- Onboarding interactivo para nuevos usuarios
+- Dashboards personalizados por tipo de cliente
+- Modo offline con sincronización posterior
+- Accessibility completo (WCAG 2.1)
+- Animaciones de feedback inmediato
+
+ACTUALIZA TAMBIÉN:
+- ReservasClasePage.tsx - Integrar nuevos componentes
+- reservasClaseApi.ts - Añadir endpoints inteligentes
+
+---
+
+PROMPT 19 - AVANZADO: Gestión de Coaches - Staff Manager Pro
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/gestion-coach/ añadiendo estos archivos:
+
+6. components/Evaluaciones360.tsx - Sistema de evaluaciones completo
+7. components/GestorSustituciones.tsx - Algoritmo de reemplazos
+8. components/TrackingHoras.tsx - Control de horas y compensaciones
+9. components/SistemaKPIs.tsx - Metas y objetivos por entrenador
+10. components/PlanificadorVacaciones.tsx - Gestión de ausencias
+11. components/CertificacionesLicencias.tsx - Renovaciones automáticas
+12. components/SistemaMentoring.tsx - Junior-senior coaching
+13. components/IntegracionNomina.tsx - Conexión con pagos
+14. components/AnalisisRentabilidad.tsx - ROI por entrenador
+15. components/SistemaBonus.tsx - Incentivos por performance
+
+NUEVAS FUNCIONALIDADES:
+- Sistema de evaluaciones 360° (clientes + management)
+- Gestión automática de sustituciones con algoritmo
+- Tracking de horas extra y compensaciones
+- Sistema de metas y KPIs por entrenador
+- Planificación de vacaciones y ausencias
+- Certificaciones y renovaciones de licencias
+- Sistema de mentoring junior-senior coaches
+- Integración con nómina y pagos
+- Análisis de rentabilidad por entrenador
+- Sistema de bonus por performance
+
+MEJORAS UX/UI:
+- Dashboard personalizado por coach
+- Calendario compartido entre staff
+- Sistema de mensajería interna
+- Reportes automáticos de performance
+- Gamificación con badges y logros
+- App móvil específica para coaches
+
+ACTUALIZA TAMBIÉN:
+- GestionCoachPage.tsx - Integrar sistema profesional
+- gestionCoachApi.ts - Añadir endpoints de gestión avanzada
+
+---
+
+PROMPT 20 - AVANZADO: Reportes de Asistencia - Analytics BI
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/reportes-asistencia/ añadiendo estos archivos:
+
+6. components/DashboardInteractivo.tsx - Dashboards con drill-down
+7. components/AnalisisPredictivo.tsx - Predicción de abandonos con ML
+8. components/SegmentacionClientes.tsx - Análisis avanzado de segmentos
+9. components/ComparativaCompetencia.tsx - Benchmarking sector
+10. components/ROIMarketing.tsx - Retorno por canal de marketing
+11. components/LifetimeValue.tsx - Análisis LTV por cliente
+12. components/MapasCalor.tsx - Ocupación por zonas del gym
+13. components/ForecastingDemanda.tsx - Predicción estacional
+14. components/AlertasInteligentes.tsx - Notificaciones automáticas
+15. components/IntegracionAnalytics.tsx - Conexión Google Analytics
+
+ACTUALIZA TAMBIÉN:
+- ReportesAsistenciaPage.tsx - Integrar dashboards BI
+- reportesAsistenciaApi.ts - Endpoints de analytics avanzados
+
+---
+
+PROMPT 21 - AVANZADO: WOD del Día - Plataforma Completa
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/wod-dia/ añadiendo estos archivos:
+
+6. components/IASugerencias.tsx - IA que sugiere WODs por historial
+7. components/BibliotecaEjercicios.tsx - 500+ ejercicios con videos
+8. components/EscalamientoAutomatico.tsx - Adaptación por nivel
+9. components/ComentariosRatings.tsx - Sistema de reviews de WODs
+10. components/IntegracionWearables.tsx - Conexión dispositivos (simulado)
+11. components/ChallengesSemanales.tsx - Retos periódicos
+12. components/ProgresionDificultad.tsx - Aumento automático intensidad
+13. components/WODsColaborativos.tsx - Entrenamientos inter-gimnasios
+14. components/SistemaBadges.tsx - Logros por completar WODs
+15. components/AnalisisPatrones.tsx - Patterns de entrenamiento
+16. components/EditorDragDrop.tsx - Constructor visual de WODs
+17. components/Vista3D.tsx - Visualización 3D ejercicios
+18. components/TimerMotivacional.tsx - Cronómetro con audio
+19. components/CompartirSocial.tsx - Share en redes sociales
+20. components/ModoCoach.tsx - Broadcasting en vivo
+21. components/RealidadAumentada.tsx - AR para demostraciones
+
+ACTUALIZA TAMBIÉN:
+- WODDiaPage.tsx - Integrar plataforma completa
+- wodDiaApi.ts - Endpoints de funcionalidades avanzadas
+
+---
+
+PROMPT 22 - AVANZADO: Leaderboard - Competencia Global
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/leaderboard/ añadiendo estos archivos:
+
+6. components/LigasDivisiones.tsx - Sistema automático de ligas por nivel
+7. components/CompetenciasInterGyms.tsx - Torneos entre gimnasios
+8. components/SistemaHandicap.tsx - Equidad en competencias
+9. components/TorneosBracket.tsx - Brackets automáticos estilo torneo
+10. components/StreamingVivo.tsx - Transmisión en vivo simulada
+11. components/ApuestasVirtuales.tsx - Sistema de créditos y apuestas
+12. components/RankingsHistoricos.tsx - Records históricos all-time
+13. components/CompetenciasGrupales.tsx - Equipos y challenges grupales
+14. components/IntegracionFederaciones.tsx - Conexión deportiva oficial
+15. components/APIPublica.tsx - Endpoints para desarrolladores
+16. components/EfectosCelebracion.tsx - Animaciones de victoria
+17. components/ComentariosTiempoReal.tsx - Chat estilo Twitch
+18. components/PerfilesAtletas.tsx - Biografías detalladas
+19. components/GaleriaFotos.tsx - Álbum de competencias
+20. components/SistemaFans.tsx - Seguidores y fans
+21. components/TransmisionMultiCamara.tsx - Múltiples ángulos streaming
+
+ACTUALIZA TAMBIÉN:
+- LeaderboardPage.tsx - Integrar competencia global
+- leaderboardApi.ts - Endpoints de competencias avanzadas
+
+---
+
+PROMPT 23 - AVANZADO: Historial de Marcas - Performance Tracker
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/historial-marcas/ añadiendo estos archivos:
+
+6. components/IAPredictiva.tsx - IA para predecir próximos PRs
+7. components/AnalisisBiomecanico.tsx - Análisis biomecánico simulado
+8. components/ComparativasElite.tsx - Comparación con atletas élite
+9. components/CoachingVirtual.tsx - Recomendaciones automáticas
+10. components/TrackingLesiones.tsx - Seguimiento lesiones y recuperación
+11. components/IntegracionNutricion.tsx - Conexión nutrición y sueño
+12. components/PeriodizacionAutomatica.tsx - Planificación entrenamientos
+13. components/AnalisisFatiga.tsx - Detección overtraining
+14. components/MetasSMART.tsx - Sistema metas automatizado
+15. components/CorrelacionesMetricas.tsx - Análisis entre métricas
+16. components/GraficosMultiVariable.tsx - Charts avanzados
+17. components/HeatmapsPerformance.tsx - Mapas calor por período
+18. components/PrediccionesVisuales.tsx - Predicciones con intervalos
+19. components/ComparadorAtletas.tsx - Comparación lado a lado
+20. components/CelebracionesPersonalizadas.tsx - Logros customizados
+21. components/SharingMilestones.tsx - Compartir automático logros
+
+ACTUALIZA TAMBIÉN:
+- HistorialMarcasPage.tsx - Integrar performance tracker
+- historialMarcasApi.ts - Endpoints de tracking avanzado
+
+---
+
+PROMPT 24 - AVANZADO: Escáner de Entrada - Sistema Biométrico
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/escaner-entrada/ añadiendo estos archivos:
+
+6. components/ReconocimientoFacial.tsx - IA facial simulada
+7. components/SistemaMultiModal.tsx - QR + facial + huella + RFID
+8. components/AntiFraude.tsx - Machine learning anti-fraude
+9. components/IntegracionCamaras.tsx - Cámaras de seguridad
+10. components/ControlAforo.tsx - Semáforos automáticos de aforo
+11. components/AlertasSeguridad.tsx - Detección personas no autorizadas
+12. components/SistemaInvitados.tsx - Acceso temporal de invitados
+13. components/ControlTemperatura.tsx - Integración termómetros
+14. components/LogsForenses.tsx - Auditorías y trazabilidad
+15. components/APIExterna.tsx - Integración sistemas terceros
+16. components/InterfazFuturista.tsx - UI estilo sci-fi scanner
+17. components/FeedbackHaptico.tsx - Vibraciones simuladas
+18. components/MultiIdioma.tsx - Detección automática idioma
+19. components/ModoAccesibilidad.tsx - Adaptación discapacidades
+20. components/DashboardMonitoreo.tsx - Control tiempo real
+21. components/AlertasPushSeguridad.tsx - Notificaciones staff
+
+ACTUALIZA TAMBIÉN:
+- EscanerEntradaPage.tsx - Integrar sistema biométrico
+- escanerEntradaApi.ts - Endpoints de seguridad avanzada
+
+---
+
+PROMPT 25 - AVANZADO: Historial de Asistencias - Big Data Analytics
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/historial-asistencias/ añadiendo estos archivos:
+
+6. components/MLPrediccionAusencias.tsx - Machine Learning ausencias
+7. components/PatronesEstacionales.tsx - Análisis estacionales complejos
+8. components/CorrelacionesExternas.tsx - Factores clima/eventos
+9. components/SegmentacionComportamientos.tsx - Segmentación automática
+10. components/RecomendacionesPersonalizadas.tsx - Sistema recomendaciones
+11. components/AnalisisSentiment.tsx - Sentiment de experiencia
+12. components/PrediccionChurn.tsx - Early warnings abandono
+13. components/OptimizacionHorarios.tsx - Optimización automática horarios
+14. components/ABTestingPoliticas.tsx - Testing políticas gimnasio
+15. components/DataWarehouse.tsx - Almacén datos históricos
+16. components/DashboardTiempoReal.tsx - Dashboards auto-refresh
+17. components/VisualizacionesInteractivas.tsx - Charts filtros dinámicos
+18. components/MapasCalorAnimados.tsx - Heatmaps temporales
+19. components/ExportacionBI.tsx - Export herramientas BI externas
+20. components/AlertasInteligentes.tsx - Alertas con contexto
+21. components/StorytellingDatos.tsx - Narrativa automática datos
+
+ACTUALIZA TAMBIÉN:
+- HistorialAsistenciasPage.tsx - Integrar big data analytics
+- historialAsistenciasApi.ts - Endpoints de análisis avanzado
+
+---
+
+PROMPT 26 - AVANZADO: Pases Virtuales - Blockchain & NFTs
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/pases-virtuales/ añadiendo estos archivos:
+
+6. components/MembresiasNFT.tsx - NFTs con beneficios únicos
+7. components/IntercambioP2P.tsx - Intercambio sesiones P2P
+8. components/TokensLealtad.tsx - Programa lealtad tokens virtuales
+9. components/SmartContracts.tsx - Auto-renovación smart contracts
+10. components/MarketplacePremium.tsx - Marketplace membresías premium
+11. components/ReferidosCripto.tsx - Referidos criptomonedas virtuales
+12. components/MembresiasCompartidas.tsx - Membresías familiares
+13. components/SegurosCancelacion.tsx - Seguros automáticos
+14. components/HerenciasMembresías.tsx - Sistema herencias
+15. components/WalletsDigitales.tsx - Integración wallets simuladas
+16. components/WalletIntegrado.tsx - Wallet app integrado
+17. components/Visualizaciones3D.tsx - NFTs 3D membresía
+18. components/TradingSimulator.tsx - Simulador intercambios
+19. components/ColeccionablesDigitales.tsx - Gamificación coleccionables
+20. components/RealidadAumentadaBeneficios.tsx - AR visualizar beneficios
+21. components/SocialTrading.tsx - Trading social entre miembros
+
+ACTUALIZA TAMBIÉN:
+- PasesVirtualesPage.tsx - Integrar blockchain y NFTs
+- pasesVirtualesApi.ts - Endpoints blockchain simulado
+
+---
+
+PROMPT 27 - AVANZADO: Ventas Rápidas - E-commerce Integrado
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/ventas-rapidas/ añadiendo estos archivos:
+
+6. components/CatalogoOnline.tsx - Catálogo con reserva y pickup
+7. components/InventarioTiempoReal.tsx - Inventario multi-ubicación
+8. components/ProgramaAfiliados.tsx - Sistema afiliados automático
+9. components/UpsellingInteligente.tsx - Upselling basado ML
+10. components/SuscripcionesRecurrentes.tsx - Sistema suscripciones
+11. components/IntegracionProveedores.tsx - Dropshipping proveedores
+12. components/CashbackPuntos.tsx - Cashback y programa puntos
+13. components/ReviewsRatings.tsx - Reviews y ratings productos
+14. components/ChatbotRecomendaciones.tsx - Chatbot productos
+15. components/MarketplaceCoaches.tsx - Marketplace coaches
+16. components/RealidadAumentadaPruebas.tsx - AR probar productos
+17. components/BusquedaVisual.tsx - Búsqueda por imagen
+18. components/WishlistCompartida.tsx - Wishlist y gifting
+19. components/OneClickCheckout.tsx - Checkout biométrico
+20. components/LiveShoppingSessions.tsx - Sesiones shopping vivo
+21. components/SocialCommerceInfluencers.tsx - Commerce influencers
+
+ACTUALIZA TAMBIÉN:
+- VentasRapidasPage.tsx - Integrar e-commerce completo
+- ventasRapidasApi.ts - Endpoints e-commerce avanzado
+
+---
+
+PROMPT 28 - AVANZADO: Tickets Diarios - Contabilidad Inteligente
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/tickets-diarios/ añadiendo estos archivos:
+
+6. components/IntegracionSoftwareContable.tsx - Integración directa contable
+7. components/FacturacionElectronica.tsx - Facturación automática
+8. components/ConciliacionBancaria.tsx - Conciliación automática
+9. components/CategorizacionInteligente.tsx - Categorización gastos ML
+10. components/ReportesFiscales.tsx - Reportes fiscales automáticos
+11. components/DeteccionFraudes.tsx - Detección fraudes ML
+12. components/AprobacionesMultinivel.tsx - Sistema aprobaciones
+13. components/AuditoriaTrail.tsx - Trail completa inmutable
+14. components/ForecastingCashFlow.tsx - Forecasting flujo caja
+15. components/IntegracionBancos.tsx - Open Banking integración
+16. components/DashboardCFO.tsx - Dashboard KPIs financieros
+17. components/AlertasAnomalias.tsx - Alertas anomalías contables
+18. components/ReportesStakeholders.tsx - Reportes automáticos
+19. components/ModoContador.tsx - Vistas especializadas contador
+20. components/ExportacionFormatos.tsx - Export formatos contables
+21. components/WizardsConfiguracion.tsx - Configuración fiscal
+
+ACTUALIZA TAMBIÉN:
+- TicketsDiariosPage.tsx - Integrar contabilidad inteligente
+- ticketsDiariosApi.ts - Endpoints contabilidad automatizada
+
+---
+
+PROMPT 29 - AVANZADO: Caja Diaria - Financial Command Center
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/caja-diaria/ añadiendo estos archivos:
+
+6. components/TradingSimulator.tsx - Trading simulator inversiones
+7. components/AnalisisMargenesProducto.tsx - Análisis márgenes producto/servicio
+8. components/OptimizacionPreciosIA.tsx - Optimización precios IA
+9. components/BudgetsForecasting.tsx - Budgets y forecasting avanzado
+10. components/AnalisisCompetencia.tsx - Análisis competencia automatizado
+11. components/ROICalculator.tsx - ROI calculator inversiones
+12. components/AlertasFinancieras.tsx - Alertas financieras inteligentes
+13. components/IntegracionMercados.tsx - Integración mercados financieros
+14. components/MultiCurrency.tsx - Multi-currency expansión
+15. components/BlockchainTransparencia.tsx - Transparencia blockchain
+16. components/CommandCenterNASA.tsx - Command center estilo NASA
+17. components/GraficosFinancierosReal.tsx - Gráficos tiempo real
+18. components/AlertasCriticas.tsx - Alertas escalación automática
+19. components/ModoCEO.tsx - Modo CEO executive summary
+20. components/AssistantVoz.tsx - Integración assistant voz
+21. components/RealidadVirtualDatos.tsx - VR inmersión datos
+
+ACTUALIZA TAMBIÉN:
+- CajaDiariaPage.tsx - Integrar financial command center
+- cajaDiariaApi.ts - Endpoints centro comando financiero
+
+---
+
+PROMPT 30 - AVANZADO: Listado de Pases - CRM Avanzado
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/listado-pases/ añadiendo estos archivos:
+
+6. components/ScoringClientesML.tsx - Scoring automático clientes ML
+7. components/CampañasMarketingAutomatizadas.tsx - Campañas automatizadas
+8. components/SegmentacionDinamica.tsx - Segmentación tiempo real
+9. components/CustomerJourneyMapping.tsx - Journey mapping automático
+10. components/TicketsSoporte.tsx - Sistema tickets integrado
+11. components/NetPromoterScore.tsx - NPS automático
+12. components/SistemaWinBack.tsx - Win-back ex-clientes
+13. components/AnalisisSentiment.tsx - Sentiment comunicaciones
+14. components/IntegracionMarketing.tsx - Herramientas marketing
+15. components/ProgramaEmbajadores.tsx - Embajadores automatizado
+16. components/CustomerView360.tsx - Vista 360° timeline
+17. components/ComunicacionOmnicanal.tsx - Omnicanal interfaz
+18. components/AutomationBuilder.tsx - Constructor visual automation
+19. components/DashboardsPersonalizados.tsx - Dashboards por rol
+20. components/MobileCRM.tsx - CRM móvil staff
+21. components/VoiceNotesTranscripcion.tsx - Voice notes automáticas
+
+ACTUALIZA TAMBIÉN:
+- ListadoPasesPage.tsx - Integrar CRM avanzado
+- listadoPasesApi.ts - Endpoints CRM clase mundial
+
+---
+
+PROMPT 31 - AVANZADO: Crear Contrato - LegalTech Platform
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/crear-contrato/ añadiendo estos archivos:
+
+6. components/IAClausulasPersonalizadas.tsx - IA cláusulas personalizadas
+7. components/ESignaturesLegales.tsx - E-signatures validez legal
+8. components/BlockchainInmutabilidad.tsx - Blockchain contratos
+9. components/AnalisisRiesgosLegales.tsx - Análisis automático riesgos
+10. components/IntegracionBasesLegales.tsx - Bases datos legales
+11. components/VersioningInteligente.tsx - Versioning inteligente
+12. components/TraduccionMultiidioma.tsx - Traducción automática
+13. components/ComplianceRegulaciones.tsx - Compliance automático
+14. components/MediacionDisputas.tsx - Mediación automática disputas
+15. components/APILegal.tsx - API sistemas legales
+16. components/EditorColaborativo.tsx - Editor tiempo real
+17. components/ComentariosSugerencias.tsx - Comentarios automáticos
+18. components/TemplatesInteligentes.tsx - Templates adaptativos
+19. components/Preview3DContratos.tsx - Preview 3D firmados
+20. components/VaultDigital.tsx - Almacenamiento seguro
+21. components/NegotiationTracker.tsx - Tracker modificaciones
+
+ACTUALIZA TAMBIÉN:
+- CrearContratoPage.tsx - Integrar plataforma LegalTech
+- crearContratoApi.ts - Endpoints LegalTech avanzados
+
+---
+
+PROMPT 32 - AVANZADO: Renovaciones - Customer Success Platform
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/renovaciones/ añadiendo estos archivos:
+
+6. components/HealthScoresAutomaticos.tsx - Health scores automáticos cliente
+7. components/PlaybooksRetencion.tsx - Playbooks automatizados retención
+8. components/PrediccionChurn.tsx - Predicción churn 90% precisión
+9. components/OfertasPersonalizadas.tsx - Ofertas tiempo real
+10. components/EscalacionAutomatica.tsx - Sistema escalación automática
+11. components/CustomerAdvocacy.tsx - Customer advocacy automatizado
+12. components/AnalisisTouchpoints.tsx - Análisis touchpoints críticos
+13. components/SistemaRewards.tsx - Sistema rewards lealtad
+14. components/IntegracionExternalData.tsx - Integración datos externos
+15. components/RetentionOptimization.tsx - Optimización retención A/B
+16. components/CustomerSuccessCockpit.tsx - Customer success cockpit
+17. components/AutomatedWorkflowBuilder.tsx - Constructor workflow automático
+18. components/PredictiveAnalyticsDashboard.tsx - Dashboard analytics predictivo
+19. components/CommunicationTimeline.tsx - Timeline comunicación visual
+20. components/SuccessMilestoneCelebrations.tsx - Celebraciones milestones
+21. components/MobileFirstExperience.tsx - Experiencia mobile-first
+
+ACTUALIZA TAMBIÉN:
+- RenovacionesPage.tsx - Integrar customer success platform
+- renovacionesApi.ts - Endpoints customer success avanzados
+
+🎯 RESUMEN FINAL: 32 prompts totales
+📊 16 features × 2 prompts cada una
+🏗️ Fase 1: Estructura básica funcional
+🚀 Fase 2: Funcionalidades premium y avanzadas

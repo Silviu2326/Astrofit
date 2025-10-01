@@ -1,0 +1,7 @@
+﻿I have created and updated the following files:
+
+1.  `src/features/agente-entrenador/components/builder/ConstructorVisual.tsx`
+2.  `src/features/agente-entrenador/components/builder/BloquesEntrenamiento.tsx`
+3.  `src/features/agente-entrenador/components/builder/SuperseriesManager.tsx`
+
+These files implement the training builder components with features such as drag & drop, modular blocks, superseries editor with timers, real-time preview, estimated time calculation, and placeholders for muscle balance validation, predefined templates, and PDF export.

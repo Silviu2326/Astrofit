@@ -1,0 +1,42 @@
+/* EstadosAvanzados.css */
+.estados-avanzados {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.estados-avanzados-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.estados-avanzados-text {
+  white-space: nowrap;
+}
+
+/* Status variants */
+.estados-avanzados.confirmada {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.estados-avanzados.pendiente {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.estados-avanzados.cancelada {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.estados-avanzados.completa {
+  background-color: #dbeafe;
+  color: #1e40af;
+}

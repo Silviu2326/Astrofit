@@ -1,0 +1,7 @@
+﻿I have created the basic structure for the "Cuestionario Diario - Control de Wellness" module, including the specified files and folders:
+
+1.  `C:\Users\usuario\Documents\project-bolt-sb1-qekdxfwt\project\src\features\cuestionario-diario\CuestionarioDiarioPage.tsx`
+2.  `C:\Users\usuario\Documents\project-bolt-sb1-qekdxfwt\project\src\features\cuestionario-diario\cuestionarioDiarioApi.ts`
+3.  `C:\Users\usuario\Documents\project-bolt-sb1-qekdxfwt\project\src\features\cuestionario-diario\components\FormularioWellness.tsx`
+
+These files include the basic implementation as per your specifications, using TypeScript, React, and TailwindCSS, and are optimized for mobile devices.

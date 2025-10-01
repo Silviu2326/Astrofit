@@ -1,0 +1,1 @@
+﻿I have successfully created the basic structure for the "Comparador de Resultados - An├ílisis Entre Atletas" module, including the specified files and folders.

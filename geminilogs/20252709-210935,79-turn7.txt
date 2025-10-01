@@ -1,0 +1,26 @@
+﻿TIMEOUT: Prompt excediÃ³ 5 minutos de ejecuciÃ³n
+Prompt original:
+
+IMPORTANTE: Debes crear fÃ­sicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 7: Crear componentes de biblioteca de ejercicios
+
+Desarrolla los componentes para gestiÃ³n de ejercicios:
+
+1. src/features/agente-entrenador/components/library/BibliotecaEjercicios.tsx
+2. src/features/agente-entrenador/components/library/BancoVariantes.tsx (mejorar existente)
+3. src/features/agente-entrenador/components/library/FiltrosAvanzados.tsx
+
+ESPECIFICACIONES:
+- Biblioteca de ejercicios con mÃ¡s de 200 ejercicios predefinidos
+- Filtros avanzados por grupo muscular, equipamiento, dificultad
+- Sistema de variantes automÃ¡ticas para evitar monotonÃ­a
+- Buscador inteligente por mÃºsculo objetivo o equipamiento
+- Vista en grid con videos demostrativos (placeholders)
+- Sistema de favoritos personalizable por entrenador
+- CategorizaciÃ³n por modalidad (powerlifting, calistenia, funcional)
+- Banco de ejercicios correctivos y de rehabilitaciÃ³n
+- Algoritmo de sustituciÃ³n automÃ¡tica por lesiones
+- Base de datos local con ejercicios del sector fitness espaÃ±ol
+
+

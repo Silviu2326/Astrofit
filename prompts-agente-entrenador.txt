@@ -1,0 +1,259 @@
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 1: Crear la estructura base mejorada para el módulo Agente Entrenador
+
+Crea la carpeta src/features/agente-entrenador/ y organiza la estructura de archivos:
+
+```
+src/features/agente-entrenador/
+├── hooks/                           (Custom hooks para lógica compartida)
+│   ├── useWorkoutBuilder.ts
+│   ├── useProgressTracking.ts
+│   └── useExerciseLibrary.ts
+├── utils/                           (Utilidades y helpers)
+│   ├── workoutCalculations.ts
+│   ├── progressionAlgorithms.ts
+│   └── exerciseValidation.ts
+├── types/                           (Definiciones de tipos TypeScript)
+│   ├── workout.ts
+│   ├── exercise.ts
+│   └── progression.ts
+├── components/
+│   ├── builder/
+│   ├── progression/
+│   ├── library/
+│   ├── analytics/
+│   ├── templates/
+│   └── dashboard/
+```
+
+ESPECIFICACIONES:
+- TypeScript estricto con tipos bien definidos para entrenamientos
+- Estructura modular organizada por funcionalidad de entrenamiento
+- Custom hooks para lógica de construcción de rutinas
+- Utilidades para cálculos de volumen, intensidad y progresión
+- Tipos específicos para ejercicios, series, repeticiones y cargas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 2: Crear tipos TypeScript y utilidades base para entrenamientos
+
+Crea los archivos de tipos y utilidades fundamentales para el módulo:
+
+1. src/features/agente-entrenador/types/workout.ts
+2. src/features/agente-entrenador/types/exercise.ts
+3. src/features/agente-entrenador/types/progression.ts
+4. src/features/agente-entrenador/utils/workoutCalculations.ts
+5. src/features/agente-entrenador/utils/progressionAlgorithms.ts
+6. src/features/agente-entrenador/utils/exerciseValidation.ts
+
+ESPECIFICACIONES:
+- Interfaces completas para entrenamientos, ejercicios y progresiones
+- Enums para tipos de ejercicio (fuerza, cardio, movilidad, rehabilitación)
+- Funciones de cálculo para volumen de entrenamiento (series x reps x peso)
+- Algoritmos de progresión automática (lineal, ondulante, escalera)
+- Validadores para rangos de repeticiones, intensidades y frecuencias
+- Datos mock realistas del sector fitness con ejercicios populares
+- Tipado estricto con uniones de tipos para diferentes modalidades
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 3: Crear custom hooks para gestión de entrenamientos
+
+Crea los custom hooks para manejar la lógica del módulo:
+
+1. src/features/agente-entrenador/hooks/useWorkoutBuilder.ts
+2. src/features/agente-entrenador/hooks/useProgressTracking.ts
+3. src/features/agente-entrenador/hooks/useExerciseLibrary.ts
+
+ESPECIFICACIONES:
+- Hook para construcción de entrenamientos (drag & drop, bloques, superseries)
+- Hook para tracking de progreso (PRs, volumen acumulado, tendencias)
+- Hook para biblioteca de ejercicios (filtros, búsqueda, favoritos)
+- Estado local con React hooks optimizados para performance
+- Manejo de estados complejos de entrenamientos multi-día
+- Simulación de APIs con delays realistas para carga de datos
+- Cache inteligente para entrenamientos frecuentemente usados
+- Persistencia local para borradores de rutinas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 4: Actualizar la página principal con diseño moderno de entrenamiento
+
+Actualiza el archivo principal del módulo:
+
+1. src/features/agente-entrenador/AgenteEntrenadorPage.tsx
+
+ESPECIFICACIONES DE MEJORA:
+- Diseño moderno con tema fitness (colores intensos, gradientes deportivos)
+- Layout responsivo optimizado para construir entrenamientos
+- Paleta de colores energética (rojos, naranjas, azules intensos)
+- Iconografía específica de fitness con Lucide React
+- Cards con animaciones de entrada para diferentes secciones
+- Tipografía bold y deportiva para transmitir energía
+- Dashboard de métricas de entrenamiento en tiempo real
+- Header con accesos rápidos a funciones principales
+- Grid adaptativo para construcción visual de rutinas
+- Breadcrumbs especializados para navegación de entrenamientos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 5: Crear componentes del dashboard de entrenamiento
+
+Crea los componentes para el dashboard principal:
+
+1. src/features/agente-entrenador/components/dashboard/DashboardEntrenamiento.tsx
+2. src/features/agente-entrenador/components/dashboard/MetricasSemanales.tsx
+
+ESPECIFICACIONES:
+- Dashboard con métricas clave de entrenamiento en tiempo real
+- Cards de overview con estadísticas de volumen, intensidad, frecuencia
+- Gráficos de barras para volumen semanal por grupo muscular
+- Indicadores de progreso hacia objetivos de fuerza
+- Comparativas de rendimiento entre microciclos
+- Heat map de intensidad por día de la semana
+- Cronómetro integrado para descansos entre series
+- Calculadora rápida de 1RM y porcentajes
+- Notificaciones de récords personales alcanzados
+- Responsive design optimizado para uso en gimnasio (móvil)
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 6: Mejorar componentes de construcción de entrenamientos
+
+Actualiza y mejora los componentes de construcción:
+
+1. src/features/agente-entrenador/components/builder/ConstructorVisual.tsx (mejorar existente)
+2. src/features/agente-entrenador/components/builder/BloquesEntrenamiento.tsx
+3. src/features/agente-entrenador/components/builder/SuperseriesManager.tsx
+
+ESPECIFICACIONES:
+- Constructor visual con drag & drop de ejercicios a bloques
+- Sistema de bloques modulares (calentamiento, fuerza, cardio, cool-down)
+- Editor de superseries con temporizadores automáticos
+- Vista previa en tiempo real del entrenamiento completo
+- Calculadora automática de tiempo total estimado
+- Validador de equilibrio muscular en la sesión
+- Plantillas predefinidas por objetivo (fuerza, hipertrofia, resistencia)
+- Duplicador de bloques para rutinas repetitivas
+- Sistema de notas por ejercicio para técnica y modificaciones
+- Export del entrenamiento a PDF para imprimir
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 7: Crear componentes de biblioteca de ejercicios
+
+Desarrolla los componentes para gestión de ejercicios:
+
+1. src/features/agente-entrenador/components/library/BibliotecaEjercicios.tsx
+2. src/features/agente-entrenador/components/library/BancoVariantes.tsx (mejorar existente)
+3. src/features/agente-entrenador/components/library/FiltrosAvanzados.tsx
+
+ESPECIFICACIONES:
+- Biblioteca de ejercicios con más de 200 ejercicios predefinidos
+- Filtros avanzados por grupo muscular, equipamiento, dificultad
+- Sistema de variantes automáticas para evitar monotonía
+- Buscador inteligente por músculo objetivo o equipamiento
+- Vista en grid con videos demostrativos (placeholders)
+- Sistema de favoritos personalizable por entrenador
+- Categorización por modalidad (powerlifting, calistenia, funcional)
+- Banco de ejercicios correctivos y de rehabilitación
+- Algoritmo de sustitución automática por lesiones
+- Base de datos local con ejercicios del sector fitness español
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 8: Desarrollar componentes de progresión y analytics
+
+Crea los componentes para análisis y progresión:
+
+1. src/features/agente-entrenador/components/progression/TimelineProgresion.tsx (mejorar existente)
+2. src/features/agente-entrenador/components/analytics/AnalisisRendimiento.tsx
+3. src/features/agente-entrenador/components/analytics/PrediccionesIA.tsx
+
+ESPECIFICACIONES:
+- Timeline visual de progresión con hitos importantes
+- Análisis de rendimiento con gráficos de tendencias
+- Predicciones de IA para próximos PRs y plateaus
+- Comparativas de volumen entre mesociclos
+- Tracking automático de cargas por ejercicio principal
+- Identificación de desequilibrios musculares
+- Alertas de sobreentrenamiento por volumen excesivo
+- Recomendaciones automáticas de deload
+- Análisis de adherencia al plan programado
+- Exportación de datos para análisis externo
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 9: Crear componentes de plantillas y periodización
+
+Desarrolla los componentes para plantillas de entrenamiento:
+
+1. src/features/agente-entrenador/components/templates/PlantillasEntrenamiento.tsx
+2. src/features/agente-entrenador/components/templates/PeriodizacionAvanzada.tsx
+3. src/features/agente-entrenador/components/templates/MicrociclosManager.tsx
+
+ESPECIFICACIONES:
+- Biblioteca de plantillas por metodología (5/3/1, Westside, DUP)
+- Sistema de periodización con fases automáticas
+- Manager de microciclos con progresión inteligente
+- Plantillas específicas por deporte (powerlifting, crossfit, fitness)
+- Constructor de mesociclos con picos de intensidad
+- Sistema de deload automático cada 4-6 semanas
+- Adaptación automática por feedback del atleta
+- Plantillas para poblaciones especiales (principiantes, veteranos)
+- Integración con calendario para periodización anual
+- Simulador de competencias y peaks de rendimiento
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 10: Crear componentes de equilibrio y validación
+
+Finaliza con los componentes de análisis y validación:
+
+1. src/features/agente-entrenador/components/analytics/IndicadoresEquilibrio.tsx (mejorar existente)
+2. src/features/agente-entrenador/components/analytics/ValidadorRutinas.tsx
+3. src/features/agente-entrenador/agenteEntrenadorApi.ts (mejorar API)
+
+ESPECIFICACIONES:
+- Indicadores visuales de equilibrio muscular agonista/antagonista
+- Validador automático de rutinas por volumen y frecuencia
+- APIs mock con datos realistas de entrenamientos
+- Análisis de ratios de fuerza (sentadilla/peso muerto/press banca)
+- Detector de desequilibrios por lateralidad
+- Calculadora de fatiga acumulada por grupo muscular
+- Sistema de alertas por sobrecarga o subcarga
+- Recomendaciones automáticas de ejercicios correctivos
+- Dashboard de salud articular y movilidad
+- Integración con métricas de recuperación (HRV simulado)
+
+DATOS MOCK REALISTAS:
+- Ejercicios populares en gimnasios españoles
+- Progresiones típicas por nivel (principiante: +2.5kg/semana)
+- Ratios de fuerza estándar del powerlifting
+- Volúmenes semanales por grupo muscular (pecho: 12-20 series)
+- Frecuencias óptimas por músculo (2-3x por semana)
+- Ejercicios correctivos comunes (band pull-aparts, face pulls)
+- Plantillas de entrenadores reconocidos adaptadas
+- Datos de adherencia reales (70-80% cumplimiento medio)
+
+RESULTADO ESPERADO:
+Un módulo completo de Agente Entrenador profesional con todas las funcionalidades necesarias para construir, analizar y optimizar entrenamientos, con diseño moderno enfocado en fitness, UX excepcional para entrenadores y datos realistas del sector del entrenamiento personal.

@@ -1,0 +1,3 @@
+﻿Okay, I will create the complete structure for the CRM Notes module.
+
+First, I'll create the necessary directories.It seems the command failed. I'll create the directories individually to avoid issues.The path seems to be causing issues. I'll list the contents of the parent directory to verify the path.
