@@ -1,0 +1,11 @@
+﻿I have successfully created the complete structure for the "Referidos - Sistema de Recomendaciones" module, including all specified files and directories:
+
+1.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/referidos/referidosApi.ts`
+2.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/referidos/components/CodigosReferido.tsx`
+3.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/referidos/components/DescuentosBeneficios.tsx`
+4.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/referidos/components/ControlNuevosClientes.tsx`
+5.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/referidos/components/ProgramaRecompensas.tsx`
+6.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/referidos/components/EstadisticasReferidos.tsx`
+7.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/referidos/ReferidosPage.tsx`
+
+Each component includes mock data and adheres to the technical requirements of TypeScript, React, functional components with hooks, and TailwindCSS for styling.

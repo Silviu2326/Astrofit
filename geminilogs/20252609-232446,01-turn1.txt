@@ -1,0 +1,42 @@
+﻿Okay, I will create the complete structure for the "CRM - Client List" module. I'll start by creating the necessary directories and files.call:write_file{content:import React from 'react';
+
+const ClientesFilters: React.FC = () => {
+  return (
+    <div className="p-4 bg-gray-50 rounded-lg">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <input
+          type="text"
+          placeholder="Buscar por nombre..."
+          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+        />
+        <select className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+          <option value="">Todos los estados</option>
+          <option value="activo">Activo</option>
+          <option value="inactivo">Inactivo</option>
+        </select>
+        <select className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+          <option value="">Todas las etiquetas</option>
+          <option value="vip">VIP</option>
+          <option value="nuevo">Nuevo</option>
+          <option value="potencial">Potencial</option>
+        </select>
+        <input
+          type="date"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+        />
+      </div>
+      <div className="mt-4 flex items-center space-x-2">
+        <span className="text-sm font-medium text-gray-700">Vistas:</span>
+        <button className="px-3 py-1 text-sm text-white bg-indigo-600 rounded-full hover:bg-indigo-700">
+          Clientes activos online
+        </button>
+        <button className="px-3 py-1 text-sm text-gray-700 bg-gray-200 rounded-full hover:bg-gray-300">
+          Clientes sin actividad 30 d├¡as
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default ClientesFilters;
+<ctrl46>,file_path:<ctrl46>C:/Users/usuario/Documents/fuzzie-production/src/features/clientes-listado/components/ClientesFilters.tsx<ctrl46>}call:write_file{content:

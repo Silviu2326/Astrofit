@@ -1,0 +1,7 @@
+﻿I have successfully created the basic structure for the "Informes Semanales - Resumen de Wellness" module, including the specified files and folders:
+
+*   `src/features/informes-semanales/InformesSemanalesPage.tsx`
+*   `src/features/informes-semanales/informesSemanalesApi.ts`
+*   `src/features/informes-semanales/components/DashboardWellness.tsx`
+
+These files include placeholder content following the technical requirements (TypeScript, React, TailwindCSS, Chart.js) and specifications (dashboard, API with aggregated data, weekly evolution, radar charts, comparison, team view).

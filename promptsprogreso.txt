@@ -1,0 +1,67 @@
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Progreso General - Dashboard Integral de Evolución siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/progreso-general/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/progreso-general/ProgresoGeneralPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/progreso-general/progresoGeneralApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/progreso-general/components/MedicionesCorporales.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/progreso-general/components/GraficosEvolucion.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/progreso-general/components/FotosProgreso.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/progreso-general/components/ChecklistDiaria.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/progreso-general/components/NotasProgreso.tsx
+
+
+ESPECIFICACIONES:
+- Dashboard integral de evolución de cada cliente en una sola pantalla
+- Mediciones corporales: peso, perímetros, pliegues o cualquier métrica personalizable
+- Gráficos de evolución: tendencia semana a semana, comparaciones con objetivos
+- Fotos de progreso: antes y después para visualizar cambios reales con galería
+- Checklist diaria: marcar si el cliente cumplió con entreno, dieta o descanso
+- Notas de progreso: espacio para registrar observaciones tras cada revisión
+- Vista panorámica completa: números, imágenes y adherencia unificados
+- Seguimiento temporal de todas las métricas importantes
+- Comparativas automáticas entre períodos
+- Alertas de progreso o estancamiento
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Hábitos Básicos - Constructor de Pequeñas Victorias siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/habitos-basicos/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/habitos-basicos/HabitosBasicosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/habitos-basicos/habitosBasicosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/habitos-basicos/components/DefinirHabitos.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/habitos-basicos/components/MarcacionDiaria.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/habitos-basicos/components/ResumenSemanal.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/habitos-basicos/components/PersonalizacionCliente.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/habitos-basicos/components/EstadisticasAdherencia.tsx
+
+
+ESPECIFICACIONES:
+- Definir hábitos simples: beber agua, caminar 10.000 pasos, dormir 8 horas, estirar 10 minutos
+- Marcación diaria: el cliente marca cada día si cumplió o no cada hábito
+- Resumen semanal: muestra % de adherencia por hábito y general
+- Personalización por cliente: crear hábitos específicos según objetivos individuales
+- Estadísticas de adherencia: gráficos y métricas de cumplimiento histórico
+- Tracking de racha de días consecutivos cumpliendo hábitos
+- Sistema de recompensas por constancia y logros
+- Vista de calendario con códigos de color por cumplimiento
+- Alertas de hábitos no marcados
+- Los grandes cambios vienen de gestos repetidos cada día
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks

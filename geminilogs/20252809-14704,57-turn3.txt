@@ -1,0 +1,5 @@
+﻿He creado la estructura b├ísica para el m├│dulo "Gesti├│n de Tornos - Control F├¡sico de Accesos" y los archivos especificados:
+
+1.  `project-bolt-sb1-qekdxfwt/project/src/features/gestion-tornos/GestionTornosPage.tsx`
+2.  `project-bolt-sb1-qekdxfwt/project/src/features/gestion-tornos/gestionTornosApi.ts`
+3.  `project-bolt-sb1-qekdxfwt/project/src/features/gestion-tornos/components/PanelTornos.tsx`

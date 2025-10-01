@@ -1,0 +1,5 @@
+﻿He creado los siguientes componentes de automatizaci├│n:
+
+1.  `C:/Users/usuario/Documents/src/features/agente-marketing/components/automation/CalendarioPublicaciones.tsx`
+2.  `C:/Users/usuario/Documents/src/features/agente-marketing/components/automation/AutomatizacionRespuestas.tsx`
+3.  `C:/Users/usuario/Documents/src/features/agente-marketing/components/automation/RecomendacionesTiming.tsx`

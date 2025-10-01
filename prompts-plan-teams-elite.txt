@@ -1,0 +1,686 @@
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Dashboards de Equipos - Analíticas Avanzadas siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/dashboards-equipos/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/dashboards-equipos/DashboardsEquiposPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/dashboards-equipos/dashboardsEquiposApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/dashboards-equipos/components/WidgetsConfigurables.tsx
+
+ESPECIFICACIONES:
+- Página principal con dashboard de métricas clave por equipo
+- API con datos de rendimiento: carga semanal, % lesiones, adherencia entrenos
+- Widgets configurables básicos con métricas agrupadas por equipo
+- Métricas principales: carga de trabajo, disponibilidad, performance
+- Vista de resumen ejecutivo para dirección técnica
+- Gráficos básicos en tiempo real con datos mock
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS, Chart.js
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Dashboard responsive con widgets redimensionables
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/dashboards-equipos/ añadiendo estos archivos:
+
+4. components/TarjetasComparativas.tsx - Tarjetas comparativas equipos indicadores rendimiento relativo
+5. components/MetricasKPI.tsx - Sistema KPIs personalizables benchmarks industria deportiva
+6. components/AlertasRendimiento.tsx - Alertas automáticas rendimiento escalamiento dirección técnica
+7. components/DashboardTiempoReal.tsx - Dashboard tiempo real WebSocket updates instantáneos
+8. components/AnalisisPredictivo.tsx - Análisis predictivo rendimiento tendencias históricas
+9. components/FiltrosAvanzados.tsx - Sistema filtros avanzados categoría edad posición
+10. components/ExportadorReportes.tsx - Exportación reportes ejecutivos múltiples formatos
+11. components/IntegracionVideoanalisis.tsx - Integración sistemas videoanalisis correlación datos
+
+ACTUALIZA TAMBIÉN:
+- DashboardsEquiposPage.tsx - Integrar analíticas profesionales avanzadas
+- dashboardsEquiposApi.ts - Endpoints WebSocket análisis predictivo benchmarking
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Comparativas Longitudinales - Análisis Temporal siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/comparativas-longitudinales/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/comparativas-longitudinales/ComparativasLongitudinalesPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/comparativas-longitudinales/comparativasLongitudinalesApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/comparativas-longitudinales/components/GraficoMultiAnual.tsx
+
+ESPECIFICACIONES:
+- Página principal con análisis histórico multi-temporal
+- API con datos de evolución de equipos/atletas por temporadas
+- Gráfico de líneas multi-año básico con datos de rendimiento
+- Posibilidad de filtrar por posición, rol o categoría
+- Vista comparativa entre diferentes temporadas
+- Indicadores de progresión y regresión por período
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS, Chart.js
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Gráficos temporales con múltiples series de datos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/comparativas-longitudinales/ añadiendo estos archivos:
+
+4. components/AnalisisEstacional.tsx - Análisis estacional automático detección ciclos rendimiento
+5. components/ModelosPredictivos.tsx - Modelos predictivos proyectar evolución futura atletas
+6. components/DetectorPatrones.tsx - Detector patrones machine learning identificar tendencias
+7. components/CorrelacionesAutomaticas.tsx - Correlaciones automáticas variables entrenamiento competencia
+8. components/AnalisisCohortes.tsx - Análisis cohortes comparar generaciones atletas
+9. components/BenchmarkingInternacional.tsx - Sistema benchmarking bases datos deportivas internacionales
+10. components/VentanasCriticas.tsx - Identificación automática ventanas críticas desarrollo
+11. components/ReportesCientificos.tsx - Reportes científicos significancia estadística cambios
+
+ACTUALIZA TAMBIÉN:
+- ComparativasLongitudinalesPage.tsx - Integrar análisis científico avanzado
+- comparativasLongitudinalesApi.ts - Endpoints machine learning análisis estadístico
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Reportes de Rendimiento - Informes Ejecutivos siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/reportes-rendimiento/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/reportes-rendimiento/ReportesRendimientoPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/reportes-rendimiento/reportesRendimientoApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/reportes-rendimiento/components/GeneradorPDF.tsx
+
+ESPECIFICACIONES:
+- Página principal para generación de reportes ejecutivos
+- API para compilación de datos de rendimiento multi-fuente
+- Generador básico de PDF con resúmenes de carga y mejoras individuales
+- Vista previa estilo "dossier profesional" antes de generar
+- Plantillas predefinidas para diferentes tipos de reportes
+- KPIs de equipo organizados en secciones temáticas
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS, React-PDF
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Sistema de generación de documentos profesionales
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/reportes-rendimiento/ añadiendo estos archivos:
+
+4. components/EditorInformes.tsx - Editor visual informes drag drop secciones gráficos
+5. components/MotorRecomendaciones.tsx - Motor recomendaciones genera insights automáticos datos
+6. components/DistribucionAutomatica.tsx - Sistema distribución automática stakeholders roles permisos
+7. components/InformesAdaptativos.tsx - Informes adaptativos cambian contenido audiencia objetivo
+8. components/IntegracionVideoanalysis.tsx - Integración sistemas videoanalysis incluir clips relevantes
+9. components/ProgramadorAutomatico.tsx - Programación automática reportes periódicos semanal mensual
+10. components/SistemaComentarios.tsx - Sistema comentarios colaborativo revisión informes
+11. components/AnalyticsLectura.tsx - Analytics lectura medir engagement reportes
+
+ACTUALIZA TAMBIÉN:
+- ReportesRendimientoPage.tsx - Integrar sistema informes inteligente
+- reportesRendimientoApi.ts - Endpoints editor visual IA programación automática
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Dispositivos Conectados - Gestión de Sensores siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/dispositivos-conectados/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/dispositivos-conectados/DispositivosConectadosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/dispositivos-conectados/dispositivosConectadosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/dispositivos-conectados/components/TablaDispositivos.tsx
+
+ESPECIFICACIONES:
+- Página principal con inventario de dispositivos deportivos conectados
+- API para gestión de hardware: GPS, pulsómetros, medidores de potencia
+- Tabla con iconos de dispositivos, estado de batería y sincronización
+- Estados: conectado, desconectado, batería baja, sincronizando
+- Asignación de dispositivos a jugadores específicos
+- Alertas básicas de mantenimiento y calibración
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Simulación de conectividad IoT deportivo
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/dispositivos-conectados/ añadiendo estos archivos:
+
+4. components/MonitorConectividad.tsx - Monitor tiempo real conectividad mapas cobertura facility
+5. components/CalibracionAutomatica.tsx - Sistema calibración automática protocolos específicos dispositivo
+6. components/AnalisisFallos.tsx - Análisis predictivo fallos patrones uso degradación
+7. components/GestorFirmware.tsx - Gestión automatizada firmware updates flota dispositivos
+8. components/TroubleshootingAutomatico.tsx - Sistema troubleshooting automático diagnósticos remotos
+9. components/IntegracionMarcas.tsx - Integración múltiples marcas Catapult GPS Sports Polar Garmin
+10. components/DashboardUtilizacion.tsx - Dashboard utilización ROI dispositivo
+11. components/SistemaReservas.tsx - Sistema reservas check-out dispositivos sesiones
+
+ACTUALIZA TAMBIÉN:
+- DispositivosConectadosPage.tsx - Integrar IoT deportivo avanzado
+- dispositivosConectadosApi.ts - Endpoints protocolos IoT diagnósticos automáticos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Datos en Tiempo Real - Monitorización Live siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/datos-tiempo-real/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/datos-tiempo-real/DatosTiempoRealPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/datos-tiempo-real/datosTiempoRealApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/datos-tiempo-real/components/TableroLive.tsx
+
+ESPECIFICACIONES:
+- Página principal con monitorización en vivo durante entrenamientos
+- API con stream de datos en tiempo real de sensores
+- Tablero tipo broadcast con métricas live: velocidad, carga, pulsaciones
+- Gráficos dinámicos que se actualizan automáticamente
+- Alertas instantáneas por valores fuera de rango
+- Vista de equipo completo con métricas individuales
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS, Chart.js
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- WebSocket simulado para datos en tiempo real
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/datos-tiempo-real/ añadiendo estos archivos:
+
+4. components/SistemaAlertas.tsx - Sistema alertas multi-nivel escalamiento automático staff médico
+5. components/GrabadorSesion.tsx - Grabador sesión completa marcadores eventos críticos
+6. components/TransmisionLive.tsx - Transmisión live análisis remoto especialistas externos
+7. components/AnalisisZonasIntensidad.tsx - Análisis automático zonas intensidad durante sesión
+8. components/ComparacionHistorica.tsx - Comparación tiempo real sesiones históricas similares
+9. components/CoachingAutomatico.tsx - Sistema coaching automático sugerencias datos live
+10. components/IntegracionVideoSincronizado.tsx - Integración video sincronizado análisis técnico-táctico
+11. components/DashboardComando.tsx - Dashboard comando NASA mission control staff técnico
+
+ACTUALIZA TAMBIÉN:
+- DatosTiempoRealPage.tsx - Integrar monitorización profesional avanzada
+- datosTiempoRealApi.ts - Endpoints alertas tiempo real grabación streaming
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Informes de Sensores - Análisis Post-Sesión siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/informes-sensores/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/informes-sensores/InformesSensoresPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/informes-sensores/informesSensoresApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/informes-sensores/components/DashboardPostSesion.tsx
+
+ESPECIFICACIONES:
+- Página principal con análisis completo post-entrenamiento
+- API con datos compilados de todos los sensores utilizados
+- Dashboard con métricas clave: carga total, distancia, aceleraciones, fatiga
+- Datos básicos por atleta: tiempo en zonas, picos de intensidad
+- Resumen ejecutivo de la sesión con indicadores de carga
+- Comparativa con sesiones anteriores del mismo tipo
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS, Chart.js
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Visualizaciones de análisis biomecánico básico
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/informes-sensores/ añadiendo estos archivos:
+
+4. components/HeatmapsMovimiento.tsx - Heatmaps movimiento posicionamiento campo durante sesión
+5. components/CurvasIntensidad.tsx - Curvas intensidad detalladas análisis picos valles
+6. components/AnalisisAsimetrias.tsx - Análisis automático asimetrías biomecánicas alertas lesión
+7. components/CorrelacionCargaInterna.tsx - Correlación automática carga externa interna RPE datos objetivos
+8. components/ModeloFatiga.tsx - Modelo fatiga acumulada predicción tiempo recuperación
+9. components/BenchmarkingNormativo.tsx - Benchmarking automático bases datos normativas posición
+10. components/ReportesCientificos.tsx - Reportes científicos recomendaciones específicas próximas sesiones
+11. components/IntegracionAnalisisVideo.tsx - Integración sistemas análisis video contexto táctico
+
+ACTUALIZA TAMBIÉN:
+- InformesSensoresPage.tsx - Integrar análisis científico avanzado
+- informesSensoresApi.ts - Endpoints heatmaps análisis biomecánico modelos fatiga
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Torneos - Organización de Competiciones siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/torneos/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/torneos/TorneosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/torneos/torneosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/torneos/components/CuadroTorneos.tsx
+
+ESPECIFICACIONES:
+- Página principal con gestión de competiciones internas
+- API para organización de torneos con equipos inscritos
+- Cuadro de torneos estilo "brackets" con avance automático
+- Calendario de eventos con fases eliminatorias
+- Sistema básico de inscripciones y sorteos
+- Gestión de resultados y avance de fases
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Visualización de brackets tipo torneo deportivo
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/torneos/ añadiendo estos archivos:
+
+4. components/GeneradorBrackets.tsx - Generador automático brackets múltiples formatos eliminación liga suizo
+5. components/SistemaSeeding.tsx - Sistema seeding inteligente rankings estadísticas históricas
+6. components/StreamingTorneo.tsx - Plataforma streaming integrada transmitir partidos torneo
+7. components/ApuestasVirtuales.tsx - Sistema apuestas virtuales equipos participantes
+8. components/GestionArbitros.tsx - Gestión completa árbitros horarios sedes partido
+9. components/AnalyticsTorneo.tsx - Analytics tiempo real estadísticas torneo
+10. components/SistemaPremios.tsx - Sistema premios reconocimientos automático
+11. components/IntegracionRedesSociales.tsx - Integración redes sociales cobertura evento
+
+ACTUALIZA TAMBIÉN:
+- TorneosPage.tsx - Integrar gestión profesional competiciones
+- torneosApi.ts - Endpoints algoritmos brackets seeding streaming
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Campeonatos - Eventos a Gran Escala siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/campeonatos/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/campeonatos/CampeonatosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/campeonatos/campeonatosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/campeonatos/components/AgendaOficial.tsx
+
+ESPECIFICACIONES:
+- Página principal para gestión de campeonatos multi-equipo
+- API para eventos complejos con múltiples sedes y cronogramas
+- Agenda oficial tipo "calendario federativo" con pestañas por sede
+- Gestión básica de sedes, fechas y árbitros asignados
+- Sistema de inscripciones y validación de equipos
+- Cronograma maestro con sincronización entre sedes
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Sistema de gestión de eventos multi-sede
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/campeonatos/ añadiendo estos archivos:
+
+4. components/CentroComando.tsx - Centro comando central coordinación tiempo real sedes
+5. components/GestorLogistica.tsx - Gestor completo logística transporte hospedaje catering seguridad
+6. components/CoberturaMediatica.tsx - Sistema cobertura mediática acreditaciones prensa broadcasting
+7. components/ProtocolosCOVID.tsx - Gestión automatizada protocolos COVID medidas sanitarias
+8. components/SistemaEmergencias.tsx - Sistema emergencias escalamiento automático servicios médicos
+9. components/IntegracionTicketing.tsx - Integración sistemas ticketing control aforo sede
+10. components/DashboardSponsors.tsx - Dashboard ejecutivo sponsors métricas exposición
+11. components/SistemaSustentabilidad.tsx - Sistema sustentabilidad tracking huella carbono evento
+
+ACTUALIZA TAMBIÉN:
+- CampeonatosPage.tsx - Integrar gestión federativa profesional
+- campeonatosApi.ts - Endpoints comando control logística broadcasting
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Resultados de Eventos - Gestión de Marcadores siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/resultados-eventos/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/resultados-eventos/ResultadosEventosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/resultados-eventos/resultadosEventosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/resultados-eventos/components/ScoreboardDigital.tsx
+
+ESPECIFICACIONES:
+- Página principal con marcadores digitales de eventos
+- API para registro y publicación de resultados en tiempo real
+- Scoreboard digital tipo estadio con resultados actualizados
+- Historial de resultados por evento y clasificaciones
+- Sistema básico de validación de resultados
+- Exportación de tablas de posiciones
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Sistema de marcadores en tiempo real
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/resultados-eventos/ añadiendo estos archivos:
+
+4. components/CentroResultados.tsx - Centro resultados validación automática sistema apelaciones
+5. components/DistribucionMediatica.tsx - Distribución mediática automática APIs deportivas medios comunicación
+6. components/AnalyticsEvento.tsx - Analytics completo evento estadísticas avanzadas records establecidos
+7. components/TimingOficial.tsx - Sistema timing oficial cronometraje automático deportes individuales
+8. components/IntegracionPhotofinish.tsx - Integración sistemas photofinish video replay decisiones
+9. components/GeneradorComunicados.tsx - Generación automática comunicados prensa highlights
+10. components/ClasificacionesComplejas.tsx - Sistema clasificaciones complejas criterios múltiples
+11. components/ArchivoHistorico.tsx - Archivo histórico records marcas comparación automática
+
+ACTUALIZA TAMBIÉN:
+- ResultadosEventosPage.tsx - Integrar sistema broadcasting profesional
+- resultadosEventosApi.ts - Endpoints validación APIs distribución analytics
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Listado de Jugadores - Base de Datos de Scouting siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/listado-jugadores/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/listado-jugadores/ListadoJugadoresPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/listado-jugadores/listadoJugadoresApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/listado-jugadores/components/TarjetasProspectos.tsx
+
+ESPECIFICACIONES:
+- Página principal con base de datos de jugadores observados
+- API con perfiles de prospectos: edad, posición, club actual
+- Tarjetas con foto, datos básicos y etiquetas de nivel/potencial
+- Sistema de filtros por posición, edad, club, nacionalidad
+- Búsqueda avanzada por características específicas
+- Estados: seguimiento activo, en evaluación, descartado, fichado
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Sistema de tarjetas de jugadores estilo trading cards
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/listado-jugadores/ añadiendo estos archivos:
+
+4. components/MotorRecomendaciones.tsx - Motor recomendaciones sugiere jugadores necesidades equipo
+5. components/NetworkScouting.tsx - Network scouting colaborativo agentes scouts externos
+6. components/InteligenciaCompetitiva.tsx - Inteligencia competitiva tracking interés otros clubes
+7. components/AlertasMercado.tsx - Sistema alertas automáticas jugadores entran mercado
+8. components/ValoracionAutomatizada.tsx - Valoración automatizada métricas rendimiento potencial
+9. components/IntegracionTransfermarkt.tsx - Integración bases datos transfermarkt APIs deportivas
+10. components/ReportsColaborativos.tsx - Sistema reports colaborativos múltiples scouts jugador
+11. components/PrediccionValor.tsx - Predicción valor futuro trayectoria comparables históricos
+
+ACTUALIZA TAMBIÉN:
+- ListadoJugadoresPage.tsx - Integrar plataforma scouting profesional
+- listadoJugadoresApi.ts - Endpoints matching perfiles network colaborativo APIs
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Evaluación de Jugador - Análisis Detallado siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/evaluacion-jugador/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/evaluacion-jugador/EvaluacionJugadorPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/evaluacion-jugador/evaluacionJugadorApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/evaluacion-jugador/components/FichaTecnica.tsx
+
+ESPECIFICACIONES:
+- Página principal con análisis completo de prospecto específico
+- API con datos detallados: técnico, físico, táctico, mental
+- Ficha técnica con pestañas organizadas por área de evaluación
+- Notas de rendimiento y observaciones cualitativas de scouts
+- Sistema de scoring por área con visualización tipo radar
+- Galería de videos de jugadas destacadas
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS, Chart.js
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Sistema de pestañas para organizar evaluaciones complejas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/evaluacion-jugador/ añadiendo estos archivos:
+
+4. components/AnalisisVideoIA.tsx - Análisis video IA tracking automático movimientos decisiones
+5. components/PerfilPsicologico.tsx - Perfil psicológico deportivo tests validados análisis personalidad
+6. components/ProyeccionCarrera.tsx - Proyección carrera modelos predictivos atletas comparables
+7. components/AnalisisBiomecanico.tsx - Análisis biomecánico automático técnica eficiencia movimientos
+8. components/RiskAssessment.tsx - Sistema risk assessment probabilidad lesiones futuras
+9. components/AdaptabilidadCultural.tsx - Evaluación adaptabilidad cultural lingüística fichajes internacionales
+10. components/CompatibilidadSistema.tsx - Análisis compatibilidad sistema juego club
+11. components/ValoracionEconomica.tsx - Valoración económica dinámica potencial mercado
+
+ACTUALIZA TAMBIÉN:
+- EvaluacionJugadorPage.tsx - Integrar análisis científico profesional
+- evaluacionJugadorApi.ts - Endpoints IA tests psicológicos modelos predictivos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Historial de Scouting - Seguimiento Longitudinal siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/historial-scouting/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/historial-scouting/HistorialScoutingPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/historial-scouting/historialScoutingApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/historial-scouting/components/TimelineEvaluaciones.tsx
+
+ESPECIFICACIONES:
+- Página principal con historial completo de seguimiento por jugador
+- API con evaluaciones cronológicas y evolución de ratings
+- Timeline visual con notas y observaciones por fecha
+- Gráficos de evolución de puntuaciones a lo largo del tiempo
+- Comparación de evaluaciones entre diferentes scouts
+- Marcadores de eventos importantes: debut, lesiones, transferencias
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS, Chart.js
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Timeline interactivo con datos temporales
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/historial-scouting/ añadiendo estos archivos:
+
+4. components/AnalisisTendencias.tsx - Análisis automático tendencias desarrollo machine learning
+5. components/ComparadorEvolucion.tsx - Comparador evolución atletas referencia misma posición
+6. components/AlertasDesarrollo.tsx - Sistema alertas automáticas cambios significativos rendimiento
+7. components/CorrelacionScouts.tsx - Correlación observaciones scouts performance real competencia
+8. components/PrediccionTransferencias.tsx - Predicción ventanas transferencia patrones históricos
+9. components/EfectividadScouts.tsx - Análisis efectividad scouts individuales predicciones
+10. components/EarlyWarning.tsx - Sistema early warning jugadores riesgo estancamiento
+11. components/RecomendacionesOfertas.tsx - Recomendaciones automáticas momentos óptimos ofertas
+
+ACTUALIZA TAMBIÉN:
+- HistorialScoutingPage.tsx - Integrar análisis longitudinal avanzado
+- historialScoutingApi.ts - Endpoints algoritmos tendencias alertas predictivas correlación
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Equipo A vs B - Comparativa Directa siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/equipo-a-vs-b/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/equipo-a-vs-b/EquipoAVsBPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/equipo-a-vs-b/equipoAVsBApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/equipo-a-vs-b/components/GraficoRadar.tsx
+
+ESPECIFICACIONES:
+- Página principal para comparación directa entre dos equipos
+- API con datos de enfrentamientos históricos y estadísticas
+- Gráfico de radar lado a lado con métricas clave por equipo
+- Resumen de fortalezas y debilidades relativas
+- Historial de enfrentamientos directos con resultados
+- Análisis de tendencias recientes por equipo
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS, Chart.js
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Visualizaciones comparativas lado a lado
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/equipo-a-vs-b/ añadiendo estos archivos:
+
+4. components/AnalisisVentajasCompetitivas.tsx - Análisis automático ventajas competitivas recomendaciones específicas
+5. components/RecomendacionesTacticas.tsx - Generador recomendaciones tácticas fortalezas debilidades detectadas
+6. components/SimuladorEncuentro.tsx - Simulador encuentro múltiples escenarios probabilidades resultado
+7. components/AnalisisJugadoresClave.tsx - Análisis jugadores clave mismatches posicionales
+8. components/ScoutingEspecifico.tsx - Sistema scouting específico próximo enfrentamiento
+9. components/CondicionesAmbientales.tsx - Análisis condiciones ambientales factores externos localía clima
+10. components/PrediccionAlineaciones.tsx - Predicción alineaciones probables patrones históricos
+11. components/DashboardPrePartido.tsx - Dashboard pre-partido análisis consolidado cuerpo técnico
+
+ACTUALIZA TAMBIÉN:
+- EquipoAVsBPage.tsx - Integrar análisis competitivo profesional
+- equipoAVsBApi.ts - Endpoints algoritmos competitivos simulación generador tácticas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Análisis por Posición - Desglose Posicional siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/analisis-posicion/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/analisis-posicion/AnalisisPosicionPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/analisis-posicion/analisisPosicionApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/analisis-posicion/components/TablasPosicionales.tsx
+
+ESPECIFICACIONES:
+- Página principal con análisis detallado por posiciones
+- API con estadísticas agrupadas por posición: porteros, defensas, medios, delanteros
+- Tablas comparativas con promedios por posición entre equipos
+- Gráficos de barras mostrando diferencias posicionales clave
+- Métricas específicas por posición: paradas/gol para porteros, pases para medios
+- Identificación de fortalezas/debilidades por línea de juego
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS, Chart.js
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Análisis estadístico agrupado por posiciones
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/analisis-posicion/ añadiendo estos archivos:
+
+4. components/MapaCalorPosicional.tsx - Mapa calor posicional zonas mayor actividad posición
+5. components/AnalisisRotaciones.tsx - Análisis rotaciones movimientos posiciones durante juego
+6. components/OptimizadorPosicional.tsx - Optimizador sugiere cambios posicionales maximizar rendimiento
+7. components/CompatibilidadJugadores.tsx - Análisis compatibilidad jugadores misma posición
+8. components/BenchmarkingLigas.tsx - Sistema benchmarking ligas referencia posición
+9. components/IdentificacionGaps.tsx - Identificación automática gaps oportunidades línea
+10. components/AnalisisPredictivo.tsx - Análisis predictivo rendimiento cambios posicionales
+11. components/RecomendacionesFichajes.tsx - Recomendaciones fichajes específicas posición gaps identificados
+
+ACTUALIZA TAMBIÉN:
+- AnalisisPosicionPage.tsx - Integrar analytics posicionales avanzados
+- analisisPosicionApi.ts - Endpoints mapas calor algoritmos rotaciones optimización
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Proyección de Partido - Predicción de Rendimiento siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/proyeccion-partido/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/proyeccion-partido/ProyeccionPartidoPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/proyeccion-partido/proyeccionPartidoApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/proyeccion-partido/components/ModeloPredictivo.tsx
+
+ESPECIFICACIONES:
+- Página principal con predicción de resultados de próximo partido
+- API con modelo predictivo basado en datos históricos de ambos equipos
+- Panel con probabilidades de victoria/empate/derrota
+- Métricas clave que influyen en la predicción
+- Escenarios alternativos basados en diferentes alineaciones
+- Factores externos considerados: local/visitante, clima, estado físico
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Modelos predictivos básicos con datos históricos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/proyeccion-partido/ añadiendo estos archivos:
+
+4. components/SimuladorEscenariosIA.tsx - Simulador escenarios IA modela miles partidos virtuales
+5. components/AnalisisFactoresExternos.tsx - Análisis automático factores externos clima presión árbitro público
+6. components/RecomendacionesApuestas.tsx - Sistema recomendaciones mercados apuestas deportivas
+7. components/PrediccionesGranulares.tsx - Predicciones granulares goles tiempo tarjetas corners
+8. components/AnalisisMomentum.tsx - Análisis momentum forma actual peso temporal
+9. components/IntegracionMercados.tsx - Integración mercados apuestas tiempo real comparación odds
+10. components/TrackingPrecision.tsx - Sistema tracking precisión modelo mejora continua
+11. components/AlertasOportunidades.tsx - Alertas oportunidades valor mercados apuestas
+
+ACTUALIZA TAMBIÉN:
+- ProyeccionPartidoPage.tsx - Integrar IA predictiva avanzada
+- proyeccionPartidoApi.ts - Endpoints modelos IA APIs meteorológicos tracking precisión
+
+🏆 Resumen Teams Elite
+
+📊 Analíticas Avanzadas: 3 páginas (6 prompts)
+📡 Sensores: 3 páginas (6 prompts)
+🏟️ Gestión de Eventos: 3 páginas (6 prompts)
+🔍 Scouting: 3 páginas (6 prompts)
+⚔️ Comparador de Equipos: 3 páginas (6 prompts)
+
+👉 Total: 15 páginas con 30 prompts (2 por página) especializados para ecosistemas de alto rendimiento con tecnología deportiva avanzada, scouting profesional y analítica predictiva.
+
+Estructura correcta:
+- Prompt 1 por página: Crear feature básica
+- Prompt 2 por página: Estilizar y completar con funcionalidades avanzadas

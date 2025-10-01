@@ -1,0 +1,23 @@
+﻿
+
+P├ígina de Reportes de Rendimiento completamente transformada en un generador profesional de reportes basados en datos de wearables con:
+
+**Wizard de 6 Pasos:**
+1. Seleccionar Cliente y Per├¡odo (con b├║squeda y vista previa de datos)
+2. Seleccionar Plantilla (6 plantillas predefinidas)
+3. Personalizar Contenido (14 secciones disponibles)
+4. Configurar Dise├▒o (4 estilos, colores, tipograf├¡a)
+5. A├▒adir Contenido Personalizado (mensaje del entrenador, recomendaciones)
+6. Preview y Generaci├│n (con zoom y opciones de formato)
+
+**Caracter├¡sticas:**
+- 5 clientes mock con dispositivos wearables
+- 6 plantillas (Semanal, Mensual, Atl├®tico, Bienestar, Comparativo, Personalizado)
+- Preview del PDF con dise├▒o adaptable seg├║n estilo elegido
+- Modal de generaci├│n con progreso animado
+- Opciones de descarga, env├¡o por email y compartir link
+- Tab de Historial con 5 reportes generados
+- Tab de Reportes Autom├íticos programados
+- Tab de Analytics con estad├¡sticas y gr├íficos
+- Animaciones con framer-motion
+- Dise├▒o azul-p├║rpura profesional

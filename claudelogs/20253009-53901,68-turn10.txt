@@ -1,0 +1,18 @@
+﻿
+
+Dashboard financiero completo transformado en `AnaliticaIngresosPage.tsx` con:
+
+Ô£à **6 KPIs principales**: MRR, ARR, Ingresos Totales, Tasa Crecimiento, ARPU, Churn Rate  
+Ô£à **Gr├ífico combo** evoluci├│n ingresos/MRR con barras + l├¡neas  
+Ô£à **Waterfall chart** MRR movements (New/Expansion/Churn/Contraction)  
+Ô£à **Donut charts** distribuci├│n por producto y canal  
+Ô£à **Tabla ranking** productos con ARPU, crecimiento y tendencias  
+Ô£à **Proyecciones** 3 escenarios (optimista/realista/pesimista)  
+Ô£à **M├®tricas salud**: Quick Ratio, NRR, MRR Churn, CAC Payback  
+Ô£à **Top 8 clientes** con ingresos y LTV  
+Ô£à **An├ílisis expansi├│n** y churned revenue  
+Ô£à **20 meses datos** con estacionalidad realista  
+Ô£à **Selector per├¡odo** y botones exportar/configurar  
+Ô£à **Paleta verde-dorado** profesional  
+Ô£à **Animaciones** framer-motion  
+Ô£à **TypeScript** con tipos correctos

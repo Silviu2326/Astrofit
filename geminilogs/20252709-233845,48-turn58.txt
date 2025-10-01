@@ -1,0 +1,12 @@
+﻿(node:35500) MaxListenersExceededWarning: Possible EventTarget memory leak detected. 11 abort listeners added to [AbortSignal]. Use events.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+All specified files and directories for the booking page module have been created with placeholder content:
+
+- `src/features/micrositio/pagina-reserva/PaginaReservaPage.tsx`
+- `src/features/micrositio/pagina-reserva/paginaReservaApi.ts`
+- `src/features/micrositio/pagina-reserva/components/FormularioReserva.tsx`
+- `src/features/micrositio/pagina-reserva/components/SeleccionServicio.tsx`
+- `src/features/micrositio/pagina-reserva/components/SeleccionHorario.tsx`
+- `src/features/micrositio/pagina-reserva/components/DatosCliente.tsx`
+- `src/features/micrositio/pagina-reserva/components/PagoStripe.tsx`
+- `src/features/micrositio/pagina-reserva/components/ConfirmacionCita.tsx`

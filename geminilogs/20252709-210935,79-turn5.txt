@@ -1,0 +1,3 @@
+﻿I have successfully created the following files:
+- `src/features/agente-entrenador/components/dashboard/DashboardEntrenamiento.tsx`
+- `src/features/agente-entrenador/components/dashboard/MetricasSemanales.tsx`

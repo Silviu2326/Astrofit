@@ -1,0 +1,13 @@
+﻿(node:36476) MaxListenersExceededWarning: Possible EventTarget memory leak detected. 11 abort listeners added to [AbortSignal]. Use events.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+I have created the following files:
+- `src/features/transferencias-clientes/components/HistorialMovimientos.tsx`
+- `src/features/transferencias-clientes/components/ValidadorCapacidad.tsx`
+- `src/features/transferencias-clientes/components/WorkflowAprobacion.tsx`
+- `src/features/transferencias-clientes/components/NotificacionesSedes.tsx`
+- `src/features/transferencias-clientes/components/EstadisticasMovilidad.tsx`
+- `src/features/transferencias-clientes/components/SistemaNivelesAprobacion.tsx`
+- `src/features/transferencias-clientes/components/DashboardTransferencias.tsx`
+- `src/features/transferencias-clientes/components/AlertasAtencionEspecial.tsx`
+- `src/features/transferencias-clientes/TransferenciasClientesPage.tsx` (created and integrated new components)
+- `src/features/transferencias-clientes/transferenciasClientesApi.ts` (created and added new endpoints)

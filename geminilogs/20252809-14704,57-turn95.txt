@@ -1,0 +1,5 @@
+﻿The basic structure for the "Asignaci├│n de Roles - Gesti├│n Flexible" module has been created, including the specified directories and files:
+
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/asignacion-roles/AsignacionRolesPage.tsx`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/asignacion-roles/asignacionRolesApi.ts`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/asignacion-roles/components/FormularioAsignacion.tsx`

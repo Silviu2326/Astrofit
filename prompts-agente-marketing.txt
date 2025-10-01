@@ -1,0 +1,256 @@
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 1: Crear la estructura base mejorada para el módulo Agente de Marketing
+
+Crea la carpeta src/features/agente-marketing/ y organiza la estructura de archivos:
+
+```
+src/features/agente-marketing/
+├── hooks/                           (Custom hooks para lógica compartida)
+│   ├── useMarketingData.ts
+│   ├── useCampaignManager.ts
+│   └── useSocialMedia.ts
+├── utils/                           (Utilidades y helpers)
+│   ├── marketingCalculations.ts
+│   ├── contentGeneration.ts
+│   └── reportGeneration.ts
+├── types/                           (Definiciones de tipos TypeScript)
+│   ├── campaign.ts
+│   ├── analytics.ts
+│   └── socialMedia.ts
+├── components/
+│   ├── dashboard/
+│   ├── campaign/
+│   ├── content/
+│   ├── analytics/
+│   ├── automation/
+│   ├── integrations/
+│   └── history/
+```
+
+ESPECIFICACIONES:
+- TypeScript estricto con tipos bien definidos
+- Estructura modular organizada por funcionalidad
+- Custom hooks para lógica reutilizable
+- Utilidades para cálculos de marketing y generación de contenido
+- Tipos TypeScript específicos para cada dominio del marketing
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 2: Crear tipos TypeScript y utilidades base
+
+Crea los archivos de tipos y utilidades fundamentales para el módulo:
+
+1. src/features/agente-marketing/types/campaign.ts
+2. src/features/agente-marketing/types/analytics.ts
+3. src/features/agente-marketing/types/socialMedia.ts
+4. src/features/agente-marketing/utils/marketingCalculations.ts
+5. src/features/agente-marketing/utils/contentGeneration.ts
+6. src/features/agente-marketing/utils/reportGeneration.ts
+
+ESPECIFICACIONES:
+- Interfaces completas para campañas, métricas y redes sociales
+- Funciones de cálculo para ROI, engagement, conversiones
+- Generadores de contenido automático para posts
+- Utilidades de exportación y reportes
+- Datos mock realistas del sector fitness
+- Tipado estricto con enums y uniones de tipos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 3: Crear custom hooks para gestión de estado
+
+Crea los custom hooks para manejar la lógica del módulo:
+
+1. src/features/agente-marketing/hooks/useMarketingData.ts
+2. src/features/agente-marketing/hooks/useCampaignManager.ts
+3. src/features/agente-marketing/hooks/useSocialMedia.ts
+
+ESPECIFICACIONES:
+- Hook para gestión de datos de marketing (métricas, analytics)
+- Hook para CRUD de campañas (crear, editar, eliminar, duplicar)
+- Hook para integración con redes sociales (publicar, programar)
+- Estado local con React hooks (useState, useEffect, useCallback)
+- Manejo de loading states y error handling
+- Simulación de APIs con delays realistas
+- Cache local para mejor performance
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 4: Actualizar la página principal con diseño moderno
+
+Actualiza el archivo principal del módulo:
+
+1. src/features/agente-marketing/AgenteMarketingPage.tsx
+
+ESPECIFICACIONES DE MEJORA:
+- Diseño moderno con gradientes y efectos visuales atractivos
+- Layout responsivo optimizado para móvil, tablet y desktop
+- Paleta de colores profesional (azules, verdes, blancos)
+- Iconografía moderna con Lucide React
+- Cards con hover effects y sombras dinámicas
+- Tipografía elegante y jerarquía visual clara
+- Animaciones suaves con Framer Motion o CSS transitions
+- Header con métricas clave en tiempo real
+- Grid layout adaptativo según pantalla
+- Breadcrumbs y navegación contextual
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 5: Crear componentes del dashboard de métricas
+
+Crea los componentes para el dashboard principal:
+
+1. src/features/agente-marketing/components/dashboard/DashboardMetricas.tsx
+2. src/features/agente-marketing/components/dashboard/OverviewCards.tsx
+
+ESPECIFICACIONES:
+- Dashboard con métricas clave en tiempo real
+- Cards de overview con estadísticas principales
+- Gráficos interactivos con Recharts o Chart.js
+- Indicadores de rendimiento (KPIs) visuales
+- Comparativas periodo anterior vs actual
+- Mapas de calor para análisis de engagement
+- Loading states y skeleton loaders
+- Animaciones de entrada para las métricas
+- Tooltips informativos en cada métrica
+- Responsive design para todos los dispositivos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 6: Mejorar componentes de gestión de campañas
+
+Actualiza y mejora los componentes de campañas:
+
+1. src/features/agente-marketing/components/campaign/LienzoCampana.tsx
+2. src/features/agente-marketing/components/campaign/EditorPlantillas.tsx
+3. src/features/agente-marketing/components/campaign/ABTestingManager.tsx
+
+ESPECIFICACIONES:
+- Lienzo visual para diseñar campañas con drag & drop
+- Editor de plantillas con componentes prediseñados
+- Sistema de A/B testing con estadísticas
+- Vista previa en tiempo real de campañas
+- Biblioteca de templates específicos para fitness
+- Configuración avanzada de targeting
+- Simulador de alcance y presupuesto
+- Guardado automático de borradores
+- Versionado de campañas para comparación
+- Validación de campos obligatorios
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 7: Crear componentes de generación de contenido
+
+Desarrolla los componentes para creación de contenido:
+
+1. src/features/agente-marketing/components/content/GeneradorContenido.tsx
+2. src/features/agente-marketing/components/content/CopysAutomaticos.tsx (mejorar existente)
+3. src/features/agente-marketing/components/content/BibliotecaAssets.tsx
+
+ESPECIFICACIONES:
+- Generador de contenido con IA para posts de redes sociales
+- Templates de copy específicos para entrenadores personales
+- Biblioteca de assets gráficos y videos prediseñados
+- Editor de texto enriquecido con preview
+- Sugerencias automáticas de hashtags relevantes
+- Calendario de contenido con vista mensual
+- Análisis de sentimiento del contenido generado
+- Variaciones automáticas para diferentes plataformas
+- Sistema de etiquetas para organizar contenido
+- Exportación directa a redes sociales
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 8: Desarrollar componentes de analytics y reportes
+
+Crea los componentes para análisis y reportes:
+
+1. src/features/agente-marketing/components/analytics/SimuladorImpacto.tsx (mejorar existente)
+2. src/features/agente-marketing/components/analytics/AnalisisSentimientos.tsx
+3. src/features/agente-marketing/components/analytics/ReportesROI.tsx
+
+ESPECIFICACIONES:
+- Simulador de impacto con proyecciones realistas
+- Análisis de sentimientos de comentarios y feedback
+- Reportes detallados de ROI con gráficos interactivos
+- Comparativas de rendimiento entre campañas
+- Predicciones basadas en datos históricos
+- Métricas de engagement por plataforma
+- Tracking de conversiones y embudo de ventas
+- Alertas automáticas de rendimiento anómalo
+- Exportación de reportes en PDF y Excel
+- Dashboard ejecutivo con métricas clave
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 9: Crear componentes de automatización
+
+Desarrolla los componentes para automatización de marketing:
+
+1. src/features/agente-marketing/components/automation/CalendarioPublicaciones.tsx
+2. src/features/agente-marketing/components/automation/AutomatizacionRespuestas.tsx
+3. src/features/agente-marketing/components/automation/RecomendacionesTiming.tsx (mejorar existente)
+
+ESPECIFICACIONES:
+- Calendario visual para programar publicaciones
+- Sistema de automatización de respuestas básicas
+- Recomendaciones inteligentes de timing óptimo
+- Configuración de workflows automáticos
+- Programación recurrente de contenido
+- Respuestas automáticas personalizables por tipo de mensaje
+- Análisis de mejores horarios por audiencia
+- Notificaciones de eventos importantes
+- Integración con múltiples redes sociales
+- Backup automático de publicaciones programadas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 10: Crear componentes de integración y historial
+
+Finaliza con los componentes de integración e historial:
+
+1. src/features/agente-marketing/components/integrations/IntegracionRedes.tsx
+2. src/features/agente-marketing/components/history/HistorialCampanas.tsx (mejorar existente)
+3. src/features/agente-marketing/agenteMarketingApi.ts (mejorar API)
+
+ESPECIFICACIONES:
+- Panel de integración con redes sociales (Instagram, Facebook, LinkedIn)
+- Configuración OAuth para conectar cuentas
+- Historial detallado de campañas con filtros avanzados
+- APIs mock con datos realistas y latencia simulada
+- Sincronización automática de métricas
+- Gestión de múltiples cuentas por plataforma
+- Logs de actividad con timestamps
+- Sistema de backup y restauración
+- Webhooks simulados para eventos en tiempo real
+- Dashboard de estado de integraciones
+
+DATOS MOCK REALISTAS:
+- Métricas de fitness: seguidores, engagement, conversiones
+- Campañas típicas: "Reto 30 días", "Descuento verano", "Nuevo año, nuevo yo"
+- ROI del sector fitness (2-5x retorno típico)
+- Horarios óptimos: 6-9am, 5-8pm para fitness
+- Hashtags populares: #fitness #entrenamientopersonal #salud
+- Comentarios y feedback realistas de clientes
+
+RESULTADO ESPERADO:
+Un módulo completo de Agente de Marketing profesional con todas las funcionalidades necesarias para gestionar campañas de marketing digital para entrenadores personales, con diseño moderno, UX excepcional y datos realistas del sector fitness.

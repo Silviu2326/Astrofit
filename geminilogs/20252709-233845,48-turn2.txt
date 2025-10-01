@@ -1,0 +1,1 @@
+﻿All specified files and folders for the "Configuraci├│n App" module have been successfully created within `src/features/app-white-label/configuracion-app/`.

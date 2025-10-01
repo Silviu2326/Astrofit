@@ -1,0 +1,7 @@
+﻿I have created the basic structure for the "Listado de Roles - Gesti├│n de Equipo" module, including the specified files and folders:
+
+1.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/listado-roles/ListadoRolesPage.tsx`
+2.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/listado-roles/listadoRolesApi.ts`
+3.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/listado-roles/components/TablaEquipo.tsx`
+
+These files include the main page with a basic table of sports team members, an API for sports role management with realistic mock data for 25 people, and a simple table component with profile photo, name, position, and primary role. The roles include 'Entrenador Principal', 'Asistente', 'Fisioterapeuta', 'Atleta', and 'Capit├ín'. The `ListadoRolesPage.tsx` also includes basic search functionality by name or role. The implementation uses TypeScript, React, and TailwindCSS, following the requested functional component pattern with hooks.

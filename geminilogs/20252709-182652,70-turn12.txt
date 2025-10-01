@@ -1,0 +1,20 @@
+﻿I have successfully created all the requested files and directories for the "Campa??as" module, including the `types.ts` file and updated `campanasApi.ts` to use it.
+
+The structure is as follows:
+
+```
+C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/campanas/
+Ôö£ÔöÇÔöÇ CampanasPage.tsx
+Ôö£ÔöÇÔöÇ campanasApi.ts
+Ôö£ÔöÇÔöÇ types.ts
+ÔööÔöÇÔöÇ components/
+    Ôö£ÔöÇÔöÇ CalendarioCampanas.tsx
+    Ôö£ÔöÇÔöÇ CrearCampana.tsx
+    Ôö£ÔöÇÔöÇ HistorialCampanas.tsx
+    Ôö£ÔöÇÔöÇ MetricasCampana.tsx
+    ÔööÔöÇÔöÇ SeguimientoResultados.tsx
+```
+
+All files have initial content based on the provided specifications and technical requirements (TypeScript, React, TailwindCSS, functional components with hooks, and mock data).
+
+The module for "Campa??as - Organizador de Iniciativas de Promoci├│n" has been created.

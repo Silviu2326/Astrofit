@@ -1,0 +1,36 @@
+﻿Claro, comenzar├® a crear la estructura de archivos y el contenido para el m├│dulo `CRM - Cliente Detalle`. usar├® React, TypeScript y TailwindCSS como has solicitado.call:write_file{content:call:write_file{content:<ctrl46>
+export const mockCliente = {
+  id: '1',
+  nombre: 'Ana Garc├¡a',
+  fotoUrl: 'https://randomuser.me/api/portraits/women/75.jpg',
+  tags: ['VIP', 'Fitness', 'Nutrici├│n'],
+  info: {
+    email: 'ana.garcia@example.com',
+    telefono: '+34 600 123 456',
+    fechaAlta: '2023-01-15',
+    estado: 'Activo',
+    direccion: 'Calle Falsa 123, Madrid, Espa├▒a',
+  },
+  historial: [
+    { id: 'h1', tipo: 'Entrenamiento', fecha: '2024-07-22', descripcion: 'Sesi├│n de cardio y fuerza.' },
+    { id: 'h2', tipo: 'Pago', fecha: '2024-07-20', descripcion: 'Abono mensualidad Julio. $50.00' },
+    { id: 'h3', tipo: 'Reserva', fecha: '2024-07-18', descripcion: 'Clase de Yoga reservada para el 25/07.' },
+    { id: 'h4', tipo: 'Formulario', fecha: '2023-01-15', descripcion: 'Cuestionario inicial de salud completado.' },
+  ],
+  archivos: [
+    { id: 'a1', nombre: 'Contrato_firmado.pdf', tipo: 'Contrato', fechaSubida: '2023-01-15' },
+    { id: 'a2', nombre: 'Consentimiento_datos.pdf', tipo: 'Consentimiento', fechaSubida: '2023-01-15' },
+    { id: 'a3', nombre: 'Informe_progreso_Q1.pdf', tipo: 'Informe', fechaSubida: '2024-04-01' },
+  ],
+  notas: [
+    { id: 'n1', autor: 'Entrenador Alex', texto: 'Muestra gran progreso en ejercicios de pierna. Sugerir nueva rutina.', timestamp: '2024-07-10T10:30:00Z' },
+    { id: 'n2', autor: 'Admin', texto: 'Pendiente de pago la cuota de Agosto.', timestamp: '2024-07-21T15:00:00Z' },
+  ],
+  tareas: [
+    { id: 't1', titulo: 'Preparar nueva rutina de entrenamiento', asignadoA: 'Entrenador Alex', fechaVencimiento: '2024-08-01', estado: 'Pendiente' },
+    { id: 't2', titulo: 'Llamar para seguimiento de satisfacci├│n', asignadoA: 'Soporte', fechaVencimiento: '2024-07-28', estado: 'Completada' },
+  ],
+};
+
+export type Cliente = typeof mockCliente;
+<ctrl46>,file_path:<ctrl46>C:/Users/usuario/Documents/fuzzie-production/src/features/cliente-detalle/clienteDetalleApi.ts<ctrl46>}call:write_file{content:

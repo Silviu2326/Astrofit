@@ -1,0 +1,7 @@
+﻿I have successfully created and enhanced the requested files for the "Agente Entrenador" module:
+
+*   `src/features/agente-entrenador/components/analytics/ValidadorRutinas.tsx`
+*   `src/features/agente-entrenador/components/analytics/IndicadoresEquilibrio.tsx`
+*   `src/features/agente-entrenador/agenteEntrenadorApi.ts`
+
+These files now include the specified functionalities and realistic mock data.

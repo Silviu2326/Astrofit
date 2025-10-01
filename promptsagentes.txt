@@ -1,0 +1,303 @@
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Agente Nutricionista - El Chef de la Salud siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/agente-nutricionista/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/agente-nutricionista/AgenteNutricionistaPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/agente-nutricionista/agenteNutricionistaApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/agente-nutricionista/components/CalendarioSemanal.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/agente-nutricionista/components/SustitucionesInteligentes.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/agente-nutricionista/components/AlertasNutricionales.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/agente-nutricionista/components/RecetasRapidas.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/agente-nutricionista/components/ExportadorVisual.tsx
+
+
+ESPECIFICACIONES:
+- Vista de calendario semanal de comidas con macros diarios y totales
+- Sustituciones inteligentes: clic en una comida y te sugiere alternativas similares
+- Alertas nutricionales: indicadores de déficit/exceso (ej. poca proteína, exceso azúcar)
+- Panel lateral de recetas rápidas: arrastrar y soltar para reemplazar
+- Exportador visual: botón para generar menú imprimible o PDF para el cliente
+- Dashboard inteligente con recomendaciones automáticas
+- Análisis nutricional en tiempo real
+- Sugerencias personalizadas por cliente
+- Integración con biblioteca de recetas
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Agente Entrenador - El Programador de Hierro siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/agente-entrenador/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/agente-entrenador/AgenteEntrenadorPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/agente-entrenador/agenteEntrenadorApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/agente-entrenador/components/ConstructorVisual.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/agente-entrenador/components/TimelineProgresion.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/agente-entrenador/components/BancoVariantes.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/agente-entrenador/components/IndicadoresEquilibrio.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/agente-entrenador/components/ProgresoSimulado.tsx
+
+
+ESPECIFICACIONES:
+- Constructor visual de entrenos en bloques (fuerza, cardio, movilidad)
+- Timeline de progresión: cómo va aumentando cargas/volumen en semanas
+- Banco de variantes sugeridas automáticamente si detecta molestias o limitaciones
+- Indicadores de equilibrio: proporción tren superior/inferior, core, movilidad
+- Progreso simulado: ver cómo evoluciona la carga si se siguen las progresiones
+- Drag & drop para organizar ejercicios
+- Análisis automático de balance muscular
+- Sugerencias de progresión basadas en ciencia
+- Alertas de sobreentrenamiento y desbalances
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Agente de Bienestar - El Coach de Hábitos siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/agente-bienestar/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/agente-bienestar/AgenteBienestarPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/agente-bienestar/agenteBienestarApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/agente-bienestar/components/TableroHabitos.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/agente-bienestar/components/SemaforoAdherencia.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/agente-bienestar/components/RetosGamificados.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/agente-bienestar/components/PanelMotivacional.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/agente-bienestar/components/TendenciasEstiloVida.tsx
+
+
+ESPECIFICACIONES:
+- Tablero de hábitos (agua, sueño, pasos, estiramientos)
+- Semáforo de adherencia: verde, amarillo, rojo según % cumplimiento
+- Retos gamificados: tarjetas semanales con micro-objetivos ("3 días seguidos de 8h de sueño")
+- Panel motivacional: frases o recordatorios que puedes activar con un clic
+- Tendencias de estilo de vida: gráfico simple de hábitos cumplidos vs. no cumplidos
+- Sistema de puntos y recompensas
+- Tracking automático de métricas de bienestar
+- Recordatorios inteligentes personalizados
+- Insights sobre patrones de comportamiento
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Agente de Progreso - El Analista siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/agente-progreso/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/agente-progreso/AgenteProgresoPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/agente-progreso/agenteProgresoApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/agente-progreso/components/DashboardMetricas.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/agente-progreso/components/GraficosEvolucion.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/agente-progreso/components/AlertasRiesgo.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/agente-progreso/components/InformeAutomatico.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/agente-progreso/components/ModuloInsights.tsx
+
+
+ESPECIFICACIONES:
+- Dashboard de métricas: peso, perímetros, entrenos completados, adherencia nutricional
+- Gráficos de evolución comparativos (antes/después, mes actual vs. anterior)
+- Alertas de riesgo: clientes con más de 2 semanas sin avances visibles
+- Informe automático: botón "generar resumen para cliente" (lenguaje simple)
+- Módulo de insights: recomendaciones rápidas basadas en los datos ("sugerir ajuste calórico", "proponer descanso activo")
+- Análisis predictivo de tendencias
+- Detección automática de plateaus
+- Correlaciones entre variables de progreso
+- Reportes personalizados por cliente
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Agente de Comunicación - El Copy Fitness siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/agente-comunicacion/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/agente-comunicacion/AgenteComunicacionPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/agente-comunicacion/agenteComunicacionApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/agente-comunicacion/components/GeneradorMensajes.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/agente-comunicacion/components/PlantillasRapidas.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/agente-comunicacion/components/VistaPreviaEnvio.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/agente-comunicacion/components/CalendarioEditorial.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/agente-comunicacion/components/CajaCreativa.tsx
+
+
+ESPECIFICACIONES:
+- Generador de mensajes: selecciona tono (cálido, técnico, motivador)
+- Plantillas rápidas: bienvenida, recordatorio de sesión, mensaje motivacional
+- Vista previa de envío: cómo se verá en email o notificación móvil
+- Calendario editorial: sugerencias de días/horas ideales para enviar
+- Caja creativa: genera variaciones de un mismo mensaje para elegir la que más te guste
+- Editor de contenido con IA
+- Personalización automática por cliente
+- Análisis de efectividad de mensajes
+- Biblioteca de copys exitosos
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Agente de Marketing - El Estratega Comercial siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/agente-marketing/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/agente-marketing/AgenteMarketingPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/agente-marketing/agenteMarketingApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/agente-marketing/components/LienzoCampana.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/agente-marketing/components/CopysAutomaticos.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/agente-marketing/components/SimuladorImpacto.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/agente-marketing/components/RecomendacionesTiming.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/agente-marketing/components/HistorialCampanas.tsx
+
+
+ESPECIFICACIONES:
+- Lienzo de campaña: nombre, objetivo, segmento destinatario
+- Copys automáticos para emails, posts y landing page
+- Simulador de impacto: proyección de leads y conversiones según campañas similares previas
+- Recomendaciones de timing (ej. mejor lanzar lunes mañana a leads "oficina")
+- Historial de campañas con resultados y aprendizajes clave
+- Generación de contenido multicanal
+- Análisis de audiencia y segmentación
+- A/B testing automático de copys
+- ROI predictor para campañas
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Agente Financiero - El Contable Fitness siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/agente-financiero/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/agente-financiero/AgenteFinancieroPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/agente-financiero/agenteFinancieroApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/agente-financiero/components/CuadroMandoFinanciero.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/agente-financiero/components/TarjetasAlertas.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/agente-financiero/components/SugerenciasPrecios.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/agente-financiero/components/UpsellsDetectados.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/agente-financiero/components/ProyeccionMensual.tsx
+
+
+ESPECIFICACIONES:
+- Cuadro de mando financiero: ingresos, gastos, margen del mes
+- Tarjetas de alertas: clientes con pagos pendientes, suscripciones por renovar
+- Sugerencias de precios: ajuste recomendado según demanda y comparativas históricas
+- Upsells detectados: lista de clientes con potencial de pasar a plan superior
+- Proyección mensual: estimación de ingresos al cierre si se mantienen tendencias
+- Análisis de rentabilidad por cliente
+- Detección automática de oportunidades comerciales
+- Gestión de cobranza inteligente
+- Métricas de lifetime value
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Agente Científico - El Friki de la Evidencia siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/agente-cientifico/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/agente-cientifico/AgenteCientificoPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/agente-cientifico/agenteCientificoApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/agente-cientifico/components/ProtocolosSugeridos.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/agente-cientifico/components/ResumenesInvestigacion.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/agente-cientifico/components/RecomendacionesSeguras.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/agente-cientifico/components/ValidacionPlanes.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/agente-cientifico/components/MiniBiblioteca.tsx
+
+
+ESPECIFICACIONES:
+- Protocolos sugeridos: rutinas basadas en evidencia con explicación simple
+- Resumenes de investigación: "Lo último sobre HIIT y pérdida de grasa (3 frases clave)"
+- Recomendaciones seguras: sustituciones basadas en ciencia (ej. usar split squat en vez de back squat en caso de dolor lumbar)
+- Validación de planes: semáforo de si un plan cumple estándares científicos (volumen, descanso, intensidad)
+- Mini biblioteca: artículos o guías recomendadas para profundizar
+- Base de datos de estudios científicos
+- Alertas de contraindicaciones
+- Actualizaciones automáticas de evidencia
+- Validador de protocolos contra literatura científica
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Agente Copiloto - El Estratega Integral siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/agente-copiloto/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/agente-copiloto/AgenteCopilotoPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/agente-copiloto/agenteCopilotoApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/agente-copiloto/components/Vision360.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/agente-copiloto/components/RecomendacionSemanal.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/agente-copiloto/components/PrioridadesInteligentes.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/agente-copiloto/components/AccionesRapidas.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/agente-copiloto/components/ImpactoEstimado.tsx
+
+
+ESPECIFICACIONES:
+- Visión 360º del cliente: entreno, dieta, hábitos y progreso en una sola vista
+- Recomendación semanal: hasta 5 micro-ajustes globales (ej. "+200 kcal en días de entreno", "añadir movilidad en calentamiento")
+- Prioridades: ordena qué tocar primero para impacto más rápido
+- Botón "Aplicar todo" o "Aplicar por partes"
+- Impacto estimado: predice la mejora esperada si se siguen los cambios
+- Dashboard unificado de todos los agentes
+- Motor de recomendaciones inteligentes
+- Coordinación automática entre módulos
+- Predicción de resultados basada en cambios propuestos
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks

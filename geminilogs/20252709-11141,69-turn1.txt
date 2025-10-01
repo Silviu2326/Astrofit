@@ -1,0 +1,10 @@
+﻿He creado la estructura completa para el m├│dulo CRM - Clientes Listado, incluyendo los siguientes archivos:
+
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/clientes-listado/ClientesListadoPage.tsx`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/clientes-listado/clientesListadoApi.ts`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/clientes-listado/components/ClientesTable.tsx`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/clientes-listado/components/ClientesFilters.tsx`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/clientes-listado/components/ClientesActions.tsx`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/clientes-listado/components/VistasPersonalizadas.tsx`
+
+Los archivos contienen datos mock realistas y la estructura b├ísica de los componentes seg├║n las especificaciones.

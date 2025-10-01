@@ -1,0 +1,15 @@
+﻿I am unable to create directories using the `run_shell_command` tool in this environment. I will proceed with writing the files directly. If any `write_file` operation fails due to a non-existent directory, I will inform you.
+
+Here's the content for `FuentesLeadPage.tsx`:
+Here's the content for `fuentesLeadApi.ts`:
+Here's the content for `ClasificarLeads.tsx`:
+Here's the content for `EtiquetasCanales.tsx`:
+Here's the content for `AnalisisInversion.tsx`:
+Here's the content for `DashboardFuentes.tsx`:
+(node:1064) MaxListenersExceededWarning: Possible EventTarget memory leak detected. 11 abort listeners added to [AbortSignal]. Use events.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+Here's the content for `TendenciasCanales.tsx`:
+I have created all the requested files. To complete the module structure and ensure type definitions are properly organized, I will now create a `types.ts` file.
+
+Here's the content for `types.ts`:
+I have successfully created the complete structure for the "Fuentes de Lead - An├ílisis de Origen de Clientes" module, including all specified files and an additional `types.ts` file for better organization. All components include realistic mock data, are built with TypeScript and React hooks, and are styled using TailwindCSS.

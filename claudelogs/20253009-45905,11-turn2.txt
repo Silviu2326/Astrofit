@@ -1,0 +1,14 @@
+﻿
+
+Sistema completo de gesti├│n de impuestos implementado en ImpuestosPage.tsx con:
+
+Ô£à **4 cards de resumen fiscal**: IVA repercutido, IVA soportado, resultado (a pagar/devolver), IRPF retenido
+Ô£à **5 tabs**: IVA, IRPF, Otros Impuestos, Declaraciones, Configuraci├│n
+Ô£à **Tab IVA**: Resumen trimestral (Q1-Q4), desglose de 40 operaciones, Modelo 303 simulado
+Ô£à **Tab IRPF**: 13 retenciones, Modelo 130 trimestral, Modelo 190 anual
+Ô£à **Tab Otros**: IAE, tasa basuras, licencia municipal
+Ô£à **Tab Declaraciones**: Historial de 7 declaraciones con estados, calendario fiscal 2025
+Ô£à **Tab Configuraci├│n**: Datos fiscales, configuraci├│n IVA/IRPF, calculadoras interactivas
+Ô£à **Datos realistas**: 40 operaciones IVA, 13 retenciones IRPF, c├ílculos correctos con f├│rmulas reales
+Ô£à **Dise├▒o profesional**: Paleta azul-gris, badges de estado, animaciones framer-motion, responsive
+Ô£à **Disclaimer legal** sobre verificaci├│n profesional

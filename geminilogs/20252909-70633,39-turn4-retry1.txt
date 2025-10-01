@@ -1,0 +1,32 @@
+﻿Error executing tool run shell command: Tool "run shell command" not found in registry.
+(node:16216) MaxListenersExceededWarning: Possible EventTarget memory leak detected. 11 abort listeners added to [AbortSignal]. Use events.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+Okay, I'll start by locating the `NodosDisparadores.tsx` component to begin the improvements.Got the component path. Reading the file to see how to improve it.Okay, I'll improve the existing component by enhancing visuals with styled `Card` components and category-specific colors. I'll refine the drag-and-drop with visual cues and a clear preview. To keep it clean, I'll modularize the code, creating separate components for the search bar and trigger cards. I'm now replacing the `NodosDisparadores.tsx` file with the updated code.Okay, `NodosDisparadores.tsx` is updated. I need to verify the existence of `card.tsx`, `input.tsx`, and `badge.tsx` in `src/components/ui` to ensure its new dependencies are met.`src/components/ui` is missing. I'll create it, then add `card.tsx`, `input.tsx`, and `badge.tsx` within it. Starting with the directory creation.`mkdir -p` failed on Windows. I'll use `mkdir` to create `src`, then `src\components`, then `src\components\ui`, handling each directory individually. Starting with `src`.`src` exists. Creating `src\components`.`src\components` exists. Creating `src\components\ui`.Oops, wrong tool name. It's `run_shell_command`. Correcting.The directories exist, my assumption was wrong. I'll list `src/components` to verify.`ui` is missing from `components`, and my `mkdir` failed. I'll retry creating `ui` within `src/components`.`mkdir src\components\ui` fails, but `list_directory` doesn't show it. I'll try creating `card.tsx` directly in `src/components/ui` to confirm if the directory exists.`card.tsx` is done, so `src/components/ui` exists. Next, I'll create `input.tsx` and `badge.tsx`.call:write_file{content:import React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
+
+const badgeVariants = cva(
+  'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+  {
+    variants: {
+      variant: {
+        default: 'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
+        secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        destructive: 'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
+        outline: 'text-foreground',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+    },
+  }
+);
+
+export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {}
+
+function Badge({ className, variant, ...props }: BadgeProps) {
+  return <div className={cn(badgeVariants({ variant }), className)} {...props} />;
+}
+
+export { Badge, badgeVariants };
+<ctrl46>,file_path:<ctrl46>C:\Users\usuario\Documents\project-bolt-sb1-qekdxfwt\project\src\components\ui\badge.tsx<ctrl46>}

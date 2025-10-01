@@ -1,0 +1,273 @@
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo CRM - Clientes Listado siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/clientes-listado/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/clientes-listado/ClientesListadoPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/clientes-listado/clientesListadoApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/clientes-listado/components/ClientesTable.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/clientes-listado/components/ClientesFilters.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/clientes-listado/components/ClientesActions.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/clientes-listado/components/VistasPersonalizadas.tsx
+
+
+ESPECIFICACIONES:
+- Tabla con columnas: Foto, Nombre, Estado, Etiquetas, Fecha Alta, Última Actividad, Acciones
+- Filtros por: nombre, estado (activo/inactivo), etiquetas, fecha de alta
+- Búsqueda en tiempo real
+- Vistas personalizadas guardadas ("Clientes activos online", "Clientes sin actividad 30 días")
+- Acciones en lote: añadir etiquetas, exportar, enviar formularios
+- Central de mando para ver comunidad entera de clientes
+- Información básica visible sin abrir fichas individuales
+- Sistema de etiquetas personalizables ("online", "premium", "rehabilitación")
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo CRM - Cliente Detalle siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/cliente-detalle/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/cliente-detalle/ClienteDetallePage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/cliente-detalle/clienteDetalleApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/cliente-detalle/components/ClienteHeader.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/cliente-detalle/components/ClienteInfo.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/cliente-detalle/components/ClienteHistorial.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/cliente-detalle/components/ClienteArchivos.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/cliente-detalle/components/ClienteNotas.tsx
+8. project-bolt-sb1-qekdxfwt/project/src/features/cliente-detalle/components/ClienteTareas.tsx
+
+
+ESPECIFICACIONES:
+- Header con foto, nombre, etiquetas editables
+- Tabs para: Información, Historial, Archivos, Notas, Tareas
+- Información básica: contacto, fecha alta, estado
+- Historial completo: entrenamientos, reservas, pagos, formularios
+- Gestión de archivos: contratos, consentimientos, informes
+- Sistema de notas privadas con timestamp
+- Tareas asignadas con fechas y estados
+- Ficha completa 360º del cliente
+- Registro de todo lo que ha pasado con timeline
+- Programación de seguimientos
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo CRM - Leads Listado siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/leads-listado/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/leads-listado/LeadsListadoPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/leads-listado/leadsListadoApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/leads-listado/components/LeadsKanban.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/leads-listado/components/LeadCard.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/leads-listado/components/LeadsStats.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/leads-listado/components/LeadsFilters.tsx
+
+
+ESPECIFICACIONES:
+- Tablero kanban con columnas: "Nuevo contacto", "Contactado", "Cita agendada", "Ganado", "Perdido"
+- Tarjetas de leads arrastrables entre columnas
+- Estadísticas del embudo: total leads, tasa conversión, tiempo promedio
+- Filtros por origen, fecha, cualificación
+- Vista de lista como alternativa al kanban
+- Acciones rápidas: llamar, enviar email, agendar cita
+- Cada tarjeta debe mostrar: nombre, teléfono, email, origen, fecha contacto, objetivo
+- Radar comercial sencillo pero efectivo
+- Vista de oportunidades en tiempo real
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo CRM - Lead Detalle siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/lead-detalle/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/lead-detalle/LeadDetallePage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/lead-detalle/leadDetalleApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/lead-detalle/components/LeadHeader.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/lead-detalle/components/LeadQualification.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/lead-detalle/components/LeadTimeline.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/lead-detalle/components/LeadConversion.tsx
+
+
+ESPECIFICACIONES:
+- Header con datos de contacto y estado actual
+- Formulario de cualificación: objetivo, disponibilidad, presupuesto, urgencia
+- Timeline de todas las interacciones: llamadas, emails, notas
+- Sección de seguimiento con próximas acciones
+- Botón prominente para convertir a cliente
+- Formulario de nueva interacción (llamada, email, nota)
+- Editar información del lead
+- Añadir notas de contacto con timestamp
+- Programar seguimientos
+- Convertir lead a cliente (transferir toda la información)
+- Historial completo de interacciones
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo CRM - Segmentos siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/segmentos/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/segmentos/SegmentosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/segmentos/segmentosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/segmentos/components/SegmentosList.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/segmentos/components/SegmentoBuilder.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/segmentos/components/SegmentoPreview.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/segmentos/components/SegmentoActions.tsx
+
+
+ESPECIFICACIONES:
+- Lista de segmentos con: nombre, descripción, cantidad de miembros, última actualización
+- Constructor visual de reglas con condiciones múltiples
+- Vista previa en tiempo real de cuántos clientes/leads cumplen las reglas
+- Acciones sobre segmentos: etiquetar, exportar, enviar formulario, eliminar
+- Ejemplos de reglas: "Clientes online sin reservas en los últimos 30 días", "Personas interesadas en fuerza que no han completado el PAR-Q", "Clientes premium que cumplen años este mes"
+- Constructor debe permitir: múltiples condiciones con AND/OR, filtros por tipo/etiquetas/fechas/actividad/estado, guardar segmento con nombre y descripción
+- Segmentos dinámicos que se actualizan automáticamente
+- Lanzar acciones masivas desde segmentos
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo CRM - Notas siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/notas/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/notas/NotasPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/notas/notasApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/notas/components/NotasList.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/notas/components/NotaForm.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/notas/components/NotaCard.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/notas/components/NotasFilters.tsx
+
+
+ESPECIFICACIONES:
+- Lista de notas con vista de cards o lista
+- Filtros por: cliente/lead asociado, etiquetas, fecha, autor
+- Búsqueda en contenido de notas
+- Botón flotante para nueva nota
+- Modal para crear/editar notas
+- Cada nota debe tener: título y contenido, cliente/lead asociado (opcional), etiquetas personalizables, autor y timestamp, asignación a miembro del equipo, prioridad (alta, media, baja)
+- Crear nota rápida con cliente preseleccionado
+- Editar notas existentes
+- Filtrar por etiquetas y clientes
+- Asignar notas a otros miembros del equipo
+- Notas privadas vs compartidas
+- Comentarios tras sesiones, detalles personales, ideas futuras
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo CRM - Tareas siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/tareas/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/tareas/TareasPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/tareas/tareasApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/tareas/components/TareasList.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/tareas/components/TareaForm.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/tareas/components/TareaCard.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/tareas/components/TareasFilters.tsx
+
+
+ESPECIFICACIONES:
+- Lista de tareas con diferentes vistas: todas, pendientes, completadas, vencidas
+- Filtros por: estado, fecha vencimiento, asignado a, cliente relacionado
+- Checkbox para marcar completadas
+- Indicadores visuales de prioridad y vencimiento
+- Cada tarea debe tener: título y descripción, fecha de vencimiento, estado (pendiente/en progreso/completada), prioridad (alta/media/baja), asignado a (miembro del equipo), cliente/lead relacionado (opcional), notas adicionales
+- Ejemplos de tareas: "Llamar a Ana para feedback de la última rutina", "Enviar recordatorio de pago a Marcos", "Agendar sesión de evaluación con Laura"
+- Crear tarea rápida
+- Asignar a otros miembros
+- Notificaciones de vencimiento
+- Historial de tareas completadas
+- Lista de pendientes para no perder el ritmo
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo CRM - Archivos siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/archivos/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/archivos/ArchivosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/archivos/archivosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/archivos/components/ArchivosGrid.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/archivos/components/ArchivoUpload.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/archivos/components/ArchivoViewer.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/archivos/components/ArchivosFilters.tsx
+
+
+ESPECIFICACIONES:
+- Grid de archivos con thumbnails para imágenes/PDFs
+- Upload por drag & drop
+- Filtros por: tipo de archivo, cliente asociado, fecha subida, etiquetas
+- Búsqueda por nombre de archivo
+- Organizador por carpetas/categorías
+- Cada archivo debe tener: nombre y extensión, tamaño del archivo, fecha de subida, cliente/lead asociado, etiquetas categorizadas ("contratos", "médicos", "programas", "fotos"), control de versiones para actualizaciones
+- Tipos de archivos comunes: contratos firmados (PDF), certificados médicos (PDF, imagen), programas de entrenamiento (PDF), fotos de progreso (imagen), formularios completados (PDF)
+- Vista previa sin descargar
+- Descarga individual o en lote
+- Historial de versiones
+- Compartir con cliente vía enlace
+- Organización automática por tipo
+- Documentación importante centralizada
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks

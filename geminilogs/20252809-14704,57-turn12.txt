@@ -1,0 +1,1 @@
+﻿He creado los nuevos archivos de componentes y he actualizado `ListadoSedesPage.tsx` y `listadoSedesApi.ts` seg├║n tus especificaciones.

@@ -1,0 +1,7 @@
+﻿I have successfully created the folder structure and written the content for the following files:
+
+- `C:\Users\usuario\Documents\project-bolt-sb1-qekdxfwt\project\src\features\reservas-clase\ReservasClasePage.tsx`
+- `C:\Users\usuario\Documents\project-bolt-sb1-qekdxfwt\project\src\features\reservas-clase\reservasClaseApi.ts`
+- `C:\Users\usuario\Documents\project-bolt-sb1-qekdxfwt\project\src\features\reservas-clase\components\TablaReservas.tsx`
+- `C:\Users\usuario\Documents\project-bolt-sb1-qekdxfwt\project\src\features\reservas-clase\components\GestorAforo.tsx`
+- `C:\Users\usuario\Documents\project-bolt-sb1-qekdxfwt\project\src\features\reservas-clase\components\ListaEspera.tsx`

@@ -1,0 +1,8 @@
+﻿Okay, I will enhance the `project-bolt-sb1-qekdxfwt/project/src/features/torneos/` module.
+
+Here's the plan:
+1.  Create the new component files: `GeneradorBrackets.tsx`, `SistemaSeeding.tsx`, `StreamingTorneo.tsx`, `ApuestasVirtuales.tsx`, `GestionArbitros.tsx`, `AnalyticsTorneo.tsx`, `SistemaPremios.tsx`, and `IntegracionRedesSociales.tsx` in `src/features/torneos/components/`.
+2.  Update `TorneosPage.tsx` to integrate the new components.
+3.  Update `torneosApi.ts` with relevant endpoints and algorithms.
+
+I will start by creating the new component files.New component files are done. Now, I'll update `TorneosPage.tsx` by first reading its content.Okay, I'm updating `TorneosPage.tsx`. I'll import and use the new components, adding them as new page sections.`TorneosPage.tsx` is updated. Next, I'll update `torneosApi.ts` with bracket, seeding, and streaming placeholders. I'll start by reading `torneosApi.ts`.Okay, I'll update `torneosApi.ts` with bracket generation, seeding, and streaming management placeholders.Files and updates are done: new components created, `TorneosPage.tsx` updated with component imports/usage, and `torneosApi.ts` now includes placeholder endpoints for brackets, seeding, streaming, analytics, prizes, social media, virtual bets, and referee management.

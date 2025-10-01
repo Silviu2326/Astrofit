@@ -1,0 +1,15 @@
+﻿The module `project-bolt-sb1-qekdxfwt/project/src/features/control-pedidos/` has been enhanced.
+
+The following files and folders were created:
+- `src/features/control-pedidos/components/LineaTiempo.tsx`
+- `src/features/control-pedidos/components/ConfirmadorRecepcion.tsx`
+- `src/features/control-pedidos/components/AnalisisProveedores.tsx`
+- `src/features/control-pedidos/components/IntegracionProveedores.tsx`
+- `src/features/control-pedidos/components/AlertasPedidosRetrasados.tsx`
+- `src/features/control-pedidos/components/GeneradorOrdenesAutomatico.tsx`
+- `src/features/control-pedidos/components/ValidacionCalidad.tsx`
+- `src/features/control-pedidos/components/DashboardCompras.tsx`
+
+The following files were updated:
+- `ControlPedidosPage.tsx`: Integrated the new components for advanced purchase management.
+- `controlPedidosApi.ts`: Added new endpoints for supplier performance analysis and order tracking.

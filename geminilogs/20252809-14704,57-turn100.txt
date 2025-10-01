@@ -1,0 +1,1 @@
+﻿All specified files and folders have been created, and the existing files `EditarMesocicloPage.tsx` and `editarMesocicloApi.ts` have been updated to integrate the new components and endpoints.

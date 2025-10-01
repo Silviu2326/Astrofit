@@ -1,0 +1,824 @@
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Listado de Roles - Gestión de Equipo siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/listado-roles/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/listado-roles/ListadoRolesPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/listado-roles/listadoRolesApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/listado-roles/components/TablaEquipo.tsx
+
+ESPECIFICACIONES:
+- Página principal con tabla básica de miembros del equipo deportivo
+- API para gestión de roles deportivos (entrenadores, asistentes, fisioterapeutas, atletas)
+- Tabla simple con foto de perfil, nombre, posición, rol principal
+- Roles básicos: entrenador principal, asistente, fisioterapeuta, atleta, capitán
+- Funcionalidad de búsqueda por nombre o rol
+- Datos mock realistas con equipo de 25 personas
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Estructura base para gestión deportiva profesional
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/listado-roles/ añadiendo estos archivos:
+
+4. components/EditorRoles.tsx - Editor visual cambiar roles drag & drop
+5. components/HistorialCambios.tsx - Historial completo cambios rol timestamps justificaciones
+6. components/JerarquiaVisual.tsx - Jerarquía visual organigrama deportivo estilo árbol
+7. components/BotonesAccionRapida.tsx - Botones promover cambiar rol alta/baja temporal
+8. components/SistemaNotificaciones.tsx - Notificaciones cambios roles importantes
+9. components/ValidacionesRoles.tsx - Validaciones máximo 1 capitán mínimo 2 entrenadores
+10. components/RolesTemporales.tsx - Gestión roles temporales lesiones ausencias
+11. components/IntegracionCalendario.tsx - Integración calendario planificar cambios futuros
+
+ACTUALIZA TAMBIÉN:
+- ListadoRolesPage.tsx - Integrar gestión avanzada equipo
+- listadoRolesApi.ts - Endpoints gestión roles y notificaciones
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Permisos de Entrenadores - Control de Accesos siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/permisos-entrenadores/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/permisos-entrenadores/PermisosEntrenadoresPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/permisos-entrenadores/permisosEntrenadoresApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/permisos-entrenadores/components/MatrizPermisos.tsx
+
+ESPECIFICACIONES:
+- Página principal con matriz de permisos estilo checklist
+- API para gestión de permisos por rol de entrenador
+- Matriz simple: entrenadores vs permisos con switches ON/OFF
+- Permisos básicos: crear rutinas, acceder datos médicos, convocar atletas, gestionar calendario
+- Vista tabular clara con nombres de entrenadores y permisos
+- Estados visuales: permitido (verde), denegado (rojo), pendiente (amarillo)
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Sistema básico de roles y permisos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/permisos-entrenadores/ añadiendo estos archivos:
+
+4. components/GestorRoles.tsx - Gestor roles predefinidos entrenador principal asistente especialista
+5. components/AuditoriaAccesos.tsx - Sistema auditoría completo quién cambió qué permiso cuándo
+6. components/PlantillasPermisos.tsx - Plantillas permisos tipo entrenador asignación rápida
+7. components/PermisosGranulares.tsx - Permisos granulares acceso horario grupo atletas tipo data
+8. components/HerenciaPermisos.tsx - Sistema herencia permisos basado jerarquía
+9. components/AlertasSeguridad.tsx - Alertas seguridad permisos críticos
+10. components/AprobacionMultinivel.tsx - Aprobación multinivel permisos sensibles datos médicos
+11. components/LogsAcceso.tsx - Logs acceso geolocalización device tracking
+
+ACTUALIZA TAMBIÉN:
+- PermisosEntrenadoresPage.tsx - Integrar sistema avanzado control accesos
+- permisosEntrenadoresApi.ts - Endpoints auditoría y seguridad
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Asignación de Roles - Gestión Flexible siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/asignacion-roles/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/asignacion-roles/AsignacionRolesPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/asignacion-roles/asignacionRolesApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/asignacion-roles/components/FormularioAsignacion.tsx
+
+ESPECIFICACIONES:
+- Página principal con formulario de asignación múltiple de roles
+- API para gestión de roles múltiples por persona
+- Formulario con menús desplegables para seleccionar persona y roles
+- Capacidad de asignar múltiples roles: jugador + capitán, entrenador + fisioterapeuta
+- Etiquetas de colores para cada tipo de rol asignado
+- Vista previa de las asignaciones antes de confirmar
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Sistema de formularios con validación básica
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/asignacion-roles/ añadiendo estos archivos:
+
+4. components/ValidadorConflictos.tsx - Validador automático conflictos roles incompatibles sobrecarga
+5. components/SugerenciasInteligentes.tsx - Sistema sugerencias basado experiencia especialidades
+6. components/VisualizadorRoles.tsx - Visualizador roles múltiples badges códigos color avanzados
+7. components/GestionTemporal.tsx - Gestión temporal roles activos solo competencias
+8. components/RotacionAutomatica.tsx - Sistema rotación automática responsabilidades
+9. components/AnalisisCarga.tsx - Análisis carga trabajo persona múltiples roles
+10. components/AlertasBurnout.tsx - Alertas burnout persona demasiados roles
+11. components/HistoriaAsignaciones.tsx - Historia asignaciones exitosas replicar patrones
+
+ACTUALIZA TAMBIÉN:
+- AsignacionRolesPage.tsx - Integrar sistema inteligente gestión
+- asignacionRolesApi.ts - Endpoints validación y sugerencias
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Calendario de Periodización - Planificación Anual siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/calendario-periodizacion/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/calendario-periodizacion/CalendarioPeriodizacionPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/calendario-periodizacion/calendarioPeriodizacionApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/calendario-periodizacion/components/VistaGantt.tsx
+
+ESPECIFICACIONES:
+- Página principal con vista tipo Gantt del año deportivo
+- API con datos de ciclos de entrenamiento anuales
+- Vista Gantt básica con barras por semanas mostrando diferentes fases
+- Fases básicas: pretemporada, competición, descanso activo
+- Colores por tipo: azul (fuerza), verde (técnica), rojo (competición), amarillo (descanso)
+- Navegación por meses del año deportivo
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Integración básica con biblioteca de Gantt charts
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/calendario-periodizacion/ añadiendo estos archivos:
+
+4. components/EditorFases.tsx - Editor visual modificar fases drag drop temporal
+5. components/AnalisisCarga.tsx - Análisis automático distribución cargas entrenamiento
+6. components/SincronizadorCompetencias.tsx - Sincronización calendario oficial competencias deporte
+7. components/AlertasSolapamiento.tsx - Alertas solapamiento fases períodos intensos
+8. components/PlantillasDeporte.tsx - Sistema plantillas periodización por deporte
+9. components/PrediccionFatiga.tsx - Predicción fatiga planificación cargas
+10. components/IntegracionMeteorologica.tsx - Integración datos meteorológicos entrenamientos outdoor
+11. components/NotificacionesCambioFase.tsx - Notificaciones automáticas cambios fase equipo técnico
+
+ACTUALIZA TAMBIÉN:
+- CalendarioPeriodizacionPage.tsx - Integrar planificación deportiva avanzada
+- calendarioPeriodizacionApi.ts - Endpoints timeline y sincronización APIs
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Editor de Mesociclo - Bloques de Entrenamiento siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/editar-mesociclo/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/editar-mesociclo/EditarMesocicloPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/editar-mesociclo/editarMesocicloApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/editar-mesociclo/components/EditorModular.tsx
+
+ESPECIFICACIONES:
+- Página principal con editor de bloques de entrenamiento
+- API para gestión de mesociclos y microciclos
+- Editor modular básico con sliders para volumen e intensidad
+- Objetivos configurables: fuerza, resistencia, técnica, velocidad
+- Vista de resumen con distribución porcentual de cada objetivo
+- Duración configurable: 2-6 semanas por mesociclo
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Controles slider para valores numéricos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/editar-mesociclo/ añadiendo estos archivos:
+
+4. components/CalculadoraCarga.tsx - Calculadora automática cargas principios científicos
+5. components/ValidadorCientifico.tsx - Validador coherencia literatura deportiva científica
+6. components/SimuladorAdaptacion.tsx - Simulador adaptaciones fisiológicas esperadas
+7. components/AlertasSobreentrenamiento.tsx - Sistema alertas sobreentrenamiento sub-entrenamiento
+8. components/IntegracionBaseDatos.tsx - Integración bases datos métodos entrenamiento
+9. components/RecomendacionesDeporte.tsx - Recomendaciones automáticas deporte específico
+10. components/AnalisisProgresion.tsx - Análisis progresión óptima periodización inversa
+11. components/PrediccionResultados.tsx - Predicción resultados mesociclos similares anteriores
+
+ACTUALIZA TAMBIÉN:
+- EditarMesocicloPage.tsx - Integrar herramientas científicas avanzadas
+- editarMesocicloApi.ts - Endpoints cálculos científicos y validaciones
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Plantillas de Mesociclos - Banco de Planificaciones siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/plantillas-mesociclos/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-mesociclos/PlantillasMesociclosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-mesociclos/plantillasMesociclosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-mesociclos/components/GaleriaPlantillas.tsx
+
+ESPECIFICACIONES:
+- Página principal con galería de plantillas de mesociclos
+- API con plantillas predefinidas para diferentes deportes
+- Galería de tarjetas con título, duración, deporte y botón "aplicar"
+- Plantillas básicas: pretemporada fútbol, fuerza máxima, resistencia aeróbica
+- Vista previa básica de cada plantilla antes de aplicar
+- Sistema de favoritos para plantillas más usadas
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Sistema de tarjetas responsive con preview
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/plantillas-mesociclos/ añadiendo estos archivos:
+
+4. components/RecomendadorIA.tsx - IA recomienda plantillas historial equipo
+5. components/EditorPlantillas.tsx - Editor avanzado crear modificar plantillas personalizadas
+6. components/BibliotecaComunitaria.tsx - Biblioteca comunitaria equipos comparten plantillas exitosas
+7. components/RatingReviews.tsx - Sistema rating reviews plantillas entrenadores
+8. components/AdaptacionAutomatica.tsx - Adaptación automática plantillas características equipo
+9. components/VersionadoPlantillas.tsx - Versionado plantillas historial cambios
+10. components/AnalisisEfectividad.tsx - Análisis efectividad plantillas resultados
+11. components/MarketplacePremium.tsx - Marketplace plantillas premium entrenadores élite
+
+ACTUALIZA TAMBIÉN:
+- PlantillasMesociclosPage.tsx - Integrar sistema inteligente recomendaciones
+- plantillasMesociclosApi.ts - Endpoints IA y colaboración comunitaria
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Pruebas Físicas - Laboratorio de Tests siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/pruebas-fisicas/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/pruebas-fisicas/PruebasFisicasPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/pruebas-fisicas/pruebasFisicasApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/pruebas-fisicas/components/TablaPruebas.tsx
+
+ESPECIFICACIONES:
+- Página principal con tabla de pruebas físicas programadas
+- API con datos de tests: vertical jump, velocidad, resistencia, 1RM, VO2
+- Tabla básica con tipo de prueba, fecha, atletas participantes, estado
+- Estados: programada, en curso, completada, cancelada
+- Formulario simple para programar nuevas pruebas
+- Lista de atletas convocados por prueba
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Sistema básico de gestión de tests deportivos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/pruebas-fisicas/ añadiendo estos archivos:
+
+4. components/ProtocolosCientificos.tsx - Protocolos científicos estandarizados instrucciones detalladas
+5. components/RegistroTiempoReal.tsx - Sistema registro tiempo real cronómetros mediciones
+6. components/AnalizadorBiomecanico.tsx - Analizador biomecánico técnica movimientos
+7. components/IntegracionDispositivos.tsx - Integración simulada dispositivos medición células
+8. components/CalculosPercentiles.tsx - Cálculos automáticos percentiles rankings posición
+9. components/AlertasAnomalias.tsx - Sistema alertas resultados anómalos lesiones
+10. components/ExportacionCientifica.tsx - Exportación resultados formatos científicos
+11. components/BaseDatosNormativa.tsx - Base datos normativa deporte edad género
+
+ACTUALIZA TAMBIÉN:
+- PruebasFisicasPage.tsx - Integrar laboratorio científico avanzado
+- pruebasFisicasApi.ts - Endpoints hardware y cálculos estadísticos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Resultados Históricos - Evolución por Atleta siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/resultados-historicos/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/resultados-historicos/ResultadosHistoricosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/resultados-historicos/resultadosHistoricosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/resultados-historicos/components/GraficoEvolucion.tsx
+
+ESPECIFICACIONES:
+- Página principal con gráficos de evolución individual
+- API con historial de resultados por atleta y prueba
+- Gráfico de líneas básico mostrando progresión temporal
+- Selector de atleta y tipo de prueba
+- Datos ejemplo: salto vertical 40cm → 48cm en 6 meses
+- Vista de resumen con mejor marca personal y fecha
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS, Chart.js
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Gráficos interactivos básicos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/resultados-historicos/ añadiendo estos archivos:
+
+4. components/AnalisisTendencias.tsx - Análisis automático tendencias mejora estancamiento declive
+5. components/PrediccionRendimiento.tsx - Predicción rendimiento futuro curvas progresión
+6. components/DetectorPlateau.tsx - Detector automático plateaus recomendaciones intervención
+7. components/CorrelacionesTests.tsx - Correlaciones diferentes tests mismo atleta
+8. components/AnalisisEstacionalidad.tsx - Análisis estacionalidad rendimiento
+9. components/ComparacionNormativas.tsx - Comparación automática normativas deporte categoría
+10. components/AlertasRegresiones.tsx - Sistema alertas regresiones significativas
+11. components/ReportesProgreso.tsx - Reportes automáticos progreso atletas entrenadores
+
+ACTUALIZA TAMBIÉN:
+- ResultadosHistoricosPage.tsx - Integrar análisis deportivo avanzado
+- resultadosHistoricosApi.ts - Endpoints modelos predictivos y alertas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Comparador de Resultados - Análisis Entre Atletas siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/comparador-resultados/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/comparador-resultados/ComparadorResultadosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/comparador-resultados/comparadorResultadosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/comparador-resultados/components/GraficoComparativo.tsx
+
+ESPECIFICACIONES:
+- Página principal para comparar rendimiento entre atletas
+- API con datos comparativos de múltiples atletas
+- Gráfico de barras lado a lado con colores por atleta
+- Selector múltiple para elegir 2-5 atletas a comparar
+- Métricas clave: fuerza, velocidad, resistencia, agilidad
+- Vista de radar chart para comparación multivariable
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS, Chart.js
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Múltiples tipos de gráficos comparativos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/comparador-resultados/ añadiendo estos archivos:
+
+4. components/AnalisisFortalezas.tsx - Análisis automático fortalezas debilidades atleta
+5. components/RecomendacionesEntrenamiento.tsx - Recomendaciones entrenamiento personalizadas gaps
+6. components/SimuladorAlineacion.tsx - Simulador alineaciones óptimas complementariedad
+7. components/BenchmarksHistoricos.tsx - Comparación benchmarks históricos equipo
+8. components/CompatibilidadAtletas.tsx - Análisis compatibilidad atletas deportes equipo
+9. components/ScoringPonderado.tsx - Sistema scoring ponderado importancia métrica
+10. components/PrediccionCompetencia.tsx - Predicción rendimiento competencia tests
+11. components/ReportesScouting.tsx - Reportes automatizados scouting puntos fuertes débiles
+
+ACTUALIZA TAMBIÉN:
+- ComparadorResultadosPage.tsx - Integrar análisis competitivo avanzado
+- comparadorResultadosApi.ts - Endpoints algoritmos fortalezas y simulaciones
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Cuestionario Diario - Control de Wellness siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/cuestionario-diario/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/cuestionario-diario/CuestionarioDiarioPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/cuestionario-diario/cuestionarioDiarioApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/cuestionario-diario/components/FormularioWellness.tsx
+
+ESPECIFICACIONES:
+- Página principal con cuestionario diario de bienestar
+- API para registro diario de métricas de wellness
+- Formulario simple y rápido: sueño, dolor, ánimo, energía
+- Interfaz móvil con iconos intuitivos (caritas feliz/triste)
+- Escala de 1-5 para cada métrica
+- Historial básico de respuestas por atleta
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Optimizado para dispositivos móviles
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/cuestionario-diario/ añadiendo estos archivos:
+
+4. components/MonitorEmocional.tsx - Monitor emocional avanzado tracking estrés motivación
+5. components/AlertasWellness.tsx - Sistema alertas automáticas métricas caen significativamente
+6. components/RecomendacionesPersonalizadas.tsx - Recomendaciones personalizadas patrones individuales
+7. components/IntegracionWearables.tsx - Integración simulada wearables métricas objetivas
+8. components/CuestionariosAdaptativos.tsx - Cuestionarios adaptativos cambian respuestas previas
+9. components/SistemaGamificacion.tsx - Sistema gamificación aumentar adherencia reporte
+10. components/AnalisisCorrelaciones.tsx - Análisis correlaciones wellness rendimiento
+11. components/IntervencionesAutomaticas.tsx - Intervenciones automáticas derivación psicólogo deportivo
+
+ACTUALIZA TAMBIÉN:
+- CuestionarioDiarioPage.tsx - Integrar monitoreo avanzado bienestar
+- cuestionarioDiarioApi.ts - Endpoints patrones anómalos y wearables
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Informes Semanales - Resumen de Wellness siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/informes-semanales/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/informes-semanales/InformesSemanalesPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/informes-semanales/informesSemanalesApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/informes-semanales/components/DashboardWellness.tsx
+
+ESPECIFICACIONES:
+- Página principal con dashboard semanal de bienestar del equipo
+- API con datos agregados de wellness por semana
+- Dashboard con evolución semanal: sueño, fatiga, ánimo promedio
+- Gráficos tipo radar mostrando promedios por día de la semana
+- Comparativa semana actual vs anterior
+- Vista de equipo completo con indicadores por atleta
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS, Chart.js
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Múltiples tipos de visualización de datos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/informes-semanales/ añadiendo estos archivos:
+
+4. components/AnalizadorPatrones.tsx - Analizador patrones estacionales cíclicos bienestar
+5. components/ComparadorPeriodos.tsx - Comparador períodos pretemporada competición descanso
+6. components/PrediccionRendimiento.tsx - Predicción rendimiento equipo métricas wellness
+7. components/AnalisisCorrelacion.tsx - Análisis correlación wellness grupal resultados deportivos
+8. components/DetectorOvertraining.tsx - Identificación automática atletas riesgo overtraining
+9. components/ReportesAutomaticos.tsx - Reportes automáticos cuerpo técnico insights clave
+10. components/BenchmarkingEquipos.tsx - Sistema benchmarking otros equipos datos anonimizados
+11. components/RecomendacionesCarga.tsx - Recomendaciones carga entrenamiento estado equipo
+
+ACTUALIZA TAMBIÉN:
+- InformesSemanalesPage.tsx - Integrar analytics equipo avanzados
+- informesSemanalesApi.ts - Endpoints patrones temporales y modelos predictivos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Alertas de Fatiga - Detección de Sobrecarga siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/alertas-fatiga/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/alertas-fatiga/AlertasFatigaPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/alertas-fatiga/alertasFatigaApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/alertas-fatiga/components/PanelAlertas.tsx
+
+ESPECIFICACIONES:
+- Página principal con panel de alertas de fatiga
+- API para detección automática de sobrecarga
+- Panel con alertas en rojo/amarillo según severidad
+- Alertas cuando atleta baja significativamente en energía/ánimo
+- Recomendaciones básicas: "reducir carga esta semana"
+- Lista de atletas en riesgo con nivel de alerta
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Sistema básico de alertas y notificaciones
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/alertas-fatiga/ añadiendo estos archivos:
+
+4. components/ModeloPredictivoFatiga.tsx - Modelo predictivo anticipa fatiga machine learning
+5. components/ProtocolosIntervencion.tsx - Protocolos automáticos intervención nivel riesgo
+6. components/SeguimientoRecuperacion.tsx - Seguimiento recuperación métricas objetivas
+7. components/IntegracionBiomarcadores.tsx - Integración biomarcadores simulados HRV cortisol
+8. components/ClasificadorFatiga.tsx - Clasificador fatiga aguda crónica overreaching
+9. components/SistemaEscalamiento.tsx - Sistema escalamiento automático atleta entrenador médico
+10. components/AnalisisFactores.tsx - Análisis factores contribuyentes carga sueño estrés
+11. components/RecomendacionesEspecificas.tsx - Recomendaciones específicas tipo fatiga detectada
+
+ACTUALIZA TAMBIÉN:
+- AlertasFatigaPage.tsx - Integrar sistema inteligente prevención fatiga
+- alertasFatigaApi.ts - Endpoints modelos predictivos y biomarcadores
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Lista de Convocatorias - Gestión de Eventos siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/lista-convocatorias/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/lista-convocatorias/ListaConvocatoriasPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/lista-convocatorias/listaConvocatoriasApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/lista-convocatorias/components/TablaEventos.tsx
+
+ESPECIFICACIONES:
+- Página principal con listado de próximos partidos y eventos
+- API con datos de convocatorias y eventos deportivos
+- Tabla tipo calendario deportivo con fecha, lugar, rival
+- Estados por atleta: convocado, suplente, no disponible, lesionado
+- Iconos de estado claros y códigos de color
+- Vista previa de plantilla convocada por evento
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Sistema básico de gestión de eventos deportivos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/lista-convocatorias/ añadiendo estos archivos:
+
+4. components/GeneradorConvocatorias.tsx - Generador automático convocatorias forma física wellness
+5. components/AnalisisRival.tsx - Análisis automático rival recomendaciones tácticas
+6. components/LogisticaEvento.tsx - Gestión completa logística transporte hospedaje
+7. components/ComunicacionMulticanal.tsx - Sistema comunicación automática múltiples canales
+8. components/TrackingConfirmaciones.tsx - Seguimiento confirmaciones tiempo real
+9. components/IntegracionCalendarios.tsx - Integración calendario personal cada atleta
+10. components/GestionDocumentacion.tsx - Gestión documentación pasaportes seguros
+11. components/SistemaBackup.tsx - Sistema backup automático suplencias última hora
+
+ACTUALIZA TAMBIÉN:
+- ListaConvocatoriasPage.tsx - Integrar gestión avanzada competencias
+- listaConvocatoriasApi.ts - Endpoints algoritmos selección y comunicación
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Asistencia a Eventos - Confirmación de Disponibilidad siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/asistencia-eventos/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/asistencia-eventos/AsistenciaEventosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/asistencia-eventos/asistenciaEventosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/asistencia-eventos/components/ListaConfirmaciones.tsx
+
+ESPECIFICACIONES:
+- Página principal con lista de confirmaciones por evento
+- API para gestión de disponibilidad de atletas
+- Lista con ✔️ / ❌ por cada jugador y estado de confirmación
+- Porcentaje global de confirmaciones por evento
+- Estados: confirmado, rechazado, pendiente, dudoso
+- Recordatorios automáticos para atletas sin respuesta
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Sistema básico de confirmaciones
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/asistencia-eventos/ añadiendo estos archivos:
+
+4. components/PredictorAsistencia.tsx - Predictor asistencia patrones históricos atleta
+5. components/GestorConflictos.tsx - Gestor automático conflictos horarios compromisos
+6. components/ComunicacionAutomatica.tsx - Sistema comunicación automatizada recordatorios inteligentes
+7. components/IntegracionCalendarios.tsx - Integración calendarios personales detectar conflictos
+8. components/AnalisisMotivos.tsx - Análisis motivos ausencia identificar patrones
+9. components/SistemaIncentivos.tsx - Sistema incentivos mejorar tasas confirmación
+10. components/EscalamientoRecordatorios.tsx - Escalamiento automático recordatorios importancia evento
+11. components/DashboardTendencias.tsx - Dashboard tendencias participación atleta período
+
+ACTUALIZA TAMBIÉN:
+- AsistenciaEventosPage.tsx - Integrar sistema inteligente disponibilidad
+- asistenciaEventosApi.ts - Endpoints predicción y calendarios externos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Gestión de Plantillas de Convocatoria - Alineaciones Tácticas siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/gestion-plantillas-convocatoria/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/gestion-plantillas-convocatoria/GestionPlantillasConvocatoriaPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/gestion-plantillas-convocatoria/gestionPlantillasConvocatoriaApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/gestion-plantillas-convocatoria/components/TableroTactico.tsx
+
+ESPECIFICACIONES:
+- Página principal con tablero táctico tipo cancha deportiva
+- API para gestión de formaciones y posiciones
+- Tablero visual con drag & drop de fotos de jugadores
+- Posiciones configurables según deporte (fútbol, básquet, etc.)
+- Roles dentro del partido por posición
+- Vista previa de alineación antes de confirmar
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Sistema drag & drop básico para posicionamiento
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora y estiliza el módulo Gestión de Plantillas de Convocatoria con análisis táctico avanzado.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/gestion-plantillas-convocatoria/ añadiendo estos archivos:
+
+4. components/AnalizadorTactico.tsx - Analizador automático fortalezas debilidades formación
+5. components/SimuladorFormaciones.tsx - Simulador formaciones alternativas rival contexto
+6. components/OptimizadorAlineacion.tsx - Optimizador sugiere mejor alineación datos rendimiento
+7. components/CompatibilidadJugadores.tsx - Análisis compatibilidad jugadores diferentes posiciones
+8. components/FormacionesDinamicas.tsx - Sistema formaciones dinámicas cambian durante partido
+9. components/IntegracionVideo.tsx - Integración análisis video validar posicionamiento
+10. components/BibliotecaFormaciones.tsx - Biblioteca formaciones exitosas rivales específicos
+11. components/PrediccionResultado.tsx - Predicción resultado alineación propuesta
+
+ACTUALIZA TAMBIÉN:
+- GestionPlantillasConvocatoriaPage.tsx - Integrar análisis táctico avanzado
+- gestionPlantillasConvocatoriaApi.ts - Endpoints optimización y simulaciones
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Ficha de Atleta - Perfil Deportivo siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/ficha-atleta/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/ficha-atleta/FichaAtletaPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/ficha-atleta/fichaAtletaApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/ficha-atleta/components/PerfilDeportivo.tsx
+
+ESPECIFICACIONES:
+- Página principal estilo "perfil deportivo" con pestañas organizadas
+- API con datos completos del atleta: personales, deportivos, médicos
+- Perfil con datos básicos: posición, altura, peso, edad
+- Pestañas: datos personales, historial lesiones, progresión física
+- Historial básico de lesiones con fechas y tratamientos
+- Progresión física con gráficos simples de evolución
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Sistema de pestañas para organizar información
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/ficha-atleta/ añadiendo estos archivos:
+
+4. components/AnalisisBiomecanico.tsx - Análisis biomecánico evaluación movimientos fundamentales
+5. components/PerfilPsicologico.tsx - Perfil psicológico deportivo tests personalidad motivación
+6. components/PlanDesarrollo.tsx - Plan desarrollo individualizado objetivos corto largo plazo
+7. components/IntegracionWearables.tsx - Integración wearables métricas fisiológicas tiempo real
+8. components/AlertasMedicas.tsx - Sistema alertas médicas condiciones especiales
+9. components/AnalisisTalento.tsx - Análisis talento potencial métricas múltiples
+10. components/TrackingDesarrollo.tsx - Tracking desarrollo físico técnico táctico mental
+11. components/RecomendacionesPersonalizadas.tsx - Recomendaciones personalizadas entrenamiento nutrición
+
+ACTUALIZA TAMBIÉN:
+- FichaAtletaPage.tsx - Integrar perfil deportivo completo avanzado
+- fichaAtletaApi.ts - Endpoints biomecánica y dispositivos wearables
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Historial de Rendimiento - Datos Longitudinales siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/historial-rendimiento/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/historial-rendimiento/HistorialRendimientoPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/historial-rendimiento/historialRendimientoApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/historial-rendimiento/components/GraficosProgresion.tsx
+
+ESPECIFICACIONES:
+- Página principal con gráficos de progresión longitudinal
+- API con datos históricos de rendimiento por atleta
+- Gráficos con líneas de tendencia y comparaciones anuales
+- Métricas: tests físicos, entrenamientos realizados, carga acumulada
+- Vista temporal configurable: semanas, meses, años
+- Marcadores de eventos importantes (lesiones, competencias)
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS, Chart.js
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Gráficos temporales avanzados con múltiples series
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/historial-rendimiento/ añadiendo estos archivos:
+
+4. components/ModeloPredictivo.tsx - Modelo predictivo rendimiento futuro trayectoria histórica
+5. components/AnalisisCorrelaciones.tsx - Análisis correlaciones variables entrenamiento competencia
+6. components/BenchmarkingElite.tsx - Benchmarking automático atletas élite deporte categoría
+7. components/VentanasDesarrollo.tsx - Identificación ventanas críticas desarrollo edad
+8. components/ImpactoLesiones.tsx - Análisis impacto lesiones curva rendimiento
+9. components/AlertasDesviacion.tsx - Alertas desviaciones significativas progresión esperada
+10. components/OptimizacionCargas.tsx - Optimización cargas respuesta histórica individual
+11. components/ReportesEvolucion.tsx - Reportes automáticos evolución entrenadores atletas
+
+ACTUALIZA TAMBIÉN:
+- HistorialRendimientoPage.tsx - Integrar análisis predictivo avanzado
+- historialRendimientoApi.ts - Endpoints machine learning y benchmarking
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Comparador de Atletas - Análisis Cara a Cara siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/comparador-atletas/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/comparador-atletas/ComparadorAtletasPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/comparador-atletas/comparadorAtletasApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/comparador-atletas/components/ComparacionDirecta.tsx
+
+ESPECIFICACIONES:
+- Página principal para comparación directa entre dos atletas
+- API con métricas comparativas detalladas
+- Comparación lado a lado: fuerza, resistencia, técnica, velocidad
+- Gráfico de barras con colores diferenciados por atleta
+- Selector de atletas con búsqueda y filtros
+- Resumen ejecutivo de fortalezas/debilidades relativas
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS, Chart.js
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Visualizaciones comparativas interactivas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/comparador-atletas/ añadiendo estos archivos:
+
+4. components/AnalisisComplementariedad.tsx - Análisis complementariedad formar duplas líneas óptimas
+5. components/SimuladorDuelos.tsx - Simulador duelos directos predicción resultados
+6. components/ReporteScouting.tsx - Reporte scouting automático análisis profesional
+7. components/RadarCharts.tsx - Comparación multidimensional radar charts avanzados
+8. components/HistorialEnfrentamientos.tsx - Análisis histórico enfrentamientos directos competencias
+9. components/ScoringPonderado.tsx - Sistema scoring ponderado importancia posicional
+10. components/RecomendacionesTacticas.tsx - Recomendaciones tácticas fortalezas debilidades
+11. components/PrediccionEvolucion.tsx - Predicción evolución relativa edades trayectorias
+
+ACTUALIZA TAMBIÉN:
+- ComparadorAtletasPage.tsx - Integrar análisis competitivo profesional
+- comparadorAtletasApi.ts - Endpoints algoritmos complementariedad y simulación
+
+🏃 Resumen Teams Pro
+
+👥 Roles de Equipo: 3 páginas (6 prompts)
+📅 Planificación Mesociclos: 3 páginas (6 prompts)
+🧪 Laboratorio Tests: 3 páginas (6 prompts)
+📋 Cuestionarios Wellness: 3 páginas (6 prompts)
+📣 Convocatorias: 3 páginas (6 prompts)
+🧑‍🎓 Perfiles Atletas: 3 páginas (6 prompts)
+
+👉 Total: 18 páginas con 36 prompts (2 por página) especializados para gestión integral de equipos deportivos profesionales.
+
+Estructura correcta:
+- Prompt 1 por página: Crear feature básica
+- Prompt 2 por página: Estilizar y completar con funcionalidades avanzadas

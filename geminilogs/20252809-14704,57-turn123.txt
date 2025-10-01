@@ -1,0 +1,7 @@
+﻿I have successfully created the basic structure for the "Historial de Rendimiento - Datos Longitudinales" module, including the specified files and folders:
+
+*   `src/features/historial-rendimiento/HistorialRendimientoPage.tsx`
+*   `src/features/historial-rendimiento/historialRendimientoApi.ts`
+*   `src/features/historial-rendimiento/components/GraficosProgresion.tsx`
+
+These files include the initial code for the main page, a mock API for historical data, and a component for progression charts using Chart.js, adhering to the technical requirements and specifications provided.
