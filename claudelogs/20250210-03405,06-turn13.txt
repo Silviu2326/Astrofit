@@ -1,0 +1,25 @@
+﻿
+
+Ô£à Sistema de Quizzes y Evaluaciones completado con:
+
+**Componentes creados:**
+- `QuizBuilder.tsx` - Constructor visual de quizzes con arrastrar/soltar
+- `QuizTaker.tsx` - Interfaz para responder quizzes con temporizador
+- `QuizResults.tsx` - Visualizaci├│n de resultados y calificaciones
+- `QuizCard.tsx` - Tarjeta de quiz con estad├¡sticas
+- `QuizzesPage.tsx` - P├ígina principal con gesti├│n completa
+
+**Caracter├¡sticas:**
+- Ô£à Gradiente cyan-blue-indigo en encabezados y botones
+- Ô£à 3 tipos de preguntas: opci├│n m├║ltiple, verdadero/falso, abierta
+- Ô£à Constructor visual con a├▒adir/editar/eliminar preguntas
+- Ô£à Sistema de puntos personalizable por pregunta
+- Ô£à Temporizador con cuenta regresiva
+- Ô£à Calificaci├│n autom├ítica (excepto preguntas abiertas)
+- Ô£à Resultados detallados con revisi├│n de respuestas
+- Ô£à Sistema de calificaci├│n (A-F) y porcentajes
+- Ô£à Estad├¡sticas de rendimiento
+- Ô£à Buscador y filtros
+- Ô£à Opci├│n de reintentar quizzes
+
+Archivos: `src/features/quizzes/`

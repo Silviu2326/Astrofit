@@ -232,256 +232,304 @@ const AnaliticaIngresosPage: React.FC = () => {
   const formatPercent = (value: number) => `${value >= 0 ? '+' : ''}${value.toFixed(1)}%`;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-green-50 to-yellow-50 p-6">
-      {/* Header */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-emerald-50/30 to-lime-50/30 pb-12">
+      {/* Hero Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
+        transition={{ duration: 0.6 }}
+        className="relative overflow-hidden bg-gradient-to-r from-emerald-600 via-green-600 to-lime-600 rounded-3xl shadow-2xl mb-8 p-8 md:p-12"
       >
-        <div className="flex items-center gap-3 mb-2">
-          <motion.div
-            animate={{ rotate: [0, 10, -10, 0] }}
-            transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-            className="p-3 bg-gradient-to-br from-green-500 to-yellow-500 rounded-xl shadow-lg"
-          >
-            <DollarSign className="w-8 h-8 text-white" />
-          </motion.div>
-          <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-green-600 via-green-500 to-yellow-500 bg-clip-text text-transparent">
-              Analítica de Ingresos
-            </h1>
-            <p className="text-gray-600 mt-1">Análisis completo de ingresos y proyecciones financieras</p>
-          </div>
+        {/* Efectos de fondo animados */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-4 mt-6">
-          {/* Selector de período */}
-          <div className="flex items-center gap-2 bg-white rounded-lg shadow-sm px-4 py-2">
-            <Calendar className="w-5 h-5 text-gray-500" />
-            <select
-              value={period}
-              onChange={(e) => setPeriod(e.target.value as Period)}
-              className="border-none bg-transparent focus:outline-none focus:ring-0 text-sm font-medium text-gray-700"
-            >
-              <option value="month">Este mes</option>
-              <option value="3months">Últimos 3 meses</option>
-              <option value="6months">Últimos 6 meses</option>
-              <option value="12months">Últimos 12 meses</option>
-              <option value="fiscal">Año fiscal</option>
-              <option value="custom">Personalizado</option>
-            </select>
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '50px 50px'
+          }}></div>
+        </div>
+
+        <div className="relative z-10">
+          {/* Título con icono animado */}
+          <div className="flex items-center gap-4 mb-4">
+            <div className="relative">
+              <motion.div
+                animate={{ rotate: [0, 10, -10, 0] }}
+                transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                className="p-3 bg-white/20 backdrop-blur-sm rounded-2xl"
+              >
+                <DollarSign className="w-10 h-10 text-yellow-200" />
+              </motion.div>
+              <div className="absolute inset-0 w-16 h-16 bg-yellow-300 rounded-full blur-lg opacity-30"></div>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
+              Analítica de <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-yellow-400">Ingresos</span>
+            </h1>
           </div>
 
-          {/* Botones de acción */}
-          <button className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-50 rounded-lg shadow-sm transition-colors">
-            <Download className="w-4 h-4 text-gray-600" />
-            <span className="text-sm font-medium text-gray-700">Exportar Reporte</span>
-          </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-50 rounded-lg shadow-sm transition-colors">
-            <LineChart className="w-4 h-4 text-gray-600" />
-            <span className="text-sm font-medium text-gray-700">Proyecciones</span>
-          </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-yellow-500 hover:from-green-600 hover:to-yellow-600 text-white rounded-lg shadow-md transition-all">
-            <Target className="w-4 h-4" />
-            <span className="text-sm font-medium">Configurar Objetivos</span>
-          </button>
+          {/* Descripción */}
+          <p className="text-xl md:text-2xl text-emerald-100 max-w-3xl leading-relaxed mb-6">
+            Maximiza tus ingresos con <span className="font-bold text-white px-2 py-1 bg-white/20 rounded-lg backdrop-blur-sm">datos precisos</span> y proyecciones inteligentes
+          </p>
+
+          {/* Indicadores pills */}
+          <div className="flex flex-wrap gap-3">
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
+              <Calendar className="w-5 h-5 text-emerald-200" />
+              <select
+                value={period}
+                onChange={(e) => setPeriod(e.target.value as Period)}
+                className="border-none bg-transparent focus:outline-none text-sm font-semibold text-white"
+              >
+                <option value="month" className="text-gray-900">Este mes</option>
+                <option value="3months" className="text-gray-900">Últimos 3 meses</option>
+                <option value="6months" className="text-gray-900">Últimos 6 meses</option>
+                <option value="12months" className="text-gray-900">Últimos 12 meses</option>
+                <option value="fiscal" className="text-gray-900">Año fiscal</option>
+                <option value="custom" className="text-gray-900">Personalizado</option>
+              </select>
+            </div>
+            <button className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20 hover:bg-white/20 transition-all duration-300">
+              <Download className="w-4 h-4 text-white" />
+              <span className="text-sm font-semibold text-white">Exportar</span>
+            </button>
+            <button className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20 hover:bg-white/20 transition-all duration-300">
+              <LineChart className="w-4 h-4 text-white" />
+              <span className="text-sm font-semibold text-white">Proyecciones</span>
+            </button>
+            <button className="flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 hover:bg-white transition-all duration-300 shadow-lg">
+              <Target className="w-4 h-4 text-emerald-600" />
+              <span className="text-sm font-semibold text-emerald-600">Objetivos</span>
+            </button>
+          </div>
         </div>
       </motion.div>
 
       {/* KPIs Principales */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {/* MRR */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          onHoverStart={() => setHoveredKPI('mrr')}
-          onHoverEnd={() => setHoveredKPI(null)}
-          className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500 hover:shadow-xl transition-shadow"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+          whileHover={{ scale: 1.03, y: -8 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
         >
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <p className="text-sm text-gray-600 font-medium">MRR (Monthly Recurring Revenue)</p>
-              <h3 className="text-3xl font-bold text-gray-900 mt-1">{formatCurrency(mrr)}</h3>
+          {/* Shimmer effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
+
+          {/* Decoración de fondo */}
+          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-emerald-500 to-green-600 opacity-5 rounded-full blur-2xl"></div>
+
+          <div className="relative z-10">
+            {/* Icono */}
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300">
+              <DollarSign className="w-8 h-8" />
             </div>
-            <div className="p-2 bg-green-100 rounded-lg">
-              <TrendingUp className="w-6 h-6 text-green-600" />
+
+            {/* Título */}
+            <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">
+              MRR
+            </p>
+
+            {/* Valor */}
+            <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 mb-3">
+              {formatCurrency(mrr)}
+            </p>
+
+            {/* Cambio */}
+            <div className="flex items-center gap-2">
+              <div className={`p-1 rounded-lg ${mrrChange >= 0 ? 'bg-green-50' : 'bg-red-50'}`}>
+                {mrrChange >= 0 ? (
+                  <ArrowUpRight className="w-4 h-4 text-green-600" />
+                ) : (
+                  <ArrowDownRight className="w-4 h-4 text-red-600" />
+                )}
+              </div>
+              <span className={`text-sm font-bold ${mrrChange >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                {formatPercent(mrrChange)}
+              </span>
+              <span className="text-xs text-gray-500 font-medium">vs anterior</span>
             </div>
-          </div>
-          <div className="flex items-center gap-2 mb-3">
-            {mrrChange >= 0 ? (
-              <ArrowUpRight className="w-4 h-4 text-green-600" />
-            ) : (
-              <ArrowDownRight className="w-4 h-4 text-red-600" />
-            )}
-            <span className={`text-sm font-semibold ${mrrChange >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-              {formatPercent(mrrChange)}
-            </span>
-            <span className="text-sm text-gray-500">
-              ({formatCurrency(mrrChangeAmount)}) vs mes anterior
-            </span>
-          </div>
-          <div className="h-16">
-            <ResponsiveContainer width="100%" height="100%">
-              <RechartsLineChart data={filteredData.slice(-6)}>
-                <Line type="monotone" dataKey="mrr" stroke="#10B981" strokeWidth={2} dot={false} />
-              </RechartsLineChart>
-            </ResponsiveContainer>
+
+            {/* Barra decorativa */}
+            <div className="mt-4 w-full h-1 bg-gray-100 rounded-full overflow-hidden">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: '100%' }}
+                transition={{ delay: 0.6, duration: 1 }}
+                className="h-full bg-gradient-to-r from-emerald-500 to-green-600 rounded-full"
+              ></motion.div>
+            </div>
           </div>
         </motion.div>
 
         {/* ARR */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.1 }}
-          onHoverStart={() => setHoveredKPI('arr')}
-          onHoverEnd={() => setHoveredKPI(null)}
-          className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-yellow-500 hover:shadow-xl transition-shadow"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          whileHover={{ scale: 1.03, y: -8 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
         >
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <p className="text-sm text-gray-600 font-medium">ARR (Annual Recurring Revenue)</p>
-              <h3 className="text-3xl font-bold text-gray-900 mt-1">{formatCurrency(arr)}</h3>
-            </div>
-            <div className="p-2 bg-yellow-100 rounded-lg">
-              <Award className="w-6 h-6 text-yellow-600" />
-            </div>
-          </div>
-          <div className="text-sm text-gray-600 mb-3">
-            Proyección anual basada en MRR actual
-          </div>
-          <div className="bg-gradient-to-r from-yellow-50 to-green-50 rounded-lg p-3">
-            <p className="text-xs text-gray-600">Proyección a 12 meses</p>
-            <p className="text-lg font-bold text-gray-900">{formatCurrency(projections[11].realistic)}</p>
-          </div>
-        </motion.div>
+          {/* Shimmer effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
 
-        {/* Ingresos Totales */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-          className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500 hover:shadow-xl transition-shadow"
-        >
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <p className="text-sm text-gray-600 font-medium">Ingresos Totales del Período</p>
-              <h3 className="text-3xl font-bold text-gray-900 mt-1">{formatCurrency(totalRevenue)}</h3>
+          {/* Decoración de fondo */}
+          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-lime-500 to-yellow-600 opacity-5 rounded-full blur-2xl"></div>
+
+          <div className="relative z-10">
+            {/* Icono */}
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-lime-500 to-yellow-600 flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300">
+              <Award className="w-8 h-8" />
             </div>
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <BarChart3 className="w-6 h-6 text-blue-600" />
-            </div>
-          </div>
-          <div className="space-y-2">
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Recurrentes:</span>
-              <span className="text-sm font-semibold text-gray-900">{formatCurrency(recurringRevenue)}</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">One-time:</span>
-              <span className="text-sm font-semibold text-gray-900">{formatCurrency(oneTimeRevenue)}</span>
-            </div>
-            <div className="w-full bg-gray-200 rounded-full h-2 mt-3">
-              <div
-                className="bg-gradient-to-r from-blue-500 to-green-500 h-2 rounded-full"
-                style={{ width: `${(recurringRevenue / totalRevenue) * 100}%` }}
-              />
-            </div>
-            <p className="text-xs text-gray-500 text-center">
-              {((recurringRevenue / totalRevenue) * 100).toFixed(1)}% recurrentes
+
+            {/* Título */}
+            <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">
+              ARR
             </p>
+
+            {/* Valor */}
+            <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 mb-3">
+              {formatCurrency(arr)}
+            </p>
+
+            {/* Cambio */}
+            <div className="flex items-center gap-2">
+              <div className="p-1 bg-lime-50 rounded-lg">
+                <TrendingUp className="w-4 h-4 text-lime-600" />
+              </div>
+              <span className="text-xs text-gray-500 font-medium">Proyección anual</span>
+            </div>
+
+            {/* Barra decorativa */}
+            <div className="mt-4 w-full h-1 bg-gray-100 rounded-full overflow-hidden">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: '85%' }}
+                transition={{ delay: 0.7, duration: 1 }}
+                className="h-full bg-gradient-to-r from-lime-500 to-yellow-600 rounded-full"
+              ></motion.div>
+            </div>
           </div>
         </motion.div>
 
-        {/* Tasa de Crecimiento */}
+        {/* Crecimiento MRR */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3 }}
-          className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-500 hover:shadow-xl transition-shadow"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+          whileHover={{ scale: 1.03, y: -8 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
         >
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <p className="text-sm text-gray-600 font-medium">Tasa de Crecimiento (MRR)</p>
-              <h3 className="text-3xl font-bold text-gray-900 mt-1">{formatPercent(avgGrowthRate)}</h3>
+          {/* Shimmer effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
+
+          {/* Decoración de fondo */}
+          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-green-500 to-teal-600 opacity-5 rounded-full blur-2xl"></div>
+
+          <div className="relative z-10">
+            {/* Icono */}
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300">
+              <Activity className="w-8 h-8" />
             </div>
-            <div className="p-2 bg-purple-100 rounded-lg">
-              <Activity className="w-6 h-6 text-purple-600" />
+
+            {/* Título */}
+            <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">
+              Crecimiento MRR
+            </p>
+
+            {/* Valor */}
+            <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 mb-3">
+              {formatPercent(avgGrowthRate)}
+            </p>
+
+            {/* Cambio */}
+            <div className="flex items-center gap-2">
+              <div className={`p-1 rounded-lg ${avgGrowthRate >= 15 ? 'bg-green-50' : 'bg-orange-50'}`}>
+                {avgGrowthRate >= 15 ? (
+                  <TrendingUp className="w-4 h-4 text-green-600" />
+                ) : (
+                  <Target className="w-4 h-4 text-orange-600" />
+                )}
+              </div>
+              <span className="text-xs text-gray-500 font-medium">
+                {avgGrowthRate >= 15 ? 'Objetivo logrado' : `Objetivo: +15%`}
+              </span>
+            </div>
+
+            {/* Barra decorativa */}
+            <div className="mt-4 w-full h-1 bg-gray-100 rounded-full overflow-hidden">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${Math.min((avgGrowthRate / 15) * 100, 100)}%` }}
+                transition={{ delay: 0.8, duration: 1 }}
+                className="h-full bg-gradient-to-r from-green-500 to-teal-600 rounded-full"
+              ></motion.div>
             </div>
           </div>
-          <div className="mb-3">
-            <p className="text-sm text-gray-600 mb-2">Objetivo: +15%</p>
-            <div className="w-full bg-gray-200 rounded-full h-3">
-              <div
-                className="bg-gradient-to-r from-purple-500 to-pink-500 h-3 rounded-full transition-all"
-                style={{ width: `${Math.min((avgGrowthRate / 15) * 100, 100)}%` }}
-              />
-            </div>
-          </div>
-          <p className="text-xs text-gray-500">
-            {avgGrowthRate >= 15 ? '🎉 ¡Objetivo alcanzado!' : `Faltan ${(15 - avgGrowthRate).toFixed(1)}% para el objetivo`}
-          </p>
         </motion.div>
 
         {/* ARPU */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4 }}
-          className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-cyan-500 hover:shadow-xl transition-shadow"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+          whileHover={{ scale: 1.03, y: -8 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
         >
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <p className="text-sm text-gray-600 font-medium">ARPU (Avg Revenue Per User)</p>
-              <h3 className="text-3xl font-bold text-gray-900 mt-1">{formatCurrency(Math.round(arpu))}</h3>
-            </div>
-            <div className="p-2 bg-cyan-100 rounded-lg">
-              <Users className="w-6 h-6 text-cyan-600" />
-            </div>
-          </div>
-          <div className="flex items-center gap-2 mb-3">
-            {arpuChange >= 0 ? (
-              <ArrowUpRight className="w-4 h-4 text-green-600" />
-            ) : (
-              <ArrowDownRight className="w-4 h-4 text-red-600" />
-            )}
-            <span className={`text-sm font-semibold ${arpuChange >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-              {formatPercent(arpuChange)}
-            </span>
-            <span className="text-sm text-gray-500">vs mes anterior</span>
-          </div>
-          <div className="bg-cyan-50 rounded-lg p-3">
-            <p className="text-xs text-gray-600">Clientes activos</p>
-            <p className="text-lg font-bold text-gray-900">{currentMonth.customers}</p>
-          </div>
-        </motion.div>
+          {/* Shimmer effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
 
-        {/* Churn Rate */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5 }}
-          className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-red-500 hover:shadow-xl transition-shadow"
-        >
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <p className="text-sm text-gray-600 font-medium">Churn Rate Financiero</p>
-              <h3 className="text-3xl font-bold text-gray-900 mt-1">{churnRate.toFixed(2)}%</h3>
+          {/* Decoración de fondo */}
+          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-cyan-500 to-blue-600 opacity-5 rounded-full blur-2xl"></div>
+
+          <div className="relative z-10">
+            {/* Icono */}
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300">
+              <Users className="w-8 h-8" />
             </div>
-            <div className="p-2 bg-red-100 rounded-lg">
-              <TrendingDown className="w-6 h-6 text-red-600" />
-            </div>
-          </div>
-          <div className="mb-3">
-            <p className="text-sm text-gray-600">Impacto en MRR:</p>
-            <p className="text-lg font-bold text-red-600">-{formatCurrency(churnImpact)}</p>
-          </div>
-          <div className="bg-red-50 rounded-lg p-3">
-            <p className="text-xs text-gray-600">Estado</p>
-            <p className="text-sm font-semibold text-gray-900">
-              {churnRate < 5 ? '✅ Excelente' : churnRate < 7 ? '⚠️ Aceptable' : '❌ Requiere atención'}
+
+            {/* Título */}
+            <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">
+              ARPU
             </p>
+
+            {/* Valor */}
+            <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 mb-3">
+              {formatCurrency(Math.round(arpu))}
+            </p>
+
+            {/* Cambio */}
+            <div className="flex items-center gap-2">
+              <div className={`p-1 rounded-lg ${arpuChange >= 0 ? 'bg-green-50' : 'bg-red-50'}`}>
+                {arpuChange >= 0 ? (
+                  <ArrowUpRight className="w-4 h-4 text-green-600" />
+                ) : (
+                  <ArrowDownRight className="w-4 h-4 text-red-600" />
+                )}
+              </div>
+              <span className={`text-sm font-bold ${arpuChange >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                {formatPercent(arpuChange)}
+              </span>
+              <span className="text-xs text-gray-500 font-medium">vs anterior</span>
+            </div>
+
+            {/* Barra decorativa */}
+            <div className="mt-4 w-full h-1 bg-gray-100 rounded-full overflow-hidden">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: '75%' }}
+                transition={{ delay: 0.9, duration: 1 }}
+                className="h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full"
+              ></motion.div>
+            </div>
           </div>
         </motion.div>
       </div>
@@ -490,46 +538,57 @@ const AnaliticaIngresosPage: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-xl shadow-lg p-6 mb-8"
+        transition={{ duration: 0.6 }}
+        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 mb-8 border border-white/50 relative overflow-hidden"
       >
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-xl font-bold text-gray-900">Evolución de Ingresos y MRR</h2>
-            <p className="text-sm text-gray-600 mt-1">Análisis de ingresos totales y MRR en el tiempo</p>
+        {/* Decoración de fondo */}
+        <div className="absolute -right-20 -top-20 w-64 h-64 bg-gradient-to-br from-emerald-200 to-lime-200 rounded-full blur-3xl opacity-20"></div>
+
+        <div className="relative z-10">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
+                <div className="p-2 bg-gradient-to-br from-emerald-500 to-lime-500 rounded-xl">
+                  <LineChart className="w-6 h-6 text-white" />
+                </div>
+                Evolución de Ingresos y MRR
+              </h2>
+              <p className="text-sm text-gray-600 mt-2">Análisis de ingresos totales y MRR en el tiempo</p>
+            </div>
+            <div className="flex flex-wrap items-center gap-4">
+              <div className="flex items-center gap-2 bg-blue-50 px-3 py-2 rounded-lg">
+                <div className="w-3 h-3 bg-blue-500 rounded-full" />
+                <span className="text-sm font-medium text-gray-700">Ingresos Totales</span>
+              </div>
+              <div className="flex items-center gap-2 bg-emerald-50 px-3 py-2 rounded-lg">
+                <div className="w-3 h-3 bg-emerald-500 rounded-full" />
+                <span className="text-sm font-medium text-gray-700">MRR</span>
+              </div>
+              <div className="flex items-center gap-2 bg-purple-50 px-3 py-2 rounded-lg">
+                <div className="w-3 h-3 bg-purple-500 rounded-full" />
+                <span className="text-sm font-medium text-gray-700">MRR Neto</span>
+              </div>
+            </div>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-blue-500 rounded-full" />
-              <span className="text-sm text-gray-600">Ingresos Totales</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-green-500 rounded-full" />
-              <span className="text-sm text-gray-600">MRR</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-purple-500 rounded-full" />
-              <span className="text-sm text-gray-600">MRR Neto</span>
-            </div>
+          <div className="h-96">
+            <ResponsiveContainer width="100%" height="100%">
+              <ComposedChart data={filteredData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+                <XAxis dataKey="month" tick={{ fontSize: 12 }} />
+                <YAxis yAxisId="left" tick={{ fontSize: 12 }} tickFormatter={(value) => `€${(value / 1000).toFixed(0)}k`} />
+                <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 12 }} tickFormatter={(value) => `${value.toFixed(0)}%`} />
+                <Tooltip
+                  contentStyle={{ backgroundColor: '#fff', border: '1px solid #E5E7EB', borderRadius: '12px', boxShadow: '0 10px 40px rgba(0,0,0,0.1)' }}
+                  formatter={(value: any) => typeof value === 'number' && value < 100 ? `${value.toFixed(1)}%` : formatCurrency(value)}
+                />
+                <Legend />
+                <Bar yAxisId="left" dataKey="totalRevenue" fill="#3B82F6" name="Ingresos Totales" radius={[8, 8, 0, 0]} />
+                <Line yAxisId="left" type="monotone" dataKey="mrr" stroke="#10B981" strokeWidth={3} name="MRR" dot={{ r: 4 }} />
+                <Line yAxisId="left" type="monotone" dataKey="netMRR" stroke="#8B5CF6" strokeWidth={2} strokeDasharray="5 5" name="MRR Neto" dot={{ r: 3 }} />
+                <Line yAxisId="right" type="monotone" dataKey="growthRate" stroke="#F59E0B" strokeWidth={2} name="Crecimiento %" dot={{ r: 3 }} />
+              </ComposedChart>
+            </ResponsiveContainer>
           </div>
-        </div>
-        <div className="h-96">
-          <ResponsiveContainer width="100%" height="100%">
-            <ComposedChart data={filteredData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-              <XAxis dataKey="month" tick={{ fontSize: 12 }} />
-              <YAxis yAxisId="left" tick={{ fontSize: 12 }} tickFormatter={(value) => `€${(value / 1000).toFixed(0)}k`} />
-              <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 12 }} tickFormatter={(value) => `${value.toFixed(0)}%`} />
-              <Tooltip
-                contentStyle={{ backgroundColor: '#fff', border: '1px solid #E5E7EB', borderRadius: '8px' }}
-                formatter={(value: any) => typeof value === 'number' && value < 100 ? `${value.toFixed(1)}%` : formatCurrency(value)}
-              />
-              <Legend />
-              <Bar yAxisId="left" dataKey="totalRevenue" fill="#3B82F6" name="Ingresos Totales" radius={[8, 8, 0, 0]} />
-              <Line yAxisId="left" type="monotone" dataKey="mrr" stroke="#10B981" strokeWidth={3} name="MRR" dot={{ r: 4 }} />
-              <Line yAxisId="left" type="monotone" dataKey="netMRR" stroke="#8B5CF6" strokeWidth={2} strokeDasharray="5 5" name="MRR Neto" dot={{ r: 3 }} />
-              <Line yAxisId="right" type="monotone" dataKey="growthRate" stroke="#F59E0B" strokeWidth={2} name="Crecimiento %" dot={{ r: 3 }} />
-            </ComposedChart>
-          </ResponsiveContainer>
         </div>
       </motion.div>
 
@@ -539,103 +598,136 @@ const AnaliticaIngresosPage: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="bg-white rounded-xl shadow-lg p-6"
+          transition={{ duration: 0.6 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 relative overflow-hidden"
         >
-          <h2 className="text-xl font-bold text-gray-900 mb-4">Desglose de Ingresos por Categoría</h2>
-          <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <RechartsBarChart data={filteredData.slice(-6)}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                <XAxis dataKey="month" tick={{ fontSize: 12 }} />
-                <YAxis tick={{ fontSize: 12 }} tickFormatter={(value) => `€${(value / 1000).toFixed(0)}k`} />
-                <Tooltip
-                  contentStyle={{ backgroundColor: '#fff', border: '1px solid #E5E7EB', borderRadius: '8px' }}
-                  formatter={(value: any) => formatCurrency(value)}
-                />
-                <Legend />
-                <Bar dataKey="recurringRevenue" stackId="a" fill="#10B981" name="Recurrentes" radius={[0, 0, 0, 0]} />
-                <Bar dataKey="oneTimeRevenue" stackId="a" fill="#3B82F6" name="One-time" radius={[8, 8, 0, 0]} />
-              </RechartsBarChart>
-            </ResponsiveContainer>
+          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-blue-200 to-emerald-200 rounded-full blur-3xl opacity-20"></div>
+
+          <div className="relative z-10">
+            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <div className="p-2 bg-gradient-to-br from-blue-500 to-emerald-500 rounded-xl">
+                <BarChart3 className="w-5 h-5 text-white" />
+              </div>
+              Desglose de Ingresos
+            </h2>
+            <div className="h-80">
+              <ResponsiveContainer width="100%" height="100%">
+                <RechartsBarChart data={filteredData.slice(-6)}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+                  <XAxis dataKey="month" tick={{ fontSize: 12 }} />
+                  <YAxis tick={{ fontSize: 12 }} tickFormatter={(value) => `€${(value / 1000).toFixed(0)}k`} />
+                  <Tooltip
+                    contentStyle={{ backgroundColor: '#fff', border: '1px solid #E5E7EB', borderRadius: '12px', boxShadow: '0 10px 40px rgba(0,0,0,0.1)' }}
+                    formatter={(value: any) => formatCurrency(value)}
+                  />
+                  <Legend />
+                  <Bar dataKey="recurringRevenue" stackId="a" fill="#10B981" name="Recurrentes" radius={[0, 0, 0, 0]} />
+                  <Bar dataKey="oneTimeRevenue" stackId="a" fill="#3B82F6" name="One-time" radius={[8, 8, 0, 0]} />
+                </RechartsBarChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </motion.div>
 
-        {/* MRR Movements */}
+        {/* MRR Movements (Waterfall) */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="bg-white rounded-xl shadow-lg p-6"
+          transition={{ duration: 0.6 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 relative overflow-hidden"
         >
-          <h2 className="text-xl font-bold text-gray-900 mb-4">MRR Movements (Waterfall)</h2>
-          <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <RechartsBarChart data={waterfallData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                <XAxis dataKey="name" tick={{ fontSize: 11 }} angle={-15} textAnchor="end" height={80} />
-                <YAxis tick={{ fontSize: 12 }} tickFormatter={(value) => `€${(value / 1000).toFixed(0)}k`} />
-                <Tooltip
-                  contentStyle={{ backgroundColor: '#fff', border: '1px solid #E5E7EB', borderRadius: '8px' }}
-                  formatter={(value: any) => formatCurrency(Math.abs(value))}
-                />
-                <Bar dataKey="value" fill="#8B5CF6" radius={[8, 8, 8, 8]}>
-                  {waterfallData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.fill} />
-                  ))}
-                </Bar>
-              </RechartsBarChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="mt-4 grid grid-cols-2 gap-3">
-            <div className="bg-green-50 rounded-lg p-3">
-              <p className="text-xs text-gray-600">Crecimiento Total</p>
-              <p className="text-lg font-bold text-green-600">+{formatCurrency(currentMonth.newMRR + currentMonth.expansionMRR)}</p>
+          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full blur-3xl opacity-20"></div>
+
+          <div className="relative z-10">
+            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl">
+                <Activity className="w-5 h-5 text-white" />
+              </div>
+              MRR Movements (Waterfall)
+            </h2>
+            <div className="h-80">
+              <ResponsiveContainer width="100%" height="100%">
+                <RechartsBarChart data={waterfallData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+                  <XAxis dataKey="name" tick={{ fontSize: 11 }} angle={-15} textAnchor="end" height={80} />
+                  <YAxis tick={{ fontSize: 12 }} tickFormatter={(value) => `€${(value / 1000).toFixed(0)}k`} />
+                  <Tooltip
+                    contentStyle={{ backgroundColor: '#fff', border: '1px solid #E5E7EB', borderRadius: '12px', boxShadow: '0 10px 40px rgba(0,0,0,0.1)' }}
+                    formatter={(value: any) => formatCurrency(Math.abs(value))}
+                  />
+                  <Bar dataKey="value" fill="#8B5CF6" radius={[8, 8, 8, 8]}>
+                    {waterfallData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.fill} />
+                    ))}
+                  </Bar>
+                </RechartsBarChart>
+              </ResponsiveContainer>
             </div>
-            <div className="bg-red-50 rounded-lg p-3">
-              <p className="text-xs text-gray-600">Pérdida Total</p>
-              <p className="text-lg font-bold text-red-600">-{formatCurrency(currentMonth.churnMRR + currentMonth.contractionMRR)}</p>
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-3 border border-green-200">
+                <p className="text-xs text-gray-600 font-medium">Crecimiento Total</p>
+                <p className="text-lg font-bold text-green-600">+{formatCurrency(currentMonth.newMRR + currentMonth.expansionMRR)}</p>
+              </div>
+              <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-3 border border-red-200">
+                <p className="text-xs text-gray-600 font-medium">Pérdida Total</p>
+                <p className="text-lg font-bold text-red-600">-{formatCurrency(currentMonth.churnMRR + currentMonth.contractionMRR)}</p>
+              </div>
             </div>
           </div>
         </motion.div>
       </div>
 
-      {/* Distribución de Ingresos */}
+      {/* Análisis por Segmento */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         {/* Por Producto */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="bg-white rounded-xl shadow-lg p-6"
+          transition={{ duration: 0.6 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 relative overflow-hidden"
         >
-          <h2 className="text-xl font-bold text-gray-900 mb-4">Distribución por Producto/Servicio</h2>
-          <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <RechartsPieChart>
-                <Pie
-                  data={productRevenueData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={100}
-                  paddingAngle={5}
-                  dataKey="revenue"
-                  label={(entry) => `${entry.name}: ${entry.percentage}%`}
-                  labelLine={true}
-                >
-                  {productRevenueData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip formatter={(value: any) => formatCurrency(value)} />
-              </RechartsPieChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="grid grid-cols-2 gap-2 mt-4">
-            {productRevenueData.slice(0, 4).map((product) => (
-              <div key={product.name} className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: product.color }} />
-                <span className="text-xs text-gray-600">{product.name}</span>
+          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-yellow-200 to-orange-200 rounded-full blur-3xl opacity-20"></div>
+
+          <div className="relative z-10">
+            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <div className="p-2 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-xl">
+                <PieChart className="w-5 h-5 text-white" />
               </div>
-            ))}
+              Ingresos por Producto/Plan
+            </h2>
+            <div className="h-80">
+              <ResponsiveContainer width="100%" height="100%">
+                <RechartsPieChart>
+                  <Pie
+                    data={productRevenueData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={100}
+                    paddingAngle={5}
+                    dataKey="revenue"
+                    label={(entry) => `${entry.name}: ${entry.percentage}%`}
+                    labelLine={true}
+                  >
+                    {productRevenueData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    formatter={(value: any) => formatCurrency(value)}
+                    contentStyle={{ backgroundColor: '#fff', border: '1px solid #E5E7EB', borderRadius: '12px', boxShadow: '0 10px 40px rgba(0,0,0,0.1)' }}
+                  />
+                </RechartsPieChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="grid grid-cols-2 gap-2 mt-4">
+              {productRevenueData.slice(0, 4).map((product) => (
+                <div key={product.name} className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg">
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: product.color }} />
+                  <span className="text-xs font-medium text-gray-700">{product.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </motion.div>
 
@@ -643,39 +735,51 @@ const AnaliticaIngresosPage: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.1 }}
-          className="bg-white rounded-xl shadow-lg p-6"
+          transition={{ delay: 0.1, duration: 0.6 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 relative overflow-hidden"
         >
-          <h2 className="text-xl font-bold text-gray-900 mb-4">Distribución por Canal de Adquisición</h2>
-          <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <RechartsPieChart>
-                <Pie
-                  data={distributionByChannel}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={100}
-                  paddingAngle={5}
-                  dataKey="value"
-                  label={(entry) => `${entry.name}: ${entry.value}%`}
-                  labelLine={true}
-                >
-                  {distributionByChannel.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip formatter={(value: any) => `${value}%`} />
-              </RechartsPieChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="grid grid-cols-2 gap-2 mt-4">
-            {distributionByChannel.map((channel) => (
-              <div key={channel.name} className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: channel.color }} />
-                <span className="text-xs text-gray-600">{channel.name}</span>
+          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-indigo-200 to-purple-200 rounded-full blur-3xl opacity-20"></div>
+
+          <div className="relative z-10">
+            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl">
+                <Users className="w-5 h-5 text-white" />
               </div>
-            ))}
+              Ingresos por Canal
+            </h2>
+            <div className="h-80">
+              <ResponsiveContainer width="100%" height="100%">
+                <RechartsPieChart>
+                  <Pie
+                    data={distributionByChannel}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={100}
+                    paddingAngle={5}
+                    dataKey="value"
+                    label={(entry) => `${entry.name}: ${entry.value}%`}
+                    labelLine={true}
+                  >
+                    {distributionByChannel.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    formatter={(value: any) => `${value}%`}
+                    contentStyle={{ backgroundColor: '#fff', border: '1px solid #E5E7EB', borderRadius: '12px', boxShadow: '0 10px 40px rgba(0,0,0,0.1)' }}
+                  />
+                </RechartsPieChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="grid grid-cols-2 gap-2 mt-4">
+              {distributionByChannel.map((channel) => (
+                <div key={channel.name} className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg">
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: channel.color }} />
+                  <span className="text-xs font-medium text-gray-700">{channel.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
@@ -748,63 +852,98 @@ const AnaliticaIngresosPage: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-xl shadow-lg p-6 mb-8"
+        transition={{ duration: 0.6 }}
+        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 mb-8 border border-white/50 relative overflow-hidden"
       >
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-xl font-bold text-gray-900">Proyecciones Financieras (12 meses)</h2>
-            <p className="text-sm text-gray-600 mt-1">Basado en tasa de crecimiento histórica y churn actual</p>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-green-500 rounded-full" />
-              <span className="text-sm text-gray-600">Optimista</span>
+        {/* Decoración de fondo */}
+        <div className="absolute -right-20 -top-20 w-64 h-64 bg-gradient-to-br from-blue-200 to-purple-200 rounded-full blur-3xl opacity-20"></div>
+
+        <div className="relative z-10">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
+                <div className="p-2 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl">
+                  <Target className="w-6 h-6 text-white" />
+                </div>
+                Proyecciones Financieras (12 meses)
+              </h2>
+              <p className="text-sm text-gray-600 mt-2">Basado en tasa de crecimiento histórica y churn actual</p>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-blue-500 rounded-full" />
-              <span className="text-sm text-gray-600">Realista</span>
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex items-center gap-2 bg-green-50 px-3 py-2 rounded-lg">
+                <div className="w-3 h-3 bg-green-500 rounded-full" />
+                <span className="text-sm font-medium text-gray-700">Optimista</span>
+              </div>
+              <div className="flex items-center gap-2 bg-blue-50 px-3 py-2 rounded-lg">
+                <div className="w-3 h-3 bg-blue-500 rounded-full" />
+                <span className="text-sm font-medium text-gray-700">Realista</span>
+              </div>
+              <div className="flex items-center gap-2 bg-red-50 px-3 py-2 rounded-lg">
+                <div className="w-3 h-3 bg-red-500 rounded-full" />
+                <span className="text-sm font-medium text-gray-700">Pesimista</span>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-red-500 rounded-full" />
-              <span className="text-sm text-gray-600">Pesimista</span>
-            </div>
           </div>
-        </div>
-        <div className="h-96">
-          <ResponsiveContainer width="100%" height="100%">
-            <ComposedChart data={[...filteredData.slice(-3), ...projections]}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-              <XAxis dataKey="month" tick={{ fontSize: 12 }} />
-              <YAxis tick={{ fontSize: 12 }} tickFormatter={(value) => `€${(value / 1000).toFixed(0)}k`} />
-              <Tooltip
-                contentStyle={{ backgroundColor: '#fff', border: '1px solid #E5E7EB', borderRadius: '8px' }}
-                formatter={(value: any) => formatCurrency(value)}
-              />
-              <Legend />
-              <Line type="monotone" dataKey="mrr" stroke="#3B82F6" strokeWidth={3} name="MRR Histórico" dot={{ r: 4 }} />
-              <Line type="monotone" dataKey="realistic" stroke="#3B82F6" strokeWidth={3} strokeDasharray="5 5" name="Proyección Realista" dot={{ r: 4 }} />
-              <Line type="monotone" dataKey="optimistic" stroke="#10B981" strokeWidth={2} strokeDasharray="5 5" name="Proyección Optimista" dot={{ r: 3 }} />
-              <Line type="monotone" dataKey="pessimistic" stroke="#EF4444" strokeWidth={2} strokeDasharray="5 5" name="Proyección Pesimista" dot={{ r: 3 }} />
-              <Area type="monotone" dataKey="optimistic" fill="#10B981" fillOpacity={0.1} />
-              <Area type="monotone" dataKey="pessimistic" fill="#EF4444" fillOpacity={0.1} />
-            </ComposedChart>
-          </ResponsiveContainer>
-        </div>
-        <div className="grid grid-cols-3 gap-4 mt-6">
-          <div className="bg-green-50 rounded-lg p-4">
-            <p className="text-sm text-gray-600 mb-1">Escenario Optimista</p>
-            <p className="text-2xl font-bold text-green-600">{formatCurrency(projections[11].optimistic)}</p>
-            <p className="text-xs text-gray-500 mt-1">+{((projections[11].optimistic / mrr - 1) * 100).toFixed(1)}% en 12 meses</p>
+          <div className="h-96 mb-6">
+            <ResponsiveContainer width="100%" height="100%">
+              <ComposedChart data={[...filteredData.slice(-3), ...projections]}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+                <XAxis dataKey="month" tick={{ fontSize: 12 }} />
+                <YAxis tick={{ fontSize: 12 }} tickFormatter={(value) => `€${(value / 1000).toFixed(0)}k`} />
+                <Tooltip
+                  contentStyle={{ backgroundColor: '#fff', border: '1px solid #E5E7EB', borderRadius: '12px', boxShadow: '0 10px 40px rgba(0,0,0,0.1)' }}
+                  formatter={(value: any) => formatCurrency(value)}
+                />
+                <Legend />
+                <Line type="monotone" dataKey="mrr" stroke="#3B82F6" strokeWidth={3} name="MRR Histórico" dot={{ r: 4 }} />
+                <Line type="monotone" dataKey="realistic" stroke="#3B82F6" strokeWidth={3} strokeDasharray="5 5" name="Proyección Realista" dot={{ r: 4 }} />
+                <Line type="monotone" dataKey="optimistic" stroke="#10B981" strokeWidth={2} strokeDasharray="5 5" name="Proyección Optimista" dot={{ r: 3 }} />
+                <Line type="monotone" dataKey="pessimistic" stroke="#EF4444" strokeWidth={2} strokeDasharray="5 5" name="Proyección Pesimista" dot={{ r: 3 }} />
+                <Area type="monotone" dataKey="optimistic" fill="#10B981" fillOpacity={0.1} />
+                <Area type="monotone" dataKey="pessimistic" fill="#EF4444" fillOpacity={0.1} />
+              </ComposedChart>
+            </ResponsiveContainer>
           </div>
-          <div className="bg-blue-50 rounded-lg p-4">
-            <p className="text-sm text-gray-600 mb-1">Escenario Realista</p>
-            <p className="text-2xl font-bold text-blue-600">{formatCurrency(projections[11].realistic)}</p>
-            <p className="text-xs text-gray-500 mt-1">+{((projections[11].realistic / mrr - 1) * 100).toFixed(1)}% en 12 meses</p>
-          </div>
-          <div className="bg-red-50 rounded-lg p-4">
-            <p className="text-sm text-gray-600 mb-1">Escenario Pesimista</p>
-            <p className="text-2xl font-bold text-red-600">{formatCurrency(projections[11].pessimistic)}</p>
-            <p className="text-xs text-gray-500 mt-1">+{((projections[11].pessimistic / mrr - 1) * 100).toFixed(1)}% en 12 meses</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-4 border border-green-200"
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <TrendingUp className="w-5 h-5 text-green-600" />
+                <p className="text-sm font-semibold text-gray-600">Escenario Optimista</p>
+              </div>
+              <p className="text-3xl font-bold text-green-600">{formatCurrency(projections[11].optimistic)}</p>
+              <p className="text-xs text-gray-500 mt-2">+{((projections[11].optimistic / mrr - 1) * 100).toFixed(1)}% crecimiento en 12 meses</p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-4 border border-blue-200"
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <Activity className="w-5 h-5 text-blue-600" />
+                <p className="text-sm font-semibold text-gray-600">Escenario Realista</p>
+              </div>
+              <p className="text-3xl font-bold text-blue-600">{formatCurrency(projections[11].realistic)}</p>
+              <p className="text-xs text-gray-500 mt-2">+{((projections[11].realistic / mrr - 1) * 100).toFixed(1)}% crecimiento en 12 meses</p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-4 border border-red-200"
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <AlertCircle className="w-5 h-5 text-red-600" />
+                <p className="text-sm font-semibold text-gray-600">Escenario Pesimista</p>
+              </div>
+              <p className="text-3xl font-bold text-red-600">{formatCurrency(projections[11].pessimistic)}</p>
+              <p className="text-xs text-gray-500 mt-2">+{((projections[11].pessimistic / mrr - 1) * 100).toFixed(1)}% crecimiento en 12 meses</p>
+            </motion.div>
           </div>
         </div>
       </motion.div>
@@ -813,95 +952,137 @@ const AnaliticaIngresosPage: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-xl shadow-lg p-6 mb-8"
+        transition={{ duration: 0.6 }}
+        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 mb-8 border border-white/50 relative overflow-hidden"
       >
-        <h2 className="text-xl font-bold text-gray-900 mb-6">Métricas de Salud Financiera</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Quick Ratio */}
-          <div className="relative">
-            <div className="flex items-start justify-between mb-3">
-              <div>
-                <p className="text-sm text-gray-600 font-medium">Quick Ratio</p>
-                <h3 className="text-3xl font-bold text-gray-900 mt-1">{quickRatio.toFixed(2)}</h3>
-              </div>
-              <div className={`p-2 rounded-lg ${quickRatio > 4 ? 'bg-green-100' : quickRatio > 2 ? 'bg-yellow-100' : 'bg-red-100'}`}>
-                <Zap className={`w-5 h-5 ${quickRatio > 4 ? 'text-green-600' : quickRatio > 2 ? 'text-yellow-600' : 'text-red-600'}`} />
-              </div>
-            </div>
-            <p className="text-xs text-gray-500 mb-2">Ideal: {'>'} 4.0</p>
-            <div className="w-full bg-gray-200 rounded-full h-2">
-              <div
-                className={`h-2 rounded-full ${quickRatio > 4 ? 'bg-green-500' : quickRatio > 2 ? 'bg-yellow-500' : 'bg-red-500'}`}
-                style={{ width: `${Math.min((quickRatio / 8) * 100, 100)}%` }}
-              />
-            </div>
-            <p className="text-xs text-gray-600 mt-2">
-              {quickRatio > 4 ? '✅ Excelente' : quickRatio > 2 ? '⚠️ Aceptable' : '❌ Necesita mejora'}
-            </p>
-          </div>
+        {/* Decoración de fondo */}
+        <div className="absolute -right-20 -top-20 w-64 h-64 bg-gradient-to-br from-emerald-200 to-cyan-200 rounded-full blur-3xl opacity-20"></div>
 
-          {/* NRR */}
-          <div className="relative">
-            <div className="flex items-start justify-between mb-3">
-              <div>
-                <p className="text-sm text-gray-600 font-medium">Net Revenue Retention</p>
-                <h3 className="text-3xl font-bold text-gray-900 mt-1">{nrr.toFixed(1)}%</h3>
-              </div>
-              <div className={`p-2 rounded-lg ${nrr > 100 ? 'bg-green-100' : 'bg-yellow-100'}`}>
-                <Activity className={`w-5 h-5 ${nrr > 100 ? 'text-green-600' : 'text-yellow-600'}`} />
-              </div>
+        <div className="relative z-10">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+            <div className="p-2 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-xl">
+              <Zap className="w-6 h-6 text-white" />
             </div>
-            <p className="text-xs text-gray-500 mb-2">Ideal: {'>'} 100%</p>
-            <div className="w-full bg-gray-200 rounded-full h-2">
-              <div
-                className={`h-2 rounded-full ${nrr > 100 ? 'bg-green-500' : 'bg-yellow-500'}`}
-                style={{ width: `${Math.min((nrr / 120) * 100, 100)}%` }}
-              />
-            </div>
-            <p className="text-xs text-gray-600 mt-2">
-              {nrr > 110 ? '✅ Excelente' : nrr > 100 ? '✅ Bueno' : '⚠️ Necesita mejora'}
-            </p>
-          </div>
+            Métricas de Salud Financiera
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Quick Ratio */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.1 }}
+              className="relative bg-gradient-to-br from-emerald-50 to-green-50 rounded-2xl p-4 border border-emerald-200"
+            >
+              <div className="flex items-start justify-between mb-3">
+                <div>
+                  <p className="text-sm text-gray-600 font-semibold">Quick Ratio</p>
+                  <h3 className="text-3xl font-bold text-gray-900 mt-1">{quickRatio.toFixed(2)}</h3>
+                </div>
+                <div className={`p-2 rounded-xl ${quickRatio > 4 ? 'bg-green-100' : quickRatio > 2 ? 'bg-yellow-100' : 'bg-red-100'}`}>
+                  <Zap className={`w-5 h-5 ${quickRatio > 4 ? 'text-green-600' : quickRatio > 2 ? 'text-yellow-600' : 'text-red-600'}`} />
+                </div>
+              </div>
+              <p className="text-xs text-gray-500 mb-2 font-medium">Ideal: {'>'} 4.0</p>
+              <div className="w-full bg-white/50 rounded-full h-2 overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${Math.min((quickRatio / 8) * 100, 100)}%` }}
+                  transition={{ delay: 0.5, duration: 1 }}
+                  className={`h-2 rounded-full ${quickRatio > 4 ? 'bg-green-500' : quickRatio > 2 ? 'bg-yellow-500' : 'bg-red-500'}`}
+                />
+              </div>
+              <p className="text-xs text-gray-600 mt-2 font-medium">
+                {quickRatio > 4 ? '✅ Excelente' : quickRatio > 2 ? '⚠️ Aceptable' : '❌ Necesita mejora'}
+              </p>
+            </motion.div>
 
-          {/* MRR Churn Rate */}
-          <div className="relative">
-            <div className="flex items-start justify-between mb-3">
-              <div>
-                <p className="text-sm text-gray-600 font-medium">MRR Churn Rate</p>
-                <h3 className="text-3xl font-bold text-gray-900 mt-1">{churnRate.toFixed(2)}%</h3>
+            {/* NRR */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
+              className="relative bg-gradient-to-br from-cyan-50 to-blue-50 rounded-2xl p-4 border border-cyan-200"
+            >
+              <div className="flex items-start justify-between mb-3">
+                <div>
+                  <p className="text-sm text-gray-600 font-semibold">Net Revenue Retention</p>
+                  <h3 className="text-3xl font-bold text-gray-900 mt-1">{nrr.toFixed(1)}%</h3>
+                </div>
+                <div className={`p-2 rounded-xl ${nrr > 100 ? 'bg-green-100' : 'bg-yellow-100'}`}>
+                  <Activity className={`w-5 h-5 ${nrr > 100 ? 'text-green-600' : 'text-yellow-600'}`} />
+                </div>
               </div>
-              <div className={`p-2 rounded-lg ${churnRate < 5 ? 'bg-green-100' : 'bg-yellow-100'}`}>
-                <TrendingDown className={`w-5 h-5 ${churnRate < 5 ? 'text-green-600' : 'text-yellow-600'}`} />
+              <p className="text-xs text-gray-500 mb-2 font-medium">Ideal: {'>'} 100%</p>
+              <div className="w-full bg-white/50 rounded-full h-2 overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${Math.min((nrr / 120) * 100, 100)}%` }}
+                  transition={{ delay: 0.6, duration: 1 }}
+                  className={`h-2 rounded-full ${nrr > 100 ? 'bg-green-500' : 'bg-yellow-500'}`}
+                />
               </div>
-            </div>
-            <p className="text-xs text-gray-500 mb-2">Objetivo: {'<'} 5%</p>
-            <div className="w-full bg-gray-200 rounded-full h-2">
-              <div
-                className={`h-2 rounded-full ${churnRate < 5 ? 'bg-green-500' : 'bg-yellow-500'}`}
-                style={{ width: `${Math.min((churnRate / 10) * 100, 100)}%` }}
-              />
-            </div>
-            <p className="text-xs text-gray-600 mt-2">
-              {churnRate < 5 ? '✅ Excelente' : churnRate < 7 ? '⚠️ Aceptable' : '❌ Alto'}
-            </p>
-          </div>
+              <p className="text-xs text-gray-600 mt-2 font-medium">
+                {nrr > 110 ? '✅ Excelente' : nrr > 100 ? '✅ Bueno' : '⚠️ Necesita mejora'}
+              </p>
+            </motion.div>
 
-          {/* CAC Payback */}
-          <div className="relative">
-            <div className="flex items-start justify-between mb-3">
-              <div>
-                <p className="text-sm text-gray-600 font-medium">CAC Payback Period</p>
-                <h3 className="text-3xl font-bold text-gray-900 mt-1">8.5 <span className="text-lg text-gray-600">meses</span></h3>
+            {/* MRR Churn Rate */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3 }}
+              className="relative bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl p-4 border border-orange-200"
+            >
+              <div className="flex items-start justify-between mb-3">
+                <div>
+                  <p className="text-sm text-gray-600 font-semibold">Revenue Churn</p>
+                  <h3 className="text-3xl font-bold text-gray-900 mt-1">{churnRate.toFixed(2)}%</h3>
+                </div>
+                <div className={`p-2 rounded-xl ${churnRate < 5 ? 'bg-green-100' : 'bg-orange-100'}`}>
+                  <TrendingDown className={`w-5 h-5 ${churnRate < 5 ? 'text-green-600' : 'text-orange-600'}`} />
+                </div>
               </div>
-              <div className="p-2 bg-green-100 rounded-lg">
-                <Target className="w-5 h-5 text-green-600" />
+              <p className="text-xs text-gray-500 mb-2 font-medium">Objetivo: {'<'} 5%</p>
+              <div className="w-full bg-white/50 rounded-full h-2 overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${Math.min((churnRate / 10) * 100, 100)}%` }}
+                  transition={{ delay: 0.7, duration: 1 }}
+                  className={`h-2 rounded-full ${churnRate < 5 ? 'bg-green-500' : 'bg-orange-500'}`}
+                />
               </div>
-            </div>
-            <p className="text-xs text-gray-500 mb-2">Ideal: {'<'} 12 meses</p>
-            <div className="w-full bg-gray-200 rounded-full h-2">
-              <div className="h-2 rounded-full bg-green-500" style={{ width: '70%' }} />
-            </div>
-            <p className="text-xs text-gray-600 mt-2">✅ Excelente recuperación</p>
+              <p className="text-xs text-gray-600 mt-2 font-medium">
+                {churnRate < 5 ? '✅ Excelente' : churnRate < 7 ? '⚠️ Aceptable' : '❌ Alto'}
+              </p>
+            </motion.div>
+
+            {/* Expansion Revenue */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.4 }}
+              className="relative bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-4 border border-purple-200"
+            >
+              <div className="flex items-start justify-between mb-3">
+                <div>
+                  <p className="text-sm text-gray-600 font-semibold">Expansion Revenue</p>
+                  <h3 className="text-3xl font-bold text-gray-900 mt-1">{formatCurrency(currentMonth.expansionMRR)}</h3>
+                </div>
+                <div className="p-2 bg-purple-100 rounded-xl">
+                  <ArrowUpRight className="w-5 h-5 text-purple-600" />
+                </div>
+              </div>
+              <p className="text-xs text-gray-500 mb-2 font-medium">Tasa: {((currentMonth.expansionMRR / previousMonth.mrr) * 100).toFixed(1)}%</p>
+              <div className="w-full bg-white/50 rounded-full h-2 overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: '65%' }}
+                  transition={{ delay: 0.8, duration: 1 }}
+                  className="h-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500"
+                />
+              </div>
+              <p className="text-xs text-gray-600 mt-2 font-medium">✅ Crecimiento positivo</p>
+            </motion.div>
           </div>
         </div>
       </motion.div>
@@ -1026,25 +1207,68 @@ const AnaliticaIngresosPage: React.FC = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="bg-gradient-to-r from-green-600 to-yellow-600 rounded-xl shadow-lg p-6 text-white"
+        transition={{ duration: 0.6 }}
+        className="relative overflow-hidden bg-gradient-to-r from-emerald-600 via-green-600 to-lime-600 rounded-3xl shadow-2xl p-8 text-white"
       >
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div>
-            <p className="text-green-100 text-sm mb-1">Total Ingresos Período</p>
-            <p className="text-3xl font-bold">{formatCurrency(totalRevenue)}</p>
-          </div>
-          <div>
-            <p className="text-green-100 text-sm mb-1">Clientes Activos</p>
-            <p className="text-3xl font-bold">{currentMonth.customers}</p>
-          </div>
-          <div>
-            <p className="text-green-100 text-sm mb-1">Crecimiento Promedio</p>
-            <p className="text-3xl font-bold">{formatPercent(avgGrowthRate)}</p>
-          </div>
-          <div>
-            <p className="text-green-100 text-sm mb-1">ARR Proyectado</p>
-            <p className="text-3xl font-bold">{formatCurrency(arr)}</p>
-          </div>
+        {/* Efectos de fondo */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+        </div>
+
+        {/* Dots pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3) 1px, transparent 1px)`,
+            backgroundSize: '20px 20px'
+          }}></div>
+        </div>
+
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-4 gap-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <DollarSign className="w-5 h-5 text-emerald-200" />
+              <p className="text-emerald-100 text-sm font-semibold">Total Ingresos Período</p>
+            </div>
+            <p className="text-4xl font-bold">{formatCurrency(totalRevenue)}</p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <Users className="w-5 h-5 text-emerald-200" />
+              <p className="text-emerald-100 text-sm font-semibold">Clientes Activos</p>
+            </div>
+            <p className="text-4xl font-bold">{currentMonth.customers}</p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <TrendingUp className="w-5 h-5 text-emerald-200" />
+              <p className="text-emerald-100 text-sm font-semibold">Crecimiento Promedio</p>
+            </div>
+            <p className="text-4xl font-bold">{formatPercent(avgGrowthRate)}</p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <Award className="w-5 h-5 text-emerald-200" />
+              <p className="text-emerald-100 text-sm font-semibold">ARR Proyectado</p>
+            </div>
+            <p className="text-4xl font-bold">{formatCurrency(arr)}</p>
+          </motion.div>
         </div>
       </motion.div>
     </div>

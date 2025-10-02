@@ -743,103 +743,153 @@ const ConfiguracionUpsellsPage: React.FC = () => {
     );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-pink-50 p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+        {/* Hero Section */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+          transition={{ duration: 0.6 }}
+          className="relative overflow-hidden bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 rounded-3xl shadow-2xl mb-8 p-8 md:p-12"
         >
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-4">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-                className="p-3 bg-gradient-to-br from-emerald-500 to-blue-600 rounded-xl shadow-lg"
-              >
-                <Settings className="w-8 h-8 text-white" />
-              </motion.div>
-              <div>
-                <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">
-                  Motor de Reglas de Upsells
-                </h1>
-                <p className="text-slate-600 mt-1">
-                  Automatiza ofertas inteligentes basadas en comportamiento
-                </p>
+          {/* Efectos de fondo animados */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          </div>
+
+          {/* Grid pattern */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                               linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+              backgroundSize: '50px 50px'
+            }}></div>
+          </div>
+
+          <div className="relative z-10">
+            {/* Título con icono animado */}
+            <div className="flex items-center gap-3 mb-4">
+              <div className="relative">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+                  className="p-2 bg-white/20 rounded-xl backdrop-blur-sm"
+                >
+                  <Settings className="w-10 h-10 text-yellow-300" />
+                </motion.div>
+                <div className="absolute inset-0 w-10 h-10 bg-yellow-300 rounded-full blur-lg opacity-50"></div>
               </div>
+              <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
+                Configuración de <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-yellow-400">Upsells</span>
+              </h1>
             </div>
-            <div className="flex gap-3">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setShowTestModal(true)}
-                className="px-4 py-2 bg-white border-2 border-blue-200 text-blue-600 rounded-lg font-medium hover:bg-blue-50 transition-colors flex items-center gap-2"
-              >
-                <Play className="w-4 h-4" />
-                Test de Reglas
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setView('logs')}
-                className="px-4 py-2 bg-white border-2 border-emerald-200 text-emerald-600 rounded-lg font-medium hover:bg-emerald-50 transition-colors flex items-center gap-2"
-              >
-                <FileText className="w-4 h-4" />
-                Ver Logs
-              </motion.button>
+
+            {/* Descripción */}
+            <p className="text-xl md:text-2xl text-orange-100 max-w-3xl leading-relaxed mb-6">
+              Diseña ofertas irresistibles que impulsan el valor de tu negocio
+            </p>
+
+            {/* Botones de acción */}
+            <div className="flex flex-wrap gap-4">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setShowRuleBuilder(true)}
-                className="px-5 py-2 bg-gradient-to-r from-emerald-500 to-blue-600 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-shadow flex items-center gap-2"
+                className="px-6 py-3 bg-white/20 backdrop-blur-md rounded-xl border border-white/20 text-white font-semibold hover:bg-white/30 transition-all flex items-center gap-2 shadow-lg"
               >
                 <Plus className="w-5 h-5" />
-                Nueva Regla
+                Nuevo Upsell
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setView('templates')}
+                className="px-6 py-3 bg-white/10 backdrop-blur-md rounded-xl border border-white/20 text-white font-semibold hover:bg-white/20 transition-all flex items-center gap-2"
+              >
+                <Sparkles className="w-5 h-5" />
+                Ver Plantillas
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setShowTestModal(true)}
+                className="px-6 py-3 bg-white/10 backdrop-blur-md rounded-xl border border-white/20 text-white font-semibold hover:bg-white/20 transition-all flex items-center gap-2"
+              >
+                <Play className="w-5 h-5" />
+                Probar Estrategia
               </motion.button>
             </div>
           </div>
         </motion.div>
 
         {/* Estadísticas Rápidas */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <StatCard
-            icon={Zap}
-            label="Reglas Activas"
-            value={totalActiveRules}
-            color="emerald"
-            trend="+3 esta semana"
-          />
-          <StatCard
-            icon={Activity}
-            label="Triggers Ejecutados Hoy"
-            value={totalExecutionsToday}
-            color="blue"
-            trend="12% más que ayer"
-          />
-          <StatCard
-            icon={Target}
-            label="Tasa de Éxito Promedio"
-            value={`${avgSuccessRate.toFixed(1)}%`}
-            color="purple"
-            trend="+2.3% vs mes anterior"
-          />
-          <StatCard
-            icon={TrendingUp}
-            label="Ofertas Automatizadas"
-            value={totalOffersGenerated}
-            color="orange"
-            trend="Total generadas"
-          />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {[
+            { icon: Zap, label: 'Estrategias Activas', value: totalActiveRules, color: 'orange', trend: '+3 esta semana' },
+            { icon: Activity, label: 'Ofertas Mostradas', value: totalExecutionsToday, color: 'red', trend: '12% más que ayer' },
+            { icon: Target, label: 'Conversión Promedio', value: `${avgSuccessRate.toFixed(1)}%`, color: 'pink', trend: '+2.3% vs mes anterior' },
+            { icon: TrendingUp, label: 'Revenue Generado', value: `€${rules.reduce((acc, r) => acc + r.stats.revenue, 0)}`, color: 'orange', trend: 'Total acumulado' }
+          ].map((stat, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+              whileHover={{ scale: 1.03, y: -8 }}
+              className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
+            >
+              {/* Shimmer effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
+
+              {/* Decoración de fondo */}
+              <div className={`absolute -right-8 -top-8 w-32 h-32 ${
+                stat.color === 'orange' ? 'bg-gradient-to-br from-orange-500 to-red-600' :
+                stat.color === 'red' ? 'bg-gradient-to-br from-red-500 to-pink-600' :
+                stat.color === 'pink' ? 'bg-gradient-to-br from-pink-500 to-rose-600' :
+                'bg-gradient-to-br from-orange-400 to-yellow-600'
+              } opacity-5 rounded-full blur-2xl`}></div>
+
+              <div className="relative z-10">
+                {/* Icono */}
+                <div className={`w-16 h-16 rounded-2xl ${
+                  stat.color === 'orange' ? 'bg-gradient-to-br from-orange-500 to-red-600' :
+                  stat.color === 'red' ? 'bg-gradient-to-br from-red-500 to-pink-600' :
+                  stat.color === 'pink' ? 'bg-gradient-to-br from-pink-500 to-rose-600' :
+                  'bg-gradient-to-br from-orange-400 to-yellow-600'
+                } flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300`}>
+                  <stat.icon className="w-8 h-8" />
+                </div>
+
+                {/* Título */}
+                <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">
+                  {stat.label}
+                </p>
+
+                {/* Valor */}
+                <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 mb-3">
+                  {stat.value}
+                </p>
+
+                {/* Cambio */}
+                <div className="flex items-center gap-2">
+                  <div className="p-1 bg-orange-50 rounded-lg">
+                    <TrendingUp className="w-4 h-4 text-orange-600" />
+                  </div>
+                  <span className="text-xs text-gray-500 font-medium">{stat.trend}</span>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
 
         {/* Navegación de Vistas */}
-        <div className="flex gap-2 mb-6 border-b border-slate-200">
+        <div className="flex gap-2 mb-6 border-b border-orange-100">
           <TabButton
             active={view === 'list'}
             onClick={() => setView('list')}
             icon={GitBranch}
-            label="Reglas"
+            label="Estrategias Activas"
           />
           <TabButton
             active={view === 'templates'}
@@ -851,13 +901,13 @@ const ConfiguracionUpsellsPage: React.FC = () => {
             active={view === 'logs'}
             onClick={() => setView('logs')}
             icon={FileText}
-            label="Logs"
+            label="Historial"
           />
           <TabButton
             active={view === 'analytics'}
             onClick={() => setView('analytics')}
             icon={BarChart3}
-            label="Análisis"
+            label="Métricas"
           />
         </div>
 
@@ -1124,7 +1174,7 @@ const TabButton: React.FC<TabButtonProps> = ({ active, onClick, icon: Icon, labe
       onClick={onClick}
       className={`px-4 py-2 flex items-center gap-2 font-medium transition-colors relative ${
         active
-          ? 'text-emerald-600'
+          ? 'text-orange-600'
           : 'text-slate-600 hover:text-slate-800'
       }`}
     >
@@ -1133,7 +1183,7 @@ const TabButton: React.FC<TabButtonProps> = ({ active, onClick, icon: Icon, labe
       {active && (
         <motion.div
           layoutId="activeTab"
-          className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-500 to-blue-600"
+          className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-orange-600 via-red-600 to-pink-600"
         />
       )}
     </button>
@@ -1150,9 +1200,9 @@ const FilterButton: React.FC<FilterButtonProps> = ({ active, onClick, label }) =
   return (
     <button
       onClick={onClick}
-      className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+      className={`px-4 py-2 rounded-xl font-medium transition-colors ${
         active
-          ? 'bg-gradient-to-r from-emerald-500 to-blue-600 text-white shadow-lg'
+          ? 'bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 text-white shadow-lg'
           : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
       }`}
     >
@@ -1187,8 +1237,8 @@ const RuleCard: React.FC<RuleCardProps> = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
-      className={`bg-white rounded-xl p-6 shadow-lg border-2 transition-all ${
-        rule.active ? 'border-emerald-200' : 'border-slate-200'
+      className={`bg-white/80 backdrop-blur-xl rounded-3xl p-6 shadow-xl border-2 transition-all hover:shadow-2xl ${
+        rule.active ? 'border-orange-200' : 'border-slate-200'
       }`}
     >
       <div className="flex items-start gap-4">
@@ -1209,11 +1259,11 @@ const RuleCard: React.FC<RuleCardProps> = ({
                 <span
                   className={`px-3 py-1 rounded-full text-xs font-semibold ${
                     rule.active
-                      ? 'bg-emerald-100 text-emerald-700'
+                      ? 'bg-gradient-to-r from-orange-100 to-pink-100 text-orange-700'
                       : 'bg-slate-100 text-slate-600'
                   }`}
                 >
-                  {rule.active ? 'Activa' : 'Inactiva'}
+                  {rule.active ? '🔥 Activa' : 'Inactiva'}
                 </span>
               </div>
               <p className="text-slate-600 text-sm mb-3">{rule.description}</p>
@@ -1345,7 +1395,7 @@ const RuleCard: React.FC<RuleCardProps> = ({
             <button
               onClick={onToggle}
               className={`relative w-12 h-6 rounded-full transition-colors ${
-                rule.active ? 'bg-emerald-500' : 'bg-slate-300'
+                rule.active ? 'bg-gradient-to-r from-orange-500 to-pink-500' : 'bg-slate-300'
               }`}
             >
               <motion.div
@@ -1359,7 +1409,7 @@ const RuleCard: React.FC<RuleCardProps> = ({
           <div className="flex items-center justify-between">
             <button
               onClick={() => setExpanded(!expanded)}
-              className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1"
+              className="text-sm text-orange-600 hover:text-orange-700 font-medium flex items-center gap-1"
             >
               {expanded ? (
                 <>
@@ -1458,19 +1508,24 @@ const TemplateCard: React.FC<TemplateCardProps> = ({ template }) => {
 
   return (
     <motion.div
-      whileHover={{ y: -4 }}
-      className="bg-white rounded-xl p-6 shadow-lg border border-slate-100 cursor-pointer group"
+      whileHover={{ y: -4, scale: 1.02 }}
+      className="bg-white/80 backdrop-blur-xl rounded-3xl p-6 shadow-xl border border-white/50 cursor-pointer group relative overflow-hidden"
     >
-      <div
-        className={`w-12 h-12 rounded-lg ${colorClasses[template.color as keyof typeof colorClasses].split(' ')[1]} ${colorClasses[template.color as keyof typeof colorClasses].split(' ')[2]} flex items-center justify-center mb-4`}
-      >
-        <Icon className="w-6 h-6" />
+      {/* Decoración de fondo */}
+      <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-orange-200 to-pink-200 rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
+
+      <div className="relative z-10">
+        <div
+          className={`w-14 h-14 rounded-2xl ${colorClasses[template.color as keyof typeof colorClasses].split(' ')[1]} ${colorClasses[template.color as keyof typeof colorClasses].split(' ')[2]} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform`}
+        >
+          <Icon className="w-7 h-7" />
+        </div>
+        <h3 className="text-lg font-bold text-slate-800 mb-2">{template.name}</h3>
+        <p className="text-sm text-slate-600 mb-4">{template.description}</p>
+        <button className="w-full py-2.5 bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 text-white rounded-xl font-medium opacity-0 group-hover:opacity-100 transition-all shadow-lg hover:shadow-xl">
+          Usar Plantilla
+        </button>
       </div>
-      <h3 className="text-lg font-bold text-slate-800 mb-2">{template.name}</h3>
-      <p className="text-sm text-slate-600 mb-4">{template.description}</p>
-      <button className="w-full py-2 bg-gradient-to-r from-emerald-500 to-blue-600 text-white rounded-lg font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-        Usar Plantilla
-      </button>
     </motion.div>
   );
 };
@@ -1651,34 +1706,37 @@ const AnalyticsView: React.FC<AnalyticsViewProps> = ({ rules }) => {
       </div>
 
       {/* Recomendaciones */}
-      <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-6 border border-blue-100">
-        <div className="flex items-start gap-3">
-          <div className="p-2 bg-blue-100 rounded-lg">
-            <Sparkles className="w-5 h-5 text-blue-600" />
+      <div className="relative overflow-hidden bg-gradient-to-br from-orange-50 via-red-50 to-pink-50 rounded-3xl p-6 border border-orange-100">
+        {/* Decoración de fondo */}
+        <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-orange-200 to-pink-200 rounded-full blur-3xl opacity-20"></div>
+
+        <div className="flex items-start gap-3 relative z-10">
+          <div className="p-2 bg-gradient-to-br from-orange-500 to-pink-500 rounded-xl shadow-lg">
+            <Sparkles className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-slate-800 mb-2">
-              Optimizaciones Sugeridas
+            <h3 className="text-lg font-bold text-slate-800 mb-2 flex items-center gap-2">
+              💡 Optimizaciones Sugeridas
             </h3>
-            <ul className="space-y-2 text-sm text-slate-700">
+            <ul className="space-y-3 text-sm text-slate-700">
               <li className="flex items-start gap-2">
-                <AlertCircle className="w-4 h-4 text-blue-600 mt-0.5" />
+                <AlertCircle className="w-4 h-4 text-orange-600 mt-0.5 flex-shrink-0" />
                 <span>
-                  La regla "Reactivar Inactivos" tiene baja conversión (11.1%). Considera
+                  La estrategia <span className="font-semibold">"Reactivar Inactivos"</span> tiene baja conversión (11.1%). Considera
                   ajustar las condiciones o mejorar la oferta.
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <AlertCircle className="w-4 h-4 text-blue-600 mt-0.5" />
+                <AlertCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
                 <span>
-                  "Objetivo Alcanzado Celebración" tiene excelente conversión (72.7%).
-                  Considera crear reglas similares para otros hitos.
+                  <span className="font-semibold">"Objetivo Alcanzado Celebración"</span> tiene excelente conversión (72.7%).
+                  Considera crear estrategias similares para otros hitos.
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <AlertCircle className="w-4 h-4 text-blue-600 mt-0.5" />
+                <AlertCircle className="w-4 h-4 text-pink-600 mt-0.5 flex-shrink-0" />
                 <span>
-                  El "Bundle Alto Valor" genera €3,500 con solo 12 ejecuciones. Amplía las
+                  El <span className="font-semibold">"Bundle Alto Valor"</span> genera €3,500 con solo 12 ejecuciones. Amplía las
                   condiciones para alcanzar más clientes potenciales.
                 </span>
               </li>
@@ -1756,28 +1814,43 @@ const RuleBuilderModal: React.FC<RuleBuilderModalProps> = ({ rule, onClose, onSa
         className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
       >
         {/* Header */}
-        <div className="bg-gradient-to-r from-emerald-500 to-blue-600 p-6 text-white">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold">
-              {rule ? 'Editar Regla' : 'Nueva Regla de Upsell'}
-            </h2>
-            <button
-              onClick={onClose}
-              className="p-2 hover:bg-white/20 rounded-lg transition-colors"
-            >
-              <X className="w-6 h-6" />
-            </button>
+        <div className="relative overflow-hidden bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 p-6 text-white">
+          {/* Pattern de fondo */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3) 1px, transparent 1px)`,
+              backgroundSize: '20px 20px'
+            }}></div>
           </div>
-          {/* Progress */}
-          <div className="flex gap-2">
-            {[1, 2, 3, 4, 5, 6].map((s) => (
-              <div
-                key={s}
-                className={`flex-1 h-1 rounded-full transition-colors ${
-                  s <= step ? 'bg-white' : 'bg-white/30'
-                }`}
-              />
-            ))}
+
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-white/20 rounded-xl backdrop-blur-sm">
+                  <Settings className="w-6 h-6" />
+                </div>
+                <h2 className="text-2xl font-bold">
+                  {rule ? 'Editar Estrategia' : 'Nueva Estrategia de Upsell'}
+                </h2>
+              </div>
+              <button
+                onClick={onClose}
+                className="p-2 hover:bg-white/20 rounded-xl transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            {/* Progress */}
+            <div className="flex gap-2">
+              {[1, 2, 3, 4, 5, 6].map((s) => (
+                <div
+                  key={s}
+                  className={`flex-1 h-1.5 rounded-full transition-all duration-300 ${
+                    s <= step ? 'bg-white shadow-lg' : 'bg-white/30'
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
@@ -1851,9 +1924,9 @@ const RuleBuilderModal: React.FC<RuleBuilderModalProps> = ({ rule, onClose, onSa
                         trigger: { type: triggerType },
                       })
                     }
-                    className={`p-4 rounded-lg border-2 text-left transition-all ${
+                    className={`p-4 rounded-xl border-2 text-left transition-all ${
                       formData.trigger?.type === triggerType
-                        ? 'border-emerald-500 bg-emerald-50'
+                        ? 'border-orange-500 bg-gradient-to-r from-orange-50 to-pink-50'
                         : 'border-slate-200 hover:border-slate-300'
                     }`}
                   >
@@ -1879,7 +1952,7 @@ const RuleBuilderModal: React.FC<RuleBuilderModalProps> = ({ rule, onClose, onSa
                   brevedad, este modal muestra la estructura básica.
                 </p>
               </div>
-              <button className="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors flex items-center gap-2">
+              <button className="px-4 py-2 bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 text-white rounded-xl hover:shadow-lg transition-all flex items-center gap-2">
                 <Plus className="w-4 h-4" />
                 Añadir Condición
               </button>
@@ -1894,9 +1967,9 @@ const RuleBuilderModal: React.FC<RuleBuilderModalProps> = ({ rule, onClose, onSa
                 {(Object.keys(ACTION_LABELS) as ActionType[]).map((actionType) => (
                   <button
                     key={actionType}
-                    className="w-full p-4 rounded-lg border-2 border-slate-200 hover:border-emerald-500 text-left transition-all"
+                    className="w-full p-4 rounded-xl border-2 border-slate-200 hover:border-orange-500 hover:bg-gradient-to-r hover:from-orange-50 hover:to-pink-50 text-left transition-all"
                   >
-                    {ACTION_LABELS[actionType]}
+                    <span className="font-medium text-slate-800">{ACTION_LABELS[actionType]}</span>
                   </button>
                 ))}
               </div>
@@ -1945,40 +2018,40 @@ const RuleBuilderModal: React.FC<RuleBuilderModalProps> = ({ rule, onClose, onSa
 
           {step === 6 && (
             <div className="space-y-4">
-              <h3 className="text-lg font-bold text-slate-800">
-                Paso 6: Revisión y Activación
+              <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+                🎯 Paso 6: Revisión y Activación
               </h3>
-              <div className="bg-slate-50 rounded-xl p-6 space-y-4">
+              <div className="bg-gradient-to-br from-orange-50 via-white to-pink-50 rounded-2xl p-6 space-y-4 border border-orange-100">
                 <div>
-                  <div className="text-sm font-semibold text-slate-500 mb-1">Nombre</div>
-                  <div className="text-lg font-bold text-slate-800">
+                  <div className="text-sm font-semibold text-slate-500 mb-1 uppercase tracking-wide">Nombre</div>
+                  <div className="text-xl font-bold text-slate-800">
                     {formData.name || 'Sin nombre'}
                   </div>
                 </div>
                 <div>
-                  <div className="text-sm font-semibold text-slate-500 mb-1">Trigger</div>
-                  <div className="px-3 py-1 bg-blue-100 text-blue-700 rounded inline-block">
+                  <div className="text-sm font-semibold text-slate-500 mb-2 uppercase tracking-wide">Trigger</div>
+                  <div className="px-4 py-2 bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-xl inline-block font-medium shadow-lg">
                     {formData.trigger
                       ? TRIGGER_LABELS[formData.trigger.type]
                       : 'No definido'}
                   </div>
                 </div>
                 <div>
-                  <div className="text-sm font-semibold text-slate-500 mb-1">
+                  <div className="text-sm font-semibold text-slate-500 mb-3 uppercase tracking-wide">
                     Estimación de Impacto
                   </div>
                   <div className="grid grid-cols-2 gap-4 mt-2">
-                    <div className="bg-white p-3 rounded-lg">
-                      <div className="text-xs text-slate-500">Clientes potenciales</div>
-                      <div className="text-2xl font-bold text-emerald-600">~45</div>
+                    <div className="bg-white/80 backdrop-blur-xl p-4 rounded-xl border border-orange-100 shadow-lg">
+                      <div className="text-xs text-slate-500 uppercase tracking-wider mb-1">Clientes potenciales</div>
+                      <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-pink-600">~45</div>
                     </div>
-                    <div className="bg-white p-3 rounded-lg">
-                      <div className="text-xs text-slate-500">Ejecuciones/mes</div>
-                      <div className="text-2xl font-bold text-blue-600">~60</div>
+                    <div className="bg-white/80 backdrop-blur-xl p-4 rounded-xl border border-orange-100 shadow-lg">
+                      <div className="text-xs text-slate-500 uppercase tracking-wider mb-1">Ejecuciones/mes</div>
+                      <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-pink-600">~60</div>
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 pt-4 border-t border-slate-200">
+                <div className="flex items-center gap-3 pt-4 border-t border-orange-100">
                   <input
                     type="checkbox"
                     id="activate"
@@ -1986,10 +2059,10 @@ const RuleBuilderModal: React.FC<RuleBuilderModalProps> = ({ rule, onClose, onSa
                     onChange={(e) =>
                       setFormData({ ...formData, active: e.target.checked })
                     }
-                    className="w-5 h-5 text-emerald-600"
+                    className="w-5 h-5 text-orange-600 rounded focus:ring-orange-500"
                   />
-                  <label htmlFor="activate" className="text-sm font-medium text-slate-700">
-                    Activar regla inmediatamente
+                  <label htmlFor="activate" className="text-sm font-medium text-slate-700 cursor-pointer">
+                    🔥 Activar estrategia inmediatamente
                   </label>
                 </div>
               </div>
@@ -2012,17 +2085,17 @@ const RuleBuilderModal: React.FC<RuleBuilderModalProps> = ({ rule, onClose, onSa
           {step < 6 ? (
             <button
               onClick={() => setStep(Math.min(6, step + 1))}
-              className="px-6 py-2 bg-gradient-to-r from-emerald-500 to-blue-600 text-white rounded-lg font-medium hover:shadow-lg transition-shadow"
+              className="px-6 py-2 bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 text-white rounded-xl font-medium hover:shadow-lg transition-shadow"
             >
               Siguiente
             </button>
           ) : (
             <button
               onClick={handleSave}
-              className="px-6 py-2 bg-gradient-to-r from-emerald-500 to-blue-600 text-white rounded-lg font-medium hover:shadow-lg transition-shadow flex items-center gap-2"
+              className="px-6 py-2 bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 text-white rounded-xl font-medium hover:shadow-lg transition-shadow flex items-center gap-2"
             >
               <Check className="w-5 h-5" />
-              Guardar Regla
+              Guardar Estrategia
             </button>
           )}
         </div>
@@ -2094,7 +2167,7 @@ const TestRuleModal: React.FC<TestRuleModalProps> = ({ rule, onClose }) => {
 
           <button
             onClick={runTest}
-            className="w-full py-3 bg-gradient-to-r from-emerald-500 to-blue-600 text-white rounded-lg font-medium hover:shadow-lg transition-shadow flex items-center justify-center gap-2"
+            className="w-full py-3 bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 text-white rounded-xl font-medium hover:shadow-lg transition-shadow flex items-center justify-center gap-2"
           >
             <Play className="w-5 h-5" />
             Ejecutar Test
@@ -2104,36 +2177,36 @@ const TestRuleModal: React.FC<TestRuleModalProps> = ({ rule, onClose }) => {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className={`p-6 rounded-xl ${
+              className={`p-6 rounded-2xl ${
                 testResult
-                  ? 'bg-emerald-50 border-2 border-emerald-200'
+                  ? 'bg-gradient-to-r from-orange-50 to-pink-50 border-2 border-orange-200'
                   : 'bg-red-50 border-2 border-red-200'
               }`}
             >
               <div className="flex items-center gap-3 mb-3">
                 {testResult ? (
                   <>
-                    <div className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-pink-500 rounded-full flex items-center justify-center shadow-lg">
                       <Check className="w-6 h-6 text-white" />
                     </div>
-                    <div className="text-lg font-bold text-emerald-800">
-                      Regla se ejecutaría
+                    <div className="text-lg font-bold text-orange-800">
+                      ✅ Estrategia se ejecutaría
                     </div>
                   </>
                 ) : (
                   <>
-                    <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center shadow-lg">
                       <X className="w-6 h-6 text-white" />
                     </div>
                     <div className="text-lg font-bold text-red-800">
-                      Regla NO se ejecutaría
+                      ❌ Estrategia NO se ejecutaría
                     </div>
                   </>
                 )}
               </div>
               <p
                 className={`text-sm ${
-                  testResult ? 'text-emerald-700' : 'text-red-700'
+                  testResult ? 'text-orange-700' : 'text-red-700'
                 }`}
               >
                 {testDetails}

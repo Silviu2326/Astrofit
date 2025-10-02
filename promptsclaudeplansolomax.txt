@@ -1,0 +1,1225 @@
+# 🚀 PROMPTS DE ESTILIZACIÓN - FEATURES PLANSOLOMAX
+
+---
+
+## 📋 PROMPT 1: Cohortes de Clientes
+
+Transforma completamente la página de Cohortes de Clientes ([src/features/plansolomax/analytics-avanzadas/analytics-avanzadas/cohortes-clientes/CohortesClientesPage.tsx](src/features/plansolomax/analytics-avanzadas/analytics-avanzadas/cohortes-clientes/CohortesClientesPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un análisis de cohortes completo y profesional
+- Facilita el análisis de comportamiento de grupos de clientes
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-blue-600 via-indigo-600 to-purple-600`
+   - Título "Análisis de Cohortes"
+   - Descripción: "Comprende el comportamiento de tus clientes a través del tiempo"
+   - Icono de grupo/usuarios
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Total de Cohortes
+   - Cohorte Más Grande
+   - Retención Promedio (%)
+   - Análisis Activos
+   - Cards con glassmorphism
+
+3. **MATRIZ DE COHORTES**
+   - Tabla de retención tipo heatmap
+   - Semanas/meses en eje horizontal
+   - Cohortes en eje vertical
+   - Color gradient según retención (%)
+   - Hover para ver detalles numéricos
+
+4. **CONFIGURADOR DE ANÁLISIS**
+   - Selector de métrica (retención, revenue, engagement)
+   - Agrupación por (día, semana, mes)
+   - Rango de fechas
+   - Filtros de segmentos
+
+5. **GRÁFICOS COMPLEMENTARIOS**
+   - Líneas de retención por cohorte
+   - Comparativa entre cohortes
+   - Lifetime value por cohorte
+   - Curvas de supervivencia
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente blue-indigo-purple para hero
+- Heatmap con escala de colores
+- Tabla interactiva con hover states
+- Gráficos de líneas (Recharts)
+- Filtros con glassmorphism
+- Exportar análisis a CSV/PDF
+- Tooltips informativos
+- Legend con gradiente de colores
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolomax/analytics-avanzadas/analytics-avanzadas/cohortes-clientes](src/features/plansolomax/analytics-avanzadas/analytics-avanzadas/cohortes-clientes).
+
+---
+
+## 📋 PROMPT 2: LTV de Clientes
+
+Transforma completamente la página de LTV de Clientes ([src/features/plansolomax/analytics-avanzadas/analytics-avanzadas/ltv-clientes/LtvClientesPage.tsx](src/features/plansolomax/analytics-avanzadas/analytics-avanzadas/ltv-clientes/LtvClientesPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un dashboard de Lifetime Value completo
+- Facilita la predicción del valor de los clientes
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-green-600 via-emerald-600 to-teal-600`
+   - Título "Lifetime Value (LTV)"
+   - Descripción: "Predice y maximiza el valor de tus clientes"
+   - Icono de dinero/gráfico ascendente
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - LTV Promedio ($)
+   - LTV Predicho 12 Meses ($)
+   - CAC/LTV Ratio
+   - Segmento de Mayor Valor
+   - Cards con glassmorphism
+
+3. **DISTRIBUCIÓN DE LTV**
+   - Histograma de distribución
+   - Percentiles marcados (P25, P50, P75, P90)
+   - Clientes por rango de valor
+   - Top 10% identificados
+
+4. **PREDICTOR DE LTV**
+   - Modelo predictivo con IA
+   - Factores de influencia
+   - Confianza de predicción (%)
+   - Escenarios optimista/realista/pesimista
+
+5. **SEGMENTACIÓN POR VALOR**
+   - VIP (top 10%)
+   - Alto valor (top 25%)
+   - Valor medio (50%)
+   - Bajo valor
+   - Acciones recomendadas por segmento
+
+6. **ANÁLISIS TEMPORAL**
+   - Evolución de LTV promedio
+   - LTV por cohorte de registro
+   - Tendencias y proyecciones
+   - Comparativas mensuales
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente green-emerald-teal para hero
+- Gráficos de distribución (Recharts)
+- Cards de segmentos con iconos
+- Predictor con progress indicator
+- Tabla de clientes ordenada por LTV
+- Badges de categoría de valor
+- Números grandes animados ($)
+- Sparklines de tendencia
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolomax/analytics-avanzadas/analytics-avanzadas/ltv-clientes](src/features/plansolomax/analytics-avanzadas/analytics-avanzadas/ltv-clientes).
+
+---
+
+## 📋 PROMPT 3: Retención de Clientes
+
+Transforma completamente la página de Retención de Clientes ([src/features/plansolomax/analytics-avanzadas/analytics-avanzadas/retencion-clientes/RetencionClientesPage.tsx](src/features/plansolomax/analytics-avanzadas/analytics-avanzadas/retencion-clientes/RetencionClientesPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un dashboard completo de retención
+- Facilita el análisis de churn y estrategias de retención
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-orange-600 via-red-600 to-pink-600`
+   - Título "Análisis de Retención"
+   - Descripción: "Mantén a tus clientes comprometidos y leales"
+   - Icono de retention/loop
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Tasa de Retención (%)
+   - Churn Rate (%)
+   - Clientes en Riesgo
+   - MRR Retenido ($)
+   - Cards con glassmorphism
+
+3. **CURVA DE RETENCIÓN**
+   - Gráfico de retención acumulativa
+   - Benchmarks de industria
+   - Predicción de retención futura
+   - Comparativa mes vs mes
+
+4. **ANÁLISIS DE CHURN**
+   - Razones principales de cancelación
+   - Churn voluntario vs involuntario
+   - Segmentos con mayor churn
+   - Tendencia de churn temporal
+
+5. **ESTRATEGIAS DE RETENCIÓN**
+   - Intervenciones activas
+   - Success rate por estrategia
+   - ROI de campañas de retención
+   - Playbooks recomendados
+
+6. **EARLY WARNING SYSTEM**
+   - Clientes en riesgo alto/medio/bajo
+   - Señales de churn detectadas
+   - Acciones sugeridas automáticas
+   - Timeline de intervenciones
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente orange-red-pink para hero
+- Curvas de retención (Recharts)
+- Semáforo de riesgo (rojo/amarillo/verde)
+- Cards de clientes en riesgo
+- Progress bars de retención
+- Badges de razones de churn
+- Alertas destacadas
+- Timeline de acciones
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolomax/analytics-avanzadas/analytics-avanzadas/retencion-clientes](src/features/plansolomax/analytics-avanzadas/analytics-avanzadas/retencion-clientes).
+
+---
+
+## 📋 PROMPT 4: Analítica de Ingresos
+
+Transforma completamente la página de Analítica de Ingresos ([src/features/plansolomax/analytics-avanzadas/analytics-avanzadas/analitica-ingresos/AnaliticaIngresosPage.tsx](src/features/plansolomax/analytics-avanzadas/analytics-avanzadas/analitica-ingresos/AnaliticaIngresosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un dashboard financiero completo
+- Facilita el análisis de revenue y proyecciones
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-emerald-600 via-green-600 to-lime-600`
+   - Título "Analítica de Ingresos"
+   - Descripción: "Maximiza tus ingresos con datos precisos"
+   - Icono de dinero/analytics
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - MRR (Monthly Recurring Revenue)
+   - ARR (Annual Recurring Revenue)
+   - Crecimiento MRR (%)
+   - ARPU (Average Revenue Per User)
+   - Cards con glassmorphism
+
+3. **GRÁFICO DE INGRESOS**
+   - MRR breakdown (nuevo, expansión, churn, net)
+   - Waterfall chart de cambios
+   - Proyección de ingresos (3-6 meses)
+   - Comparativa YoY
+
+4. **MÉTRICAS FINANCIERAS**
+   - Quick Ratio
+   - Customer Concentration
+   - Revenue Churn vs Logo Churn
+   - Expansion Revenue
+
+5. **ANÁLISIS POR SEGMENTO**
+   - Ingresos por plan/tier
+   - Ingresos por canal de adquisición
+   - Ingresos por región geográfica
+   - Productos/servicios más rentables
+
+6. **PROYECCIONES Y FORECASTING**
+   - Modelo de proyección con ML
+   - Escenarios de crecimiento
+   - Sensibilidad a variables
+   - Metas vs real
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente emerald-green-lime para hero
+- Gráficos financieros (Recharts)
+- Waterfall chart animado
+- KPIs con números grandes ($)
+- Sparklines de tendencias
+- Tablas de breakdown detallado
+- Indicadores de crecimiento (↑↓)
+- Exportar reportes financieros
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolomax/analytics-avanzadas/analytics-avanzadas/analitica-ingresos](src/features/plansolomax/analytics-avanzadas/analytics-avanzadas/analitica-ingresos).
+
+---
+
+## 📋 PROMPT 5: Listado de Automatizaciones
+
+Transforma completamente la página de Listado de Automatizaciones ([src/features/plansolomax/automatizaciones/automatizaciones/listado-automatizaciones/ListadoAutomatizacionesPage.tsx](src/features/plansolomax/automatizaciones/automatizaciones/listado-automatizaciones/ListadoAutomatizacionesPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un gestor completo de automatizaciones
+- Facilita la visualización y gestión de workflows
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-violet-600 via-purple-600 to-fuchsia-600`
+   - Título "Automatizaciones"
+   - Descripción: "Gestiona tus flujos automáticos"
+   - Icono de workflow/automatización
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Automatizaciones Activas
+   - Ejecuciones Este Mes
+   - Tasa de Éxito (%)
+   - Tiempo Ahorrado (horas)
+   - Cards con glassmorphism
+
+3. **GRID DE AUTOMATIZACIONES**
+   - Cards por automatización
+   - Estado (activa/pausada/error)
+   - Trigger y acciones principales
+   - Últimas ejecuciones
+   - Métricas de rendimiento
+
+4. **FILTROS Y BÚSQUEDA**
+   - Por estado
+   - Por tipo de trigger
+   - Por tags/categorías
+   - Ordenar por nombre/fecha/ejecuciones
+
+5. **ACCIONES RÁPIDAS**
+   - Activar/pausar toggle
+   - Duplicar automatización
+   - Ver historial de ejecuciones
+   - Editar flujo
+   - Eliminar
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente violet-purple-fuchsia para hero
+- Cards de automatizaciones con iconos
+- Badges de estado coloridos
+- Toggle switches animados
+- Métricas en mini-gráficos
+- Dropdown de acciones
+- Search bar con autocomplete
+- Empty state para sin automatizaciones
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolomax/automatizaciones/automatizaciones/listado-automatizaciones](src/features/plansolomax/automatizaciones/automatizaciones/listado-automatizaciones).
+
+---
+
+## 📋 PROMPT 6: Crear Flujo de Automatización
+
+Transforma completamente la página de Crear Flujo ([src/features/plansolomax/automatizaciones/automatizaciones/crear-flujo/CrearFlujoPage.tsx](src/features/plansolomax/automatizaciones/automatizaciones/crear-flujo/CrearFlujoPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un builder visual de automatizaciones
+- Facilita la creación de flujos complejos sin código
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-cyan-600 via-blue-600 to-indigo-600`
+   - Título "Crear Automatización"
+   - Descripción: "Construye flujos poderosos sin código"
+   - Icono de construcción/builder
+
+2. **CANVAS DE FLUJO**
+   - Área drag & drop para nodos
+   - Zoom in/out
+   - Minimap en esquina
+   - Grid de fondo
+   - Auto-layout
+
+3. **BIBLIOTECA DE NODOS**
+   - Panel lateral de componentes:
+     * Triggers (eventos)
+     * Acciones (email, SMS, webhook)
+     * Condicionales (if/then)
+     * Delays (esperas)
+     * Splits (A/B)
+   - Drag desde panel a canvas
+   - Iconos distintivos por tipo
+
+4. **CONFIGURACIÓN DE NODOS**
+   - Panel derecho al seleccionar nodo
+   - Formulario específico por tipo
+   - Variables dinámicas
+   - Preview de salida
+   - Validaciones
+
+5. **TESTING Y VALIDACIÓN**
+   - Modo test
+   - Ejecutar con datos de prueba
+   - Ver logs de ejecución
+   - Detectar errores de configuración
+   - Sugerencias de optimización
+
+6. **GUARDADO Y PUBLICACIÓN**
+   - Guardar como borrador
+   - Activar automatización
+   - Nombrar y categorizar
+   - Configurar horarios (si aplica)
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente cyan-blue-indigo para hero
+- Canvas con grid pattern
+- Nodos con glassmorphism
+- Líneas conectoras animadas
+- Sidebar de nodos colapsable
+- Panel de configuración deslizable
+- Botones de acción destacados
+- Minimap con preview del flujo
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolomax/automatizaciones/automatizaciones/crear-flujo](src/features/plansolomax/automatizaciones/automatizaciones/crear-flujo).
+
+---
+
+## 📋 PROMPT 7: Librería de Plantillas
+
+Transforma completamente la página de Librería de Plantillas ([src/features/plansolomax/automatizaciones/automatizaciones/libreria-plantillas/LibreriaPlantillasPage.tsx](src/features/plansolomax/automatizaciones/automatizaciones/libreria-plantillas/LibreriaPlantillasPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea una biblioteca de templates predefinidos
+- Facilita el inicio rápido de automatizaciones
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-pink-600 via-rose-600 to-red-600`
+   - Título "Plantillas de Automatización"
+   - Descripción: "Comienza rápido con templates probados"
+   - Icono de templates/biblioteca
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Total de Plantillas
+   - Más Populares
+   - Creadas por la Comunidad
+   - Tus Plantillas Guardadas
+   - Cards con glassmorphism
+
+3. **GRID DE PLANTILLAS**
+   - Cards con preview visual del flujo
+   - Nombre y descripción
+   - Categoría (onboarding, marketing, retención)
+   - Nivel de complejidad
+   - Rating y usos
+
+4. **CATEGORÍAS**
+   - Tabs de navegación:
+     * Todas
+     * Onboarding
+     * Marketing
+     * Retención
+     * Ventas
+     * Soporte
+     * Mis Plantillas
+   - Contador por categoría
+
+5. **PREVIEW Y USO**
+   - Modal de preview del flujo
+   - Descripción detallada
+   - Nodos y acciones incluidas
+   - Botón "Usar plantilla"
+   - Personalización antes de usar
+
+6. **BÚSQUEDA Y FILTROS**
+   - Barra de búsqueda
+   - Filtros por:
+     * Popularidad
+     * Recientes
+     * Complejidad
+     * Tags
+   - Ordenamiento
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente pink-rose-red para hero
+- Cards de plantillas con hover effect
+- Badges de categoría coloridos
+- Preview modal amplio
+- Rating stars
+- Tags/labels de funcionalidades
+- Filtros con glassmorphism
+- Empty state si no hay resultados
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolomax/automatizaciones/automatizaciones/libreria-plantillas](src/features/plansolomax/automatizaciones/automatizaciones/libreria-plantillas).
+
+---
+
+## 📋 PROMPT 8: Historial de Flujos
+
+Transforma completamente la página de Historial de Flujos ([src/features/plansolomax/automatizaciones/automatizaciones/historial-flujos/HistorialFlujosPage.tsx](src/features/plansolomax/automatizaciones/automatizaciones/historial-flujos/HistorialFlujosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un visualizador de historial de ejecuciones
+- Facilita el debugging y análisis de automatizaciones
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-amber-600 via-orange-600 to-red-600`
+   - Título "Historial de Ejecuciones"
+   - Descripción: "Monitorea y audita tus automatizaciones"
+   - Icono de historial/reloj
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Ejecuciones Hoy
+   - Tasa de Éxito (%)
+   - Errores Este Mes
+   - Tiempo Promedio de Ejecución
+   - Cards con glassmorphism
+
+3. **LISTA DE EJECUCIONES**
+   - Tabla/timeline de ejecuciones:
+     * Fecha y hora
+     * Automatización ejecutada
+     * Estado (éxito/error/en proceso)
+     * Duración
+     * Usuario/trigger
+     * Ver detalles
+   - Filtros temporales
+   - Paginación
+
+4. **DETALLES DE EJECUCIÓN**
+   - Modal/panel expandible:
+     * Timeline de pasos ejecutados
+     * Datos de entrada
+     * Acciones realizadas
+     * Logs detallados
+     * Errores si los hubo
+     * Duración por paso
+
+5. **ANÁLISIS DE ERRORES**
+   - Errores comunes
+   - Automatizaciones con más fallos
+   - Sugerencias de corrección
+   - Reintentar ejecución fallida
+
+6. **MÉTRICAS TEMPORALES**
+   - Gráfico de ejecuciones por día/hora
+   - Distribución de éxito vs error
+   - Tendencia de rendimiento
+   - Comparativas periódicas
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente amber-orange-red para hero
+- Timeline visual de ejecuciones
+- Badges de estado (success/error/running)
+- Tabla con filas alternadas
+- Modal de detalles amplio
+- Logs con syntax highlighting
+- Gráficos de tendencia (Recharts)
+- Filtros de fecha con calendar picker
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolomax/automatizaciones/automatizaciones/historial-flujos](src/features/plansolomax/automatizaciones/automatizaciones/historial-flujos).
+
+---
+
+## 📋 PROMPT 9: Personalización de Dominio
+
+Transforma completamente la página de Personalización de Dominio ([src/features/plansolomax/branding/branding/personalizacion-dominio/PersonalizacionDominioPage.tsx](src/features/plansolomax/branding/branding/personalizacion-dominio/PersonalizacionDominioPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un configurador de dominio personalizado
+- Facilita el white-labeling completo
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-blue-600 via-indigo-600 to-purple-600`
+   - Título "Dominio Personalizado"
+   - Descripción: "Tu marca, tu dominio"
+   - Icono de dominio/web
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Estado del Dominio
+   - SSL Activo
+   - Visitas Este Mes
+   - Uptime (%)
+   - Cards con glassmorphism
+
+3. **CONFIGURADOR DE DOMINIO**
+   - Input de dominio deseado
+   - Verificar disponibilidad
+   - Conectar dominio existente
+   - Instrucciones DNS paso a paso
+   - Validación de configuración
+
+4. **ESTADO DE CONFIGURACIÓN**
+   - Checklist de pasos:
+     * ✓ Dominio verificado
+     * ✓ DNS configurado
+     * ✓ SSL activo
+     * Propagación DNS (tiempo restante)
+   - Progress indicator
+   - Troubleshooting guide
+
+5. **GESTIÓN DE SUBDOMINIOS**
+   - Lista de subdominios configurados
+   - Agregar nuevo subdominio
+   - Propósito (app, blog, micrositio, etc.)
+   - Redirecciones
+
+6. **SSL Y SEGURIDAD**
+   - Certificado SSL status
+   - Auto-renovación configurada
+   - HTTPS forzado
+   - HSTS habilitado
+   - Configuración avanzada
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente blue-indigo-purple para hero
+- Input de dominio destacado
+- Checklist con iconos de estado
+- Progress stepper horizontal
+- Cards de DNS records
+- Badges de estado (activo/pendiente)
+- Copy button para valores DNS
+- Alertas informativas
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolomax/branding/branding/personalizacion-dominio](src/features/plansolomax/branding/branding/personalizacion-dominio).
+
+---
+
+## 📋 PROMPT 10: Personalización de Estilos
+
+Transforma completamente la página de Personalización de Estilos ([src/features/plansolomax/branding/branding/personalizacion-estilos/PersonalizacionEstilosPage.tsx](src/features/plansolomax/branding/branding/personalizacion-estilos/PersonalizacionEstilosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un editor visual de branding
+- Facilita la personalización completa de la interfaz
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-pink-600 via-purple-600 to-indigo-600`
+   - Título "Personalización de Estilos"
+   - Descripción: "Diseña tu marca visual perfecta"
+   - Icono de paleta/pincel
+
+2. **EDITOR VISUAL**
+   - Preview en vivo de cambios
+   - Split view (editor | preview)
+   - Responsive preview (desktop/tablet/mobile)
+
+3. **COLORES DE MARCA**
+   - Color primario (picker)
+   - Color secundario (picker)
+   - Color de acento (picker)
+   - Paleta automática generada
+   - Contraste WCAG validado
+   - Copiar códigos HEX/RGB
+
+4. **TIPOGRAFÍA**
+   - Fuente principal (dropdown)
+   - Fuente secundaria (dropdown)
+   - Tamaños de texto
+   - Preview de jerarquía tipográfica
+   - Google Fonts integración
+
+5. **LOGO Y BRANDING**
+   - Upload de logo (PNG/SVG)
+   - Upload de favicon
+   - Versión light/dark
+   - Dimensiones recomendadas
+   - Preview en diferentes contextos
+
+6. **COMPONENTES UI**
+   - Estilo de botones (rounded, square, pill)
+   - Cards (bordes, sombras)
+   - Inputs (estilo, focus)
+   - Navegación (header, sidebar)
+   - Personalizar cada elemento
+
+7. **TEMAS PREDEFINIDOS**
+   - Templates de diseño:
+     * Moderno
+     * Minimalista
+     * Corporativo
+     * Deportivo
+     * Wellness
+   - Aplicar tema base
+   - Personalizar desde ahí
+
+8. **CSS PERSONALIZADO**
+   - Editor de código (opcional)
+   - Variables CSS
+   - Clases custom
+   - Preview en tiempo real
+   - Syntax highlighting
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente pink-purple-indigo para hero
+- Color pickers elegantes
+- Preview iframe interactivo
+- Slider de tamaños
+- Font previewer
+- Upload zones con preview
+- Code editor (Monaco/CodeMirror)
+- Antes/después comparador
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolomax/branding/branding/personalizacion-estilos](src/features/plansolomax/branding/branding/personalizacion-estilos).
+
+---
+
+## 📋 PROMPT 11: Personalización de App Cliente
+
+Transforma completamente la página de Personalización de App Cliente ([src/features/plansolomax/branding/branding/personalizacion-app-cliente/PersonalizacionAppClientePage.tsx](src/features/plansolomax/branding/branding/personalizacion-app-cliente/PersonalizacionAppClientePage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un configurador de app móvil/web del cliente
+- Facilita el white-labeling de la experiencia del usuario final
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-teal-600 via-cyan-600 to-blue-600`
+   - Título "App del Cliente Personalizada"
+   - Descripción: "Tu marca en las manos de tus clientes"
+   - Icono de móvil/app
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Usuarios Activos de la App
+   - Rating Promedio (★)
+   - Sesiones Este Mes
+   - Tiempo Promedio en App
+   - Cards con glassmorphism
+
+3. **PREVIEW INTERACTIVO**
+   - Mockup de móvil con app
+   - Navegación funcional
+   - Cambios en tiempo real
+   - Toggle iOS/Android
+   - Dark/Light mode
+
+4. **BRANDING DE APP**
+   - Logo de app (icono circular)
+   - Splash screen personalizado
+   - Colores de marca
+   - Nombre de la app
+   - Preview en diferentes pantallas
+
+5. **NAVEGACIÓN Y MENÚ**
+   - Configurar tabs del bottom nav
+   - Iconos por sección
+   - Renombrar secciones
+   - Drag & drop para ordenar
+   - Mostrar/ocultar secciones
+
+6. **PANTALLAS PRINCIPALES**
+   - Home dashboard layout
+   - Perfil del usuario
+   - Entrenamientos
+   - Nutrición
+   - Progreso
+   - Personalizar widgets
+
+7. **NOTIFICACIONES**
+   - Diseño de notificaciones push
+   - Icono y colores
+   - Sonidos (opcional)
+   - Preview iOS/Android
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente teal-cyan-blue para hero
+- Mockup 3D de dispositivo
+- Pantalla interactiva
+- Drag & drop interface
+- Color pickers
+- Upload zones
+- Tabs de secciones
+- Toggle switches
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolomax/branding/branding/personalizacion-app-cliente](src/features/plansolomax/branding/branding/personalizacion-app-cliente).
+
+---
+
+## 📋 PROMPT 12: Sugerencias de Productos (Upsells)
+
+Transforma completamente la página de Sugerencias de Productos ([src/features/plansolomax/upsells/upsells/sugerencias-productos/SugerenciasProductosPage.tsx](src/features/plansolomax/upsells/upsells/sugerencias-productos/SugerenciasProductosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un motor de recomendaciones inteligente
+- Facilita el upselling y cross-selling automático
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-emerald-600 via-green-600 to-teal-600`
+   - Título "Sugerencias Inteligentes"
+   - Descripción: "Aumenta tus ingresos con recomendaciones personalizadas"
+   - Icono de recomendación/estrella
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Upsells Este Mes ($)
+   - Tasa de Conversión (%)
+   - Ticket Promedio ($)
+   - ROI de Sugerencias
+   - Cards con glassmorphism
+
+3. **MOTOR DE RECOMENDACIONES**
+   - Algoritmo de sugerencias:
+     * Basado en historial
+     * Productos complementarios
+     * Tendencias similares
+     * IA predictiva
+   - Configuración de reglas
+   - Peso de factores
+
+4. **PRODUCTOS SUGERIDOS**
+   - Grid de productos recomendados
+   - Score de relevancia
+   - Razón de sugerencia
+   - Precio y descuento (si aplica)
+   - CTA para agregar
+
+5. **TIMING DE SUGERENCIAS**
+   - Cuándo mostrar:
+     * Al checkout
+     * Después de compra
+     * En perfil del usuario
+     * Email post-compra
+   - Frecuencia límite
+
+6. **SEGMENTACIÓN**
+   - Sugerencias por:
+     * Tipo de cliente
+     * Plan actual
+     * Comportamiento
+     * Objetivos
+   - Personalización masiva
+
+7. **ANÁLISIS DE RENDIMIENTO**
+   - Productos más upselled
+   - Combinaciones exitosas
+   - Tasa de aceptación
+   - Ingresos incrementales
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente emerald-green-teal para hero
+- Cards de productos con imágenes
+- Score bars de relevancia
+- Badges de "Recomendado"
+- Gráficos de conversión (Recharts)
+- Filtros de segmentación
+- Toggle de algoritmo
+- Heatmap de combinaciones
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolomax/upsells/upsells/sugerencias-productos](src/features/plansolomax/upsells/upsells/sugerencias-productos).
+
+---
+
+## 📋 PROMPT 13: Configuración de Upsells
+
+Transforma completamente la página de Configuración de Upsells ([src/features/plansolomax/upsells/upsells/configuracion-upsells/ConfiguracionUpsellsPage.tsx](src/features/plansolomax/upsells/upsells/configuracion-upsells/ConfiguracionUpsellsPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un configurador completo de estrategias de upsell
+- Facilita la creación de ofertas y bundles
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-orange-600 via-red-600 to-pink-600`
+   - Título "Configuración de Upsells"
+   - Descripción: "Diseña ofertas irresistibles"
+   - Icono de configuración/engranajes
+
+2. **ESTRATEGIAS ACTIVAS**
+   - Lista de upsells configurados
+   - Estado (activo/pausado)
+   - Rendimiento de cada uno
+   - Editar/duplicar/eliminar
+
+3. **CREAR NUEVO UPSELL**
+   - Tipo de oferta:
+     * Upgrade de plan
+     * Bundle de productos
+     * Add-on de servicio
+     * Extensión de tiempo
+   - Productos/servicios incluidos
+   - Precio y descuento
+
+4. **CONDICIONES DE ACTIVACIÓN**
+   - Trigger:
+     * Después de X días
+     * Al alcanzar objetivo
+     * En momento de renovación
+     * Manual por admin
+   - Segmentación de audiencia
+   - Exclusiones
+
+5. **DISEÑO DE LA OFERTA**
+   - Título y descripción
+   - Imagen/banner
+   - Destacar beneficios
+   - Urgencia (tiempo limitado)
+   - CTA personalizado
+
+6. **CONFIGURACIÓN DE VISUALIZACIÓN**
+   - Dónde mostrar:
+     * Modal popup
+     * Banner en dashboard
+     * Email
+     * In-app notification
+   - Frecuencia de muestra
+   - Timing
+
+7. **A/B TESTING**
+   - Variantes de oferta
+   - Distribución de tráfico
+   - Métricas a optimizar
+   - Duración del test
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente orange-red-pink para hero
+- Cards de estrategias con métricas
+- Formulario multi-step
+- Product selector con imágenes
+- Date/time pickers
+- Preview de oferta modal
+- Toggle de canales
+- Splits para A/B testing
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolomax/upsells/upsells/configuracion-upsells](src/features/plansolomax/upsells/upsells/configuracion-upsells).
+
+---
+
+## 📋 PROMPT 14: Reporte de Conversión (Upsells)
+
+Transforma completamente la página de Reporte de Conversión ([src/features/plansolomax/upsells/upsells/conversion-report/ConversionReportPage.tsx](src/features/plansolomax/upsells/upsells/conversion-report/ConversionReportPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un dashboard analítico de upsells
+- Facilita la optimización de estrategias de venta
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-violet-600 via-fuchsia-600 to-pink-600`
+   - Título "Reporte de Conversión"
+   - Descripción: "Optimiza tus estrategias de upsell"
+   - Icono de gráfico/analytics
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Ingresos por Upsells ($)
+   - Tasa de Conversión (%)
+   - AOV Incrementado ($)
+   - Mejor Oferta
+   - Cards con glassmorphism
+
+3. **FUNNEL DE CONVERSIÓN**
+   - Visualización de embudo:
+     * Ofertas mostradas
+     * Clicks en oferta
+     * Agregado al carrito
+     * Checkout completado
+   - Tasa de drop-off por etapa
+   - Comparativa temporal
+
+4. **ANÁLISIS POR OFERTA**
+   - Tabla de upsells:
+     * Nombre de oferta
+     * Impresiones
+     * Clicks (CTR)
+     * Conversiones
+     * Ingresos generados
+     * ROI
+   - Ordenar por columna
+   - Exportar datos
+
+5. **RENDIMIENTO TEMPORAL**
+   - Gráfico de ingresos por upsells
+   - Tendencia de conversión
+   - Estacionalidad
+   - Picos y valles identificados
+
+6. **SEGMENTACIÓN DE RESULTADOS**
+   - Por tipo de cliente
+   - Por canal de presentación
+   - Por producto base
+   - Por región/demografía
+
+7. **INSIGHTS Y RECOMENDACIONES**
+   - Sugerencias de IA para optimizar
+   - Ofertas con bajo rendimiento
+   - Oportunidades identificadas
+   - Benchmarks de industria
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente violet-fuchsia-pink para hero
+- Funnel chart interactivo
+- Tabla con métricas destacadas
+- Gráficos de tendencia (Recharts)
+- Badges de rendimiento (alto/medio/bajo)
+- Filtros temporales
+- Cards de insights
+- Exportar reportes
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolomax/upsells/upsells/conversion-report](src/features/plansolomax/upsells/upsells/conversion-report).
+
+---
+
+## 📋 PROMPT 15: Dispositivos Conectados (Wearables)
+
+Transforma completamente la página de Dispositivos Conectados ([src/features/plansolomax/wearables/wearables/dispositivos-conectados/DispositivosConectadosPage.tsx](src/features/plansolomax/wearables/wearables/dispositivos-conectados/DispositivosConectadosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un gestor de dispositivos wearables
+- Facilita la integración con Apple Watch, Fitbit, Garmin, etc.
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-sky-600 via-blue-600 to-indigo-600`
+   - Título "Dispositivos Conectados"
+   - Descripción: "Integra datos de wearables de tus clientes"
+   - Icono de reloj/wearable
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Dispositivos Conectados
+   - Sincronizaciones Hoy
+   - Clientes con Wearables (%)
+   - Datos Recibidos (MB)
+   - Cards con glassmorphism
+
+3. **INTEGRACIONES DISPONIBLES**
+   - Cards de plataformas:
+     * Apple Health / Apple Watch
+     * Fitbit
+     * Garmin Connect
+     * Strava
+     * Whoop
+     * Oura Ring
+   - Estado de conexión
+   - Botón conectar/desconectar
+   - Permisos de datos
+
+4. **DISPOSITIVOS DE CLIENTES**
+   - Lista de clientes con wearables
+   - Dispositivo(s) conectado(s)
+   - Última sincronización
+   - Calidad de datos (score)
+   - Ver perfil del cliente
+
+5. **TIPOS DE DATOS CAPTURADOS**
+   - Checkboxes de métricas:
+     * Pasos diarios
+     * Calorías quemadas
+     * Frecuencia cardíaca
+     * Sueño (calidad y duración)
+     * Actividades/entrenamientos
+     * VO2 max
+     * Variabilidad cardíaca (HRV)
+   - Configurar cuáles sincronizar
+
+6. **CONFIGURACIÓN DE SINCRONIZACIÓN**
+   - Frecuencia de sync (tiempo real, cada hora, diaria)
+   - Retención de datos históricos
+   - Privacidad y permisos
+   - Notificaciones de desconexión
+
+7. **TROUBLESHOOTING**
+   - Dispositivos con problemas
+   - Errores de sincronización
+   - Guía de reconexión
+   - Soporte por plataforma
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente sky-blue-indigo para hero
+- Cards de plataformas con logos
+- Badges de estado de conexión
+- Tabla de dispositivos
+- Toggle switches para permisos
+- Iconos de wearables
+- Indicadores de sync en tiempo real
+- Alertas de problemas
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolomax/wearables/wearables/dispositivos-conectados](src/features/plansolomax/wearables/wearables/dispositivos-conectados).
+
+---
+
+## 📋 PROMPT 16: Panel de Datos de Wearables
+
+Transforma completamente la página de Panel de Datos ([src/features/plansolomax/wearables/wearables/panel-datos-wearables/PanelDatosWearablesPage.tsx](src/features/plansolomax/wearables/wearables/panel-datos-wearables/PanelDatosWearablesPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un dashboard de visualización de datos de wearables
+- Facilita el análisis de métricas de salud y fitness
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-lime-600 via-green-600 to-emerald-600`
+   - Título "Dashboard de Wearables"
+   - Descripción: "Insights en tiempo real de tus clientes"
+   - Icono de dashboard/métricas
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Promedio de Pasos Diarios
+   - Horas de Sueño Promedio
+   - Calorías Quemadas Totales
+   - Entrenamientos Completados
+   - Cards con glassmorphism
+
+3. **SELECTOR DE CLIENTE**
+   - Dropdown de clientes con wearable
+   - Búsqueda rápida
+   - Dispositivo(s) del cliente
+   - Última sincronización
+
+4. **MÉTRICAS PRINCIPALES**
+   - Actividad física:
+     * Pasos diarios (gráfico de barras)
+     * Calorías activas vs en reposo
+     * Minutos activos
+     * Distancia recorrida
+   - Gráficos temporales (7/30/90 días)
+
+5. **SUEÑO Y RECUPERACIÓN**
+   - Horas de sueño por noche
+   - Calidad de sueño (profundo/ligero/REM)
+   - Score de recuperación
+   - Tendencias y anomalías
+
+6. **FRECUENCIA CARDÍACA**
+   - FC en reposo
+   - FC máxima en entrenamientos
+   - Zonas de FC
+   - Variabilidad cardíaca (HRV)
+   - Gráfico temporal
+
+7. **ENTRENAMIENTOS REGISTRADOS**
+   - Lista de actividades del wearable
+   - Tipo de ejercicio
+   - Duración e intensidad
+   - Calorías quemadas
+   - Ver detalles por entrenamiento
+
+8. **COMPARATIVAS Y BENCHMARKS**
+   - Cliente vs promedio de cohorte
+   - Progreso temporal (mes vs mes)
+   - Objetivos vs real
+   - Percentiles
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente lime-green-emerald para hero
+- Gráficos de métricas (Recharts)
+- Cards de métricas con iconos
+- Rings de progreso (actividad, sueño)
+- Heatmap de actividad (GitHub-style)
+- Selector de cliente elegante
+- Badges de zonas (FC, sueño)
+- Timeline de entrenamientos
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolomax/wearables/wearables/panel-datos-wearables](src/features/plansolomax/wearables/wearables/panel-datos-wearables).
+
+---
+
+## 📋 PROMPT 17: Reportes de Rendimiento (Wearables)
+
+Transforma completamente la página de Reportes de Rendimiento ([src/features/plansolomax/wearables/wearables/reportes-rendimiento/ReportesRendimientoPage.tsx](src/features/plansolomax/wearables/wearables/reportes-rendimiento/ReportesRendimientoPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema de reportes de rendimiento físico
+- Facilita el análisis de progreso y mejora
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-rose-600 via-pink-600 to-fuchsia-600`
+   - Título "Reportes de Rendimiento"
+   - Descripción: "Analiza el progreso de tus clientes en profundidad"
+   - Icono de reporte/gráfico
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Clientes con Mejora de Rendimiento (%)
+   - VO2 Max Promedio
+   - Recuperación Promedio
+   - Adherencia a Entrenamientos (%)
+   - Cards con glassmorphism
+
+3. **GENERADOR DE REPORTES**
+   - Selector de cliente
+   - Período de análisis (semana/mes/trimestre/año)
+   - Métricas a incluir (checkboxes)
+   - Formato (PDF/Email/Dashboard)
+
+4. **ANÁLISIS DE PROGRESO**
+   - Evolución de métricas clave:
+     * Capacidad cardiovascular
+     * Fuerza y resistencia
+     * Flexibilidad
+     * Composición corporal (si disponible)
+   - Tendencias ascendentes/descendentes
+   - Milestones alcanzados
+
+5. **COMPARATIVAS TEMPORALES**
+   - Mes actual vs mes anterior
+   - Trimestre vs trimestre
+   - Año vs año
+   - Visualización de mejoras (%)
+
+6. **INSIGHTS Y RECOMENDACIONES**
+   - Áreas de mejora identificadas
+   - Sugerencias de entrenamiento
+   - Alertas de sobreentrenamiento
+   - Recomendaciones de descanso
+
+7. **EXPORTAR Y COMPARTIR**
+   - Generar PDF profesional
+   - Enviar por email al cliente
+   - Compartir en portal del cliente
+   - Programar reportes automáticos
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente rose-pink-fuchsia para hero
+- Gráficos de evolución (Recharts)
+- Comparativas lado a lado
+- Cards de insights
+- Indicadores de mejora (↑↓)
+- Progress bars de objetivos
+- Template de reporte preview
+- Botones de exportación
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolomax/wearables/wearables/reportes-rendimiento](src/features/plansolomax/wearables/wearables/reportes-rendimiento).
+
+---
+
+# 📝 NOTAS GENERALES PARA TODOS LOS PROMPTS
+
+## ⚠️ IMPORTANTE:
+1. **SIEMPRE** revisar [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md) antes de empezar
+2. **NO CREAR NUEVOS ARCHIVOS** - Solo editar existentes
+3. Usar **TypeScript** correctamente
+4. Implementar **framer-motion** para animaciones
+5. Incluir **Lucide React** para iconos
+6. Datos **mockeados realistas**
+7. **Responsive** completo (mobile-first)
+8. **Código limpio** y bien comentado
+
+## Checklist de Estilización:
+- [ ] `rounded-3xl` para cards principales
+- [ ] `bg-white/80 backdrop-blur-xl` para glassmorphism
+- [ ] `border border-white/50` para definición
+- [ ] Gradientes de 3 colores en headers
+- [ ] Animaciones de entrada con framer-motion
+- [ ] `whileHover` para interactividad
+- [ ] `shadow-xl` y `hover:shadow-2xl`
+- [ ] Gráficos con Recharts (cuando aplique)
+- [ ] Progress bars con gradientes animados
+
+---
+
+**Versión:** 1.0
+**Fecha:** Enero 2025
+**Sistema de Diseño:** Moderno con Glassmorphism
+**Área:** PlanSoloMax Features (Tier Premium)

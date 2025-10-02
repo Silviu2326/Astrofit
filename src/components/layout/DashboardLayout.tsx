@@ -97,11 +97,13 @@ import ContenidosDescargablesPage from '../../features/plancreatorpro/biblioteca
 import FeedComunidadPage from '../../features/plancreatorpro/comunidad/comunidad/feed-comunidad/FeedComunidadPage';
 import GruposComunidadPage from '../../features/plancreatorpro/comunidad/comunidad/grupos-comunidad/GruposComunidadPage';
 import ModeracionComunidadPage from '../../features/plancreatorpro/comunidad/comunidad/moderacion-comunidad/ModeracionComunidadPage';
+import { CommunityModerationAgent } from '../../features/agente-moderacion/CommunityModerationAgent';
 import RankingActividadPage from '../../features/plancreatorpro/comunidad/comunidad/ranking-actividad/RankingActividadPage';
 import ListadoCursosPage from '../../features/plancreatorpro/cursos-online/cursos-online/listado-cursos/ListadoCursosPage';
 import CrearCursoPage from '../../features/plancreatorpro/cursos-online/cursos-online/crear-curso/CrearCursoPage';
 import CursoDetallePage from '../../features/plancreatorpro/cursos-online/cursos-online/curso-detalle/CursoDetallePage';
 import GestionLeccionesPage from '../../features/plancreatorpro/cursos-online/cursos-online/gestion-lecciones/GestionLeccionesPage';
+import { GestionLecciones } from '../../features/gestion-lecciones';
 import QuizzesEvaluacionesPage from '../../features/plancreatorpro/cursos-online/cursos-online/quizzes-evaluaciones/QuizzesEvaluacionesPage';
 import ListadoEmailsPage from '../../features/plancreatorpro/email-broadcast/email-broadcast/listado-emails/ListadoEmailsPage';
 import CrearEmailPage from '../../features/plancreatorpro/email-broadcast/email-broadcast/crear-email/CrearEmailPage';
@@ -125,6 +127,7 @@ import RecursosAfiliadosPage from '../../features/plancreatormax/sistema-afiliad
 import ExperimentosPage from '../../features/plancreatormax/tests-ab/tests-ab/experimentos/ExperimentosPage';
 import ResultadosTestPage from '../../features/plancreatormax/tests-ab/tests-ab/resultados-test/ResultadosTestPage';
 import HistorialExperimentosPage from '../../features/plancreatormax/tests-ab/tests-ab/historial-experimentos/HistorialExperimentosPage';
+import { ExperimentosABPage } from '../../features/experimentos-ab/pages/ExperimentosABPage';
 import CatalogoProductosPage from '../../features/plancreatormax/tienda-merchandising/tienda-merchandising/catalogo-productos/CatalogoProductosPage';
 import ConfiguracionTiendaPage from '../../features/plancreatormax/tienda-merchandising/tienda-merchandising/configuracion-tienda/ConfiguracionTiendaPage';
 import PedidosClientesPage from '../../features/plancreatormax/tienda-merchandising/tienda-merchandising/pedidos-clientes/PedidosClientesPage';
@@ -241,6 +244,8 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onLogout }) =>
         return <AgenteFinancieroPage />;
       case 'agente-marketing':
         return <AgenteMarketingPage />;
+      case 'agente-moderacion':
+        return <CommunityModerationAgent />;
       case 'biblioteca-ejercicios':
         return <BibliotecaEjerciciosPage />;
       case 'editor-ejercicio':
@@ -405,7 +410,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onLogout }) =>
       case 'curso-detalle':
         return <CursoDetallePage />;
       case 'gestion-lecciones':
-        return <GestionLeccionesPage />;
+        return <GestionLecciones />;
       case 'quizzes-evaluaciones':
         return <QuizzesEvaluacionesPage />;
       case 'listado-emails':
@@ -447,6 +452,8 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onLogout }) =>
         return <RecursosAfiliadosPage />;
       case 'experimentos':
         return <ExperimentosPage />;
+      case 'experimentos-ab':
+        return <ExperimentosABPage />;
       case 'resultados-test':
         return <ResultadosTestPage />;
       case 'historial-experimentos':

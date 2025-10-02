@@ -166,100 +166,145 @@ const ConversionReportPage: React.FC = () => {
     }
   };
 
-  const KPICard = ({ titulo, valor, subvalor, cambio, icon: Icon, prefix = '', suffix = '' }: any) => {
+  const KPICard = ({ titulo, valor, subvalor, cambio, icon: Icon, prefix = '', suffix = '', index = 0 }: any) => {
     const esPositivo = cambio >= 0;
     return (
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-emerald-500"
+        transition={{ delay: index * 0.1, duration: 0.5 }}
+        whileHover={{ scale: 1.03, y: -8 }}
+        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
       >
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-medium text-gray-600">{titulo}</h3>
-          <Icon className="w-5 h-5 text-emerald-600" />
-        </div>
-        <div className="flex items-end justify-between">
-          <div>
-            <p className="text-3xl font-bold text-gray-900">
-              {prefix}{valor.toLocaleString()}{suffix}
-            </p>
-            {subvalor && <p className="text-sm text-gray-500 mt-1">{subvalor}</p>}
+        {/* Shimmer effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
+
+        {/* Decoración de fondo */}
+        <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-violet-500 to-pink-600 opacity-5 rounded-full blur-2xl"></div>
+
+        <div className="relative z-10">
+          {/* Icono */}
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300">
+            <Icon className="w-8 h-8" />
           </div>
-          <div className={`flex items-center gap-1 ${esPositivo ? 'text-green-600' : 'text-red-600'}`}>
-            {esPositivo ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
-            <span className="text-sm font-semibold">{Math.abs(cambio).toFixed(1)}%</span>
+
+          {/* Título */}
+          <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">
+            {titulo}
+          </p>
+
+          {/* Valor */}
+          <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 mb-3">
+            {prefix}{valor.toLocaleString()}{suffix}
+          </p>
+
+          {subvalor && (
+            <p className="text-xs text-gray-500 font-medium mb-3">{subvalor}</p>
+          )}
+
+          {/* Cambio */}
+          <div className="flex items-center gap-2">
+            <div className={`p-1 ${esPositivo ? 'bg-green-50' : 'bg-red-50'} rounded-lg`}>
+              {esPositivo ? <TrendingUp className="w-4 h-4 text-green-600" /> : <TrendingDown className="w-4 h-4 text-red-600" />}
+            </div>
+            <span className={`text-sm font-bold ${esPositivo ? 'text-green-600' : 'text-red-600'}`}>
+              {esPositivo ? '+' : ''}{cambio.toFixed(1)}%
+            </span>
+            <span className="text-xs text-gray-500 font-medium">vs anterior</span>
           </div>
-        </div>
-        <div className="mt-4 h-12">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={monthlyData.slice(-6)}>
-              <Line type="monotone" dataKey="tasaConversion" stroke="#10b981" strokeWidth={2} dot={false} />
-            </LineChart>
-          </ResponsiveContainer>
+
+          {/* Mini gráfico */}
+          <div className="mt-4 h-12 opacity-50">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={monthlyData.slice(-6)}>
+                <Line type="monotone" dataKey="tasaConversion" stroke="#a855f7" strokeWidth={2} dot={false} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       </motion.div>
     );
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-8">
-      {/* Header */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50/30 to-pink-50/30 pb-12">
+      {/* Hero Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
+        transition={{ duration: 0.6 }}
+        className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-fuchsia-600 to-pink-600 rounded-3xl shadow-2xl mb-8 p-8 md:p-12"
       >
-        <div className="flex items-center gap-3 mb-2">
-          <div className="p-3 bg-gradient-to-r from-emerald-500 to-amber-500 rounded-xl">
-            <BarChart3 className="w-8 h-8 text-white" />
-          </div>
-          <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-600 to-amber-600 bg-clip-text text-transparent">
-              Análisis de Conversiones de Upsells
-            </h1>
-            <p className="text-gray-600 mt-1">Mide y optimiza el rendimiento de tus ofertas</p>
-          </div>
+        {/* Efectos de fondo animados */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
         </div>
 
-        <div className="flex items-center gap-4 mt-6 flex-wrap">
-          <div className="flex items-center gap-2 bg-white rounded-lg shadow px-4 py-2">
-            <Calendar className="w-4 h-4 text-gray-600" />
-            <select
-              value={periodo}
-              onChange={(e) => setPeriodo(e.target.value)}
-              className="border-none focus:outline-none text-sm font-medium"
-            >
-              <option value="mes">Este mes</option>
-              <option value="3meses">Últimos 3 meses</option>
-              <option value="6meses">Últimos 6 meses</option>
-              <option value="12meses">Últimos 12 meses</option>
-              <option value="personalizado">Personalizado</option>
-            </select>
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '50px 50px'
+          }}></div>
+        </div>
+
+        <div className="relative z-10">
+          {/* Título con icono animado */}
+          <div className="flex items-center gap-3 mb-4">
+            <div className="relative">
+              <BarChart3 className="w-10 h-10 text-yellow-300 animate-pulse" />
+              <div className="absolute inset-0 w-10 h-10 bg-yellow-300 rounded-full blur-lg opacity-50"></div>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
+              Reporte de <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-yellow-400">Conversión</span>
+            </h1>
           </div>
-          <button className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition shadow">
-            <Download className="w-4 h-4" />
-            Exportar Reporte
-          </button>
-          <button className="flex items-center gap-2 bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition shadow">
-            <Settings className="w-4 h-4" />
-            Configurar Objetivos
-          </button>
-          <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition shadow">
-            <Send className="w-4 h-4" />
-            Enviar Reporte
-          </button>
+
+          {/* Descripción */}
+          <p className="text-xl md:text-2xl text-purple-100 max-w-3xl leading-relaxed">
+            Optimiza tus estrategias de <span className="font-bold text-white px-2 py-1 bg-white/20 rounded-lg backdrop-blur-sm">upsell</span> con insights accionables
+          </p>
+
+          {/* Indicadores pills */}
+          <div className="mt-8 flex flex-wrap gap-4">
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
+              <Calendar className="w-5 h-5 text-yellow-300" />
+              <select
+                value={periodo}
+                onChange={(e) => setPeriodo(e.target.value)}
+                className="bg-transparent border-none focus:outline-none text-sm font-semibold text-white cursor-pointer"
+              >
+                <option value="mes" className="text-gray-900">Este mes</option>
+                <option value="3meses" className="text-gray-900">Últimos 3 meses</option>
+                <option value="6meses" className="text-gray-900">Últimos 6 meses</option>
+                <option value="12meses" className="text-gray-900">Últimos 12 meses</option>
+                <option value="personalizado" className="text-gray-900">Personalizado</option>
+              </select>
+            </div>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20 text-white font-semibold hover:bg-white/20 transition"
+            >
+              <Download className="w-5 h-5" />
+              Exportar
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20 text-white font-semibold hover:bg-white/20 transition"
+            >
+              <Settings className="w-5 h-5" />
+              Objetivos
+            </motion.button>
+          </div>
         </div>
       </motion.div>
 
-      {/* KPIs Principales */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        <KPICard
-          titulo="Tasa de Conversión Global"
-          valor={kpis.tasaConversion.actual}
-          cambio={kpis.tasaConversion.cambio}
-          icon={Target}
-          suffix="%"
-        />
+      {/* KPIs Principales - Estadísticas Rápidas */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <KPICard
           titulo="Ingresos por Upsells"
           valor={kpis.ingresos.actual}
@@ -267,111 +312,167 @@ const ConversionReportPage: React.FC = () => {
           cambio={kpis.ingresos.cambio}
           icon={DollarSign}
           prefix="€"
+          index={0}
         />
         <KPICard
-          titulo="AOV con Upsell"
+          titulo="Tasa de Conversión"
+          valor={kpis.tasaConversion.actual}
+          cambio={kpis.tasaConversion.cambio}
+          icon={Target}
+          suffix="%"
+          index={1}
+        />
+        <KPICard
+          titulo="AOV Incrementado"
           valor={kpis.aov.conUpsell}
-          subvalor={`vs €${kpis.aov.sinUpsell} sin upsells (+${kpis.aov.incremento.toFixed(0)}%)`}
+          subvalor={`+${kpis.aov.incremento.toFixed(0)}% vs sin upsells`}
           cambio={15.2}
           icon={ShoppingCart}
           prefix="€"
-        />
-        <KPICard
-          titulo="Ofertas Presentadas"
-          valor={kpis.ofertasPresentadas.actual}
-          cambio={kpis.ofertasPresentadas.cambio}
-          icon={Package}
-        />
-        <KPICard
-          titulo="Conversiones Totales"
-          valor={kpis.conversiones.actual}
-          cambio={kpis.conversiones.cambio}
-          icon={Users}
+          index={2}
         />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-br from-emerald-500 to-amber-500 rounded-xl shadow-lg p-6 text-white"
+          transition={{ delay: 0.3, duration: 0.5 }}
+          whileHover={{ scale: 1.03, y: -8 }}
+          className="bg-gradient-to-br from-violet-600 via-fuchsia-600 to-pink-600 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 text-white relative overflow-hidden group"
         >
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-medium opacity-90">ROI de Upsells</h3>
-            <Zap className="w-5 h-5" />
+          {/* Pattern de fondo */}
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3) 1px, transparent 1px)`,
+              backgroundSize: '20px 20px'
+            }}></div>
           </div>
-          <p className="text-4xl font-bold">{kpis.roi.valor}x</p>
-          <p className="text-sm opacity-90 mt-2">{kpis.roi.descripcion}</p>
-          <div className="mt-4 bg-white/20 rounded-lg p-3">
-            <p className="text-xs">Retorno excelente sobre inversión</p>
+
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-sm font-semibold tracking-wide uppercase opacity-90">Mejor Oferta</p>
+              <div className="p-2 bg-white/20 rounded-xl backdrop-blur-sm">
+                <Award className="w-6 h-6" />
+              </div>
+            </div>
+            <p className="text-2xl font-bold mb-2">Membresía Premium Anual</p>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="px-3 py-1 bg-yellow-300/20 backdrop-blur-md rounded-full border border-yellow-200/30">
+                <span className="text-sm font-bold text-yellow-100">€8,500</span>
+              </div>
+              <div className="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full border border-white/20">
+                <span className="text-sm font-semibold">42 conversiones</span>
+              </div>
+            </div>
+            <div className="mt-4 w-full h-1 bg-white/20 rounded-full overflow-hidden">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: '85%' }}
+                transition={{ delay: 0.8, duration: 1 }}
+                className="h-full bg-gradient-to-r from-yellow-300 to-yellow-100 rounded-full"
+              ></motion.div>
+            </div>
           </div>
         </motion.div>
       </div>
 
-      {/* Gráfico Principal de Conversiones */}
+      {/* Rendimiento Temporal - Gráfico Principal */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-xl shadow-lg p-6 mb-8"
+        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 md:p-8 mb-8 border border-white/50 relative overflow-hidden"
       >
-        <h2 className="text-xl font-bold text-gray-900 mb-6">Evolución de Conversiones (Últimos 12 meses)</h2>
-        <ResponsiveContainer width="100%" height={400}>
-          <LineChart data={monthlyData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-            <XAxis dataKey="month" stroke="#6b7280" />
-            <YAxis yAxisId="left" stroke="#10b981" />
-            <YAxis yAxisId="right" orientation="right" stroke="#3b82f6" />
-            <Tooltip
-              contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
-            />
-            <Legend />
-            <Line yAxisId="left" type="monotone" dataKey="tasaConversion" stroke="#10b981" strokeWidth={3} name="Tasa de Conversión (%)" dot={{ r: 4 }} />
-            <Line yAxisId="right" type="monotone" dataKey="ingresos" stroke="#3b82f6" strokeWidth={3} name="Ingresos (€)" dot={{ r: 4 }} />
-            <Line yAxisId="right" type="monotone" dataKey="ofertasPresentadas" stroke="#f59e0b" strokeWidth={2} name="Ofertas Presentadas" dot={{ r: 3 }} />
-          </LineChart>
-        </ResponsiveContainer>
+        <div className="absolute -right-20 -top-20 w-64 h-64 bg-gradient-to-br from-violet-200 to-pink-200 rounded-full blur-3xl opacity-20"></div>
+
+        <div className="relative z-10">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 bg-gradient-to-br from-violet-500 to-fuchsia-600 rounded-xl">
+              <TrendingUp className="w-6 h-6 text-white" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900">Evolución de Conversiones (Últimos 12 meses)</h2>
+          </div>
+          <ResponsiveContainer width="100%" height={400}>
+            <LineChart data={monthlyData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis dataKey="month" stroke="#6b7280" />
+              <YAxis yAxisId="left" stroke="#a855f7" />
+              <YAxis yAxisId="right" orientation="right" stroke="#ec4899" />
+              <Tooltip
+                contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '12px', padding: '12px' }}
+              />
+              <Legend />
+              <Line yAxisId="left" type="monotone" dataKey="tasaConversion" stroke="#a855f7" strokeWidth={3} name="Tasa de Conversión (%)" dot={{ r: 4, fill: '#a855f7' }} />
+              <Line yAxisId="right" type="monotone" dataKey="ingresos" stroke="#ec4899" strokeWidth={3} name="Ingresos (€)" dot={{ r: 4, fill: '#ec4899' }} />
+              <Line yAxisId="right" type="monotone" dataKey="ofertasPresentadas" stroke="#f472b6" strokeWidth={2} name="Ofertas Presentadas" dot={{ r: 3, fill: '#f472b6' }} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
       </motion.div>
 
       {/* Funnel de Conversión */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-xl shadow-lg p-6 mb-8"
+        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 md:p-8 mb-8 border border-white/50 relative overflow-hidden"
       >
-        <h2 className="text-xl font-bold text-gray-900 mb-6">Funnel de Conversión</h2>
-        <div className="grid md:grid-cols-2 gap-8">
-          <div>
-            <ResponsiveContainer width="100%" height={350}>
-              <BarChart data={funnelData} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" />
-                <YAxis dataKey="name" type="category" width={150} />
-                <Tooltip />
-                <Bar dataKey="value" fill="#10b981">
-                  {funnelData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
+        <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-gradient-to-br from-violet-200 to-fuchsia-200 rounded-full blur-3xl opacity-20"></div>
+
+        <div className="relative z-10">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 bg-gradient-to-br from-violet-500 to-fuchsia-600 rounded-xl">
+              <Filter className="w-6 h-6 text-white" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900">Funnel de Conversión</h2>
           </div>
-          <div className="space-y-4">
-            {funnelData.map((step, idx) => (
-              <div key={idx} className="border-l-4 pl-4" style={{ borderColor: step.color }}>
-                <div className="flex items-center justify-between">
-                  <h4 className="font-semibold text-gray-900">{step.name}</h4>
-                  <span className="text-2xl font-bold text-gray-900">{step.porcentaje}%</span>
-                </div>
-                <p className="text-sm text-gray-600">{step.value.toLocaleString()} usuarios</p>
-                {idx > 0 && (
-                  <p className="text-xs text-red-600 mt-1">
-                    Drop-off: {((funnelData[idx-1].value - step.value) / funnelData[idx-1].value * 100).toFixed(1)}%
-                  </p>
-                )}
-                {idx === 2 && (
-                  <div className="mt-2 bg-amber-50 border border-amber-200 rounded p-2">
-                    <p className="text-xs text-amber-800"><strong>⚠️ Mayor drop-off aquí:</strong> Optimiza visibilidad de la oferta</p>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <ResponsiveContainer width="100%" height={350}>
+                <BarChart data={funnelData} layout="vertical">
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                  <XAxis type="number" />
+                  <YAxis dataKey="name" type="category" width={150} />
+                  <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '12px', padding: '12px' }} />
+                  <Bar dataKey="value" radius={[0, 8, 8, 0]}>
+                    {funnelData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="space-y-3">
+              {funnelData.map((step, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-4 border-l-4"
+                  style={{ borderColor: step.color }}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-bold text-gray-900">{step.name}</h4>
+                    <div className="px-3 py-1 bg-white rounded-full">
+                      <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-fuchsia-600">
+                        {step.porcentaje}%
+                      </span>
+                    </div>
                   </div>
-                )}
-              </div>
-            ))}
+                  <p className="text-sm font-semibold text-gray-600">{step.value.toLocaleString()} usuarios</p>
+                  {idx > 0 && (
+                    <div className="mt-2 flex items-center gap-2">
+                      <TrendingDown className="w-4 h-4 text-red-500" />
+                      <p className="text-xs font-bold text-red-600">
+                        Drop-off: {((funnelData[idx-1].value - step.value) / funnelData[idx-1].value * 100).toFixed(1)}%
+                      </p>
+                    </div>
+                  )}
+                  {idx === 2 && (
+                    <div className="mt-3 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-300 rounded-xl p-3">
+                      <p className="text-xs text-amber-900 font-semibold">⚠️ Mayor drop-off aquí: Optimiza visibilidad de la oferta</p>
+                    </div>
+                  )}
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </motion.div>
@@ -380,46 +481,71 @@ const ConversionReportPage: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-xl shadow-lg p-6 mb-8"
+        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 md:p-8 mb-8 border border-white/50 relative overflow-hidden"
       >
-        <h2 className="text-xl font-bold text-gray-900 mb-6">Análisis por Tipo de Oferta</h2>
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b-2 border-gray-200">
-                  <th className="text-left py-3 px-2 text-sm font-semibold text-gray-700">Tipo</th>
-                  <th className="text-right py-3 px-2 text-sm font-semibold text-gray-700">Vistas</th>
-                  <th className="text-right py-3 px-2 text-sm font-semibold text-gray-700">Conv.</th>
-                  <th className="text-right py-3 px-2 text-sm font-semibold text-gray-700">Tasa</th>
-                  <th className="text-right py-3 px-2 text-sm font-semibold text-gray-700">Ingresos</th>
-                </tr>
-              </thead>
-              <tbody>
-                {offerTypeData.map((offer, idx) => (
-                  <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50">
-                    <td className="py-3 px-2 font-medium">{offer.tipo}</td>
-                    <td className="py-3 px-2 text-right">{offer.vistas}</td>
-                    <td className="py-3 px-2 text-right">{offer.conversiones}</td>
-                    <td className="py-3 px-2 text-right">
-                      <span className="font-semibold text-emerald-600">{offer.tasa}%</span>
-                    </td>
-                    <td className="py-3 px-2 text-right font-semibold">€{offer.ingresos.toLocaleString()}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <div className="absolute -right-20 -top-20 w-64 h-64 bg-gradient-to-br from-pink-200 to-violet-200 rounded-full blur-3xl opacity-20"></div>
+
+        <div className="relative z-10">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 bg-gradient-to-br from-violet-500 to-fuchsia-600 rounded-xl">
+              <PieChart className="w-6 h-6 text-white" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900">Análisis por Tipo de Oferta</h2>
           </div>
-          <div>
-            <ResponsiveContainer width="100%" height={250}>
-              <BarChart data={offerTypeData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="tipo" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="tasa" fill="#10b981" name="Tasa de Conversión (%)" />
-              </BarChart>
-            </ResponsiveContainer>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b-2 border-violet-200 bg-gradient-to-r from-violet-50 to-fuchsia-50">
+                    <th className="text-left py-4 px-4 text-sm font-bold text-gray-700">Tipo</th>
+                    <th className="text-right py-4 px-4 text-sm font-bold text-gray-700">Vistas</th>
+                    <th className="text-right py-4 px-4 text-sm font-bold text-gray-700">Conv.</th>
+                    <th className="text-right py-4 px-4 text-sm font-bold text-gray-700">Tasa</th>
+                    <th className="text-right py-4 px-4 text-sm font-bold text-gray-700">Ingresos</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {offerTypeData.map((offer, idx) => (
+                    <motion.tr
+                      key={idx}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.1 }}
+                      className="border-b border-purple-100 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 transition-all duration-300"
+                    >
+                      <td className="py-4 px-4 font-bold text-gray-900">{offer.tipo}</td>
+                      <td className="py-4 px-4 text-right text-gray-700">{offer.vistas}</td>
+                      <td className="py-4 px-4 text-right text-gray-700">{offer.conversiones}</td>
+                      <td className="py-4 px-4 text-right">
+                        <div className="inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-violet-100 to-fuchsia-100 rounded-full">
+                          <span className="font-bold bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-fuchsia-600">
+                            {offer.tasa}%
+                          </span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4 text-right font-bold text-gray-900">€{offer.ingresos.toLocaleString()}</td>
+                    </motion.tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div>
+              <ResponsiveContainer width="100%" height={250}>
+                <BarChart data={offerTypeData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                  <XAxis dataKey="tipo" stroke="#6b7280" />
+                  <YAxis stroke="#6b7280" />
+                  <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '12px', padding: '12px' }} />
+                  <Bar dataKey="tasa" fill="url(#colorTasa)" radius={[8, 8, 0, 0]} name="Tasa de Conversión (%)" />
+                  <defs>
+                    <linearGradient id="colorTasa" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#a855f7" stopOpacity={1} />
+                      <stop offset="100%" stopColor="#ec4899" stopOpacity={0.8} />
+                    </linearGradient>
+                  </defs>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </div>
       </motion.div>
@@ -429,158 +555,254 @@ const ConversionReportPage: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="bg-white rounded-xl shadow-lg p-6"
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 relative overflow-hidden"
         >
-          <div className="flex items-center gap-2 mb-4">
-            <Award className="w-5 h-5 text-amber-500" />
-            <h2 className="text-xl font-bold text-gray-900">Top Ofertas por Ingresos</h2>
-          </div>
-          <div className="space-y-3">
-            {topOffersByRevenue.map((offer) => (
-              <div key={offer.pos} className="flex items-center gap-3 p-3 bg-gradient-to-r from-emerald-50 to-amber-50 rounded-lg">
-                <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-emerald-500 to-amber-500 rounded-full flex items-center justify-center text-white font-bold">
-                  {offer.pos}
-                </div>
-                <div className="flex-1">
-                  <p className="font-semibold text-gray-900 text-sm">{offer.nombre}</p>
-                  <p className="text-xs text-gray-600">{offer.conversiones} conversiones</p>
-                </div>
-                <div className="text-right">
-                  <p className="font-bold text-emerald-600">€{offer.ingresos.toLocaleString()}</p>
-                  {offer.badge && (
-                    <span className="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded-full">{offer.badge}</span>
-                  )}
-                </div>
+          <div className="absolute -right-12 -top-12 w-40 h-40 bg-gradient-to-br from-yellow-200 to-amber-200 rounded-full blur-3xl opacity-20"></div>
+
+          <div className="relative z-10">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 bg-gradient-to-br from-yellow-500 to-amber-600 rounded-xl">
+                <Award className="w-6 h-6 text-white" />
               </div>
-            ))}
+              <h2 className="text-xl font-bold text-gray-900">Top Ofertas por Ingresos</h2>
+            </div>
+            <div className="space-y-3">
+              {topOffersByRevenue.map((offer, idx) => (
+                <motion.div
+                  key={offer.pos}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  whileHover={{ scale: 1.02, x: 4 }}
+                  className="flex items-center gap-3 p-4 bg-gradient-to-r from-amber-50 to-yellow-50 rounded-2xl border border-amber-200/50 hover:border-amber-300 hover:shadow-md transition-all duration-300"
+                >
+                  <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-yellow-500 to-amber-600 rounded-2xl flex items-center justify-center text-white font-bold shadow-lg">
+                    {offer.pos}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold text-gray-900 text-sm truncate">{offer.nombre}</p>
+                    <p className="text-xs text-gray-600 font-medium">{offer.conversiones} conversiones</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-bold text-lg bg-clip-text text-transparent bg-gradient-to-r from-yellow-600 to-amber-600">
+                      €{offer.ingresos.toLocaleString()}
+                    </p>
+                    {offer.badge && (
+                      <span className="text-xs bg-gradient-to-r from-yellow-500 to-amber-500 text-white px-2 py-1 rounded-full font-semibold">
+                        {offer.badge}
+                      </span>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="bg-white rounded-xl shadow-lg p-6"
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 relative overflow-hidden"
         >
-          <div className="flex items-center gap-2 mb-4">
-            <Target className="w-5 h-5 text-emerald-500" />
-            <h2 className="text-xl font-bold text-gray-900">Top Ofertas por Conversión</h2>
-          </div>
-          <div className="space-y-3">
-            {topOffersByConversion.map((offer) => (
-              <div key={offer.pos} className="flex items-center gap-3 p-3 bg-gradient-to-r from-emerald-50 to-blue-50 rounded-lg">
-                <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold">
-                  {offer.pos}
-                </div>
-                <div className="flex-1">
-                  <p className="font-semibold text-gray-900 text-sm">{offer.nombre}</p>
-                  <p className="text-xs text-gray-600">{offer.conversiones} conversiones</p>
-                </div>
-                <div className="text-right">
-                  <p className="font-bold text-emerald-600">{offer.tasa}%</p>
-                  {offer.badge && (
-                    <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full">{offer.badge}</span>
-                  )}
-                </div>
+          <div className="absolute -right-12 -top-12 w-40 h-40 bg-gradient-to-br from-green-200 to-emerald-200 rounded-full blur-3xl opacity-20"></div>
+
+          <div className="relative z-10">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl">
+                <Target className="w-6 h-6 text-white" />
               </div>
-            ))}
+              <h2 className="text-xl font-bold text-gray-900">Top Ofertas por Conversión</h2>
+            </div>
+            <div className="space-y-3">
+              {topOffersByConversion.map((offer, idx) => (
+                <motion.div
+                  key={offer.pos}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  whileHover={{ scale: 1.02, x: 4 }}
+                  className="flex items-center gap-3 p-4 bg-gradient-to-r from-emerald-50 to-green-50 rounded-2xl border border-emerald-200/50 hover:border-emerald-300 hover:shadow-md transition-all duration-300"
+                >
+                  <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center text-white font-bold shadow-lg">
+                    {offer.pos}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold text-gray-900 text-sm truncate">{offer.nombre}</p>
+                    <p className="text-xs text-gray-600 font-medium">{offer.conversiones} conversiones</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-bold text-lg bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-600">
+                      {offer.tasa}%
+                    </p>
+                    {offer.badge && (
+                      <span className="text-xs bg-gradient-to-r from-green-500 to-emerald-500 text-white px-2 py-1 rounded-full font-semibold">
+                        {offer.badge}
+                      </span>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
 
-      {/* Peores Ofertas - Oportunidades de Mejora */}
+      {/* Oportunidades de Mejora */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-r from-red-50 to-orange-50 rounded-xl shadow-lg p-6 mb-8 border border-red-200"
+        className="bg-gradient-to-br from-red-600 via-orange-600 to-pink-600 rounded-3xl shadow-2xl p-8 mb-8 border border-white/20 relative overflow-hidden"
       >
-        <div className="flex items-center gap-2 mb-4">
-          <AlertCircle className="w-5 h-5 text-red-600" />
-          <h2 className="text-xl font-bold text-gray-900">Oportunidades de Mejora</h2>
+        {/* Efectos de fondo */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-300 rounded-full blur-3xl"></div>
         </div>
-        <div className="grid md:grid-cols-3 gap-4">
-          {worstOffers.map((offer, idx) => (
-            <div key={idx} className="bg-white rounded-lg p-4 border-l-4 border-red-500">
-              <h3 className="font-semibold text-gray-900 mb-2">{offer.nombre}</h3>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-2xl font-bold text-red-600">{offer.tasa}%</span>
-                <span className="text-xs text-gray-600">tasa conversión</span>
-              </div>
-              <div className="bg-red-50 rounded p-2 mb-2">
-                <p className="text-xs text-red-800"><strong>Razón:</strong> {offer.razon}</p>
-              </div>
-              <div className="bg-emerald-50 rounded p-2 mb-3">
-                <p className="text-xs text-emerald-800"><strong>Sugerencia:</strong> {offer.sugerencia}</p>
-              </div>
-              <button className="w-full bg-emerald-600 text-white text-sm py-2 rounded-lg hover:bg-emerald-700 transition">
-                Optimizar Oferta
-              </button>
+
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '50px 50px'
+          }}></div>
+        </div>
+
+        <div className="relative z-10">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="relative">
+              <AlertCircle className="w-8 h-8 text-yellow-300 animate-pulse" />
+              <div className="absolute inset-0 w-8 h-8 bg-yellow-300 rounded-full blur-lg opacity-50"></div>
             </div>
-          ))}
+            <h2 className="text-3xl font-bold text-white">Oportunidades de Mejora</h2>
+          </div>
+
+          <p className="text-orange-100 mb-6">Ofertas con bajo rendimiento que requieren optimización</p>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {worstOffers.map((offer, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                whileHover={{ scale: 1.02, y: -4 }}
+                className="bg-white/95 backdrop-blur-xl rounded-2xl p-5 border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <h3 className="font-bold text-gray-900 mb-3 text-lg leading-tight">{offer.nombre}</h3>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="flex items-center gap-2">
+                    <TrendingDown className="w-5 h-5 text-red-500" />
+                    <span className="text-3xl font-bold text-red-600">{offer.tasa}%</span>
+                  </div>
+                  <span className="text-xs text-gray-600 font-medium">tasa conversión</span>
+                </div>
+                <div className="bg-gradient-to-r from-red-50 to-orange-50 border border-red-200 rounded-xl p-3 mb-3">
+                  <p className="text-xs text-red-900 font-semibold"><strong>❌ Razón:</strong> {offer.razon}</p>
+                </div>
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-3 mb-4">
+                  <p className="text-xs text-emerald-900 font-semibold"><strong>✅ Sugerencia:</strong> {offer.sugerencia}</p>
+                </div>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white text-sm font-semibold py-3 rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-md hover:shadow-lg"
+                >
+                  Optimizar Oferta
+                </motion.button>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </motion.div>
 
-      {/* Análisis por Segmento */}
+      {/* Segmentación de Resultados */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-xl shadow-lg p-6 mb-8"
+        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 md:p-8 mb-8 border border-white/50 relative overflow-hidden"
       >
-        <h2 className="text-xl font-bold text-gray-900 mb-6">Análisis por Segmento de Clientes</h2>
-        <div className="flex gap-4 mb-6 border-b">
-          {(['membresia', 'canal', 'actividad'] as const).map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setSegmentTab(tab)}
-              className={`px-4 py-2 font-medium transition ${
-                segmentTab === tab
-                  ? 'text-emerald-600 border-b-2 border-emerald-600'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              {tab === 'membresia' ? 'Tipo de Membresía' : tab === 'canal' ? 'Canal de Adquisición' : 'Nivel de Actividad'}
-            </button>
-          ))}
-        </div>
-        <div className="grid md:grid-cols-2 gap-8">
-          <div>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={segmentData[segmentTab]}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="nombre" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="tasa" fill="#10b981" name="Tasa de Conversión (%)" />
-              </BarChart>
-            </ResponsiveContainer>
+        <div className="absolute -left-20 -top-20 w-64 h-64 bg-gradient-to-br from-blue-200 to-indigo-200 rounded-full blur-3xl opacity-20"></div>
+
+        <div className="relative z-10">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl">
+              <Users className="w-6 h-6 text-white" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900">Segmentación de Resultados</h2>
           </div>
-          <div className="space-y-4">
-            {segmentData[segmentTab].map((seg, idx) => (
-              <div key={idx} className="bg-gradient-to-r from-emerald-50 to-blue-50 rounded-lg p-4">
-                <h3 className="font-bold text-gray-900 mb-2">{seg.nombre}</h3>
-                <div className="grid grid-cols-3 gap-4 text-sm">
-                  <div>
-                    <p className="text-gray-600">Tasa Conv.</p>
-                    <p className="font-bold text-emerald-600 text-lg">{seg.tasa}%</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-600">Ingresos</p>
-                    <p className="font-bold text-gray-900">€{seg.ingresos.toLocaleString()}</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-600">Clientes</p>
-                    <p className="font-bold text-gray-900">{seg.clientes}</p>
-                  </div>
-                </div>
-              </div>
+
+          <div className="flex gap-3 mb-6 border-b-2 border-gray-200">
+            {(['membresia', 'canal', 'actividad'] as const).map((tab) => (
+              <motion.button
+                key={tab}
+                onClick={() => setSegmentTab(tab)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={`px-6 py-3 font-semibold transition-all duration-300 rounded-t-xl ${
+                  segmentTab === tab
+                    ? 'text-white bg-gradient-to-r from-violet-500 to-fuchsia-500 shadow-lg'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                }`}
+              >
+                {tab === 'membresia' ? 'Tipo de Membresía' : tab === 'canal' ? 'Canal de Adquisición' : 'Nivel de Actividad'}
+              </motion.button>
             ))}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-              <p className="text-sm text-blue-900">
-                <strong>💡 Insight:</strong> {
-                  segmentTab === 'membresia' ? 'Segmento Premium convierte 2x mejor que Básica' :
-                  segmentTab === 'canal' ? 'Clientes referidos tienen mayor tasa de conversión' :
-                  'Usuarios con alta actividad convierten 2.6x más'
-                }
-              </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={segmentData[segmentTab]}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                  <XAxis dataKey="nombre" stroke="#6b7280" />
+                  <YAxis stroke="#6b7280" />
+                  <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '12px', padding: '12px' }} />
+                  <Bar dataKey="tasa" fill="url(#colorSegment)" radius={[8, 8, 0, 0]} name="Tasa de Conversión (%)" />
+                  <defs>
+                    <linearGradient id="colorSegment" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#3b82f6" stopOpacity={1} />
+                      <stop offset="100%" stopColor="#6366f1" stopOpacity={0.8} />
+                    </linearGradient>
+                  </defs>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="space-y-3">
+              {segmentData[segmentTab].map((seg, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-5 border border-blue-200/50 hover:border-blue-300 hover:shadow-md transition-all duration-300"
+                >
+                  <h3 className="font-bold text-gray-900 mb-3 text-lg">{seg.nombre}</h3>
+                  <div className="grid grid-cols-3 gap-4 text-sm">
+                    <div>
+                      <p className="text-gray-600 font-medium mb-1">Tasa Conv.</p>
+                      <p className="font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 text-xl">{seg.tasa}%</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-600 font-medium mb-1">Ingresos</p>
+                      <p className="font-bold text-gray-900 text-lg">€{seg.ingresos.toLocaleString()}</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-600 font-medium mb-1">Clientes</p>
+                      <p className="font-bold text-gray-900 text-lg">{seg.clientes}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+              <div className="bg-gradient-to-r from-blue-500 to-indigo-500 border border-blue-300 rounded-2xl p-4">
+                <p className="text-sm text-white font-semibold">
+                  💡 <strong>Insight:</strong> {
+                    segmentTab === 'membresia' ? 'Segmento Premium convierte 2x mejor que Básica' :
+                    segmentTab === 'canal' ? 'Clientes referidos tienen mayor tasa de conversión' :
+                    'Usuarios con alta actividad convierten 2.6x más'
+                  }
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -807,32 +1029,67 @@ const ConversionReportPage: React.FC = () => {
         </div>
       </motion.div>
 
-      {/* Recomendaciones IA */}
+      {/* Insights y Recomendaciones IA */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl shadow-lg p-6 mb-8 border border-purple-200"
+        className="bg-gradient-to-br from-violet-600 via-purple-600 to-fuchsia-600 rounded-3xl shadow-2xl p-8 mb-8 border border-white/20 relative overflow-hidden"
       >
-        <div className="flex items-center gap-2 mb-6">
-          <Lightbulb className="w-6 h-6 text-purple-600" />
-          <h2 className="text-xl font-bold text-gray-900">Insights y Recomendaciones IA</h2>
+        {/* Efectos de fondo */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-72 h-72 bg-pink-300 rounded-full blur-3xl"></div>
         </div>
-        <div className="grid md:grid-cols-2 gap-4">
-          {recommendations.map((rec, idx) => (
-            <div key={idx} className="bg-white rounded-lg p-4 border-l-4 border-purple-500">
-              <div className="flex items-start justify-between mb-3">
-                <p className="text-sm text-gray-900 flex-1">{rec.texto}</p>
-                <span className={`text-xs px-2 py-1 rounded-full ml-2 ${
-                  rec.prioridad === 'alta' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-700'
-                }`}>
-                  {rec.prioridad === 'alta' ? 'Alta' : 'Media'}
-                </span>
-              </div>
-              <button className="w-full bg-purple-600 text-white text-sm py-2 rounded-lg hover:bg-purple-700 transition">
-                Implementar Acción
-              </button>
+
+        {/* Dots pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3) 1px, transparent 1px)`,
+            backgroundSize: '20px 20px'
+          }}></div>
+        </div>
+
+        <div className="relative z-10">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="relative">
+              <Lightbulb className="w-8 h-8 text-yellow-300" />
+              <div className="absolute inset-0 w-8 h-8 bg-yellow-300 rounded-full blur-lg opacity-50"></div>
             </div>
-          ))}
+            <h2 className="text-3xl font-bold text-white">Insights y Recomendaciones IA</h2>
+          </div>
+
+          <p className="text-purple-100 mb-6">Sugerencias basadas en análisis de datos y machine learning</p>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            {recommendations.map((rec, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                whileHover={{ scale: 1.02, y: -4 }}
+                className="bg-white/95 backdrop-blur-xl rounded-2xl p-5 border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <p className="text-sm text-gray-900 font-medium flex-1 leading-relaxed">{rec.texto}</p>
+                  <span className={`text-xs px-3 py-1 rounded-full ml-2 font-bold ${
+                    rec.prioridad === 'alta'
+                      ? 'bg-gradient-to-r from-red-500 to-pink-500 text-white'
+                      : 'bg-gradient-to-r from-amber-400 to-orange-400 text-white'
+                  }`}>
+                    {rec.prioridad === 'alta' ? 'Alta' : 'Media'}
+                  </span>
+                </div>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white text-sm font-semibold py-3 rounded-xl hover:from-violet-700 hover:to-fuchsia-700 transition-all duration-300 shadow-md hover:shadow-lg"
+                >
+                  Implementar Acción
+                </motion.button>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </motion.div>
 

@@ -1,169 +1,101 @@
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Link2, Plus, ArrowRight, Timer, Zap } from 'lucide-react';
 
-import React, { useState, useEffect } from 'react';
-
-interface Exercise {
+interface SuperseriesItem {
   id: string;
   name: string;
+  exercises: string[];
   sets: number;
-  reps: string;
-  weight: string;
-  notes: string;
+  rest: number;
 }
 
-interface Superseries {
-  id: string;
-  name: string;
-  exercises: Exercise[];
-  restTimeSeconds: number;
-}
-
-interface SuperseriesManagerProps {
-  onAddSuperseries: (superseries: Superseries) => void;
-  availableExercises: Exercise[];
-}
-
-const SuperseriesManager: React.FC<SuperseriesManagerProps> = ({ onAddSuperseries, availableExercises }) => {
-  const [superseriesName, setSuperseriesName] = useState('');
-  const [selectedExercises, setSelectedExercises] = useState<Exercise[]>([]);
-  const [restTime, setRestTime] = useState(60);
-  const [timerRunning, setTimerRunning] = useState(false);
-  const [currentTimer, setCurrentTimer] = useState(0);
-
-  useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
-    if (timerRunning && currentTimer > 0) {
-      interval = setInterval(() => {
-        setCurrentTimer(prevTime => prevTime - 1);
-      }, 1000);
-    } else if (currentTimer === 0) {
-      setTimerRunning(false);
+const SuperseriesManager: React.FC = () => {
+  const [superseries, setSuperseries] = useState<SuperseriesItem[]>([
+    {
+      id: 'ss1',
+      name: 'Push-Pull Supremo',
+      exercises: ['Press Banca', 'Remo con Barra', 'Press Militar', 'Dominadas'],
+      sets: 3,
+      rest: 90
+    },
+    {
+      id: 'ss2',
+      name: 'Pierna Completa',
+      exercises: ['Sentadilla', 'Peso Muerto Rumano', 'Zancadas'],
+      sets: 4,
+      rest: 120
     }
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [timerRunning, currentTimer]);
-
-  const handleAddExerciseToSuperseries = (exerciseId: string) => {
-    const exerciseToAdd = availableExercises.find(ex => ex.id === exerciseId);
-    if (exerciseToAdd && !selectedExercises.some(ex => ex.id === exerciseId)) {
-      setSelectedExercises(prev => [...prev, exerciseToAdd]);
-    }
-  };
-
-  const handleRemoveExerciseFromSuperseries = (exerciseId: string) => {
-    setSelectedExercises(prev => prev.filter(ex => ex.id !== exerciseId));
-  };
-
-  const handleCreateSuperseries = () => {
-    if (superseriesName.trim() === '' || selectedExercises.length < 2) {
-      alert('Please provide a name and select at least two exercises for the superseries.');
-      return;
-    }
-
-    const newSuperseries: Superseries = {
-      id: `superseries-${Date.now()}`,
-      name: superseriesName,
-      exercises: selectedExercises,
-      restTimeSeconds: restTime,
-    };
-    onAddSuperseries(newSuperseries);
-    setSuperseriesName('');
-    setSelectedExercises([]);
-    setRestTime(60);
-  };
-
-  const startTimer = () => {
-    setCurrentTimer(restTime);
-    setTimerRunning(true);
-  };
-
-  const stopTimer = () => {
-    setTimerRunning(false);
-  };
-
-  const resetTimer = () => {
-    setTimerRunning(false);
-    setCurrentTimer(restTime);
-  };
+  ]);
 
   return (
-    <div className="p-4 bg-white rounded shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Editor de Superseries</h2>
+    <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl overflow-hidden border border-white/50">
+      <div className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 p-6 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3) 1px, transparent 1px)`,
+            backgroundSize: '20px 20px'
+          }}></div>
+        </div>
 
-      <div className="mb-4">
-        <label htmlFor="superseriesName" className="block text-sm font-medium text-gray-700">Nombre de la Superserie</label>
-        <input
-          type="text"
-          id="superseriesName"
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-          value={superseriesName}
-          onChange={(e) => setSuperseriesName(e.target.value)}
-          placeholder="Ej: Superserie Pecho y Tríceps"
-        />
+        <h3 className="text-xl font-bold text-white flex items-center gap-2 relative z-10">
+          <div className="p-2 bg-white/20 rounded-xl backdrop-blur-sm">
+            <Link2 className="w-6 h-6" />
+          </div>
+          Superseries Manager
+        </h3>
       </div>
 
-      <div className="mb-4">
-        <h3 className="text-xl font-semibold mb-2">Ejercicios en Superserie</h3>
-        <div className="border p-3 rounded min-h-[80px] mb-2">
-          {selectedExercises.length === 0 && <p className="text-gray-400">Arrastra ejercicios aquí o selecciónalos</p>}
-          {selectedExercises.map(ex => (
-            <div key={ex.id} className="flex justify-between items-center bg-blue-50 p-2 mb-1 rounded">
-              <span>{ex.name}</span>
-              <button onClick={() => handleRemoveExerciseFromSuperseries(ex.id)} className="text-red-500 hover:text-red-700 text-sm">
-                Eliminar
-              </button>
+      <div className="p-6 space-y-4">
+        {superseries.map((ss, index) => (
+          <motion.div
+            key={ss.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+            className="bg-gradient-to-r from-orange-50 to-pink-50 rounded-2xl p-4 border border-orange-200"
+          >
+            <div className="flex items-start justify-between mb-3">
+              <div>
+                <h4 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+                  <Zap className="w-5 h-5 text-orange-500" />
+                  {ss.name}
+                </h4>
+                <div className="flex items-center gap-4 mt-2 text-sm text-gray-600">
+                  <div className="flex items-center gap-1">
+                    <span className="font-semibold">{ss.sets}</span> sets
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Timer className="w-4 h-4" />
+                    <span>{ss.rest}s descanso</span>
+                  </div>
+                </div>
+              </div>
+              <div className="px-3 py-1 bg-orange-500 text-white text-xs font-bold rounded-full">
+                {ss.exercises.length} ejercicios
+              </div>
             </div>
-          ))}
-        </div>
-        <h4 className="text-lg font-medium mb-2">Ejercicios Disponibles</h4>
-        <div className="bg-gray-100 p-3 rounded shadow-inner flex flex-wrap gap-2 max-h-40 overflow-y-auto">
-          {availableExercises.map(exercise => (
-            <button
-              key={exercise.id}
-              onClick={() => handleAddExerciseToSuperseries(exercise.id)}
-              className="bg-gray-200 hover:bg-gray-300 p-2 border rounded shadow-sm text-sm"
-              disabled={selectedExercises.some(ex => ex.id === exercise.id)}
-            >
-              {exercise.name}
-            </button>
-          ))}
-        </div>
-      </div>
 
-      <div className="mb-4">
-        <label htmlFor="restTime" className="block text-sm font-medium text-gray-700">Tiempo de Descanso (segundos)</label>
-        <input
-          type="number"
-          id="restTime"
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-          value={restTime}
-          onChange={(e) => setRestTime(Number(e.target.value))}
-          min="0"
-        />
-      </div>
+            <div className="flex items-center gap-2">
+              {ss.exercises.map((ex, idx) => (
+                <React.Fragment key={idx}>
+                  <div className="flex-1 bg-white rounded-lg px-3 py-2 shadow-sm border border-gray-200">
+                    <p className="text-sm font-semibold text-gray-800">{ex}</p>
+                  </div>
+                  {idx < ss.exercises.length - 1 && (
+                    <ArrowRight className="w-5 h-5 text-orange-500 flex-shrink-0" />
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+          </motion.div>
+        ))}
 
-      <div className="mb-4">
-        <h3 className="text-xl font-semibold mb-2">Temporizador Automático</h3>
-        <div className="flex items-center space-x-4">
-          <span className="text-4xl font-bold">{Math.floor(currentTimer / 60).toString().padStart(2, '0')}:{(currentTimer % 60).toString().padStart(2, '0')}</span>
-          <button onClick={startTimer} disabled={timerRunning || restTime === 0} className="bg-green-500 text-white px-4 py-2 rounded disabled:opacity-50">
-            Iniciar
-          </button>
-          <button onClick={stopTimer} disabled={!timerRunning} className="bg-red-500 text-white px-4 py-2 rounded disabled:opacity-50">
-            Detener
-          </button>
-          <button onClick={resetTimer} className="bg-gray-500 text-white px-4 py-2 rounded">
-            Reiniciar
-          </button>
-        </div>
+        <button className="w-full py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2">
+          <Plus className="w-5 h-5" />
+          Crear Nueva Superserie
+        </button>
       </div>
-
-      <button
-        onClick={handleCreateSuperseries}
-        className="bg-blue-600 text-white px-6 py-3 rounded-md text-lg font-semibold hover:bg-blue-700"
-      >
-        Crear Superserie
-      </button>
     </div>
   );
 };

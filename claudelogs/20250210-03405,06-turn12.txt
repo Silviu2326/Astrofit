@@ -1,0 +1,74 @@
+﻿
+
+## Ô£à Marketplace de Cursos Completado
+
+He creado un sistema completo de listado de cursos con las siguientes caracter├¡sticas:
+
+### ­ƒÄ¿ Dise├▒o
+- Gradiente `from-purple-600 via-pink-600 to-rose-600`
+- Interfaz moderna con glassmorphism
+- Tarjetas de curso con hover effects
+- Vista en grid y lista
+
+### ­ƒöì Funcionalidades
+
+**Sistema de B├║squeda y Filtros:**
+- B├║squeda en tiempo real (t├¡tulo, descripci├│n, tags)
+- Filtros por categor├¡a (10 categor├¡as)
+- Filtros por nivel (principiante, intermedio, avanzado)
+- Rango de precio con slider
+- Valoraci├│n m├¡nima
+- Idioma
+
+**Sistema de Ordenamiento:**
+- M├ís popular
+- M├ís reciente
+- Mejor valorado
+- Precio: menor a mayor
+- Precio: mayor a menor
+
+**Tarjetas de Curso:**
+- Preview con imagen
+- Rating con estrellas y n├║mero de valoraciones
+- Informaci├│n del instructor
+- Estad├¡sticas (duraci├│n, lecciones, estudiantes)
+- Badges (Bestseller, Nuevo)
+- Precio con descuento
+- Vista grid y lista
+
+**Modal de Preview:**
+- Video/imagen de preview con bot├│n play
+- Informaci├│n completa del curso
+- Lista de aprendizajes
+- Requisitos
+- Caracter├¡sticas incluidas
+- Informaci├│n del instructor
+- Tags y categor├¡as
+- Precio y botones de compra
+
+### ­ƒôü Estructura Creada
+```
+src/features/cursos/
+Ôö£ÔöÇÔöÇ components/
+Ôöé   Ôö£ÔöÇÔöÇ CoursesPage.tsx          # P├ígina principal
+Ôöé   Ôö£ÔöÇÔöÇ CourseCard.tsx            # Tarjeta de curso
+Ôöé   Ôö£ÔöÇÔöÇ CourseFiltersPanel.tsx   # Panel de filtros
+Ôöé   ÔööÔöÇÔöÇ CoursePreviewModal.tsx   # Modal de preview
+Ôö£ÔöÇÔöÇ types/
+Ôöé   ÔööÔöÇÔöÇ course.types.ts           # Tipos e interfaces
+Ôö£ÔöÇÔöÇ data/
+Ôöé   ÔööÔöÇÔöÇ mockCourses.ts            # 8 cursos de ejemplo
+ÔööÔöÇÔöÇ index.ts                      # Exportaciones
+```
+
+### ­ƒÄ» Caracter├¡sticas Incluidas
+- 8 cursos de ejemplo con datos completos
+- Sistema de ratings visual
+- Filtros colapsables
+- B├║squeda en tiempo real
+- Responsive design
+- Animaciones y transiciones suaves
+- Precios con descuentos
+- Badges de bestseller y nuevo
+
+Para usar el componente: `import { CoursesPage } from '@/features/cursos'`

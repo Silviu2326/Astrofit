@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Trophy, Medal, Award, Star, Target, Zap, Calendar, Crown, Shield, Flame } from 'lucide-react';
 
 interface Insignia {
@@ -159,42 +160,97 @@ const InsigniasLogros: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Estadísticas generales */}
-      <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg p-6 text-white">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="text-center">
-            <p className="text-3xl font-bold">{insigniasDesbloqueadas.length}</p>
-            <p className="text-blue-100">Insignias obtenidas</p>
-          </div>
-          <div className="text-center">
-            <p className="text-3xl font-bold">{insignias.length}</p>
-            <p className="text-blue-100">Total disponibles</p>
-          </div>
-          <div className="text-center">
-            <p className="text-3xl font-bold">{Math.round((insigniasDesbloqueadas.length / insignias.length) * 100)}%</p>
-            <p className="text-blue-100">Progreso total</p>
-          </div>
-          <div className="text-center">
-            <p className="text-3xl font-bold">{insigniasDesbloqueadas.filter(i => i.rareza === 'Legendario').length}</p>
-            <p className="text-blue-100">Legendarias</p>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="relative overflow-hidden bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl shadow-2xl p-8 border border-white/20"
+      >
+        {/* Efectos de fondo */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        </div>
+
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '50px 50px'
+          }}></div>
+        </div>
+
+        <div className="relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.1, duration: 0.4 }}
+              className="text-center"
+            >
+              <p className="text-4xl font-bold text-white">{insigniasDesbloqueadas.length}</p>
+              <p className="text-blue-100 font-medium mt-1">Insignias obtenidas</p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.4 }}
+              className="text-center"
+            >
+              <p className="text-4xl font-bold text-white">{insignias.length}</p>
+              <p className="text-blue-100 font-medium mt-1">Total disponibles</p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3, duration: 0.4 }}
+              className="text-center"
+            >
+              <p className="text-4xl font-bold text-yellow-300">{Math.round((insigniasDesbloqueadas.length / insignias.length) * 100)}%</p>
+              <p className="text-blue-100 font-medium mt-1">Progreso total</p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.4, duration: 0.4 }}
+              className="text-center"
+            >
+              <p className="text-4xl font-bold text-yellow-300">{insigniasDesbloqueadas.filter(i => i.rareza === 'Legendario').length}</p>
+              <p className="text-blue-100 font-medium mt-1">Legendarias</p>
+            </motion.div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Insignias desbloqueadas */}
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-          <Trophy className="h-6 w-6 text-yellow-500 mr-2" />
-          Mis Insignias ({insigniasDesbloqueadas.length})
-        </h3>
+      <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/50 relative overflow-hidden">
+        {/* Decoración de fondo */}
+        <div className="absolute -right-20 -top-20 w-64 h-64 bg-gradient-to-br from-yellow-200 to-orange-200 rounded-full blur-3xl opacity-20"></div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {insigniasDesbloqueadas.map((insignia) => {
-            const IconComponent = insignia.icon;
-            return (
-              <div
-                key={insignia.id}
-                className={`relative border-2 rounded-lg p-4 transition-all duration-200 hover:shadow-lg ${getRarezaColor(insignia.rareza)}`}
-              >
+        <div className="relative z-10">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-3 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-2xl shadow-lg">
+              <Trophy className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900">Mis Insignias ({insigniasDesbloqueadas.length})</h3>
+              <p className="text-sm text-gray-600">Logros desbloqueados</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {insigniasDesbloqueadas.map((insignia, index) => {
+              const IconComponent = insignia.icon;
+              return (
+                <motion.div
+                  key={insignia.id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.05, duration: 0.3 }}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className={`relative border-2 rounded-2xl p-4 transition-all duration-200 shadow-md hover:shadow-xl ${getRarezaColor(insignia.rareza)}`}
+                >
                 {/* Etiqueta de categoría */}
                 <div className={`absolute top-2 right-2 w-3 h-3 rounded-full ${getCategoriaColor(insignia.categoria)}`}></div>
 
@@ -219,31 +275,45 @@ const InsigniasLogros: React.FC = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             );
-          })}
+            })}
+          </div>
         </div>
       </div>
 
       {/* Insignias por obtener */}
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-          <Target className="h-6 w-6 text-blue-500 mr-2" />
-          Por Desbloquear ({insigniasPendientes.length})
-        </h3>
+      <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/50 relative overflow-hidden">
+        {/* Decoración de fondo */}
+        <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-gradient-to-br from-blue-200 to-purple-200 rounded-full blur-3xl opacity-20"></div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {insigniasPendientes.map((insignia) => {
-            const IconComponent = insignia.icon;
-            const progreso = insignia.progreso || 0;
-            const objetivo = insignia.objetivo || 100;
-            const porcentaje = (progreso / objetivo) * 100;
+        <div className="relative z-10">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl shadow-lg">
+              <Target className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900">Por Desbloquear ({insigniasPendientes.length})</h3>
+              <p className="text-sm text-gray-600">Próximos objetivos</p>
+            </div>
+          </div>
 
-            return (
-              <div
-                key={insignia.id}
-                className="relative border-2 border-gray-200 rounded-lg p-4 bg-gray-50 transition-all duration-200 hover:shadow-lg"
-              >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {insigniasPendientes.map((insignia, index) => {
+              const IconComponent = insignia.icon;
+              const progreso = insignia.progreso || 0;
+              const objetivo = insignia.objetivo || 100;
+              const porcentaje = (progreso / objetivo) * 100;
+
+              return (
+                <motion.div
+                  key={insignia.id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.05, duration: 0.3 }}
+                  whileHover={{ scale: 1.03, y: -3 }}
+                  className="relative border-2 border-gray-200 rounded-2xl p-4 bg-gradient-to-br from-gray-50 to-gray-100 transition-all duration-200 hover:shadow-lg"
+                >
                 {/* Etiqueta de categoría */}
                 <div className={`absolute top-2 right-2 w-3 h-3 rounded-full ${getCategoriaColor(insignia.categoria)} opacity-50`}></div>
 
@@ -280,24 +350,43 @@ const InsigniasLogros: React.FC = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             );
-          })}
+            })}
+          </div>
         </div>
       </div>
 
       {/* Leyenda de categorías */}
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-4">Categorías</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {['Constancia', 'Logro', 'Especial', 'Nivel'].map((categoria) => (
-            <div key={categoria} className="flex items-center space-x-2">
-              <div className={`w-4 h-4 rounded-full ${getCategoriaColor(categoria)}`}></div>
-              <span className="text-sm text-gray-700">{categoria}</span>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5, duration: 0.5 }}
+        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 relative overflow-hidden"
+      >
+        <div className="relative z-10">
+          <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl">
+              <Award className="w-4 h-4 text-white" />
             </div>
-          ))}
+            Categorías de Insignias
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {['Constancia', 'Logro', 'Especial', 'Nivel'].map((categoria, index) => (
+              <motion.div
+                key={categoria}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 + index * 0.1, duration: 0.3 }}
+                className="flex items-center space-x-2 p-3 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200"
+              >
+                <div className={`w-4 h-4 rounded-full ${getCategoriaColor(categoria)} shadow-md`}></div>
+                <span className="text-sm font-semibold text-gray-700">{categoria}</span>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

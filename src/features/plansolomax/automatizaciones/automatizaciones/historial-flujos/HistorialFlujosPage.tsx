@@ -27,9 +27,12 @@ import {
   ExternalLink,
   X,
   Copy,
-  AlertCircle
+  AlertCircle,
+  ArrowUpRight,
+  Timer,
+  Sparkles
 } from 'lucide-react';
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, Area, AreaChart } from 'recharts';
 
 // Types
 type ExecutionStatus = 'success' | 'failed' | 'in_progress' | 'canceled';
@@ -226,12 +229,11 @@ const HistorialFlujosPage: React.FC = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedExecution, setSelectedExecution] = useState<FlowExecution | null>(null);
-  const [showLogsView, setShowLogsView] = useState(false);
   const [showAlertsModal, setShowAlertsModal] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<ExecutionStatus | 'all'>('all');
   const [selectedFlow, setSelectedFlow] = useState<string>('all');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 50;
+  const itemsPerPage = 20;
 
   // Filtered executions
   const filteredExecutions = useMemo(() => {
@@ -267,6 +269,24 @@ const HistorialFlujosPage: React.FC = () => {
     return filtered;
   }, [executions, selectedDateRange, selectedStatus, selectedFlow, searchQuery]);
 
+  // Statistics - Today
+  const todayStats = useMemo(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayExecs = executions.filter(e => e.timestamp >= today);
+    return todayExecs.length;
+  }, [executions]);
+
+  // Statistics - This month
+  const monthStats = useMemo(() => {
+    const monthStart = new Date();
+    monthStart.setDate(1);
+    monthStart.setHours(0, 0, 0, 0);
+    const monthExecs = executions.filter(e => e.timestamp >= monthStart);
+    const failed = monthExecs.filter(e => e.status === 'failed').length;
+    return failed;
+  }, [executions]);
+
   // Statistics
   const stats = useMemo(() => {
     const total = filteredExecutions.length;
@@ -298,12 +318,6 @@ const HistorialFlujosPage: React.FC = () => {
     return data;
   }, [executions]);
 
-  // Active executions
-  const activeExecutions = useMemo(() =>
-    filteredExecutions.filter(e => e.status === 'in_progress').slice(0, 5),
-    [filteredExecutions]
-  );
-
   // Error analysis
   const errorAnalysis = useMemo(() => {
     const errorMap = new Map<string, { count: number; flows: Set<string>; lastOccurrence: Date }>();
@@ -325,6 +339,23 @@ const HistorialFlujosPage: React.FC = () => {
       .slice(0, 5);
   }, [executions]);
 
+  // Most failed flows
+  const mostFailedFlows = useMemo(() => {
+    const flowMap = new Map<string, { name: string; failed: number; total: number }>();
+    executions.forEach(e => {
+      if (!flowMap.has(e.flowId)) {
+        flowMap.set(e.flowId, { name: e.flowName, failed: 0, total: 0 });
+      }
+      const flowData = flowMap.get(e.flowId)!;
+      flowData.total++;
+      if (e.status === 'failed') flowData.failed++;
+    });
+    return Array.from(flowMap.values())
+      .filter(f => f.failed > 0)
+      .sort((a, b) => b.failed - a.failed)
+      .slice(0, 3);
+  }, [executions]);
+
   // Pagination
   const paginatedExecutions = useMemo(() => {
     const start = (currentPage - 1) * itemsPerPage;
@@ -335,16 +366,17 @@ const HistorialFlujosPage: React.FC = () => {
 
   // Unique flows for filter
   const uniqueFlows = useMemo(() => {
-    const flows = new Set(executions.map(e => ({ id: e.flowId, name: e.flowName })));
-    return Array.from(flows);
+    const flowsMap = new Map<string, string>();
+    executions.forEach(e => flowsMap.set(e.flowId, e.flowName));
+    return Array.from(flowsMap.entries()).map(([id, name]) => ({ id, name }));
   }, [executions]);
 
   const getStatusBadge = (status: ExecutionStatus) => {
     const styles = {
-      success: 'bg-green-100 text-green-800 border-green-300',
-      failed: 'bg-red-100 text-red-800 border-red-300',
-      in_progress: 'bg-blue-100 text-blue-800 border-blue-300 animate-pulse',
-      canceled: 'bg-gray-100 text-gray-800 border-gray-300'
+      success: 'bg-green-500 text-white',
+      failed: 'bg-red-500 text-white',
+      in_progress: 'bg-blue-500 text-white animate-pulse',
+      canceled: 'bg-gray-500 text-white'
     };
     const labels = {
       success: 'Exitoso',
@@ -353,7 +385,7 @@ const HistorialFlujosPage: React.FC = () => {
       canceled: 'Cancelado'
     };
     return (
-      <span className={`px-2 py-1 rounded-full text-xs font-medium border ${styles[status]}`}>
+      <span className={`px-3 py-1 rounded-full text-xs font-bold ${styles[status]}`}>
         {labels[status]}
       </span>
     );
@@ -373,258 +405,395 @@ const HistorialFlujosPage: React.FC = () => {
     return `${(ms / 1000).toFixed(2)}s`;
   };
 
-  const getLogLevelColor = (level: LogLevel) => {
-    switch (level) {
-      case 'INFO': return 'text-blue-600';
-      case 'WARNING': return 'text-yellow-600';
-      case 'ERROR': return 'text-red-600';
-      case 'DEBUG': return 'text-gray-600';
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-gray-50 p-6">
-      {/* Header */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50/30 to-red-50/30 pb-12">
+      {/* HERO SECTION */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
+        transition={{ duration: 0.6 }}
+        className="relative overflow-hidden bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 rounded-3xl shadow-2xl mb-8 p-8 md:p-12"
       >
-        <div className="flex items-center gap-3 mb-2">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-          >
-            <History className="w-8 h-8 text-purple-600" />
-          </motion.div>
-          <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
-              Historial de Ejecuciones
-            </h1>
-            <p className="text-gray-600">Logs y monitoreo de flujos automatizados</p>
-          </div>
+        {/* Efectos de fondo animados */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
         </div>
 
-        {/* Header Actions */}
-        <div className="flex flex-wrap gap-3 mt-4">
-          {/* Date Range Selector */}
-          <div className="flex gap-2">
-            {dateRanges.map(range => (
-              <button
-                key={range.label}
-                onClick={() => setSelectedDateRange(range)}
-                className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                  selectedDateRange.label === range.label
-                    ? 'bg-purple-600 text-white shadow-lg'
-                    : 'bg-white text-gray-700 hover:bg-gray-50 border'
-                }`}
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '50px 50px'
+          }}></div>
+        </div>
+
+        <div className="relative z-10">
+          {/* Título con icono animado */}
+          <div className="flex items-center gap-3 mb-4">
+            <div className="relative">
+              <motion.div
+                animate={{ rotate: [0, 360] }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               >
-                {range.label}
-              </button>
-            ))}
+                <History className="w-10 h-10 text-yellow-300" />
+              </motion.div>
+              <div className="absolute inset-0 w-10 h-10 bg-yellow-300 rounded-full blur-lg opacity-50"></div>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
+              Historial de <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-yellow-400">Ejecuciones</span>
+            </h1>
           </div>
 
-          <div className="flex gap-2 ml-auto">
-            <button className="flex items-center gap-2 px-4 py-2 bg-white border rounded-lg hover:bg-gray-50 transition-colors">
-              <Download className="w-4 h-4" />
-              Exportar Logs
-            </button>
-            <button
-              onClick={() => setShowAlertsModal(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-white border rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              <Bell className="w-4 h-4" />
-              Configurar Alertas
-            </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-white border rounded-lg hover:bg-gray-50 transition-colors text-red-600">
-              <Trash2 className="w-4 h-4" />
-              Limpiar Logs Antiguos
-            </button>
+          {/* Descripción */}
+          <p className="text-xl md:text-2xl text-orange-100 max-w-3xl leading-relaxed">
+            Monitorea y audita tus <span className="font-bold text-white px-2 py-1 bg-white/20 rounded-lg backdrop-blur-sm">automatizaciones</span>
+          </p>
+
+          {/* Indicadores pills */}
+          <div className="mt-8 flex flex-wrap gap-4">
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
+              <CheckCircle className="w-5 h-5 text-green-300" />
+              <span className="text-sm font-semibold text-white">{stats.successful} Exitosas</span>
+            </div>
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
+              <XCircle className="w-5 h-5 text-red-300" />
+              <span className="text-sm font-semibold text-white">{stats.failed} Fallidas</span>
+            </div>
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
+              <TrendingUp className="w-5 h-5 text-emerald-300" />
+              <span className="text-sm font-semibold text-white">{stats.successRate.toFixed(1)}% Tasa de Éxito</span>
+            </div>
           </div>
         </div>
       </motion.div>
 
-      {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+      {/* ESTADÍSTICAS RÁPIDAS */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {/* Ejecuciones Hoy */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.1 }}
-          className="bg-white p-6 rounded-xl shadow-md border border-gray-100"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+          whileHover={{ scale: 1.03, y: -8 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
         >
-          <div className="flex items-center gap-3 mb-2">
-            <Activity className="w-5 h-5 text-purple-600" />
-            <span className="text-gray-600 text-sm font-medium">Total Ejecuciones</span>
+          {/* Shimmer effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
+
+          {/* Decoración de fondo */}
+          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-amber-500 to-orange-600 opacity-5 rounded-full blur-2xl"></div>
+
+          <div className="relative z-10">
+            {/* Icono */}
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300">
+              <Calendar className="w-8 h-8" />
+            </div>
+
+            {/* Título */}
+            <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">
+              Ejecuciones Hoy
+            </p>
+
+            {/* Valor */}
+            <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 mb-3">
+              {todayStats}
+            </p>
+
+            {/* Barra decorativa */}
+            <div className="mt-4 w-full h-1 bg-gray-100 rounded-full overflow-hidden">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: '75%' }}
+                transition={{ delay: 0.6, duration: 1 }}
+                className="h-full bg-gradient-to-r from-amber-500 to-orange-600 rounded-full"
+              ></motion.div>
+            </div>
           </div>
-          <p className="text-3xl font-bold text-gray-900">{stats.total}</p>
         </motion.div>
 
+        {/* Tasa de Éxito */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-          className="bg-white p-6 rounded-xl shadow-md border border-green-100"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          whileHover={{ scale: 1.03, y: -8 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
         >
-          <div className="flex items-center gap-3 mb-2">
-            <CheckCircle className="w-5 h-5 text-green-600" />
-            <span className="text-gray-600 text-sm font-medium">Exitosas</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
+          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-green-500 to-emerald-600 opacity-5 rounded-full blur-2xl"></div>
+
+          <div className="relative z-10">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300">
+              <BarChart3 className="w-8 h-8" />
+            </div>
+
+            <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">
+              Tasa de Éxito
+            </p>
+
+            <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-600 mb-3">
+              {stats.successRate.toFixed(1)}%
+            </p>
+
+            <div className="flex items-center gap-2">
+              <div className="p-1 bg-green-50 rounded-lg">
+                <ArrowUpRight className="w-4 h-4 text-green-600" />
+              </div>
+              <span className="text-sm font-bold text-green-600">+2.3%</span>
+              <span className="text-xs text-gray-500 font-medium">vs mes anterior</span>
+            </div>
+
+            <div className="mt-4 w-full h-1 bg-gray-100 rounded-full overflow-hidden">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${stats.successRate}%` }}
+                transition={{ delay: 0.7, duration: 1 }}
+                className="h-full bg-gradient-to-r from-green-500 to-emerald-600 rounded-full"
+              ></motion.div>
+            </div>
           </div>
-          <p className="text-3xl font-bold text-green-600">{stats.successful}</p>
         </motion.div>
 
+        {/* Errores Este Mes */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3 }}
-          className="bg-white p-6 rounded-xl shadow-md border border-red-100"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+          whileHover={{ scale: 1.03, y: -8 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
         >
-          <div className="flex items-center gap-3 mb-2">
-            <XCircle className="w-5 h-5 text-red-600" />
-            <span className="text-gray-600 text-sm font-medium">Fallidas</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
+          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-red-500 to-pink-600 opacity-5 rounded-full blur-2xl"></div>
+
+          <div className="relative z-10">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-500 to-pink-600 flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300">
+              <AlertTriangle className="w-8 h-8" />
+            </div>
+
+            <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">
+              Errores Este Mes
+            </p>
+
+            <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-pink-600 mb-3">
+              {monthStats}
+            </p>
+
+            <div className="flex items-center gap-2">
+              <div className="p-1 bg-red-50 rounded-lg">
+                <TrendingDown className="w-4 h-4 text-red-600" />
+              </div>
+              <span className="text-sm font-bold text-red-600">-5.1%</span>
+              <span className="text-xs text-gray-500 font-medium">vs mes anterior</span>
+            </div>
+
+            <div className="mt-4 w-full h-1 bg-gray-100 rounded-full overflow-hidden">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: '35%' }}
+                transition={{ delay: 0.8, duration: 1 }}
+                className="h-full bg-gradient-to-r from-red-500 to-pink-600 rounded-full"
+              ></motion.div>
+            </div>
           </div>
-          <p className="text-3xl font-bold text-red-600">{stats.failed}</p>
         </motion.div>
 
+        {/* Tiempo Promedio de Ejecución */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4 }}
-          className="bg-white p-6 rounded-xl shadow-md border border-blue-100"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+          whileHover={{ scale: 1.03, y: -8 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
         >
-          <div className="flex items-center gap-3 mb-2">
-            <BarChart3 className="w-5 h-5 text-blue-600" />
-            <span className="text-gray-600 text-sm font-medium">Tasa de Éxito</span>
-          </div>
-          <p className={`text-3xl font-bold ${stats.successRate >= 90 ? 'text-green-600' : stats.successRate >= 70 ? 'text-yellow-600' : 'text-red-600'}`}>
-            {stats.successRate.toFixed(1)}%
-          </p>
-        </motion.div>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
+          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-purple-500 to-indigo-600 opacity-5 rounded-full blur-2xl"></div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5 }}
-          className="bg-white p-6 rounded-xl shadow-md border border-purple-100"
-        >
-          <div className="flex items-center gap-3 mb-2">
-            <Clock className="w-5 h-5 text-purple-600" />
-            <span className="text-gray-600 text-sm font-medium">Tiempo Promedio</span>
+          <div className="relative z-10">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300">
+              <Timer className="w-8 h-8" />
+            </div>
+
+            <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">
+              Tiempo Promedio
+            </p>
+
+            <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600 mb-3">
+              {formatDuration(stats.avgDuration)}
+            </p>
+
+            <div className="flex items-center gap-2">
+              <div className="p-1 bg-purple-50 rounded-lg">
+                <Zap className="w-4 h-4 text-purple-600" />
+              </div>
+              <span className="text-sm font-bold text-purple-600">Optimizado</span>
+            </div>
+
+            <div className="mt-4 w-full h-1 bg-gray-100 rounded-full overflow-hidden">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: '60%' }}
+                transition={{ delay: 0.9, duration: 1 }}
+                className="h-full bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full"
+              ></motion.div>
+            </div>
           </div>
-          <p className="text-3xl font-bold text-gray-900">{formatDuration(stats.avgDuration)}</p>
         </motion.div>
       </div>
 
-      {/* Chart */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-        className="bg-white p-6 rounded-xl shadow-md mb-6"
-      >
-        <h2 className="text-xl font-bold mb-4 text-gray-800">Ejecuciones - Últimos 30 Días</h2>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-            <XAxis dataKey="date" stroke="#666" style={{ fontSize: 12 }} />
-            <YAxis stroke="#666" style={{ fontSize: 12 }} />
-            <Tooltip
-              contentStyle={{ backgroundColor: '#fff', border: '1px solid #ddd', borderRadius: '8px' }}
-            />
-            <Legend />
-            <Line type="monotone" dataKey="total" stroke="#8b5cf6" strokeWidth={2} name="Total" dot={{ r: 3 }} />
-            <Line type="monotone" dataKey="successful" stroke="#10b981" strokeWidth={2} name="Exitosas" dot={{ r: 3 }} />
-            <Line type="monotone" dataKey="failed" stroke="#ef4444" strokeWidth={2} name="Fallidas" dot={{ r: 3 }} />
-          </LineChart>
-        </ResponsiveContainer>
-      </motion.div>
-
-      {/* Active Executions */}
-      {activeExecutions.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-xl shadow-lg mb-6 text-white"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <Play className="w-6 h-6" />
-            <h2 className="text-xl font-bold">Ejecuciones Activas ({activeExecutions.length})</h2>
-          </div>
-          <div className="space-y-3">
-            {activeExecutions.map(exec => (
-              <div key={exec.id} className="bg-white/10 backdrop-blur-sm p-4 rounded-lg">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-3">
-                    <RefreshCw className="w-4 h-4 animate-spin" />
-                    <span className="font-medium">{exec.flowName}</span>
-                    {exec.clientName && <span className="text-sm opacity-90">→ {exec.clientName}</span>}
-                  </div>
-                  <span className="text-sm opacity-90">
-                    {formatDuration(Date.now() - exec.timestamp.getTime())}
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="flex-1 bg-white/20 rounded-full h-2 overflow-hidden">
-                    <motion.div
-                      className="bg-white h-full"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${(exec.stepsCompleted / exec.totalSteps) * 100}%` }}
-                      transition={{ duration: 0.5 }}
-                    />
-                  </div>
-                  <span className="text-sm opacity-90">
-                    Paso {exec.stepsCompleted} de {exec.totalSteps}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-      )}
-
-      {/* Error Analysis */}
+      {/* ANÁLISIS DE ERRORES */}
       {errorAnalysis.length > 0 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white p-6 rounded-xl shadow-md mb-6"
+          transition={{ delay: 0.5 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 mb-8 relative overflow-hidden"
         >
-          <div className="flex items-center gap-3 mb-4">
-            <AlertTriangle className="w-6 h-6 text-red-600" />
-            <h2 className="text-xl font-bold text-gray-800">Errores Recurrentes</h2>
-          </div>
-          <div className="space-y-3">
-            {errorAnalysis.map((error, idx) => (
-              <div key={idx} className="flex items-center justify-between p-4 bg-red-50 border border-red-200 rounded-lg">
-                <div className="flex-1">
-                  <p className="font-medium text-gray-900">{error.error}</p>
-                  <p className="text-sm text-gray-600 mt-1">
-                    {error.flows.join(', ')} • Última vez: {error.lastOccurrence.toLocaleString('es-ES')}
-                  </p>
+          <div className="absolute -right-20 -top-20 w-64 h-64 bg-gradient-to-br from-red-200 to-pink-200 rounded-full blur-3xl opacity-20"></div>
+
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-gradient-to-br from-red-500 to-pink-600 rounded-2xl shadow-xl">
+                  <AlertTriangle className="w-6 h-6 text-white" />
                 </div>
-                <div className="flex items-center gap-4">
-                  <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full font-bold">
-                    {error.count}x
-                  </span>
-                  <button className="text-purple-600 hover:text-purple-800 font-medium text-sm">
-                    Ver Ocurrencias →
-                  </button>
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">Análisis de Errores</h2>
+                  <p className="text-sm text-gray-600">Errores recurrentes y sugerencias</p>
                 </div>
               </div>
-            ))}
+            </div>
+
+            <div className="space-y-3">
+              {errorAnalysis.map((error, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.6 + idx * 0.1 }}
+                  className="flex items-center justify-between p-4 bg-gradient-to-r from-red-50 to-pink-50 border-2 border-red-200 rounded-2xl hover:shadow-lg transition-all duration-300 group"
+                >
+                  <div className="flex-1">
+                    <p className="font-bold text-gray-900 mb-1">{error.error}</p>
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <span className="px-2 py-1 bg-red-100 rounded-lg font-medium">{error.flows.length} flujos afectados</span>
+                      <span>•</span>
+                      <span>Última vez: {error.lastOccurrence.toLocaleDateString('es-ES')}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="text-center">
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-500 to-pink-600 flex items-center justify-center text-white shadow-xl">
+                        <span className="text-xl font-bold">{error.count}</span>
+                      </div>
+                      <span className="text-xs text-gray-600 font-medium">ocurrencias</span>
+                    </div>
+                    <button className="px-4 py-2 bg-gradient-to-br from-red-500 to-pink-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300 group-hover:scale-105">
+                      Resolver →
+                    </button>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Automatizaciones con más fallos */}
+            {mostFailedFlows.length > 0 && (
+              <div className="mt-6 pt-6 border-t-2 border-gray-200">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Automatizaciones con Más Fallos</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {mostFailedFlows.map((flow, idx) => (
+                    <div key={idx} className="p-4 bg-white rounded-2xl border-2 border-red-100 shadow-md">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Zap className="w-4 h-4 text-red-600" />
+                        <span className="font-bold text-gray-900 text-sm truncate">{flow.name}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-2xl font-bold text-red-600">{flow.failed}</span>
+                        <span className="text-xs text-gray-600">de {flow.total} ejecuciones</span>
+                      </div>
+                      <div className="mt-2 w-full h-2 bg-red-100 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-red-500 to-pink-600 rounded-full"
+                          style={{ width: `${(flow.failed / flow.total) * 100}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </motion.div>
       )}
+
+      {/* MÉTRICAS TEMPORALES */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6 }}
+        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 mb-8 relative overflow-hidden"
+      >
+        <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-gradient-to-br from-amber-200 to-orange-200 rounded-full blur-3xl opacity-20"></div>
+
+        <div className="relative z-10">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-3 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl shadow-xl">
+              <TrendingUp className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">Métricas Temporales</h2>
+              <p className="text-sm text-gray-600">Tendencias de ejecución - Últimos 30 días</p>
+            </div>
+          </div>
+
+          <ResponsiveContainer width="100%" height={350}>
+            <AreaChart data={chartData}>
+              <defs>
+                <linearGradient id="colorTotal" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.3}/>
+                  <stop offset="95%" stopColor="#f59e0b" stopOpacity={0}/>
+                </linearGradient>
+                <linearGradient id="colorSuccess" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
+                  <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                </linearGradient>
+                <linearGradient id="colorFailed" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3}/>
+                  <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis dataKey="date" stroke="#666" style={{ fontSize: 12 }} />
+              <YAxis stroke="#666" style={{ fontSize: 12 }} />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: '#fff',
+                  border: '2px solid #f59e0b',
+                  borderRadius: '12px',
+                  boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+                }}
+              />
+              <Legend />
+              <Area type="monotone" dataKey="total" stroke="#f59e0b" strokeWidth={3} fillOpacity={1} fill="url(#colorTotal)" name="Total" />
+              <Area type="monotone" dataKey="successful" stroke="#10b981" strokeWidth={3} fillOpacity={1} fill="url(#colorSuccess)" name="Exitosas" />
+              <Area type="monotone" dataKey="failed" stroke="#ef4444" strokeWidth={3} fillOpacity={1} fill="url(#colorFailed)" name="Fallidas" />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      </motion.div>
 
       {/* Filters */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="bg-white p-4 rounded-xl shadow-md mb-6"
+        transition={{ delay: 0.7 }}
+        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 mb-8"
       >
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-4 flex-wrap gap-4">
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center gap-2 text-purple-600 font-medium hover:text-purple-800"
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300"
           >
             <Filter className="w-5 h-5" />
             Filtros Avanzados
@@ -632,15 +801,32 @@ const HistorialFlujosPage: React.FC = () => {
           </button>
 
           {/* Search */}
-          <div className="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-lg border flex-1 max-w-md ml-4">
+          <div className="flex items-center gap-2 bg-gray-50 px-4 py-3 rounded-2xl border-2 border-gray-200 flex-1 max-w-md hover:border-amber-500 transition-colors duration-300">
             <Search className="w-5 h-5 text-gray-400" />
             <input
               type="text"
               placeholder="Buscar por ID, flujo, cliente, error..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-1 bg-transparent outline-none text-gray-900"
+              className="flex-1 bg-transparent outline-none text-gray-900 placeholder-gray-400"
             />
+          </div>
+
+          {/* Date Range Selector */}
+          <div className="flex gap-2">
+            {dateRanges.slice(0, 3).map(range => (
+              <button
+                key={range.label}
+                onClick={() => setSelectedDateRange(range)}
+                className={`px-4 py-2 rounded-xl font-semibold transition-all duration-300 ${
+                  selectedDateRange.label === range.label
+                    ? 'bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-xl'
+                    : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200'
+                }`}
+              >
+                {range.label}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -650,14 +836,14 @@ const HistorialFlujosPage: React.FC = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t"
+              className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t-2 border-gray-200"
             >
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Estado</label>
+                <label className="block text-sm font-bold text-gray-700 mb-2">Estado</label>
                 <select
                   value={selectedStatus}
                   onChange={(e) => setSelectedStatus(e.target.value as any)}
-                  className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-amber-100 focus:border-amber-500 outline-none transition-all duration-300"
                 >
                   <option value="all">Todos</option>
                   <option value="success">Exitoso</option>
@@ -668,11 +854,11 @@ const HistorialFlujosPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Flujo</label>
+                <label className="block text-sm font-bold text-gray-700 mb-2">Flujo</label>
                 <select
                   value={selectedFlow}
                   onChange={(e) => setSelectedFlow(e.target.value)}
-                  className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-amber-100 focus:border-amber-500 outline-none transition-all duration-300"
                 >
                   <option value="all">Todos los flujos</option>
                   {uniqueFlows.map(flow => (
@@ -687,8 +873,9 @@ const HistorialFlujosPage: React.FC = () => {
                     setSelectedStatus('all');
                     setSelectedFlow('all');
                     setSearchQuery('');
+                    setSelectedDateRange(dateRanges[2]);
                   }}
-                  className="flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors"
+                  className="flex-1 px-4 py-3 bg-gray-100 hover:bg-gray-200 rounded-2xl font-bold transition-colors duration-300"
                 >
                   Limpiar Filtros
                 </button>
@@ -698,105 +885,151 @@ const HistorialFlujosPage: React.FC = () => {
         </AnimatePresence>
       </motion.div>
 
-      {/* Executions Table */}
+      {/* LISTA DE EJECUCIONES */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-xl shadow-md overflow-hidden"
+        transition={{ delay: 0.8 }}
+        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl overflow-hidden border border-white/50 mb-8"
       >
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50 border-b-2 border-gray-200">
-              <tr>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">ID</th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Timestamp</th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Flujo</th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Trigger</th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Cliente</th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Estado</th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Duración</th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Pasos</th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Acción</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {paginatedExecutions.map((exec) => (
-                <motion.tr
-                  key={exec.id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="hover:bg-purple-50 transition-colors"
-                >
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="text-sm font-mono text-gray-900">{exec.id}</span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm">
-                      <div className="font-medium text-gray-900">
-                        {exec.timestamp.toLocaleDateString('es-ES')}
+        <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 p-6 relative overflow-hidden">
+          {/* Pattern de fondo */}
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3) 1px, transparent 1px)`,
+              backgroundSize: '20px 20px'
+            }}></div>
+          </div>
+
+          <h3 className="text-2xl font-bold text-white flex items-center gap-3 relative z-10">
+            <div className="p-2 bg-white/20 rounded-xl backdrop-blur-sm">
+              <Activity className="w-6 h-6" />
+            </div>
+            Timeline de Ejecuciones
+            <span className="ml-auto text-sm font-normal bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm">
+              {filteredExecutions.length} resultados
+            </span>
+          </h3>
+        </div>
+
+        <div className="p-6">
+          <div className="space-y-3">
+            {paginatedExecutions.map((exec, index) => (
+              <motion.div
+                key={exec.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.03, duration: 0.4 }}
+                className="relative flex items-center gap-4 p-4 rounded-2xl hover:bg-gradient-to-r hover:from-orange-50 hover:to-red-50 transition-all duration-300 border-2 border-transparent hover:border-orange-200 hover:shadow-lg group cursor-pointer"
+                onClick={() => setSelectedExecution(exec)}
+              >
+                {/* Timeline dot */}
+                <div className="flex-shrink-0 flex flex-col items-center">
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 ${
+                    exec.status === 'success' ? 'bg-gradient-to-br from-green-400 to-emerald-600' :
+                    exec.status === 'failed' ? 'bg-gradient-to-br from-red-400 to-pink-600' :
+                    exec.status === 'in_progress' ? 'bg-gradient-to-br from-blue-400 to-indigo-600' :
+                    'bg-gradient-to-br from-gray-400 to-gray-600'
+                  }`}>
+                    <span className="text-white">{getStatusIcon(exec.status)}</span>
+                  </div>
+
+                  {/* Línea vertical */}
+                  {index < paginatedExecutions.length - 1 && (
+                    <div className="w-0.5 h-8 bg-gradient-to-b from-gray-200 to-transparent mt-2"></div>
+                  )}
+                </div>
+
+                {/* Contenido */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-1">
+                        <span className="font-bold text-gray-900 text-lg">{exec.flowName}</span>
+                        {getStatusBadge(exec.status)}
                       </div>
-                      <div className="text-gray-500">
-                        {exec.timestamp.toLocaleTimeString('es-ES')}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-2">
-                      <Zap className="w-4 h-4 text-purple-600" />
-                      <span className="text-sm font-medium text-gray-900">{exec.flowName}</span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="text-sm text-gray-600">{exec.triggerDetails}</div>
-                  </td>
-                  <td className="px-6 py-4">
-                    {exec.clientName ? (
-                      <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xs font-bold">
-                          {exec.clientAvatar}
+                      <div className="flex items-center gap-3 text-sm text-gray-600">
+                        <div className="flex items-center gap-1">
+                          <Calendar className="w-4 h-4" />
+                          <span>{exec.timestamp.toLocaleDateString('es-ES')}</span>
                         </div>
-                        <span className="text-sm text-gray-900">{exec.clientName}</span>
+                        <span>•</span>
+                        <div className="flex items-center gap-1">
+                          <Clock className="w-4 h-4" />
+                          <span>{exec.timestamp.toLocaleTimeString('es-ES')}</span>
+                        </div>
+                        <span>•</span>
+                        <div className="flex items-center gap-1">
+                          <Timer className="w-4 h-4" />
+                          <span>{formatDuration(exec.duration)}</span>
+                        </div>
+                        {exec.clientName && (
+                          <>
+                            <span>•</span>
+                            <div className="flex items-center gap-2">
+                              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-400 to-pink-600 text-white flex items-center justify-center text-xs font-bold">
+                                {exec.clientAvatar}
+                              </div>
+                              <span>{exec.clientName}</span>
+                            </div>
+                          </>
+                        )}
                       </div>
-                    ) : (
-                      <span className="text-sm text-gray-400">N/A</span>
-                    )}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {getStatusBadge(exec.status)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="text-sm text-gray-900">{formatDuration(exec.duration)}</span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="text-sm text-gray-900">
-                      {exec.stepsCompleted} / {exec.totalSteps}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <button
-                      onClick={() => setSelectedExecution(exec)}
-                      className="px-3 py-1 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium"
-                    >
-                      Ver Detalles
-                    </button>
-                  </td>
-                </motion.tr>
-              ))}
-            </tbody>
-          </table>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <div className="text-right">
+                        <div className="text-sm text-gray-600 mb-1">Progreso</div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div
+                              className={`h-full rounded-full transition-all duration-500 ${
+                                exec.status === 'success' ? 'bg-gradient-to-r from-green-400 to-emerald-600' :
+                                exec.status === 'failed' ? 'bg-gradient-to-r from-red-400 to-pink-600' :
+                                'bg-gradient-to-r from-blue-400 to-indigo-600'
+                              }`}
+                              style={{ width: `${(exec.stepsCompleted / exec.totalSteps) * 100}%` }}
+                            ></div>
+                          </div>
+                          <span className="text-sm font-bold text-gray-900">
+                            {exec.stepsCompleted}/{exec.totalSteps}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {exec.error && (
+                    <div className="mt-2 p-2 bg-red-50 border-l-4 border-red-500 rounded text-sm text-red-800">
+                      <div className="flex items-center gap-2">
+                        <AlertTriangle className="w-4 h-4 flex-shrink-0" />
+                        <span className="font-medium">{exec.error}</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Ver detalles button */}
+                <button className="flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-xl font-semibold opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-105">
+                  Ver Detalles
+                  <ExternalLink className="w-4 h-4" />
+                </button>
+              </motion.div>
+            ))}
+          </div>
         </div>
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="px-6 py-4 border-t flex items-center justify-between">
-            <div className="text-sm text-gray-600">
+          <div className="px-6 py-4 border-t-2 border-gray-200 flex items-center justify-between bg-gray-50">
+            <div className="text-sm font-medium text-gray-600">
               Mostrando {(currentPage - 1) * itemsPerPage + 1} - {Math.min(currentPage * itemsPerPage, filteredExecutions.length)} de {filteredExecutions.length}
             </div>
             <div className="flex gap-2">
               <button
                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className="px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                className="px-4 py-2 border-2 border-gray-200 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-amber-50 hover:border-amber-500 transition-all duration-300 font-semibold"
               >
                 Anterior
               </button>
@@ -807,10 +1040,10 @@ const HistorialFlujosPage: React.FC = () => {
                     <button
                       key={page}
                       onClick={() => setCurrentPage(page)}
-                      className={`w-10 h-10 rounded-lg font-medium ${
+                      className={`w-10 h-10 rounded-xl font-bold transition-all duration-300 ${
                         currentPage === page
-                          ? 'bg-purple-600 text-white'
-                          : 'hover:bg-gray-50'
+                          ? 'bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-lg'
+                          : 'hover:bg-gray-100 text-gray-700'
                       }`}
                     >
                       {page}
@@ -821,7 +1054,7 @@ const HistorialFlujosPage: React.FC = () => {
               <button
                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
-                className="px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                className="px-4 py-2 border-2 border-gray-200 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-amber-50 hover:border-amber-500 transition-all duration-300 font-semibold"
               >
                 Siguiente
               </button>
@@ -830,7 +1063,7 @@ const HistorialFlujosPage: React.FC = () => {
         )}
       </motion.div>
 
-      {/* Execution Details Modal */}
+      {/* MODAL DE DETALLES DE EJECUCIÓN */}
       <AnimatePresence>
         {selectedExecution && (
           <motion.div
@@ -845,115 +1078,137 @@ const HistorialFlujosPage: React.FC = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
+              className="bg-white rounded-3xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-hidden"
             >
               {/* Modal Header */}
-              <div className="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="text-2xl font-bold">{selectedExecution.id}</span>
-                      {getStatusBadge(selectedExecution.status)}
-                    </div>
-                    <h3 className="text-xl font-medium flex items-center gap-2">
-                      <Zap className="w-5 h-5" />
-                      {selectedExecution.flowName}
-                    </h3>
-                    <p className="text-purple-100 mt-1">
-                      {selectedExecution.timestamp.toLocaleString('es-ES')}
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => setSelectedExecution(null)}
-                    className="text-white hover:bg-white/20 p-2 rounded-lg transition-colors"
-                  >
-                    <X className="w-6 h-6" />
-                  </button>
+              <div className="bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 text-white p-6 relative overflow-hidden">
+                {/* Pattern de fondo */}
+                <div className="absolute inset-0 opacity-20">
+                  <div className="absolute inset-0" style={{
+                    backgroundImage: `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3) 1px, transparent 1px)`,
+                    backgroundSize: '20px 20px'
+                  }}></div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-4">
-                  <div>
-                    <p className="text-purple-200 text-sm">Duración</p>
-                    <p className="text-lg font-bold">{formatDuration(selectedExecution.duration)}</p>
+                <div className="relative z-10">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="text-2xl font-bold font-mono">{selectedExecution.id}</span>
+                        {getStatusBadge(selectedExecution.status)}
+                      </div>
+                      <h3 className="text-2xl font-bold flex items-center gap-2">
+                        <Zap className="w-6 h-6" />
+                        {selectedExecution.flowName}
+                      </h3>
+                      <p className="text-orange-100 mt-1">
+                        {selectedExecution.timestamp.toLocaleString('es-ES')}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => setSelectedExecution(null)}
+                      className="text-white hover:bg-white/20 p-2 rounded-xl transition-colors"
+                    >
+                      <X className="w-6 h-6" />
+                    </button>
                   </div>
-                  <div>
-                    <p className="text-purple-200 text-sm">Pasos Completados</p>
-                    <p className="text-lg font-bold">{selectedExecution.stepsCompleted} / {selectedExecution.totalSteps}</p>
-                  </div>
-                  <div>
-                    <p className="text-purple-200 text-sm">Trigger</p>
-                    <p className="text-lg font-bold capitalize">{selectedExecution.trigger}</p>
+
+                  <div className="grid grid-cols-4 gap-4">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/20">
+                      <p className="text-orange-200 text-sm">Duración</p>
+                      <p className="text-xl font-bold">{formatDuration(selectedExecution.duration)}</p>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/20">
+                      <p className="text-orange-200 text-sm">Pasos</p>
+                      <p className="text-xl font-bold">{selectedExecution.stepsCompleted} / {selectedExecution.totalSteps}</p>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/20">
+                      <p className="text-orange-200 text-sm">Trigger</p>
+                      <p className="text-xl font-bold capitalize">{selectedExecution.trigger}</p>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/20">
+                      <p className="text-orange-200 text-sm">Cliente</p>
+                      <p className="text-xl font-bold">{selectedExecution.clientName || 'N/A'}</p>
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* Modal Content */}
-              <div className="p-6 overflow-y-auto max-h-[calc(90vh-250px)]">
+              <div className="p-6 overflow-y-auto max-h-[calc(90vh-280px)]">
                 {/* Error Section */}
                 {selectedExecution.error && (
-                  <div className="mb-6 p-4 bg-red-50 border-2 border-red-200 rounded-lg">
+                  <div className="mb-6 p-6 bg-gradient-to-r from-red-50 to-pink-50 border-2 border-red-300 rounded-2xl">
                     <div className="flex items-start gap-3 mb-3">
-                      <AlertTriangle className="w-6 h-6 text-red-600 flex-shrink-0 mt-1" />
+                      <div className="p-2 bg-red-500 rounded-xl">
+                        <AlertTriangle className="w-6 h-6 text-white flex-shrink-0" />
+                      </div>
                       <div className="flex-1">
-                        <h4 className="font-bold text-red-900 mb-2">Error Detectado</h4>
+                        <h4 className="font-bold text-red-900 text-lg mb-2">Error Detectado</h4>
                         <p className="text-red-800 font-medium mb-3">{selectedExecution.error}</p>
                         {selectedExecution.errorStack && (
-                          <details className="mt-2">
-                            <summary className="cursor-pointer text-sm text-red-700 font-medium hover:text-red-900">
-                              Ver Stack Trace
+                          <details className="mt-3">
+                            <summary className="cursor-pointer text-sm text-red-700 font-bold hover:text-red-900">
+                              Ver Stack Trace Completo
                             </summary>
-                            <pre className="mt-2 p-3 bg-red-100 rounded text-xs overflow-x-auto text-red-900 font-mono">
+                            <pre className="mt-3 p-4 bg-red-100 rounded-xl text-xs overflow-x-auto text-red-900 font-mono border-2 border-red-200">
                               {selectedExecution.errorStack}
                             </pre>
                           </details>
                         )}
                       </div>
                     </div>
-                    <button className="w-full mt-3 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium">
+                    <button className="w-full mt-3 px-4 py-3 bg-gradient-to-br from-red-500 to-pink-600 text-white rounded-xl hover:shadow-xl transition-all duration-300 font-bold flex items-center justify-center gap-2">
+                      <RefreshCw className="w-5 h-5" />
                       Reintentar Ejecución
                     </button>
                   </div>
                 )}
 
-                {/* Timeline */}
+                {/* Timeline de Pasos */}
                 <div className="mb-6">
-                  <h4 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <Clock className="w-5 h-5 text-purple-600" />
-                    Timeline de Ejecución
+                  <h4 className="font-bold text-gray-900 text-xl mb-4 flex items-center gap-2">
+                    <div className="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                      <Clock className="w-5 h-5 text-white" />
+                    </div>
+                    Timeline de Pasos Ejecutados
                   </h4>
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     {selectedExecution.steps.map((step, idx) => (
                       <div key={idx} className="flex gap-4">
                         <div className="flex flex-col items-center">
-                          <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                            step.status === 'success' ? 'bg-green-100 text-green-600' :
-                            step.status === 'failed' ? 'bg-red-100 text-red-600' :
-                            'bg-gray-100 text-gray-400'
+                          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg ${
+                            step.status === 'success' ? 'bg-gradient-to-br from-green-400 to-emerald-600' :
+                            step.status === 'failed' ? 'bg-gradient-to-br from-red-400 to-pink-600' :
+                            'bg-gradient-to-br from-gray-300 to-gray-500'
                           }`}>
-                            {getStatusIcon(step.status === 'failed' ? 'failed' : step.status === 'success' ? 'success' : 'canceled')}
+                            <span className="text-white font-bold">{step.stepNumber}</span>
                           </div>
                           {idx < selectedExecution.steps.length - 1 && (
-                            <div className="w-0.5 h-12 bg-gray-200 my-1" />
+                            <div className="w-1 h-16 bg-gradient-to-b from-gray-300 to-gray-200 my-2 rounded-full" />
                           )}
                         </div>
-                        <div className={`flex-1 p-4 rounded-lg border-2 ${
-                          step.status === 'success' ? 'bg-green-50 border-green-200' :
-                          step.status === 'failed' ? 'bg-red-50 border-red-200' :
-                          'bg-gray-50 border-gray-200'
+                        <div className={`flex-1 p-4 rounded-2xl border-2 ${
+                          step.status === 'success' ? 'bg-gradient-to-r from-green-50 to-emerald-50 border-green-300' :
+                          step.status === 'failed' ? 'bg-gradient-to-r from-red-50 to-pink-50 border-red-300' :
+                          'bg-gray-50 border-gray-300'
                         }`}>
                           <div className="flex items-center justify-between mb-2">
-                            <span className="font-bold text-gray-900">Paso {step.stepNumber}: {step.nodeName}</span>
-                            <span className="text-sm text-gray-600">{formatDuration(step.duration)}</span>
+                            <div className="flex items-center gap-2">
+                              {getStatusIcon(step.status === 'failed' ? 'failed' : step.status === 'success' ? 'success' : 'canceled')}
+                              <span className="font-bold text-gray-900">{step.nodeName}</span>
+                            </div>
+                            <span className="text-sm font-bold text-gray-600">{formatDuration(step.duration)}</span>
                           </div>
                           <div className="flex items-center gap-4 text-sm text-gray-600">
-                            <span className="capitalize">{step.nodeType}</span>
+                            <span className="px-2 py-1 bg-white rounded-lg font-medium capitalize">{step.nodeType}</span>
                             <span>•</span>
                             <span>{step.timestamp.toLocaleTimeString('es-ES')}</span>
                           </div>
                           {step.output && (
-                            <details className="mt-2">
-                              <summary className="cursor-pointer text-sm text-purple-600 font-medium">Ver Output</summary>
-                              <pre className="mt-2 p-2 bg-white rounded text-xs overflow-x-auto">
+                            <details className="mt-3">
+                              <summary className="cursor-pointer text-sm text-amber-600 font-bold hover:text-amber-800">Ver Output del Paso</summary>
+                              <pre className="mt-2 p-3 bg-white rounded-xl text-xs overflow-x-auto border-2 border-gray-200 font-mono">
                                 {JSON.stringify(step.output, null, 2)}
                               </pre>
                             </details>
@@ -967,41 +1222,53 @@ const HistorialFlujosPage: React.FC = () => {
                 {/* Payloads */}
                 <div className="grid grid-cols-2 gap-4 mb-6">
                   <div>
-                    <h4 className="font-bold text-gray-900 mb-3">Payload de Entrada</h4>
-                    <div className="bg-gray-50 border rounded-lg p-4">
-                      <pre className="text-xs overflow-x-auto">
+                    <h4 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
+                      <div className="p-1.5 bg-blue-500 rounded-lg">
+                        <Download className="w-4 h-4 text-white" />
+                      </div>
+                      Payload de Entrada
+                    </h4>
+                    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-2xl p-4">
+                      <pre className="text-xs overflow-x-auto font-mono text-gray-800">
                         {JSON.stringify(selectedExecution.inputPayload, null, 2)}
                       </pre>
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-900 mb-3">Payload de Salida</h4>
-                    <div className="bg-gray-50 border rounded-lg p-4">
-                      <pre className="text-xs overflow-x-auto">
+                    <h4 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
+                      <div className="p-1.5 bg-purple-500 rounded-lg">
+                        <Download className="w-4 h-4 text-white rotate-180" />
+                      </div>
+                      Payload de Salida
+                    </h4>
+                    <div className="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-200 rounded-2xl p-4">
+                      <pre className="text-xs overflow-x-auto font-mono text-gray-800">
                         {JSON.stringify(selectedExecution.outputPayload, null, 2)}
                       </pre>
                     </div>
                   </div>
                 </div>
 
-                {/* Logs */}
+                {/* Logs Técnicos */}
                 <div>
                   <h4 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
-                    <Terminal className="w-5 h-5 text-purple-600" />
-                    Logs Técnicos
+                    <div className="p-2 bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl">
+                      <Terminal className="w-5 h-5 text-white" />
+                    </div>
+                    Logs Técnicos Detallados
                   </h4>
-                  <div className="bg-gray-900 text-gray-100 rounded-lg p-4 font-mono text-sm max-h-60 overflow-y-auto">
+                  <div className="bg-gray-900 text-gray-100 rounded-2xl p-4 font-mono text-sm max-h-60 overflow-y-auto border-4 border-gray-800">
                     {selectedExecution.logs.map((log, idx) => (
-                      <div key={idx} className="mb-1">
+                      <div key={idx} className="mb-2 hover:bg-gray-800 p-1 rounded transition-colors">
                         <span className="text-gray-500">[{log.timestamp.toLocaleTimeString('es-ES')}]</span>
                         {' '}
                         <span className={
                           log.level === 'ERROR' ? 'text-red-400 font-bold' :
-                          log.level === 'WARNING' ? 'text-yellow-400' :
+                          log.level === 'WARNING' ? 'text-yellow-400 font-bold' :
                           log.level === 'INFO' ? 'text-blue-400' :
                           'text-gray-400'
                         }>
-                          {log.level}
+                          [{log.level}]
                         </span>
                         {' '}
                         <span>{log.message}</span>
@@ -1012,18 +1279,22 @@ const HistorialFlujosPage: React.FC = () => {
               </div>
 
               {/* Modal Footer */}
-              <div className="border-t p-4 flex gap-3">
+              <div className="border-t-2 border-gray-200 p-4 flex gap-3 bg-gray-50">
                 <button
                   onClick={() => setSelectedExecution(null)}
-                  className="flex-1 px-4 py-2 border rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                  className="flex-1 px-4 py-3 border-2 border-gray-300 rounded-2xl hover:bg-gray-100 transition-colors font-bold"
                 >
                   Cerrar
                 </button>
-                <button className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium">
+                <button className="flex items-center gap-2 px-4 py-3 bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-2xl hover:shadow-xl transition-all duration-300 font-bold">
+                  <Copy className="w-4 h-4" />
+                  Copiar ID
+                </button>
+                <button className="flex items-center gap-2 px-4 py-3 bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-2xl hover:shadow-xl transition-all duration-300 font-bold">
                   <Download className="w-4 h-4" />
                   Exportar Log
                 </button>
-                <button className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium">
+                <button className="flex items-center gap-2 px-4 py-3 bg-gradient-to-br from-purple-500 to-pink-600 text-white rounded-2xl hover:shadow-xl transition-all duration-300 font-bold">
                   <ExternalLink className="w-4 h-4" />
                   Ver Flujo
                 </button>
@@ -1048,17 +1319,19 @@ const HistorialFlujosPage: React.FC = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white rounded-xl shadow-2xl max-w-2xl w-full"
+              className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden"
             >
-              <div className="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-6 rounded-t-xl">
+              <div className="bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 text-white p-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <Bell className="w-6 h-6" />
+                    <div className="p-2 bg-white/20 rounded-xl backdrop-blur-sm">
+                      <Bell className="w-6 h-6" />
+                    </div>
                     <h3 className="text-2xl font-bold">Configurar Alertas</h3>
                   </div>
                   <button
                     onClick={() => setShowAlertsModal(false)}
-                    className="hover:bg-white/20 p-2 rounded-lg transition-colors"
+                    className="hover:bg-white/20 p-2 rounded-xl transition-colors"
                   >
                     <X className="w-6 h-6" />
                   </button>
@@ -1066,68 +1339,69 @@ const HistorialFlujosPage: React.FC = () => {
               </div>
 
               <div className="p-6 space-y-4">
-                <div className="p-4 border-2 border-purple-200 rounded-lg hover:border-purple-400 transition-colors cursor-pointer">
+                <div className="p-4 border-2 border-amber-200 rounded-2xl hover:border-amber-400 hover:shadow-lg transition-all duration-300 cursor-pointer bg-gradient-to-r from-amber-50 to-orange-50">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h4 className="font-bold text-gray-900">Tasa de Fallo Elevada</h4>
+                      <h4 className="font-bold text-gray-900 text-lg">Tasa de Fallo Elevada</h4>
                       <p className="text-sm text-gray-600">Alerta cuando la tasa de fallo supere el umbral</p>
                     </div>
-                    <input type="checkbox" className="w-5 h-5" />
+                    <input type="checkbox" className="w-6 h-6 rounded" defaultChecked />
                   </div>
                   <div className="mt-3 flex items-center gap-2">
-                    <input type="number" defaultValue="10" className="w-20 px-3 py-2 border rounded-lg" />
-                    <span className="text-sm text-gray-600">% de fallos</span>
+                    <input type="number" defaultValue="10" className="w-20 px-3 py-2 border-2 border-gray-200 rounded-xl focus:border-amber-500 outline-none" />
+                    <span className="text-sm text-gray-600 font-medium">% de fallos</span>
                   </div>
                 </div>
 
-                <div className="p-4 border-2 border-purple-200 rounded-lg hover:border-purple-400 transition-colors cursor-pointer">
+                <div className="p-4 border-2 border-amber-200 rounded-2xl hover:border-amber-400 hover:shadow-lg transition-all duration-300 cursor-pointer">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h4 className="font-bold text-gray-900">Flujo Inactivo</h4>
+                      <h4 className="font-bold text-gray-900 text-lg">Flujo Inactivo</h4>
                       <p className="text-sm text-gray-600">Alerta cuando un flujo no se ejecute por cierto tiempo</p>
                     </div>
-                    <input type="checkbox" className="w-5 h-5" />
+                    <input type="checkbox" className="w-6 h-6 rounded" />
                   </div>
                   <div className="mt-3 flex items-center gap-2">
-                    <input type="number" defaultValue="7" className="w-20 px-3 py-2 border rounded-lg" />
-                    <span className="text-sm text-gray-600">días sin ejecutarse</span>
+                    <input type="number" defaultValue="7" className="w-20 px-3 py-2 border-2 border-gray-200 rounded-xl focus:border-amber-500 outline-none" />
+                    <span className="text-sm text-gray-600 font-medium">días sin ejecutarse</span>
                   </div>
                 </div>
 
-                <div className="p-4 border-2 border-purple-200 rounded-lg hover:border-purple-400 transition-colors cursor-pointer">
+                <div className="p-4 border-2 border-amber-200 rounded-2xl hover:border-amber-400 hover:shadow-lg transition-all duration-300 cursor-pointer">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h4 className="font-bold text-gray-900">Duración Excesiva</h4>
+                      <h4 className="font-bold text-gray-900 text-lg">Duración Excesiva</h4>
                       <p className="text-sm text-gray-600">Alerta cuando una ejecución tarde demasiado</p>
                     </div>
-                    <input type="checkbox" className="w-5 h-5" />
+                    <input type="checkbox" className="w-6 h-6 rounded" />
                   </div>
                   <div className="mt-3 flex items-center gap-2">
-                    <input type="number" defaultValue="30" className="w-20 px-3 py-2 border rounded-lg" />
-                    <span className="text-sm text-gray-600">segundos</span>
+                    <input type="number" defaultValue="30" className="w-20 px-3 py-2 border-2 border-gray-200 rounded-xl focus:border-amber-500 outline-none" />
+                    <span className="text-sm text-gray-600 font-medium">segundos</span>
                   </div>
                 </div>
 
-                <div className="pt-4 border-t">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Canal de Notificación</label>
-                  <select className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 outline-none">
+                <div className="pt-4 border-t-2 border-gray-200">
+                  <label className="block text-sm font-bold text-gray-700 mb-2">Canal de Notificación</label>
+                  <select className="w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-amber-100 focus:border-amber-500 outline-none">
                     <option>Email</option>
                     <option>Notificación In-App</option>
                     <option>Webhook</option>
+                    <option>Slack</option>
                   </select>
                 </div>
               </div>
 
-              <div className="border-t p-4 flex gap-3">
+              <div className="border-t-2 border-gray-200 p-4 flex gap-3 bg-gray-50">
                 <button
                   onClick={() => setShowAlertsModal(false)}
-                  className="flex-1 px-4 py-2 border rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                  className="flex-1 px-4 py-3 border-2 border-gray-300 rounded-2xl hover:bg-gray-100 transition-colors font-bold"
                 >
                   Cancelar
                 </button>
                 <button
                   onClick={() => setShowAlertsModal(false)}
-                  className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium"
+                  className="flex-1 px-4 py-3 bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-2xl hover:shadow-xl transition-all duration-300 font-bold"
                 >
                   Guardar Configuración
                 </button>
@@ -1136,6 +1410,27 @@ const HistorialFlujosPage: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Floating Action Buttons */}
+      <div className="fixed bottom-8 right-8 flex flex-col gap-3">
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={() => setShowAlertsModal(true)}
+          className="p-4 bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-full shadow-2xl hover:shadow-amber-500/50 transition-all duration-300"
+          title="Configurar Alertas"
+        >
+          <Bell className="w-6 h-6" />
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          className="p-4 bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-full shadow-2xl hover:shadow-blue-500/50 transition-all duration-300"
+          title="Exportar Logs"
+        >
+          <Download className="w-6 h-6" />
+        </motion.button>
+      </div>
     </div>
   );
 };

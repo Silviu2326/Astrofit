@@ -376,6 +376,7 @@ const menuModules = [
     label: 'Tests A/B',
     icon: FlaskConical,
     items: [
+      { id: 'experimentos-ab', label: '🧪 Experimentos A/B', icon: FlaskConical },
       { id: 'experimentos', label: 'Experimentos', icon: FlaskConical },
       { id: 'resultados-test', label: 'Resultados Test', icon: BarChart3 },
       { id: 'historial-experimentos', label: 'Historial Experimentos', icon: History },

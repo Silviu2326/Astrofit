@@ -477,17 +477,47 @@ const StatCard: React.FC<{
   color: string;
 }> = ({ icon: Icon, titulo, valor, subtitulo, color }) => (
   <motion.div
-    whileHover={{ y: -4, boxShadow: '0 12px 24px rgba(0,0,0,0.15)' }}
-    className="bg-white rounded-xl p-6 shadow-md border border-gray-100"
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+    whileHover={{ scale: 1.03, y: -8 }}
+    className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
   >
-    <div className="flex items-start justify-between">
-      <div className="flex-1">
-        <p className="text-sm font-medium text-gray-600 mb-1">{titulo}</p>
-        <p className={`text-3xl font-bold ${color} mb-1`}>{valor}</p>
-        {subtitulo && <p className="text-xs text-gray-500">{subtitulo}</p>}
+    {/* Shimmer effect */}
+    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
+
+    {/* Decoración de fondo */}
+    <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-violet-500 to-fuchsia-600 opacity-5 rounded-full blur-2xl"></div>
+
+    <div className="relative z-10">
+      {/* Icono */}
+      <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${color.replace('text-', 'from-').replace('-600', '-500')} to-purple-600 flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300`}>
+        <Icon className="w-8 h-8" />
       </div>
-      <div className={`p-3 rounded-lg ${color.replace('text-', 'bg-').replace('-600', '-100')}`}>
-        <Icon className={`w-6 h-6 ${color}`} />
+
+      {/* Título */}
+      <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">
+        {titulo}
+      </p>
+
+      {/* Valor */}
+      <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 mb-3">
+        {valor}
+      </p>
+
+      {/* Subtitulo */}
+      {subtitulo && (
+        <p className="text-xs text-gray-500 font-medium">{subtitulo}</p>
+      )}
+
+      {/* Barra decorativa */}
+      <div className="mt-4 w-full h-1 bg-gray-100 rounded-full overflow-hidden">
+        <motion.div
+          initial={{ width: 0 }}
+          animate={{ width: '100%' }}
+          transition={{ delay: 0.5, duration: 1 }}
+          className={`h-full bg-gradient-to-r ${color.replace('text-', 'from-').replace('-600', '-500')} to-purple-600 rounded-full`}
+        ></motion.div>
       </div>
     </div>
   </motion.div>
@@ -541,115 +571,130 @@ const FlujoCard: React.FC<{
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
-      whileHover={{ y: -6, boxShadow: '0 16px 32px rgba(0,0,0,0.12)' }}
-      className="bg-white rounded-xl p-5 shadow-md border border-gray-100 hover:border-purple-200 transition-all"
+      whileHover={{ y: -6, scale: 1.02 }}
+      className="bg-white/80 backdrop-blur-xl rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 border border-white/50 relative overflow-hidden group"
     >
-      {/* Header */}
-      <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center gap-2">
-          <div className={`p-2 rounded-lg ${getTipoColor()}`}>
-            <TipoIcon className="w-5 h-5" />
+      {/* Shimmer effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
+
+      {/* Decoración de fondo */}
+      <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-violet-200 to-fuchsia-200 rounded-full blur-3xl opacity-20"></div>
+
+      <div className="relative z-10">
+        {/* Header */}
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <div className={`p-3 rounded-xl ${getTipoColor()} shadow-lg`}>
+              <TipoIcon className="w-6 h-6" />
+            </div>
+            <div>
+              <span className={`text-xs font-bold px-3 py-1.5 rounded-full ${getEstadoBadge()} shadow-sm`}>
+                {flujo.estado.toUpperCase()}
+              </span>
+            </div>
+          </div>
+          <button className="text-gray-400 hover:text-violet-600 transition-colors">
+            <MoreVertical className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Título y descripción */}
+        <h3 className="font-bold text-xl text-gray-800 mb-2">{flujo.nombre}</h3>
+        <p className="text-sm text-gray-600 mb-4 line-clamp-2">{flujo.descripcion}</p>
+
+        {/* Trigger badge */}
+        <div className="mb-4 inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-50 to-pink-50 rounded-full border border-purple-200">
+          <Zap className="w-4 h-4 text-purple-600" />
+          <span className="text-sm font-semibold text-purple-700">{flujo.triggerDescripcion}</span>
+        </div>
+
+        {/* Estadísticas */}
+        <div className="grid grid-cols-2 gap-3 mb-4 p-4 bg-gradient-to-br from-gray-50 to-purple-50/30 rounded-2xl border border-gray-100">
+          <div>
+            <p className="text-xs text-gray-600 font-semibold mb-1">Ejecuciones</p>
+            <p className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-purple-600">{flujo.ejecucionesTotales}</p>
           </div>
           <div>
-            <span className={`text-xs font-semibold px-2 py-1 rounded-full ${getEstadoBadge()}`}>
-              {flujo.estado.toUpperCase()}
-            </span>
+            <p className="text-xs text-gray-600 font-semibold mb-1">Tasa de Éxito</p>
+            <p className={`text-2xl font-bold ${flujo.tasaExito >= 90 ? 'text-green-600' : flujo.tasaExito >= 70 ? 'text-yellow-600' : 'text-red-600'}`}>
+              {flujo.tasaExito}%
+            </p>
+          </div>
+          <div>
+            <p className="text-xs text-gray-600 font-semibold mb-1">Clientes</p>
+            <p className="text-lg font-bold text-gray-800">{flujo.clientesProcesados}</p>
+          </div>
+          <div>
+            <p className="text-xs text-gray-600 font-semibold mb-1">Conversiones</p>
+            <p className="text-lg font-bold text-fuchsia-600">{flujo.conversionesGeneradas}</p>
           </div>
         </div>
-        <button className="text-gray-400 hover:text-gray-600">
-          <MoreVertical className="w-5 h-5" />
-        </button>
-      </div>
 
-      {/* Título y descripción */}
-      <h3 className="font-bold text-lg text-gray-800 mb-2">{flujo.nombre}</h3>
-      <p className="text-sm text-gray-600 mb-3 line-clamp-2">{flujo.descripcion}</p>
-
-      {/* Tipo de flujo */}
-      <div className="flex items-center gap-2 mb-3">
-        <span className={`text-xs font-medium px-3 py-1 rounded-full ${getTipoColor()}`}>
-          {flujo.tipo.toUpperCase()}
-        </span>
-        <span className="text-xs text-gray-500">• {flujo.triggerDescripcion}</span>
-      </div>
-
-      {/* Estadísticas */}
-      <div className="grid grid-cols-2 gap-3 mb-4 p-3 bg-gray-50 rounded-lg">
-        <div>
-          <p className="text-xs text-gray-500">Ejecuciones</p>
-          <p className="text-lg font-bold text-gray-800">{flujo.ejecucionesTotales}</p>
+        {/* Mini gráfico de progreso */}
+        <div className="mb-4">
+          <div className="w-full bg-purple-100 rounded-full h-2 overflow-hidden">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: `${flujo.tasaExito}%` }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="h-full bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500 rounded-full"
+            ></motion.div>
+          </div>
         </div>
-        <div>
-          <p className="text-xs text-gray-500">Tasa de Éxito</p>
-          <p className={`text-lg font-bold ${flujo.tasaExito >= 90 ? 'text-green-600' : flujo.tasaExito >= 70 ? 'text-yellow-600' : 'text-red-600'}`}>
-            {flujo.tasaExito}%
-          </p>
-        </div>
-        <div>
-          <p className="text-xs text-gray-500">Clientes</p>
-          <p className="text-lg font-bold text-gray-800">{flujo.clientesProcesados}</p>
-        </div>
-        <div>
-          <p className="text-xs text-gray-500">Conversiones</p>
-          <p className="text-lg font-bold text-purple-600">{flujo.conversionesGeneradas}</p>
-        </div>
-      </div>
 
-      {/* Última ejecución */}
-      {flujo.ultimaEjecucion && (
-        <p className="text-xs text-gray-500 mb-3">
-          Última ejecución: {new Date(flujo.ultimaEjecucion).toLocaleString('es-ES', {
-            day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit'
-          })}
-        </p>
-      )}
+        {/* Última ejecución */}
+        {flujo.ultimaEjecucion && (
+          <div className="flex items-center gap-2 mb-4 text-xs text-gray-500">
+            <Clock className="w-4 h-4" />
+            <span>Última: {new Date(flujo.ultimaEjecucion).toLocaleString('es-ES', {
+              day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit'
+            })}</span>
+          </div>
+        )}
 
-      {/* Acciones */}
-      <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-        <div className="flex items-center gap-2">
+        {/* Acciones */}
+        <div className="flex items-center gap-2 pt-4 border-t border-gray-200">
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             onClick={() => onToggleEstado(flujo.id)}
-            className={`p-2 rounded-lg transition-colors ${
+            className={`p-2.5 rounded-xl transition-all shadow-md ${
               flujo.estado === 'activo'
-                ? 'bg-yellow-100 text-yellow-700 hover:bg-yellow-200'
-                : 'bg-green-100 text-green-700 hover:bg-green-200'
+                ? 'bg-gradient-to-br from-yellow-400 to-orange-500 text-white'
+                : 'bg-gradient-to-br from-green-400 to-emerald-500 text-white'
             }`}
           >
             {flujo.estado === 'activo' ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
           </motion.button>
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             onClick={() => onVer(flujo)}
-            className="p-2 rounded-lg bg-blue-100 text-blue-700 hover:bg-blue-200 transition-colors"
+            className="p-2.5 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-500 text-white hover:from-blue-500 hover:to-indigo-600 transition-all shadow-md"
           >
             <Eye className="w-4 h-4" />
           </motion.button>
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             onClick={() => onEditar(flujo.id)}
-            className="p-2 rounded-lg bg-purple-100 text-purple-700 hover:bg-purple-200 transition-colors"
+            className="p-2.5 rounded-xl bg-gradient-to-br from-violet-400 to-purple-500 text-white hover:from-violet-500 hover:to-purple-600 transition-all shadow-md"
           >
             <Edit className="w-4 h-4" />
           </motion.button>
-        </div>
-        <div className="flex items-center gap-2">
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             onClick={() => onDuplicar(flujo.id)}
-            className="p-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+            className="p-2.5 rounded-xl bg-gradient-to-br from-gray-400 to-gray-500 text-white hover:from-gray-500 hover:to-gray-600 transition-all shadow-md"
           >
             <Copy className="w-4 h-4" />
           </motion.button>
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             onClick={() => onEliminar(flujo.id)}
-            className="p-2 rounded-lg bg-red-100 text-red-700 hover:bg-red-200 transition-colors"
+            className="p-2.5 rounded-xl bg-gradient-to-br from-red-400 to-pink-500 text-white hover:from-red-500 hover:to-pink-600 transition-all shadow-md ml-auto"
           >
             <Trash2 className="w-4 h-4" />
           </motion.button>
@@ -661,32 +706,42 @@ const FlujoCard: React.FC<{
 
 const PlantillaCard: React.FC<{ plantilla: PlantillaFlujo; onUsar: (id: string) => void }> = ({ plantilla, onUsar }) => (
   <motion.div
-    whileHover={{ y: -4, boxShadow: '0 12px 24px rgba(0,0,0,0.12)' }}
-    className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl p-5 border-2 border-purple-200 hover:border-purple-400 transition-all"
+    whileHover={{ y: -6, scale: 1.02 }}
+    className="bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 rounded-3xl p-6 border-2 border-violet-200 hover:border-violet-400 transition-all shadow-xl hover:shadow-2xl relative overflow-hidden group"
   >
-    <div className="flex items-start justify-between mb-3">
-      <Sparkles className="w-6 h-6 text-purple-600" />
-      <div className="flex items-center gap-1">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <Star
-            key={i}
-            className={`w-3 h-3 ${i < Math.floor(plantilla.rating) ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'}`}
-          />
-        ))}
+    {/* Decoración de fondo */}
+    <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-violet-200 to-fuchsia-200 rounded-full blur-3xl opacity-30"></div>
+
+    <div className="relative z-10">
+      <div className="flex items-start justify-between mb-4">
+        <div className="p-3 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-xl shadow-lg">
+          <Sparkles className="w-6 h-6 text-white" />
+        </div>
+        <div className="flex items-center gap-1">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Star
+              key={i}
+              className={`w-4 h-4 ${i < Math.floor(plantilla.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`}
+            />
+          ))}
+        </div>
       </div>
-    </div>
-    <h4 className="font-bold text-gray-800 mb-2">{plantilla.nombre}</h4>
-    <p className="text-sm text-gray-600 mb-4">{plantilla.descripcion}</p>
-    <div className="flex items-center justify-between">
-      <span className="text-xs text-gray-500">{plantilla.vecesUsada} usos</span>
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => onUsar(plantilla.id)}
-        className="px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors"
-      >
-        Usar Plantilla
-      </motion.button>
+      <h4 className="font-bold text-xl text-gray-800 mb-2">{plantilla.nombre}</h4>
+      <p className="text-sm text-gray-600 mb-4">{plantilla.descripcion}</p>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-white/60 backdrop-blur-sm rounded-full border border-violet-200">
+          <Target className="w-4 h-4 text-violet-600" />
+          <span className="text-xs font-semibold text-violet-700">{plantilla.vecesUsada} usos</span>
+        </div>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => onUsar(plantilla.id)}
+          className="px-5 py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-xl text-sm font-bold hover:from-violet-700 hover:to-purple-700 transition-all shadow-lg"
+        >
+          Usar Plantilla
+        </motion.button>
+      </div>
     </div>
   </motion.div>
 );
@@ -815,35 +870,65 @@ export const ListadoAutomatizacionesPage: React.FC = () => {
     .map(f => ({ nombre: f.nombre, ejecuciones: f.ejecucionesTotales }));
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-purple-50 to-blue-50 p-6">
-      {/* Header impactante */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50/30 to-fuchsia-50/20 p-6">
+      {/* Hero Section Moderno */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
+        transition={{ duration: 0.6 }}
+        className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 rounded-3xl shadow-2xl mb-8 p-8 md:p-12"
       >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <motion.div
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-              className="p-4 bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl shadow-lg"
-            >
-              <Zap className="w-10 h-10 text-white" />
-            </motion.div>
-            <div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                Automatizaciones Activas
-              </h1>
-              <p className="text-gray-600 mt-1">Flujos automatizados de marketing y comunicación</p>
+        {/* Efectos de fondo animados */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        </div>
+
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '50px 50px'
+          }}></div>
+        </div>
+
+        <div className="relative z-10">
+          {/* Título con icono animado */}
+          <div className="flex items-center gap-4 mb-4">
+            <div className="relative">
+              <Workflow className="w-12 h-12 text-yellow-300 animate-pulse" />
+              <div className="absolute inset-0 w-12 h-12 bg-yellow-300 rounded-full blur-lg opacity-50"></div>
             </div>
+            <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
+              Automatizaciones
+            </h1>
           </div>
-          <div className="flex items-center gap-3">
+
+          {/* Descripción */}
+          <p className="text-xl md:text-2xl text-purple-100 max-w-3xl leading-relaxed mb-6">
+            Gestiona tus flujos automáticos de{' '}
+            <span className="font-bold text-white px-2 py-1 bg-white/20 rounded-lg backdrop-blur-sm">
+              marketing y comunicación
+            </span>
+          </p>
+
+          {/* Botones de acción */}
+          <div className="flex flex-wrap gap-4">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => alert('Crear Flujo')}
+              className="px-6 py-3 bg-white text-violet-600 rounded-xl font-bold hover:bg-purple-50 transition-all shadow-xl flex items-center gap-2"
+            >
+              <Plus className="w-5 h-5" />
+              Crear Flujo
+            </motion.button>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setMostrarPlantillas(!mostrarPlantillas)}
-              className="px-4 py-2 bg-white border-2 border-purple-300 text-purple-700 rounded-lg font-medium hover:bg-purple-50 transition-colors flex items-center gap-2"
+              className="px-6 py-3 bg-white/10 backdrop-blur-md text-white rounded-xl font-semibold hover:bg-white/20 transition-all border border-white/20 flex items-center gap-2"
             >
               <Sparkles className="w-5 h-5" />
               Desde Plantilla
@@ -852,19 +937,10 @@ export const ListadoAutomatizacionesPage: React.FC = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => alert('Configuración Global')}
-              className="px-4 py-2 bg-white border-2 border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center gap-2"
+              className="px-6 py-3 bg-white/10 backdrop-blur-md text-white rounded-xl font-semibold hover:bg-white/20 transition-all border border-white/20 flex items-center gap-2"
             >
               <Settings className="w-5 h-5" />
               Configuración
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => alert('Crear Flujo')}
-              className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-bold hover:from-purple-700 hover:to-blue-700 transition-all shadow-lg flex items-center gap-2"
-            >
-              <Plus className="w-5 h-5" />
-              Crear Flujo
             </motion.button>
           </div>
         </div>
@@ -937,27 +1013,36 @@ export const ListadoAutomatizacionesPage: React.FC = () => {
             exit={{ opacity: 0, height: 0 }}
             className="mb-8 overflow-hidden"
           >
-            <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-purple-200">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-                  <Sparkles className="w-6 h-6 text-purple-600" />
-                  Plantillas Populares
-                </h2>
-                <button
-                  onClick={() => setMostrarPlantillas(false)}
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  ✕
-                </button>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {plantillasMockeadas.map(plantilla => (
-                  <PlantillaCard
-                    key={plantilla.id}
-                    plantilla={plantilla}
-                    onUsar={handleUsarPlantilla}
-                  />
-                ))}
+            <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/50 relative overflow-hidden">
+              {/* Decoración de fondo */}
+              <div className="absolute -right-20 -top-20 w-64 h-64 bg-gradient-to-br from-violet-200 to-fuchsia-200 rounded-full blur-3xl opacity-20"></div>
+
+              <div className="relative z-10">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-3xl font-bold text-gray-800 flex items-center gap-3">
+                    <div className="p-3 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-xl shadow-lg">
+                      <Sparkles className="w-7 h-7 text-white" />
+                    </div>
+                    Plantillas Populares
+                  </h2>
+                  <motion.button
+                    whileHover={{ scale: 1.1, rotate: 90 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => setMostrarPlantillas(false)}
+                    className="text-gray-400 hover:text-violet-600 transition-colors p-2 hover:bg-gray-100 rounded-lg"
+                  >
+                    <span className="text-2xl">✕</span>
+                  </motion.button>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {plantillasMockeadas.map(plantilla => (
+                    <PlantillaCard
+                      key={plantilla.id}
+                      plantilla={plantilla}
+                      onUsar={handleUsarPlantilla}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </motion.div>
@@ -965,36 +1050,44 @@ export const ListadoAutomatizacionesPage: React.FC = () => {
       </AnimatePresence>
 
       {/* Barra de búsqueda y filtros */}
-      <div className="mb-6 bg-white rounded-xl p-4 shadow-md">
+      <div className="mb-6 bg-white/80 backdrop-blur-xl rounded-3xl p-6 shadow-xl border border-white/50">
         <div className="flex items-center gap-4 mb-4">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-violet-400" />
             <input
               type="text"
-              placeholder="Buscar por nombre o descripción..."
+              placeholder="Buscar automatizaciones..."
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-violet-100 focus:border-violet-500 transition-all duration-300 bg-white/80 backdrop-blur-sm"
             />
           </div>
-          <button
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => setMostrarFiltros(!mostrarFiltros)}
-            className={`px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors ${
-              mostrarFiltros ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            className={`px-6 py-3 rounded-xl font-semibold flex items-center gap-2 transition-all shadow-lg ${
+              mostrarFiltros
+                ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white'
+                : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200'
             }`}
           >
             <Filter className="w-5 h-5" />
             Filtros
-          </button>
-          <button
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => setMostrarEstadisticas(!mostrarEstadisticas)}
-            className={`px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors ${
-              mostrarEstadisticas ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            className={`px-6 py-3 rounded-xl font-semibold flex items-center gap-2 transition-all shadow-lg ${
+              mostrarEstadisticas
+                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white'
+                : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200'
             }`}
           >
             <BarChart3 className="w-5 h-5" />
             Análisis
-          </button>
+          </motion.button>
         </div>
 
         {/* Filtros expandidos */}
@@ -1148,59 +1241,96 @@ export const ListadoAutomatizacionesPage: React.FC = () => {
       {/* Tabs y selector de vista */}
       <div className="flex items-center justify-between mb-6">
         {/* Tabs */}
-        <div className="flex items-center gap-2 bg-white rounded-lg p-1 shadow-md">
+        <div className="flex items-center gap-2 bg-white/80 backdrop-blur-xl rounded-2xl p-1.5 shadow-xl border border-white/50">
           {(['todos', 'activos', 'pausados', 'borradores', 'archivados'] as TabActual[]).map(tab => (
-            <button
+            <motion.button
               key={tab}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => setTabActual(tab)}
-              className={`px-4 py-2 rounded-md font-medium transition-colors ${
+              className={`px-5 py-2.5 rounded-xl font-semibold transition-all ${
                 tabActual === tab
-                  ? 'bg-purple-600 text-white shadow-md'
+                  ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white shadow-lg'
                   : 'text-gray-600 hover:bg-gray-100'
               }`}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
               {tab !== 'todos' && (
-                <span className="ml-2 text-xs">
-                  ({flujos.filter(f => tab === 'activos' ? f.estado === 'activo' : f.estado === tab.slice(0, -1)).length})
+                <span className={`ml-2 text-xs px-2 py-0.5 rounded-full ${
+                  tabActual === tab ? 'bg-white/20' : 'bg-gray-200'
+                }`}>
+                  {flujos.filter(f => tab === 'activos' ? f.estado === 'activo' : f.estado === tab.slice(0, -1)).length}
                 </span>
               )}
-            </button>
+            </motion.button>
           ))}
         </div>
 
         {/* Selector de vista */}
-        <div className="flex items-center gap-2 bg-white rounded-lg p-1 shadow-md">
-          <button
+        <div className="flex items-center gap-2 bg-white/80 backdrop-blur-xl rounded-2xl p-1.5 shadow-xl border border-white/50">
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             onClick={() => setVistaActual('grid')}
-            className={`p-2 rounded-md transition-colors ${
-              vistaActual === 'grid' ? 'bg-purple-600 text-white' : 'text-gray-600 hover:bg-gray-100'
+            className={`p-3 rounded-xl transition-all ${
+              vistaActual === 'grid'
+                ? 'bg-gradient-to-br from-violet-600 to-purple-600 text-white shadow-lg'
+                : 'text-gray-600 hover:bg-gray-100'
             }`}
           >
             <Grid3x3 className="w-5 h-5" />
-          </button>
-          <button
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             onClick={() => setVistaActual('kanban')}
-            className={`p-2 rounded-md transition-colors ${
-              vistaActual === 'kanban' ? 'bg-purple-600 text-white' : 'text-gray-600 hover:bg-gray-100'
+            className={`p-3 rounded-xl transition-all ${
+              vistaActual === 'kanban'
+                ? 'bg-gradient-to-br from-violet-600 to-purple-600 text-white shadow-lg'
+                : 'text-gray-600 hover:bg-gray-100'
             }`}
           >
             <LayoutGrid className="w-5 h-5" />
-          </button>
-          <button
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             onClick={() => setVistaActual('tabla')}
-            className={`p-2 rounded-md transition-colors ${
-              vistaActual === 'tabla' ? 'bg-purple-600 text-white' : 'text-gray-600 hover:bg-gray-100'
+            className={`p-3 rounded-xl transition-all ${
+              vistaActual === 'tabla'
+                ? 'bg-gradient-to-br from-violet-600 to-purple-600 text-white shadow-lg'
+                : 'text-gray-600 hover:bg-gray-100'
             }`}
           >
             <List className="w-5 h-5" />
-          </button>
+          </motion.button>
         </div>
       </div>
 
       {/* Contador de resultados */}
-      <div className="mb-4 text-sm text-gray-600">
-        Mostrando {flujosFiltrados.length} de {flujos.length} flujos
+      <div className="mb-4 flex items-center gap-3">
+        <div className="px-4 py-2 bg-white/80 backdrop-blur-xl rounded-full border border-white/50 shadow-md">
+          <span className="text-sm font-semibold text-gray-600">
+            Mostrando <span className="text-violet-600 font-bold">{flujosFiltrados.length}</span> de <span className="text-gray-800 font-bold">{flujos.length}</span> automatizaciones
+          </span>
+        </div>
+        {(busqueda || filtroTipo !== 'todos' || filtroTrigger !== 'todos') && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => {
+              setBusqueda('');
+              setFiltroTipo('todos');
+              setFiltroTrigger('todos');
+            }}
+            className="px-4 py-2 bg-red-100 text-red-700 rounded-full text-sm font-semibold hover:bg-red-200 transition-all shadow-md flex items-center gap-2"
+          >
+            <RefreshCw className="w-4 h-4" />
+            Limpiar filtros
+          </motion.button>
+        )}
       </div>
 
       {/* Vista Grid */}
@@ -1510,24 +1640,42 @@ export const ListadoAutomatizacionesPage: React.FC = () => {
       {/* Empty state */}
       {flujosFiltrados.length === 0 && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-center py-16"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center py-20 bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/50"
         >
-          <Workflow className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-gray-600 mb-2">No se encontraron flujos</h3>
-          <p className="text-gray-500 mb-6">Intenta ajustar los filtros o crear un nuevo flujo</p>
-          <button
-            onClick={() => {
-              setBusqueda('');
-              setFiltroTipo('todos');
-              setFiltroTrigger('todos');
-              setTabActual('todos');
-            }}
-            className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
-          >
-            Limpiar Filtros
-          </button>
+          <div className="relative inline-block mb-6">
+            <Workflow className="w-24 h-24 text-violet-200 mx-auto" />
+            <div className="absolute inset-0 w-24 h-24 bg-violet-200 rounded-full blur-2xl opacity-30 animate-pulse"></div>
+          </div>
+          <h3 className="text-2xl font-bold text-gray-800 mb-3">No se encontraron automatizaciones</h3>
+          <p className="text-gray-500 mb-8 max-w-md mx-auto">
+            Intenta ajustar los filtros o crea tu primera automatización para comenzar
+          </p>
+          <div className="flex items-center justify-center gap-4">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                setBusqueda('');
+                setFiltroTipo('todos');
+                setFiltroTrigger('todos');
+                setTabActual('todos');
+              }}
+              className="px-6 py-3 bg-white text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-all shadow-lg border-2 border-gray-200"
+            >
+              Limpiar Filtros
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => alert('Crear Flujo')}
+              className="px-6 py-3 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-xl font-bold hover:from-violet-700 hover:to-purple-700 transition-all shadow-lg flex items-center gap-2"
+            >
+              <Plus className="w-5 h-5" />
+              Crear Flujo
+            </motion.button>
+          </div>
         </motion.div>
       )}
     </div>

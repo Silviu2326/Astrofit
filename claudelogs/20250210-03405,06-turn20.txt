@@ -1,0 +1,22 @@
+﻿
+
+Ô£à P├ígina de Membres├¡a creada en `src/pages/Membresia.tsx`
+
+**Caracter├¡sticas implementadas:**
+
+­ƒÄ¿ **Gradiente**: `from-purple-600 via-fuchsia-600 to-pink-600`
+
+­ƒôª **Secciones incluidas:**
+- Hero con toggle mensual/anual y badge de ahorro
+- 3 planes de precios (B├ísico, Profesional, Enterprise)
+- Tabla de comparaci├│n detallada
+- Testimonios con avatares y ratings
+- FAQs con acorde├│n interactivo
+- CTA final destacado con garant├¡a de 30 d├¡as
+
+­ƒîƒ **Elementos destacados:**
+- Plan "Profesional" marcado como "M├üS POPULAR"
+- Animaciones hover en tarjetas
+- Toggle para cambiar entre precios mensuales/anuales
+- Indicador de descuento en plan anual
+- Social proof con avatares de clientes

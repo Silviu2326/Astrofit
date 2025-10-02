@@ -1,0 +1,1067 @@
+# 🎯 PROMPTS DE ESTILIZACIÓN - FEATURES PLANCREATORPRO
+
+---
+
+## 📋 PROMPT 1: Buscador de Contenidos
+
+Transforma completamente la página de Buscador de Contenidos ([src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/buscador-contenidos/BuscadorContenidosPage.tsx](src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/buscador-contenidos/BuscadorContenidosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un buscador avanzado de contenidos con filtros inteligentes
+- Facilita el descubrimiento de recursos educativos
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Buscador**
+   - Gradiente `from-blue-600 via-indigo-600 to-purple-600`
+   - Título "Buscador de Contenidos"
+   - Descripción: "Encuentra exactamente lo que necesitas"
+   - Icono de búsqueda/lupa animado
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Total de Contenidos
+   - Artículos Disponibles
+   - Videos Educativos
+   - Descargas Disponibles
+   - Cards con glassmorphism
+
+3. **BARRA DE BÚSQUEDA PRINCIPAL**
+   - Input grande y destacado:
+     * Placeholder: "Busca artículos, videos, guías..."
+     * Icono de búsqueda animado
+     * Autocomplete/sugerencias
+     * Búsqueda en tiempo real
+     * Resultados mientras escribes (dropdown)
+   - Botón de búsqueda con gradiente
+   - Búsqueda por voz (opcional, icono micrófono)
+
+4. **FILTROS AVANZADOS**
+   - Panel de filtros lateral o expandible:
+     * **Tipo de contenido**:
+       - Artículos
+       - Videos
+       - Descargables (PDFs, eBooks)
+       - Infografías
+       - Podcasts
+     * **Categoría**:
+       - Nutrición
+       - Entrenamiento
+       - Bienestar
+       - Motivación
+       - Negocio/Marketing
+     * **Nivel de dificultad**:
+       - Principiante
+       - Intermedio
+       - Avanzado
+     * **Duración** (para videos):
+       - Cortos (<5min)
+       - Medios (5-15min)
+       - Largos (>15min)
+     * **Fecha de publicación**:
+       - Última semana
+       - Último mes
+       - Últimos 3 meses
+       - Último año
+     * **Idioma**
+     * **Tags** (multi-select)
+   - Pills activos mostrando filtros aplicados
+   - Botón "Limpiar filtros"
+
+5. **RESULTADOS DE BÚSQUEDA**
+   - Grid/Lista de resultados:
+     * **Vista Grid** (cards):
+       - Thumbnail/imagen destacada
+       - Tipo de contenido (badge)
+       - Título del contenido
+       - Descripción breve (2 líneas)
+       - Autor y fecha
+       - Rating (estrellas)
+       - Duración (si video)
+       - Tags principales
+       - Botón "Ver más"
+     * **Vista Lista** (compacta):
+       - Imagen pequeña
+       - Info en fila
+       - Acciones rápidas
+   - Toggle entre vista Grid/Lista
+   - Paginación o infinite scroll
+   - Ordenar por:
+     * Relevancia (default)
+     * Más recientes
+     * Más populares
+     * Mejor valorados
+
+6. **SUGERENCIAS INTELIGENTES**
+   - "También te puede interesar":
+     * Contenidos relacionados
+     * Basado en búsquedas anteriores
+     * Trending topics
+   - "Búsquedas populares" (pills clickeables)
+   - "Usuarios también buscaron..."
+
+7. **FILTROS RÁPIDOS**
+   - Pills horizontales con filtros comunes:
+     * "Nuevo esta semana"
+     * "Más populares"
+     * "Videos cortos"
+     * "Descargables gratis"
+     * "Tendencias"
+   - Click aplica filtro instantáneo
+
+8. **HISTORIAL DE BÚSQUEDA**
+   - Búsquedas recientes (dropdown o sección)
+   - Click para repetir búsqueda
+   - Botón para borrar historial
+   - Guardados/Favoritos (búsquedas frecuentes)
+
+9. **VISTA PREVIA RÁPIDA**
+   - Hover en resultado muestra quick preview:
+     * Modal o popover
+     * Descripción completa
+     * Tags todos
+     * Preview de contenido
+     * Botones: Guardar, Compartir, Abrir
+
+10. **FAVORITOS Y GUARDADOS**
+    - Botón corazón para guardar
+    - Listas personalizadas ("Para leer después", "Favoritos")
+    - Acceso rápido a guardados
+
+11. **COMPARTIR BÚSQUEDA**
+    - Generar link con filtros aplicados
+    - Compartir por email/WhatsApp
+    - Copiar URL de búsqueda
+
+12. **DATOS MOCKEADOS**
+    - 50-100 contenidos variados
+    - Artículos, videos, PDFs simulados
+    - Tags y categorías
+    - Ratings y vistas
+    - Historial de búsqueda
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente blue-indigo-purple para hero
+- Barra de búsqueda XL con glassmorphism
+- Pills de filtros activos coloridos
+- Cards de resultados con hover effect
+- Badges de tipo de contenido
+- Grid responsive con animaciones de entrada
+- Quick preview modal elegante
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/buscador-contenidos](src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/buscador-contenidos).
+
+---
+
+## 📋 PROMPT 2: Contenidos - Artículos
+
+Transforma completamente la página de Contenidos Artículos ([src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-articulos/ContenidosArticulosPage.tsx](src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-articulos/ContenidosArticulosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea una biblioteca de artículos educativos estilo blog
+- Facilita la lectura y gestión de contenido escrito
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Artículos**
+   - Gradiente `from-emerald-600 via-teal-600 to-cyan-600`
+   - Título "Biblioteca de Artículos"
+   - Descripción: "Conocimiento al alcance de tu mano"
+   - Contador de artículos totales
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Total de Artículos
+   - Artículos Publicados Este Mes
+   - Lecturas Totales
+   - Promedio de Rating
+   - Cards con glassmorphism
+
+3. **ARTÍCULOS DESTACADOS**
+   - Carrusel o grid de artículos destacados:
+     * Imagen grande tipo magazine
+     * Categoría (badge destacado)
+     * Título llamativo
+     * Resumen breve
+     * Autor con avatar
+     * Tiempo de lectura estimado
+     * Fecha de publicación
+     * Badge "Destacado" o "Editor's Pick"
+   - 3-5 artículos rotando
+
+4. **GRID DE ARTÍCULOS**
+   - Cards de artículos:
+     * Imagen destacada (16:9)
+     * Categoría (badge colorido)
+     * Título (2 líneas max)
+     * Excerpt (3 líneas)
+     * Metadata:
+       - Avatar autor + nombre
+       - Fecha relativa ("hace 2 días")
+       - Tiempo de lectura (ej: "8 min")
+       - Vistas
+       - Rating (estrellas)
+     * Tags principales (pills)
+     * Botón "Leer más"
+   - Grid responsive: 1-2-3 columnas
+   - Lazy loading al hacer scroll
+
+5. **FILTROS Y CATEGORÍAS**
+   - Tabs de categorías:
+     * Todos
+     * Nutrición
+     * Entrenamiento
+     * Bienestar
+     * Motivación
+     * Ciencia y Estudios
+     * Negocio
+   - Dropdown de ordenamiento:
+     * Más recientes
+     * Más leídos
+     * Mejor valorados
+     * Alfabético
+
+6. **VISTA DE LECTURA (MODAL O PÁGINA)**
+   - Diseño tipo medium/blog:
+     * **Header del artículo**:
+       - Imagen hero grande
+       - Categoría
+       - Título grande y llamativo
+       - Autor con bio breve
+       - Fecha y tiempo de lectura
+       - Compartir (social icons)
+     * **Contenido**:
+       - Tipografía legible (text-lg)
+       - Line-height espacioso
+       - Imágenes dentro del artículo
+       - Quotes destacados
+       - Código (si aplica) con syntax highlight
+       - Lists estilizadas
+       - Secciones con headings claros
+     * **Sidebar** (desktop):
+       - Tabla de contenidos (índice)
+       - Artículos relacionados
+       - CTA (suscripción, descarga)
+     * **Footer del artículo**:
+       - Tags completos
+       - Rating (dar estrellas)
+       - Compartir en redes
+       - Comentarios (opcional)
+   - Progress bar de lectura (top)
+   - Botón "Back to top"
+
+7. **BÚSQUEDA DE ARTÍCULOS**
+   - Barra de búsqueda específica
+   - Búsqueda en títulos y contenido
+   - Highlight de términos encontrados
+
+8. **ARTÍCULOS RELACIONADOS**
+   - "También te puede interesar"
+   - Cards pequeños con imagen, título, categoría
+   - Basado en tags similares
+
+9. **GUARDADOS Y FAVORITOS**
+   - Botón guardar/favorito
+   - Lista de lectura personalizada
+   - Leer después
+
+10. **COMPARTIR ARTÍCULO**
+    - Social sharing:
+      * Facebook
+      * Twitter/X
+      * LinkedIn
+      * WhatsApp
+      * Email
+      * Copiar link
+    - Quote to share (generar imagen con quote)
+
+11. **ESTADÍSTICAS POR ARTÍCULO** (admin)
+    - Vistas
+    - Tiempo promedio de lectura
+    - Engagement rate
+    - Fuentes de tráfico
+
+12. **CREAR/EDITAR ARTÍCULO** (admin)
+    - Editor WYSIWYG:
+      * Rich text editor
+      * Upload de imágenes
+      * Markdown support
+      * Preview en vivo
+    - Metadata:
+      * Título, excerpt
+      * Categoría, tags
+      * Imagen destacada
+      * SEO (meta description)
+    - Programar publicación
+    - Guardar como draft
+
+13. **DATOS MOCKEADOS**
+    - 30-50 artículos variados
+    - Categorías diversas
+    - Autores simulados
+    - Ratings y vistas
+    - Contenido lorem ipsum realista
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente emerald-teal-cyan para hero
+- Cards estilo magazine con imágenes grandes
+- Tipografía de lectura cómoda (text-lg, leading-relaxed)
+- Badges de categoría coloridos
+- Progress bar de lectura
+- Sidebar sticky (desktop)
+- Social icons estilizados
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-articulos](src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-articulos).
+
+---
+
+## 📋 PROMPT 3: Contenidos - Videos
+
+Transforma completamente la página de Contenidos Videos ([src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-video/ContenidosVideoPage.tsx](src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-video/ContenidosVideoPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea una plataforma de videos educativos estilo YouTube
+- Facilita la visualización y organización de contenido en video
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Videos**
+   - Gradiente `from-red-600 via-pink-600 to-purple-600`
+   - Título "Biblioteca de Videos"
+   - Descripción: "Aprende visualmente con nuestro contenido"
+   - Play button animado
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Total de Videos
+   - Horas de Contenido
+   - Total de Vistas
+   - Videos Nuevos Este Mes
+   - Cards con glassmorphism
+
+3. **VIDEO DESTACADO (HERO VIDEO)**
+   - Video principal grande:
+     * Thumbnail de alta calidad
+     * Play overlay grande
+     * Título destacado
+     * Descripción breve
+     * Duración, vistas, fecha
+     * Categoría (badge)
+     * Botón "Ver ahora"
+   - Auto-rotate cada X segundos (opcional)
+
+4. **GRID DE VIDEOS**
+   - Cards de videos estilo YouTube:
+     * **Thumbnail**:
+       - Imagen preview (16:9)
+       - Play overlay al hover
+       - Duración en esquina inferior derecha
+       - Badge de categoría
+       - Icono si es nuevo (últimos 7 días)
+     * **Información**:
+       - Título (2 líneas max)
+       - Canal/Autor con avatar
+       - Vistas + fecha relativa
+       - Descripción breve (opcional)
+     * **Hover effect**:
+       - Preview en GIF (si disponible)
+       - Acciones rápidas (Guardar, Compartir)
+   - Grid responsive: 1-2-3-4 columnas
+   - Infinite scroll
+
+5. **CATEGORÍAS Y PLAYLISTS**
+   - Tabs de categorías:
+     * Todos
+     * Tutoriales
+     * Entrenamientos
+     * Nutrición
+     * Motivación
+     * Webinars
+   - Playlists curadas:
+     * "Fundamentos de nutrición"
+     * "Serie de entrenamiento"
+     * Cards de playlist con contador de videos
+
+6. **FILTROS**
+   - Dropdown de filtros:
+     * Duración:
+       - Cortos (<5min)
+       - Medios (5-20min)
+       - Largos (>20min)
+     * Calidad:
+       - HD (1080p+)
+       - SD
+     * Fecha:
+       - Hoy
+       - Esta semana
+       - Este mes
+       - Este año
+   - Ordenar por:
+     * Relevancia
+     * Fecha (más recientes)
+     * Vistas (más vistos)
+     * Rating (mejor valorados)
+
+7. **REPRODUCTOR DE VIDEO (MODAL O PÁGINA)**
+   - Player profesional:
+     * Video player full-featured:
+       - Play/Pause
+       - Timeline scrubbing
+       - Volumen
+       - Velocidad (0.5x, 1x, 1.25x, 1.5x, 2x)
+       - Calidad (Auto, 1080p, 720p, 480p)
+       - Subtítulos (CC)
+       - Picture-in-picture
+       - Fullscreen
+       - Teatro mode
+     * Controles personalizados estilizados
+     * Thumbnail preview al hacer hover en timeline
+   - **Información lateral** (desktop):
+     * Título del video
+     * Canal/Autor con avatar y botón suscribir
+     * Vistas, fecha de publicación
+     * Like/Dislike buttons
+     * Compartir, Guardar, Reportar
+     * Descripción (expandible)
+     * Tags
+   - **Videos relacionados** (sidebar):
+     * Autoplay siguiente video
+     * Lista de sugerencias
+     * De la misma playlist
+
+8. **COMENTARIOS** (opcional)
+   - Sección de comentarios:
+     * Input para nuevo comentario
+     * Lista de comentarios con:
+       - Avatar usuario
+       - Nombre y fecha
+       - Texto del comentario
+       - Like/Dislike
+       - Responder
+     * Ordenar por: Top, Recientes
+   - Moderación (admin)
+
+9. **PLAYLISTS**
+   - Crear playlists personalizadas:
+     * Nombre de playlist
+     * Descripción
+     * Privacidad (Pública/Privada)
+     * Agregar videos (drag & drop)
+   - Vista de playlist:
+     * Lista de videos en orden
+     * Reproducción continua
+     * Progress de playlist (3/10 videos)
+
+10. **BUSCAR VIDEOS**
+    - Barra de búsqueda específica
+    - Autocompletado
+    - Búsqueda en títulos, descripciones, tags
+    - Filtros integrados
+
+11. **HISTORIAL DE VISUALIZACIÓN**
+    - Videos vistos recientemente
+    - Continuar viendo (resume desde donde quedó)
+    - Progress bar de visto (%)
+    - Limpiar historial
+
+12. **GUARDADOS Y WATCHLATER**
+    - Guardar video para ver después
+    - Lista "Ver más tarde"
+    - Favoritos
+    - Descargar para offline (si disponible)
+
+13. **COMPARTIR VIDEO**
+    - Compartir en redes sociales
+    - Embed code (iframe)
+    - Compartir con timestamp específico
+    - QR code
+
+14. **SUBIR VIDEO** (admin/creator)
+    - Upload de video:
+      * Drag & drop de archivo
+      * Progress bar de upload
+      * Procesamiento (conversión)
+    - Metadata:
+      * Título, descripción
+      * Thumbnail (upload o auto-generated)
+      * Categoría, tags
+      * Playlist
+      * Privacidad
+      * Programar publicación
+    - Edición básica:
+      * Recortar inicio/fin
+      * Agregar intro/outro
+      * Subtítulos (upload SRT)
+
+15. **ANALYTICS POR VIDEO** (admin)
+    - Vistas a lo largo del tiempo
+    - Retención de audiencia (gráfico)
+    - Fuentes de tráfico
+    - Demographics (edad, ubicación)
+    - Engagement (likes, shares, comments)
+
+16. **DATOS MOCKEADOS**
+    - 40-60 videos simulados
+    - Thumbnails variados
+    - Duraciones variadas (2min - 45min)
+    - Vistas y likes realistas
+    - Playlists curadas
+    - Comentarios simulados
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente red-pink-purple para hero
+- Cards de video con thumbnail 16:9
+- Play overlay con efecto hover
+- Video player controls personalizados
+- Sidebar de videos relacionados
+- Progress bars de visualización
+- Badges de duración y calidad
+- Modal de player amplio
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-video](src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-video).
+
+---
+
+## 📋 PROMPT 4: Contenidos - Descargables
+
+Transforma completamente la página de Contenidos Descargables ([src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-descargables/ContenidosDescargablesPage.tsx](src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-descargables/ContenidosDescargablesPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea una biblioteca de recursos descargables (PDFs, eBooks, plantillas)
+- Facilita el acceso y gestión de materiales educativos
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Descargables**
+   - Gradiente `from-orange-600 via-amber-600 to-yellow-600`
+   - Título "Recursos Descargables"
+   - Descripción: "PDFs, eBooks, plantillas y más"
+   - Icono de descarga/documento animado
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Total de Recursos
+   - Descargas Este Mes
+   - Recursos Premium
+   - Tamaño Total (GB)
+   - Cards con glassmorphism
+
+3. **CATEGORÍAS DE DESCARGABLES**
+   - Tabs/Pills de tipos:
+     * Todos
+     * PDFs / eBooks
+     * Plantillas (Excel, Word)
+     * Guías y Manuales
+     * Infografías
+     * Workbooks
+     * Checklists
+   - Contador por categoría
+
+4. **GRID DE RECURSOS**
+   - Cards de descargables:
+     * **Thumbnail/Preview**:
+       - Imagen de portada o primera página
+       - Badge de tipo de archivo (PDF, DOCX, XLSX)
+       - Badge de tamaño (2.5 MB)
+       - Badge "Premium" o "Gratis"
+     * **Información**:
+       - Título del recurso
+       - Descripción breve
+       - Categoría
+       - Autor/Creador
+       - Fecha de publicación
+       - Número de páginas (si aplica)
+       - Descargas (#)
+       - Rating (estrellas)
+     * **Botones**:
+       - Vista previa
+       - Descargar
+       - Compartir
+   - Grid responsive: 1-2-3 columnas
+   - Hover: lift effect
+
+5. **FILTROS**
+   - Panel de filtros:
+     * Tipo de archivo (PDF, DOCX, XLSX, PPT)
+     * Categoría
+     * Gratis vs Premium
+     * Idioma
+     * Tamaño de archivo (pequeño, mediano, grande)
+     * Fecha de subida
+   - Ordenar por:
+     * Más recientes
+     * Más descargados
+     * Mejor valorados
+     * Alfabético
+
+6. **VISTA PREVIA (MODAL)**
+   - Preview del documento:
+     * Visor de PDF integrado (primeras 3-5 páginas)
+     * Navegación de páginas
+     * Zoom in/out
+     * Si no es PDF, mostrar descripción detallada
+   - **Información completa**:
+     * Título y descripción extendida
+     * Autor con bio
+     * Qué incluye (bullet points)
+     * Quién debería descargarlo
+     * Tags completos
+     * Rating y reviews
+   - **Botón de descarga destacado**
+   - **Recursos relacionados**
+
+7. **PROCESO DE DESCARGA**
+   - Click en descargar:
+     * Si es gratis: descarga directa
+     * Si es premium: verificar acceso
+       - Modal con opciones de pago/suscripción
+       - O mensaje de "Upgrade requerido"
+   - Progress bar de descarga
+   - Notificación de descarga completada
+   - Opción de abrir archivo o guardar
+
+8. **COLECCIONES/BUNDLES**
+   - Packs de recursos relacionados:
+     * "Kit completo de nutrición"
+     * "Pack de plantillas de entrenamiento"
+     * Card de colección con:
+       - Thumbnail del pack
+       - Número de recursos incluidos
+       - Precio (si aplica)
+       - Descuento vs compra individual
+       - Botón "Ver colección"
+   - Vista de colección:
+     * Lista de recursos incluidos
+     * Preview de cada uno
+     * Descargar todo (ZIP)
+
+9. **BÚSQUEDA DE RECURSOS**
+   - Barra de búsqueda potente
+   - Búsqueda en títulos, descripciones, tags
+   - Sugerencias en tiempo real
+   - Historial de búsquedas
+
+10. **MIS DESCARGAS** (user)
+    - Historial de descargas:
+      * Recursos descargados
+      * Fecha de descarga
+      * Re-descargar (link permanente)
+    - Organizados por categoría
+    - Búsqueda en mis descargas
+
+11. **GUARDADOS Y FAVORITOS**
+    - Guardar para descargar después
+    - Lista de deseos (wishlist)
+    - Notificaciones cuando recurso premium se vuelve gratis
+
+12. **COMPARTIR RECURSO**
+    - Compartir en redes sociales
+    - Enviar por email
+    - Copiar link
+    - Generar código de afiliado (si aplica)
+
+13. **SUBIR RECURSO** (admin/creator)
+    - Upload de archivos:
+      * Drag & drop (múltiples archivos)
+      * Validación de tipo y tamaño
+      * Progress bar de upload
+    - Metadata:
+      * Título, descripción
+      * Categoría, tags
+      * Thumbnail (upload o auto-generate)
+      * Tipo (gratis/premium)
+      * Precio (si premium)
+    - Preview antes de publicar
+    - Programar publicación
+
+14. **ANALYTICS POR RECURSO** (admin)
+    - Descargas totales
+    - Descargas por día/semana/mes (gráfico)
+    - Fuentes de tráfico
+    - Conversión (vistas → descargas)
+    - Ingresos (si premium)
+
+15. **REVIEWS Y RATINGS**
+    - Sistema de ratings (1-5 estrellas)
+    - Reviews escritas:
+      * Usuario, fecha
+      * Rating
+      * Comentario
+      * ¿Fue útil? (thumbs up/down)
+    - Ordenar reviews por:
+      * Más útiles
+      * Más recientes
+      * Rating (alto/bajo)
+
+16. **DATOS MOCKEADOS**
+    - 30-50 recursos descargables simulados
+    - Variedad de tipos de archivo
+    - Thumbnails de portadas
+    - Tamaños realistas (500KB - 10MB)
+    - Ratings y reviews
+    - Historial de descargas
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente orange-amber-yellow para hero
+- Cards con thumbnail de documento
+- Badges de tipo de archivo coloridos
+- Visor de PDF integrado (modal)
+- Progress bar de descarga
+- Badges "Premium" con gradiente
+- Grid de colecciones destacadas
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-descargables](src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-descargables).
+
+---
+
+## 📋 PROMPT 5: Feed de Comunidad
+
+Transforma completamente la página de Feed de Comunidad ([src/features/plancreatorpro/comunidad/comunidad/feed-comunidad/FeedComunidadPage.tsx](src/features/plancreatorpro/comunidad/comunidad/feed-comunidad/FeedComunidadPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un feed social estilo Facebook/Instagram
+- Facilita la interacción y engagement de la comunidad
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Comunidad**
+   - Gradiente `from-pink-600 via-rose-600 to-red-600`
+   - Título "Feed de Comunidad"
+   - Descripción: "Conecta, comparte e inspira"
+   - Icono de comunidad/personas
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Miembros Activos
+   - Posts Hoy
+   - Engagement Rate
+   - Nuevos Miembros Esta Semana
+   - Cards con glassmorphism
+
+3. **CREAR POST**
+   - Composer destacado (top):
+     * Avatar del usuario actual
+     * Textarea: "¿Qué quieres compartir?"
+     * Botones de multimedia:
+       - Foto/Video (upload)
+       - Emoji
+       - Poll/Encuesta
+       - Ubicación (opcional)
+     * Selector de privacidad (Público/Amigos/Solo yo)
+     * Botón "Publicar" (gradiente)
+   - Preview de imágenes antes de publicar
+   - Contador de caracteres
+
+4. **FEED DE POSTS**
+   - Timeline de posts (ordenado cronológicamente o por relevancia):
+     * **Card de Post**:
+       - **Header**:
+         * Avatar usuario + nombre
+         * Timestamp ("hace 2h")
+         * Badge de rol (Admin, Moderador, Miembro)
+         * Dropdown de acciones (Editar, Eliminar, Reportar)
+       - **Contenido**:
+         * Texto del post (expandible si es largo)
+         * Imágenes/Videos (galería si múltiples)
+         * Links con preview card
+         * Poll (si aplica) con opciones y votos
+       - **Footer (acciones)**:
+         * Like (corazón) + contador
+         * Comentar + contador
+         * Compartir
+         * Guardar (bookmark)
+       - **Sección de comentarios**:
+         * Mostrar primeros 2-3 comentarios
+         * "Ver todos los comentarios" (expandir)
+         * Input para comentar
+   - Infinite scroll
+
+5. **TIPOS DE POSTS**
+   - **Post de texto**: Solo texto
+   - **Post con imagen**: 1 o varias imágenes (galería)
+   - **Post con video**: Video embebido con play
+   - **Post con link**: Preview card del link
+   - **Post con poll**: Encuesta con opciones votables
+   - **Post compartido**: Repost de otro usuario
+   - **Logro/Achievement**: Post destacado de logro del usuario
+
+6. **INTERACCIONES**
+   - **Likes**:
+     * Animación al dar like (corazón crece)
+     * Ver quién dio like (modal con lista)
+     * Reacciones (opcional: Like, Love, Wow, etc.)
+   - **Comentarios**:
+     * Responder a comentarios (threading)
+     * Like a comentarios
+     * Editar/Eliminar propio comentario
+     * Ordenar: Más recientes, Más relevantes
+   - **Compartir**:
+     * Compartir en el feed (repost)
+     * Copiar link
+     * Compartir en externo (WhatsApp, etc.)
+
+7. **FILTROS Y ORDENAMIENTO**
+   - Tabs de feed:
+     * Para ti (algoritmo personalizado)
+     * Siguiendo (solo de quien sigues)
+     * Trending (más engagement)
+     * Recientes
+   - Filtros:
+     * Solo con imágenes
+     * Solo videos
+     * Solo polls
+     * Por grupo específico
+
+8. **SIDEBAR (desktop)**
+   - **Sugerencias de personas a seguir**:
+     * Avatares + nombres
+     * Botón "Seguir"
+   - **Grupos populares**:
+     * Lista de grupos
+     * Botón "Unirse"
+   - **Trending topics**:
+     * Hashtags populares
+     * Click para filtrar feed
+
+9. **HISTORIAS/STORIES** (opcional)
+   - Carrusel de historias en top:
+     * Avatar con borde colorido
+     * Click para ver historia
+     * Crear tu historia (+)
+   - Viewer de historias:
+     * Fullscreen modal
+     * Auto-advance
+     * Progress bars por historia
+     * Reaccionar a historia
+
+10. **NOTIFICACIONES**
+    - Centro de notificaciones:
+      * Nuevo like en tu post
+      * Nuevo comentario
+      * Nuevo seguidor
+      * Mencionado en post
+      * Invitación a grupo
+    - Badge con contador
+    - Marcar como leídas
+
+11. **PERFIL DE USUARIO (VISTA RÁPIDA)**
+    - Click en avatar/nombre → popover:
+      * Foto de perfil y cover
+      * Nombre y bio breve
+      * Estadísticas (seguidores, siguiendo, posts)
+      * Botón Seguir/Siguiendo
+      * Botón "Ver perfil completo"
+
+12. **REPORTAR/MODERAR**
+    - Reportar post/comentario:
+      * Razones: Spam, Ofensivo, Inapropiado
+      * Enviar a moderadores
+    - Bloquear usuario
+    - Ocultar post ("No me interesa")
+
+13. **BÚSQUEDA EN COMUNIDAD**
+    - Buscar posts, personas, grupos
+    - Búsqueda por hashtags
+    - Búsqueda en comentarios
+
+14. **GAMIFICACIÓN**
+    - Badges/Logros de comunidad:
+      * Primer post
+      * 100 likes recibidos
+      * Miembro del mes
+    - Leaderboard de engagement
+
+15. **DATOS MOCKEADOS**
+    - 30-50 posts simulados
+    - Variedad de tipos de posts
+    - Usuarios variados con avatares
+    - Comentarios e interacciones
+    - Likes y shares realistas
+    - Notificaciones simuladas
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente pink-rose-red para hero
+- Cards de posts con glassmorphism
+- Avatares circulares con border
+- Botones de interacción con animación
+- Galería de imágenes con lightbox
+- Comentarios con threading visual
+- Pills de filtros activos
+- Sidebar con glassmorphism
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatorpro/comunidad/comunidad/feed-comunidad](src/features/plancreatorpro/comunidad/comunidad/feed-comunidad).
+
+---
+
+## 📋 PROMPT 6: Grupos de Comunidad
+- Gradiente: `from-purple-600 via-indigo-600 to-blue-600`
+- Gestión de grupos temáticos
+- Crear, unirse y administrar grupos
+- Feed por grupo, miembros, reglas
+
+## 📋 PROMPT 7: Moderación de Comunidad
+- Gradiente: `from-red-600 via-orange-600 to-yellow-600`
+- Panel de moderación de contenido
+- Cola de reportes, acciones de moderación
+- Usuarios baneados/suspendidos
+
+## 📋 PROMPT 8: Ranking de Actividad
+- Gradiente: `from-yellow-600 via-amber-600 to-orange-600`
+- Leaderboard de usuarios más activos
+- Gamificación y badges
+- Premios y reconocimientos
+
+## 📋 PROMPT 9: Crear Curso Online
+- Gradiente: `from-indigo-600 via-purple-600 to-pink-600`
+- Constructor de cursos paso a paso
+- Estructura de módulos y lecciones
+- Configuración de precio y acceso
+
+## 📋 PROMPT 10: Curso Detalle
+- Gradiente: `from-blue-600 via-cyan-600 to-teal-600`
+- Vista del estudiante de un curso
+- Progreso, lecciones, materiales
+- Certificado al completar
+
+## 📋 PROMPT 11: Gestión de Lecciones
+- Gradiente: `from-green-600 via-emerald-600 to-teal-600`
+- CRUD de lecciones por curso
+- Tipos: video, texto, quiz, descargable
+- Drag & drop para reordenar
+
+## 📋 PROMPT 12: Listado de Cursos
+- Gradiente: `from-purple-600 via-pink-600 to-rose-600`
+- Marketplace de cursos
+- Filtros, búsqueda, categorías
+- Preview de curso, ratings
+
+## 📋 PROMPT 13: Quizzes y Evaluaciones
+- Gradiente: `from-cyan-600 via-blue-600 to-indigo-600`
+- Constructor de quizzes
+- Tipos de preguntas (multiple choice, verdadero/falso, abierta)
+- Resultados y calificaciones automáticas
+
+## 📋 PROMPT 14: Crear Email Broadcast
+- Gradiente: `from-pink-600 via-fuchsia-600 to-purple-600`
+- Editor de emails masivos
+- Templates, segmentación, programación
+- A/B testing
+
+## 📋 PROMPT 15: Listado de Emails
+- Gradiente: `from-orange-600 via-red-600 to-pink-600`
+- Historial de campañas enviadas
+- Métricas (aperturas, clicks, conversiones)
+- Estados (draft, programado, enviado)
+
+## 📋 PROMPT 16: Plantillas de Email
+- Gradiente: `from-blue-600 via-indigo-600 to-purple-600`
+- Biblioteca de templates de email
+- Editor visual drag & drop
+- Guardar templates personalizados
+
+## 📋 PROMPT 17: Reportes de Envío
+- Gradiente: `from-green-600 via-teal-600 to-cyan-600`
+- Dashboard de analytics de emails
+- Gráficos de rendimiento
+- Exportar reportes
+
+## 📋 PROMPT 18: Beneficios de Membresía
+- Gradiente: `from-yellow-600 via-orange-600 to-red-600`
+- Configurar beneficios por tier
+- Features incluidas por nivel
+- Comparación visual de planes
+
+## 📋 PROMPT 19: Listado de Membresías
+- Gradiente: `from-indigo-600 via-blue-600 to-cyan-600`
+- Vista de planes disponibles
+- Pricing table elegante
+- Botones de suscripción
+
+## 📋 PROMPT 20: Página de Membresía
+- Gradiente: `from-purple-600 via-fuchsia-600 to-pink-600`
+- Landing page de venta de membresía
+- Testimonios, FAQs, comparación
+- CTA destacado
+
+## 📋 PROMPT 21: Pagos de Membresía
+- Gradiente: `from-green-600 via-emerald-600 to-teal-600`
+- Gestión de suscripciones y pagos
+- Historial de transacciones
+- Métodos de pago, facturas
+
+---
+
+# 📝 NOTAS GENERALES PARA TODOS LOS PROMPTS
+
+## ⚠️ IMPORTANTE:
+1. **SIEMPRE** revisar [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md) antes de empezar
+2. **NO CREAR NUEVOS ARCHIVOS** - Solo editar existentes
+3. Usar **TypeScript** correctamente
+4. Implementar **framer-motion** para animaciones
+5. Incluir **Lucide React** para iconos
+6. Datos **mockeados realistas**
+7. **Responsive** completo (mobile-first)
+8. **Código limpio** y bien comentado
+
+## Checklist de Estilización:
+- [ ] `rounded-3xl` para cards principales
+- [ ] `bg-white/80 backdrop-blur-xl` para glassmorphism
+- [ ] `border border-white/50` para definición
+- [ ] Gradientes de 3 colores en headers
+- [ ] Patrones sutiles (dots/grid) en backgrounds
+- [ ] Animaciones de entrada con framer-motion
+- [ ] `whileHover` para interactividad
+- [ ] `shadow-xl` y `hover:shadow-2xl`
+- [ ] Iconos en contenedores con backdrop blur
+- [ ] Progress bars con gradientes animados
+
+## Características Comunes:
+
+### Biblioteca de Contenidos
+- Búsqueda avanzada con filtros
+- Categorización clara
+- Preview/Vista previa de contenidos
+- Sistema de ratings y reviews
+- Guardados/Favoritos
+- Compartir en redes sociales
+- Analytics de uso
+
+### Comunidad
+- Feed social interactivo
+- Sistema de likes/comentarios/compartir
+- Notificaciones en tiempo real
+- Perfiles de usuario
+- Moderación de contenido
+- Gamificación y badges
+
+### Cursos Online
+- Estructura modular (curso → módulos → lecciones)
+- Tracking de progreso
+- Quizzes y evaluaciones
+- Certificados
+- Drip content (liberación programada)
+- Foros de discusión por curso
+
+### Email Broadcast
+- Editor WYSIWYG
+- Segmentación de audiencia
+- Programación de envíos
+- A/B testing
+- Analytics detallados (aperturas, clicks)
+- Templates reutilizables
+
+### Membresías
+- Tiers de suscripción
+- Comparación de planes
+- Gestión de pagos recurrentes
+- Beneficios por nivel
+- Upgrades/Downgrades
+- Trial periods
+
+---
+
+**Versión:** 1.0
+**Fecha:** Enero 2025
+**Sistema de Diseño:** Moderno con Glassmorphism
+**Área:** PlanCreatorPro Features (Tier Profesional)
+**Total de Módulos:** 21

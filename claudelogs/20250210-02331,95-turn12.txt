@@ -1,0 +1,47 @@
+﻿
+
+## Ô£à Componente Historial de Experimentos Completado
+
+He creado el componente **ExperimentHistory** con las siguientes caracter├¡sticas:
+
+### ­ƒÄ¿ Dise├▒o
+- **Gradiente amber-yellow-lime** en el header principal
+- Interfaz moderna con efectos glass morphism
+- Tarjetas con estados visuales diferenciados (ganador A, B, sin diferencia)
+
+### ­ƒôè Funcionalidades Principales
+
+1. **Historial de Tests Pasados**
+   - Lista completa de experimentos A/B realizados
+   - Datos de ambas variantes (conversiones, clicks, impresiones)
+   - Tasas de conversi├│n comparativas
+
+2. **An├ílisis de Resultados**
+   - Indicador de variante ganadora
+   - Porcentaje de mejora
+   - Nivel de confianza estad├¡stica
+   - M├®tricas detalladas por variante
+
+3. **Insights y Aprendizajes**
+   - Insights espec├¡ficos por cada experimento
+   - Secci├│n de aprendizajes clave globales:
+     - Elementos m├ís efectivos
+     - Mejores horarios
+     - Segmentos ganadores
+     - ├üreas de mejora
+
+4. **Estad├¡sticas Generales**
+   - Total de tests realizados
+   - Mejora promedio obtenida
+   - Tasa de ├®xito general
+
+5. **Sistema de Filtros**
+   - Por tipo (email, landing, anuncio, contenido)
+   - Por estado (gan├│ A, gan├│ B, sin diferencia, en curso)
+
+6. **Funcionalidad Extra**
+   - Bot├│n de exportaci├│n de datos
+   - Badges visuales de estado y tipo
+   - Iconos distintivos por resultado
+
+**Ubicaci├│n**: `src/features/agents/agente-marketing/components/campaign/ExperimentHistory.tsx`

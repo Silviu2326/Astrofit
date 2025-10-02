@@ -1,0 +1,752 @@
+# 🚀 PROMPTS DE ESTILIZACIÓN - FEATURES PLANSOLOPRO
+
+---
+
+## 📋 PROMPT 1: Landing de Servicios (Micrositio)
+
+Transforma completamente la página de Landing de Servicios ([src/features/plansolopro/micrositio/micrositio/landing-servicios/LandingServiciosPage.tsx](src/features/plansolopro/micrositio/micrositio/landing-servicios/LandingServiciosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea una landing page profesional para servicios de entrenamiento
+- Facilita la conversión de visitantes en clientes
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-blue-600 via-indigo-600 to-purple-600`
+   - Título "Tu Página de Servicios Profesional"
+   - Descripción: "Atrae más clientes con una presencia web impecable"
+   - Icono de landing page/web
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Visitas Este Mes
+   - Conversiones (%)
+   - Reservas Generadas
+   - Tasa de Rebote (%)
+   - Cards con glassmorphism
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente blue-indigo-purple para hero
+- Secciones modernas con glassmorphism
+- CTAs destacados con animaciones
+- Formularios de contacto elegantes
+- Galería de servicios con hover effects
+- Testimonios con avatares
+- Mapa de ubicación integrado
+- Footer profesional con links
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolopro/micrositio/micrositio/landing-servicios](src/features/plansolopro/micrositio/micrositio/landing-servicios).
+
+---
+
+## 📋 PROMPT 2: Página de Reserva (Micrositio)
+
+Transforma completamente la página de Reserva ([src/features/plansolopro/micrositio/micrositio/pagina-reserva/PaginaReservaPage.tsx](src/features/plansolopro/micrositio/micrositio/pagina-reserva/PaginaReservaPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema de reservas online intuitivo
+- Facilita la programación de citas para clientes
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-emerald-600 via-teal-600 to-cyan-600`
+   - Título "Reserva tu Sesión"
+   - Descripción: "Agenda tu cita en segundos"
+   - Icono de calendario/reloj
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Sesiones Disponibles Esta Semana
+   - Reservas Pendientes
+   - Horarios Populares
+   - Tasa de Ocupación (%)
+   - Cards con glassmorphism
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente emerald-teal-cyan para hero
+- Calendario visual interactivo
+- Selección de horarios con slots
+- Formulario de reserva paso a paso
+- Preview de disponibilidad en tiempo real
+- Confirmación con resumen elegante
+- Recordatorios automáticos configurables
+- Integración con Google Calendar
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolopro/micrositio/micrositio/pagina-reserva](src/features/plansolopro/micrositio/micrositio/pagina-reserva).
+
+---
+
+## 📋 PROMPT 3: Calendario Público (Micrositio)
+
+Transforma completamente la página de Calendario Público ([src/features/plansolopro/micrositio/micrositio/calendario-publico/CalendarioPublicoPage.tsx](src/features/plansolopro/micrositio/micrositio/calendario-publico/CalendarioPublicoPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un calendario público accesible para clientes
+- Facilita la visualización de disponibilidad
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-pink-600 via-rose-600 to-red-600`
+   - Título "Calendario de Disponibilidad"
+   - Descripción: "Encuentra el horario perfecto para ti"
+   - Icono de calendario público
+
+2. **CALENDARIO VISUAL**
+   - Vista mensual/semanal/diaria
+   - Slots de horarios disponibles (verde)
+   - Slots ocupados (gris)
+   - Hover para ver detalles
+   - Click para reservar
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente pink-rose-red para hero
+- Calendario fullscreen con navegación
+- Color coding por tipo de sesión
+- Leyenda de disponibilidad
+- Filtros por servicio/duración
+- Vista de lista alternativa
+- Timezone selector
+- Mobile-friendly touch interactions
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolopro/micrositio/micrositio/calendario-publico](src/features/plansolopro/micrositio/micrositio/calendario-publico).
+
+---
+
+## 📋 PROMPT 4: Testimonios de Clientes (Micrositio)
+
+Transforma completamente la página de Testimonios ([src/features/plansolopro/micrositio/micrositio/testimonios-clientes/TestimoniosClientesPage.tsx](src/features/plansolopro/micrositio/micrositio/testimonios-clientes/TestimoniosClientesPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea una galería de testimonios impactante
+- Facilita la validación social y credibilidad
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-amber-600 via-orange-600 to-red-600`
+   - Título "Lo que Dicen Nuestros Clientes"
+   - Descripción: "Historias reales de transformación"
+   - Icono de estrellas/testimonios
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Total de Testimonios
+   - Rating Promedio (★)
+   - Clientes Satisfechos (%)
+   - Transformaciones Destacadas
+   - Cards con glassmorphism
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente amber-orange-red para hero
+- Cards de testimonios con avatares
+- Rating stars animados
+- Before/After photo comparisons
+- Video testimonials con player
+- Filtros por categoría/servicio
+- Carousel de testimonios destacados
+- CTA para dejar testimonio
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolopro/micrositio/micrositio/testimonios-clientes](src/features/plansolopro/micrositio/micrositio/testimonios-clientes).
+
+---
+
+## 📋 PROMPT 5: Blog y Noticias (Micrositio)
+
+Transforma completamente la página de Blog ([src/features/plansolopro/micrositio/micrositio/blog-noticias/BlogNoticiasPage.tsx](src/features/plansolopro/micrositio/micrositio/blog-noticias/BlogNoticiasPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un blog profesional para contenido
+- Facilita el marketing de contenidos y SEO
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-violet-600 via-purple-600 to-fuchsia-600`
+   - Título "Blog y Noticias"
+   - Descripción: "Tips, consejos y actualizaciones"
+   - Icono de blog/artículos
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Total de Artículos
+   - Vistas Este Mes
+   - Artículos Publicados
+   - Categorías Activas
+   - Cards con glassmorphism
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente violet-purple-fuchsia para hero
+- Grid de artículos con featured image
+- Categorías y tags coloridos
+- Búsqueda de artículos
+- Filtros por categoría/fecha
+- Vista de artículo con rich content
+- Compartir en redes sociales
+- Newsletter subscription form
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolopro/micrositio/micrositio/blog-noticias](src/features/plansolopro/micrositio/micrositio/blog-noticias).
+
+---
+
+## 📋 PROMPT 6: Listado de Hábitos
+
+Transforma completamente la página de Listado de Hábitos ([src/features/plansolopro/habitos-avanzados/habitos-avanzados/listado-habitos/ListadoHabitosPage.tsx](src/features/plansolopro/habitos-avanzados/habitos-avanzados/listado-habitos/ListadoHabitosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema de tracking de hábitos completo
+- Facilita el seguimiento de rutinas diarias
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-green-600 via-emerald-600 to-teal-600`
+   - Título "Mis Hábitos"
+   - Descripción: "Construye rutinas que transforman"
+   - Icono de checklist/hábitos
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Hábitos Activos
+   - Racha Más Larga (días)
+   - Tasa de Cumplimiento (%)
+   - Hábitos Completados Hoy
+   - Cards con glassmorphism
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente green-emerald-teal para hero
+- Cards de hábitos con checkbox interactivo
+- Streak counter con fuego animado
+- Progress bars por hábito
+- Filtros por categoría/frecuencia
+- Vista calendario de hábitos (heatmap)
+- Badges de logros y milestones
+- Quick actions para marcar como hecho
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolopro/habitos-avanzados/habitos-avanzados/listado-habitos](src/features/plansolopro/habitos-avanzados/habitos-avanzados/listado-habitos).
+
+---
+
+## 📋 PROMPT 7: Crear Hábito
+
+Transforma completamente la página de Crear Hábito ([src/features/plansolopro/habitos-avanzados/habitos-avanzados/crear-habito/CrearHabitoPage.tsx](src/features/plansolopro/habitos-avanzados/habitos-avanzados/crear-habito/CrearHabitoPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un formulario completo de creación de hábitos
+- Facilita la configuración de rutinas personalizadas
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-cyan-600 via-blue-600 to-indigo-600`
+   - Título "Crear Nuevo Hábito"
+   - Descripción: "Define tu rutina perfecta"
+   - Icono de plus/nuevo hábito
+
+2. **FORMULARIO PASO A PASO**
+   - Step 1: Información básica
+   - Step 2: Frecuencia y horarios
+   - Step 3: Recordatorios
+   - Step 4: Meta y motivación
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente cyan-blue-indigo para hero
+- Stepper horizontal con progreso
+- Campos de formulario elegantes
+- Selector de iconos para hábito
+- Color picker para categoría
+- Frequency selector (diario/semanal/mensual)
+- Time picker para recordatorios
+- Preview del hábito configurado
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolopro/habitos-avanzados/habitos-avanzados/crear-habito](src/features/plansolopro/habitos-avanzados/habitos-avanzados/crear-habito).
+
+---
+
+## 📋 PROMPT 8: Estadísticas de Hábitos
+
+Transforma completamente la página de Estadísticas de Hábitos ([src/features/plansolopro/habitos-avanzados/habitos-avanzados/estadisticas-habitos/EstadisticasHabitosPage.tsx](src/features/plansolopro/habitos-avanzados/habitos-avanzados/estadisticas-habitos/EstadisticasHabitosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un dashboard analítico de hábitos
+- Facilita el seguimiento del progreso
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-orange-600 via-red-600 to-pink-600`
+   - Título "Estadísticas de Hábitos"
+   - Descripción: "Visualiza tu progreso y crecimiento"
+   - Icono de gráficos/analytics
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Promedio de Cumplimiento (%)
+   - Días Consecutivos
+   - Hábito Más Consistente
+   - Mejor Racha del Año
+   - Cards con glassmorphism
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente orange-red-pink para hero
+- Gráficos de línea de progreso (Recharts)
+- Heatmap de cumplimiento (GitHub-style)
+- Gráfico de dona por categoría
+- Timeline de hábitos completados
+- Comparativas mes vs mes
+- Insights y recomendaciones con IA
+- Exportar reportes
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolopro/habitos-avanzados/habitos-avanzados/estadisticas-habitos](src/features/plansolopro/habitos-avanzados/habitos-avanzados/estadisticas-habitos).
+
+---
+
+## 📋 PROMPT 9: Retos de Hábitos
+
+Transforma completamente la página de Retos de Hábitos ([src/features/plansolopro/habitos-avanzados/habitos-avanzados/retos-habitos/RetosHabitosPage.tsx](src/features/plansolopro/habitos-avanzados/habitos-avanzados/retos-habitos/RetosHabitosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema de desafíos gamificado
+- Facilita la motivación mediante retos
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-yellow-600 via-amber-600 to-orange-600`
+   - Título "Retos y Desafíos"
+   - Descripción: "Supérate a ti mismo cada día"
+   - Icono de trofeo/medalla
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Retos Activos
+   - Retos Completados
+   - Días en Racha Actual
+   - Puntos Acumulados
+   - Cards con glassmorphism
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente yellow-amber-orange para hero
+- Cards de retos con ilustraciones
+- Progress rings para retos activos
+- Badges de logros desbloqueados
+- Leaderboard de participantes
+- Contador de días restantes
+- Premios y recompensas visuales
+- Compartir logros en redes
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolopro/habitos-avanzados/habitos-avanzados/retos-habitos](src/features/plansolopro/habitos-avanzados/habitos-avanzados/retos-habitos).
+
+---
+
+## 📋 PROMPT 10: Videollamada - Sala
+
+Transforma completamente la página de Videollamada ([src/features/plansolopro/tele-sesiones/tele-sesiones/videollamada-sala/VideollamadaSalaPage.tsx](src/features/plansolopro/tele-sesiones/tele-sesiones/videollamada-sala/VideollamadaSalaPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea una sala de videollamadas profesional
+- Facilita sesiones virtuales de alta calidad
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION (Pre-join)**
+   - Gradiente `from-indigo-600 via-blue-600 to-cyan-600`
+   - Título "Sala de Videollamada"
+   - Descripción: "Tu sesión virtual profesional"
+   - Icono de video/cámara
+
+2. **SALA DE VIDEOLLAMADA**
+   - Video principal (pantalla completa)
+   - Controles inferiores con glassmorphism
+   - Panel lateral de chat colapsable
+   - Indicadores de calidad de conexión
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente indigo-blue-cyan para pre-join
+- Video frame con bordes redondeados
+- Botones de control (mic, camera, share)
+- Indicador de red (verde/amarillo/rojo)
+- Chat sidebar con mensajes
+- Whiteboard compartida (opcional)
+- Screen sharing visual feedback
+- Notas en vivo integradas
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolopro/tele-sesiones/tele-sesiones/videollamada-sala](src/features/plansolopro/tele-sesiones/tele-sesiones/videollamada-sala).
+
+---
+
+## 📋 PROMPT 11: Grabaciones de Sesiones
+
+Transforma completamente la página de Grabaciones ([src/features/plansolopro/tele-sesiones/tele-sesiones/grabaciones-sesiones/GrabacionesSesionesPage.tsx](src/features/plansolopro/tele-sesiones/tele-sesiones/grabaciones-sesiones/GrabacionesSesionesPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea una biblioteca de grabaciones de sesiones
+- Facilita el acceso y gestión de videos
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-purple-600 via-pink-600 to-rose-600`
+   - Título "Grabaciones de Sesiones"
+   - Descripción: "Revive tus sesiones cuando quieras"
+   - Icono de play/video
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Total de Grabaciones
+   - Horas de Video
+   - Vistas Este Mes
+   - Almacenamiento Usado (GB)
+   - Cards con glassmorphism
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente purple-pink-rose para hero
+- Grid de videos con thumbnails
+- Player de video integrado
+- Filtros por fecha/cliente
+- Búsqueda por título
+- Compartir link de grabación
+- Download video option
+- Transcripción automática (si aplica)
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolopro/tele-sesiones/tele-sesiones/grabaciones-sesiones](src/features/plansolopro/tele-sesiones/tele-sesiones/grabaciones-sesiones).
+
+---
+
+## 📋 PROMPT 12: Chat de Sesión
+
+Transforma completamente la página de Chat de Sesión ([src/features/plansolopro/tele-sesiones/tele-sesiones/chat-sesion/ChatSesionPage.tsx](src/features/plansolopro/tele-sesiones/tele-sesiones/chat-sesion/ChatSesionPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un chat en tiempo real para sesiones
+- Facilita la comunicación durante videollamadas
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-teal-600 via-cyan-600 to-blue-600`
+   - Título "Chat de Sesión"
+   - Descripción: "Comparte mensajes y archivos"
+   - Icono de chat/mensajes
+
+2. **INTERFAZ DE CHAT**
+   - Lista de mensajes con scroll
+   - Input de mensaje inferior
+   - Burbujas de chat diferenciadas
+   - Timestamps en mensajes
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente teal-cyan-blue para hero
+- Burbujas de chat estilizadas
+- Avatares en mensajes
+- Typing indicator animado
+- Compartir archivos/imágenes
+- Emojis y reacciones
+- Scroll to bottom button
+- Notificaciones de mensaje nuevo
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolopro/tele-sesiones/tele-sesiones/chat-sesion](src/features/plansolopro/tele-sesiones/tele-sesiones/chat-sesion).
+
+---
+
+## 📋 PROMPT 13: Notas de Sesión
+
+Transforma completamente la página de Notas de Sesión ([src/features/plansolopro/tele-sesiones/tele-sesiones/notas-sesion/NotasSesionPage.tsx](src/features/plansolopro/tele-sesiones/tele-sesiones/notas-sesion/NotasSesionPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un editor de notas profesional
+- Facilita el registro de información de sesiones
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-lime-600 via-green-600 to-emerald-600`
+   - Título "Notas de Sesión"
+   - Descripción: "Registra y organiza tus observaciones"
+   - Icono de notas/documento
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Notas Creadas Este Mes
+   - Sesiones Documentadas
+   - Promedio de Notas por Sesión
+   - Últimas Notas (fecha)
+   - Cards con glassmorphism
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente lime-green-emerald para hero
+- Editor de texto enriquecido (WYSIWYG)
+- Templates de notas predefinidos
+- Tags y categorías
+- Búsqueda de notas
+- Adjuntar archivos
+- Compartir notas con cliente
+- Exportar a PDF
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolopro/tele-sesiones/tele-sesiones/notas-sesion](src/features/plansolopro/tele-sesiones/tele-sesiones/notas-sesion).
+
+---
+
+## 📋 PROMPT 14: Listado de Cupones
+
+Transforma completamente la página de Listado de Cupones ([src/features/plansolopro/cupones-avanzados/cupones-avanzados/listado-cupones/ListadoCuponesPage.tsx](src/features/plansolopro/cupones-avanzados/cupones-avanzados/listado-cupones/ListadoCuponesPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un gestor completo de cupones de descuento
+- Facilita promociones y estrategias de pricing
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-red-600 via-orange-600 to-yellow-600`
+   - Título "Gestión de Cupones"
+   - Descripción: "Crea ofertas irresistibles"
+   - Icono de cupón/descuento
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Cupones Activos
+   - Usos Este Mes
+   - Descuento Total Otorgado ($)
+   - Tasa de Conversión (%)
+   - Cards con glassmorphism
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente red-orange-yellow para hero
+- Cards de cupones tipo ticket
+- Badges de estado (activo/expirado)
+- Código de cupón copyable
+- Progress bar de usos
+- Filtros por tipo/estado
+- QR code por cupón
+- Estadísticas de rendimiento
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolopro/cupones-avanzados/cupones-avanzados/listado-cupones](src/features/plansolopro/cupones-avanzados/cupones-avanzados/listado-cupones).
+
+---
+
+## 📋 PROMPT 15: Crear Cupón
+
+Transforma completamente la página de Crear Cupón ([src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/CrearCuponPage.tsx](src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/CrearCuponPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un formulario completo de cupones
+- Facilita la configuración de promociones
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-fuchsia-600 via-purple-600 to-violet-600`
+   - Título "Crear Nuevo Cupón"
+   - Descripción: "Configura tu promoción perfecta"
+   - Icono de plus/nuevo cupón
+
+2. **FORMULARIO DE CUPÓN**
+   - Tipo de descuento (% o $)
+   - Código del cupón
+   - Fechas de validez
+   - Límites de uso
+   - Condiciones y restricciones
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente fuchsia-purple-violet para hero
+- Campos de formulario elegantes
+- Generador automático de código
+- Date range picker
+- Toggle switches para opciones
+- Preview del cupón visual
+- Simulador de descuento
+- Validaciones en tiempo real
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon](src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon).
+
+---
+
+## 📋 PROMPT 16: Reportes de Uso de Cupones
+
+Transforma completamente la página de Reportes de Uso ([src/features/plansolopro/cupones-avanzados/cupones-avanzados/reportes-uso/ReportesUsoPage.tsx](src/features/plansolopro/cupones-avanzados/cupones-avanzados/reportes-uso/ReportesUsoPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un dashboard analítico de cupones
+- Facilita el análisis de efectividad de promociones
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-sky-600 via-blue-600 to-indigo-600`
+   - Título "Reportes de Cupones"
+   - Descripción: "Analiza el impacto de tus promociones"
+   - Icono de gráficos/analytics
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Total Redimido ($)
+   - Cupones Más Populares
+   - ROI de Promociones (%)
+   - Nuevos Clientes por Cupón
+   - Cards con glassmorphism
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente sky-blue-indigo para hero
+- Gráficos de uso temporal (Recharts)
+- Tabla de cupones con métricas
+- Comparativa entre cupones
+- Funnel de conversión
+- Filtros temporales
+- Exportar reportes
+- Insights y recomendaciones
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolopro/cupones-avanzados/cupones-avanzados/reportes-uso](src/features/plansolopro/cupones-avanzados/cupones-avanzados/reportes-uso).
+
+---
+
+## 📋 PROMPT 17: Customer Journey
+
+Transforma completamente la página de Customer Journey ([src/features/plansolopro/recorrido-cliente/recorrido-cliente/customer-journey/CustomerJourneyPage.tsx](src/features/plansolopro/recorrido-cliente/recorrido-cliente/customer-journey/CustomerJourneyPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un visualizador del recorrido del cliente
+- Facilita el entendimiento del lifecycle completo
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-emerald-600 via-green-600 to-lime-600`
+   - Título "Recorrido del Cliente"
+   - Descripción: "Visualiza cada etapa del journey"
+   - Icono de mapa/ruta
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Clientes en Onboarding
+   - Etapa Promedio
+   - Tiempo Promedio por Etapa
+   - Tasa de Conversión (%)
+   - Cards con glassmorphism
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente emerald-green-lime para hero
+- Timeline visual de etapas
+- Progress tracker por cliente
+- Puntos de contacto (touchpoints)
+- Acciones en cada etapa
+- Filtros por estado del cliente
+- Vista individual del journey
+- Automated triggers configurables
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolopro/recorrido-cliente/recorrido-cliente/customer-journey](src/features/plansolopro/recorrido-cliente/recorrido-cliente/customer-journey).
+
+---
+
+## 📋 PROMPT 18: Hitos de Clientes
+
+Transforma completamente la página de Hitos de Clientes ([src/features/plansolopro/recorrido-cliente/recorrido-cliente/hitos-clientes/HitosClientesPage.tsx](src/features/plansolopro/recorrido-cliente/recorrido-cliente/hitos-clientes/HitosClientesPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema de milestones del cliente
+- Facilita el seguimiento de logros y progreso
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-amber-600 via-yellow-600 to-lime-600`
+   - Título "Hitos y Logros"
+   - Descripción: "Celebra cada victoria de tus clientes"
+   - Icono de bandera/logro
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Hitos Alcanzados Este Mes
+   - Clientes con Logros Recientes
+   - Hito Más Común
+   - Promedio de Hitos por Cliente
+   - Cards con glassmorphism
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente amber-yellow-lime para hero
+- Cards de hitos con iconos distintivos
+- Timeline de logros por cliente
+- Badges de celebración
+- Notificaciones de hitos alcanzados
+- Configurador de hitos personalizados
+- Compartir logros (social sharing)
+- Galería de transformaciones
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolopro/recorrido-cliente/recorrido-cliente/hitos-clientes](src/features/plansolopro/recorrido-cliente/recorrido-cliente/hitos-clientes).
+
+---
+
+## 📋 PROMPT 19: Alertas de Retención
+
+Transforma completamente la página de Alertas de Retención ([src/features/plansolopro/recorrido-cliente/recorrido-cliente/alertas-retencion/AlertasRetencionPage.tsx](src/features/plansolopro/recorrido-cliente/recorrido-cliente/alertas-retencion/AlertasRetencionPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema de alertas tempranas
+- Facilita la prevención de churn
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION**
+   - Gradiente `from-rose-600 via-red-600 to-orange-600`
+   - Título "Alertas de Retención"
+   - Descripción: "Prevén la pérdida de clientes antes de que suceda"
+   - Icono de campana/alerta
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Alertas Activas
+   - Clientes en Riesgo Alto
+   - Alertas Resueltas Este Mes
+   - Tasa de Retención (%)
+   - Cards con glassmorphism
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente rose-red-orange para hero
+- Cards de alertas por nivel de urgencia
+- Semáforo visual (rojo/amarillo/verde)
+- Lista priorizada de clientes
+- Score de riesgo de churn
+- Acciones rápidas sugeridas
+- Configurador de triggers de alerta
+- Timeline de intervenciones
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plansolopro/recorrido-cliente/recorrido-cliente/alertas-retencion](src/features/plansolopro/recorrido-cliente/recorrido-cliente/alertas-retencion).
+
+---
+
+# 📝 NOTAS GENERALES PARA TODOS LOS PROMPTS
+
+## ⚠️ IMPORTANTE:
+1. **SIEMPRE** revisar [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md) antes de empezar
+2. **NO CREAR NUEVOS ARCHIVOS** - Solo editar existentes
+3. Usar **TypeScript** correctamente
+4. Implementar **framer-motion** para animaciones
+5. Incluir **Lucide React** para iconos
+6. Datos **mockeados realistas**
+7. **Responsive** completo (mobile-first)
+8. **Código limpio** y bien comentado
+
+## Checklist de Estilización:
+- [ ] `rounded-3xl` para cards principales
+- [ ] `bg-white/80 backdrop-blur-xl` para glassmorphism
+- [ ] `border border-white/50` para definición
+- [ ] Gradientes de 3 colores en headers
+- [ ] Animaciones de entrada con framer-motion
+- [ ] `whileHover` para interactividad
+- [ ] `shadow-xl` y `hover:shadow-2xl`
+- [ ] Gráficos con Recharts (cuando aplique)
+- [ ] Progress bars con gradientes animados
+
+---
+
+**Versión:** 1.0
+**Fecha:** Enero 2025
+**Sistema de Diseño:** Moderno con Glassmorphism
+**Área:** PlanSoloPro Features (Tier Profesional)

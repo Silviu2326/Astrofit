@@ -1,0 +1,73 @@
+## 📋 PROMPT 11: Experimentos A/B
+- Gradiente: red-orange-yellow
+- Crear y gestionar tests A/B
+- Constructor visual de variantes
+- Métricas y resultados en tiempo real
+
+## 📋 PROMPT 12: Historial de Experimentos
+- Gradiente: amber-yellow-lime
+- Archivo de tests pasados
+- Análisis de resultados históricos
+- Insights y aprendizajes
+
+## 📋 PROMPT 13: Resultados de Tests
+- Gradiente: green-emerald-teal
+- Dashboard de resultados A/B
+- Significancia estadística
+- Recomendaciones de implementación
+
+## 📋 PROMPT 14: Catálogo de Productos (Tienda)
+- Gradiente: blue-indigo-purple
+- Gestión de productos de merchandising
+- Variantes y SKUs
+- Inventario y precios
+
+## 📋 PROMPT 15: Configuración de Tienda
+- Gradiente: purple-fuchsia-pink
+- Personalización de tienda online
+- Métodos de pago y envío
+- Configuración de impuestos
+
+## 📋 PROMPT 16: Pedidos de Clientes
+- Gradiente: cyan-blue-indigo
+- Gestión de órdenes
+- Estados de envío
+- Comunicación con clientes
+
+## 📋 PROMPT 17: Informes de Ventas
+- Gradiente: green-teal-cyan
+- Analytics de ventas
+- Productos más vendidos
+- Proyecciones y tendencias
+
+---
+
+# 📝 NOTAS GENERALES PARA TODOS LOS PROMPTS
+
+## ⚠️ IMPORTANTE:
+1. **SIEMPRE** revisar [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md) antes de empezar
+2. **NO CREAR NUEVOS ARCHIVOS** - Solo editar existentes
+3. Usar **TypeScript** correctamente
+4. Implementar **framer-motion** para animaciones
+5. Incluir **Lucide React** para iconos
+6. Datos **mockeados realistas**
+7. **Responsive** completo (mobile-first)
+8. **Código limpio** y bien comentado
+
+## Checklist de Estilización:
+- [ ] `rounded-3xl` para cards principales
+- [ ] `bg-white/80 backdrop-blur-xl` para glassmorphism
+- [ ] `border border-white/50` para definición
+- [ ] Gradientes de 3 colores en headers
+- [ ] Animaciones de entrada con framer-motion
+- [ ] `whileHover` para interactividad
+- [ ] `shadow-xl` y `hover:shadow-2xl`
+- [ ] Gráficos con Recharts (cuando aplique)
+- [ ] Progress bars con gradientes animados
+
+---
+
+**Versión:** 1.0
+**Fecha:** Enero 2025
+**Sistema de Diseño:** Moderno con Glassmorphism
+**Área:** PlanCreatorMax Features (Tier Avanzado)
