@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 import {
   Edit,
   Copy,
   Trash2,
   Eye,
-  Star,
   Users,
   TrendingUp,
   MoreVertical,
   Check,
   X,
   Package,
-  DollarSign,
+  Clock,
 } from 'lucide-react';
+import Modal from '../../../../../components/ui/modal';
 import { getProductos, getBestSellingProducts, Producto } from '../productosServiciosApi';
 
 interface CatalogoCompletoProps {
@@ -25,16 +26,60 @@ const CatalogoCompleto: React.FC<CatalogoCompletoProps> = ({ viewMode, searchTer
   const [todosProductos, setTodosProductos] = useState<Producto[]>([]);
   const [bestSellers, setBestSellers] = useState<Producto[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Producto[]>([]);
+  const [showProductDetail, setShowProductDetail] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Producto | null>(null);
 
   useEffect(() => {
     const fetchProductos = async () => {
-      const allData = await getProductos();
-      setTodosProductos(allData);
-      const bestSellerData = await getBestSellingProducts();
-      setBestSellers(bestSellerData);
+      try {
+        const allData = await getProductos();
+        setTodosProductos(allData);
+        const bestSellerData = await getBestSellingProducts();
+        setBestSellers(bestSellerData);
+      } catch (error) {
+        toast.error('Error al cargar los productos');
+      }
     };
     fetchProductos();
   }, []);
+
+  const handleViewProduct = (producto: Producto) => {
+    setSelectedProduct(producto);
+    setShowProductDetail(true);
+  };
+
+  const handleEditProduct = (producto: Producto) => {
+    setSelectedProduct(producto);
+    setShowEditModal(true);
+  };
+
+  const handleDuplicateProduct = (producto: Producto) => {
+    // Simular duplicación
+    toast.success(`Producto "${producto.nombre}" duplicado exitosamente`);
+  };
+
+  const handleDeleteProduct = (producto: Producto) => {
+    setSelectedProduct(producto);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = () => {
+    if (selectedProduct) {
+      toast.success(`Producto "${selectedProduct.nombre}" eliminado exitosamente`);
+      setShowDeleteModal(false);
+      setSelectedProduct(null);
+    }
+  };
+
+  const handleSaveEdit = () => {
+    if (selectedProduct) {
+      toast.success(`Producto "${selectedProduct.nombre}" actualizado exitosamente`);
+      setShowEditModal(false);
+      setSelectedProduct(null);
+    }
+  };
 
   useEffect(() => {
     if (searchTerm) {
@@ -108,9 +153,15 @@ const CatalogoCompleto: React.FC<CatalogoCompletoProps> = ({ viewMode, searchTer
           </div>
 
           {/* Menú de acciones */}
-          <button className="p-2 bg-white/20 backdrop-blur-md rounded-xl hover:bg-white/30 transition-colors">
-            <MoreVertical className="w-5 h-5 text-white" />
-          </button>
+          <div className="relative">
+            <button 
+              onClick={() => handleViewProduct(producto)}
+              className="p-2 bg-white/20 backdrop-blur-md rounded-xl hover:bg-white/30 transition-colors"
+              title="Ver opciones"
+            >
+              <MoreVertical className="w-5 h-5 text-white" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -185,6 +236,7 @@ const CatalogoCompleto: React.FC<CatalogoCompletoProps> = ({ viewMode, searchTer
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
+              onClick={() => handleViewProduct(producto)}
               className="p-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-xl transition-colors"
               title="Ver detalle"
             >
@@ -193,6 +245,7 @@ const CatalogoCompleto: React.FC<CatalogoCompletoProps> = ({ viewMode, searchTer
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
+              onClick={() => handleEditProduct(producto)}
               className="p-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 rounded-xl transition-colors"
               title="Editar"
             >
@@ -201,6 +254,7 @@ const CatalogoCompleto: React.FC<CatalogoCompletoProps> = ({ viewMode, searchTer
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
+              onClick={() => handleDuplicateProduct(producto)}
               className="p-2 bg-purple-50 hover:bg-purple-100 text-purple-600 rounded-xl transition-colors"
               title="Duplicar"
             >
@@ -209,6 +263,7 @@ const CatalogoCompleto: React.FC<CatalogoCompletoProps> = ({ viewMode, searchTer
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
+              onClick={() => handleDeleteProduct(producto)}
               className="p-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl transition-colors"
               title="Eliminar"
             >
@@ -289,6 +344,185 @@ const CatalogoCompleto: React.FC<CatalogoCompletoProps> = ({ viewMode, searchTer
           </div>
         )}
       </section>
+
+      {/* Modal Detalle del Producto */}
+      <Modal
+        isOpen={showProductDetail}
+        onClose={() => setShowProductDetail(false)}
+        title={selectedProduct?.nombre || 'Detalle del Producto'}
+        size="lg"
+      >
+        {selectedProduct && (
+          <div className="space-y-6">
+            <div className="grid grid-cols-2 gap-6">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Información General</h3>
+                <div className="space-y-2">
+                  <p><span className="font-semibold">Precio:</span> €{selectedProduct.precio}</p>
+                  <p><span className="font-semibold">Duración:</span> {selectedProduct.duracion}</p>
+                  <p><span className="font-semibold">Modalidad:</span> {selectedProduct.modalidad}</p>
+                  <p><span className="font-semibold">Tipo:</span> {selectedProduct.tipo}</p>
+                  <p><span className="font-semibold">Estado:</span> 
+                    <span className={`ml-2 px-2 py-1 rounded-full text-xs font-semibold ${
+                      selectedProduct.disponibilidad 
+                        ? 'bg-green-100 text-green-700' 
+                        : 'bg-gray-100 text-gray-700'
+                    }`}>
+                      {selectedProduct.disponibilidad ? 'Activo' : 'Inactivo'}
+                    </span>
+                  </p>
+                </div>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Descripción</h3>
+                <p className="text-gray-600">{selectedProduct.descripcion}</p>
+              </div>
+            </div>
+            
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Características</h3>
+              <ul className="space-y-1">
+                {selectedProduct.caracteristicas.map((caracteristica, idx) => (
+                  <li key={idx} className="flex items-start gap-2">
+                    <Check className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                    <span className="text-gray-700">{caracteristica}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {selectedProduct.cupos && (
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Disponibilidad</h3>
+                <p className="text-gray-600">Cupos disponibles: {selectedProduct.cupos}</p>
+              </div>
+            )}
+          </div>
+        )}
+      </Modal>
+
+      {/* Modal Editar Producto */}
+      <Modal
+        isOpen={showEditModal}
+        onClose={() => setShowEditModal(false)}
+        title="Editar Producto"
+        size="lg"
+      >
+        {selectedProduct && (
+          <div className="space-y-6">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Nombre del Producto
+              </label>
+              <input
+                type="text"
+                defaultValue={selectedProduct.nombre}
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Descripción
+              </label>
+              <textarea
+                defaultValue={selectedProduct.descripcion}
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"
+                rows={3}
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Precio (€)
+                </label>
+                <input
+                  type="number"
+                  defaultValue={selectedProduct.precio}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Duración
+                </label>
+                <input
+                  type="text"
+                  defaultValue={selectedProduct.duracion}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                defaultChecked={selectedProduct.disponibilidad}
+                className="w-4 h-4 text-emerald-600 rounded"
+              />
+              <label className="text-sm font-semibold text-gray-700">
+                Producto activo
+              </label>
+            </div>
+
+            <div className="flex justify-end gap-3 pt-4">
+              <button
+                onClick={() => setShowEditModal(false)}
+                className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleSaveEdit}
+                className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
+              >
+                Guardar Cambios
+              </button>
+            </div>
+          </div>
+        )}
+      </Modal>
+
+      {/* Modal Confirmar Eliminación */}
+      <Modal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        title="Confirmar Eliminación"
+        size="sm"
+      >
+        {selectedProduct && (
+          <div className="space-y-6">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Trash2 className="w-8 h-8 text-red-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                ¿Eliminar producto?
+              </h3>
+              <p className="text-gray-600">
+                ¿Estás seguro de que quieres eliminar <strong>"{selectedProduct.nombre}"</strong>? 
+                Esta acción no se puede deshacer.
+              </p>
+            </div>
+
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="px-6 py-3 bg-red-600 text-white rounded-xl font-semibold hover:bg-red-700 transition-colors"
+              >
+                Eliminar
+              </button>
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 };

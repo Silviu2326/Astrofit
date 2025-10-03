@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.app.json"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^16.6.0",
     "@reduxjs/toolkit": "^2.9.0",
     "@supabase/supabase-js": "^2.57.4",
     "@tanstack/react-query": "^5.90.2",
@@ -21,13 +22,13 @@
     "framer-motion": "^12.23.22",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
-    "react-beautiful-dnd": "^13.1.1",
     "react-calendar": "^6.0.0",
     "react-chartjs-2": "^5.3.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.63.0",
+    "react-hot-toast": "^2.6.0",
     "react-icons": "^5.5.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.9.3",

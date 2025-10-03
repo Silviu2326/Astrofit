@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Mail, User, CreditCard, AlertCircle, Reply, Archive, Star } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import { Mail, User, CreditCard, AlertCircle, Reply, Archive, Star, Send, X } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -10,6 +10,8 @@ interface Message {
   read: boolean;
   priority: 'high' | 'medium' | 'low';
   type: 'client' | 'system' | 'payment';
+  starred?: boolean;
+  archived?: boolean;
 }
 
 interface MessageCenterProps {
@@ -18,6 +20,11 @@ interface MessageCenterProps {
 
 export const MessageCenter: React.FC<MessageCenterProps> = ({ messages }) => {
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
+  const [localMessages, setLocalMessages] = useState<Message[]>(() => messages);
+  const [isReplying, setIsReplying] = useState(false);
+  const [replyText, setReplyText] = useState('');
+
+  const visibleMessages = useMemo(() => localMessages.filter(m => !m.archived), [localMessages]);
 
   const getMessageIcon = (type: string) => {
     switch (type) {
@@ -59,18 +66,23 @@ export const MessageCenter: React.FC<MessageCenterProps> = ({ messages }) => {
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-semibold text-gray-800">Mensajes</h3>
           <span className="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-xs font-medium">
-            {messages.filter(m => !m.read).length} nuevos
+            {visibleMessages.filter(m => !m.read).length} nuevos
           </span>
         </div>
         
         <div className="space-y-2 max-h-80 overflow-y-auto">
-          {messages.map((message) => {
+          {visibleMessages.map((message) => {
             const Icon = getMessageIcon(message.type);
             
             return (
               <div
                 key={message.id}
-                onClick={() => setSelectedMessage(message)}
+                onClick={() => {
+                  setSelectedMessage(message);
+                  if (!message.read) {
+                    setLocalMessages(prev => prev.map(m => m.id === message.id ? { ...m, read: true } : m));
+                  }
+                }}
                 className={`p-3 rounded-lg border-l-4 cursor-pointer transition-colors hover:bg-gray-50 ${
                   getPriorityColor(message.priority)
                 } ${!message.read ? 'bg-blue-50' : 'bg-white'} ${
@@ -109,13 +121,33 @@ export const MessageCenter: React.FC<MessageCenterProps> = ({ messages }) => {
                 <p className="text-sm text-gray-600">De: {selectedMessage.sender}</p>
               </div>
               <div className="flex items-center space-x-2">
-                <button className="p-2 text-gray-500 hover:text-blue-600 rounded-lg hover:bg-blue-50">
+                <button
+                  onClick={() => {
+                    setIsReplying(true);
+                  }}
+                  className="p-2 text-gray-500 hover:text-blue-600 rounded-lg hover:bg-blue-50"
+                >
                   <Reply className="h-4 w-4" />
                 </button>
-                <button className="p-2 text-gray-500 hover:text-yellow-600 rounded-lg hover:bg-yellow-50">
+                <button
+                  onClick={() => {
+                    if (!selectedMessage) return;
+                    setLocalMessages(prev => prev.map(m => m.id === selectedMessage.id ? { ...m, starred: !m.starred } : m));
+                    setSelectedMessage(prev => prev ? { ...prev, starred: !prev.starred } as Message : prev);
+                  }}
+                  className={`p-2 rounded-lg hover:bg-yellow-50 ${selectedMessage.starred ? 'text-yellow-600' : 'text-gray-500 hover:text-yellow-600'}`}
+                >
                   <Star className="h-4 w-4" />
                 </button>
-                <button className="p-2 text-gray-500 hover:text-gray-600 rounded-lg hover:bg-gray-50">
+                <button
+                  onClick={() => {
+                    if (!selectedMessage) return;
+                    setLocalMessages(prev => prev.map(m => m.id === selectedMessage.id ? { ...m, archived: true } : m));
+                    setSelectedMessage(null);
+                    setIsReplying(false);
+                  }}
+                  className="p-2 text-gray-500 hover:text-gray-600 rounded-lg hover:bg-gray-50"
+                >
                   <Archive className="h-4 w-4" />
                 </button>
               </div>
@@ -140,10 +172,55 @@ export const MessageCenter: React.FC<MessageCenterProps> = ({ messages }) => {
                   {formatTimeAgo(selectedMessage.timestamp)}
                 </span>
               </div>
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium">
-                Responder
-              </button>
+              {!isReplying ? (
+                <button
+                  onClick={() => setIsReplying(true)}
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium"
+                >
+                  Responder
+                </button>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => { setIsReplying(false); setReplyText(''); }}
+                    className="p-2 text-gray-500 hover:text-gray-700 rounded-lg hover:bg-gray-100"
+                    aria-label="Cancelar respuesta"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+              )}
             </div>
+
+            {isReplying && (
+              <div className="border border-gray-200 rounded-lg p-3">
+                <textarea
+                  value={replyText}
+                  onChange={(e) => setReplyText(e.target.value)}
+                  placeholder={`Responder a ${selectedMessage.sender}...`}
+                  className="w-full border-0 outline-none resize-none bg-transparent text-gray-900 placeholder-gray-500 min-h-[60px]"
+                />
+                <div className="flex justify-end gap-2 mt-2">
+                  <button
+                    onClick={() => { setIsReplying(false); setReplyText(''); }}
+                    className="px-3 py-2 text-sm text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (!replyText.trim()) return;
+                      // Simulación de envío
+                      setIsReplying(false);
+                      setReplyText('');
+                    }}
+                    className="inline-flex items-center gap-1 px-3 py-2 text-sm text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+                  >
+                    <Send className="h-4 w-4" /> Enviar
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         ) : (
           <div className="flex items-center justify-center h-full text-gray-500">

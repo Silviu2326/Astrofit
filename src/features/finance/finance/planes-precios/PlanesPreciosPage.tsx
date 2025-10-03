@@ -6,17 +6,11 @@ import {
   TrendingUp,
   TrendingDown,
   Target,
-  Plus,
-  Settings,
-  Grid,
-  List,
   Check,
   X,
   Edit2,
   Eye,
-  Calendar,
   CreditCard,
-  Gift,
   Bell,
   Download,
   ChevronRight,
@@ -27,7 +21,6 @@ import {
   Star,
   Sparkles,
   Building2,
-  Info,
   HelpCircle,
   MessageSquare,
   Shield,
@@ -35,13 +28,15 @@ import {
   ChevronDown,
   ChevronUp,
   ArrowUpRight,
+  Trash2,
+  Copy,
+  Phone,
+  Mail,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   LineChart,
   Line,
-  BarChart,
-  Bar,
   PieChart,
   Pie,
   Cell,
@@ -52,6 +47,9 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import toast from 'react-hot-toast';
+import Modal from '../../../../components/ui/modal';
+import ConfirmationModal from '../../../../components/ui/confirmation-modal';
 
 // ==================== TIPOS ====================
 type PlanFrequency = 'monthly' | 'quarterly' | 'annual' | 'custom';
@@ -128,13 +126,6 @@ interface Testimonial {
   rating: number;
 }
 
-interface Addon {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  icon: string;
-}
 
 // ==================== DATOS MOCKEADOS ====================
 const mockPlans: Plan[] = [
@@ -427,6 +418,7 @@ const mockTestimonials: Testimonial[] = [
     name: 'Ana Martínez',
     business: 'Centro Wellness Barcelona',
     plan: 'Premium',
+    avatar: 'AM',
     quote: 'El plan Premium vale cada euro. Las funciones avanzadas nos han ayudado a duplicar nuestra retención de clientes.',
     rating: 5,
   },
@@ -435,6 +427,7 @@ const mockTestimonials: Testimonial[] = [
     name: 'Luis Fernández',
     business: 'CrossFit Valencia',
     plan: 'Básico',
+    avatar: 'LF',
     quote: 'Perfecto para empezar. Es económico pero tiene todas las funciones esenciales que necesitaba.',
     rating: 4,
   },
@@ -443,6 +436,7 @@ const mockTestimonials: Testimonial[] = [
     name: 'María García',
     business: 'Elite Gym Network',
     plan: 'Elite',
+    avatar: 'MG',
     quote: 'Gestiono 5 gimnasios con el plan Elite. El soporte personalizado y las funciones VIP son increíbles.',
     rating: 5,
   },
@@ -451,53 +445,17 @@ const mockTestimonials: Testimonial[] = [
     name: 'Jorge Sánchez',
     business: 'Studio Personal Training',
     plan: 'Pro',
+    avatar: 'JS',
     quote: 'La relación calidad-precio del plan Pro es insuperable. Mis clientes aman la app móvil.',
     rating: 5,
   },
 ];
 
-const mockAddons: Addon[] = [
-  {
-    id: 'addon1',
-    name: 'Clientes Adicionales',
-    description: 'Añade más clientes a tu plan actual',
-    price: 5,
-    icon: 'users',
-  },
-  {
-    id: 'addon2',
-    name: 'Almacenamiento Extra',
-    description: '50GB de almacenamiento adicional',
-    price: 10,
-    icon: 'database',
-  },
-  {
-    id: 'addon3',
-    name: 'Integración WhatsApp',
-    description: 'Comunicación directa con clientes',
-    price: 25,
-    icon: 'message',
-  },
-  {
-    id: 'addon4',
-    name: 'Branding Personalizado',
-    description: 'App con tu logo y colores',
-    price: 50,
-    icon: 'palette',
-  },
-  {
-    id: 'addon5',
-    name: 'Reportes Avanzados',
-    description: 'Analytics y reportes personalizados',
-    price: 30,
-    icon: 'chart',
-  },
-];
 
 // ==================== COMPONENTE PRINCIPAL ====================
 const PlanesPreciosPage: React.FC = () => {
-  const [viewMode, setViewMode] = useState<'pricing-table' | 'list'>('pricing-table');
-  const [showActiveOnly, setShowActiveOnly] = useState(true);
+  const [viewMode] = useState<'pricing-table' | 'list'>('pricing-table');
+  const [showActiveOnly] = useState(true);
   const [showNewPlanModal, setShowNewPlanModal] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
   const [showSubscribersModal, setShowSubscribersModal] = useState(false);
@@ -505,6 +463,16 @@ const PlanesPreciosPage: React.FC = () => {
   const [expandedFAQ, setExpandedFAQ] = useState<string | null>(null);
   const [numClients, setNumClients] = useState<number>(50);
   const [numUsers, setNumUsers] = useState<number>(3);
+  
+  // Estados para modales y confirmaciones
+  const [showPlanDetailsModal, setShowPlanDetailsModal] = useState(false);
+  const [showEditPlanModal, setShowEditPlanModal] = useState(false);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [showExportModal, setShowExportModal] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
+  const [showTrialActionsModal, setShowTrialActionsModal] = useState(false);
+  const [selectedSubscription, setSelectedSubscription] = useState<Subscription | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const totalSubscribers = mockPlans.reduce((acc, plan) => acc + plan.subscribers, 0);
   const totalMRR = mockPlans.reduce((acc, plan) => acc + plan.mrr, 0);
@@ -570,6 +538,130 @@ const PlanesPreciosPage: React.FC = () => {
       return basePrice * (1 - discount / 100);
     }
     return basePrice;
+  };
+
+  // ==================== FUNCIONES DE MANEJO ====================
+  
+  const handlePlanSelect = (plan: Plan) => {
+    setSelectedPlan(plan);
+    setShowPlanDetailsModal(true);
+    toast.success(`Plan ${plan.name} seleccionado`, {
+      icon: '🎯',
+    });
+  };
+
+  const handleEditPlan = (plan: Plan) => {
+    setSelectedPlan(plan);
+    setShowEditPlanModal(true);
+  };
+
+  const handleDeletePlan = (plan: Plan) => {
+    setSelectedPlan(plan);
+    setShowDeleteConfirmation(true);
+  };
+
+  const confirmDeletePlan = async () => {
+    if (!selectedPlan) return;
+    
+    setIsLoading(true);
+    try {
+      // Simular llamada API
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      toast.success(`Plan ${selectedPlan.name} eliminado correctamente`, {
+        icon: '🗑️',
+      });
+      setShowDeleteConfirmation(false);
+      setSelectedPlan(null);
+    } catch (error) {
+      toast.error('Error al eliminar el plan');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleExportData = () => {
+    setShowExportModal(true);
+  };
+
+  const confirmExport = async (format: 'csv' | 'excel' | 'pdf') => {
+    setIsLoading(true);
+    try {
+      // Simular exportación
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      toast.success(`Datos exportados en formato ${format.toUpperCase()}`, {
+        icon: '📊',
+      });
+      setShowExportModal(false);
+    } catch (error) {
+      toast.error('Error al exportar los datos');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleContactSales = () => {
+    setShowContactModal(true);
+  };
+
+  const handleTrialAction = (subscription: Subscription) => {
+    setSelectedSubscription(subscription);
+    setShowTrialActionsModal(true);
+  };
+
+  const confirmTrialAction = async (action: 'convert' | 'extend') => {
+    if (!selectedSubscription) return;
+    
+    setIsLoading(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      const actionText = action === 'convert' ? 'convertido' : 'extendido';
+      toast.success(`Trial ${actionText} para ${selectedSubscription.customerName}`, {
+        icon: action === 'convert' ? '✅' : '⏰',
+      });
+      setShowTrialActionsModal(false);
+      setSelectedSubscription(null);
+    } catch (error) {
+      toast.error('Error al procesar la acción');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleCopyPlanLink = (plan: Plan) => {
+    const link = `${window.location.origin}/plans/${plan.id}`;
+    navigator.clipboard.writeText(link);
+    toast.success('Enlace copiado al portapapeles', {
+      icon: '📋',
+    });
+  };
+
+  const handleViewSubscribers = (plan: Plan) => {
+    setSelectedPlan(plan);
+    setShowSubscribersModal(true);
+  };
+
+  const handleAlertAction = (alert: Alert) => {
+    toast(`Procesando alerta: ${alert.message}`, {
+      icon: '🔔',
+    });
+  };
+
+  const handleSpecialOffer = (offer: string) => {
+    toast.success(`¡Oferta ${offer} aplicada!`, {
+      icon: '🎁',
+      duration: 6000,
+    });
+  };
+
+  const handleFAQCopy = (faq: FAQ) => {
+    const text = `P: ${faq.question}\nR: ${faq.answer}`;
+    navigator.clipboard.writeText(text);
+    toast.success('FAQ copiada al portapapeles', {
+      icon: '📋',
+    });
   };
 
   return (
@@ -719,7 +811,11 @@ const PlanesPreciosPage: React.FC = () => {
                   <p className="font-medium text-gray-900">{alert.message}</p>
                   <p className="text-sm text-gray-600">{alert.date}</p>
                 </div>
-                <button className="text-gray-400 hover:text-gray-600">
+                <button 
+                  onClick={() => handleAlertAction(alert)}
+                  className="text-gray-400 hover:text-gray-600"
+                  title="Procesar alerta"
+                >
                   <ChevronRight className="w-5 h-5" />
                 </button>
               </div>
@@ -849,6 +945,7 @@ const PlanesPreciosPage: React.FC = () => {
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      onClick={() => handlePlanSelect(plan)}
                       className={`w-full py-3 rounded-xl font-semibold transition-all duration-300 mb-2 ${
                         plan.isPopular
                           ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/50'
@@ -862,7 +959,10 @@ const PlanesPreciosPage: React.FC = () => {
                       {plan.isPopular ? 'Comenzar Ahora' : 'Seleccionar Plan'}
                     </motion.button>
 
-                    <button className="w-full text-sm text-gray-600 hover:text-gray-900 font-medium">
+                    <button 
+                      onClick={() => handlePlanSelect(plan)}
+                      className="w-full text-sm text-gray-600 hover:text-gray-900 font-medium"
+                    >
                       Ver detalles completos →
                     </button>
                   </div>
@@ -952,16 +1052,32 @@ const PlanesPreciosPage: React.FC = () => {
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         <button
-                          onClick={() => setSelectedPlan(plan)}
+                          onClick={() => handleEditPlan(plan)}
                           className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                          title="Editar plan"
                         >
                           <Edit2 className="w-4 h-4 text-gray-600" />
                         </button>
                         <button
-                          onClick={() => setShowSubscribersModal(true)}
+                          onClick={() => handleViewSubscribers(plan)}
                           className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                          title="Ver suscriptores"
                         >
                           <Eye className="w-4 h-4 text-gray-600" />
+                        </button>
+                        <button
+                          onClick={() => handleCopyPlanLink(plan)}
+                          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                          title="Copiar enlace"
+                        >
+                          <Copy className="w-4 h-4 text-gray-600" />
+                        </button>
+                        <button
+                          onClick={() => handleDeletePlan(plan)}
+                          className="p-2 hover:bg-red-100 rounded-lg transition-colors"
+                          title="Eliminar plan"
+                        >
+                          <Trash2 className="w-4 h-4 text-red-600" />
                         </button>
                       </div>
                     </td>
@@ -1017,7 +1133,7 @@ const PlanesPreciosPage: React.FC = () => {
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
-                data={mockPlans}
+                data={mockPlans.map(plan => ({ name: plan.name, subscribers: plan.subscribers, color: plan.color }))}
                 dataKey="subscribers"
                 nameKey="name"
                 cx="50%"
@@ -1111,6 +1227,7 @@ const PlanesPreciosPage: React.FC = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={handleContactSales}
                   className="mt-4 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold shadow-lg"
                 >
                   Hablar con Ventas
@@ -1163,6 +1280,7 @@ const PlanesPreciosPage: React.FC = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => handleSpecialOffer('Black Friday')}
                 className="w-full py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-xl font-semibold shadow-lg"
               >
                 Aprovechar Oferta
@@ -1211,6 +1329,7 @@ const PlanesPreciosPage: React.FC = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => handleSpecialOffer('Paquete Anual')}
                 className="w-full py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-xl font-semibold shadow-lg"
               >
                 Seleccionar Paquete
@@ -1257,6 +1376,7 @@ const PlanesPreciosPage: React.FC = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => handleSpecialOffer('Starter Pack')}
                 className="w-full py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl font-semibold shadow-lg"
               >
                 Comenzar Ahora
@@ -1321,22 +1441,39 @@ const PlanesPreciosPage: React.FC = () => {
               transition={{ delay: index * 0.05 }}
               className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg border border-white/50 overflow-hidden"
             >
-              <button
-                onClick={() => setExpandedFAQ(expandedFAQ === faq.id ? null : faq.id)}
-                className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
-              >
-                <div className="flex items-center gap-3 flex-1">
+              <div className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors">
+                <button
+                  onClick={() => setExpandedFAQ(expandedFAQ === faq.id ? null : faq.id)}
+                  className="flex items-center gap-3 flex-1 text-left"
+                >
                   <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center flex-shrink-0">
                     <HelpCircle className="w-5 h-5 text-purple-600" />
                   </div>
                   <span className="font-semibold text-gray-900">{faq.question}</span>
+                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleFAQCopy(faq);
+                    }}
+                    className="p-1 hover:bg-gray-200 rounded transition-colors"
+                    title="Copiar FAQ"
+                  >
+                    <Copy className="w-4 h-4 text-gray-500" />
+                  </button>
+                  <button
+                    onClick={() => setExpandedFAQ(expandedFAQ === faq.id ? null : faq.id)}
+                    className="p-1 hover:bg-gray-200 rounded transition-colors"
+                  >
+                    {expandedFAQ === faq.id ? (
+                      <ChevronUp className="w-5 h-5 text-gray-600 flex-shrink-0" />
+                    ) : (
+                      <ChevronDown className="w-5 h-5 text-gray-600 flex-shrink-0" />
+                    )}
+                  </button>
                 </div>
-                {expandedFAQ === faq.id ? (
-                  <ChevronUp className="w-5 h-5 text-gray-600 flex-shrink-0" />
-                ) : (
-                  <ChevronDown className="w-5 h-5 text-gray-600 flex-shrink-0" />
-                )}
-              </button>
+              </div>
 
               <AnimatePresence>
                 {expandedFAQ === faq.id && (
@@ -1399,6 +1536,7 @@ const PlanesPreciosPage: React.FC = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={handleContactSales}
               className="px-8 py-4 bg-white text-purple-600 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all"
             >
               <div className="flex items-center gap-2">
@@ -1485,10 +1623,16 @@ const PlanesPreciosPage: React.FC = () => {
                     <p className="text-xs text-gray-600 mt-1">{daysLeft} días restantes</p>
                   </div>
                   <div className="flex gap-2">
-                    <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all text-sm font-medium">
+                    <button 
+                      onClick={() => handleTrialAction(sub)}
+                      className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all text-sm font-medium"
+                    >
                       Convertir
                     </button>
-                    <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all text-sm font-medium">
+                    <button 
+                      onClick={() => handleTrialAction(sub)}
+                      className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all text-sm font-medium"
+                    >
                       Extender
                     </button>
                   </div>
@@ -1502,7 +1646,10 @@ const PlanesPreciosPage: React.FC = () => {
       <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-xl font-bold text-gray-900">Suscripciones Activas</h3>
-          <button className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium">
+          <button 
+            onClick={handleExportData}
+            className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium"
+          >
             <Download className="w-4 h-4" />
             Exportar
           </button>
@@ -1631,7 +1778,12 @@ const PlanesPreciosPage: React.FC = () => {
                 </p>
               </div>
               <button
-                onClick={() => setShowNewPlanModal(false)}
+                onClick={() => {
+                  setShowNewPlanModal(false);
+                  toast.success('Iniciando wizard de creación de plan', {
+                    icon: '✨',
+                  });
+                }}
                 className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all"
               >
                 Comenzar
@@ -1640,6 +1792,409 @@ const PlanesPreciosPage: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* MODAL DETALLES DEL PLAN */}
+      <Modal
+        isOpen={showPlanDetailsModal}
+        onClose={() => setShowPlanDetailsModal(false)}
+        title={`Detalles del Plan ${selectedPlan?.name}`}
+        size="lg"
+      >
+        {selectedPlan && (
+          <div className="space-y-6">
+            <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-6">
+              <div className="flex items-center gap-4 mb-4">
+                <div 
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center text-white font-bold text-xl"
+                  style={{ backgroundColor: selectedPlan.color }}
+                >
+                  {selectedPlan.name[0]}
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900">{selectedPlan.name}</h3>
+                  <p className="text-gray-600">{selectedPlan.longDescription}</p>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                <div className="bg-white rounded-lg p-4">
+                  <p className="text-sm text-gray-600">Precio</p>
+                  <p className="text-2xl font-bold" style={{ color: selectedPlan.color }}>
+                    €{selectedPlan.price}/mes
+                  </p>
+                </div>
+                <div className="bg-white rounded-lg p-4">
+                  <p className="text-sm text-gray-600">Suscriptores</p>
+                  <p className="text-2xl font-bold text-gray-900">{selectedPlan.subscribers}</p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-semibold text-gray-900 mb-4">Características</h4>
+              <div className="space-y-3">
+                {selectedPlan.features.map((feature) => (
+                  <div key={feature.id} className="flex items-center gap-3">
+                    {feature.included ? (
+                      <Check className="w-5 h-5 text-green-500" />
+                    ) : (
+                      <X className="w-5 h-5 text-gray-300" />
+                    )}
+                    <div className="flex-1">
+                      <p className={`font-medium ${feature.included ? 'text-gray-900' : 'text-gray-400'}`}>
+                        {feature.name}
+                      </p>
+                      <p className="text-sm text-gray-600">{feature.description}</p>
+                      {feature.limit && feature.included && (
+                        <p className="text-xs text-purple-600 font-medium">{feature.limit}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => {
+                  setShowPlanDetailsModal(false);
+                  setShowEditPlanModal(true);
+                }}
+                className="flex-1 bg-blue-500 text-white py-3 rounded-xl font-medium hover:bg-blue-600 transition-all"
+              >
+                Editar Plan
+              </button>
+              <button
+                onClick={() => {
+                  setShowPlanDetailsModal(false);
+                  handleCopyPlanLink(selectedPlan);
+                }}
+                className="flex-1 border-2 border-gray-300 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-50 transition-all"
+              >
+                Copiar Enlace
+              </button>
+            </div>
+          </div>
+        )}
+      </Modal>
+
+      {/* MODAL EDITAR PLAN */}
+      <Modal
+        isOpen={showEditPlanModal}
+        onClose={() => setShowEditPlanModal(false)}
+        title={`Editar Plan ${selectedPlan?.name}`}
+        size="lg"
+      >
+        <div className="text-center py-12">
+          <Edit2 className="w-16 h-16 text-blue-500 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">Editor de Plan</h3>
+          <p className="text-gray-600 mb-6">
+            Formulario completo para editar precios, características y configuraciones del plan
+          </p>
+          <div className="space-y-3">
+            <button
+              onClick={() => {
+                setShowEditPlanModal(false);
+                toast.success('Plan actualizado correctamente', {
+                  icon: '✅',
+                });
+              }}
+              className="w-full bg-blue-500 text-white py-3 rounded-xl font-medium hover:bg-blue-600 transition-all"
+            >
+              Guardar Cambios
+            </button>
+            <button
+              onClick={() => setShowEditPlanModal(false)}
+              className="w-full border-2 border-gray-300 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-50 transition-all"
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* MODAL CONFIRMACIÓN ELIMINAR */}
+      <ConfirmationModal
+        isOpen={showDeleteConfirmation}
+        onClose={() => setShowDeleteConfirmation(false)}
+        onConfirm={confirmDeletePlan}
+        title="Eliminar Plan"
+        message={`¿Estás seguro de que quieres eliminar el plan "${selectedPlan?.name}"? Esta acción no se puede deshacer y afectará a ${selectedPlan?.subscribers} suscriptores.`}
+        confirmText="Eliminar"
+        cancelText="Cancelar"
+        type="danger"
+        isLoading={isLoading}
+      />
+
+      {/* MODAL EXPORTAR DATOS */}
+      <Modal
+        isOpen={showExportModal}
+        onClose={() => setShowExportModal(false)}
+        title="Exportar Datos"
+        size="md"
+      >
+        <div className="space-y-6">
+          <p className="text-gray-600">Selecciona el formato para exportar los datos de suscripciones:</p>
+          
+          <div className="grid grid-cols-1 gap-3">
+            <button
+              onClick={() => confirmExport('csv')}
+              disabled={isLoading}
+              className="flex items-center gap-3 p-4 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all disabled:opacity-50"
+            >
+              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                <Download className="w-5 h-5 text-green-600" />
+              </div>
+              <div className="text-left">
+                <p className="font-semibold text-gray-900">CSV</p>
+                <p className="text-sm text-gray-600">Formato de hoja de cálculo</p>
+              </div>
+            </button>
+
+            <button
+              onClick={() => confirmExport('excel')}
+              disabled={isLoading}
+              className="flex items-center gap-3 p-4 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all disabled:opacity-50"
+            >
+              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                <Download className="w-5 h-5 text-blue-600" />
+              </div>
+              <div className="text-left">
+                <p className="font-semibold text-gray-900">Excel</p>
+                <p className="text-sm text-gray-600">Archivo .xlsx con formato</p>
+              </div>
+            </button>
+
+            <button
+              onClick={() => confirmExport('pdf')}
+              disabled={isLoading}
+              className="flex items-center gap-3 p-4 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all disabled:opacity-50"
+            >
+              <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                <Download className="w-5 h-5 text-red-600" />
+              </div>
+              <div className="text-left">
+                <p className="font-semibold text-gray-900">PDF</p>
+                <p className="text-sm text-gray-600">Reporte en formato PDF</p>
+              </div>
+            </button>
+          </div>
+
+          {isLoading && (
+            <div className="text-center py-4">
+              <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin mx-auto mb-2"></div>
+              <p className="text-sm text-gray-600">Generando archivo...</p>
+            </div>
+          )}
+        </div>
+      </Modal>
+
+      {/* MODAL CONTACTO VENTAS */}
+      <Modal
+        isOpen={showContactModal}
+        onClose={() => setShowContactModal(false)}
+        title="Contactar con Ventas"
+        size="md"
+      >
+        <div className="space-y-6">
+          <div className="text-center">
+            <MessageSquare className="w-16 h-16 text-purple-500 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">¿Necesitas ayuda personalizada?</h3>
+            <p className="text-gray-600">
+              Nuestro equipo de ventas está listo para ayudarte a encontrar el plan perfecto para tu gimnasio.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4">
+            <button
+              onClick={() => {
+                setShowContactModal(false);
+                toast.success('Redirigiendo a WhatsApp...', {
+                  icon: '💬',
+                });
+              }}
+              className="flex items-center gap-3 p-4 bg-green-500 text-white rounded-xl hover:bg-green-600 transition-all"
+            >
+              <MessageSquare className="w-5 h-5" />
+              <div className="text-left">
+                <p className="font-semibold">Chat en Vivo</p>
+                <p className="text-sm opacity-90">Respuesta inmediata</p>
+              </div>
+            </button>
+
+            <button
+              onClick={() => {
+                setShowContactModal(false);
+                toast.success('Abriendo llamada telefónica...', {
+                  icon: '📞',
+                });
+              }}
+              className="flex items-center gap-3 p-4 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-all"
+            >
+              <Phone className="w-5 h-5" />
+              <div className="text-left">
+                <p className="font-semibold">Llamada Telefónica</p>
+                <p className="text-sm opacity-90">+34 900 123 456</p>
+              </div>
+            </button>
+
+            <button
+              onClick={() => {
+                setShowContactModal(false);
+                toast.success('Abriendo cliente de email...', {
+                  icon: '📧',
+                });
+              }}
+              className="flex items-center gap-3 p-4 bg-purple-500 text-white rounded-xl hover:bg-purple-600 transition-all"
+            >
+              <Mail className="w-5 h-5" />
+              <div className="text-left">
+                <p className="font-semibold">Email</p>
+                <p className="text-sm opacity-90">ventas@astrofit.com</p>
+              </div>
+            </button>
+          </div>
+
+          <div className="bg-gray-50 rounded-xl p-4">
+            <h4 className="font-semibold text-gray-900 mb-2">Horario de Atención</h4>
+            <p className="text-sm text-gray-600">Lunes a Viernes: 9:00 - 18:00</p>
+            <p className="text-sm text-gray-600">Sábados: 10:00 - 14:00</p>
+          </div>
+        </div>
+      </Modal>
+
+      {/* MODAL ACCIONES TRIAL */}
+      <Modal
+        isOpen={showTrialActionsModal}
+        onClose={() => setShowTrialActionsModal(false)}
+        title={`Acciones para ${selectedSubscription?.customerName}`}
+        size="md"
+      >
+        {selectedSubscription && (
+          <div className="space-y-6">
+            <div className="bg-blue-50 rounded-xl p-4">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold">
+                  {selectedSubscription.customerAvatar}
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-900">{selectedSubscription.customerName}</p>
+                  <p className="text-sm text-gray-600">Plan: {selectedSubscription.planName}</p>
+                </div>
+              </div>
+              <p className="text-sm text-gray-600">
+                Estado actual: <span className="font-medium text-blue-600">Trial activo</span>
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <button
+                onClick={() => confirmTrialAction('convert')}
+                disabled={isLoading}
+                className="w-full flex items-center gap-3 p-4 bg-green-500 text-white rounded-xl hover:bg-green-600 transition-all disabled:opacity-50"
+              >
+                <Check className="w-5 h-5" />
+                <div className="text-left">
+                  <p className="font-semibold">Convertir a Suscripción</p>
+                  <p className="text-sm opacity-90">Activar pago automático</p>
+                </div>
+              </button>
+
+              <button
+                onClick={() => confirmTrialAction('extend')}
+                disabled={isLoading}
+                className="w-full flex items-center gap-3 p-4 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-all disabled:opacity-50"
+              >
+                <Clock className="w-5 h-5" />
+                <div className="text-left">
+                  <p className="font-semibold">Extender Trial</p>
+                  <p className="text-sm opacity-90">Añadir 7 días más</p>
+                </div>
+              </button>
+            </div>
+
+            {isLoading && (
+              <div className="text-center py-4">
+                <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin mx-auto mb-2"></div>
+                <p className="text-sm text-gray-600">Procesando acción...</p>
+              </div>
+            )}
+          </div>
+        )}
+      </Modal>
+
+      {/* MODAL SUSCRIPTORES */}
+      <Modal
+        isOpen={showSubscribersModal}
+        onClose={() => setShowSubscribersModal(false)}
+        title={`Suscriptores del Plan ${selectedPlan?.name}`}
+        size="lg"
+      >
+        {selectedPlan && (
+          <div className="space-y-6">
+            <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900">{selectedPlan.name}</h3>
+                  <p className="text-gray-600">{selectedPlan.subscribers} suscriptores activos</p>
+                </div>
+                <div 
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center text-white font-bold text-xl"
+                  style={{ backgroundColor: selectedPlan.color }}
+                >
+                  {selectedPlan.name[0]}
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              {mockSubscriptions
+                .filter(sub => sub.planId === selectedPlan.id)
+                .map((sub) => (
+                  <div key={sub.id} className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold">
+                      {sub.customerAvatar}
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-semibold text-gray-900">{sub.customerName}</p>
+                      <p className="text-sm text-gray-600">
+                        {sub.status === 'active' ? 'Activo' : 
+                         sub.status === 'trial' ? 'Trial' : 
+                         sub.status === 'payment-failed' ? 'Pago Fallido' : sub.status}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-bold text-purple-600">€{sub.mrr}</p>
+                      <p className="text-sm text-gray-600">MRR</p>
+                    </div>
+                    <button className="p-2 hover:bg-gray-200 rounded-lg transition-colors">
+                      <ChevronRight className="w-5 h-5 text-gray-600" />
+                    </button>
+                  </div>
+                ))}
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => {
+                  setShowSubscribersModal(false);
+                  handleExportData();
+                }}
+                className="flex-1 bg-blue-500 text-white py-3 rounded-xl font-medium hover:bg-blue-600 transition-all flex items-center justify-center gap-2"
+              >
+                <Download className="w-4 h-4" />
+                Exportar Lista
+              </button>
+              <button
+                onClick={() => setShowSubscribersModal(false)}
+                className="flex-1 border-2 border-gray-300 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-50 transition-all"
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 };

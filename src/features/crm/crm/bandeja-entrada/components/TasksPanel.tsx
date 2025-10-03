@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { CheckCircle, Circle, Calendar, User, Briefcase, Clock } from 'lucide-react';
 
 interface Task {
@@ -18,6 +18,7 @@ interface TasksPanelProps {
 
 export const TasksPanel: React.FC<TasksPanelProps> = ({ tasks }) => {
   const [filter, setFilter] = useState<'all' | 'pending' | 'completed'>('pending');
+  const [localTasks, setLocalTasks] = useState<Task[]>(() => tasks);
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
@@ -52,18 +53,18 @@ export const TasksPanel: React.FC<TasksPanelProps> = ({ tasks }) => {
     }
   };
 
-  const filteredTasks = tasks.filter(task => {
+  const filteredTasks = useMemo(() => localTasks.filter(task => {
     switch (filter) {
       case 'pending': return !task.completed;
       case 'completed': return task.completed;
       default: return true;
     }
-  });
+  }), [localTasks, filter]);
 
   const filters = [
-    { id: 'pending' as const, label: 'Pendientes', count: tasks.filter(t => !t.completed).length },
-    { id: 'completed' as const, label: 'Completadas', count: tasks.filter(t => t.completed).length },
-    { id: 'all' as const, label: 'Todas', count: tasks.length }
+    { id: 'pending' as const, label: 'Pendientes', count: localTasks.filter(t => !t.completed).length },
+    { id: 'completed' as const, label: 'Completadas', count: localTasks.filter(t => t.completed).length },
+    { id: 'all' as const, label: 'Todas', count: localTasks.length }
   ];
 
   return (
@@ -102,7 +103,10 @@ export const TasksPanel: React.FC<TasksPanelProps> = ({ tasks }) => {
               }`}
             >
               <div className="flex items-start space-x-3">
-                <button className="flex-shrink-0 mt-0.5">
+                <button
+                  onClick={() => setLocalTasks(prev => prev.map(t => t.id === task.id ? { ...t, completed: !t.completed } : t))}
+                  className="flex-shrink-0 mt-0.5"
+                >
                   {task.completed ? (
                     <CheckCircle className="h-5 w-5 text-green-600" />
                   ) : (

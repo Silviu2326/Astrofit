@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 import {
   Award,
   Check,
-  Clock,
   Calendar,
   Percent,
   TrendingDown,
@@ -18,11 +18,23 @@ const BonosClases: React.FC = () => {
 
   useEffect(() => {
     const fetchBonos = async () => {
-      const data = await getProductosByType('bono');
-      setBonos(data);
+      try {
+        const data = await getProductosByType('bono');
+        setBonos(data);
+      } catch (error) {
+        toast.error('Error al cargar los bonos');
+      }
     };
     fetchBonos();
   }, []);
+
+  const handleBuyBono = (bono: Producto) => {
+    if (!bono.disponibilidad) {
+      toast.error('Este bono no está disponible actualmente');
+      return;
+    }
+    toast.success(`Bono "${bono.nombre}" agregado al carrito exitosamente`);
+  };
 
   // Función para calcular el ahorro (mock)
   const calcularAhorro = (precio: number, numClases: number) => {
@@ -103,8 +115,6 @@ const BonosClases: React.FC = () => {
 
           // Mock: clases restantes
           const clasesRestantes = Math.floor(Math.random() * numClases);
-          const clasesUsadas = numClases - clasesRestantes;
-          const progreso = (clasesUsadas / numClases) * 100;
 
           return (
             <motion.div
@@ -225,6 +235,7 @@ const BonosClases: React.FC = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={() => handleBuyBono(bono)}
                   disabled={!bono.disponibilidad}
                   className={`w-full py-3 rounded-xl font-bold text-white shadow-lg hover:shadow-xl transition-all duration-300 ${
                     bono.disponibilidad

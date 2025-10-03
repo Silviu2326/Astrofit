@@ -6,9 +6,16 @@ import TareaCard from './TareaCard';
 
 interface TareasListProps {
   filterStatus?: Tarea['estado'];
+  filters?: {
+    estado?: Tarea['estado'];
+    fechaVencimiento?: string;
+    asignadoA?: string;
+    clienteRelacionado?: string;
+  };
+  onTareaUpdate?: () => void;
 }
 
-const TareasList: React.FC<TareasListProps> = ({ filterStatus }) => {
+const TareasList: React.FC<TareasListProps> = ({ filterStatus, filters, onTareaUpdate }) => {
   const [tareas, setTareas] = useState<Tarea[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -20,19 +27,56 @@ const TareasList: React.FC<TareasListProps> = ({ filterStatus }) => {
       setLoading(false);
     };
     fetchTareas();
-  }, []);
+  }, [onTareaUpdate]);
 
   const handleToggleComplete = async (tarea: Tarea) => {
-    const updatedTarea = { ...tarea, estado: tarea.estado === 'completada' ? 'pendiente' : 'completada' };
+    const newEstado: Tarea['estado'] = tarea.estado === 'completada' ? 'pendiente' : 'completada';
+    const updatedTarea = { ...tarea, estado: newEstado };
     await updateTarea(updatedTarea);
     setTareas((prevTareas) =>
       prevTareas.map((t) => (t.id === updatedTarea.id ? updatedTarea : t))
     );
+    // Notificar al componente padre para actualizar estadísticas
+    if (onTareaUpdate) {
+      onTareaUpdate();
+    }
   };
 
-  const filteredTareas = filterStatus
-    ? tareas.filter((tarea) => tarea.estado === filterStatus)
-    : tareas;
+  // Función para aplicar todos los filtros
+  const applyFilters = (tareas: Tarea[]) => {
+    return tareas.filter((tarea) => {
+      // Filtro por estado (prioridad al filterStatus si existe)
+      const estadoFilter = filterStatus || filters?.estado;
+      if (estadoFilter && tarea.estado !== estadoFilter) {
+        return false;
+      }
+
+      // Filtro por fecha de vencimiento
+      if (filters?.fechaVencimiento) {
+        const tareaDate = new Date(tarea.fechaVencimiento).toDateString();
+        const filterDate = new Date(filters.fechaVencimiento).toDateString();
+        if (tareaDate !== filterDate) {
+          return false;
+        }
+      }
+
+      // Filtro por asignado a
+      if (filters?.asignadoA && !tarea.asignadoA.toLowerCase().includes(filters.asignadoA.toLowerCase())) {
+        return false;
+      }
+
+      // Filtro por cliente relacionado
+      if (filters?.clienteRelacionado && tarea.clienteRelacionado) {
+        if (!tarea.clienteRelacionado.toLowerCase().includes(filters.clienteRelacionado.toLowerCase())) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+  };
+
+  const filteredTareas = applyFilters(tareas);
 
   if (loading) {
     return (
@@ -64,8 +108,15 @@ const TareasList: React.FC<TareasListProps> = ({ filterStatus }) => {
       {filteredTareas.length === 0 && (
         <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-12 border border-white/50 text-center">
           <CheckSquare className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-xl font-bold text-gray-800 mb-2">No hay tareas</h3>
-          <p className="text-gray-600">No se encontraron tareas con los filtros seleccionados</p>
+          <h3 className="text-xl font-bold text-gray-800 mb-2">
+            {tareas.length === 0 ? 'No hay tareas' : 'No se encontraron tareas'}
+          </h3>
+          <p className="text-gray-600">
+            {tareas.length === 0 
+              ? 'Crea tu primera tarea para comenzar a organizar tu trabajo'
+              : 'No se encontraron tareas que coincidan con los filtros seleccionados'
+            }
+          </p>
         </div>
       )}
     </motion.div>

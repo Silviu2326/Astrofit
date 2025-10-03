@@ -1,13 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CheckSquare, Clock, CheckCircle, AlertCircle, Plus, Filter } from 'lucide-react';
 import TareasList from './components/TareasList';
 import TareaForm from './components/TareaForm';
 import TareasFilters from './components/TareasFilters';
+import { Tarea, getTareas } from './tareasApi';
 
 const TareasPage: React.FC = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const [tareas, setTareas] = useState<Tarea[]>([]);
+  const [filters, setFilters] = useState<{
+    estado?: Tarea['estado'];
+    fechaVencimiento?: string;
+    asignadoA?: string;
+    clienteRelacionado?: string;
+  }>({});
+
+  // Cargar tareas al montar el componente
+  useEffect(() => {
+    const fetchTareas = async () => {
+      const data = await getTareas();
+      setTareas(data);
+    };
+    fetchTareas();
+  }, []);
+
+  // Función para actualizar la lista de tareas
+  const refreshTareas = async () => {
+    const data = await getTareas();
+    setTareas(data);
+  };
+
+  // Función para manejar cambios en los filtros
+  const handleFilterChange = (newFilters: typeof filters) => {
+    setFilters(newFilters);
+  };
+
+  // Calcular estadísticas dinámicas
+  const stats = {
+    total: tareas.length,
+    pendientes: tareas.filter(t => t.estado === 'pendiente').length,
+    completadas: tareas.filter(t => t.estado === 'completada').length,
+    urgentes: tareas.filter(t => t.prioridad === 'alta' && t.estado !== 'completada').length,
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 pb-12">
@@ -58,10 +94,17 @@ const TareasPage: React.FC = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setShowFilters(!showFilters)}
-                className="flex items-center gap-2 px-4 py-2.5 bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold rounded-xl hover:bg-white/20 transition-all duration-300"
+                className={`flex items-center gap-2 px-4 py-2.5 backdrop-blur-md border font-semibold rounded-xl transition-all duration-300 ${
+                  Object.keys(filters).some(key => filters[key as keyof typeof filters])
+                    ? 'bg-white/20 border-white/30 text-white'
+                    : 'bg-white/10 border-white/20 text-white hover:bg-white/20'
+                }`}
               >
                 <Filter className="w-4 h-4" />
                 <span>Filtros</span>
+                {Object.keys(filters).some(key => filters[key as keyof typeof filters]) && (
+                  <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                )}
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -92,7 +135,7 @@ const TareasPage: React.FC = () => {
               </div>
             </div>
             <p className="text-sm font-medium text-gray-600 mt-3">Total Tareas</p>
-            <p className="text-3xl font-bold text-blue-600">24</p>
+            <p className="text-3xl font-bold text-blue-600">{stats.total}</p>
           </motion.div>
 
           <motion.div
@@ -107,7 +150,7 @@ const TareasPage: React.FC = () => {
               </div>
             </div>
             <p className="text-sm font-medium text-gray-600 mt-3">Pendientes</p>
-            <p className="text-3xl font-bold text-yellow-600">12</p>
+            <p className="text-3xl font-bold text-yellow-600">{stats.pendientes}</p>
           </motion.div>
 
           <motion.div
@@ -122,7 +165,7 @@ const TareasPage: React.FC = () => {
               </div>
             </div>
             <p className="text-sm font-medium text-gray-600 mt-3">Completadas</p>
-            <p className="text-3xl font-bold text-green-600">10</p>
+            <p className="text-3xl font-bold text-green-600">{stats.completadas}</p>
           </motion.div>
 
           <motion.div
@@ -137,7 +180,7 @@ const TareasPage: React.FC = () => {
               </div>
             </div>
             <p className="text-sm font-medium text-gray-600 mt-3">Urgentes</p>
-            <p className="text-3xl font-bold text-red-600">2</p>
+            <p className="text-3xl font-bold text-red-600">{stats.urgentes}</p>
           </motion.div>
         </div>
       </div>
@@ -155,12 +198,16 @@ const TareasPage: React.FC = () => {
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <TareasFilters />
+                <TareasFilters onFilterChange={handleFilterChange} />
               </motion.div>
             )}
 
             {/* Tareas */}
-            <TareasList />
+            <TareasList 
+              filterStatus={filters.estado}
+              filters={filters}
+              onTareaUpdate={refreshTareas}
+            />
           </div>
 
           {/* Formulario */}
@@ -171,7 +218,7 @@ const TareasPage: React.FC = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <TareaForm />
+                <TareaForm onTareaCreated={refreshTareas} onClose={() => setShowForm(false)} />
               </motion.div>
             )}
 

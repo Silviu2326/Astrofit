@@ -1,21 +1,48 @@
 import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LayoutGrid, List, Plus, Download, Upload, TrendingUp, Sparkles } from 'lucide-react';
+import { LayoutGrid, List, Plus, Download, Upload, TrendingUp } from 'lucide-react';
 import LeadsKanban from './components/LeadsKanban';
 import LeadsStats from './components/LeadsStats';
+import LeadsList from './components/LeadsList';
 import LeadsFilters from './components/LeadsFilters';
 import { useLeads } from './leadsListadoApi';
 
 const LeadsListadoPage: React.FC = () => {
   const { leads, loading, error } = useLeads();
   const [view, setView] = useState<'kanban' | 'list'>('kanban');
-  const [_filters, setFilters] = useState({});
+  const [_filters, setFilters] = useState<any>({});
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [isNewLeadOpen, setIsNewLeadOpen] = useState(false);
   const [newLeadName, setNewLeadName] = useState('');
   const [newLeadEmail, setNewLeadEmail] = useState('');
   const [newLeadPhone, setNewLeadPhone] = useState('');
   const [newLeadStage, setNewLeadStage] = useState('Nuevo');
+
+  const applyFiltersToLeads = (items: any[], filters: any) => {
+    if (!filters) return items;
+    let result = items;
+    if (filters.searchTerm) {
+      const q = String(filters.searchTerm).toLowerCase();
+      result = result.filter((l: any) =>
+        [l.name, l.email, l.phone].some((v) => String(v || '').toLowerCase().includes(q))
+      );
+    }
+    if (filters.origin) {
+      result = result.filter((l: any) => l.origin === filters.origin);
+    }
+    if (filters.status) {
+      result = result.filter((l: any) => l.status === filters.status);
+    }
+    if (filters.startDate) {
+      const from = new Date(filters.startDate).getTime();
+      result = result.filter((l: any) => new Date(l.contactDate).getTime() >= from);
+    }
+    if (filters.endDate) {
+      const to = new Date(filters.endDate).getTime();
+      result = result.filter((l: any) => new Date(l.contactDate).getTime() <= to);
+    }
+    return result;
+  };
 
   const exportToCSV = (items: Array<Record<string, any>>, filename = 'leads_export.csv') => {
     if (!items || items.length === 0) {
@@ -282,7 +309,7 @@ const LeadsListadoPage: React.FC = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <LeadsKanban leads={leads} />
+              <LeadsKanban leads={leads} onAddLead={() => openNewLeadModal()} />
             </motion.div>
           ) : (
             <motion.div
@@ -291,20 +318,8 @@ const LeadsListadoPage: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/50"
             >
-              <div className="text-center py-12">
-                <div className="relative inline-block mb-6">
-                  <div className="w-20 h-20 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-2xl flex items-center justify-center">
-                    <List className="w-10 h-10 text-indigo-600" />
-                  </div>
-                  <div className="absolute -top-2 -right-2">
-                    <Sparkles className="w-6 h-6 text-yellow-400 animate-pulse" />
-                  </div>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">Vista de Lista</h3>
-                <p className="text-gray-600">Esta vista estará disponible próximamente</p>
-              </div>
+              <LeadsList leads={applyFiltersToLeads(leads, _filters)} />
             </motion.div>
           )}
         </AnimatePresence>

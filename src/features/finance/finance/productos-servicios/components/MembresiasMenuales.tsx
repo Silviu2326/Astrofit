@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 import {
   Check,
   Star,
   Users,
-  Zap,
-  TrendingUp,
   CreditCard,
   Award,
   ArrowRight,
@@ -19,11 +18,27 @@ const MembresiasMenuales: React.FC = () => {
 
   useEffect(() => {
     const fetchMembresias = async () => {
-      const data = await getProductosByType('membresia');
-      setMembresias(data);
+      try {
+        const data = await getProductosByType('membresia');
+        setMembresias(data);
+      } catch (error) {
+        toast.error('Error al cargar las membresías');
+      }
     };
     fetchMembresias();
   }, []);
+
+  const handleSubscribe = (membresia: Producto) => {
+    if (!membresia.disponibilidad) {
+      toast.error('Esta membresía no está disponible actualmente');
+      return;
+    }
+    toast.success(`Te has suscrito a ${membresia.nombre} exitosamente`);
+  };
+
+  const handleContactAdvisor = () => {
+    toast.success('Te hemos conectado con un asesor. Te contactaremos pronto.');
+  };
 
   // Determinar cuál membresía es la más popular (la del medio o la de mayor precio)
   const getMembershipTier = (index: number, total: number) => {
@@ -226,6 +241,7 @@ const MembresiasMenuales: React.FC = () => {
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      onClick={() => handleSubscribe(membresia)}
                       className={`w-full py-4 rounded-xl font-bold text-white shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-r ${config.buttonGradient} flex items-center justify-center gap-2 group`}
                     >
                       <span>{membresia.disponibilidad ? 'Suscribirse Ahora' : 'No Disponible'}</span>
@@ -284,6 +300,7 @@ const MembresiasMenuales: React.FC = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={handleContactAdvisor}
             className="bg-white text-purple-600 px-8 py-3 rounded-xl font-bold shadow-xl hover:shadow-2xl transition-all duration-300"
           >
             Hablar con un Asesor

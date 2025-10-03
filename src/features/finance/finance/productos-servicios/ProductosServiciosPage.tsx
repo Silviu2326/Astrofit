@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import toast from 'react-hot-toast';
 import {
   Package,
   Star,
@@ -12,7 +13,6 @@ import {
   List,
   ShoppingBag,
   Users,
-  Clock,
   Sparkles,
   ArrowUpRight,
   CreditCard,
@@ -24,7 +24,8 @@ import MembresiasMenuales from './components/MembresiasMenuales';
 import BonosClases from './components/BonosClases';
 import SesionesIndividuales from './components/SesionesIndividuales';
 import ProgramasOnline from './components/ProgramasOnline';
-import { getProductos, getBestSellingProducts, Producto } from './productosServiciosApi';
+import Modal from '../../../../components/ui/modal';
+import { getProductos, getBestSellingProducts } from './productosServiciosApi';
 
 type TabType = 'catalogo' | 'membresias' | 'bonos' | 'sesiones' | 'programas';
 
@@ -39,7 +40,8 @@ const ProductosServiciosPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('catalogo');
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [showFilters, setShowFilters] = useState(false);
+  const [showNewProductModal, setShowNewProductModal] = useState(false);
+  const [showFiltersModal, setShowFiltersModal] = useState(false);
   const [stats, setStats] = useState<StatsData>({
     totalProductos: 0,
     productosActivos: 0,
@@ -49,19 +51,38 @@ const ProductosServiciosPage: React.FC = () => {
 
   useEffect(() => {
     const fetchStats = async () => {
-      const allProducts = await getProductos();
-      const bestSellers = await getBestSellingProducts();
+      try {
+        const allProducts = await getProductos();
+        const bestSellers = await getBestSellingProducts();
 
-      setStats({
-        totalProductos: allProducts.length,
-        productosActivos: allProducts.filter(p => p.disponibilidad).length,
-        ingresosMensuales: 12450, // Mock data
-        masVendidos: bestSellers.length,
-      });
+        setStats({
+          totalProductos: allProducts.length,
+          productosActivos: allProducts.filter(p => p.disponibilidad).length,
+          ingresosMensuales: 12450, // Mock data
+          masVendidos: bestSellers.length,
+        });
+      } catch (error) {
+        toast.error('Error al cargar las estadísticas');
+      }
     };
 
     fetchStats();
   }, []);
+
+  const handleNewProduct = () => {
+    setShowNewProductModal(true);
+  };
+
+  const handleFilters = () => {
+    setShowFiltersModal(true);
+  };
+
+  const handleCreateProduct = () => {
+    // Simular creación de producto
+    toast.success('Producto creado exitosamente');
+    setShowNewProductModal(false);
+    // Aquí se actualizarían las estadísticas
+  };
 
   const tabs = [
     { id: 'catalogo' as TabType, label: 'Catálogo Completo', icon: Package },
@@ -261,7 +282,7 @@ const ProductosServiciosPage: React.FC = () => {
 
             {/* Filtros */}
             <button
-              onClick={() => setShowFilters(!showFilters)}
+              onClick={handleFilters}
               className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-xl font-semibold text-gray-700 transition-colors duration-300 flex items-center gap-2"
             >
               <Filter className="w-5 h-5" />
@@ -272,6 +293,7 @@ const ProductosServiciosPage: React.FC = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={handleNewProduct}
               className="px-6 py-3 bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
             >
               <Plus className="w-5 h-5" />
@@ -328,6 +350,152 @@ const ProductosServiciosPage: React.FC = () => {
           {activeTab === 'programas' && <ProgramasOnline />}
         </motion.div>
       </AnimatePresence>
+
+      {/* Modal Nuevo Producto */}
+      <Modal
+        isOpen={showNewProductModal}
+        onClose={() => setShowNewProductModal(false)}
+        title="Crear Nuevo Producto"
+        size="lg"
+      >
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Nombre del Producto
+            </label>
+            <input
+              type="text"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"
+              placeholder="Ej: Sesión Personalizada"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Descripción
+            </label>
+            <textarea
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"
+              rows={3}
+              placeholder="Describe tu producto o servicio..."
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Precio (€)
+              </label>
+              <input
+                type="number"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"
+                placeholder="0"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Tipo
+              </label>
+              <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none">
+                <option value="individual">Individual</option>
+                <option value="grupal">Grupal</option>
+                <option value="membresia">Membresía</option>
+                <option value="programa">Programa</option>
+                <option value="bono">Bono</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="flex justify-end gap-3 pt-4">
+            <button
+              onClick={() => setShowNewProductModal(false)}
+              className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={handleCreateProduct}
+              className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
+            >
+              Crear Producto
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Modal Filtros */}
+      <Modal
+        isOpen={showFiltersModal}
+        onClose={() => setShowFiltersModal(false)}
+        title="Filtrar Productos"
+        size="md"
+      >
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-3">
+              Tipo de Producto
+            </label>
+            <div className="space-y-2">
+              {['Individual', 'Grupal', 'Membresía', 'Programa', 'Bono'].map((tipo) => (
+                <label key={tipo} className="flex items-center gap-3">
+                  <input type="checkbox" className="w-4 h-4 text-emerald-600 rounded" />
+                  <span className="text-sm text-gray-700">{tipo}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-3">
+              Modalidad
+            </label>
+            <div className="space-y-2">
+              {['Presencial', 'Online', 'Híbrido'].map((modalidad) => (
+                <label key={modalidad} className="flex items-center gap-3">
+                  <input type="checkbox" className="w-4 h-4 text-emerald-600 rounded" />
+                  <span className="text-sm text-gray-700">{modalidad}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Rango de Precio
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              <input
+                type="number"
+                placeholder="Mínimo"
+                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"
+              />
+              <input
+                type="number"
+                placeholder="Máximo"
+                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"
+              />
+            </div>
+          </div>
+
+          <div className="flex justify-end gap-3 pt-4">
+            <button
+              onClick={() => setShowFiltersModal(false)}
+              className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
+            >
+              Limpiar
+            </button>
+            <button
+              onClick={() => {
+                toast.success('Filtros aplicados');
+                setShowFiltersModal(false);
+              }}
+              className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
+            >
+              Aplicar Filtros
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
