@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Filter, Search, X } from 'lucide-react';
 
@@ -57,6 +57,22 @@ const ClientesFilters: React.FC<ClientesFiltersProps> = ({ onFilterChange }) => 
     onFilterChange({ q: '', estado: '', etiquetas: [], fechaAltaDesde: undefined, fechaAltaHasta: undefined, sinActividadDias: undefined, page: 1 });
   };
 
+  // Auto-aplicar filtros cuando cambian (sin recargar la página)
+  // Debounce para el buscador
+  useEffect(() => {
+    const handle = setTimeout(() => {
+      apply();
+    }, 300);
+    return () => clearTimeout(handle);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [q]);
+
+  // Aplicación inmediata para selectores y fechas/campos discretos
+  useEffect(() => {
+    apply();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [estado, etiquetas, fechaAltaDesde, fechaAltaHasta, sinActividadDias]);
+
   return (
     <div className="bg-white rounded-xl shadow-md p-4">
       <div className="flex flex-col md:flex-row md:items-center gap-3">
@@ -68,7 +84,12 @@ const ClientesFilters: React.FC<ClientesFiltersProps> = ({ onFilterChange }) => 
             className="w-full pl-9 pr-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && apply()}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                apply();
+              }
+            }}
           />
         </div>
 
@@ -83,6 +104,7 @@ const ClientesFilters: React.FC<ClientesFiltersProps> = ({ onFilterChange }) => 
         </select>
 
         <button
+          type="button"
           onClick={() => setShowAdvanced(v => !v)}
           className="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition"
         >
@@ -91,8 +113,8 @@ const ClientesFilters: React.FC<ClientesFiltersProps> = ({ onFilterChange }) => 
         </button>
 
         <div className="flex items-center gap-2 ml-auto">
-          <button onClick={clear} className="px-4 py-2.5 bg-white border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50">Limpiar</button>
-          <button onClick={apply} className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold shadow">
+          <button type="button" onClick={clear} className="px-4 py-2.5 bg-white border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50">Limpiar</button>
+          <button type="button" onClick={apply} className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold shadow">
             Aplicar filtros
           </button>
         </div>

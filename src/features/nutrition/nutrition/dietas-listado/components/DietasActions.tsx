@@ -19,6 +19,7 @@ export const DietasActions: React.FC = () => {
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
+        onClick={() => window.dispatchEvent(new CustomEvent('app:navigate', { detail: { page: 'dieta-nueva' } }))}
         className="px-6 py-3 bg-gradient-to-br from-lime-500 to-green-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 relative overflow-hidden group"
       >
         {/* Shimmer effect */}

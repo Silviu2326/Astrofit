@@ -242,128 +242,36 @@ const ReportesRendimientoPage: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-rose-50/30 to-fuchsia-50/30 p-6">
-      {/* HERO SECTION */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="relative overflow-hidden bg-gradient-to-r from-rose-600 via-pink-600 to-fuchsia-600 rounded-3xl shadow-2xl mb-8 p-8 md:p-12"
-      >
-        {/* Efectos de fondo animados */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        </div>
-
-        {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: '50px 50px'
-          }}></div>
-        </div>
-
-        <div className="relative z-10">
-          {/* Título con icono animado */}
-          <div className="flex items-center gap-3 mb-4">
-            <div className="relative">
-              <BarChart3 className="w-10 h-10 text-yellow-300 animate-pulse" />
-              <div className="absolute inset-0 w-10 h-10 bg-yellow-300 rounded-full blur-lg opacity-50"></div>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
-              Reportes de <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-yellow-400">Rendimiento</span>
-            </h1>
-          </div>
-
-          {/* Descripción */}
-          <p className="text-xl md:text-2xl text-pink-100 max-w-3xl leading-relaxed">
-            Analiza el progreso de tus clientes <span className="font-bold text-white px-2 py-1 bg-white/20 rounded-lg backdrop-blur-sm">en profundidad</span>
-          </p>
-
-          {/* Indicadores pills */}
-          <div className="mt-8 flex flex-wrap gap-4">
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
-              <TrendingUp className="w-5 h-5 text-green-300" />
-              <span className="text-sm font-semibold text-white">Análisis Avanzado</span>
-            </div>
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
-              <FileText className="w-5 h-5 text-blue-300" />
-              <span className="text-sm font-semibold text-white">Reportes PDF</span>
-            </div>
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
-              <Activity className="w-5 h-5 text-purple-300" />
-              <span className="text-sm font-semibold text-white">Métricas en Tiempo Real</span>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* ESTADÍSTICAS RÁPIDAS */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {[
-          { label: 'Clientes con Mejora', value: '87%', icon: TrendingUp, color: 'from-green-500 to-emerald-600', change: '+12%' },
-          { label: 'VO2 Max Promedio', value: '52', icon: Activity, color: 'from-rose-500 to-pink-600', change: '+3' },
-          { label: 'Recuperación Promedio', value: '84%', icon: Heart, color: 'from-purple-500 to-fuchsia-600', change: '+8%' },
-          { label: 'Adherencia Entrenamientos', value: '92%', icon: Award, color: 'from-orange-500 to-rose-600', change: '+5%' },
-        ].map((stat, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1, duration: 0.5 }}
-            whileHover={{ scale: 1.03, y: -8 }}
-            className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
-          >
-            {/* Shimmer effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
-
-            {/* Decoración de fondo */}
-            <div className={`absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br ${stat.color} opacity-5 rounded-full blur-2xl`}></div>
-
-            <div className="relative z-10">
-              {/* Icono */}
-              <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${stat.color} flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300`}>
-                <stat.icon className="w-8 h-8" />
-              </div>
-
-              {/* Título */}
-              <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">
-                {stat.label}
-              </p>
-
-              {/* Valor */}
-              <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 mb-3">
-                {stat.value}
-              </p>
-
-              {/* Cambio */}
-              <div className="flex items-center gap-2">
-                <div className="p-1 bg-green-50 rounded-lg">
-                  <TrendingUp className="w-4 h-4 text-green-600" />
-                </div>
-                <span className="text-sm font-bold text-green-600">{stat.change}</span>
-                <span className="text-xs text-gray-500 font-medium">vs anterior</span>
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Header de Acciones */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 p-6">
+      {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="mb-8"
       >
         <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <motion.div
+              animate={{ rotate: [0, 5, -5, 0] }}
+              transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+              className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg"
+            >
+              <FileText className="w-8 h-8 text-white" />
+            </motion.div>
+            <div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Generador de Reportes de Rendimiento
+              </h1>
+              <p className="text-slate-600 mt-1">Crea reportes visuales profesionales para tus clientes</p>
+            </div>
+          </div>
+
           <div className="flex gap-3">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => { setActiveTab('nuevo'); setCurrentStep(1); }}
-              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-rose-600 via-pink-600 to-fuchsia-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
+              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
             >
               <Plus className="w-5 h-5" />
               Nuevo Reporte
@@ -371,26 +279,26 @@ const ReportesRendimientoPage: React.FC = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => setActiveTab('historial')}
-              className="flex items-center gap-2 px-6 py-3 bg-white/80 backdrop-blur-xl text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-white/50"
+              onClick={() => setActiveTab('plantillas')}
+              className="flex items-center gap-2 px-6 py-3 bg-white text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-slate-200"
             >
-              <Clock className="w-5 h-5" />
-              Historial
+              <Layout className="w-5 h-5" />
+              Plantillas
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => setActiveTab('analytics')}
-              className="flex items-center gap-2 px-6 py-3 bg-white/80 backdrop-blur-xl text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-white/50"
+              onClick={() => setActiveTab('historial')}
+              className="flex items-center gap-2 px-6 py-3 bg-white text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-slate-200"
             >
-              <BarChart3 className="w-5 h-5" />
-              Analytics
+              <Clock className="w-5 h-5" />
+              Historial
             </motion.button>
           </div>
         </div>
 
         {/* Tabs Navigation */}
-        <div className="flex gap-4 mt-6 border-b border-rose-200">
+        <div className="flex gap-4 mt-6 border-b border-slate-200">
           {[
             { id: 'nuevo', label: 'Nuevo Reporte', icon: Plus },
             { id: 'plantillas', label: 'Mis Plantillas', icon: Layout },
@@ -403,7 +311,7 @@ const ReportesRendimientoPage: React.FC = () => {
               onClick={() => setActiveTab(tab.id as any)}
               className={`flex items-center gap-2 px-6 py-3 border-b-2 transition-all ${
                 activeTab === tab.id
-                  ? 'border-rose-600 text-rose-600 font-semibold'
+                  ? 'border-blue-600 text-blue-600'
                   : 'border-transparent text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -424,22 +332,21 @@ const ReportesRendimientoPage: React.FC = () => {
             exit={{ opacity: 0, x: -20 }}
           >
             {/* Wizard Progress */}
-            <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-6 shadow-xl mb-6 border border-white/50">
+            <div className="bg-white rounded-2xl p-6 shadow-lg mb-6">
               <div className="flex items-center justify-between mb-4">
                 {[1, 2, 3, 4, 5, 6].map(step => (
                   <div key={step} className="flex items-center flex-1">
                     <div className="flex flex-col items-center flex-1">
-                      <motion.div
-                        whileHover={{ scale: 1.1 }}
+                      <div
                         className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all ${
                           currentStep >= step
-                            ? 'bg-gradient-to-br from-rose-600 via-pink-600 to-fuchsia-600 text-white shadow-lg'
+                            ? 'bg-gradient-to-br from-blue-600 to-purple-600 text-white shadow-lg'
                             : 'bg-slate-200 text-slate-400'
                         }`}
                       >
                         {currentStep > step ? <Check className="w-5 h-5" /> : step}
-                      </motion.div>
-                      <span className="text-xs mt-2 text-slate-600 text-center font-medium">
+                      </div>
+                      <span className="text-xs mt-2 text-slate-600 text-center">
                         {step === 1 && 'Cliente y Período'}
                         {step === 2 && 'Plantilla'}
                         {step === 3 && 'Contenido'}
@@ -451,7 +358,7 @@ const ReportesRendimientoPage: React.FC = () => {
                     {step < 6 && (
                       <div
                         className={`h-1 flex-1 mx-2 rounded transition-all ${
-                          currentStep > step ? 'bg-gradient-to-r from-rose-600 via-pink-600 to-fuchsia-600' : 'bg-slate-200'
+                          currentStep > step ? 'bg-gradient-to-r from-blue-600 to-purple-600' : 'bg-slate-200'
                         }`}
                       />
                     )}
@@ -465,7 +372,7 @@ const ReportesRendimientoPage: React.FC = () => {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-white/50"
+                className="bg-white rounded-2xl p-8 shadow-lg"
               >
                 <h2 className="text-2xl font-bold text-slate-900 mb-6">Seleccionar Cliente y Período</h2>
 
@@ -492,12 +399,12 @@ const ReportesRendimientoPage: React.FC = () => {
                         onClick={() => setSelectedClient(client)}
                         className={`p-4 border-2 rounded-xl cursor-pointer transition-all ${
                           selectedClient?.id === client.id
-                            ? 'border-rose-600 bg-gradient-to-br from-rose-50 to-pink-50 shadow-lg'
+                            ? 'border-blue-600 bg-blue-50 shadow-lg'
                             : 'border-slate-200 hover:border-slate-300 bg-white'
                         }`}
                       >
                         <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 bg-gradient-to-br from-rose-500 via-pink-600 to-fuchsia-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
                             {client.avatar}
                           </div>
                           <div className="flex-1">
@@ -511,7 +418,7 @@ const ReportesRendimientoPage: React.FC = () => {
                             </div>
                           </div>
                           {selectedClient?.id === client.id && (
-                            <Check className="w-6 h-6 text-rose-600" />
+                            <Check className="w-6 h-6 text-blue-600" />
                           )}
                         </div>
                       </motion.div>
@@ -537,12 +444,12 @@ const ReportesRendimientoPage: React.FC = () => {
                         onClick={() => setSelectedPeriod(period.id)}
                         className={`p-4 border-2 rounded-xl transition-all text-left ${
                           selectedPeriod === period.id
-                            ? 'border-rose-600 bg-gradient-to-br from-rose-50 to-pink-50 shadow-lg'
+                            ? 'border-blue-600 bg-blue-50 shadow-lg'
                             : 'border-slate-200 hover:border-slate-300 bg-white'
                         }`}
                       >
                         <div className="flex items-center gap-2 mb-1">
-                          <Calendar className="w-4 h-4 text-rose-600" />
+                          <Calendar className="w-4 h-4 text-blue-600" />
                           <span className="font-semibold text-slate-900">{period.label}</span>
                         </div>
                         {period.days && (
@@ -604,7 +511,7 @@ const ReportesRendimientoPage: React.FC = () => {
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setCurrentStep(2)}
                     disabled={!selectedClient || !selectedPeriod}
-                    className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-rose-600 via-pink-600 to-fuchsia-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Siguiente
                     <ChevronRight className="w-5 h-5" />
@@ -618,7 +525,7 @@ const ReportesRendimientoPage: React.FC = () => {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-white/50"
+                className="bg-white rounded-2xl p-8 shadow-lg"
               >
                 <h2 className="text-2xl font-bold text-slate-900 mb-6">Seleccionar Plantilla</h2>
 
@@ -631,11 +538,11 @@ const ReportesRendimientoPage: React.FC = () => {
                       onClick={() => setSelectedTemplate(template)}
                       className={`border-2 rounded-xl cursor-pointer transition-all overflow-hidden ${
                         selectedTemplate?.id === template.id
-                          ? 'border-rose-600 shadow-xl'
+                          ? 'border-blue-600 shadow-xl'
                           : 'border-slate-200 hover:border-slate-300 shadow-lg'
                       }`}
                     >
-                      <div className="bg-gradient-to-br from-rose-50 to-fuchsia-50 p-8 flex items-center justify-center text-6xl">
+                      <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-8 flex items-center justify-center text-6xl">
                         {template.thumbnail}
                       </div>
                       <div className="p-6">
@@ -658,7 +565,7 @@ const ReportesRendimientoPage: React.FC = () => {
                           )}
                         </div>
                         {selectedTemplate?.id === template.id && (
-                          <div className="mt-4 flex items-center gap-2 text-rose-600">
+                          <div className="mt-4 flex items-center gap-2 text-blue-600">
                             <Check className="w-5 h-5" />
                             <span className="font-semibold">Seleccionada</span>
                           </div>
@@ -673,7 +580,7 @@ const ReportesRendimientoPage: React.FC = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setCurrentStep(1)}
-                    className="flex items-center gap-2 px-8 py-3 bg-white/80 backdrop-blur-xl text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-white/50"
+                    className="flex items-center gap-2 px-8 py-3 bg-white text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-slate-200"
                   >
                     <ChevronLeft className="w-5 h-5" />
                     Anterior
@@ -683,7 +590,7 @@ const ReportesRendimientoPage: React.FC = () => {
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setCurrentStep(3)}
                     disabled={!selectedTemplate}
-                    className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-rose-600 via-pink-600 to-fuchsia-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Siguiente
                     <ChevronRight className="w-5 h-5" />
@@ -697,7 +604,7 @@ const ReportesRendimientoPage: React.FC = () => {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-white/50"
+                className="bg-white rounded-2xl p-8 shadow-lg"
               >
                 <h2 className="text-2xl font-bold text-slate-900 mb-6">Personalizar Contenido</h2>
                 <p className="text-slate-600 mb-6">Selecciona las secciones que deseas incluir en el reporte</p>
@@ -709,7 +616,7 @@ const ReportesRendimientoPage: React.FC = () => {
                       whileHover={{ scale: 1.02 }}
                       className={`p-4 border-2 rounded-xl transition-all ${
                         section.included
-                          ? 'border-rose-600 bg-gradient-to-br from-rose-50 to-pink-50'
+                          ? 'border-blue-600 bg-blue-50'
                           : 'border-slate-200 bg-white'
                       }`}
                     >
@@ -722,11 +629,11 @@ const ReportesRendimientoPage: React.FC = () => {
                               s.id === section.id ? { ...s, included: !s.included } : s
                             ));
                           }}
-                          className="mt-1 w-5 h-5 text-rose-600 rounded focus:ring-2 focus:ring-rose-500"
+                          className="mt-1 w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
                         />
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1">
-                            <section.icon className="w-4 h-4 text-rose-600" />
+                            <section.icon className="w-4 h-4 text-blue-600" />
                             <span className="font-semibold text-slate-900">{section.name}</span>
                           </div>
                           <p className="text-sm text-slate-600">{section.description}</p>
@@ -741,7 +648,7 @@ const ReportesRendimientoPage: React.FC = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setCurrentStep(2)}
-                    className="flex items-center gap-2 px-8 py-3 bg-white/80 backdrop-blur-xl text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-white/50"
+                    className="flex items-center gap-2 px-8 py-3 bg-white text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-slate-200"
                   >
                     <ChevronLeft className="w-5 h-5" />
                     Anterior
@@ -750,7 +657,7 @@ const ReportesRendimientoPage: React.FC = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setCurrentStep(4)}
-                    className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-rose-600 via-pink-600 to-fuchsia-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
+                    className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
                   >
                     Siguiente
                     <ChevronRight className="w-5 h-5" />
@@ -764,7 +671,7 @@ const ReportesRendimientoPage: React.FC = () => {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-white/50"
+                className="bg-white rounded-2xl p-8 shadow-lg"
               >
                 <h2 className="text-2xl font-bold text-slate-900 mb-6">Configurar Diseño</h2>
 
@@ -774,7 +681,7 @@ const ReportesRendimientoPage: React.FC = () => {
                     <label className="block text-sm font-semibold text-slate-700 mb-3">Estilo del Reporte</label>
                     <div className="grid grid-cols-4 gap-4">
                       {[
-                        { id: 'professional', name: 'Profesional', colors: 'from-rose-500 via-pink-600 to-fuchsia-700' },
+                        { id: 'professional', name: 'Profesional', colors: 'from-blue-500 to-blue-700' },
                         { id: 'sporty', name: 'Deportivo', colors: 'from-orange-500 to-red-600' },
                         { id: 'minimal', name: 'Minimalista', colors: 'from-slate-700 to-slate-900' },
                         { id: 'elegant', name: 'Elegante', colors: 'from-purple-500 to-pink-600' },
@@ -786,7 +693,7 @@ const ReportesRendimientoPage: React.FC = () => {
                           onClick={() => setReportStyle(style.id)}
                           className={`p-4 border-2 rounded-xl transition-all ${
                             reportStyle === style.id
-                              ? 'border-rose-600 shadow-lg'
+                              ? 'border-blue-600 shadow-lg'
                               : 'border-slate-200 hover:border-slate-300'
                           }`}
                         >
@@ -855,7 +762,7 @@ const ReportesRendimientoPage: React.FC = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setCurrentStep(3)}
-                    className="flex items-center gap-2 px-8 py-3 bg-white/80 backdrop-blur-xl text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-white/50"
+                    className="flex items-center gap-2 px-8 py-3 bg-white text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-slate-200"
                   >
                     <ChevronLeft className="w-5 h-5" />
                     Anterior
@@ -864,7 +771,7 @@ const ReportesRendimientoPage: React.FC = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setCurrentStep(5)}
-                    className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-rose-600 via-pink-600 to-fuchsia-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
+                    className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
                   >
                     Siguiente
                     <ChevronRight className="w-5 h-5" />
@@ -878,7 +785,7 @@ const ReportesRendimientoPage: React.FC = () => {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-white/50"
+                className="bg-white rounded-2xl p-8 shadow-lg"
               >
                 <h2 className="text-2xl font-bold text-slate-900 mb-6">Añadir Contenido Personalizado</h2>
 
@@ -929,7 +836,7 @@ const ReportesRendimientoPage: React.FC = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setCurrentStep(4)}
-                    className="flex items-center gap-2 px-8 py-3 bg-white/80 backdrop-blur-xl text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-white/50"
+                    className="flex items-center gap-2 px-8 py-3 bg-white text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-slate-200"
                   >
                     <ChevronLeft className="w-5 h-5" />
                     Anterior
@@ -938,7 +845,7 @@ const ReportesRendimientoPage: React.FC = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setCurrentStep(6)}
-                    className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-rose-600 via-pink-600 to-fuchsia-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
+                    className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
                   >
                     Ver Preview
                     <Eye className="w-5 h-5" />
@@ -952,7 +859,7 @@ const ReportesRendimientoPage: React.FC = () => {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-white/50"
+                className="bg-white rounded-2xl p-8 shadow-lg"
               >
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-2xl font-bold text-slate-900">Preview del Reporte</h2>
@@ -980,7 +887,7 @@ const ReportesRendimientoPage: React.FC = () => {
                     style={{ width: `${pdfZoom}%`, maxWidth: '800px' }}
                   >
                     {/* Portada */}
-                    <div className={`p-12 bg-gradient-to-br ${reportStyle === 'professional' ? 'from-rose-600 via-pink-600 to-fuchsia-600' : reportStyle === 'sporty' ? 'from-orange-500 to-red-600' : reportStyle === 'minimal' ? 'from-slate-700 to-slate-900' : 'from-purple-500 to-pink-600'} text-white text-center`}>
+                    <div className={`p-12 bg-gradient-to-br ${reportStyle === 'professional' ? 'from-blue-600 to-purple-600' : reportStyle === 'sporty' ? 'from-orange-500 to-red-600' : reportStyle === 'minimal' ? 'from-slate-700 to-slate-900' : 'from-purple-500 to-pink-600'} text-white text-center`}>
                       <div className="text-6xl font-bold mb-4">📊</div>
                       <h1 className="text-4xl font-bold mb-2">Reporte de Rendimiento</h1>
                       <p className="text-2xl mb-8">{selectedClient?.name}</p>
@@ -997,22 +904,22 @@ const ReportesRendimientoPage: React.FC = () => {
                         </div>
                       )}
                       <div className="grid grid-cols-2 gap-6">
-                        <div className="bg-gradient-to-br from-rose-50 to-pink-100 p-6 rounded-xl">
-                          <div className="text-4xl font-bold text-rose-600 mb-2">142,856</div>
+                        <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl">
+                          <div className="text-4xl font-bold text-blue-600 mb-2">142,856</div>
                           <div className="text-slate-700">Pasos Totales</div>
                           <div className="text-sm text-green-600 mt-2">↑ 12% vs anterior</div>
                         </div>
-                        <div className="bg-gradient-to-br from-purple-50 to-fuchsia-100 p-6 rounded-xl">
+                        <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl">
                           <div className="text-4xl font-bold text-purple-600 mb-2">18</div>
                           <div className="text-slate-700">Entrenamientos</div>
                           <div className="text-sm text-green-600 mt-2">↑ 3 más que antes</div>
                         </div>
-                        <div className="bg-gradient-to-br from-green-50 to-emerald-100 p-6 rounded-xl">
+                        <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl">
                           <div className="text-4xl font-bold text-green-600 mb-2">7.5h</div>
                           <div className="text-slate-700">Sueño Promedio</div>
                           <div className="text-sm text-green-600 mt-2">Óptimo ✓</div>
                         </div>
-                        <div className="bg-gradient-to-br from-orange-50 to-rose-100 p-6 rounded-xl">
+                        <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl">
                           <div className="text-4xl font-bold text-orange-600 mb-2">3,240</div>
                           <div className="text-slate-700">Calorías Quemadas</div>
                           <div className="text-sm text-green-600 mt-2">↑ 8% vs objetivo</div>
@@ -1024,9 +931,9 @@ const ReportesRendimientoPage: React.FC = () => {
                     <div className="p-12 bg-slate-50">
                       <h2 className="text-2xl font-bold text-slate-900 mb-4">Análisis de Actividad</h2>
                       <div className="bg-white p-6 rounded-xl mb-4">
-                        <div className="h-48 bg-gradient-to-r from-rose-200 to-fuchsia-200 rounded-lg flex items-end justify-around p-4">
+                        <div className="h-48 bg-gradient-to-r from-blue-200 to-purple-200 rounded-lg flex items-end justify-around p-4">
                           {[70, 90, 65, 100, 85, 75, 95].map((height, i) => (
-                            <div key={i} className="bg-gradient-to-t from-rose-600 via-pink-600 to-fuchsia-600 rounded-t" style={{ width: '12%', height: `${height}%` }} />
+                            <div key={i} className="bg-blue-600 rounded-t" style={{ width: '12%', height: `${height}%` }} />
                           ))}
                         </div>
                         <p className="text-center text-slate-600 mt-4">Pasos por día</p>
@@ -1069,7 +976,7 @@ const ReportesRendimientoPage: React.FC = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setCurrentStep(5)}
-                    className="flex items-center gap-2 px-8 py-3 bg-white/80 backdrop-blur-xl text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-white/50"
+                    className="flex items-center gap-2 px-8 py-3 bg-white text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-slate-200"
                   >
                     <ChevronLeft className="w-5 h-5" />
                     Anterior
@@ -1079,7 +986,7 @@ const ReportesRendimientoPage: React.FC = () => {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => setCurrentStep(1)}
-                      className="flex items-center gap-2 px-6 py-3 bg-white/80 backdrop-blur-xl text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-white/50"
+                      className="flex items-center gap-2 px-6 py-3 bg-white text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-slate-200"
                     >
                       <Edit className="w-5 h-5" />
                       Editar
@@ -1088,7 +995,7 @@ const ReportesRendimientoPage: React.FC = () => {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={handleGenerateReport}
-                      className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-rose-600 via-pink-600 to-fuchsia-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
+                      className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
                     >
                       <FileText className="w-5 h-5" />
                       Generar Reporte
@@ -1107,7 +1014,7 @@ const ReportesRendimientoPage: React.FC = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-white/50"
+            className="bg-white rounded-2xl p-8 shadow-lg"
           >
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-slate-900">Historial de Reportes</h2>
@@ -1183,14 +1090,14 @@ const ReportesRendimientoPage: React.FC = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-white/50"
+            className="bg-white rounded-2xl p-8 shadow-lg"
           >
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-slate-900">Reportes Automáticos</h2>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-rose-600 via-pink-600 to-fuchsia-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
+                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
               >
                 <Plus className="w-5 h-5" />
                 Nueva Programación
@@ -1261,44 +1168,37 @@ const ReportesRendimientoPage: React.FC = () => {
           >
             <div className="grid grid-cols-4 gap-6">
               {[
-                { label: 'Reportes Generados', value: '147', icon: FileText, color: 'from-rose-500 to-pink-600' },
-                { label: 'Clientes Activos', value: '28', icon: Users, color: 'from-purple-500 to-fuchsia-600' },
-                { label: 'Tasa de Apertura', value: '94%', icon: Eye, color: 'from-green-500 to-emerald-600' },
-                { label: 'Downloads Totales', value: '312', icon: Download, color: 'from-orange-500 to-rose-600' },
+                { label: 'Reportes Generados', value: '147', icon: FileText, color: 'blue' },
+                { label: 'Clientes Activos', value: '28', icon: Users, color: 'purple' },
+                { label: 'Tasa de Apertura', value: '94%', icon: Eye, color: 'green' },
+                { label: 'Downloads Totales', value: '312', icon: Download, color: 'orange' },
               ].map((stat, i) => (
                 <motion.div
                   key={i}
                   whileHover={{ scale: 1.03, y: -5 }}
-                  className="bg-white/80 backdrop-blur-xl rounded-3xl p-6 shadow-xl border border-white/50 relative overflow-hidden group"
+                  className="bg-white rounded-2xl p-6 shadow-lg"
                 >
-                  {/* Shimmer effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
-
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${stat.color} flex items-center justify-center shadow-lg`}>
-                        <stat.icon className="w-6 h-6 text-white" />
-                      </div>
-                      <TrendingUp className="w-5 h-5 text-green-600" />
-                    </div>
-                    <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 mb-1">{stat.value}</div>
-                    <div className="text-sm text-slate-600 font-medium">{stat.label}</div>
+                  <div className="flex items-center justify-between mb-4">
+                    <stat.icon className={`w-8 h-8 text-${stat.color}-600`} />
+                    <TrendingUp className="w-5 h-5 text-green-600" />
                   </div>
+                  <div className="text-3xl font-bold text-slate-900 mb-1">{stat.value}</div>
+                  <div className="text-sm text-slate-600">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
 
             <div className="grid grid-cols-2 gap-6">
-              <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-6 shadow-xl border border-white/50">
+              <div className="bg-white rounded-2xl p-6 shadow-lg">
                 <h3 className="font-bold text-slate-900 mb-4">Reportes por Mes</h3>
-                <div className="h-64 bg-gradient-to-t from-rose-50 to-transparent rounded-xl flex items-end justify-around p-4">
+                <div className="h-64 bg-gradient-to-t from-blue-50 to-transparent rounded-xl flex items-end justify-around p-4">
                   {[45, 62, 58, 71, 68, 79, 85, 92, 88, 95, 98, 100].map((height, i) => (
-                    <div key={i} className="bg-gradient-to-t from-rose-600 via-pink-600 to-fuchsia-600 rounded-t" style={{ width: '7%', height: `${height}%` }} />
+                    <div key={i} className="bg-gradient-to-t from-blue-600 to-purple-600 rounded-t" style={{ width: '7%', height: `${height}%` }} />
                   ))}
                 </div>
               </div>
 
-              <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-6 shadow-xl border border-white/50">
+              <div className="bg-white rounded-2xl p-6 shadow-lg">
                 <h3 className="font-bold text-slate-900 mb-4">Plantillas Más Usadas</h3>
                 <div className="space-y-3">
                   {[
@@ -1313,12 +1213,10 @@ const ReportesRendimientoPage: React.FC = () => {
                         <span className="text-slate-700">{template.name}</span>
                         <span className="font-semibold text-slate-900">{template.count}</span>
                       </div>
-                      <div className="h-2 bg-rose-200 rounded-full overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${template.percent}%` }}
-                          transition={{ delay: i * 0.1, duration: 1 }}
-                          className="h-full bg-gradient-to-r from-rose-600 via-pink-600 to-fuchsia-600 rounded-full"
+                      <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"
+                          style={{ width: `${template.percent}%` }}
                         />
                       </div>
                     </div>
@@ -1349,7 +1247,7 @@ const ReportesRendimientoPage: React.FC = () => {
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-                  className="w-16 h-16 bg-gradient-to-br from-rose-600 via-pink-600 to-fuchsia-600 rounded-full flex items-center justify-center mx-auto mb-6"
+                  className="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6"
                 >
                   <FileText className="w-8 h-8 text-white" />
                 </motion.div>
@@ -1361,9 +1259,9 @@ const ReportesRendimientoPage: React.FC = () => {
                   {generationProgress >= 60 && generationProgress < 80 && 'Creando PDF...'}
                   {generationProgress >= 80 && 'Finalizando...'}
                 </p>
-                <div className="w-full h-2 bg-rose-200 rounded-full overflow-hidden">
+                <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
                   <motion.div
-                    className="h-full bg-gradient-to-r from-rose-600 via-pink-600 to-fuchsia-600"
+                    className="h-full bg-gradient-to-r from-blue-600 to-purple-600"
                     initial={{ width: 0 }}
                     animate={{ width: `${generationProgress}%` }}
                     transition={{ duration: 0.5 }}
@@ -1407,7 +1305,7 @@ const ReportesRendimientoPage: React.FC = () => {
               <div className="bg-slate-50 rounded-xl p-4 mb-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-rose-600 via-pink-600 to-fuchsia-600 rounded-lg flex items-center justify-center shadow-lg">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
                       <FileText className="w-6 h-6 text-white" />
                     </div>
                     <div>
@@ -1424,7 +1322,7 @@ const ReportesRendimientoPage: React.FC = () => {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => setShowPreview(false)}
-                  className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-rose-600 to-pink-700 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
                 >
                   <Download className="w-5 h-5" />
                   Descargar
@@ -1433,7 +1331,7 @@ const ReportesRendimientoPage: React.FC = () => {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => { setShowPreview(false); setShowEmailModal(true); }}
-                  className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-pink-600 to-fuchsia-700 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
                 >
                   <Mail className="w-5 h-5" />
                   Enviar Email
@@ -1442,7 +1340,7 @@ const ReportesRendimientoPage: React.FC = () => {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => { setShowPreview(false); setShowShareModal(true); }}
-                  className="flex items-center justify-center gap-2 px-6 py-3 bg-white/80 backdrop-blur-xl text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-white/50"
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-white text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-slate-200"
                 >
                   <Share2 className="w-5 h-5" />
                   Compartir Link
@@ -1451,7 +1349,7 @@ const ReportesRendimientoPage: React.FC = () => {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => { setShowPreview(false); setCurrentStep(1); setSelectedClient(null); setSelectedTemplate(null); }}
-                  className="flex items-center justify-center gap-2 px-6 py-3 bg-white/80 backdrop-blur-xl text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-white/50"
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-white text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-slate-200"
                 >
                   <Plus className="w-5 h-5" />
                   Generar Otro
@@ -1521,7 +1419,7 @@ const ReportesRendimientoPage: React.FC = () => {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => setShowEmailModal(false)}
-                  className="flex-1 px-6 py-3 bg-white/80 backdrop-blur-xl text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-white/50"
+                  className="flex-1 px-6 py-3 bg-white text-slate-700 rounded-xl shadow hover:shadow-lg transition-all border border-slate-200"
                 >
                   Cancelar
                 </motion.button>
@@ -1529,7 +1427,7 @@ const ReportesRendimientoPage: React.FC = () => {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => { setShowEmailModal(false); alert('Email enviado exitosamente!'); }}
-                  className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-rose-600 via-pink-600 to-fuchsia-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
+                  className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
                 >
                   <Send className="w-5 h-5" />
                   Enviar Ahora
@@ -1593,7 +1491,7 @@ const ReportesRendimientoPage: React.FC = () => {
 
               <button
                 onClick={() => setShowShareModal(false)}
-                className="w-full px-6 py-3 bg-gradient-to-r from-rose-600 via-pink-600 to-fuchsia-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
+                className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
               >
                 Cerrar
               </button>

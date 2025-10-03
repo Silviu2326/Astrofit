@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Users, UserCheck, Calendar, DollarSign, TrendingUp, CheckCircle,
   UserPlus, Clock, Dumbbell, Apple, MessageSquare, BarChart, Settings,
   ArrowUpRight, ArrowDownRight, Sparkles, Activity, Target, Gift,
-  AlertCircle, Zap, TrendingDown
+  AlertCircle, Zap
 } from 'lucide-react';
+import ClienteFormModal from '../../crm/crm/clientes-listado/components/ClienteFormModal';
 
 // Tipos
 interface StatCardProps {
@@ -113,6 +115,8 @@ const InicioPage: React.FC = () => {
     }
   ];
 
+  const [openNewClient, setOpenNewClient] = useState(false);
+
   // Acciones rápidas
   const quickActions: QuickActionProps[] = [
     {
@@ -120,56 +124,56 @@ const InicioPage: React.FC = () => {
       title: 'Nuevo Cliente',
       description: 'Registra un nuevo cliente',
       gradient: 'from-blue-500 to-blue-600',
-      route: '/clientes'
+      route: 'modal:new-client'
     },
     {
       icon: <Dumbbell className="w-8 h-8" />,
       title: 'Nuevo Entrenamiento',
       description: 'Crea rutina personalizada',
       gradient: 'from-purple-500 to-purple-600',
-      route: '/entrenamientos'
+      route: 'nuevo-entrenamiento'
     },
     {
       icon: <Apple className="w-8 h-8" />,
       title: 'Nueva Dieta',
       description: 'Diseña plan nutricional',
       gradient: 'from-green-500 to-emerald-600',
-      route: '/dietas'
+      route: 'dieta-nueva'
     },
     {
       icon: <Calendar className="w-8 h-8" />,
       title: 'Agendar Cita',
       description: 'Programa una sesión',
       gradient: 'from-indigo-500 to-indigo-600',
-      route: '/agenda'
+      route: 'pagina-reserva'
     },
     {
       icon: <DollarSign className="w-8 h-8" />,
       title: 'Ver Finanzas',
       description: 'Revisa ingresos y gastos',
       gradient: 'from-emerald-500 to-teal-600',
-      route: '/finanzas'
+      route: 'panel-financiero'
     },
     {
       icon: <MessageSquare className="w-8 h-8" />,
       title: 'Enviar Mensaje',
       description: 'Contacta con clientes',
       gradient: 'from-pink-500 to-rose-600',
-      route: '/mensajes'
+      route: 'mensajeria'
     },
     {
       icon: <BarChart className="w-8 h-8" />,
       title: 'Ver Estadísticas',
       description: 'Análisis y reportes',
       gradient: 'from-orange-500 to-orange-600',
-      route: '/estadisticas'
+      route: '/dashboard-estadisticas'
     },
     {
       icon: <Settings className="w-8 h-8" />,
       title: 'Configuración',
       description: 'Ajusta preferencias',
       gradient: 'from-gray-600 to-gray-700',
-      route: '/configuracion'
+      route: 'configuracion'
     }
   ];
 
@@ -370,7 +374,7 @@ const InicioPage: React.FC = () => {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {quickActions.map((action, index) => (
-            <QuickActionCard key={index} {...action} delay={index * 0.1} />
+            <QuickActionCard key={index} {...action} delay={index * 0.1} onOpenNewClient={() => setOpenNewClient(true)} />
           ))}
         </div>
       </motion.div>
@@ -717,6 +721,11 @@ const InicioPage: React.FC = () => {
           </div>
         </div>
       </motion.div>
+      <ClienteFormModal
+        open={openNewClient}
+        onClose={() => setOpenNewClient(false)}
+        onCreated={() => setOpenNewClient(false)}
+      />
     </div>
   );
 };
@@ -786,14 +795,16 @@ const StatCard: React.FC<StatCardProps> = ({ icon, title, value, change, color, 
 };
 
 // COMPONENTE: Tarjeta de Acción Rápida Mejorada
-const QuickActionCard: React.FC<QuickActionProps & { delay: number }> = ({
+const QuickActionCard: React.FC<QuickActionProps & { delay: number; onOpenNewClient?: () => void }> = ({
   icon,
   title,
   description,
   gradient,
   route,
-  delay
+  delay,
+  onOpenNewClient
 }) => {
+  const navigate = useNavigate();
   return (
     <motion.button
       initial={{ opacity: 0, scale: 0.9 }}
@@ -801,7 +812,16 @@ const QuickActionCard: React.FC<QuickActionProps & { delay: number }> = ({
       transition={{ delay, duration: 0.4 }}
       whileHover={{ scale: 1.05, y: -8 }}
       whileTap={{ scale: 0.95 }}
-      onClick={() => console.log('Navegando a:', route)}
+      onClick={() => {
+        if (route === 'modal:new-client') {
+          onOpenNewClient?.();
+          return;
+        }
+        if (typeof route === 'string') {
+          const path = route.startsWith('/') ? route : `/${route}`;
+          navigate(path);
+        }
+      }}
       className={`
         relative overflow-hidden bg-gradient-to-br ${gradient}
         rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300

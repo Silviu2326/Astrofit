@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Users, Target, TrendingUp, Plus, Sparkles } from 'lucide-react';
+import toast from 'react-hot-toast';
 import SegmentosList from './components/SegmentosList';
 import SegmentoBuilder from './components/SegmentoBuilder';
 import SegmentoPreview from './components/SegmentoPreview';
@@ -45,27 +46,76 @@ const mockSegments: Segment[] = [
 const SegmentosPage: React.FC = () => {
   const [selectedSegment, setSelectedSegment] = useState<Segment | null>(null);
   const [segmentPreviewCount, setSegmentPreviewCount] = useState<number>(0);
-  const [isCreatingNew, setIsCreatingNew] = useState(false);
+  const [segments, setSegments] = useState<Segment[]>(mockSegments);
 
   const handleSaveSegment = (segment: Segment) => {
     console.log('Saving segment:', segment);
-    alert(`Segmento "${segment.name}" guardado.`);
-    setIsCreatingNew(false);
+    
+    if (segment.id && segments.find(s => s.id === segment.id)) {
+      // Actualizar segmento existente
+      setSegments(prev => prev.map(s => s.id === segment.id ? segment : s));
+      toast.success(`✅ Segmento "${segment.name}" actualizado correctamente`);
+    } else {
+      // Crear nuevo segmento
+      const newSegment = { ...segment, id: String(Date.now()) };
+      setSegments(prev => [...prev, newSegment]);
+      toast.success(`🎉 Segmento "${segment.name}" creado correctamente`);
+    }
+    
     setSelectedSegment(null);
   };
 
   const handleRunPreview = (rules: any[]) => {
-    const count = Math.floor(Math.random() * 200) + 10;
+    // Simular cálculo de miembros basado en reglas
+    if (rules.length === 0) {
+      setSegmentPreviewCount(0);
+      return;
+    }
+    
+    // Lógica más realista basada en el tipo de reglas
+    let baseCount = 0;
+    rules.forEach(rule => {
+      switch (rule.type) {
+        case 'tag':
+          baseCount += rule.operator === 'includes' ? 45 : 15;
+          break;
+        case 'activity':
+          baseCount += rule.operator === 'includes' ? 80 : 25;
+          break;
+        case 'date':
+          baseCount += 30;
+          break;
+        case 'status':
+          baseCount += 60;
+          break;
+        default:
+          baseCount += 20;
+      }
+    });
+    
+    // Aplicar variación aleatoria
+    const variation = Math.floor(baseCount * 0.3);
+    const count = Math.max(0, baseCount + Math.floor(Math.random() * variation * 2) - variation);
     setSegmentPreviewCount(count);
+  };
+
+  const handleDeleteSegment = (segmentId: string) => {
+    const segment = segments.find(s => s.id === segmentId);
+    setSegments(prev => prev.filter(s => s.id !== segmentId));
+    if (selectedSegment?.id === segmentId) {
+      setSelectedSegment(null);
+    }
+    if (segment) {
+      toast.success(`🗑️ Segmento "${segment.name}" eliminado correctamente`);
+    }
   };
 
   const handleNewSegment = () => {
     setSelectedSegment(null);
-    setIsCreatingNew(true);
     setSegmentPreviewCount(0);
   };
 
-  const totalMembers = mockSegments.reduce((sum, seg) => sum + seg.memberCount, 0);
+  const totalMembers = segments.reduce((sum, seg) => sum + seg.memberCount, 0);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 pb-12">
@@ -139,7 +189,7 @@ const SegmentosPage: React.FC = () => {
               </div>
             </div>
             <p className="text-sm font-medium text-gray-600 mt-3">Total Segmentos</p>
-            <p className="text-3xl font-bold text-indigo-600">{mockSegments.length}</p>
+            <p className="text-3xl font-bold text-indigo-600">{segments.length}</p>
           </motion.div>
 
           <motion.div
@@ -169,7 +219,7 @@ const SegmentosPage: React.FC = () => {
               </div>
             </div>
             <p className="text-sm font-medium text-gray-600 mt-3">Promedio por Segmento</p>
-            <p className="text-3xl font-bold text-green-600">{Math.round(totalMembers / mockSegments.length)}</p>
+            <p className="text-3xl font-bold text-green-600">{segments.length > 0 ? Math.round(totalMembers / segments.length) : 0}</p>
           </motion.div>
         </div>
       </div>
@@ -180,10 +230,9 @@ const SegmentosPage: React.FC = () => {
           {/* Lista de Segmentos */}
           <div className="lg:col-span-1">
             <SegmentosList
-              segments={mockSegments}
+              segments={segments}
               onSelectSegment={(segment) => {
                 setSelectedSegment(segment);
-                setIsCreatingNew(false);
               }}
               selectedSegmentId={selectedSegment?.id || null}
             />
@@ -215,7 +264,7 @@ const SegmentosPage: React.FC = () => {
 
             <SegmentoPreview count={segmentPreviewCount} />
 
-            {selectedSegment && <SegmentoActions segment={selectedSegment} />}
+            {selectedSegment && <SegmentoActions segment={selectedSegment} onDelete={handleDeleteSegment} />}
           </div>
         </div>
       </div>

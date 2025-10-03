@@ -6,53 +6,19 @@ echo Claude Code - Batch Prompt Sender
 echo ========================================
 echo.
 
-:: Mostrar archivos de prompts disponibles
-echo Archivos de prompts disponibles:
-echo ========================================
-set count=0
-for %%f in (prompts*.txt) do (
-    set /a count+=1
-    echo !count!. %%f
-    set "file!count!=%%f"
-)
-echo ========================================
-echo.
-
-:: Solicitar al usuario que elija un archivo
-set /p choice="Selecciona el numero del archivo a usar (1-!count!): "
-
-:: Validar la selección
-if !choice! LSS 1 goto invalid_choice
-if !choice! GTR !count! goto invalid_choice
-
-:: Obtener el archivo seleccionado
-set "PROMPT_FILE=!file%choice%!"
-echo.
-echo Archivo seleccionado: !PROMPT_FILE!
-echo.
-
-:: Verificar que el archivo existe
-if not exist "!PROMPT_FILE!" (
-    echo Error: !PROMPT_FILE! no encontrado
+echo Leyendo archivo promptsclaude.txt...
+if not exist "promptsclaude.txt" (
+    echo Error: promptsclaude.txt no encontrado
     exit /b 1
 )
 
-echo Procesando prompts de !PROMPT_FILE!...
-findstr /c:"PROMPT" "!PROMPT_FILE!" >nul
+echo Procesando prompts...
+findstr /c:"PROMPT" "promptsclaude.txt" >nul
 if !errorlevel! equ 0 (
     echo    Detectados prompts marcados
 ) else (
     echo    Sin prompts detectados
 )
-
-goto continue
-
-:invalid_choice
-echo.
-echo Error: Seleccion invalida. Debe ser un numero entre 1 y !count!
-exit /b 1
-
-:continue
 
 :: Create log directory
 if not exist "claudelogs" mkdir "claudelogs"
@@ -69,7 +35,7 @@ echo ========================================
 
 :: Create PowerShell script file to avoid command line escaping issues
 echo Creating temporary PowerShell script...
-echo $content = Get-Content '!PROMPT_FILE!' -Raw > temp_claude_script.ps1
+echo $content = Get-Content 'promptsclaude.txt' -Raw > temp_claude_script.ps1
 echo $prompts = @() >> temp_claude_script.ps1
 echo if ($content -match '(?s)## 📋 PROMPT') { >> temp_claude_script.ps1
 echo     $splits = $content -split '(?=## 📋 PROMPT \d+:)' ^| Where-Object { $_ -match '## 📋 PROMPT' } >> temp_claude_script.ps1

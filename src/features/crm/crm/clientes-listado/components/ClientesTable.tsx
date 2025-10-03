@@ -1,6 +1,7 @@
 import React from 'react';
-import { ArrowUpDown, ChevronDown, ChevronUp, Eye, MoreHorizontal } from 'lucide-react';
+import { ArrowUpDown, ChevronDown, ChevronUp, Eye } from 'lucide-react';
 import { Cliente, SortBy, SortDir } from '../clientesListadoApi';
+import ClienteActionsMenu from './ClienteActionsMenu';
 
 interface ClientesTableProps {
   clientes: Cliente[];
@@ -11,6 +12,7 @@ interface ClientesTableProps {
   onToggleSelect: (id: string) => void;
   onToggleSelectAll: () => void;
   onView: (id: string) => void;
+  onEdit?: (id: string) => void;
 }
 
 const SortIcon: React.FC<{ active: boolean; dir: SortDir }> = ({ active, dir }) => {
@@ -31,6 +33,7 @@ const ClientesTable: React.FC<ClientesTableProps> = ({
   onToggleSelect,
   onToggleSelectAll,
   onView,
+  onEdit,
 }) => {
   const allSelected = clientes.length > 0 && clientes.every(c => selected.has(c.id));
   const someSelected = clientes.some(c => selected.has(c.id)) && !allSelected;
@@ -119,9 +122,13 @@ const ClientesTable: React.FC<ClientesTableProps> = ({
                   >
                     <Eye className="w-3.5 h-3.5" /> Ver
                   </button>
-                  <button className="p-1.5 rounded-md border border-gray-200 hover:bg-gray-100">
-                    <MoreHorizontal className="w-4 h-4 text-gray-600" />
-                  </button>
+                  <ClienteActionsMenu
+                    clienteId={cliente.id}
+                    clienteNombre={cliente.nombre}
+                    clienteEmail={cliente.email}
+                    clienteTelefono={cliente.telefono}
+                    onEdit={onEdit}
+                  />
                 </div>
               </td>
             </tr>

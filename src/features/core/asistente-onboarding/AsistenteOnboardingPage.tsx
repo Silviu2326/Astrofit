@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Sparkles, User, Mail, Phone, Globe, Building2, Users, DollarSign,
@@ -19,9 +19,18 @@ const AsistenteOnboardingPage: React.FC = () => {
     servicios: [] as string[],
     idioma: 'es',
     moneda: 'EUR',
-    invitaciones: [] as { email: string; rol: string }[]
+    invitaciones: [] as { email: string; rol: string }[],
+    avatar: null as File | null,
+    notificaciones: {
+      email: true,
+      push: true,
+      sms: false
+    }
   });
   const [showConfetti, setShowConfetti] = useState(false);
+  const [newInvitationEmail, setNewInvitationEmail] = useState('');
+  const [newInvitationRol, setNewInvitationRol] = useState('Entrenador');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const totalSteps = 5;
 
@@ -64,6 +73,85 @@ const AsistenteOnboardingPage: React.FC = () => {
         ? prev.servicios.filter(s => s !== servicio)
         : [...prev.servicios, servicio]
     }));
+  };
+
+  // Funciones para manejar funcionalidades
+  const handleAvatarUpload = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setFormData(prev => ({ ...prev, avatar: file }));
+    }
+  };
+
+  const toggleNotification = (type: 'email' | 'push' | 'sms') => {
+    setFormData(prev => ({
+      ...prev,
+      notificaciones: {
+        ...prev.notificaciones,
+        [type]: !prev.notificaciones[type]
+      }
+    }));
+  };
+
+  const addTeamMember = () => {
+    if (newInvitationEmail && newInvitationEmail.includes('@')) {
+      setFormData(prev => ({
+        ...prev,
+        invitaciones: [...prev.invitaciones, { email: newInvitationEmail, rol: newInvitationRol }]
+      }));
+      setNewInvitationEmail('');
+    }
+  };
+
+  const removeTeamMember = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      invitaciones: prev.invitaciones.filter((_, i) => i !== index)
+    }));
+  };
+
+  const handleIntegrationClick = (integrationName: string) => {
+    // Simular conexión de integración
+    alert(`Conectando con ${integrationName}...`);
+  };
+
+  const skipOnboarding = () => {
+    if (confirm('¿Estás seguro de que quieres saltar el onboarding? Puedes completarlo más tarde desde la configuración.')) {
+      // Redirigir al panel de control
+      window.location.href = '/panel-control';
+    }
+  };
+
+  const goToDashboard = () => {
+    // Guardar datos del onboarding
+    localStorage.setItem('onboardingCompleted', 'true');
+    localStorage.setItem('userData', JSON.stringify(formData));
+    
+    // Redirigir al panel de control
+    window.location.href = '/panel-control';
+  };
+
+  const handleNextStepAction = (action: string) => {
+    switch (action) {
+      case 'add-clients':
+        window.location.href = '/clientes-listado';
+        break;
+      case 'view-dashboard':
+        window.location.href = '/panel-control';
+        break;
+      case 'create-routines':
+        window.location.href = '/nuevo-entrenamiento';
+        break;
+      case 'schedule-appointments':
+        window.location.href = '/pagina-reserva';
+        break;
+      default:
+        break;
+    }
   };
 
   const renderStepContent = () => {
@@ -165,12 +253,30 @@ const AsistenteOnboardingPage: React.FC = () => {
               transition={{ delay: 0.3 }}
               className="flex flex-col items-center gap-4 p-6 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-3xl border-2 border-dashed border-indigo-200"
             >
-              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-3xl font-bold shadow-xl">
-                {formData.nombre.charAt(0) || <Upload className="w-10 h-10" />}
+              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-3xl font-bold shadow-xl overflow-hidden">
+                {formData.avatar ? (
+                  <img 
+                    src={URL.createObjectURL(formData.avatar)} 
+                    alt="Avatar" 
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  formData.nombre.charAt(0) || <Upload className="w-10 h-10" />
+                )}
               </div>
-              <button className="px-6 py-2 bg-white rounded-full text-sm font-semibold text-indigo-600 hover:bg-indigo-50 transition-colors duration-300 shadow-md">
-                Subir Foto de Perfil
+              <button 
+                onClick={handleAvatarUpload}
+                className="px-6 py-2 bg-white rounded-full text-sm font-semibold text-indigo-600 hover:bg-indigo-50 transition-colors duration-300 shadow-md"
+              >
+                {formData.avatar ? 'Cambiar Foto' : 'Subir Foto de Perfil'}
               </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+              />
             </motion.div>
           </motion.div>
         );
@@ -418,8 +524,19 @@ const AsistenteOnboardingPage: React.FC = () => {
                       </div>
                       <span className="font-medium text-gray-700">{notif.label}</span>
                     </div>
-                    <button className="w-12 h-6 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full relative">
-                      <div className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full shadow-md"></div>
+                    <button 
+                      onClick={() => toggleNotification(notif.id as 'email' | 'push' | 'sms')}
+                      className={`w-12 h-6 rounded-full relative transition-all duration-300 ${
+                        formData.notificaciones[notif.id as keyof typeof formData.notificaciones]
+                          ? 'bg-gradient-to-r from-indigo-500 to-purple-600'
+                          : 'bg-gray-300'
+                      }`}
+                    >
+                      <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow-md transition-all duration-300 ${
+                        formData.notificaciones[notif.id as keyof typeof formData.notificaciones]
+                          ? 'right-1'
+                          : 'left-1'
+                      }`}></div>
                     </button>
                   </motion.div>
                 ))}
@@ -449,18 +566,47 @@ const AsistenteOnboardingPage: React.FC = () => {
               <div className="flex gap-3 mb-4">
                 <input
                   type="email"
+                  value={newInvitationEmail}
+                  onChange={(e) => setNewInvitationEmail(e.target.value)}
                   className="flex-1 px-4 py-3 rounded-2xl border-2 border-gray-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 transition-all duration-300 outline-none bg-white/80 backdrop-blur-sm"
                   placeholder="email@ejemplo.com"
                 />
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={addTeamMember}
                   className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-2xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center gap-2"
                 >
                   <Send className="w-5 h-5" />
                   Añadir
                 </motion.button>
               </div>
+
+              {/* Lista de invitaciones */}
+              {formData.invitaciones.length > 0 && (
+                <div className="space-y-2 mb-4">
+                  <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Invitaciones Enviadas</p>
+                  {formData.invitaciones.map((invitacion, index) => (
+                    <div key={index} className="flex items-center justify-between p-3 bg-white/80 rounded-2xl border border-gray-200">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full flex items-center justify-center">
+                          <Mail className="w-4 h-4 text-indigo-600" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">{invitacion.email}</p>
+                          <p className="text-xs text-gray-500">{invitacion.rol}</p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => removeTeamMember(index)}
+                        className="p-1 text-gray-400 hover:text-red-500 transition-colors duration-300"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
 
               {/* Lista de roles */}
               <div className="space-y-2">
@@ -503,6 +649,7 @@ const AsistenteOnboardingPage: React.FC = () => {
                     transition={{ delay: 0.2 + index * 0.05 }}
                     whileHover={{ scale: 1.03, y: -4 }}
                     whileTap={{ scale: 0.98 }}
+                    onClick={() => handleIntegrationClick(integration.name)}
                     className="relative overflow-hidden bg-white/80 backdrop-blur-sm rounded-3xl p-6 border-2 border-gray-200 hover:border-indigo-300 shadow-lg hover:shadow-xl transition-all duration-300 group"
                   >
                     <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-indigo-200 to-purple-200 rounded-full blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
@@ -525,6 +672,7 @@ const AsistenteOnboardingPage: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
+              onClick={() => setCurrentStep(5)}
               className="w-full py-3 text-center text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors duration-300"
             >
               Saltar por ahora →
@@ -635,10 +783,10 @@ const AsistenteOnboardingPage: React.FC = () => {
               <h3 className="text-sm font-bold text-gray-600 uppercase tracking-wider mb-4">Próximos Pasos</h3>
               <div className="grid grid-cols-2 gap-3">
                 {[
-                  { icon: User, label: 'Añadir Clientes', color: 'from-blue-500 to-indigo-500' },
-                  { icon: TrendingUp, label: 'Ver Dashboard', color: 'from-purple-500 to-pink-500' },
-                  { icon: Target, label: 'Crear Rutinas', color: 'from-emerald-500 to-teal-500' },
-                  { icon: Calendar, label: 'Agendar Citas', color: 'from-orange-500 to-red-500' }
+                  { icon: User, label: 'Añadir Clientes', color: 'from-blue-500 to-indigo-500', action: 'add-clients' },
+                  { icon: TrendingUp, label: 'Ver Dashboard', color: 'from-purple-500 to-pink-500', action: 'view-dashboard' },
+                  { icon: Target, label: 'Crear Rutinas', color: 'from-emerald-500 to-teal-500', action: 'create-routines' },
+                  { icon: Calendar, label: 'Agendar Citas', color: 'from-orange-500 to-red-500', action: 'schedule-appointments' }
                 ].map((step, index) => (
                   <motion.button
                     key={step.label}
@@ -647,6 +795,7 @@ const AsistenteOnboardingPage: React.FC = () => {
                     transition={{ delay: 0.9 + index * 0.05 }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={() => handleNextStepAction(step.action)}
                     className={`p-4 rounded-2xl bg-gradient-to-br ${step.color} text-white shadow-lg hover:shadow-xl transition-all duration-300`}
                   >
                     <step.icon className="w-6 h-6 mx-auto mb-2" />
@@ -688,7 +837,10 @@ const AsistenteOnboardingPage: React.FC = () => {
         </div>
 
         {/* Skip button */}
-        <button className="absolute top-6 right-6 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-white text-sm font-semibold hover:bg-white/20 transition-all duration-300 border border-white/20 flex items-center gap-2 z-20">
+        <button 
+          onClick={skipOnboarding}
+          className="absolute top-6 right-6 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-white text-sm font-semibold hover:bg-white/20 transition-all duration-300 border border-white/20 flex items-center gap-2 z-20"
+        >
           <X className="w-4 h-4" />
           Saltar onboarding
         </button>
@@ -848,6 +1000,7 @@ const AsistenteOnboardingPage: React.FC = () => {
                 transition={{ delay: 1 }}
                 whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(16, 185, 129, 0.3)" }}
                 whileTap={{ scale: 0.95 }}
+                onClick={goToDashboard}
                 className="w-full mt-8 py-4 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white rounded-2xl font-bold text-lg shadow-2xl hover:shadow-emerald-500/50 transition-all duration-300 flex items-center justify-center gap-3"
               >
                 <Sparkles className="w-6 h-6" />

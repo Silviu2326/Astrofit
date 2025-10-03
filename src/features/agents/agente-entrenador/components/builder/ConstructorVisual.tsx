@@ -1,256 +1,157 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import {
-  Calendar, Search, Filter, GripVertical,
-  Trash2, Sparkles
-} from 'lucide-react';
-import { agenteEntrenadorApi, Exercise } from '../../agenteEntrenadorApi';
 
-interface DayExercises {
-  day: string;
-  dayLetter: string;
+import React, { useState, useMemo, useCallback } from 'react';
+import BloquesEntrenamiento from './BloquesEntrenamiento';
+import SuperseriesManager from './SuperseriesManager';
+
+interface Exercise {
+  id: string;
+  name: string;
+  sets: number;
+  reps: string;
+  weight: string;
+  durationMinutes?: number; // For cardio/warmup
+  notes: string;
+}
+
+interface Block {
+  id: string;
+  type: 'Calentamiento' | 'Fuerza' | 'Cardio' | 'Cool-down' | 'Superserie';
+  name: string;
   exercises: Exercise[];
+  superseries?: Superseries; // Link to superseries if type is Superserie
+}
+
+interface Superseries {
+  id: string;
+  name: string;
+  exercises: Exercise[];
+  restTimeSeconds: number;
 }
 
 const ConstructorVisual: React.FC = () => {
-  const [exercises, setExercises] = useState<Exercise[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState<string>('all');
-  const [weekSchedule, setWeekSchedule] = useState<DayExercises[]>([
-    { day: 'Lunes', dayLetter: 'L', exercises: [] },
-    { day: 'Martes', dayLetter: 'M', exercises: [] },
-    { day: 'Miércoles', dayLetter: 'X', exercises: [] },
-    { day: 'Jueves', dayLetter: 'J', exercises: [] },
-    { day: 'Viernes', dayLetter: 'V', exercises: [] },
-    { day: 'Sábado', dayLetter: 'S', exercises: [] },
-    { day: 'Domingo', dayLetter: 'D', exercises: [] },
-  ]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [blocks, setBlocks] = useState<Block[]>([]);
+  const [superseriesList, setSuperseriesList] = useState<Superseries[]>([]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      const exercisesData = agenteEntrenadorApi.getExercises();
-      setExercises(exercisesData);
-      setIsLoading(false);
-    }, 300);
+  // Dummy available exercises for SuperseriesManager
+  const availableExercisesForSuperseries: Exercise[] = useMemo(() => [
+    { id: 'ex-1', name: 'Flexiones', sets: 3, reps: '10-12', weight: 'Peso corporal', notes: '' },
+    { id: 'ex-2', name: 'Sentadillas', sets: 3, reps: '8-10', weight: '50kg', notes: '' },
+    { id: 'ex-3', name: 'Press Banca', sets: 4, reps: '6-8', weight: '60kg', notes: '' },
+    { id: 'ex-4', name: 'Remo con Barra', sets: 3, reps: '10-12', weight: '40kg', notes: '' },
+    { id: 'ex-5', name: 'Dominadas', sets: 3, reps: 'AMRAP', weight: 'Peso corporal', notes: '' },
+  ], []);
+
+  const handleAddSuperseries = useCallback((newSuperseries: Superseries) => {
+    setSuperseriesList(prev => [...prev, newSuperseries]);
+    // Optionally add the superseries as a block directly
+    setBlocks(prev => [
+      ...prev,
+      {
+        id: `block-superseries-${newSuperseries.id}`,
+        type: 'Superserie',
+        name: newSuperseries.name,
+        exercises: newSuperseries.exercises,
+        superseries: newSuperseries,
+      },
+    ]);
   }, []);
 
-  const handleDragStart = (e: React.DragEvent, exercise: Exercise) => {
-    e.dataTransfer.setData('application/json', JSON.stringify(exercise));
+  const calculateEstimatedTime = useMemo(() => {
+    let totalMinutes = 0;
+    blocks.forEach(block => {
+      if (block.type === 'Cardio' && block.exercises.length > 0 && block.exercises[0].durationMinutes) {
+        totalMinutes += block.exercises[0].durationMinutes;
+      } else if (block.type === 'Superserie' && block.superseries) {
+        // Estimate for superseries: (exercises * sets * time_per_exercise) + (sets * rest_time)
+        const setsPerSuperseries = 3; // Assuming 3 sets for a superseries for estimation
+        const timePerExerciseInSuperseries = 1; // 1 minute per exercise in a superseries
+        const restBetweenSuperseries = block.superseries.restTimeSeconds / 60; // Convert to minutes
+        totalMinutes += (block.exercises.length * setsPerSuperseries * timePerExerciseInSuperseries) + (setsPerSuperseries * restBetweenSuperseries);
+      } else {
+        // For other blocks, a simple estimation per exercise
+        totalMinutes += block.exercises.length * 2; // 2 minutes per exercise (warmup, strength, cooldown)
+      }
+    });
+    return totalMinutes;
+  }, [blocks]);
+
+  const validateMuscleBalance = useMemo(() => {
+    // This is a placeholder. A real implementation would map exercises to muscle groups
+    // and analyze the distribution. For now, a simple check.
+    const strengthExercises = blocks.filter(b => b.type === 'Fuerza' || b.type === 'Superserie').flatMap(b => b.exercises);
+    if (strengthExercises.length < 3) {
+      return "Pocos ejercicios de fuerza para un buen equilibrio.";
+    }
+    return "Equilibrio muscular aparente.";
+  }, [blocks]);
+
+  const exportToPDF = () => {
+    alert("Funcionalidad de exportar a PDF no implementada aún.");
+    // TODO: Implement PDF export using a library like jsPDF or html2pdf
   };
 
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
+  const loadTemplate = (templateName: string) => {
+    // Placeholder for loading templates
+    alert(`Cargando plantilla: ${templateName}. Funcionalidad no implementada aún.`);
+    // TODO: Implement logic to load predefined blocks and exercises
   };
-
-  const handleDrop = (e: React.DragEvent, dayIndex: number) => {
-    e.preventDefault();
-    const droppedExercise: Exercise = JSON.parse(e.dataTransfer.getData('application/json'));
-
-    setWeekSchedule((prevSchedule) =>
-      prevSchedule.map((dayData, index) =>
-        index === dayIndex
-          ? { ...dayData, exercises: [...dayData.exercises, droppedExercise] }
-          : dayData
-      )
-    );
-  };
-
-  const removeExercise = (dayIndex: number, exerciseId: string) => {
-    setWeekSchedule((prevSchedule) =>
-      prevSchedule.map((dayData, index) =>
-        index === dayIndex
-          ? { ...dayData, exercises: dayData.exercises.filter(ex => ex.id !== exerciseId) }
-          : dayData
-      )
-    );
-  };
-
-  const filteredExercises = exercises.filter(ex => {
-    const matchesSearch = ex.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = categoryFilter === 'all' || ex.category === categoryFilter;
-    return matchesSearch && matchesCategory;
-  });
-
-  const categoryColors: Record<string, string> = {
-    fuerza: 'from-orange-500 to-red-500',
-    cardio: 'from-blue-500 to-cyan-500',
-    movilidad: 'from-green-500 to-teal-500',
-    correctivo: 'from-purple-500 to-pink-500'
-  };
-
-  if (isLoading) {
-    return (
-      <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50">
-        <div className="flex items-center justify-center h-40">
-          <Sparkles className="w-8 h-8 text-orange-500 animate-pulse" />
-          <span className="ml-3 text-gray-600">Cargando constructor...</span>
-        </div>
-      </div>
-    );
-  }
 
   return (
-    <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl overflow-hidden border border-white/50">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 p-6 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3) 1px, transparent 1px)`,
-            backgroundSize: '20px 20px'
-          }}></div>
-        </div>
+    <div className="p-6 bg-gray-100 min-h-screen">
+      <h1 className="text-3xl font-bold mb-6 text-center">Constructor de Entrenamientos</h1>
 
-        <h3 className="text-xl font-bold text-white flex items-center gap-2 relative z-10">
-          <div className="p-2 bg-white/20 rounded-xl backdrop-blur-sm">
-            <Calendar className="w-6 h-6" />
-          </div>
-          Constructor Visual - Timeline Semanal
-        </h3>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <div className="lg:col-span-2">
+          <BloquesEntrenamiento />
+        </div>
+        <div>
+          <SuperseriesManager
+            onAddSuperseries={handleAddSuperseries}
+            availableExercises={availableExercisesForSuperseries}
+          />
+        </div>
       </div>
 
-      <div className="p-6">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Panel de Ejercicios */}
-          <div className="lg:col-span-1">
-            <div className="mb-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Buscar ejercicio..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 rounded-xl border-2 border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 transition-all duration-300 outline-none"
-                />
-              </div>
-            </div>
-
-            <div className="mb-4">
-              <div className="flex items-center gap-2 mb-2">
-                <Filter className="w-4 h-4 text-gray-600" />
-                <span className="text-sm font-semibold text-gray-700">Filtrar por categoría</span>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={() => setCategoryFilter('all')}
-                  className={`px-3 py-1 rounded-full text-xs font-bold transition-all duration-300 ${
-                    categoryFilter === 'all'
-                      ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
-                >
-                  Todos
-                </button>
-                <button
-                  onClick={() => setCategoryFilter('fuerza')}
-                  className={`px-3 py-1 rounded-full text-xs font-bold transition-all duration-300 ${
-                    categoryFilter === 'fuerza'
-                      ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
-                >
-                  Fuerza
-                </button>
-                <button
-                  onClick={() => setCategoryFilter('cardio')}
-                  className={`px-3 py-1 rounded-full text-xs font-bold transition-all duration-300 ${
-                    categoryFilter === 'cardio'
-                      ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
-                >
-                  Cardio
-                </button>
-                <button
-                  onClick={() => setCategoryFilter('movilidad')}
-                  className={`px-3 py-1 rounded-full text-xs font-bold transition-all duration-300 ${
-                    categoryFilter === 'movilidad'
-                      ? 'bg-gradient-to-r from-green-500 to-teal-500 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
-                >
-                  Movilidad
-                </button>
-              </div>
-            </div>
-
-            <div className="space-y-2 max-h-[600px] overflow-y-auto pr-2">
-              {filteredExercises.map((exercise) => (
-                <motion.div
-                  key={exercise.id}
-                  draggable
-                  onDragStart={(e) => handleDragStart(e, exercise)}
-                  whileHover={{ scale: 1.02 }}
-                  className={`bg-gradient-to-r ${categoryColors[exercise.category] || 'from-gray-500 to-gray-600'} text-white px-3 py-2 rounded-xl cursor-grab active:cursor-grabbing shadow-md hover:shadow-lg transition-all duration-300 group relative overflow-hidden`}
-                >
-                  <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                  <div className="relative z-10 flex items-center gap-2">
-                    <GripVertical className="w-4 h-4 opacity-70" />
-                    <div className="flex-1">
-                      <p className="text-sm font-bold">{exercise.name}</p>
-                      <p className="text-xs opacity-80">{exercise.muscleGroup}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+      <div className="bg-white p-4 rounded shadow-md mb-6">
+        <h2 className="text-2xl font-bold mb-3">Vista Previa y Análisis del Entrenamiento</h2>
+        <div className="flex justify-between items-center mb-3">
+          <p className="text-lg">Tiempo Total Estimado: <span className="font-semibold">{calculateEstimatedTime} minutos</span></p>
+          <p className="text-lg">Equilibrio Muscular: <span className="font-semibold">{validateMuscleBalance}</span></p>
+        </div>
+        <div className="mb-4">
+          <h3 className="text-xl font-semibold mb-2">Plantillas Predefinidas</h3>
+          <div className="flex gap-2">
+            <button onClick={() => loadTemplate('Fuerza')} className="bg-indigo-500 text-white px-3 py-1 rounded text-sm">
+              Fuerza
+            </button>
+            <button onClick={() => loadTemplate('Hipertrofia')} className="bg-indigo-500 text-white px-3 py-1 rounded text-sm">
+              Hipertrofia
+            </button>
+            <button onClick={() => loadTemplate('Resistencia')} className="bg-indigo-500 text-white px-3 py-1 rounded text-sm">
+              Resistencia
+            </button>
           </div>
+        </div>
+        <button
+          onClick={exportToPDF}
+          className="bg-red-600 text-white px-4 py-2 rounded-md text-lg font-semibold hover:bg-red-700"
+        >
+          Exportar a PDF
+        </button>
 
-          {/* Timeline Semanal */}
-          <div className="lg:col-span-3">
-            <div className="grid grid-cols-7 gap-3">
-              {weekSchedule.map((dayData, dayIndex) => (
-                <div key={dayIndex} className="flex flex-col">
-                  {/* Día header */}
-                  <div className="text-center mb-2">
-                    <div className="w-10 h-10 mx-auto rounded-full bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-white font-bold shadow-lg mb-1">
-                      {dayData.dayLetter}
-                    </div>
-                    <p className="text-xs font-semibold text-gray-600">{dayData.day}</p>
-                  </div>
-
-                  {/* Drop zone */}
-                  <div
-                    onDragOver={handleDragOver}
-                    onDrop={(e) => handleDrop(e, dayIndex)}
-                    className={`flex-1 border-2 border-dashed rounded-2xl p-2 min-h-[400px] transition-all duration-300 ${
-                      dayData.exercises.length > 0
-                        ? 'border-orange-300 bg-orange-50'
-                        : 'border-gray-300 bg-gray-50 hover:border-orange-300 hover:bg-orange-50/30'
-                    }`}
-                  >
-                    <div className="space-y-2">
-                      {dayData.exercises.map((exercise, exIndex) => (
-                        <motion.div
-                          key={`${exercise.id}-${exIndex}`}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          className="bg-white rounded-lg p-2 shadow-md border border-gray-200 group relative"
-                        >
-                          <button
-                            onClick={() => removeExercise(dayIndex, exercise.id)}
-                            className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg"
-                          >
-                            <Trash2 className="w-3 h-3 text-white" />
-                          </button>
-                          <p className="text-xs font-bold text-gray-800 truncate">{exercise.name}</p>
-                          <div className={`w-full h-1 mt-1 rounded-full bg-gradient-to-r ${categoryColors[exercise.category]}`}></div>
-                        </motion.div>
-                      ))}
-                      {dayData.exercises.length === 0 && (
-                        <div className="flex items-center justify-center h-full">
-                          <p className="text-xs text-gray-400 text-center">
-                            Arrastra ejercicios aquí
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
+        <div className="mt-4 p-3 bg-gray-50 rounded border">
+          <h3 className="text-xl font-semibold mb-2">Estructura del Entrenamiento</h3>
+          {blocks.length === 0 && <p className="text-gray-500">Aún no hay bloques de entrenamiento. ¡Empieza a construir!</p>}
+          {blocks.map((block, index) => (
+            <div key={block.id} className="mb-2 p-2 border-b last:border-b-0">
+              <p className="font-medium">{index + 1}. {block.name} ({block.type})</p>
+              <ul className="list-disc list-inside ml-4 text-sm">
+                {block.exercises.map(ex => (
+                  <li key={ex.id}>{ex.name} - {ex.sets}x{ex.reps} ({ex.weight}) {ex.notes && `[Notas: ${ex.notes}]`}</li>
+                ))}
+              </ul>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

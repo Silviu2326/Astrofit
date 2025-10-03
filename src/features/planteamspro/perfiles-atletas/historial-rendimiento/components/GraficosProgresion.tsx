@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Chart, registerables } from 'chart.js';
-import { Activity } from 'lucide-react';
 import { AtletaRendimientoData, fetchHistorialRendimiento } from '../historialRendimientoApi';
 
 Chart.register(...registerables);
@@ -133,68 +132,22 @@ const GraficosProgresion: React.FC<GraficosProgresionProps> = ({ timeframe }) =>
   }, [data]);
 
   if (loading) {
-    return (
-      <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/50 text-center">
-        <div className="inline-block w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-        <p className="mt-4 text-gray-600 font-medium">Cargando datos de rendimiento...</p>
-      </div>
-    );
+    return <div className="text-center">Cargando datos de rendimiento...</div>;
   }
 
   if (data.length === 0) {
-    return (
-      <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/50 text-center">
-        <p className="text-gray-600">No hay datos de rendimiento disponibles para el atleta seleccionado.</p>
-      </div>
-    );
+    return <div className="text-center">No hay datos de rendimiento disponibles para el atleta seleccionado.</div>;
   }
 
   return (
-    <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl overflow-hidden border border-white/50 relative">
-      {/* Decoración de fondo */}
-      <div className="absolute -right-20 -top-20 w-64 h-64 bg-gradient-to-br from-blue-200 to-purple-200 rounded-full blur-3xl opacity-20"></div>
-
-      {/* Header con gradiente */}
-      <div className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 p-6 relative overflow-hidden">
-        {/* Dots pattern */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3) 1px, transparent 1px)`,
-            backgroundSize: '20px 20px'
-          }}></div>
-        </div>
-
-        <h2 className="text-2xl font-bold text-white flex items-center gap-3 relative z-10">
-          <div className="p-2 bg-white/20 rounded-xl backdrop-blur-sm">
-            <Activity className="w-6 h-6" />
-          </div>
-          Gráficos de Progresión
-        </h2>
+    <div className="bg-white p-4 rounded shadow">
+      <h2 className="text-xl font-semibold mb-4">Gráficos de Progresión</h2>
+      <div className="relative h-96">
+        <canvas ref={chartRef}></canvas>
       </div>
-
-      {/* Body con glassmorphism */}
-      <div className="p-6 relative z-10">
-        <div className="relative h-96 bg-white/50 rounded-2xl p-4 shadow-inner">
-          <canvas ref={chartRef}></canvas>
-        </div>
-
-        {/* Indicadores con badges */}
-        <div className="mt-6 space-y-3">
-          <div className="flex items-start gap-3 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border border-blue-100">
-            <div className="w-2 h-2 mt-2 bg-blue-500 rounded-full flex-shrink-0"></div>
-            <p className="text-sm text-gray-700 leading-relaxed">
-              <span className="font-bold text-blue-700">Líneas de tendencia:</span> Análisis estadístico de la progresión a largo plazo
-            </p>
-          </div>
-
-          <div className="flex items-start gap-3 p-3 bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl border border-purple-100">
-            <div className="w-2 h-2 mt-2 bg-purple-500 rounded-full flex-shrink-0"></div>
-            <p className="text-sm text-gray-700 leading-relaxed">
-              <span className="font-bold text-purple-700">Eventos importantes:</span> Marcadores de lesiones, competencias y cambios significativos
-            </p>
-          </div>
-        </div>
-      </div>
+      {/* Placeholder for trend lines and annual comparisons logic */}
+      <p className="mt-4 text-sm text-gray-600">* Aquí se mostrarán líneas de tendencia y comparaciones anuales.</p>
+      <p className="text-sm text-gray-600">* Los marcadores de eventos importantes (lesiones, competencias) se integrarían en los gráficos.</p>
     </div>
   );
 };

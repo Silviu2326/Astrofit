@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { Segment } from '../SegmentosPage';
 
 interface SegmentoBuilderProps {
@@ -25,7 +26,14 @@ const SegmentoBuilder: React.FC<SegmentoBuilderProps> = ({ initialSegment, onSav
   }, [initialSegment]);
 
   const handleAddRule = () => {
-    setRules([...rules, { id: Date.now(), type: 'tag', operator: 'includes', value: '' }]);
+    const newRule = { 
+      id: Date.now(), 
+      type: 'tag', 
+      operator: 'includes', 
+      value: '',
+      combinator: rules.length > 0 ? 'AND' : undefined
+    };
+    setRules([...rules, newRule]);
   };
 
   const handleRuleChange = (id: number, field: string, value: any) => {
@@ -38,17 +46,36 @@ const SegmentoBuilder: React.FC<SegmentoBuilderProps> = ({ initialSegment, onSav
 
   const handleSave = () => {
     if (!name.trim()) {
-      alert('El nombre del segmento no puede estar vacío.');
+      toast.error('❌ El nombre del segmento no puede estar vacío');
       return;
     }
+    
+    if (name.length < 3) {
+      toast.error('❌ El nombre del segmento debe tener al menos 3 caracteres');
+      return;
+    }
+    
+    if (!description.trim()) {
+      toast.error('❌ La descripción del segmento no puede estar vacía');
+      return;
+    }
+    
+    // Validar reglas
+    const invalidRules = rules.filter(rule => !rule.value || !rule.value.trim());
+    if (invalidRules.length > 0) {
+      toast.error('❌ Todas las reglas deben tener un valor válido');
+      return;
+    }
+    
     const segmentToSave: Segment = {
       id: initialSegment?.id || String(Date.now()), // Generate new ID if creating
-      name,
-      description,
+      name: name.trim(),
+      description: description.trim(),
       rules,
       memberCount: initialSegment?.memberCount || 0, // Will be updated by backend
       lastUpdated: new Date().toISOString().slice(0, 10),
     };
+    
     onSave(segmentToSave);
   };
 
@@ -143,15 +170,17 @@ const SegmentoBuilder: React.FC<SegmentoBuilderProps> = ({ initialSegment, onSav
       <div className="flex justify-end space-x-3 mt-6">
         <button
           onClick={handlePreview}
-          className="bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 transition-colors"
+          disabled={rules.length === 0}
+          className="bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
-          Previsualizar Segmento
+          🔍 Previsualizar Segmento
         </button>
         <button
           onClick={handleSave}
-          className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+          disabled={!name.trim() || !description.trim()}
+          className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
-          Guardar Segmento
+          💾 Guardar Segmento
         </button>
       </div>
     </div>

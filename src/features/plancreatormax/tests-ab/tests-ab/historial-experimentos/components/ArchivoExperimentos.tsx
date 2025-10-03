@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { experimentosHistoricos, Experimento } from '../historialExperimentosApi';
+import { getExperiments, Experiment } from '../historialExperimentosApi';
 
 const ArchivoExperimentos: React.FC = () => {
-  const [experiments, setExperiments] = useState<Experimento[]>([]);
+  const [experiments, setExperiments] = useState<Experiment[]>([]);
 
   useEffect(() => {
-    setExperiments(experimentosHistoricos);
+    const fetchExperiments = async () => {
+      const data = await getExperiments();
+      setExperiments(data);
+    };
+    fetchExperiments();
   }, []);
 
   return (
@@ -14,12 +18,10 @@ const ArchivoExperimentos: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {experiments.map((exp) => (
           <div key={exp.id} className="bg-white p-4 rounded shadow">
-            <h3 className="font-bold text-lg">{exp.nombre}</h3>
-            <p><strong>Tipo:</strong> {exp.tipo}</p>
-            <p><strong>Fecha:</strong> {exp.fechaInicio} - {exp.fechaFin}</p>
-            <p><strong>Ganador:</strong> {exp.ganadora}</p>
-            <p><strong>Mejora:</strong> {exp.mejora}%</p>
-            <p className="mt-2"><strong>Estado:</strong> {exp.estado}</p>
+            <h3 className="font-bold text-lg">{exp.description}</h3>
+            <p><strong>Fecha:</strong> {exp.date}</p>
+            <p><strong>Ganador:</strong> {exp.winner}</p>
+            <p className="mt-2"><strong>Notas:</strong> {exp.notes}</p>
           </div>
         ))}
       </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 import {
   ArrowUp,
   ArrowDown,
@@ -10,13 +11,18 @@ import {
   Calendar,
   TrendingUp,
   Download,
-  Filter,
   AlertCircle,
   CheckCircle,
   Clock,
-  Search,
   Plus,
+  Save,
+  Edit,
+  Trash2,
+  Search,
 } from 'lucide-react';
+import Modal from '../../../../components/ui/modal';
+import ConfirmationModal from '../../../../components/ui/confirmation-modal';
+import InputModal from '../../../../components/ui/input-modal';
 
 // ============================================================================
 // TIPOS Y INTERFACES
@@ -206,6 +212,47 @@ const ImpuestosPage: React.FC = () => {
   const [trimestreSeleccionado, setTrimestreSeleccionado] = useState<number | null>(null);
   const [tabActiva, setTabActiva] = useState<'iva' | 'irpf' | 'otros' | 'declaraciones' | 'configuracion'>('iva');
   const [filtroOperaciones, setFiltroOperaciones] = useState<'todos' | 'ingresos' | 'gastos'>('todos');
+  
+  // Estados para modales
+  const [modalConfiguracion, setModalConfiguracion] = useState(false);
+  const [modalNuevaDeclaracion, setModalNuevaDeclaracion] = useState(false);
+  const [modalNuevoImpuesto, setModalNuevoImpuesto] = useState(false);
+  const [modalDetallesImpuesto, setModalDetallesImpuesto] = useState(false);
+  const [modalDetallesDeclaracion, setModalDetallesDeclaracion] = useState(false);
+  const [impuestoSeleccionado, setImpuestoSeleccionado] = useState<OtroImpuesto | null>(null);
+  const [declaracionSeleccionada, setDeclaracionSeleccionada] = useState<Declaracion | null>(null);
+  
+  // Estados para confirmaciones
+  const [confirmacionEliminar, setConfirmacionEliminar] = useState(false);
+  const [confirmacionGenerar, setConfirmacionGenerar] = useState(false);
+  const [tipoGeneracion, setTipoGeneracion] = useState<string>('');
+  
+  // Estados para formularios
+  const [datosFiscales, setDatosFiscales] = useState({
+    nif: 'B12345678',
+    razonSocial: 'Mi Empresa SL',
+    domicilio: 'Calle Principal 123, 28001 Madrid',
+    epigrafeIAE: '831.9',
+    regimenFiscal: 'Régimen General'
+  });
+  
+  const [configuracionIVA, setConfiguracionIVA] = useState({
+    tipoIVA: '21',
+    aplicarIVA21: true,
+    recargoEquivalencia: false
+  });
+  
+  
+  // Estados para calculadoras
+  const [calculadoraIVA, setCalculadoraIVA] = useState({
+    baseImponible: '',
+    porcentajeIVA: '21'
+  });
+  
+  const [calculadoraIRPF, setCalculadoraIRPF] = useState({
+    baseRetencion: '',
+    porcentajeRetencion: '15'
+  });
 
   // Cálculos principales
   const totalIVARepercutido = OPERACIONES_IVA
@@ -224,10 +271,116 @@ const ImpuestosPage: React.FC = () => {
 
   // Filtrar operaciones
   const operacionesFiltradas = OPERACIONES_IVA.filter(op => {
+    // Filtro por tipo de operación
     if (filtroOperaciones === 'ingresos') return op.tipo === 'ingreso';
     if (filtroOperaciones === 'gastos') return op.tipo === 'gasto';
+    
+    // Filtro por trimestre si está seleccionado
+    if (trimestreSeleccionado) {
+      const mes = new Date(op.fecha).getMonth() + 1;
+      const trimestreOperacion = Math.ceil(mes / 3);
+      return trimestreOperacion === trimestreSeleccionado;
+    }
+    
     return true;
   });
+
+  // Filtrar resumen trimestral
+  const resumenTrimestresFiltrado = trimestreSeleccionado 
+    ? resumenTrimestres.filter(t => t.trimestre === trimestreSeleccionado)
+    : resumenTrimestres;
+
+  // ============================================================================
+  // FUNCIONES DE MANEJO DE EVENTOS
+  // ============================================================================
+
+  const handleExportarDatos = () => {
+    toast.loading('Exportando datos...', { id: 'export' });
+    setTimeout(() => {
+      toast.success('Datos exportados correctamente', { id: 'export' });
+    }, 2000);
+  };
+
+  const handlePrepararDeclaracion = (trimestre: number) => {
+    toast.success(`Preparando declaración del Q${trimestre} 2025...`);
+    setModalNuevaDeclaracion(true);
+  };
+
+  const handleGenerarModelo = (tipo: string) => {
+    setTipoGeneracion(tipo);
+    setConfirmacionGenerar(true);
+  };
+
+  const handleConfirmarGeneracion = () => {
+    toast.loading(`Generando ${tipoGeneracion}...`, { id: 'generar' });
+    setTimeout(() => {
+      toast.success(`${tipoGeneracion} generado correctamente`, { id: 'generar' });
+      setConfirmacionGenerar(false);
+    }, 2000);
+  };
+
+  const handleGuardarConfiguracion = () => {
+    toast.loading('Guardando configuración...', { id: 'config' });
+    setTimeout(() => {
+      toast.success('Configuración guardada correctamente', { id: 'config' });
+      setModalConfiguracion(false);
+    }, 1500);
+  };
+
+  const handleAñadirImpuesto = () => {
+    setModalNuevoImpuesto(true);
+  };
+
+  const handleVerDetallesImpuesto = (impuesto: OtroImpuesto) => {
+    setImpuestoSeleccionado(impuesto);
+    setModalDetallesImpuesto(true);
+  };
+
+  const handleEliminarImpuesto = (impuesto: OtroImpuesto) => {
+    setImpuestoSeleccionado(impuesto);
+    setConfirmacionEliminar(true);
+  };
+
+  const handleConfirmarEliminacion = () => {
+    toast.success(`Impuesto "${impuestoSeleccionado?.nombre}" eliminado`);
+    setConfirmacionEliminar(false);
+    setImpuestoSeleccionado(null);
+  };
+
+  const handleCalcularIVA = () => {
+    const base = parseFloat(calculadoraIVA.baseImponible);
+    const porcentaje = parseFloat(calculadoraIVA.porcentajeIVA);
+    if (base && porcentaje) {
+      const cuotaIVA = (base * porcentaje) / 100;
+      const total = base + cuotaIVA;
+      toast.success(`IVA: ${cuotaIVA.toFixed(2)}€ | Total: ${total.toFixed(2)}€`);
+    }
+  };
+
+  const handleCalcularIRPF = () => {
+    const base = parseFloat(calculadoraIRPF.baseRetencion);
+    const porcentaje = parseFloat(calculadoraIRPF.porcentajeRetencion);
+    if (base && porcentaje) {
+      const retencion = (base * porcentaje) / 100;
+      const neto = base - retencion;
+      toast.success(`Retención: ${retencion.toFixed(2)}€ | Neto: ${neto.toFixed(2)}€`);
+    }
+  };
+
+  const handleNuevaDeclaracion = () => {
+    toast.success('Nueva declaración creada');
+    setModalNuevaDeclaracion(false);
+  };
+
+  const handleNuevoImpuesto = (nombre: string) => {
+    toast.success(`Nuevo impuesto "${nombre}" añadido`);
+    setModalNuevoImpuesto(false);
+  };
+
+  const handleVerDeclaracion = (declaracion: Declaracion) => {
+    setDeclaracionSeleccionada(declaracion);
+    setModalDetallesDeclaracion(true);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 pb-12">
@@ -274,36 +427,70 @@ const ImpuestosPage: React.FC = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex items-center gap-3">
-              <div className="flex bg-white/10 backdrop-blur-md border border-white/20 rounded-xl overflow-hidden">
+            <div className="flex items-center gap-3 flex-wrap">
+              {/* Filtro Ejercicio Fiscal */}
+              <div className="relative">
                 <select
                   value={ejercicioFiscal}
                   onChange={(e) => setEjercicioFiscal(e.target.value)}
-                  className="px-3 py-2 text-sm font-semibold bg-transparent text-white border-none focus:outline-none cursor-pointer"
+                  className="appearance-none bg-white/10 backdrop-blur-md border border-white/20 text-white px-4 py-2.5 pr-8 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-white/30 cursor-pointer hover:bg-white/20 transition-all duration-300"
                 >
-                  <option value="2025">Ejercicio 2025</option>
-                  <option value="2024">Ejercicio 2024</option>
-                  <option value="2023">Ejercicio 2023</option>
+                  <option value="2025" className="bg-slate-800 text-white">Ejercicio 2025</option>
+                  <option value="2024" className="bg-slate-800 text-white">Ejercicio 2024</option>
+                  <option value="2023" className="bg-slate-800 text-white">Ejercicio 2023</option>
                 </select>
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <svg className="w-4 h-4 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
               </div>
 
-              <div className="flex bg-white/10 backdrop-blur-md border border-white/20 rounded-xl overflow-hidden">
+              {/* Filtro Trimestre */}
+              <div className="relative">
                 <select
                   value={trimestreSeleccionado || ''}
                   onChange={(e) => setTrimestreSeleccionado(e.target.value ? Number(e.target.value) : null)}
-                  className="px-3 py-2 text-sm font-semibold bg-transparent text-white border-none focus:outline-none cursor-pointer"
+                  className="appearance-none bg-white/10 backdrop-blur-md border border-white/20 text-white px-4 py-2.5 pr-8 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-white/30 cursor-pointer hover:bg-white/20 transition-all duration-300"
                 >
-                  <option value="">Todos</option>
-                  <option value="1">Q1</option>
-                  <option value="2">Q2</option>
-                  <option value="3">Q3</option>
-                  <option value="4">Q4</option>
+                  <option value="" className="bg-slate-800 text-white">Todos los trimestres</option>
+                  <option value="1" className="bg-slate-800 text-white">Q1 2025</option>
+                  <option value="2" className="bg-slate-800 text-white">Q2 2025</option>
+                  <option value="3" className="bg-slate-800 text-white">Q3 2025</option>
+                  <option value="4" className="bg-slate-800 text-white">Q4 2025</option>
                 </select>
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <svg className="w-4 h-4 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
               </div>
+
+              {/* Botón Limpiar Filtros */}
+              {(trimestreSeleccionado || filtroOperaciones !== 'todos') && (
+                <motion.button
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    setTrimestreSeleccionado(null);
+                    setFiltroOperaciones('todos');
+                    toast.success('Filtros limpiados');
+                  }}
+                  className="flex items-center gap-2 px-3 py-2.5 bg-red-500/20 backdrop-blur-md border border-red-400/30 text-red-100 font-semibold rounded-xl hover:bg-red-500/30 transition-all duration-300"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  <span className="hidden sm:inline">Limpiar</span>
+                </motion.button>
+              )}
 
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => setModalConfiguracion(true)}
                 className="flex items-center gap-2 px-4 py-2.5 bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold rounded-xl hover:bg-white/20 transition-all duration-300"
               >
                 <Settings className="w-4 h-4" />
@@ -313,6 +500,7 @@ const ImpuestosPage: React.FC = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => setModalNuevaDeclaracion(true)}
                 className="flex items-center gap-2 px-6 py-2.5 bg-white text-emerald-600 font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300"
               >
                 <Plus className="w-5 h-5" />
@@ -437,7 +625,7 @@ const ImpuestosPage: React.FC = () => {
                 Resumen Trimestral {ejercicioFiscal}
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {resumenTrimestres.map((trimestre) => (
+                {resumenTrimestresFiltrado.map((trimestre) => (
                   <div
                     key={trimestre.trimestre}
                     className="border-2 border-slate-200 rounded-lg p-4 hover:border-blue-400 transition-colors"
@@ -475,7 +663,10 @@ const ImpuestosPage: React.FC = () => {
                     <div className="text-xs text-slate-500 mb-3">
                       Límite: {new Date(trimestre.fechaLimite).toLocaleDateString('es-ES')}
                     </div>
-                    <button className="w-full bg-blue-50 hover:bg-blue-100 text-blue-600 py-2 rounded-lg text-sm font-medium transition-colors">
+                    <button 
+                      onClick={() => handlePrepararDeclaracion(trimestre.trimestre)}
+                      className="w-full bg-blue-50 hover:bg-blue-100 text-blue-600 py-2 rounded-lg text-sm font-medium transition-colors"
+                    >
                       Preparar Declaración
                     </button>
                   </div>
@@ -486,66 +677,101 @@ const ImpuestosPage: React.FC = () => {
             {/* Desglose Detallado */}
             <div className="bg-white rounded-xl shadow-lg p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
-                  <FileText className="text-blue-600" />
-                  Desglose de Operaciones
-                </h2>
+                <div>
+                  <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                    <FileText className="text-blue-600" />
+                    Desglose de Operaciones
+                  </h2>
+                  {(trimestreSeleccionado || filtroOperaciones !== 'todos') && (
+                    <p className="text-sm text-slate-600 mt-1">
+                      Mostrando {operacionesFiltradas.length} de {OPERACIONES_IVA.length} operaciones
+                      {trimestreSeleccionado && ` • Trimestre Q${trimestreSeleccionado}`}
+                      {filtroOperaciones !== 'todos' && ` • ${filtroOperaciones === 'ingresos' ? 'Solo ingresos' : 'Solo gastos'}`}
+                    </p>
+                  )}
+                </div>
                 <div className="flex gap-3">
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 bg-slate-100 p-1 rounded-lg">
                     <button
                       onClick={() => setFiltroOperaciones('todos')}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center gap-2 ${
                         filtroOperaciones === 'todos'
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                          ? 'bg-white text-slate-800 shadow-sm'
+                          : 'text-slate-600 hover:text-slate-800 hover:bg-white/50'
                       }`}
                     >
+                      <div className={`w-2 h-2 rounded-full ${filtroOperaciones === 'todos' ? 'bg-blue-500' : 'bg-slate-400'}`}></div>
                       Todos
                     </button>
                     <button
                       onClick={() => setFiltroOperaciones('ingresos')}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center gap-2 ${
                         filtroOperaciones === 'ingresos'
-                          ? 'bg-green-600 text-white'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                          ? 'bg-white text-slate-800 shadow-sm'
+                          : 'text-slate-600 hover:text-slate-800 hover:bg-white/50'
                       }`}
                     >
+                      <ArrowUp className="w-3 h-3" />
                       Ingresos
                     </button>
                     <button
                       onClick={() => setFiltroOperaciones('gastos')}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center gap-2 ${
                         filtroOperaciones === 'gastos'
-                          ? 'bg-red-600 text-white'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                          ? 'bg-white text-slate-800 shadow-sm'
+                          : 'text-slate-600 hover:text-slate-800 hover:bg-white/50'
                       }`}
                     >
+                      <ArrowDown className="w-3 h-3" />
                       Gastos
                     </button>
                   </div>
-                  <button className="bg-slate-700 hover:bg-slate-800 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
+                  <button 
+                    onClick={handleExportarDatos}
+                    className="bg-slate-700 hover:bg-slate-800 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+                  >
                     <Download size={18} />
                     Exportar
                   </button>
                 </div>
               </div>
 
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-slate-50 border-b-2 border-slate-200">
-                    <tr>
-                      <th className="text-left p-3 text-sm font-semibold text-slate-700">Fecha</th>
-                      <th className="text-left p-3 text-sm font-semibold text-slate-700">Tipo</th>
-                      <th className="text-left p-3 text-sm font-semibold text-slate-700">Cliente/Proveedor</th>
-                      <th className="text-right p-3 text-sm font-semibold text-slate-700">Base Imponible</th>
-                      <th className="text-center p-3 text-sm font-semibold text-slate-700">% IVA</th>
-                      <th className="text-right p-3 text-sm font-semibold text-slate-700">Cuota IVA</th>
-                      <th className="text-right p-3 text-sm font-semibold text-slate-700">Total</th>
-                      <th className="text-left p-3 text-sm font-semibold text-slate-700">Nº Factura</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {operacionesFiltradas.slice(0, 20).map((op) => (
+              {operacionesFiltradas.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Search className="w-8 h-8 text-slate-400" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-800 mb-2">No se encontraron operaciones</h3>
+                  <p className="text-slate-600 mb-4">
+                    No hay operaciones que coincidan con los filtros aplicados.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setTrimestreSeleccionado(null);
+                      setFiltroOperaciones('todos');
+                    }}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                  >
+                    Limpiar filtros
+                  </button>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-slate-50 border-b-2 border-slate-200">
+                      <tr>
+                        <th className="text-left p-3 text-sm font-semibold text-slate-700">Fecha</th>
+                        <th className="text-left p-3 text-sm font-semibold text-slate-700">Tipo</th>
+                        <th className="text-left p-3 text-sm font-semibold text-slate-700">Cliente/Proveedor</th>
+                        <th className="text-right p-3 text-sm font-semibold text-slate-700">Base Imponible</th>
+                        <th className="text-center p-3 text-sm font-semibold text-slate-700">% IVA</th>
+                        <th className="text-right p-3 text-sm font-semibold text-slate-700">Cuota IVA</th>
+                        <th className="text-right p-3 text-sm font-semibold text-slate-700">Total</th>
+                        <th className="text-left p-3 text-sm font-semibold text-slate-700">Nº Factura</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {operacionesFiltradas.slice(0, 20).map((op) => (
                       <tr key={op.id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
                         <td className="p-3 text-sm text-slate-600">{new Date(op.fecha).toLocaleDateString('es-ES')}</td>
                         <td className="p-3">
@@ -574,9 +800,10 @@ const ImpuestosPage: React.FC = () => {
                         <td className="p-3 text-sm text-slate-600 font-mono">{op.numeroFactura}</td>
                       </tr>
                     ))}
-                  </tbody>
-                </table>
-              </div>
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
 
             {/* Modelo 303 */}
@@ -630,10 +857,16 @@ const ImpuestosPage: React.FC = () => {
               </div>
 
               <div className="flex gap-3 mt-6">
-                <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-colors">
+                <button 
+                  onClick={() => handleGenerarModelo('Modelo 303')}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-colors"
+                >
                   Generar Modelo 303
                 </button>
-                <button className="px-6 bg-slate-700 hover:bg-slate-800 text-white py-3 rounded-lg font-semibold transition-colors">
+                <button 
+                  onClick={handleExportarDatos}
+                  className="px-6 bg-slate-700 hover:bg-slate-800 text-white py-3 rounded-lg font-semibold transition-colors"
+                >
                   <Download size={20} />
                 </button>
               </div>
@@ -731,7 +964,10 @@ const ImpuestosPage: React.FC = () => {
                 })}
               </div>
 
-              <button className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg font-semibold transition-colors">
+              <button 
+                onClick={() => handleGenerarModelo('Modelo 130')}
+                className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg font-semibold transition-colors"
+              >
                 Generar Modelo 130
               </button>
             </div>
@@ -779,7 +1015,10 @@ const ImpuestosPage: React.FC = () => {
                 </table>
               </div>
 
-              <button className="w-full mt-6 bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg font-semibold transition-colors">
+              <button 
+                onClick={() => handleGenerarModelo('Modelo 190')}
+                className="w-full mt-6 bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg font-semibold transition-colors"
+              >
                 Generar Modelo 190
               </button>
             </div>
@@ -795,7 +1034,10 @@ const ImpuestosPage: React.FC = () => {
                   <FileText className="text-blue-600" />
                   Otros Impuestos Locales
                 </h2>
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
+                <button 
+                  onClick={handleAñadirImpuesto}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+                >
                   <Plus size={18} />
                   Añadir Impuesto
                 </button>
@@ -830,9 +1072,20 @@ const ImpuestosPage: React.FC = () => {
                         <span className="font-medium text-slate-700">{new Date(impuesto.proximoVencimiento).toLocaleDateString('es-ES')}</span>
                       </div>
                     </div>
-                    <button className="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 py-2 rounded-lg text-sm font-medium transition-colors">
-                      Ver Detalles
-                    </button>
+                    <div className="flex gap-2">
+                      <button 
+                        onClick={() => handleVerDetallesImpuesto(impuesto)}
+                        className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2 rounded-lg text-sm font-medium transition-colors"
+                      >
+                        Ver Detalles
+                      </button>
+                      <button 
+                        onClick={() => handleEliminarImpuesto(impuesto)}
+                        className="bg-red-100 hover:bg-red-200 text-red-700 p-2 rounded-lg transition-colors"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -899,7 +1152,12 @@ const ImpuestosPage: React.FC = () => {
                         </td>
                         <td className="p-3 text-sm text-slate-600">{new Date(decl.fechaLimite).toLocaleDateString('es-ES')}</td>
                         <td className="p-3 text-center">
-                          <button className="text-blue-600 hover:text-blue-800 font-medium text-sm">Ver</button>
+                          <button 
+                            onClick={() => handleVerDeclaracion(decl)}
+                            className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
+                          >
+                            Ver
+                          </button>
                         </td>
                       </tr>
                     ))}
@@ -1064,12 +1322,18 @@ const ImpuestosPage: React.FC = () => {
                       <input
                         type="number"
                         placeholder="1000"
+                        value={calculadoraIVA.baseImponible}
+                        onChange={(e) => setCalculadoraIVA({...calculadoraIVA, baseImponible: e.target.value})}
                         className="w-full px-3 py-2 border border-slate-300 rounded text-sm"
                       />
                     </div>
                     <div>
                       <label className="block text-xs text-slate-600 mb-1">% IVA</label>
-                      <select className="w-full px-3 py-2 border border-slate-300 rounded text-sm">
+                      <select 
+                        value={calculadoraIVA.porcentajeIVA}
+                        onChange={(e) => setCalculadoraIVA({...calculadoraIVA, porcentajeIVA: e.target.value})}
+                        className="w-full px-3 py-2 border border-slate-300 rounded text-sm"
+                      >
                         <option value="21">21%</option>
                         <option value="10">10%</option>
                         <option value="4">4%</option>
@@ -1078,13 +1342,29 @@ const ImpuestosPage: React.FC = () => {
                     <div className="pt-2 border-t">
                       <div className="flex justify-between text-sm mb-1">
                         <span className="text-slate-600">Cuota IVA:</span>
-                        <span className="font-bold text-blue-600">210.00 €</span>
+                        <span className="font-bold text-blue-600">
+                          {calculadoraIVA.baseImponible && calculadoraIVA.porcentajeIVA 
+                            ? ((parseFloat(calculadoraIVA.baseImponible) * parseFloat(calculadoraIVA.porcentajeIVA)) / 100).toFixed(2) + ' €'
+                            : '0.00 €'
+                          }
+                        </span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-slate-600">Total con IVA:</span>
-                        <span className="font-bold text-slate-800">1,210.00 €</span>
+                        <span className="font-bold text-slate-800">
+                          {calculadoraIVA.baseImponible && calculadoraIVA.porcentajeIVA 
+                            ? (parseFloat(calculadoraIVA.baseImponible) + (parseFloat(calculadoraIVA.baseImponible) * parseFloat(calculadoraIVA.porcentajeIVA)) / 100).toFixed(2) + ' €'
+                            : '0.00 €'
+                          }
+                        </span>
                       </div>
                     </div>
+                    <button 
+                      onClick={handleCalcularIVA}
+                      className="w-full mt-3 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm font-medium transition-colors"
+                    >
+                      Calcular
+                    </button>
                   </div>
                 </div>
 
@@ -1096,12 +1376,18 @@ const ImpuestosPage: React.FC = () => {
                       <input
                         type="number"
                         placeholder="5000"
+                        value={calculadoraIRPF.baseRetencion}
+                        onChange={(e) => setCalculadoraIRPF({...calculadoraIRPF, baseRetencion: e.target.value})}
                         className="w-full px-3 py-2 border border-slate-300 rounded text-sm"
                       />
                     </div>
                     <div>
                       <label className="block text-xs text-slate-600 mb-1">% Retención</label>
-                      <select className="w-full px-3 py-2 border border-slate-300 rounded text-sm">
+                      <select 
+                        value={calculadoraIRPF.porcentajeRetencion}
+                        onChange={(e) => setCalculadoraIRPF({...calculadoraIRPF, porcentajeRetencion: e.target.value})}
+                        className="w-full px-3 py-2 border border-slate-300 rounded text-sm"
+                      >
                         <option value="15">15%</option>
                         <option value="7">7%</option>
                         <option value="19">19%</option>
@@ -1110,13 +1396,29 @@ const ImpuestosPage: React.FC = () => {
                     <div className="pt-2 border-t">
                       <div className="flex justify-between text-sm mb-1">
                         <span className="text-slate-600">Retención:</span>
-                        <span className="font-bold text-purple-600">750.00 €</span>
+                        <span className="font-bold text-purple-600">
+                          {calculadoraIRPF.baseRetencion && calculadoraIRPF.porcentajeRetencion 
+                            ? ((parseFloat(calculadoraIRPF.baseRetencion) * parseFloat(calculadoraIRPF.porcentajeRetencion)) / 100).toFixed(2) + ' €'
+                            : '0.00 €'
+                          }
+                        </span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-slate-600">Importe neto:</span>
-                        <span className="font-bold text-slate-800">4,250.00 €</span>
+                        <span className="font-bold text-slate-800">
+                          {calculadoraIRPF.baseRetencion && calculadoraIRPF.porcentajeRetencion 
+                            ? (parseFloat(calculadoraIRPF.baseRetencion) - (parseFloat(calculadoraIRPF.baseRetencion) * parseFloat(calculadoraIRPF.porcentajeRetencion)) / 100).toFixed(2) + ' €'
+                            : '0.00 €'
+                          }
+                        </span>
                       </div>
                     </div>
+                    <button 
+                      onClick={handleCalcularIRPF}
+                      className="w-full mt-3 bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg text-sm font-medium transition-colors"
+                    >
+                      Calcular
+                    </button>
                   </div>
                 </div>
               </div>
@@ -1124,6 +1426,404 @@ const ImpuestosPage: React.FC = () => {
           </div>
         )}
       </motion.div>
+
+      {/* MODALES Y CONFIRMACIONES */}
+      
+      {/* Modal de Configuración */}
+      <Modal
+        isOpen={modalConfiguracion}
+        onClose={() => setModalConfiguracion(false)}
+        title="Configuración Fiscal"
+        size="xl"
+      >
+        <div className="space-y-6">
+          {/* Datos Fiscales */}
+          <div>
+            <h3 className="text-lg font-semibold text-slate-800 mb-4">Datos Fiscales del Negocio</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">NIF/CIF</label>
+                <input
+                  type="text"
+                  value={datosFiscales.nif}
+                  onChange={(e) => setDatosFiscales({...datosFiscales, nif: e.target.value})}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Razón Social</label>
+                <input
+                  type="text"
+                  value={datosFiscales.razonSocial}
+                  onChange={(e) => setDatosFiscales({...datosFiscales, razonSocial: e.target.value})}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">Domicilio Fiscal</label>
+                <input
+                  type="text"
+                  value={datosFiscales.domicilio}
+                  onChange={(e) => setDatosFiscales({...datosFiscales, domicilio: e.target.value})}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Configuración IVA */}
+          <div>
+            <h3 className="text-lg font-semibold text-slate-800 mb-4">Configuración de IVA</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Tipo de IVA por defecto</label>
+                <select 
+                  value={configuracionIVA.tipoIVA}
+                  onChange={(e) => setConfiguracionIVA({...configuracionIVA, tipoIVA: e.target.value})}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option value="21">21% - General</option>
+                  <option value="10">10% - Reducido</option>
+                  <option value="4">4% - Superreducido</option>
+                </select>
+              </div>
+              <div className="flex items-center gap-2">
+                <input 
+                  type="checkbox" 
+                  id="iva21" 
+                  checked={configuracionIVA.aplicarIVA21}
+                  onChange={(e) => setConfiguracionIVA({...configuracionIVA, aplicarIVA21: e.target.checked})}
+                  className="w-4 h-4 text-blue-600" 
+                />
+                <label htmlFor="iva21" className="text-sm text-slate-700">Aplicar IVA 21% a servicios profesionales</label>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex gap-3 pt-4 border-t">
+            <button 
+              onClick={() => setModalConfiguracion(false)}
+              className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-2 rounded-lg font-medium transition-colors"
+            >
+              Cancelar
+            </button>
+            <button 
+              onClick={handleGuardarConfiguracion}
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition-colors"
+            >
+              <Save className="w-4 h-4 inline mr-2" />
+              Guardar Configuración
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Modal Nueva Declaración */}
+      <Modal
+        isOpen={modalNuevaDeclaracion}
+        onClose={() => setModalNuevaDeclaracion(false)}
+        title="Nueva Declaración"
+        size="lg"
+      >
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Tipo de Declaración</label>
+            <select className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+              <option>IVA - Modelo 303</option>
+              <option>IRPF - Modelo 130</option>
+              <option>IRPF - Modelo 190</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Período</label>
+            <select className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+              <option>Q1 2025</option>
+              <option>Q2 2025</option>
+              <option>Q3 2025</option>
+              <option>Q4 2025</option>
+            </select>
+          </div>
+          <div className="flex gap-3 pt-4">
+            <button 
+              onClick={() => setModalNuevaDeclaracion(false)}
+              className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-2 rounded-lg font-medium transition-colors"
+            >
+              Cancelar
+            </button>
+            <button 
+              onClick={handleNuevaDeclaracion}
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition-colors"
+            >
+              Crear Declaración
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Modal Nuevo Impuesto */}
+      <InputModal
+        isOpen={modalNuevoImpuesto}
+        onClose={() => setModalNuevoImpuesto(false)}
+        onConfirm={handleNuevoImpuesto}
+        title="Añadir Nuevo Impuesto"
+        message="Introduce el nombre del nuevo impuesto local:"
+        placeholder="Ej: Tasa de Basuras, Licencia Municipal..."
+        confirmText="Añadir Impuesto"
+      />
+
+      {/* Modal Detalles Impuesto */}
+      <Modal
+        isOpen={modalDetallesImpuesto}
+        onClose={() => setModalDetallesImpuesto(false)}
+        title={impuestoSeleccionado?.nombre || 'Detalles del Impuesto'}
+        size="md"
+      >
+        {impuestoSeleccionado && (
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Importe Anual</label>
+                <p className="text-lg font-bold text-slate-800">{impuestoSeleccionado.importeAnual.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Frecuencia</label>
+                <p className="text-lg font-semibold text-slate-800">{impuestoSeleccionado.frecuencia}</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Próximo Vencimiento</label>
+                <p className="text-lg font-semibold text-slate-800">{new Date(impuestoSeleccionado.proximoVencimiento).toLocaleDateString('es-ES')}</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Estado</label>
+                <span className={`inline-block px-2 py-1 rounded text-xs font-semibold ${
+                  impuestoSeleccionado.estado === 'pagado' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+                }`}>
+                  {impuestoSeleccionado.estado === 'pagado' ? 'Pagado' : 'Pendiente'}
+                </span>
+              </div>
+            </div>
+            <div className="flex gap-3 pt-4 border-t">
+              <button 
+                onClick={() => setModalDetallesImpuesto(false)}
+                className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-2 rounded-lg font-medium transition-colors"
+              >
+                Cerrar
+              </button>
+              <button 
+                onClick={() => {
+                  setModalDetallesImpuesto(false);
+                  // Aquí se podría abrir un modal de edición
+                }}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition-colors"
+              >
+                <Edit className="w-4 h-4 inline mr-2" />
+                Editar
+              </button>
+            </div>
+          </div>
+        )}
+      </Modal>
+
+      {/* Confirmación Generar Modelo */}
+      <ConfirmationModal
+        isOpen={confirmacionGenerar}
+        onClose={() => setConfirmacionGenerar(false)}
+        onConfirm={handleConfirmarGeneracion}
+        title="Generar Modelo"
+        message={`¿Estás seguro de que quieres generar el ${tipoGeneracion}? Esta acción creará un archivo PDF con los datos actuales.`}
+        confirmText="Generar"
+        type="info"
+      />
+
+      {/* Confirmación Eliminar Impuesto */}
+      <ConfirmationModal
+        isOpen={confirmacionEliminar}
+        onClose={() => setConfirmacionEliminar(false)}
+        onConfirm={handleConfirmarEliminacion}
+        title="Eliminar Impuesto"
+        message={`¿Estás seguro de que quieres eliminar el impuesto "${impuestoSeleccionado?.nombre}"? Esta acción no se puede deshacer.`}
+        confirmText="Eliminar"
+        type="danger"
+      />
+
+      {/* Modal Detalles Declaración */}
+      <Modal
+        isOpen={modalDetallesDeclaracion}
+        onClose={() => setModalDetallesDeclaracion(false)}
+        title={`Detalles de Declaración - ${declaracionSeleccionada?.tipo} ${declaracionSeleccionada?.modelo}`}
+        size="lg"
+      >
+        {declaracionSeleccionada && (
+          <div className="space-y-6">
+            {/* Información General */}
+            <div className="bg-slate-50 rounded-lg p-4">
+              <h3 className="text-lg font-semibold text-slate-800 mb-4">Información General</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-600 mb-1">Tipo de Declaración</label>
+                  <p className="text-lg font-semibold text-slate-800">{declaracionSeleccionada.tipo}</p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-600 mb-1">Modelo</label>
+                  <p className="text-lg font-mono font-semibold text-slate-800">{declaracionSeleccionada.modelo}</p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-600 mb-1">Período</label>
+                  <p className="text-lg font-semibold text-slate-800">{declaracionSeleccionada.periodo}</p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-600 mb-1">Estado</label>
+                  <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-semibold ${
+                    declaracionSeleccionada.estado === 'pagado'
+                      ? 'bg-green-100 text-green-700'
+                      : declaracionSeleccionada.estado === 'presentado'
+                      ? 'bg-blue-100 text-blue-700'
+                      : 'bg-yellow-100 text-yellow-700'
+                  }`}>
+                    {declaracionSeleccionada.estado === 'pagado' && <CheckCircle size={16} />}
+                    {declaracionSeleccionada.estado === 'presentado' && <Clock size={16} />}
+                    {declaracionSeleccionada.estado === 'pendiente' && <AlertCircle size={16} />}
+                    {declaracionSeleccionada.estado === 'pagado' ? 'Pagado' : declaracionSeleccionada.estado === 'presentado' ? 'Presentado' : 'Pendiente'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Fechas */}
+            <div className="bg-slate-50 rounded-lg p-4">
+              <h3 className="text-lg font-semibold text-slate-800 mb-4">Fechas Importantes</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-600 mb-1">Fecha de Declaración</label>
+                  <p className="text-lg font-semibold text-slate-800">
+                    {declaracionSeleccionada.fechaDeclaracion 
+                      ? new Date(declaracionSeleccionada.fechaDeclaracion).toLocaleDateString('es-ES', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
+                        })
+                      : 'No presentada'
+                    }
+                  </p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-600 mb-1">Fecha Límite</label>
+                  <p className="text-lg font-semibold text-slate-800">
+                    {new Date(declaracionSeleccionada.fechaLimite).toLocaleDateString('es-ES', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Resultado Económico */}
+            <div className="bg-slate-50 rounded-lg p-4">
+              <h3 className="text-lg font-semibold text-slate-800 mb-4">Resultado Económico</h3>
+              <div className="text-center">
+                <div className={`text-3xl font-bold ${
+                  declaracionSeleccionada.resultado > 0 ? 'text-orange-600' : 'text-blue-600'
+                }`}>
+                  {declaracionSeleccionada.resultado > 0 
+                    ? declaracionSeleccionada.resultado.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })
+                    : 'Sin resultado'
+                  }
+                </div>
+                <p className="text-sm text-slate-600 mt-2">
+                  {declaracionSeleccionada.resultado > 0 
+                    ? 'Importe a ingresar en Hacienda' 
+                    : declaracionSeleccionada.resultado < 0 
+                    ? 'Importe a compensar o devolver'
+                    : 'Sin importe a pagar'
+                  }
+                </p>
+              </div>
+            </div>
+
+            {/* Desglose por Trimestre (si es IVA) */}
+            {declaracionSeleccionada.tipo === 'IVA' && (
+              <div className="bg-slate-50 rounded-lg p-4">
+                <h3 className="text-lg font-semibold text-slate-800 mb-4">Desglose Trimestral</h3>
+                <div className="space-y-3">
+                  {(() => {
+                    const trimestre = parseInt(declaracionSeleccionada.periodo.split(' ')[0].replace('Q', ''));
+                    const operacionesTrimestre = OPERACIONES_IVA.filter(op => {
+                      const mes = new Date(op.fecha).getMonth() + 1;
+                      return Math.ceil(mes / 3) === trimestre;
+                    });
+                    
+                    const ivaRepercutido = operacionesTrimestre
+                      .filter(op => op.tipo === 'ingreso')
+                      .reduce((sum, op) => sum + op.cuotaIVA, 0);
+                    
+                    const ivaSoportado = operacionesTrimestre
+                      .filter(op => op.tipo === 'gasto')
+                      .reduce((sum, op) => sum + op.cuotaIVA, 0);
+
+                    return (
+                      <>
+                        <div className="flex justify-between items-center py-2 border-b border-slate-200">
+                          <span className="text-slate-600">IVA Repercutido (Cobrado):</span>
+                          <span className="font-semibold text-green-600">
+                            +{ivaRepercutido.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center py-2 border-b border-slate-200">
+                          <span className="text-slate-600">IVA Soportado (Pagado):</span>
+                          <span className="font-semibold text-red-600">
+                            -{ivaSoportado.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center py-2 font-bold text-lg">
+                          <span className="text-slate-800">Resultado Neto:</span>
+                          <span className={ivaRepercutido - ivaSoportado > 0 ? 'text-orange-600' : 'text-blue-600'}>
+                            {(ivaRepercutido - ivaSoportado).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+                          </span>
+                        </div>
+                        <div className="text-sm text-slate-500 mt-2">
+                          {operacionesTrimestre.length} operaciones registradas en este trimestre
+                        </div>
+                      </>
+                    );
+                  })()}
+                </div>
+              </div>
+            )}
+
+            {/* Acciones */}
+            <div className="flex gap-3 pt-4 border-t">
+              <button 
+                onClick={() => setModalDetallesDeclaracion(false)}
+                className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-2 rounded-lg font-medium transition-colors"
+              >
+                Cerrar
+              </button>
+              {declaracionSeleccionada.estado === 'pendiente' && (
+                <button 
+                  onClick={() => {
+                    toast.success('Preparando declaración...');
+                    setModalDetallesDeclaracion(false);
+                  }}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition-colors"
+                >
+                  Preparar Declaración
+                </button>
+              )}
+              <button 
+                onClick={() => {
+                  toast.success('Descargando PDF...');
+                }}
+                className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+              >
+                <Download size={16} />
+                Descargar PDF
+              </button>
+            </div>
+          </div>
+        )}
+      </Modal>
 
       {/* DISCLAIMER */}
       <div className="mt-8 bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-lg">

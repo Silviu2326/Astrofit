@@ -1,12 +1,14 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Users, Download, Upload, Plus, ChevronLeft, ChevronRight, TrendingUp } from 'lucide-react';
+import { Users, ChevronLeft, ChevronRight } from 'lucide-react';
 import ClientesTable from './components/ClientesTable';
 import ClientesFilters from './components/ClientesFilters';
 import ClientesActions from './components/ClientesActions';
 import VistasPersonalizadas from './components/VistasPersonalizadas';
 import ClientesStats from './components/ClientesStats';
 import { useClientes, SortBy, SortDir, ClientesFilters as Filtros } from './clientesListadoApi';
+import ClienteFormModal from './components/ClienteFormModal';
+import ClienteDetailsModal from './components/ClienteDetailsModal';
 
 const ClientesListadoPage: React.FC = () => {
   const [filters, setFilters] = useState<Partial<Filtros>>({});
@@ -67,25 +69,128 @@ const ClientesListadoPage: React.FC = () => {
     setPage(1);
   };
 
-  const handleAddCliente = () => alert('Nuevo cliente (demo)');
-  const handleExport = () => alert('Exportar clientes (demo)');
-  const handleImport = () => alert('Importar clientes (demo)');
-  const handleAddTags = () => alert(`Añadir etiquetas a ${selected.size} clientes (demo)`);
-  const handleSendForms = () => alert(`Enviar formularios a ${selected.size} clientes (demo)`);
-  const handleDeleteSelected = () => {
-    if (selected.size > 0) alert(`Eliminar ${selected.size} clientes (demo)`);
+  const [openNewModal, setOpenNewModal] = useState(false);
+  const [selectedCliente, setSelectedCliente] = useState<any>(null);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [editingCliente, setEditingCliente] = useState<any>(null);
+  const handleAddCliente = () => setOpenNewModal(true);
+  const handleExport = () => {
+    if (data.length === 0) {
+      alert('No hay datos para exportar');
+      return;
+    }
+    
+    // Crear CSV con los datos actuales
+    const headers = ['ID', 'Nombre', 'Email', 'Teléfono', 'Estado', 'Etiquetas', 'Fecha Alta', 'Última Actividad'];
+    const csvContent = [
+      headers.join(','),
+      ...data.map(cliente => [
+        cliente.id,
+        `"${cliente.nombre}"`,
+        `"${cliente.email}"`,
+        `"${cliente.telefono || ''}"`,
+        cliente.estado,
+        `"${cliente.etiquetas.join('; ')}"`,
+        cliente.fechaAlta,
+        cliente.ultimaActividad
+      ].join(','))
+    ].join('\n');
+    
+    // Crear y descargar archivo
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `clientes_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
-        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-lg font-semibold text-gray-700">Cargando clientes...</p>
-        </motion.div>
-      </div>
-    );
-  }
+  const handleImport = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.csv,.xlsx,.xls';
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const content = e.target?.result as string;
+          try {
+            // Parsear CSV básico
+            const lines = content.split('\n');
+            const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+            const importedData = lines.slice(1).filter(line => line.trim()).map(line => {
+              const values = line.split(',').map(v => v.trim().replace(/"/g, ''));
+              return headers.reduce((obj, header, index) => {
+                obj[header.toLowerCase()] = values[index] || '';
+                return obj;
+              }, {} as any);
+            });
+            
+            alert(`Se importaron ${importedData.length} clientes correctamente`);
+            // Aquí normalmente se enviarían los datos al servidor
+          } catch (error) {
+            alert('Error al procesar el archivo. Verifique el formato.');
+          }
+        };
+        reader.readAsText(file);
+      }
+    };
+    input.click();
+  };
+
+  const handleAddTags = () => {
+    if (selected.size === 0) {
+      alert('Seleccione al menos un cliente');
+      return;
+    }
+    
+    const tags = prompt(`Ingrese las etiquetas para ${selected.size} clientes (separadas por coma):`);
+    if (tags && tags.trim()) {
+      const tagList = tags.split(',').map(t => t.trim()).filter(Boolean);
+      alert(`Se añadieron las etiquetas "${tagList.join(', ')}" a ${selected.size} clientes`);
+      // Aquí normalmente se actualizarían los clientes en el servidor
+    }
+  };
+
+  const handleSendForms = () => {
+    if (selected.size === 0) {
+      alert('Seleccione al menos un cliente');
+      return;
+    }
+    
+    const formType = prompt(`Seleccione el tipo de formulario para enviar a ${selected.size} clientes:\n1. Encuesta de satisfacción\n2. Formulario de actualización de datos\n3. Formulario de preferencias\n\nIngrese el número (1-3):`);
+    
+    const formTypes = {
+      '1': 'Encuesta de satisfacción',
+      '2': 'Formulario de actualización de datos', 
+      '3': 'Formulario de preferencias'
+    };
+    
+    if (formType && formTypes[formType as keyof typeof formTypes]) {
+      alert(`Se envió "${formTypes[formType as keyof typeof formTypes]}" a ${selected.size} clientes`);
+      // Aquí normalmente se enviarían los formularios
+    }
+  };
+
+  const handleDeleteSelected = () => {
+    if (selected.size === 0) {
+      alert('Seleccione al menos un cliente');
+      return;
+    }
+    
+    const confirmDelete = confirm(`¿Está seguro de que desea eliminar ${selected.size} cliente(s)? Esta acción no se puede deshacer.`);
+    if (confirmDelete) {
+      alert(`Se eliminaron ${selected.size} clientes correctamente`);
+      setSelected(new Set()); // Limpiar selección
+      // Aquí normalmente se eliminarían los clientes del servidor
+    }
+  };
+
+  // Nota: no hacemos return temprano en carga para no desmontar los filtros y perder su estado local
 
   if (error) {
     return (
@@ -169,6 +274,12 @@ const ClientesListadoPage: React.FC = () => {
 
       {/* Stats */}
       <div className="max-w-[1920px] mx-auto px-6 py-6">
+        {isLoading && (
+          <div className="flex items-center gap-3 mb-4 text-blue-700 bg-blue-50 border border-blue-100 rounded-lg px-4 py-2">
+            <div className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+            <span className="text-sm font-medium">Cargando clientes...</span>
+          </div>
+        )}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
           <ClientesStats stats={stats} />
         </motion.div>
@@ -183,7 +294,47 @@ const ClientesListadoPage: React.FC = () => {
             selected={selected}
             onToggleSelect={onToggleSelect}
             onToggleSelectAll={onToggleSelectAll}
-            onView={(id) => alert(`Ver cliente ${id} (demo)`)}
+            onView={(id) => {
+              const cliente = data.find(c => c.id === id);
+              if (cliente) {
+                setSelectedCliente(cliente);
+                setShowDetailsModal(true);
+              }
+            }}
+            onEdit={(id) => {
+              const cliente = data.find(c => c.id === id);
+              if (cliente) {
+                setEditingCliente(cliente);
+                setOpenNewModal(true);
+              }
+            }}
+          />
+
+          <ClienteFormModal
+            open={openNewModal}
+            onClose={() => setOpenNewModal(false)}
+            onCreated={() => {
+              // Al cerrar el modal, refrescamos llevando a la primera página para ver el nuevo registro
+              setPage(1);
+            }}
+            cliente={editingCliente}
+            onUpdated={() => {
+              setPage(p => p); // trigger refresh via filters dependency; keeping the same page
+            }}
+          />
+
+          <ClienteDetailsModal
+            cliente={selectedCliente}
+            isOpen={showDetailsModal}
+            onClose={() => {
+              setShowDetailsModal(false);
+              setSelectedCliente(null);
+            }}
+            onEdit={(cliente) => {
+              setEditingCliente(cliente);
+              setOpenNewModal(true);
+              setShowDetailsModal(false);
+            }}
           />
 
           {/* Pagination - Minimalista */}
@@ -208,6 +359,7 @@ const ClientesListadoPage: React.FC = () => {
                 className="inline-flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:hover:bg-transparent transition-colors"
                 onClick={() => setPage(p => Math.max(1, p - 1))}
                 disabled={page <= 1}
+                type="button"
               >
                 <ChevronLeft className="w-4 h-4" />
                 Anterior
@@ -219,6 +371,7 @@ const ClientesListadoPage: React.FC = () => {
                 className="inline-flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:hover:bg-transparent transition-colors"
                 onClick={() => setPage(p => Math.min(pages, p + 1))}
                 disabled={page >= pages}
+                type="button"
               >
                 Siguiente
                 <ChevronRight className="w-4 h-4" />

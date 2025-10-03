@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Filter, X } from 'lucide-react';
 import { Tarea } from '../tareasApi';
 
 interface TareasFiltersProps {
@@ -16,7 +17,8 @@ const TareasFilters: React.FC<TareasFiltersProps> = ({ onFilterChange }) => {
   const [asignadoA, setAsignadoA] = useState('');
   const [clienteRelacionado, setClienteRelacionado] = useState('');
 
-  const handleFilterApply = () => {
+  // Función para aplicar filtros automáticamente
+  const applyFilters = () => {
     if (onFilterChange) {
       onFilterChange({
         estado: estado === 'todas' ? undefined : (estado as Tarea['estado']),
@@ -27,9 +29,40 @@ const TareasFilters: React.FC<TareasFiltersProps> = ({ onFilterChange }) => {
     }
   };
 
+  const handleClearFilters = () => {
+    setEstado('todas');
+    setFechaVencimiento('');
+    setAsignadoA('');
+    setClienteRelacionado('');
+    if (onFilterChange) {
+      onFilterChange({});
+    }
+  };
+
+  // Aplicar filtros automáticamente cuando cambien los valores
+  React.useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      applyFilters();
+    }, 300); // Delay de 300ms para evitar demasiadas actualizaciones
+
+    return () => clearTimeout(timeoutId);
+  }, [estado, fechaVencimiento, asignadoA, clienteRelacionado]);
+
+  const hasActiveFilters = estado !== 'todas' || fechaVencimiento || asignadoA || clienteRelacionado;
+
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md mb-4">
-      <h2 className="text-xl font-semibold mb-3">Filtros de Tareas</h2>
+    <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 mb-6">
+      <div className="flex items-center gap-2 mb-4">
+        <Filter className="w-5 h-5 text-indigo-600" />
+        <h2 className="text-xl font-bold text-gray-800">Filtros de Tareas</h2>
+        {hasActiveFilters && (
+          <div className="ml-auto">
+            <span className="text-sm text-indigo-600 font-medium bg-indigo-50 px-2 py-1 rounded-full">
+              Filtros activos
+            </span>
+          </div>
+        )}
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div>
           <label htmlFor="filterEstado" className="block text-sm font-medium text-gray-700">Estado</label>
@@ -37,7 +70,7 @@ const TareasFilters: React.FC<TareasFiltersProps> = ({ onFilterChange }) => {
             id="filterEstado"
             value={estado}
             onChange={(e) => setEstado(e.target.value as Tarea['estado'] | '' | 'todas')}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+            className="mt-1 block w-full border border-gray-300 rounded-xl shadow-sm p-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
           >
             <option value="todas">Todas</option>
             <option value="pendiente">Pendiente</option>
@@ -53,7 +86,7 @@ const TareasFilters: React.FC<TareasFiltersProps> = ({ onFilterChange }) => {
             id="filterFechaVencimiento"
             value={fechaVencimiento}
             onChange={(e) => setFechaVencimiento(e.target.value)}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+            className="mt-1 block w-full border border-gray-300 rounded-xl shadow-sm p-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
           />
         </div>
         <div>
@@ -63,7 +96,7 @@ const TareasFilters: React.FC<TareasFiltersProps> = ({ onFilterChange }) => {
             id="filterAsignadoA"
             value={asignadoA}
             onChange={(e) => setAsignadoA(e.target.value)}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+            className="mt-1 block w-full border border-gray-300 rounded-xl shadow-sm p-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
           />
         </div>
         <div>
@@ -73,16 +106,21 @@ const TareasFilters: React.FC<TareasFiltersProps> = ({ onFilterChange }) => {
             id="filterClienteRelacionado"
             value={clienteRelacionado}
             onChange={(e) => setClienteRelacionado(e.target.value)}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+            className="mt-1 block w-full border border-gray-300 rounded-xl shadow-sm p-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
           />
         </div>
       </div>
-      <button
-        onClick={handleFilterApply}
-        className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-      >
-        Aplicar Filtros
-      </button>
+      {hasActiveFilters && (
+        <div className="pt-4">
+          <button
+            onClick={handleClearFilters}
+            className="w-full bg-gradient-to-r from-red-500 to-pink-500 text-white py-3 px-6 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+          >
+            <X className="w-4 h-4" />
+            Limpiar Todos los Filtros
+          </button>
+        </div>
+      )}
     </div>
   );
 };

@@ -4,33 +4,21 @@ import {
   DollarSign,
   TrendingDown,
   TrendingUp,
-  Clock,
-  AlertCircle,
   Activity,
   Download,
-  Settings,
   FileText,
   Calendar,
-  Filter,
-  Target,
-  Bell,
   BarChart3,
   ArrowUpRight,
   ArrowDownRight,
-  CheckCircle,
-  AlertTriangle,
   PieChart as PieChartIcon,
 } from 'lucide-react';
 import {
-  LineChart,
   Line,
-  BarChart,
   Bar,
   PieChart,
   Pie,
   Cell,
-  AreaChart,
-  Area,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -59,6 +47,38 @@ const monthlyData = [
   { month: 'Dic', ingresos: 82000, gastos: 45000, beneficio: 37000 },
 ];
 
+// Datos adicionales para diferentes períodos
+const dailyData = [
+  { day: 'Lun', ingresos: 2800, gastos: 1800, beneficio: 1000 },
+  { day: 'Mar', ingresos: 3200, gastos: 2100, beneficio: 1100 },
+  { day: 'Mié', ingresos: 2900, gastos: 1900, beneficio: 1000 },
+  { day: 'Jue', ingresos: 3500, gastos: 2200, beneficio: 1300 },
+  { day: 'Vie', ingresos: 4100, gastos: 2500, beneficio: 1600 },
+  { day: 'Sáb', ingresos: 3800, gastos: 2300, beneficio: 1500 },
+  { day: 'Dom', ingresos: 2200, gastos: 1400, beneficio: 800 },
+];
+
+const weeklyData = [
+  { week: 'Sem 1', ingresos: 18500, gastos: 11200, beneficio: 7300 },
+  { week: 'Sem 2', ingresos: 20100, gastos: 12300, beneficio: 7800 },
+  { week: 'Sem 3', ingresos: 19200, gastos: 11800, beneficio: 7400 },
+  { week: 'Sem 4', ingresos: 22300, gastos: 13700, beneficio: 8600 },
+];
+
+const quarterlyData = [
+  { quarter: 'Q1', ingresos: 145000, gastos: 88000, beneficio: 57000 },
+  { quarter: 'Q2', ingresos: 183000, gastos: 105000, beneficio: 78000 },
+  { quarter: 'Q3', ingresos: 194000, gastos: 112000, beneficio: 82000 },
+  { quarter: 'Q4', ingresos: 226000, gastos: 126000, beneficio: 100000 },
+];
+
+const yearlyData = [
+  { year: '2021', ingresos: 480000, gastos: 320000, beneficio: 160000 },
+  { year: '2022', ingresos: 620000, gastos: 380000, beneficio: 240000 },
+  { year: '2023', ingresos: 750000, gastos: 420000, beneficio: 330000 },
+  { year: '2024', ingresos: 890000, gastos: 480000, beneficio: 410000 },
+];
+
 const incomeDistribution = [
   { name: 'Membresías', value: 45000, color: '#10b981' },
   { name: 'Sesiones', value: 28000, color: '#3b82f6' },
@@ -70,17 +90,38 @@ const incomeDistribution = [
 const PanelFinancieroPage: React.FC = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<Period>('month');
   const [lastUpdate] = useState(new Date().toLocaleTimeString());
+  const [isGeneratingReport, setIsGeneratingReport] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
 
-  const currentMonth = monthlyData[monthlyData.length - 1];
-  const previousMonth = monthlyData[monthlyData.length - 2];
+  // Función para obtener datos según el período seleccionado
+  const getDataForPeriod = (period: Period) => {
+    switch (period) {
+      case 'today':
+        return dailyData;
+      case 'week':
+        return weeklyData;
+      case 'month':
+        return monthlyData;
+      case 'quarter':
+        return quarterlyData;
+      case 'year':
+        return yearlyData;
+      default:
+        return monthlyData;
+    }
+  };
+
+  const currentData = getDataForPeriod(selectedPeriod);
+  const currentPeriod = currentData[currentData.length - 1];
+  const previousPeriod = currentData[currentData.length - 2];
 
   const kpis = useMemo(() => {
-    const totalIncome = currentMonth.ingresos;
-    const totalExpenses = currentMonth.gastos;
+    const totalIncome = currentPeriod.ingresos;
+    const totalExpenses = currentPeriod.gastos;
     const netProfit = totalIncome - totalExpenses;
     const profitMargin = ((netProfit / totalIncome) * 100).toFixed(1);
-    const incomeChange = (((totalIncome - previousMonth.ingresos) / previousMonth.ingresos) * 100).toFixed(1);
-    const expensesChange = (((totalExpenses - previousMonth.gastos) / previousMonth.gastos) * 100).toFixed(1);
+    const incomeChange = previousPeriod ? (((totalIncome - previousPeriod.ingresos) / previousPeriod.ingresos) * 100).toFixed(1) : '0';
+    const expensesChange = previousPeriod ? (((totalExpenses - previousPeriod.gastos) / previousPeriod.gastos) * 100).toFixed(1) : '0';
 
     return {
       totalIncome,
@@ -90,7 +131,7 @@ const PanelFinancieroPage: React.FC = () => {
       netProfit,
       profitMargin: parseFloat(profitMargin),
     };
-  }, [currentMonth, previousMonth]);
+  }, [currentPeriod, previousPeriod]);
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('es-ES', {
@@ -98,6 +139,89 @@ const PanelFinancieroPage: React.FC = () => {
       currency: 'EUR',
       minimumFractionDigits: 0,
     }).format(value);
+  };
+
+  // Función para generar reporte
+  const handleGenerateReport = async () => {
+    setIsGeneratingReport(true);
+    try {
+      // Simular generación de reporte
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Crear contenido del reporte
+      const reportContent = `
+REPORTE FINANCIERO - ${selectedPeriod.toUpperCase()}
+===============================================
+
+Período: ${selectedPeriod}
+Fecha de generación: ${new Date().toLocaleString('es-ES')}
+
+RESUMEN EJECUTIVO:
+- Ingresos totales: ${formatCurrency(kpis.totalIncome)}
+- Gastos totales: ${formatCurrency(kpis.totalExpenses)}
+- Beneficio neto: ${formatCurrency(kpis.netProfit)}
+- Margen de beneficio: ${kpis.profitMargin}%
+
+TENDENCIAS:
+- Cambio en ingresos: ${kpis.incomeChange > 0 ? '+' : ''}${kpis.incomeChange}%
+- Cambio en gastos: ${kpis.expensesChange > 0 ? '+' : ''}${kpis.expensesChange}%
+
+DISTRIBUCIÓN DE INGRESOS:
+${incomeDistribution.map(item => `- ${item.name}: ${formatCurrency(item.value)}`).join('\n')}
+      `;
+      
+      // Crear y descargar archivo
+      const blob = new Blob([reportContent], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `reporte-financiero-${selectedPeriod}-${new Date().toISOString().split('T')[0]}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      alert('Reporte generado y descargado exitosamente');
+    } catch (error) {
+      alert('Error al generar el reporte');
+    } finally {
+      setIsGeneratingReport(false);
+    }
+  };
+
+  // Función para exportar datos
+  const handleExportData = async () => {
+    setIsExporting(true);
+    try {
+      // Simular exportación
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Crear datos CSV
+      const csvContent = [
+        ['Período', 'Ingresos', 'Gastos', 'Beneficio'],
+        ...currentData.map(item => {
+          const periodKey = Object.keys(item).find(key => key !== 'ingresos' && key !== 'gastos' && key !== 'beneficio');
+          return [item[periodKey as keyof typeof item], item.ingresos, item.gastos, item.beneficio];
+        })
+      ].map(row => row.join(',')).join('\n');
+      
+      // Crear y descargar archivo CSV
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `datos-financieros-${selectedPeriod}-${new Date().toISOString().split('T')[0]}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      alert('Datos exportados exitosamente');
+    } catch (error) {
+      alert('Error al exportar los datos');
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   return (
@@ -169,19 +293,25 @@ const PanelFinancieroPage: React.FC = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-2 px-4 py-2.5 bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold rounded-xl hover:bg-white/20 transition-all duration-300"
+                onClick={handleGenerateReport}
+                disabled={isGeneratingReport}
+                className="flex items-center gap-2 px-4 py-2.5 bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold rounded-xl hover:bg-white/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <FileText className="w-4 h-4" />
-                <span className="hidden sm:inline">Reporte</span>
+                <FileText className={`w-4 h-4 ${isGeneratingReport ? 'animate-spin' : ''}`} />
+                <span className="hidden sm:inline">
+                  {isGeneratingReport ? 'Generando...' : 'Reporte'}
+                </span>
               </motion.button>
 
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-2 px-4 py-2.5 bg-white text-emerald-600 font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300"
+                onClick={handleExportData}
+                disabled={isExporting}
+                className="flex items-center gap-2 px-4 py-2.5 bg-white text-emerald-600 font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Download className="w-4 h-4" />
-                <span>Exportar</span>
+                <Download className={`w-4 h-4 ${isExporting ? 'animate-bounce' : ''}`} />
+                <span>{isExporting ? 'Exportando...' : 'Exportar'}</span>
               </motion.button>
             </div>
           </div>
@@ -265,13 +395,22 @@ const PanelFinancieroPage: React.FC = () => {
                   <BarChart3 className="w-5 h-5 text-indigo-600" />
                   Ingresos vs Gastos
                 </h3>
-                <p className="text-sm text-gray-500">Últimos 12 meses</p>
+                <p className="text-sm text-gray-500">
+                  {selectedPeriod === 'today' && 'Últimos 7 días'}
+                  {selectedPeriod === 'week' && 'Últimas 4 semanas'}
+                  {selectedPeriod === 'month' && 'Últimos 12 meses'}
+                  {selectedPeriod === 'quarter' && 'Últimos 4 trimestres'}
+                  {selectedPeriod === 'year' && 'Últimos 4 años'}
+                </p>
               </div>
             </div>
             <ResponsiveContainer width="100%" height={350}>
-              <ComposedChart data={monthlyData}>
+              <ComposedChart data={currentData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                <XAxis dataKey="month" stroke="#64748b" />
+                <XAxis 
+                  dataKey={selectedPeriod === 'today' ? 'day' : selectedPeriod === 'week' ? 'week' : selectedPeriod === 'quarter' ? 'quarter' : selectedPeriod === 'year' ? 'year' : 'month'} 
+                  stroke="#64748b" 
+                />
                 <YAxis stroke="#64748b" />
                 <Tooltip
                   contentStyle={{

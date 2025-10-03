@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Upload, FileSpreadsheet, Database, Cloud, CheckCircle,
@@ -50,6 +50,17 @@ const ImportadorDatosPage: React.FC = () => {
   const [importProgress, setImportProgress] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
+  const [fieldMappings, setFieldMappings] = useState<FieldMapping[]>([
+    { sourceField: 'nombre_completo', targetField: 'Nombre', status: 'mapped', example: 'Juan Pérez' },
+    { sourceField: 'correo', targetField: 'Email', status: 'mapped', example: 'juan@email.com' },
+    { sourceField: 'telefono', targetField: 'Teléfono', status: 'suggested', example: '+34 600 123 456' },
+    { sourceField: 'fecha_nac', targetField: 'Fecha de Nacimiento', status: 'mapped', example: '15/05/1990' },
+    { sourceField: 'objetivo', targetField: 'Objetivos', status: 'suggested', example: 'Pérdida de peso' },
+    { sourceField: 'membresia', targetField: 'Tipo de Membresía', status: 'required', example: 'Premium' },
+    { sourceField: 'direccion', targetField: 'Dirección', status: 'unmapped', example: 'Calle Mayor 123' }
+  ]);
+  const [isDragOver, setIsDragOver] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Mock data
   const importSources = [
@@ -91,15 +102,6 @@ const ImportadorDatosPage: React.FC = () => {
     }
   ];
 
-  const fieldMappings: FieldMapping[] = [
-    { sourceField: 'nombre_completo', targetField: 'Nombre', status: 'mapped', example: 'Juan Pérez' },
-    { sourceField: 'correo', targetField: 'Email', status: 'mapped', example: 'juan@email.com' },
-    { sourceField: 'telefono', targetField: 'Teléfono', status: 'suggested', example: '+34 600 123 456' },
-    { sourceField: 'fecha_nac', targetField: 'Fecha de Nacimiento', status: 'mapped', example: '15/05/1990' },
-    { sourceField: 'objetivo', targetField: 'Objetivos', status: 'suggested', example: 'Pérdida de peso' },
-    { sourceField: 'membresia', targetField: 'Tipo de Membresía', status: 'required', example: 'Premium' },
-    { sourceField: 'direccion', targetField: 'Dirección', status: 'unmapped', example: 'Calle Mayor 123' }
-  ];
 
   const validationErrors: ValidationError[] = [
     { row: 15, field: 'Email', error: 'Formato inválido', suggestion: 'Debe contener @ y dominio válido' },
@@ -184,6 +186,159 @@ const ImportadorDatosPage: React.FC = () => {
     skipped: 2,
     errors: 3
   };
+
+  // Funciones de utilidad
+  const handleFileUpload = useCallback((files: FileList | null) => {
+    if (!files) return;
+    
+    setIsUploading(true);
+    const newFiles: FileData[] = [];
+    
+    Array.from(files).forEach((file, index) => {
+      const fileData: FileData = {
+        name: file.name,
+        size: file.size,
+        type: file.name.split('.').pop() || '',
+        progress: 0
+      };
+      newFiles.push(fileData);
+      
+      // Simular progreso de carga
+      const interval = setInterval(() => {
+        setUploadedFiles(prev => prev.map(f => 
+          f.name === fileData.name 
+            ? { ...f, progress: Math.min(f.progress + 10, 100) }
+            : f
+        ));
+        
+        if (fileData.progress >= 100) {
+          clearInterval(interval);
+          setIsUploading(false);
+        }
+      }, 100);
+    });
+    
+    setUploadedFiles(prev => [...prev, ...newFiles]);
+  }, []);
+
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(false);
+  }, []);
+
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(false);
+    handleFileUpload(e.dataTransfer.files);
+  }, [handleFileUpload]);
+
+  const handleFileInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    handleFileUpload(e.target.files);
+  }, [handleFileUpload]);
+
+  const removeFile = useCallback((fileName: string) => {
+    setUploadedFiles(prev => prev.filter(f => f.name !== fileName));
+  }, []);
+
+  const downloadTemplate = useCallback((templateId: string) => {
+    const template = templates.find(t => t.id === templateId);
+    if (!template) return;
+
+    // Crear datos CSV de ejemplo
+    const headers = template.fields.join(',');
+    const sampleData = template.fields.map(field => {
+      switch (field) {
+        case 'Nombre': return 'Juan Pérez';
+        case 'Email': return 'juan@email.com';
+        case 'Teléfono': return '+34 600 123 456';
+        case 'Fecha de Nacimiento': return '15/05/1990';
+        case 'Objetivos': return 'Pérdida de peso';
+        case 'Ejercicio': return 'Press de banca';
+        case 'Grupo Muscular': return 'Pecho';
+        case 'Series': return '3';
+        case 'Repeticiones': return '12';
+        case 'Tiempo': return '45 min';
+        case 'Precio': return '29.99';
+        case 'Categoría': return 'Suplementos';
+        case 'Stock': return '50';
+        case 'Descripción': return 'Producto de alta calidad';
+        default: return 'Ejemplo';
+      }
+    }).join(',');
+    
+    const csvContent = `${headers}\n${sampleData}`;
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `${template.name}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }, []);
+
+  const autoDetectFields = useCallback(() => {
+    // Simular detección automática con IA
+    setFieldMappings(prev => prev.map(mapping => ({
+      ...mapping,
+      status: mapping.status === 'unmapped' ? 'suggested' : mapping.status
+    })));
+    
+    // Mostrar notificación de éxito
+    alert('¡Detección automática completada! Se han sugerido mapeos para los campos no mapeados.');
+  }, []);
+
+  const updateFieldMapping = useCallback((index: number, targetField: string) => {
+    setFieldMappings(prev => prev.map((mapping, i) => 
+      i === index 
+        ? { ...mapping, targetField, status: targetField === 'No mapear' ? 'unmapped' : 'mapped' }
+        : mapping
+    ));
+  }, []);
+
+  const downloadErrorReport = useCallback(() => {
+    const headers = 'Fila,Campo,Error,Sugerencia';
+    const csvContent = validationErrors.map(error => 
+      `${error.row},${error.field},"${error.error}","${error.suggestion}"`
+    ).join('\n');
+    
+    const fullCsv = `${headers}\n${csvContent}`;
+    const blob = new Blob([fullCsv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'reporte_errores_importacion.csv');
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }, []);
+
+  const viewImportedData = useCallback(() => {
+    // Simular navegación a vista de datos
+    alert('Redirigiendo a la vista de datos importados...');
+  }, []);
+
+  const openHelpGuide = useCallback(() => {
+    // Simular apertura de guía de ayuda
+    alert('Abriendo guía de importación...');
+  }, []);
+
+  const openVideoTutorials = useCallback(() => {
+    // Simular apertura de videos tutoriales
+    alert('Abriendo videos tutoriales...');
+  }, []);
+
+  const viewImportHistory = useCallback((importId: number) => {
+    // Simular vista de historial específico
+    alert(`Viendo detalles de importación #${importId}...`);
+  }, []);
 
   const handleStartImport = () => {
     setIsImporting(true);
@@ -431,7 +586,15 @@ const ImportadorDatosPage: React.FC = () => {
               {/* Drop Zone */}
               <motion.div
                 whileHover={{ scale: 1.01 }}
-                className="relative overflow-hidden border-dashed border-4 border-emerald-300 rounded-3xl p-12 text-center bg-gradient-to-br from-emerald-50 to-teal-50 hover:border-emerald-500 transition-all duration-300 cursor-pointer group"
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                onClick={() => fileInputRef.current?.click()}
+                className={`relative overflow-hidden border-dashed border-4 rounded-3xl p-12 text-center transition-all duration-300 cursor-pointer group ${
+                  isDragOver 
+                    ? 'border-emerald-500 bg-gradient-to-br from-emerald-100 to-teal-100' 
+                    : 'border-emerald-300 bg-gradient-to-br from-emerald-50 to-teal-50 hover:border-emerald-500'
+                }`}
               >
                 {/* Animated background */}
                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -442,11 +605,11 @@ const ImportadorDatosPage: React.FC = () => {
                     transition={{ repeat: Infinity, duration: 2 }}
                     className="mb-6"
                   >
-                    <Upload className="w-20 h-20 text-emerald-600 mx-auto" />
+                    <Upload className={`w-20 h-20 mx-auto ${isDragOver ? 'text-emerald-700' : 'text-emerald-600'}`} />
                   </motion.div>
 
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                    Arrastra tu archivo aquí
+                    {isDragOver ? '¡Suelta el archivo aquí!' : 'Arrastra tu archivo aquí'}
                   </h3>
                   <p className="text-gray-600 mb-4">
                     o{' '}
@@ -458,6 +621,16 @@ const ImportadorDatosPage: React.FC = () => {
                     Formatos soportados: .xlsx, .csv, .json (máx. 10MB)
                   </p>
                 </div>
+
+                {/* Hidden file input */}
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  multiple
+                  accept=".xlsx,.csv,.json"
+                  onChange={handleFileInputChange}
+                  className="hidden"
+                />
               </motion.div>
 
               {/* Uploaded Files */}
@@ -507,7 +680,10 @@ const ImportadorDatosPage: React.FC = () => {
                             </p>
                           </div>
                         </div>
-                        <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <button 
+                          onClick={() => removeFile(file.name)}
+                          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                        >
                           <X className="w-5 h-5 text-gray-500" />
                         </button>
                       </div>
@@ -604,6 +780,7 @@ const ImportadorDatosPage: React.FC = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={autoDetectFields}
                   className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
                 >
                   <Zap className="w-4 h-4" />
@@ -640,10 +817,19 @@ const ImportadorDatosPage: React.FC = () => {
 
                       {/* Target Field */}
                       <div className="flex-1">
-                        <select className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl font-semibold text-gray-900 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 outline-none transition-all">
-                          <option>{mapping.targetField}</option>
-                          <option>Otro campo...</option>
-                          <option>No mapear</option>
+                        <select 
+                          value={mapping.targetField}
+                          onChange={(e) => updateFieldMapping(index, e.target.value)}
+                          className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl font-semibold text-gray-900 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 outline-none transition-all"
+                        >
+                          <option value="Nombre">Nombre</option>
+                          <option value="Email">Email</option>
+                          <option value="Teléfono">Teléfono</option>
+                          <option value="Fecha de Nacimiento">Fecha de Nacimiento</option>
+                          <option value="Objetivos">Objetivos</option>
+                          <option value="Tipo de Membresía">Tipo de Membresía</option>
+                          <option value="Dirección">Dirección</option>
+                          <option value="No mapear">No mapear</option>
                         </select>
                       </div>
 
@@ -1099,6 +1285,7 @@ const ImportadorDatosPage: React.FC = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={viewImportedData}
                   className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center justify-center gap-2"
                 >
                   <Eye className="w-5 h-5" />
@@ -1108,6 +1295,7 @@ const ImportadorDatosPage: React.FC = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={downloadErrorReport}
                   className="px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition-all duration-300 flex items-center justify-center gap-2"
                 >
                   <Download className="w-5 h-5" />
@@ -1182,6 +1370,7 @@ const ImportadorDatosPage: React.FC = () => {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={() => downloadTemplate(template.id)}
                     className="w-full px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
                   >
                     <Download className="w-4 h-4" />
@@ -1251,6 +1440,7 @@ const ImportadorDatosPage: React.FC = () => {
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
+                    onClick={() => viewImportHistory(item.id)}
                     className="p-2 rounded-lg hover:bg-emerald-100 transition-colors"
                   >
                     <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-emerald-600" />
@@ -1285,6 +1475,7 @@ const ImportadorDatosPage: React.FC = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={openHelpGuide}
               className="px-6 py-3 bg-white text-purple-600 font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
             >
               Ver Guía de Importación
@@ -1292,6 +1483,7 @@ const ImportadorDatosPage: React.FC = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={openVideoTutorials}
               className="px-6 py-3 bg-white/20 backdrop-blur-sm text-white font-bold rounded-xl border-2 border-white/30 hover:bg-white/30 transition-all duration-300"
             >
               Videos Tutoriales

@@ -209,32 +209,22 @@ const availableVariables = [
 const TriggerNode = ({ data }: { data: any }) => {
   const Icon = data.icon;
   return (
-    <div className={`relative overflow-hidden px-4 py-3 rounded-2xl border-2 ${
-      data.isConfigured ? 'border-green-400/60' : 'border-red-400/60'
-    } bg-white/80 backdrop-blur-xl shadow-xl hover:shadow-2xl transition-all min-w-[220px] group`}>
-      {/* Decoración de fondo */}
-      <div className="absolute -right-8 -top-8 w-24 h-24 bg-gradient-to-br from-green-200 to-emerald-200 rounded-full blur-2xl opacity-30"></div>
-
-      {/* Shimmer effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transform -skew-x-12 group-hover:translate-x-full transition-all duration-700"></div>
-
-      <div className="relative z-10">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-            <Icon className="w-5 h-5 text-white" />
-          </div>
-          <div>
-            <div className="text-xs font-bold text-green-700 uppercase tracking-wide">Inicio</div>
-            <div className="text-sm font-bold text-gray-800">{data.label}</div>
-          </div>
+    <div className={`px-4 py-3 rounded-lg border-2 ${data.isConfigured ? 'border-green-500' : 'border-red-300'} bg-gradient-to-br from-green-50 to-green-100 shadow-lg min-w-[200px]`}>
+      <div className="flex items-center space-x-2">
+        <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+          <Icon className="w-4 h-4 text-white" />
         </div>
-        {!data.isConfigured && (
-          <div className="mt-3 px-2 py-1 bg-red-50 rounded-lg text-xs text-red-700 flex items-center gap-1.5 border border-red-200">
-            <AlertCircle className="w-3.5 h-3.5" />
-            <span className="font-semibold">Sin configurar</span>
-          </div>
-        )}
+        <div>
+          <div className="text-xs font-bold text-green-700 uppercase">Inicio</div>
+          <div className="text-sm font-semibold text-gray-800">{data.label}</div>
+        </div>
       </div>
+      {!data.isConfigured && (
+        <div className="mt-2 text-xs text-red-600 flex items-center space-x-1">
+          <AlertCircle className="w-3 h-3" />
+          <span>Sin configurar</span>
+        </div>
+      )}
     </div>
   );
 };
@@ -242,36 +232,26 @@ const TriggerNode = ({ data }: { data: any }) => {
 const ConditionNode = ({ data }: { data: any }) => {
   const Icon = data.icon;
   return (
-    <div className={`relative overflow-hidden px-4 py-3 rounded-2xl border-2 ${
-      data.isConfigured ? 'border-yellow-400/60' : 'border-red-400/60'
-    } bg-white/80 backdrop-blur-xl shadow-xl hover:shadow-2xl transition-all min-w-[220px] group`}>
-      {/* Decoración de fondo */}
-      <div className="absolute -right-8 -top-8 w-24 h-24 bg-gradient-to-br from-yellow-200 to-amber-200 rounded-full blur-2xl opacity-30"></div>
-
-      {/* Shimmer effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transform -skew-x-12 group-hover:translate-x-full transition-all duration-700"></div>
-
-      <div className="relative z-10">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-yellow-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-            <Icon className="w-5 h-5 text-white" />
-          </div>
-          <div>
-            <div className="text-xs font-bold text-yellow-700 uppercase tracking-wide">Condición</div>
-            <div className="text-sm font-bold text-gray-800">{data.label}</div>
-          </div>
+    <div className={`px-4 py-3 rounded-lg border-2 ${data.isConfigured ? 'border-yellow-500' : 'border-red-300'} bg-gradient-to-br from-yellow-50 to-yellow-100 shadow-lg min-w-[200px]`}>
+      <div className="flex items-center space-x-2">
+        <div className="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
+          <Icon className="w-4 h-4 text-white" />
         </div>
-        <div className="mt-3 flex gap-2 text-xs">
-          <span className="px-3 py-1 bg-green-100 text-green-700 rounded-lg font-bold border border-green-200">✓ Sí</span>
-          <span className="px-3 py-1 bg-red-100 text-red-700 rounded-lg font-bold border border-red-200">✗ No</span>
+        <div>
+          <div className="text-xs font-bold text-yellow-700 uppercase">Condición</div>
+          <div className="text-sm font-semibold text-gray-800">{data.label}</div>
         </div>
-        {!data.isConfigured && (
-          <div className="mt-3 px-2 py-1 bg-red-50 rounded-lg text-xs text-red-700 flex items-center gap-1.5 border border-red-200">
-            <AlertCircle className="w-3.5 h-3.5" />
-            <span className="font-semibold">Sin configurar</span>
-          </div>
-        )}
       </div>
+      <div className="mt-2 flex space-x-2 text-xs">
+        <span className="px-2 py-1 bg-green-200 text-green-800 rounded font-medium">Sí</span>
+        <span className="px-2 py-1 bg-red-200 text-red-800 rounded font-medium">No</span>
+      </div>
+      {!data.isConfigured && (
+        <div className="mt-2 text-xs text-red-600 flex items-center space-x-1">
+          <AlertCircle className="w-3 h-3" />
+          <span>Sin configurar</span>
+        </div>
+      )}
     </div>
   );
 };
@@ -279,37 +259,27 @@ const ConditionNode = ({ data }: { data: any }) => {
 const ActionNode = ({ data }: { data: any }) => {
   const Icon = data.icon;
   return (
-    <div className={`relative overflow-hidden px-4 py-3 rounded-2xl border-2 ${
-      data.isConfigured ? 'border-cyan-400/60' : 'border-red-400/60'
-    } bg-white/80 backdrop-blur-xl shadow-xl hover:shadow-2xl transition-all min-w-[220px] group`}>
-      {/* Decoración de fondo */}
-      <div className="absolute -right-8 -top-8 w-24 h-24 bg-gradient-to-br from-cyan-200 to-blue-200 rounded-full blur-2xl opacity-30"></div>
-
-      {/* Shimmer effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transform -skew-x-12 group-hover:translate-x-full transition-all duration-700"></div>
-
-      <div className="relative z-10">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-            <Icon className="w-5 h-5 text-white" />
-          </div>
-          <div>
-            <div className="text-xs font-bold text-cyan-700 uppercase tracking-wide">Acción</div>
-            <div className="text-sm font-bold text-gray-800">{data.label}</div>
-          </div>
+    <div className={`px-4 py-3 rounded-lg border-2 ${data.isConfigured ? 'border-blue-500' : 'border-red-300'} bg-gradient-to-br from-blue-50 to-blue-100 shadow-lg min-w-[200px]`}>
+      <div className="flex items-center space-x-2">
+        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+          <Icon className="w-4 h-4 text-white" />
         </div>
-        {data.config && (
-          <div className="mt-2 px-2 py-1 bg-cyan-50 rounded-lg text-xs text-cyan-700 font-mono truncate border border-cyan-200">
-            {JSON.stringify(data.config).substring(0, 30)}...
-          </div>
-        )}
-        {!data.isConfigured && (
-          <div className="mt-3 px-2 py-1 bg-red-50 rounded-lg text-xs text-red-700 flex items-center gap-1.5 border border-red-200">
-            <AlertCircle className="w-3.5 h-3.5" />
-            <span className="font-semibold">Sin configurar</span>
-          </div>
-        )}
+        <div>
+          <div className="text-xs font-bold text-blue-700 uppercase">Acción</div>
+          <div className="text-sm font-semibold text-gray-800">{data.label}</div>
+        </div>
       </div>
+      {data.config && (
+        <div className="mt-2 text-xs text-gray-600 truncate">
+          {JSON.stringify(data.config).substring(0, 30)}...
+        </div>
+      )}
+      {!data.isConfigured && (
+        <div className="mt-2 text-xs text-red-600 flex items-center space-x-1">
+          <AlertCircle className="w-3 h-3" />
+          <span>Sin configurar</span>
+        </div>
+      )}
     </div>
   );
 };
@@ -317,32 +287,22 @@ const ActionNode = ({ data }: { data: any }) => {
 const UtilityNode = ({ data }: { data: any }) => {
   const Icon = data.icon;
   return (
-    <div className={`relative overflow-hidden px-4 py-3 rounded-2xl border-2 ${
-      data.isConfigured ? 'border-slate-400/60' : 'border-red-400/60'
-    } bg-white/80 backdrop-blur-xl shadow-xl hover:shadow-2xl transition-all min-w-[220px] group`}>
-      {/* Decoración de fondo */}
-      <div className="absolute -right-8 -top-8 w-24 h-24 bg-gradient-to-br from-slate-200 to-gray-200 rounded-full blur-2xl opacity-30"></div>
-
-      {/* Shimmer effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transform -skew-x-12 group-hover:translate-x-full transition-all duration-700"></div>
-
-      <div className="relative z-10">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-slate-500 to-gray-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-            <Icon className="w-5 h-5 text-white" />
-          </div>
-          <div>
-            <div className="text-xs font-bold text-slate-700 uppercase tracking-wide">Utilidad</div>
-            <div className="text-sm font-bold text-gray-800">{data.label}</div>
-          </div>
+    <div className={`px-4 py-3 rounded-lg border-2 ${data.isConfigured ? 'border-gray-500' : 'border-red-300'} bg-gradient-to-br from-gray-50 to-gray-100 shadow-lg min-w-[200px]`}>
+      <div className="flex items-center space-x-2">
+        <div className="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center">
+          <Icon className="w-4 h-4 text-white" />
         </div>
-        {!data.isConfigured && (
-          <div className="mt-3 px-2 py-1 bg-red-50 rounded-lg text-xs text-red-700 flex items-center gap-1.5 border border-red-200">
-            <AlertCircle className="w-3.5 h-3.5" />
-            <span className="font-semibold">Sin configurar</span>
-          </div>
-        )}
+        <div>
+          <div className="text-xs font-bold text-gray-700 uppercase">Utilidad</div>
+          <div className="text-sm font-semibold text-gray-800">{data.label}</div>
+        </div>
       </div>
+      {!data.isConfigured && (
+        <div className="mt-2 text-xs text-red-600 flex items-center space-x-1">
+          <AlertCircle className="w-3 h-3" />
+          <span>Sin configurar</span>
+        </div>
+      )}
     </div>
   );
 };
@@ -384,11 +344,8 @@ const CrearFlujoPage: React.FC = () => {
       const newEdge = {
         ...params,
         animated: true,
-        style: {
-          stroke: 'url(#gradient)',
-          strokeWidth: 3,
-        },
-        markerEnd: { type: MarkerType.ArrowClosed, color: '#0891b2' },
+        style: { stroke: '#6366f1', strokeWidth: 2 },
+        markerEnd: { type: MarkerType.ArrowClosed, color: '#6366f1' },
       };
       setEdges((eds) => addEdge(newEdge, eds));
     },
@@ -559,132 +516,79 @@ const CrearFlujoPage: React.FC = () => {
   // ============ RENDER ============
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/30 relative">
-      {/* Hero Section */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="absolute top-0 left-0 right-0 h-auto bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 z-50 shadow-2xl overflow-hidden"
-      >
-        {/* Efectos de fondo animados */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        </div>
-
-        {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: '50px 50px'
-          }}></div>
-        </div>
-
-        <div className="relative z-10 px-6 py-6">
+    <div className="flex h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative">
+      {/* Header */}
+      <div className="absolute top-0 left-0 right-0 h-auto bg-white/95 backdrop-blur-lg border-b border-gray-200 z-50 shadow-sm">
+        <div className="px-6 py-4">
           {/* Primera fila: Título y acciones */}
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center space-x-4">
-              {/* Icono animado */}
-              <div className="relative">
-                <div className="absolute inset-0 w-12 h-12 bg-cyan-300 rounded-2xl blur-lg opacity-50 animate-pulse"></div>
-                <div className="relative w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30">
-                  <Zap className="w-6 h-6 text-cyan-200 animate-pulse" />
-                </div>
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center shadow-lg">
+                <Zap className="w-5 h-5 text-white" />
               </div>
-
               <div>
-                <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight flex items-center gap-3">
-                  Crear Automatización
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-200 to-blue-200">
-                    {flowStatus.label === 'Válido' && '✓'}
-                  </span>
+                <h1 className="text-xl font-bold text-gray-800">
+                  Crear Nuevo Flujo de Automatización
                 </h1>
-                <p className="text-cyan-100 text-lg mt-1">
-                  Construye flujos poderosos <span className="font-bold text-white px-2 py-0.5 bg-white/20 rounded-lg backdrop-blur-sm">sin código</span>
-                </p>
-                <div className="flex items-center gap-3 mt-3">
-                  <div className={`px-3 py-1 rounded-full text-xs font-bold backdrop-blur-md border ${
-                    flowStatus.color === 'green' ? 'bg-green-500/20 text-green-100 border-green-400/50' :
-                    flowStatus.color === 'yellow' ? 'bg-yellow-500/20 text-yellow-100 border-yellow-400/50' :
-                    flowStatus.color === 'red' ? 'bg-red-500/20 text-red-100 border-red-400/50' :
-                    'bg-white/20 text-white border-white/30'
+                <div className="flex items-center space-x-2 mt-1">
+                  <span className={`px-2 py-0.5 rounded text-xs font-semibold ${
+                    flowStatus.color === 'green' ? 'bg-green-100 text-green-700' :
+                    flowStatus.color === 'yellow' ? 'bg-yellow-100 text-yellow-700' :
+                    flowStatus.color === 'red' ? 'bg-red-100 text-red-700' :
+                    'bg-gray-100 text-gray-700'
                   }`}>
                     {flowStatus.label}
-                  </div>
-                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-3 py-1 border border-white/20">
-                    <span className="text-sm font-semibold text-white">{nodes.length} nodos</span>
-                  </div>
-                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-3 py-1 border border-white/20">
-                    <span className="text-sm font-semibold text-white">{edges.length} conexiones</span>
-                  </div>
+                  </span>
+                  <span className="text-xs text-gray-500">
+                    {nodes.length} nodo(s) • {edges.length} conexión(es)
+                  </span>
                 </div>
               </div>
             </div>
 
             <div className="flex items-center space-x-2">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <button
                 onClick={() => setShowTemplates(true)}
-                className="flex items-center space-x-2 px-3 py-2 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 rounded-xl transition-all text-sm text-white"
+                className="flex items-center space-x-2 px-3 py-2 bg-white border border-gray-300 hover:bg-gray-50 rounded-lg transition-colors text-sm"
               >
                 <FileText className="w-4 h-4" />
-                <span className="font-medium">Plantillas</span>
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                <span>Plantillas</span>
+              </button>
+              <button
                 onClick={exportFlow}
-                className="flex items-center space-x-2 px-3 py-2 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 rounded-xl transition-all text-sm text-white"
+                className="flex items-center space-x-2 px-3 py-2 bg-white border border-gray-300 hover:bg-gray-50 rounded-lg transition-colors text-sm"
               >
                 <Download className="w-4 h-4" />
-                <span className="font-medium">Exportar</span>
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                <span>Exportar</span>
+              </button>
+              <button
                 onClick={() => setShowSettings(true)}
-                className="p-2 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 rounded-xl transition-all text-white"
+                className="flex items-center space-x-2 px-3 py-2 bg-white border border-gray-300 hover:bg-gray-50 rounded-lg transition-colors text-sm"
               >
                 <Settings className="w-4 h-4" />
-              </motion.button>
-              <div className="w-px h-8 bg-white/20"></div>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-2 bg-red-500/20 backdrop-blur-md border border-red-400/30 hover:bg-red-500/30 rounded-xl transition-all"
-              >
-                <Trash2 className="w-4 h-4 text-red-200" />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center space-x-2 px-4 py-2 bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30 rounded-xl transition-all shadow-lg"
-              >
-                <Save className="w-4 h-4 text-white" />
-                <span className="text-sm font-semibold text-white">Borrador</span>
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+              </button>
+              <div className="w-px h-8 bg-gray-300"></div>
+              <button className="p-2 bg-white border border-gray-300 hover:bg-gray-50 rounded-lg transition-colors">
+                <Trash2 className="w-4 h-4 text-red-500" />
+              </button>
+              <button className="flex items-center space-x-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+                <Save className="w-4 h-4" />
+                <span className="text-sm font-medium">Guardar Borrador</span>
+              </button>
+              <button
                 onClick={() => setShowTestModal(true)}
-                className="flex items-center space-x-2 px-4 py-2 bg-cyan-500/30 backdrop-blur-md border border-cyan-400/50 hover:bg-cyan-500/40 text-cyan-50 rounded-xl transition-all shadow-lg"
+                className="flex items-center space-x-2 px-4 py-2 bg-purple-100 hover:bg-purple-200 text-purple-700 rounded-lg transition-colors"
               >
                 <PlayCircle className="w-4 h-4" />
-                <span className="text-sm font-semibold">Probar</span>
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+                <span className="text-sm font-medium">Probar Flujo</span>
+              </button>
+              <button
                 onClick={saveFlow}
-                className="relative overflow-hidden flex items-center space-x-2 px-5 py-2 bg-white text-cyan-600 rounded-xl transition-all shadow-xl hover:shadow-2xl font-bold group"
+                className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-lg hover:from-purple-600 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl"
               >
-                <div className="absolute inset-0 bg-cyan-200 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                <Play className="w-4 h-4 relative z-10" />
-                <span className="text-sm relative z-10">Activar</span>
-              </motion.button>
+                <Play className="w-4 h-4" />
+                <span className="text-sm font-medium">Guardar y Activar</span>
+              </button>
             </div>
           </div>
 
@@ -697,13 +601,13 @@ const CrearFlujoPage: React.FC = () => {
                   value={flowName}
                   onChange={(e) => setFlowName(e.target.value)}
                   onBlur={() => setIsEditingName(false)}
-                  className="w-full px-4 py-2 bg-white/20 backdrop-blur-md border border-white/30 text-white placeholder-cyan-200 rounded-2xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-white/50 focus:bg-white/25"
+                  className="w-full px-3 py-2 border border-blue-300 rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
                   autoFocus
                 />
               ) : (
                 <div
                   onClick={() => setIsEditingName(true)}
-                  className="px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 hover:border-white/40 rounded-2xl cursor-pointer text-sm font-semibold text-white transition-all hover:bg-white/15"
+                  className="px-3 py-2 border border-transparent hover:border-gray-300 rounded-lg cursor-pointer text-sm font-semibold transition-colors"
                 >
                   {flowName}
                 </div>
@@ -715,38 +619,31 @@ const CrearFlujoPage: React.FC = () => {
                 value={flowDescription}
                 onChange={(e) => setFlowDescription(e.target.value)}
                 placeholder="Descripción del flujo (opcional)"
-                className="w-full px-4 py-2 bg-white/20 backdrop-blur-md border border-white/30 text-white placeholder-cyan-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-white/50 focus:bg-white/25"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
 
           {/* Errores de validación */}
           {validationErrors.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-4 p-4 bg-red-500/20 backdrop-blur-md border border-red-400/50 rounded-2xl"
-            >
+            <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg">
               <div className="flex items-start space-x-2">
-                <AlertCircle className="w-5 h-5 text-red-200 mt-0.5" />
+                <AlertCircle className="w-4 h-4 text-red-600 mt-0.5" />
                 <div className="flex-1">
-                  <div className="text-sm font-bold text-red-100 mb-2">
+                  <div className="text-sm font-semibold text-red-800 mb-1">
                     Errores en el flujo:
                   </div>
-                  <ul className="text-xs text-red-200 space-y-1">
+                  <ul className="text-xs text-red-700 space-y-1">
                     {validationErrors.map((error, idx) => (
-                      <li key={idx} className="flex items-center gap-2">
-                        <div className="w-1 h-1 rounded-full bg-red-300"></div>
-                        {error}
-                      </li>
+                      <li key={idx}>• {error}</li>
                     ))}
                   </ul>
                 </div>
               </div>
-            </motion.div>
+            </div>
           )}
         </div>
-      </motion.div>
+      </div>
 
       {/* Panel Izquierdo - Paleta de Nodos */}
       <AnimatePresence>
@@ -756,29 +653,21 @@ const CrearFlujoPage: React.FC = () => {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -320, opacity: 0 }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="w-80 bg-white/80 backdrop-blur-xl border-r border-white/50 shadow-2xl overflow-hidden"
-            style={{ marginTop: validationErrors.length > 0 ? '265px' : '220px' }}
+            className="w-80 bg-white/95 backdrop-blur-sm border-r border-gray-200 shadow-xl overflow-hidden"
+            style={{ marginTop: validationErrors.length > 0 ? '220px' : '180px' }}
           >
-            {/* Decoración de fondo */}
-            <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-br from-cyan-100 via-blue-100 to-indigo-100 opacity-30 blur-2xl"></div>
-
-            <div className="h-full overflow-y-auto custom-scrollbar relative z-10">
+            <div className="h-full overflow-y-auto custom-scrollbar">
               <div className="p-4">
-                <div className="flex items-center justify-between mb-5">
-                  <div>
-                    <h2 className="text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600 uppercase tracking-wide">
-                      Paleta de Nodos
-                    </h2>
-                    <p className="text-xs text-gray-600 mt-0.5">Arrastra al canvas</p>
-                  </div>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-sm font-bold text-gray-800 uppercase tracking-wide">
+                    Paleta de Nodos
+                  </h2>
+                  <button
                     onClick={() => setShowVariables(!showVariables)}
-                    className="text-xs px-3 py-1.5 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all font-semibold shadow-md"
+                    className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
                   >
                     Variables
-                  </motion.button>
+                  </button>
                 </div>
 
                 {/* Variables Panel */}
@@ -787,77 +676,61 @@ const CrearFlujoPage: React.FC = () => {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    className="mb-5 p-4 bg-gradient-to-br from-cyan-50 to-blue-50 border border-cyan-200 rounded-2xl overflow-hidden shadow-lg"
+                    className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg overflow-hidden"
                   >
-                    <div className="text-xs font-bold text-cyan-800 mb-3 flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-cyan-500"></div>
+                    <div className="text-xs font-semibold text-blue-800 mb-2">
                       Variables Disponibles
                     </div>
-                    <div className="space-y-2 max-h-60 overflow-y-auto custom-scrollbar">
-                      {availableVariables.map((v, idx) => (
-                        <motion.div
+                    <div className="space-y-1 max-h-60 overflow-y-auto">
+                      {availableVariables.map((v) => (
+                        <div
                           key={v.key}
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: idx * 0.03 }}
-                          className="group relative overflow-hidden flex items-center justify-between p-3 bg-white/80 backdrop-blur-sm rounded-xl hover:bg-cyan-50 cursor-pointer transition-all hover:shadow-md border border-transparent hover:border-cyan-200"
+                          className="flex items-center justify-between p-2 bg-white rounded hover:bg-blue-50 cursor-pointer transition-colors"
                           onClick={() => copyVariable(v.key)}
                         >
-                          {/* Shimmer effect */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-700"></div>
-
-                          <div className="flex-1 relative z-10">
-                            <div className="text-xs font-mono font-bold text-cyan-700">
+                          <div className="flex-1">
+                            <div className="text-xs font-mono font-semibold text-gray-800">
                               {v.key}
                             </div>
-                            <div className="text-xs text-gray-600 mt-0.5">{v.description}</div>
+                            <div className="text-xs text-gray-600">{v.description}</div>
                           </div>
-                          <Copy className="w-4 h-4 text-cyan-400 group-hover:text-cyan-600 transition-colors relative z-10" />
-                        </motion.div>
+                          <Copy className="w-3 h-3 text-gray-400" />
+                        </div>
                       ))}
                     </div>
                   </motion.div>
                 )}
 
                 {/* Categorías de Nodos */}
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {/* DISPARADORES */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="bg-white/60 backdrop-blur-md border border-green-200 rounded-2xl overflow-hidden shadow-lg"
-                  >
+                  <div className="border border-green-200 rounded-lg overflow-hidden">
                     <button
                       onClick={() => toggleCategory('triggers')}
-                      className="w-full flex items-center justify-between p-4 bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 transition-all"
+                      className="w-full flex items-center justify-between p-3 bg-green-50 hover:bg-green-100 transition-colors"
                     >
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
-                          <PlayCircle className="w-4 h-4 text-white" />
-                        </div>
+                      <div className="flex items-center space-x-2">
+                        <PlayCircle className="w-4 h-4 text-green-600" />
                         <span className="text-sm font-bold text-green-800">
                           DISPARADORES
                         </span>
-                        <span className="text-xs text-green-700 bg-green-200 px-2.5 py-0.5 rounded-full font-bold">
+                        <span className="text-xs text-green-600 bg-green-200 px-2 py-0.5 rounded-full">
                           {nodeTemplates.triggers.length}
                         </span>
                       </div>
                       {collapsedCategories.triggers ? (
-                        <ChevronDown className="w-5 h-5 text-green-600" />
+                        <ChevronDown className="w-4 h-4 text-green-600" />
                       ) : (
-                        <ChevronUp className="w-5 h-5 text-green-600" />
+                        <ChevronUp className="w-4 h-4 text-green-600" />
                       )}
                     </button>
                     {!collapsedCategories.triggers && (
-                      <div className="p-3 space-y-2 bg-gradient-to-br from-white/50 to-green-50/50">
-                        {nodeTemplates.triggers.map((template, idx) => {
+                      <div className="p-2 space-y-1 bg-white">
+                        {nodeTemplates.triggers.map((template) => {
                           const Icon = template.icon;
                           return (
-                            <motion.div
+                            <div
                               key={template.id}
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: idx * 0.03 }}
                               draggable
                               onDragStart={(e) => {
                                 e.dataTransfer.setData(
@@ -866,67 +739,54 @@ const CrearFlujoPage: React.FC = () => {
                                 );
                                 e.dataTransfer.effectAllowed = 'move';
                               }}
-                              className="group relative overflow-hidden flex items-center space-x-3 p-3 bg-white/80 backdrop-blur-sm hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 rounded-xl cursor-move transition-all border border-green-200/50 hover:border-green-300 hover:shadow-md"
+                              className="flex items-center space-x-3 p-2 bg-gradient-to-r from-green-50 to-green-100 hover:from-green-100 hover:to-green-200 rounded-lg cursor-move transition-all group border border-green-200"
                             >
-                              {/* Shimmer effect */}
-                              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-700"></div>
-
-                              <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform relative z-10">
-                                <Icon className="w-5 h-5 text-white" />
+                              <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <Icon className="w-4 h-4 text-white" />
                               </div>
-                              <div className="flex-1 min-w-0 relative z-10">
-                                <div className="text-sm font-bold text-gray-800 truncate">
+                              <div className="flex-1 min-w-0">
+                                <div className="text-sm font-semibold text-gray-800 truncate">
                                   {template.label}
                                 </div>
-                                <div className="text-xs text-gray-600 truncate mt-0.5">
+                                <div className="text-xs text-gray-600 truncate">
                                   {template.description}
                                 </div>
                               </div>
-                            </motion.div>
+                            </div>
                           );
                         })}
                       </div>
                     )}
-                  </motion.div>
+                  </div>
 
                   {/* CONDICIONES */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                    className="bg-white/60 backdrop-blur-md border border-yellow-200 rounded-2xl overflow-hidden shadow-lg"
-                  >
+                  <div className="border border-yellow-200 rounded-lg overflow-hidden">
                     <button
                       onClick={() => toggleCategory('conditions')}
-                      className="w-full flex items-center justify-between p-4 bg-gradient-to-r from-yellow-50 to-amber-50 hover:from-yellow-100 hover:to-amber-100 transition-all"
+                      className="w-full flex items-center justify-between p-3 bg-yellow-50 hover:bg-yellow-100 transition-colors"
                     >
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-gradient-to-br from-yellow-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg">
-                          <GitBranch className="w-4 h-4 text-white" />
-                        </div>
+                      <div className="flex items-center space-x-2">
+                        <GitBranch className="w-4 h-4 text-yellow-600" />
                         <span className="text-sm font-bold text-yellow-800">
                           CONDICIONES
                         </span>
-                        <span className="text-xs text-yellow-700 bg-yellow-200 px-2.5 py-0.5 rounded-full font-bold">
+                        <span className="text-xs text-yellow-600 bg-yellow-200 px-2 py-0.5 rounded-full">
                           {nodeTemplates.conditions.length}
                         </span>
                       </div>
                       {collapsedCategories.conditions ? (
-                        <ChevronDown className="w-5 h-5 text-yellow-600" />
+                        <ChevronDown className="w-4 h-4 text-yellow-600" />
                       ) : (
-                        <ChevronUp className="w-5 h-5 text-yellow-600" />
+                        <ChevronUp className="w-4 h-4 text-yellow-600" />
                       )}
                     </button>
                     {!collapsedCategories.conditions && (
-                      <div className="p-3 space-y-2 bg-gradient-to-br from-white/50 to-yellow-50/50">
-                        {nodeTemplates.conditions.map((template, idx) => {
+                      <div className="p-2 space-y-1 bg-white">
+                        {nodeTemplates.conditions.map((template) => {
                           const Icon = template.icon;
                           return (
-                            <motion.div
+                            <div
                               key={template.id}
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: idx * 0.03 }}
                               draggable
                               onDragStart={(e) => {
                                 e.dataTransfer.setData(
@@ -935,63 +795,52 @@ const CrearFlujoPage: React.FC = () => {
                                 );
                                 e.dataTransfer.effectAllowed = 'move';
                               }}
-                              className="group relative overflow-hidden flex items-center space-x-3 p-3 bg-white/80 backdrop-blur-sm hover:bg-gradient-to-r hover:from-yellow-50 hover:to-amber-50 rounded-xl cursor-move transition-all border border-yellow-200/50 hover:border-yellow-300 hover:shadow-md"
+                              className="flex items-center space-x-3 p-2 bg-gradient-to-r from-yellow-50 to-yellow-100 hover:from-yellow-100 hover:to-yellow-200 rounded-lg cursor-move transition-all group border border-yellow-200"
                             >
-                              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-700"></div>
-                              <div className="w-10 h-10 bg-gradient-to-br from-yellow-500 to-amber-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform relative z-10">
-                                <Icon className="w-5 h-5 text-white" />
+                              <div className="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <Icon className="w-4 h-4 text-white" />
                               </div>
-                              <div className="flex-1 min-w-0 relative z-10">
-                                <div className="text-sm font-bold text-gray-800 truncate">
+                              <div className="flex-1 min-w-0">
+                                <div className="text-sm font-semibold text-gray-800 truncate">
                                   {template.label}
                                 </div>
-                                <div className="text-xs text-gray-600 truncate mt-0.5">
+                                <div className="text-xs text-gray-600 truncate">
                                   {template.description}
                                 </div>
                               </div>
-                            </motion.div>
+                            </div>
                           );
                         })}
                       </div>
                     )}
-                  </motion.div>
+                  </div>
 
                   {/* ACCIONES */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="bg-white/60 backdrop-blur-md border border-cyan-200 rounded-2xl overflow-hidden shadow-lg"
-                  >
+                  <div className="border border-blue-200 rounded-lg overflow-hidden">
                     <button
                       onClick={() => toggleCategory('actions')}
-                      className="w-full flex items-center justify-between p-4 bg-gradient-to-r from-cyan-50 to-blue-50 hover:from-cyan-100 hover:to-blue-100 transition-all"
+                      className="w-full flex items-center justify-between p-3 bg-blue-50 hover:bg-blue-100 transition-colors"
                     >
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                          <Zap className="w-4 h-4 text-white" />
-                        </div>
-                        <span className="text-sm font-bold text-cyan-800">ACCIONES</span>
-                        <span className="text-xs text-cyan-700 bg-cyan-200 px-2.5 py-0.5 rounded-full font-bold">
+                      <div className="flex items-center space-x-2">
+                        <Zap className="w-4 h-4 text-blue-600" />
+                        <span className="text-sm font-bold text-blue-800">ACCIONES</span>
+                        <span className="text-xs text-blue-600 bg-blue-200 px-2 py-0.5 rounded-full">
                           {nodeTemplates.actions.length}
                         </span>
                       </div>
                       {collapsedCategories.actions ? (
-                        <ChevronDown className="w-5 h-5 text-cyan-600" />
+                        <ChevronDown className="w-4 h-4 text-blue-600" />
                       ) : (
-                        <ChevronUp className="w-5 h-5 text-cyan-600" />
+                        <ChevronUp className="w-4 h-4 text-blue-600" />
                       )}
                     </button>
                     {!collapsedCategories.actions && (
-                      <div className="p-3 space-y-2 bg-gradient-to-br from-white/50 to-cyan-50/50">
-                        {nodeTemplates.actions.map((template, idx) => {
+                      <div className="p-2 space-y-1 bg-white">
+                        {nodeTemplates.actions.map((template) => {
                           const Icon = template.icon;
                           return (
-                            <motion.div
+                            <div
                               key={template.id}
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: idx * 0.03 }}
                               draggable
                               onDragStart={(e) => {
                                 e.dataTransfer.setData(
@@ -1000,63 +849,52 @@ const CrearFlujoPage: React.FC = () => {
                                 );
                                 e.dataTransfer.effectAllowed = 'move';
                               }}
-                              className="group relative overflow-hidden flex items-center space-x-3 p-3 bg-white/80 backdrop-blur-sm hover:bg-gradient-to-r hover:from-cyan-50 hover:to-blue-50 rounded-xl cursor-move transition-all border border-cyan-200/50 hover:border-cyan-300 hover:shadow-md"
+                              className="flex items-center space-x-3 p-2 bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 rounded-lg cursor-move transition-all group border border-blue-200"
                             >
-                              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-700"></div>
-                              <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform relative z-10">
-                                <Icon className="w-5 h-5 text-white" />
+                              <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <Icon className="w-4 h-4 text-white" />
                               </div>
-                              <div className="flex-1 min-w-0 relative z-10">
-                                <div className="text-sm font-bold text-gray-800 truncate">
+                              <div className="flex-1 min-w-0">
+                                <div className="text-sm font-semibold text-gray-800 truncate">
                                   {template.label}
                                 </div>
-                                <div className="text-xs text-gray-600 truncate mt-0.5">
+                                <div className="text-xs text-gray-600 truncate">
                                   {template.description}
                                 </div>
                               </div>
-                            </motion.div>
+                            </div>
                           );
                         })}
                       </div>
                     )}
-                  </motion.div>
+                  </div>
 
                   {/* UTILIDADES */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className="bg-white/60 backdrop-blur-md border border-slate-200 rounded-2xl overflow-hidden shadow-lg"
-                  >
+                  <div className="border border-gray-300 rounded-lg overflow-hidden">
                     <button
                       onClick={() => toggleCategory('utilities')}
-                      className="w-full flex items-center justify-between p-4 bg-gradient-to-r from-slate-50 to-gray-50 hover:from-slate-100 hover:to-gray-100 transition-all"
+                      className="w-full flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 transition-colors"
                     >
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-gradient-to-br from-slate-500 to-gray-600 rounded-xl flex items-center justify-center shadow-lg">
-                          <Settings className="w-4 h-4 text-white" />
-                        </div>
-                        <span className="text-sm font-bold text-slate-800">UTILIDADES</span>
-                        <span className="text-xs text-slate-700 bg-slate-200 px-2.5 py-0.5 rounded-full font-bold">
+                      <div className="flex items-center space-x-2">
+                        <Settings className="w-4 h-4 text-gray-600" />
+                        <span className="text-sm font-bold text-gray-800">UTILIDADES</span>
+                        <span className="text-xs text-gray-600 bg-gray-200 px-2 py-0.5 rounded-full">
                           {nodeTemplates.utilities.length}
                         </span>
                       </div>
                       {collapsedCategories.utilities ? (
-                        <ChevronDown className="w-5 h-5 text-slate-600" />
+                        <ChevronDown className="w-4 h-4 text-gray-600" />
                       ) : (
-                        <ChevronUp className="w-5 h-5 text-slate-600" />
+                        <ChevronUp className="w-4 h-4 text-gray-600" />
                       )}
                     </button>
                     {!collapsedCategories.utilities && (
-                      <div className="p-3 space-y-2 bg-gradient-to-br from-white/50 to-slate-50/50">
-                        {nodeTemplates.utilities.map((template, idx) => {
+                      <div className="p-2 space-y-1 bg-white">
+                        {nodeTemplates.utilities.map((template) => {
                           const Icon = template.icon;
                           return (
-                            <motion.div
+                            <div
                               key={template.id}
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: idx * 0.03 }}
                               draggable
                               onDragStart={(e) => {
                                 e.dataTransfer.setData(
@@ -1065,26 +903,25 @@ const CrearFlujoPage: React.FC = () => {
                                 );
                                 e.dataTransfer.effectAllowed = 'move';
                               }}
-                              className="group relative overflow-hidden flex items-center space-x-3 p-3 bg-white/80 backdrop-blur-sm hover:bg-gradient-to-r hover:from-slate-50 hover:to-gray-50 rounded-xl cursor-move transition-all border border-slate-200/50 hover:border-slate-300 hover:shadow-md"
+                              className="flex items-center space-x-3 p-2 bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-200 rounded-lg cursor-move transition-all group border border-gray-300"
                             >
-                              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-700"></div>
-                              <div className="w-10 h-10 bg-gradient-to-br from-slate-500 to-gray-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform relative z-10">
-                                <Icon className="w-5 h-5 text-white" />
+                              <div className="w-8 h-8 bg-gray-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <Icon className="w-4 h-4 text-white" />
                               </div>
-                              <div className="flex-1 min-w-0 relative z-10">
-                                <div className="text-sm font-bold text-gray-800 truncate">
+                              <div className="flex-1 min-w-0">
+                                <div className="text-sm font-semibold text-gray-800 truncate">
                                   {template.label}
                                 </div>
-                                <div className="text-xs text-gray-600 truncate mt-0.5">
+                                <div className="text-xs text-gray-600 truncate">
                                   {template.description}
                                 </div>
                               </div>
-                            </motion.div>
+                            </div>
                           );
                         })}
                       </div>
                     )}
-                  </motion.div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1107,18 +944,9 @@ const CrearFlujoPage: React.FC = () => {
       {/* Canvas Central */}
       <div
         ref={reactFlowWrapper}
-        className="flex-1 relative"
-        style={{ marginTop: validationErrors.length > 0 ? '265px' : '220px' }}
+        className="flex-1"
+        style={{ marginTop: validationErrors.length > 0 ? '220px' : '180px' }}
       >
-        {/* Grid pattern de fondo */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `linear-gradient(rgba(8,145,178,0.3) 1px, transparent 1px),
-                             linear-gradient(90deg, rgba(8,145,178,0.3) 1px, transparent 1px)`,
-            backgroundSize: '40px 40px'
-          }}></div>
-        </div>
-
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -1132,62 +960,33 @@ const CrearFlujoPage: React.FC = () => {
           nodeTypes={nodeTypes}
           fitView
           snapToGrid
-          snapGrid={[20, 20]}
+          snapGrid={[15, 15]}
         >
-          <defs>
-            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#06b6d4" />
-              <stop offset="100%" stopColor="#3b82f6" />
-            </linearGradient>
-          </defs>
-          <Background variant={BackgroundVariant.Dots} gap={40} size={1.5} color="#cbd5e1" />
-          <Controls className="bg-white/80 backdrop-blur-xl border border-white/50 rounded-2xl shadow-xl" />
+          <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#cbd5e1" />
+          <Controls />
           <MiniMap
             nodeColor={(node) => {
               const colors: Record<string, string> = {
                 trigger: '#10b981',
                 condition: '#eab308',
-                action: '#06b6d4',
-                utility: '#64748b',
+                action: '#3b82f6',
+                utility: '#6b7280',
               };
-              return colors[node.type || 'action'] || '#06b6d4';
+              return colors[node.type || 'action'] || '#3b82f6';
             }}
-            className="bg-white/80 backdrop-blur-xl border border-white/50 rounded-2xl shadow-xl overflow-hidden"
             style={{
-              backgroundColor: 'transparent',
+              backgroundColor: 'rgba(255, 255, 255, 0.9)',
+              border: '1px solid #e5e7eb',
             }}
           />
-          <Panel position="top-left" className="m-4">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl p-4 border border-white/50"
-            >
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500"></div>
-                <div className="text-xs font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600">
-                  INSTRUCCIONES
-                </div>
-              </div>
-              <div className="text-xs text-gray-600 space-y-1.5">
-                <div className="flex items-center gap-2">
-                  <div className="w-1 h-1 rounded-full bg-cyan-400"></div>
-                  <span>Arrastra nodos desde el panel izquierdo</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-1 h-1 rounded-full bg-cyan-400"></div>
-                  <span>Conecta arrastrando desde los puntos</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-1 h-1 rounded-full bg-cyan-400"></div>
-                  <span>Click en un nodo para configurar</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-1 h-1 rounded-full bg-cyan-400"></div>
-                  <span>Rueda del mouse para zoom</span>
-                </div>
-              </div>
-            </motion.div>
+          <Panel position="top-left" className="bg-white/90 backdrop-blur-sm rounded-lg shadow-lg p-3 m-4">
+            <div className="text-xs font-semibold text-gray-700 mb-2">Instrucciones</div>
+            <div className="text-xs text-gray-600 space-y-1">
+              <div>• Arrastra nodos desde el panel izquierdo</div>
+              <div>• Conecta nodos arrastrando desde los puntos</div>
+              <div>• Click en un nodo para configurarlo</div>
+              <div>• Usa la rueda del mouse para zoom</div>
+            </div>
           </Panel>
         </ReactFlow>
       </div>
@@ -1212,47 +1011,32 @@ const CrearFlujoPage: React.FC = () => {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: 320, opacity: 0 }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="w-96 bg-white/80 backdrop-blur-xl border-l border-white/50 shadow-2xl overflow-hidden"
-            style={{ marginTop: validationErrors.length > 0 ? '265px' : '220px' }}
+            className="w-96 bg-white/95 backdrop-blur-sm border-l border-gray-200 shadow-xl overflow-hidden"
+            style={{ marginTop: validationErrors.length > 0 ? '220px' : '180px' }}
           >
-            {/* Decoración de fondo */}
-            <div className="absolute top-0 right-0 w-full h-32 bg-gradient-to-bl from-cyan-100 via-blue-100 to-indigo-100 opacity-30 blur-2xl"></div>
-
-            <div className="h-full overflow-y-auto custom-scrollbar relative z-10">
+            <div className="h-full overflow-y-auto custom-scrollbar">
               {selectedNode ? (
-                <div className="p-5">
-                  <div className="flex items-start justify-between mb-5">
-                    <div className="flex items-center space-x-3">
-                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg ${
-                        selectedNode.data.type === 'trigger' ? 'bg-gradient-to-br from-green-500 to-emerald-600' :
-                        selectedNode.data.type === 'condition' ? 'bg-gradient-to-br from-yellow-500 to-amber-600' :
-                        selectedNode.data.type === 'action' ? 'bg-gradient-to-br from-cyan-500 to-blue-600' :
-                        'bg-gradient-to-br from-slate-500 to-gray-600'
-                      }`}>
-                        {React.createElement(selectedNode.data.icon, {
-                          className: 'w-6 h-6 text-white',
-                        })}
-                      </div>
+                <div className="p-4">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center space-x-2">
+                      {React.createElement(selectedNode.data.icon, {
+                        className: 'w-5 h-5 text-gray-700',
+                      })}
                       <div>
-                        <h3 className="text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600">
-                          Configurar Nodo
+                        <h3 className="text-sm font-bold text-gray-800">
+                          Configurar {selectedNode.data.label}
                         </h3>
-                        <p className="text-base font-bold text-gray-800 mt-0.5">
-                          {selectedNode.data.label}
-                        </p>
-                        <p className="text-xs text-gray-500 mt-0.5">
-                          ID: {selectedNode.id}
+                        <p className="text-xs text-gray-600">
+                          Nodo ID: {selectedNode.id}
                         </p>
                       </div>
                     </div>
-                    <motion.button
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
+                    <button
                       onClick={onDeleteNode}
-                      className="p-2.5 text-red-600 bg-red-50 hover:bg-red-100 rounded-xl transition-colors border border-red-200"
+                      className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                     >
                       <Trash2 className="w-4 h-4" />
-                    </motion.button>
+                    </button>
                   </div>
 
                   {/* Formulario de configuración dinámico */}
@@ -1441,43 +1225,30 @@ const CrearFlujoPage: React.FC = () => {
                         </>
                       )}
 
-                    <div className="pt-5 border-t border-gray-200/50">
-                      <motion.button
-                        whileHover={{ scale: 1.02, y: -2 }}
-                        whileTap={{ scale: 0.98 }}
+                    <div className="pt-4 border-t border-gray-200">
+                      <button
                         onClick={() =>
                           updateNodeConfig(selectedNode.data.config || {})
                         }
-                        className="relative overflow-hidden w-full py-3 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 text-white rounded-2xl font-bold text-sm shadow-xl hover:shadow-2xl transition-all group"
+                        className="w-full py-2 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-lg hover:from-purple-600 hover:to-blue-700 transition-all font-semibold text-sm shadow-lg"
                       >
-                        <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                        <div className="relative z-10 flex items-center justify-center gap-2">
-                          <CheckCircle className="w-4 h-4" />
-                          <span>Aplicar Cambios</span>
-                        </div>
-                      </motion.button>
+                        Aplicar Cambios
+                      </button>
                     </div>
                   </div>
                 </div>
               ) : (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="p-8 flex flex-col items-center justify-center h-full text-center"
-                >
-                  <div className="relative mb-6">
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-200 to-blue-200 rounded-3xl blur-2xl opacity-30"></div>
-                    <div className="relative w-20 h-20 bg-gradient-to-br from-cyan-100 to-blue-100 rounded-3xl flex items-center justify-center border border-cyan-200">
-                      <Settings className="w-10 h-10 text-cyan-600" />
-                    </div>
+                <div className="p-6 flex flex-col items-center justify-center h-full text-center">
+                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                    <Settings className="w-8 h-8 text-gray-400" />
                   </div>
-                  <h3 className="text-lg font-bold text-gray-800 mb-2">
+                  <h3 className="text-sm font-bold text-gray-800 mb-2">
                     Sin Nodo Seleccionado
                   </h3>
-                  <p className="text-sm text-gray-600 max-w-xs">
-                    Haz click en un nodo del canvas para ver y editar su configuración
+                  <p className="text-xs text-gray-600">
+                    Haz click en un nodo del canvas para configurarlo
                   </p>
-                </motion.div>
+                </div>
               )}
             </div>
           </motion.div>
@@ -1491,64 +1262,46 @@ const CrearFlujoPage: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-md z-[100] flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
             onClick={() => setShowTemplates(false)}
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl max-w-4xl w-full max-h-[85vh] overflow-hidden border border-white/50"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[80vh] overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Header con gradiente */}
-              <div className="relative overflow-hidden bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 p-6">
-                <div className="absolute inset-0 opacity-10">
-                  <div className="absolute top-0 left-0 w-32 h-32 bg-white rounded-full blur-2xl"></div>
-                  <div className="absolute bottom-0 right-0 w-40 h-40 bg-white rounded-full blur-3xl"></div>
-                </div>
-                <div className="relative z-10">
-                  <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-                    <FileText className="w-7 h-7" />
-                    Plantillas de Flujo
-                  </h2>
-                  <p className="text-cyan-100 mt-2">
-                    Comienza con una plantilla prediseñada y personalízala
-                  </p>
-                </div>
+              <div className="p-6 border-b border-gray-200">
+                <h2 className="text-xl font-bold text-gray-800">
+                  Plantillas de Flujo
+                </h2>
+                <p className="text-sm text-gray-600 mt-1">
+                  Comienza con una plantilla prediseñada
+                </p>
               </div>
-
-              <div className="p-6 overflow-y-auto max-h-[calc(85vh-140px)] custom-scrollbar">
+              <div className="p-6 overflow-y-auto max-h-[calc(80vh-120px)]">
                 <div className="grid grid-cols-2 gap-4">
-                  {flowTemplates.map((template, idx) => (
-                    <motion.div
+                  {flowTemplates.map((template) => (
+                    <div
                       key={template.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: idx * 0.05 }}
-                      className="group relative overflow-hidden p-5 bg-white/60 backdrop-blur-sm border-2 border-cyan-200/50 rounded-2xl hover:border-cyan-400 hover:shadow-xl transition-all cursor-pointer"
+                      className="p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 transition-all cursor-pointer group"
                       onClick={() => loadTemplate(template)}
                     >
-                      {/* Shimmer effect */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-700"></div>
-
-                      <div className="relative z-10">
-                        <div className="flex items-start justify-between mb-3">
-                          <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                            <FileText className="w-6 h-6 text-white" />
-                          </div>
-                          <span className="text-xs px-3 py-1 bg-cyan-100 text-cyan-700 rounded-full font-bold border border-cyan-200">
-                            {template.category}
-                          </span>
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                          <FileText className="w-5 h-5 text-white" />
                         </div>
-                        <h3 className="font-bold text-gray-800 mb-2 text-base">{template.name}</h3>
-                        <p className="text-sm text-gray-600 leading-relaxed">{template.description}</p>
-                        <div className="mt-4 flex items-center gap-2 text-xs text-cyan-600 font-semibold">
-                          <div className="w-1.5 h-1.5 rounded-full bg-cyan-500"></div>
-                          Click para usar
-                        </div>
+                        <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full font-semibold">
+                          {template.category}
+                        </span>
                       </div>
-                    </motion.div>
+                      <h3 className="font-bold text-gray-800 mb-1">{template.name}</h3>
+                      <p className="text-sm text-gray-600">{template.description}</p>
+                      <div className="mt-3 text-xs text-gray-500">
+                        Click para usar esta plantilla
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -1564,115 +1317,73 @@ const CrearFlujoPage: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-md z-[100] flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
             onClick={() => setShowTestModal(false)}
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl max-w-2xl w-full border border-white/50 overflow-hidden"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-xl shadow-2xl max-w-2xl w-full"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Header con gradiente */}
-              <div className="relative overflow-hidden bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 p-6">
-                <div className="absolute inset-0 opacity-10">
-                  <div className="absolute top-0 left-0 w-32 h-32 bg-white rounded-full blur-2xl"></div>
-                  <div className="absolute bottom-0 right-0 w-40 h-40 bg-white rounded-full blur-3xl"></div>
-                </div>
-                <div className="relative z-10">
-                  <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-                    <PlayCircle className="w-7 h-7" />
-                    Probar Flujo
-                  </h2>
-                  <p className="text-cyan-100 mt-2">
-                    Simula la ejecución del flujo con datos de prueba
-                  </p>
-                </div>
+              <div className="p-6 border-b border-gray-200">
+                <h2 className="text-xl font-bold text-gray-800">Probar Flujo</h2>
+                <p className="text-sm text-gray-600 mt-1">
+                  Simula la ejecución del flujo con datos de prueba
+                </p>
               </div>
-
               <div className="p-6">
-                <div className="mb-5">
-                  <label className="block text-sm font-bold text-gray-800 mb-2">
+                <div className="mb-4">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Seleccionar Cliente de Prueba
                   </label>
-                  <select className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border-2 border-cyan-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-all text-sm font-medium">
+                  <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option>Juan Pérez (Premium)</option>
                     <option>María García (Básico)</option>
                     <option>Carlos López (Inactivo - 15 días)</option>
                   </select>
                 </div>
 
-                <div className="relative overflow-hidden p-5 bg-gradient-to-br from-cyan-50 to-blue-50 border-2 border-cyan-200 rounded-2xl mb-5">
-                  <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-cyan-200 to-blue-200 rounded-full blur-3xl opacity-30"></div>
-
-                  <div className="relative z-10">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                        <PlayCircle className="w-5 h-5 text-white" />
-                      </div>
-                      <div className="text-base font-bold text-cyan-800">
+                <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg mb-4">
+                  <div className="flex items-start space-x-2">
+                    <PlayCircle className="w-5 h-5 text-blue-600 mt-0.5" />
+                    <div>
+                      <div className="text-sm font-semibold text-blue-800 mb-2">
                         Simulación de Ejecución
                       </div>
-                    </div>
-                    <div className="space-y-3">
-                      <motion.div
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="flex items-center gap-3 p-3 bg-white/80 backdrop-blur-sm rounded-xl border border-green-200"
-                      >
-                        <CheckCircle className="w-5 h-5 text-green-600" />
-                        <span className="text-sm font-semibold text-gray-700">Trigger activado: Nuevo Cliente</span>
-                      </motion.div>
-                      <motion.div
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="flex items-center gap-3 p-3 bg-white/80 backdrop-blur-sm rounded-xl border border-green-200"
-                      >
-                        <CheckCircle className="w-5 h-5 text-green-600" />
-                        <span className="text-sm font-semibold text-gray-700">Condición evaluada: Membresía = Premium</span>
-                      </motion.div>
-                      <motion.div
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.3 }}
-                        className="flex items-center gap-3 p-3 bg-white/80 backdrop-blur-sm rounded-xl border border-green-200"
-                      >
-                        <CheckCircle className="w-5 h-5 text-green-600" />
-                        <span className="text-sm font-semibold text-gray-700">Acción: Email enviado ✓</span>
-                      </motion.div>
-                      <motion.div
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.4 }}
-                        className="flex items-center gap-3 p-3 bg-white/80 backdrop-blur-sm rounded-xl border border-yellow-200"
-                      >
-                        <Timer className="w-5 h-5 text-yellow-600 animate-spin" />
-                        <span className="text-sm font-semibold text-gray-700">Esperando 2 días...</span>
-                      </motion.div>
+                      <div className="space-y-2 text-xs text-blue-700">
+                        <div className="flex items-center space-x-2">
+                          <CheckCircle className="w-4 h-4" />
+                          <span>Trigger activado: Nuevo Cliente</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <CheckCircle className="w-4 h-4" />
+                          <span>Condición evaluada: Membresía = Premium</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <CheckCircle className="w-4 h-4" />
+                          <span>Acción: Email enviado ✓</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Timer className="w-4 h-4" />
+                          <span>Esperando 2 días...</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex gap-3">
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                <div className="flex space-x-3">
+                  <button
                     onClick={() => setShowTestModal(false)}
-                    className="flex-1 py-3 bg-white border-2 border-gray-300 rounded-2xl hover:bg-gray-50 transition-all font-bold text-sm text-gray-700"
+                    className="flex-1 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-semibold text-sm"
                   >
                     Cerrar
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="relative overflow-hidden flex-1 py-3 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 text-white rounded-2xl font-bold text-sm shadow-xl hover:shadow-2xl transition-all group"
-                  >
-                    <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                    <span className="relative z-10">Ejecutar Simulación</span>
-                  </motion.button>
+                  </button>
+                  <button className="flex-1 py-2 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-lg hover:from-purple-600 hover:to-blue-700 transition-all font-semibold text-sm shadow-lg">
+                    Ejecutar Simulación
+                  </button>
                 </div>
               </div>
             </motion.div>

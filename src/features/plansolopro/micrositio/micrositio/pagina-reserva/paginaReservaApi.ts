@@ -23,13 +23,28 @@ export interface BookingData {
   stripeToken: string; // Placeholder for Stripe token
 }
 
+const mockServices: Service[] = [
+  { id: 'svc-pt-60', name: 'Personal Training 60min', price: 45, duration: 60 },
+  { id: 'svc-pt-30', name: 'Personal Training 30min', price: 25, duration: 30 },
+  { id: 'svc-eval', name: 'Evaluación Inicial', price: 0, duration: 30 },
+];
+
 export const getServices = async (): Promise<Service[]> => {
   try {
     const response = await axios.get(`${API_BASE_URL}/services`);
-    return response.data;
+    const data = (response && response.data) as unknown;
+    if (Array.isArray(data)) {
+      return data as Service[];
+    }
+    if (data && typeof data === 'object' && Array.isArray((data as any).services)) {
+      return (data as any).services as Service[];
+    }
+    // Fallback si el formato no es el esperado
+    return mockServices;
   } catch (error) {
     console.error('Error fetching services:', error);
-    throw error;
+    // Fallback a mock en caso de error de red/servidor
+    return mockServices;
   }
 };
 

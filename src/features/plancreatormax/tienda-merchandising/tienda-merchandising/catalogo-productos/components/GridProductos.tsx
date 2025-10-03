@@ -28,7 +28,7 @@ const GridProductos: React.FC = () => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
-      {Array.isArray(productos) && productos.map((producto) => (
+      {productos.map((producto) => (
         <TarjetaProducto key={producto.id} producto={producto} />
       ))}
     </div>

@@ -1,7 +1,5 @@
 
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Sparkles, Globe } from 'lucide-react';
 
 interface HeroSectionProps {
   trainerName: string;
@@ -12,57 +10,57 @@ interface HeroSectionProps {
 
 const HeroSection: React.FC<HeroSectionProps> = ({ trainerName, specialty, photoUrl, brandColors }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-3xl shadow-2xl mb-8 p-8 md:p-12"
-    >
-      {/* Efectos de fondo animados */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-      </div>
-
-      {/* Grid pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                           linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-          backgroundSize: '50px 50px'
-        }}></div>
-      </div>
-
-      <div className="relative z-10">
-        {/* Título con icono animado */}
-        <div className="flex items-center gap-3 mb-4 justify-center md:justify-start">
-          <div className="relative">
-            <Globe className="w-10 h-10 text-yellow-300 animate-pulse" />
-            <div className="absolute inset-0 w-10 h-10 bg-yellow-300 rounded-full blur-lg opacity-50"></div>
-          </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
-            Tu Página de Servicios <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-yellow-400">Profesional</span>
+    <section className={`${brandColors.primary} text-white py-20 md:py-32 relative overflow-hidden`}>
+      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between relative z-10">
+        <div className="md:w-1/2 text-center md:text-left mb-10 md:mb-0">
+          <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-4">
+            {trainerName}
           </h1>
+          <p className={`text-xl md:text-2xl mb-8 ${brandColors.secondary.replace('text-', 'text-opacity-90 ')}`}>
+            {specialty}
+          </p>
+          <button
+            onClick={() => {
+              const event = new CustomEvent('app:navigate', { detail: { page: 'pagina-reserva' } });
+              window.dispatchEvent(event);
+            }}
+            className={`${brandColors.accent} text-gray-900 font-bold py-3 px-8 rounded-full text-lg hover:opacity-90 transition duration-300`}
+          >
+            Reservar ahora
+          </button>
         </div>
-
-        {/* Descripción */}
-        <p className="text-xl md:text-2xl text-blue-100 max-w-3xl leading-relaxed mb-8 text-center md:text-left">
-          Atrae más clientes con una <span className="font-bold text-white px-2 py-1 bg-white/20 rounded-lg backdrop-blur-sm">presencia web impecable</span>
-        </p>
-
-        {/* Indicadores pills */}
-        <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-          <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
-            <Sparkles className="w-5 h-5 text-green-300" />
-            <span className="text-sm font-semibold text-white">Diseño Profesional</span>
-          </div>
-          <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
-            <Globe className="w-5 h-5 text-blue-300" />
-            <span className="text-sm font-semibold text-white">Conversión Optimizada</span>
-          </div>
+        <div className="md:w-1/2 flex justify-center md:justify-end">
+          <img
+            src={photoUrl}
+            alt={trainerName}
+            className="rounded-full w-64 h-64 md:w-80 md:h-80 object-cover shadow-lg border-4 border-white"
+          />
         </div>
       </div>
-    </motion.div>
+      {/* Fondo abstracto o patrón */}
+      <div className="absolute inset-0 opacity-10">
+        <svg className="w-full h-full" fill="currentColor" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <rect x="0" y="0" width="100" height="100" />
+          <circle cx="20" cy="20" r="15" fill="url(#gradient1)" />
+          <circle cx="80" cy="50" r="20" fill="url(#gradient2)" />
+          <circle cx="40" cy="90" r="10" fill="url(#gradient3)" />
+          <defs>
+            <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="rgba(255,255,255,0.2)" />
+              <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+            </linearGradient>
+            <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="rgba(255,255,255,0.2)" />
+              <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+            </linearGradient>
+            <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="rgba(255,255,255,0.2)" />
+              <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    </section>
   );
 };
 

@@ -11,6 +11,7 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
+    include: ['@hello-pangea/dnd'],
     exclude: ['lucide-react'],
   },
 });

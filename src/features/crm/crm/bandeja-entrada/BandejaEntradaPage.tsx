@@ -10,7 +10,8 @@ export const BandejaEntradaPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'messages' | 'tasks' | 'notifications'>('messages');
   const [messages] = useState(bandejaEntradaApi.getMessages());
   const [tasks] = useState(bandejaEntradaApi.getTasks());
-  const [notifications] = useState(bandejaEntradaApi.getNotifications());
+  const [notifications, setNotifications] = useState(bandejaEntradaApi.getNotifications());
+  const [selectedNotificationId, setSelectedNotificationId] = useState<string | null>(null);
 
   const tabs = [
     {
@@ -40,7 +41,59 @@ export const BandejaEntradaPage: React.FC = () => {
       case 'tasks':
         return <TasksPanel tasks={tasks} />;
       case 'notifications':
-        return <NotificationsPanel notifications={notifications} />;
+        return (
+          <div className="space-y-4">
+            <NotificationsPanel
+              notifications={notifications}
+              onViewDetails={(n) => {
+                setSelectedNotificationId(n.id);
+              }}
+            />
+
+            {selectedNotificationId && (
+              <div className="border border-gray-200 rounded-2xl p-5 bg-white">
+                {(() => {
+                  const n = notifications.find(x => x.id === selectedNotificationId);
+                  if (!n) return null;
+                  return (
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
+                            n.type === 'success' ? 'bg-green-100 text-green-700' :
+                            n.type === 'warning' ? 'bg-yellow-100 text-yellow-700' :
+                            n.type === 'error' ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'
+                          }`}>
+                            {n.type}
+                          </span>
+                          <span className="text-xs text-gray-500">{new Date(n.timestamp).toLocaleString()}</span>
+                        </div>
+                        <h4 className="text-lg font-semibold text-gray-800 mb-1">{n.title}</h4>
+                        <p className="text-gray-700 whitespace-pre-line">{n.message}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {!n.read && (
+                          <button
+                            onClick={() => setNotifications(prev => prev.map(x => x.id === n.id ? { ...x, read: true } : x))}
+                            className="px-3 py-2 text-sm bg-indigo-50 text-indigo-700 rounded-lg hover:bg-indigo-100"
+                          >
+                            Marcar como leída
+                          </button>
+                        )}
+                        <button
+                          onClick={() => setSelectedNotificationId(null)}
+                          className="px-3 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200"
+                        >
+                          Cerrar
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })()}
+              </div>
+            )}
+          </div>
+        );
       default:
         return <MessageCenter messages={messages} />;
     }

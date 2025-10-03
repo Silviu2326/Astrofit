@@ -447,168 +447,115 @@ const PanelDatosWearablesPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-lime-50/30 to-emerald-50/30 p-6">
-      {/* HERO SECTION */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6">
+      {/* HEADER */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="relative overflow-hidden bg-gradient-to-r from-lime-600 via-green-600 to-emerald-600 rounded-3xl shadow-2xl mb-8 p-8 md:p-12"
-      >
-        {/* Efectos de fondo animados */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        </div>
-
-        {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: '50px 50px'
-          }}></div>
-        </div>
-
-        <div className="relative z-10">
-          {/* Título con icono animado */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-4">
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <Activity className="w-10 h-10 text-yellow-300 animate-pulse" />
-                <div className="absolute inset-0 w-10 h-10 bg-yellow-300 rounded-full blur-lg opacity-50"></div>
-              </div>
-              <div>
-                <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
-                  Dashboard de <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-yellow-400">Wearables</span>
-                </h1>
-                <p className="text-xl md:text-2xl text-green-100 mt-2 leading-relaxed">
-                  Insights en tiempo real de tus clientes
-                </p>
-              </div>
-            </div>
-
-            {/* Botones de acción */}
-            <div className="flex flex-wrap gap-3">
-              <button className="flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-md rounded-xl border border-white/20 text-white hover:bg-white/30 transition-all duration-300">
-                <Download className="w-4 h-4" />
-                Exportar
-              </button>
-              <button className="flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-md rounded-xl border border-white/20 text-white hover:bg-white/30 transition-all duration-300">
-                <FileText className="w-4 h-4" />
-                Reporte
-              </button>
-              <button className="flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-md rounded-xl border border-white/20 text-white hover:bg-white/30 transition-all duration-300">
-                <Settings className="w-4 h-4" />
-                Alertas
-              </button>
-            </div>
-          </div>
-
-          {/* Indicadores pills */}
-          <div className="mt-6 flex flex-wrap gap-4">
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
-              <Users className="w-5 h-5 text-green-300" />
-              <span className="text-sm font-semibold text-white">{MOCK_CLIENTS.length} Clientes Activos</span>
-            </div>
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
-              <Activity className="w-5 h-5 text-yellow-300" />
-              <span className="text-sm font-semibold text-white">Sincronización en Tiempo Real</span>
-            </div>
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
-              <TrendingUp className="w-5 h-5 text-emerald-300" />
-              <span className="text-sm font-semibold text-white">Análisis Predictivo</span>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* CONTROLES */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2, duration: 0.5 }}
         className="mb-8"
       >
-        <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/50 p-6">
-          <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-4">
-            {/* Vista */}
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-gradient-to-br from-lime-500 to-emerald-600 rounded-xl">
-                <Users className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-sm font-semibold text-gray-700">Vista:</span>
-              <div className="flex bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-1 shadow-inner">
-                <button
-                  onClick={() => {
-                    setViewMode('aggregate');
-                    setSelectedClientId(null);
-                  }}
-                  className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
-                    viewMode === 'aggregate'
-                      ? 'bg-gradient-to-r from-lime-500 to-green-600 text-white shadow-lg'
-                      : 'text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  Todos los Clientes
-                </button>
-                <button
-                  onClick={() => setViewMode('individual')}
-                  className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
-                    viewMode === 'individual'
-                      ? 'bg-gradient-to-r from-lime-500 to-green-600 text-white shadow-lg'
-                      : 'text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  Cliente Individual
-                </button>
-              </div>
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-4">
+            <motion.div
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ repeat: Infinity, duration: 2 }}
+              className="p-3 bg-gradient-to-br from-blue-500 to-green-500 rounded-xl"
+            >
+              <Activity className="w-8 h-8 text-white" />
+            </motion.div>
+            <div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
+                Panel de Datos de Wearables
+              </h1>
+              <p className="text-gray-600 mt-1">
+                Analiza métricas de salud y rendimiento de tus clientes
+              </p>
             </div>
+          </div>
 
-            {/* Selector de Cliente */}
-            {viewMode === 'individual' && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="flex items-center gap-3"
+          <div className="flex items-center gap-3">
+            <button className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition-shadow">
+              <Download className="w-4 h-4" />
+              Exportar Datos
+            </button>
+            <button className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition-shadow">
+              <FileText className="w-4 h-4" />
+              Generar Reporte
+            </button>
+            <button className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition-shadow">
+              <Settings className="w-4 h-4" />
+              Configurar Alertas
+            </button>
+          </div>
+        </div>
+
+        {/* Controles */}
+        <div className="flex items-center gap-4 bg-white p-4 rounded-xl shadow">
+          <div className="flex items-center gap-2">
+            <Users className="w-5 h-5 text-gray-600" />
+            <span className="text-sm font-medium">Vista:</span>
+            <div className="flex bg-gray-100 rounded-lg p-1">
+              <button
+                onClick={() => {
+                  setViewMode('aggregate');
+                  setSelectedClientId(null);
+                }}
+                className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                  viewMode === 'aggregate'
+                    ? 'bg-blue-500 text-white'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
               >
-                <span className="text-sm font-semibold text-gray-700">Cliente:</span>
-                <select
-                  value={selectedClientId || ''}
-                  onChange={(e) => setSelectedClientId(e.target.value)}
-                  className="px-4 py-2 bg-white rounded-xl text-sm font-medium border-2 border-gray-200 focus:border-lime-500 focus:ring-4 focus:ring-lime-100 transition-all duration-300 outline-none shadow-sm"
-                >
-                  <option value="">🔍 Seleccionar cliente...</option>
-                  {MOCK_CLIENTS.map((client) => (
-                    <option key={client.id} value={client.id}>
-                      {client.name}
-                    </option>
-                  ))}
-                </select>
-              </motion.div>
-            )}
+                Todos los Clientes
+              </button>
+              <button
+                onClick={() => setViewMode('individual')}
+                className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                  viewMode === 'individual'
+                    ? 'bg-blue-500 text-white'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                Cliente Individual
+              </button>
+            </div>
+          </div>
 
-            {/* Período */}
-            <div className="flex items-center gap-3 lg:ml-auto">
-              <div className="p-2 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl">
-                <Calendar className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-sm font-semibold text-gray-700">Período:</span>
-              <div className="flex bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-1 shadow-inner">
-                {(['today', '7days', '30days'] as Period[]).map((p) => (
-                  <button
-                    key={p}
-                    onClick={() => setPeriod(p)}
-                    className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
-                      period === p
-                        ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg'
-                        : 'text-gray-600 hover:text-gray-900'
-                    }`}
-                  >
-                    {p === 'today' ? 'Hoy' : p === '7days' ? '7 días' : '30 días'}
-                  </button>
+          {viewMode === 'individual' && (
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium">Cliente:</span>
+              <select
+                value={selectedClientId || ''}
+                onChange={(e) => setSelectedClientId(e.target.value)}
+                className="px-3 py-1.5 bg-gray-100 rounded-lg text-sm border-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Seleccionar cliente...</option>
+                {MOCK_CLIENTS.map((client) => (
+                  <option key={client.id} value={client.id}>
+                    {client.name}
+                  </option>
                 ))}
-              </div>
+              </select>
+            </div>
+          )}
+
+          <div className="flex items-center gap-2 ml-auto">
+            <Calendar className="w-5 h-5 text-gray-600" />
+            <span className="text-sm font-medium">Período:</span>
+            <div className="flex bg-gray-100 rounded-lg p-1">
+              {(['today', '7days', '30days'] as Period[]).map((p) => (
+                <button
+                  key={p}
+                  onClick={() => setPeriod(p)}
+                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                    period === p
+                      ? 'bg-green-500 text-white'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  {p === 'today' ? 'Hoy' : p === '7days' ? 'Últimos 7 días' : 'Últimos 30 días'}
+                </button>
+              ))}
             </div>
           </div>
         </div>
@@ -717,90 +664,53 @@ const AggregateView: React.FC<AggregateViewProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/50 relative overflow-hidden"
+        className="bg-white p-6 rounded-xl shadow"
       >
-        {/* Decoración */}
-        <div className="absolute -right-20 -top-20 w-64 h-64 bg-gradient-to-br from-lime-200 to-emerald-200 rounded-full blur-3xl opacity-20"></div>
-
-        <div className="relative z-10">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-bold flex items-center gap-3">
-              <div className="p-2 bg-gradient-to-br from-lime-500 to-emerald-600 rounded-xl">
-                <BarChart3 className="w-6 h-6 text-white" />
-              </div>
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-lime-600 to-emerald-600">
-                Actividad Agregada
-              </span>
-              <span className="text-sm font-medium text-gray-500">
-                - Últimos {period === 'today' ? '24h' : period === '7days' ? '7 días' : '30 días'}
-              </span>
-            </h3>
-          </div>
-
-          <ResponsiveContainer width="100%" height={320}>
-            <AreaChart data={chartData}>
-              <defs>
-                <linearGradient id="colorSteps" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#84cc16" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#84cc16" stopOpacity={0}/>
-                </linearGradient>
-                <linearGradient id="colorCalories" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#f97316" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#f97316" stopOpacity={0}/>
-                </linearGradient>
-                <linearGradient id="colorWorkouts" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-              <XAxis
-                dataKey="date"
-                tickFormatter={(date) => new Date(date).toLocaleDateString('es-ES', { day: '2-digit', month: 'short' })}
-                stroke="#94a3b8"
-                style={{ fontSize: '12px' }}
-              />
-              <YAxis stroke="#94a3b8" style={{ fontSize: '12px' }} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                  border: 'none',
-                  borderRadius: '12px',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
-                }}
-                labelFormatter={(date) => new Date(date).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })}
-              />
-              <Legend
-                wrapperStyle={{ paddingTop: '20px' }}
-                iconType="circle"
-              />
-              <Area
-                type="monotone"
-                dataKey="avgSteps"
-                stroke="#84cc16"
-                strokeWidth={3}
-                fill="url(#colorSteps)"
-                name="Pasos promedio"
-              />
-              <Area
-                type="monotone"
-                dataKey="avgCalories"
-                stroke="#f97316"
-                strokeWidth={3}
-                fill="url(#colorCalories)"
-                name="Calorías promedio"
-              />
-              <Area
-                type="monotone"
-                dataKey="totalWorkouts"
-                stroke="#10b981"
-                strokeWidth={3}
-                fill="url(#colorWorkouts)"
-                name="Entrenamientos totales"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
+        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+          <BarChart3 className="w-5 h-5 text-blue-600" />
+          Actividad Agregada - Últimos{' '}
+          {period === 'today' ? '24 horas' : period === '7days' ? '7 días' : '30 días'}
+        </h3>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={chartData}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+            <XAxis
+              dataKey="date"
+              tickFormatter={(date) => new Date(date).toLocaleDateString('es-ES', { day: '2-digit', month: 'short' })}
+              stroke="#94a3b8"
+            />
+            <YAxis stroke="#94a3b8" />
+            <Tooltip
+              contentStyle={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '8px' }}
+              labelFormatter={(date) => new Date(date).toLocaleDateString('es-ES')}
+            />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="avgSteps"
+              stroke="#3b82f6"
+              strokeWidth={2}
+              name="Pasos promedio"
+              dot={{ fill: '#3b82f6', r: 4 }}
+            />
+            <Line
+              type="monotone"
+              dataKey="avgCalories"
+              stroke="#f97316"
+              strokeWidth={2}
+              name="Calorías promedio"
+              dot={{ fill: '#f97316', r: 4 }}
+            />
+            <Line
+              type="monotone"
+              dataKey="totalWorkouts"
+              stroke="#10b981"
+              strokeWidth={2}
+              name="Entrenamientos totales"
+              dot={{ fill: '#10b981', r: 4 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
       </motion.div>
 
       {/* Rankings y Alertas */}
@@ -839,66 +749,36 @@ const KPICard: React.FC<KPICardProps> = ({ title, value, subtitle, change, icon:
     blue: 'from-blue-500 to-blue-600',
     orange: 'from-orange-500 to-orange-600',
     purple: 'from-purple-500 to-purple-600',
-    green: 'from-lime-500 to-emerald-600',
+    green: 'from-green-500 to-green-600',
     red: 'from-red-500 to-red-600',
-    teal: 'from-teal-500 to-cyan-600',
-  };
-
-  const bgColorClasses = {
-    blue: 'from-blue-200 to-blue-300',
-    orange: 'from-orange-200 to-orange-300',
-    purple: 'from-purple-200 to-purple-300',
-    green: 'from-lime-200 to-emerald-300',
-    red: 'from-red-200 to-red-300',
-    teal: 'from-teal-200 to-cyan-300',
+    teal: 'from-teal-500 to-teal-600',
   };
 
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      whileHover={{ scale: 1.03, y: -8 }}
-      transition={{ duration: 0.3 }}
-      className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
+      whileHover={{ scale: 1.02 }}
+      className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition-shadow"
     >
-      {/* Shimmer effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
-
-      {/* Decoración de fondo */}
-      <div className={`absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br ${bgColorClasses[color as keyof typeof bgColorClasses]} rounded-full blur-3xl opacity-20`}></div>
-
-      <div className="relative z-10">
-        <div className="flex items-start justify-between mb-4">
-          <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${colorClasses[color as keyof typeof colorClasses]} flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform duration-300`}>
-            <Icon className="w-8 h-8" />
+      <div className="flex items-start justify-between mb-4">
+        <div className={`p-3 bg-gradient-to-br ${colorClasses[color as keyof typeof colorClasses]} rounded-lg`}>
+          <Icon className="w-6 h-6 text-white" />
+        </div>
+        {change !== undefined && (
+          <div
+            className={`flex items-center gap-1 text-sm font-medium ${
+              change >= 0 ? 'text-green-600' : 'text-red-600'
+            }`}
+          >
+            <TrendingUp className={`w-4 h-4 ${change < 0 ? 'rotate-180' : ''}`} />
+            {Math.abs(change).toFixed(1)}%
           </div>
-          {change !== undefined && (
-            <div className={`flex items-center gap-1 px-2 py-1 rounded-lg ${
-              change >= 0 ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'
-            }`}>
-              <TrendingUp className={`w-4 h-4 ${change < 0 ? 'rotate-180' : ''}`} />
-              <span className="text-sm font-bold">{Math.abs(change).toFixed(1)}%</span>
-            </div>
-          )}
-        </div>
-        <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">
-          {title}
-        </p>
-        <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 mb-3">
-          {value}
-        </p>
-        <p className="text-xs text-gray-500 font-medium">{subtitle}</p>
-
-        {/* Barra decorativa */}
-        <div className="mt-4 w-full h-1 bg-gray-100 rounded-full overflow-hidden">
-          <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: '75%' }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className={`h-full bg-gradient-to-r ${colorClasses[color as keyof typeof colorClasses]} rounded-full`}
-          ></motion.div>
-        </div>
+        )}
       </div>
+      <h3 className="text-2xl font-bold text-gray-900 mb-1">{value}</h3>
+      <p className="text-sm text-gray-600">{title}</p>
+      <p className="text-xs text-gray-500 mt-2">{subtitle}</p>
     </motion.div>
   );
 };
@@ -915,132 +795,105 @@ const RankingsSection: React.FC<{ rankings: any }> = ({ rankings }) => {
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.3 }}
-      className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 relative overflow-hidden"
+      className="bg-white p-6 rounded-xl shadow"
     >
-      {/* Decoración */}
-      <div className="absolute -left-12 -top-12 w-40 h-40 bg-gradient-to-br from-yellow-200 to-orange-200 rounded-full blur-3xl opacity-20"></div>
+      <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+        <Trophy className="w-5 h-5 text-yellow-600" />
+        Rankings de la Semana
+      </h3>
 
-      <div className="relative z-10">
-        <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-          <div className="p-2 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-xl">
-            <Trophy className="w-6 h-6 text-white" />
-          </div>
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-600 to-orange-600">
-            Rankings de la Semana
-          </span>
-        </h3>
-
-        <div className="flex gap-2 mb-6 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-1">
-          <button
-            onClick={() => setActiveTab('steps')}
-            className={`flex-1 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
-              activeTab === 'steps' ? 'bg-gradient-to-r from-lime-500 to-green-600 text-white shadow-lg' : 'text-gray-600 hover:text-gray-900'
-            }`}
-          >
-            Pasos
-          </button>
-          <button
-            onClick={() => setActiveTab('workouts')}
-            className={`flex-1 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
-              activeTab === 'workouts' ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg' : 'text-gray-600 hover:text-gray-900'
-            }`}
-          >
-            Entrenamientos
-          </button>
-          <button
-            onClick={() => setActiveTab('sleep')}
-            className={`flex-1 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
-              activeTab === 'sleep' ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white shadow-lg' : 'text-gray-600 hover:text-gray-900'
-            }`}
-          >
-            Sueño
-          </button>
-        </div>
+      <div className="flex gap-2 mb-4">
+        <button
+          onClick={() => setActiveTab('steps')}
+          className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+            activeTab === 'steps' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600'
+          }`}
+        >
+          Pasos
+        </button>
+        <button
+          onClick={() => setActiveTab('workouts')}
+          className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+            activeTab === 'workouts' ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-600'
+          }`}
+        >
+          Entrenamientos
+        </button>
+        <button
+          onClick={() => setActiveTab('sleep')}
+          className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+            activeTab === 'sleep' ? 'bg-purple-500 text-white' : 'bg-gray-100 text-gray-600'
+          }`}
+        >
+          Sueño
+        </button>
       </div>
 
-      <div className="space-y-3 relative z-10">
+      <div className="space-y-2">
         {activeTab === 'steps' &&
           rankings.stepsRanking.map((item: any, index: number) => (
-            <motion.div
-              key={item.client.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.05 }}
-              className="flex items-center gap-3 p-4 bg-gradient-to-r from-lime-50 to-green-50 rounded-2xl hover:from-lime-100 hover:to-green-100 transition-all duration-300 border border-lime-100 hover:border-lime-200 hover:shadow-md group"
-            >
-              <div className="flex-shrink-0 w-10 text-center">
+            <div key={item.client.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+              <div className="flex-shrink-0 w-8 text-center">
                 {index < 3 ? (
-                  <Award className={`w-7 h-7 ${index === 0 ? 'text-yellow-500' : index === 1 ? 'text-gray-400' : 'text-amber-700'}`} />
+                  <Award className={`w-6 h-6 ${index === 0 ? 'text-yellow-500' : index === 1 ? 'text-gray-400' : 'text-amber-700'}`} />
                 ) : (
-                  <span className="text-sm font-bold text-gray-600">#{index + 1}</span>
+                  <span className="text-sm font-medium text-gray-600">#{index + 1}</span>
                 )}
               </div>
-              <img src={item.client.avatar} alt="" className="w-10 h-10 rounded-full border-2 border-white shadow-md group-hover:scale-110 transition-transform duration-300" />
+              <img src={item.client.avatar} alt="" className="w-8 h-8 rounded-full" />
               <div className="flex-1">
-                <p className="text-sm font-bold text-gray-900">{item.client.name}</p>
-                <p className="text-xs text-gray-600 font-medium">{item.totalSteps.toLocaleString()} pasos</p>
+                <p className="text-sm font-medium">{item.client.name}</p>
+                <p className="text-xs text-gray-600">{item.totalSteps.toLocaleString()} pasos</p>
               </div>
-              <div className="text-right bg-white/60 rounded-xl px-3 py-2">
-                <p className="text-xs text-gray-500 font-medium">Promedio</p>
-                <p className="text-sm font-bold text-lime-600">{Math.floor(item.avgSteps).toLocaleString()}/día</p>
+              <div className="text-right">
+                <p className="text-xs text-gray-500">Promedio</p>
+                <p className="text-sm font-medium">{Math.floor(item.avgSteps).toLocaleString()}/día</p>
               </div>
-            </motion.div>
+            </div>
           ))}
 
         {activeTab === 'workouts' &&
           rankings.workoutsRanking.map((item: any, index: number) => (
-            <motion.div
-              key={item.client.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.05 }}
-              className="flex items-center gap-3 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl hover:from-green-100 hover:to-emerald-100 transition-all duration-300 border border-green-100 hover:border-green-200 hover:shadow-md group"
-            >
-              <div className="flex-shrink-0 w-10 text-center">
+            <div key={item.client.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+              <div className="flex-shrink-0 w-8 text-center">
                 {index < 3 ? (
-                  <Award className={`w-7 h-7 ${index === 0 ? 'text-yellow-500' : index === 1 ? 'text-gray-400' : 'text-amber-700'}`} />
+                  <Award className={`w-6 h-6 ${index === 0 ? 'text-yellow-500' : index === 1 ? 'text-gray-400' : 'text-amber-700'}`} />
                 ) : (
-                  <span className="text-sm font-bold text-gray-600">#{index + 1}</span>
+                  <span className="text-sm font-medium text-gray-600">#{index + 1}</span>
                 )}
               </div>
-              <img src={item.client.avatar} alt="" className="w-10 h-10 rounded-full border-2 border-white shadow-md group-hover:scale-110 transition-transform duration-300" />
+              <img src={item.client.avatar} alt="" className="w-8 h-8 rounded-full" />
               <div className="flex-1">
-                <p className="text-sm font-bold text-gray-900">{item.client.name}</p>
-                <p className="text-xs text-gray-600 font-medium">{item.totalWorkouts} entrenamientos</p>
+                <p className="text-sm font-medium">{item.client.name}</p>
+                <p className="text-xs text-gray-600">{item.totalWorkouts} entrenamientos</p>
               </div>
-              <div className="text-right bg-white/60 rounded-xl px-3 py-2">
-                <p className="text-xs text-gray-500 font-medium">{item.totalMinutes} min</p>
-                <p className="text-xs text-emerald-600 font-bold">{item.totalCalories} kcal</p>
+              <div className="text-right">
+                <p className="text-xs text-gray-500">{item.totalMinutes} min</p>
+                <p className="text-xs text-gray-500">{item.totalCalories} kcal</p>
               </div>
-            </motion.div>
+            </div>
           ))}
 
         {activeTab === 'sleep' &&
           rankings.sleepRanking.map((item: any, index: number) => (
-            <motion.div
-              key={item.client.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.05 }}
-              className="flex items-center gap-3 p-4 bg-gradient-to-r from-purple-50 to-purple-50 rounded-2xl hover:from-purple-100 hover:to-purple-100 transition-all duration-300 border border-purple-100 hover:border-purple-200 hover:shadow-md group"
-            >
-              <div className="flex-shrink-0 w-10 text-center">
+            <div key={item.client.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+              <div className="flex-shrink-0 w-8 text-center">
                 {index < 3 ? (
-                  <Award className={`w-7 h-7 ${index === 0 ? 'text-yellow-500' : index === 1 ? 'text-gray-400' : 'text-amber-700'}`} />
+                  <Award className={`w-6 h-6 ${index === 0 ? 'text-yellow-500' : index === 1 ? 'text-gray-400' : 'text-amber-700'}`} />
                 ) : (
-                  <span className="text-sm font-bold text-gray-600">#{index + 1}</span>
+                  <span className="text-sm font-medium text-gray-600">#{index + 1}</span>
                 )}
               </div>
-              <img src={item.client.avatar} alt="" className="w-10 h-10 rounded-full border-2 border-white shadow-md group-hover:scale-110 transition-transform duration-300" />
+              <img src={item.client.avatar} alt="" className="w-8 h-8 rounded-full" />
               <div className="flex-1">
-                <p className="text-sm font-bold text-gray-900">{item.client.name}</p>
-                <p className="text-xs text-gray-600 font-medium">{item.avgSleep.toFixed(1)}h promedio</p>
+                <p className="text-sm font-medium">{item.client.name}</p>
+                <p className="text-xs text-gray-600">{item.avgSleep.toFixed(1)}h promedio</p>
               </div>
-              <div className="text-right bg-white/60 rounded-xl px-3 py-2">
-                <p className="text-xs text-gray-500 font-medium">Calidad</p>
-                <p className="text-sm font-bold text-purple-600">{Math.floor(item.avgQuality)}%</p>
+              <div className="text-right">
+                <p className="text-xs text-gray-500">Calidad</p>
+                <p className="text-sm font-medium">{Math.floor(item.avgQuality)}%</p>
               </div>
-            </motion.div>
+            </div>
           ))}
       </div>
     </motion.div>
@@ -1053,9 +906,9 @@ const RankingsSection: React.FC<{ rankings: any }> = ({ rankings }) => {
 
 const AlertsSection: React.FC<{ alerts: Alert[] }> = ({ alerts }) => {
   const priorityColors = {
-    high: 'from-red-50 to-red-100 border-red-200 text-red-700',
-    medium: 'from-yellow-50 to-yellow-100 border-yellow-200 text-yellow-700',
-    low: 'from-blue-50 to-blue-100 border-blue-200 text-blue-700',
+    high: 'bg-red-50 border-red-200 text-red-700',
+    medium: 'bg-yellow-50 border-yellow-200 text-yellow-700',
+    low: 'bg-blue-50 border-blue-200 text-blue-700',
   };
 
   return (
@@ -1063,49 +916,37 @@ const AlertsSection: React.FC<{ alerts: Alert[] }> = ({ alerts }) => {
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.3 }}
-      className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 relative overflow-hidden"
+      className="bg-white p-6 rounded-xl shadow"
     >
-      {/* Decoración */}
-      <div className="absolute -right-12 -top-12 w-40 h-40 bg-gradient-to-br from-orange-200 to-red-200 rounded-full blur-3xl opacity-20"></div>
+      <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+        <AlertTriangle className="w-5 h-5 text-orange-600" />
+        Alertas Automáticas
+      </h3>
 
-      <div className="relative z-10">
-        <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-          <div className="p-2 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl">
-            <AlertTriangle className="w-6 h-6 text-white" />
+      <div className="space-y-3">
+        {alerts.map((alert) => (
+          <div
+            key={alert.id}
+            className={`p-4 rounded-lg border ${priorityColors[alert.priority]}`}
+          >
+            <div className="flex items-start justify-between mb-2">
+              <div className="flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4" />
+                <span className="text-sm font-semibold">{alert.clientName}</span>
+              </div>
+              <span className="text-xs uppercase font-medium">{alert.priority}</span>
+            </div>
+            <p className="text-sm mb-3">{alert.message}</p>
+            <div className="flex gap-2">
+              <button className="text-xs px-3 py-1 bg-white rounded hover:bg-opacity-80 transition-colors">
+                Enviar mensaje
+              </button>
+              <button className="text-xs px-3 py-1 bg-white rounded hover:bg-opacity-80 transition-colors">
+                Programar check-in
+              </button>
+            </div>
           </div>
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-red-600">
-            Alertas Automáticas
-          </span>
-        </h3>
-
-        <div className="space-y-3">
-          {alerts.map((alert, index) => (
-            <motion.div
-              key={alert.id}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.1 }}
-              className={`p-4 rounded-2xl border-2 bg-gradient-to-r ${priorityColors[alert.priority]} hover:shadow-lg transition-all duration-300`}
-            >
-              <div className="flex items-start justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5" />
-                  <span className="text-sm font-bold">{alert.clientName}</span>
-                </div>
-                <span className="px-3 py-1 text-xs uppercase font-bold bg-white/60 rounded-full">{alert.priority}</span>
-              </div>
-              <p className="text-sm mb-3 font-medium">{alert.message}</p>
-              <div className="flex gap-2">
-                <button className="text-xs px-4 py-2 bg-white/80 rounded-xl hover:bg-white transition-all duration-300 font-semibold shadow-sm hover:shadow">
-                  📧 Mensaje
-                </button>
-                <button className="text-xs px-4 py-2 bg-white/80 rounded-xl hover:bg-white transition-all duration-300 font-semibold shadow-sm hover:shadow">
-                  📅 Check-in
-                </button>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        ))}
       </div>
     </motion.div>
   );
@@ -1117,15 +958,9 @@ const AlertsSection: React.FC<{ alerts: Alert[] }> = ({ alerts }) => {
 
 const InsightsSection: React.FC<{ insights: Insight[] }> = ({ insights }) => {
   const impactColors = {
-    positive: 'from-green-50 to-emerald-50 border-green-200 text-green-700',
-    neutral: 'from-gray-50 to-gray-100 border-gray-200 text-gray-700',
-    negative: 'from-red-50 to-red-100 border-red-200 text-red-700',
-  };
-
-  const impactIcons = {
-    positive: '✅',
-    neutral: 'ℹ️',
-    negative: '⚠️',
+    positive: 'bg-green-50 border-green-200 text-green-700',
+    neutral: 'bg-gray-50 border-gray-200 text-gray-700',
+    negative: 'bg-red-50 border-red-200 text-red-700',
   };
 
   return (
@@ -1133,39 +968,23 @@ const InsightsSection: React.FC<{ insights: Insight[] }> = ({ insights }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4 }}
-      className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/50 relative overflow-hidden"
+      className="bg-white p-6 rounded-xl shadow"
     >
-      {/* Decoración */}
-      <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full blur-3xl opacity-20"></div>
+      <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+        <Brain className="w-5 h-5 text-purple-600" />
+        Insights Inteligentes
+      </h3>
 
-      <div className="relative z-10">
-        <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-          <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl">
-            <Brain className="w-6 h-6 text-white" />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {insights.map((insight) => (
+          <div
+            key={insight.id}
+            className={`p-4 rounded-lg border ${impactColors[insight.impact]}`}
+          >
+            <h4 className="text-sm font-semibold mb-2">{insight.title}</h4>
+            <p className="text-xs">{insight.description}</p>
           </div>
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">
-            Insights Inteligentes
-          </span>
-        </h3>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {insights.map((insight, index) => (
-            <motion.div
-              key={insight.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.05 }}
-              whileHover={{ scale: 1.05, y: -4 }}
-              className={`p-5 rounded-2xl border-2 bg-gradient-to-br ${impactColors[insight.impact]} hover:shadow-lg transition-all duration-300`}
-            >
-              <div className="flex items-start gap-2 mb-3">
-                <span className="text-2xl">{impactIcons[insight.impact]}</span>
-                <h4 className="text-sm font-bold leading-tight">{insight.title}</h4>
-              </div>
-              <p className="text-xs font-medium leading-relaxed">{insight.description}</p>
-            </motion.div>
-          ))}
-        </div>
+        ))}
       </div>
     </motion.div>
   );
@@ -1209,142 +1028,74 @@ const TrendsSection: React.FC = () => {
       transition={{ delay: 0.5 }}
       className="space-y-6"
     >
-      <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/50 relative overflow-hidden">
-        {/* Decoración */}
-        <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-gradient-to-br from-blue-200 to-cyan-200 rounded-full blur-3xl opacity-20"></div>
+      <div className="bg-white p-6 rounded-xl shadow">
+        <h3 className="text-lg font-semibold mb-4">Análisis de Tendencias</h3>
 
-        <div className="relative z-10">
-          <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-            <div className="p-2 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl">
-              <TrendingUp className="w-6 h-6 text-white" />
-            </div>
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-600">
-              Análisis de Tendencias
-            </span>
-          </h3>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Pasos por día de semana */}
+          <div>
+            <h4 className="text-sm font-medium text-gray-700 mb-3">Pasos por Día de la Semana</h4>
+            <ResponsiveContainer width="100%" height={200}>
+              <BarChart data={weekdayData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis dataKey="day" stroke="#94a3b8" />
+                <YAxis stroke="#94a3b8" />
+                <Tooltip />
+                <Bar dataKey="avgSteps" fill="#3b82f6" radius={[8, 8, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Pasos por día de semana */}
-            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 border border-blue-100">
-              <h4 className="text-sm font-bold text-gray-700 mb-4 flex items-center gap-2">
-                <Footprints className="w-4 h-4 text-lime-600" />
-                Pasos por Día de la Semana
-              </h4>
-              <ResponsiveContainer width="100%" height={220}>
-                <BarChart data={weekdayData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                  <XAxis dataKey="day" stroke="#64748b" style={{ fontSize: '12px' }} />
-                  <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                      border: 'none',
-                      borderRadius: '12px',
-                      boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
-                    }}
-                  />
-                  <Bar dataKey="avgSteps" fill="url(#gradientSteps)" radius={[8, 8, 0, 0]} />
-                  <defs>
-                    <linearGradient id="gradientSteps" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#84cc16" />
-                      <stop offset="100%" stopColor="#10b981" />
-                    </linearGradient>
-                  </defs>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+          {/* Adherencia a objetivos */}
+          <div>
+            <h4 className="text-sm font-medium text-gray-700 mb-3">Adherencia a Objetivos (%)</h4>
+            <ResponsiveContainer width="100%" height={200}>
+              <LineChart data={weekdayData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis dataKey="day" stroke="#94a3b8" />
+                <YAxis stroke="#94a3b8" />
+                <Tooltip />
+                <Line type="monotone" dataKey="adherence" stroke="#10b981" strokeWidth={2} dot={{ fill: '#10b981', r: 4 }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
 
-            {/* Adherencia a objetivos */}
-            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100">
-              <h4 className="text-sm font-bold text-gray-700 mb-4 flex items-center gap-2">
-                <Target className="w-4 h-4 text-emerald-600" />
-                Adherencia a Objetivos (%)
-              </h4>
-              <ResponsiveContainer width="100%" height={220}>
-                <AreaChart data={weekdayData}>
-                  <defs>
-                    <linearGradient id="colorAdherence" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                  <XAxis dataKey="day" stroke="#64748b" style={{ fontSize: '12px' }} />
-                  <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                      border: 'none',
-                      borderRadius: '12px',
-                      boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
-                    }}
-                  />
-                  <Area type="monotone" dataKey="adherence" stroke="#10b981" strokeWidth={3} fill="url(#colorAdherence)" />
-                </AreaChart>
-              </ResponsiveContainer>
-            </div>
+          {/* Distribución de actividades */}
+          <div>
+            <h4 className="text-sm font-medium text-gray-700 mb-3">Tipos de Entrenamientos</h4>
+            <ResponsiveContainer width="100%" height={200}>
+              <BarChart data={activityTypes} layout="vertical">
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis type="number" stroke="#94a3b8" />
+                <YAxis dataKey="type" type="category" width={80} stroke="#94a3b8" />
+                <Tooltip />
+                <Bar dataKey="count" fill="#3b82f6" radius={[0, 8, 8, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
 
-            {/* Distribución de actividades */}
-            <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-100">
-              <h4 className="text-sm font-bold text-gray-700 mb-4 flex items-center gap-2">
-                <Zap className="w-4 h-4 text-purple-600" />
-                Tipos de Entrenamientos
-              </h4>
-              <ResponsiveContainer width="100%" height={220}>
-                <BarChart data={activityTypes} layout="vertical">
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                  <XAxis type="number" stroke="#64748b" style={{ fontSize: '12px' }} />
-                  <YAxis dataKey="type" type="category" width={80} stroke="#64748b" style={{ fontSize: '11px' }} />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                      border: 'none',
-                      borderRadius: '12px',
-                      boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
-                    }}
-                  />
-                  <Bar dataKey="count" radius={[0, 8, 8, 0]}>
-                    {activityTypes.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-
-            {/* Calidad de sueño */}
-            <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-6 border border-indigo-100">
-              <h4 className="text-sm font-bold text-gray-700 mb-4 flex items-center gap-2">
-                <Moon className="w-4 h-4 text-indigo-600" />
-                Distribución Calidad de Sueño
-              </h4>
-              <ResponsiveContainer width="100%" height={220}>
-                <PieChart>
-                  <Pie
-                    data={sleepQualityDist}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, percent }) => `${name.split(' ')[0]} ${(percent * 100).toFixed(0)}%`}
-                    outerRadius={85}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {sleepQualityDist.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                      border: 'none',
-                      borderRadius: '12px',
-                      boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
-                    }}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
+          {/* Calidad de sueño */}
+          <div>
+            <h4 className="text-sm font-medium text-gray-700 mb-3">Distribución Calidad de Sueño</h4>
+            <ResponsiveContainer width="100%" height={200}>
+              <PieChart>
+                <Pie
+                  data={sleepQualityDist}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={({ name, percent }) => `${name.split(' ')[0]} ${(percent * 100).toFixed(0)}%`}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {sleepQualityDist.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
           </div>
         </div>
       </div>
@@ -1394,94 +1145,75 @@ const IndividualView: React.FC<IndividualViewProps> = ({ client, period }) => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden bg-gradient-to-r from-lime-600 via-green-600 to-emerald-600 rounded-3xl shadow-2xl p-8 border border-white/20"
+        className="bg-gradient-to-br from-blue-500 to-green-500 p-6 rounded-xl shadow-lg text-white"
       >
-        {/* Efectos de fondo */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse"></div>
+        <div className="flex items-center gap-4 mb-6">
+          <img src={client.avatar} alt={client.name} className="w-16 h-16 rounded-full border-4 border-white" />
+          <div>
+            <h2 className="text-2xl font-bold">{client.name}</h2>
+            <p className="text-blue-100">{client.age} años • {client.gender === 'M' ? 'Masculino' : 'Femenino'}</p>
+          </div>
         </div>
 
-        {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3) 1px, transparent 1px)`,
-            backgroundSize: '20px 20px'
-          }}></div>
-        </div>
-
-        <div className="relative z-10">
-          <div className="flex items-center gap-4 mb-8">
-            <img src={client.avatar} alt={client.name} className="w-20 h-20 rounded-full border-4 border-white shadow-2xl" />
-            <div>
-              <h2 className="text-3xl font-bold text-white">{client.name}</h2>
-              <p className="text-lg text-green-100 font-medium">{client.age} años • {client.gender === 'M' ? 'Masculino' : 'Femenino'}</p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="text-center">
+            <div className="relative inline-flex">
+              <svg className="w-20 h-20 transform -rotate-90">
+                <circle cx="40" cy="40" r="36" stroke="rgba(255,255,255,0.2)" strokeWidth="8" fill="none" />
+                <circle
+                  cx="40"
+                  cy="40"
+                  r="36"
+                  stroke="white"
+                  strokeWidth="8"
+                  fill="none"
+                  strokeDasharray={`${2 * Math.PI * 36}`}
+                  strokeDashoffset={`${2 * Math.PI * 36 * (1 - Math.min(stepsProgress / 100, 1))}`}
+                  strokeLinecap="round"
+                />
+              </svg>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Footprints className="w-6 h-6" />
+              </div>
             </div>
+            <p className="mt-2 text-sm font-medium">{today.steps.toLocaleString()}</p>
+            <p className="text-xs text-blue-100">de {client.stepsGoal.toLocaleString()} pasos</p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="text-center bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20">
-              <div className="relative inline-flex mb-3">
-                <svg className="w-24 h-24 transform -rotate-90">
-                  <circle cx="48" cy="48" r="40" stroke="rgba(255,255,255,0.2)" strokeWidth="8" fill="none" />
-                  <circle
-                    cx="48"
-                    cy="48"
-                    r="40"
-                    stroke="white"
-                    strokeWidth="8"
-                    fill="none"
-                    strokeDasharray={`${2 * Math.PI * 40}`}
-                    strokeDashoffset={`${2 * Math.PI * 40 * (1 - Math.min(stepsProgress / 100, 1))}`}
-                    strokeLinecap="round"
-                  />
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Footprints className="w-8 h-8 text-white" />
-                </div>
+          <div className="text-center">
+            <div className="relative inline-flex">
+              <svg className="w-20 h-20 transform -rotate-90">
+                <circle cx="40" cy="40" r="36" stroke="rgba(255,255,255,0.2)" strokeWidth="8" fill="none" />
+                <circle
+                  cx="40"
+                  cy="40"
+                  r="36"
+                  stroke="white"
+                  strokeWidth="8"
+                  fill="none"
+                  strokeDasharray={`${2 * Math.PI * 36}`}
+                  strokeDashoffset={`${2 * Math.PI * 36 * (1 - Math.min(activeMinutesProgress / 100, 1))}`}
+                  strokeLinecap="round"
+                />
+              </svg>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Clock className="w-6 h-6" />
               </div>
-              <p className="text-2xl font-bold text-white">{today.steps.toLocaleString()}</p>
-              <p className="text-xs text-green-100 font-medium">de {client.stepsGoal.toLocaleString()} pasos</p>
             </div>
+            <p className="mt-2 text-sm font-medium">{today.activeMinutes} min</p>
+            <p className="text-xs text-blue-100">de {client.activeMinutesGoal} min activos</p>
+          </div>
 
-            <div className="text-center bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20">
-              <div className="relative inline-flex mb-3">
-                <svg className="w-24 h-24 transform -rotate-90">
-                  <circle cx="48" cy="48" r="40" stroke="rgba(255,255,255,0.2)" strokeWidth="8" fill="none" />
-                  <circle
-                    cx="48"
-                    cy="48"
-                    r="40"
-                    stroke="white"
-                    strokeWidth="8"
-                    fill="none"
-                    strokeDasharray={`${2 * Math.PI * 40}`}
-                    strokeDashoffset={`${2 * Math.PI * 40 * (1 - Math.min(activeMinutesProgress / 100, 1))}`}
-                    strokeLinecap="round"
-                  />
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Clock className="w-8 h-8 text-white" />
-                </div>
-              </div>
-              <p className="text-2xl font-bold text-white">{today.activeMinutes} min</p>
-              <p className="text-xs text-green-100 font-medium">de {client.activeMinutesGoal} min activos</p>
-            </div>
+          <div className="text-center">
+            <Flame className="w-12 h-12 mx-auto mb-2" />
+            <p className="text-sm font-medium">{today.calories.toLocaleString()} kcal</p>
+            <p className="text-xs text-blue-100">quemadas hoy</p>
+          </div>
 
-            <div className="text-center bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20">
-              <div className="mb-3">
-                <Flame className="w-14 h-14 mx-auto text-white" />
-              </div>
-              <p className="text-2xl font-bold text-white">{today.calories.toLocaleString()} kcal</p>
-              <p className="text-xs text-green-100 font-medium">quemadas hoy</p>
-            </div>
-
-            <div className="text-center bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20">
-              <div className="mb-3">
-                <Moon className="w-14 h-14 mx-auto text-white" />
-              </div>
-              <p className="text-2xl font-bold text-white">{today.sleep.toFixed(1)}h</p>
-              <p className="text-xs text-green-100 font-medium">sueño ({today.sleepQuality}% calidad)</p>
-            </div>
+          <div className="text-center">
+            <Moon className="w-12 h-12 mx-auto mb-2" />
+            <p className="text-sm font-medium">{today.sleep.toFixed(1)}h</p>
+            <p className="text-xs text-blue-100">sueño ({today.sleepQuality}% calidad)</p>
           </div>
         </div>
       </motion.div>
@@ -1493,50 +1225,33 @@ const IndividualView: React.FC<IndividualViewProps> = ({ client, period }) => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 relative overflow-hidden"
+          className="bg-white p-6 rounded-xl shadow"
         >
-          {/* Decoración */}
-          <div className="absolute -right-16 -top-16 w-48 h-48 bg-gradient-to-br from-lime-200 to-green-200 rounded-full blur-3xl opacity-20"></div>
-
-          <div className="relative z-10">
-            <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-              <div className="p-2 bg-gradient-to-br from-lime-500 to-green-600 rounded-xl">
-                <Footprints className="w-5 h-5 text-white" />
-              </div>
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-lime-600 to-green-600">
-                Pasos - Últimos 7 Días
-              </span>
-            </h3>
-            <ResponsiveContainer width="100%" height={270}>
-              <BarChart data={stepsChartData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                <XAxis
-                  dataKey="date"
-                  tickFormatter={(date) => new Date(date).toLocaleDateString('es-ES', { weekday: 'short' })}
-                  stroke="#64748b"
-                  style={{ fontSize: '12px' }}
-                />
-                <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                    border: 'none',
-                    borderRadius: '12px',
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
-                  }}
-                />
-                <Bar dataKey="steps" radius={[8, 8, 0, 0]}>
-                  {stepsChartData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.steps >= entry.goal ? '#10b981' : '#ef4444'} />
-                  ))}
-                </Bar>
-                <Line type="monotone" dataKey="goal" stroke="#94a3b8" strokeDasharray="5 5" strokeWidth={2} />
-              </BarChart>
-            </ResponsiveContainer>
-            <p className="text-sm text-gray-600 mt-3 font-medium">
-              📊 Promedio: <span className="font-bold text-lime-600">{Math.floor(last7Days.reduce((sum, m) => sum + m.steps, 0) / 7).toLocaleString()}</span> pasos/día
-            </p>
-          </div>
+          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+            <Footprints className="w-5 h-5 text-blue-600" />
+            Pasos - Últimos 7 Días
+          </h3>
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart data={stepsChartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis
+                dataKey="date"
+                tickFormatter={(date) => new Date(date).toLocaleDateString('es-ES', { weekday: 'short' })}
+                stroke="#94a3b8"
+              />
+              <YAxis stroke="#94a3b8" />
+              <Tooltip />
+              <Bar dataKey="steps" fill="#3b82f6" radius={[8, 8, 0, 0]}>
+                {stepsChartData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.steps >= entry.goal ? '#10b981' : '#ef4444'} />
+                ))}
+              </Bar>
+              <Line type="monotone" dataKey="goal" stroke="#94a3b8" strokeDasharray="5 5" />
+            </BarChart>
+          </ResponsiveContainer>
+          <p className="text-sm text-gray-600 mt-2">
+            Promedio: {Math.floor(last7Days.reduce((sum, m) => sum + m.steps, 0) / 7).toLocaleString()} pasos/día
+          </p>
         </motion.div>
 
         {/* Sueño */}
@@ -1544,49 +1259,32 @@ const IndividualView: React.FC<IndividualViewProps> = ({ client, period }) => {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 relative overflow-hidden"
+          className="bg-white p-6 rounded-xl shadow"
         >
-          {/* Decoración */}
-          <div className="absolute -left-16 -bottom-16 w-48 h-48 bg-gradient-to-br from-purple-200 to-indigo-200 rounded-full blur-3xl opacity-20"></div>
-
-          <div className="relative z-10">
-            <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-              <div className="p-2 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl">
-                <Moon className="w-5 h-5 text-white" />
-              </div>
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600">
-                Sueño - Últimos 7 Días
-              </span>
-            </h3>
-            <ResponsiveContainer width="100%" height={270}>
-              <BarChart data={sleepChartData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                <XAxis
-                  dataKey="date"
-                  tickFormatter={(date) => new Date(date).toLocaleDateString('es-ES', { weekday: 'short' })}
-                  stroke="#64748b"
-                  style={{ fontSize: '12px' }}
-                />
-                <YAxis stroke="#64748b" style={{ fontSize: '12px' }} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                    border: 'none',
-                    borderRadius: '12px',
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
-                  }}
-                />
-                <Legend wrapperStyle={{ paddingTop: '10px' }} />
-                <Bar dataKey="light" stackId="a" fill="#93c5fd" name="Ligero" radius={[0, 0, 0, 0]} />
-                <Bar dataKey="deep" stackId="a" fill="#3b82f6" name="Profundo" radius={[0, 0, 0, 0]} />
-                <Bar dataKey="rem" stackId="a" fill="#a855f7" name="REM" radius={[8, 8, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-            <p className="text-sm text-gray-600 mt-3 font-medium">
-              😴 Promedio: <span className="font-bold text-purple-600">{(last7Days.reduce((sum, m) => sum + m.sleep, 0) / 7).toFixed(1)}h</span>/noche •
-              Calidad: <span className="font-bold text-indigo-600">{Math.floor(last7Days.reduce((sum, m) => sum + m.sleepQuality, 0) / 7)}%</span>
-            </p>
-          </div>
+          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+            <Moon className="w-5 h-5 text-purple-600" />
+            Sueño - Últimos 7 Días
+          </h3>
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart data={sleepChartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis
+                dataKey="date"
+                tickFormatter={(date) => new Date(date).toLocaleDateString('es-ES', { weekday: 'short' })}
+                stroke="#94a3b8"
+              />
+              <YAxis stroke="#94a3b8" />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="light" stackId="a" fill="#93c5fd" name="Ligero" radius={[0, 0, 0, 0]} />
+              <Bar dataKey="deep" stackId="a" fill="#3b82f6" name="Profundo" radius={[0, 0, 0, 0]} />
+              <Bar dataKey="rem" stackId="a" fill="#a855f7" name="REM" radius={[8, 8, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+          <p className="text-sm text-gray-600 mt-2">
+            Promedio: {(last7Days.reduce((sum, m) => sum + m.sleep, 0) / 7).toFixed(1)}h/noche • Calidad:{' '}
+            {Math.floor(last7Days.reduce((sum, m) => sum + m.sleepQuality, 0) / 7)}%
+          </p>
         </motion.div>
       </div>
 
@@ -1596,72 +1294,48 @@ const IndividualView: React.FC<IndividualViewProps> = ({ client, period }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/50 relative overflow-hidden"
+          className="bg-white p-6 rounded-xl shadow"
         >
-          {/* Decoración */}
-          <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-gradient-to-br from-cyan-200 to-blue-200 rounded-full blur-3xl opacity-20"></div>
-
-          <div className="relative z-10">
-            <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-              <div className="p-2 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl">
-                <Heart className="w-6 h-6 text-white" />
+          <h3 className="text-lg font-semibold mb-4">Métricas Avanzadas</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {client.vo2max && (
+              <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg">
+                <Wind className="w-8 h-8 mx-auto mb-2 text-blue-600" />
+                <p className="text-2xl font-bold text-blue-900">{client.vo2max.toFixed(1)}</p>
+                <p className="text-sm text-blue-700">VO2 max</p>
+                <p className="text-xs text-blue-600 mt-1">ml/kg/min</p>
               </div>
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-600 to-blue-600">
-                Métricas Avanzadas
-              </span>
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {client.vo2max && (
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -4 }}
-                  className="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl border-2 border-blue-200 shadow-lg"
+            )}
+            {client.hrv && (
+              <div className="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-lg">
+                <Heart className="w-8 h-8 mx-auto mb-2 text-green-600" />
+                <p className="text-2xl font-bold text-green-900">{Math.floor(client.hrv)}</p>
+                <p className="text-sm text-green-700">HRV</p>
+                <p className="text-xs text-green-600 mt-1">ms</p>
+              </div>
+            )}
+            {client.spo2 && (
+              <div className="text-center p-4 bg-gradient-to-br from-red-50 to-red-100 rounded-lg">
+                <Droplet className="w-8 h-8 mx-auto mb-2 text-red-600" />
+                <p className="text-2xl font-bold text-red-900">{client.spo2.toFixed(1)}%</p>
+                <p className="text-sm text-red-700">SpO2</p>
+                <p className="text-xs text-red-600 mt-1">Saturación O2</p>
+              </div>
+            )}
+            {client.recoveryScore && (
+              <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg">
+                <Zap className="w-8 h-8 mx-auto mb-2 text-purple-600" />
+                <p className="text-2xl font-bold text-purple-900">{client.recoveryScore}%</p>
+                <p className="text-sm text-purple-700">Recuperación</p>
+                <p
+                  className={`text-xs mt-1 font-medium ${
+                    client.recoveryScore >= 70 ? 'text-green-600' : client.recoveryScore >= 40 ? 'text-yellow-600' : 'text-red-600'
+                  }`}
                 >
-                  <Wind className="w-10 h-10 mx-auto mb-3 text-blue-600" />
-                  <p className="text-3xl font-bold text-blue-900">{client.vo2max.toFixed(1)}</p>
-                  <p className="text-sm font-bold text-blue-700 mt-1">VO2 max</p>
-                  <p className="text-xs text-blue-600 mt-1 font-medium">ml/kg/min</p>
-                </motion.div>
-              )}
-              {client.hrv && (
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -4 }}
-                  className="text-center p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-2xl border-2 border-green-200 shadow-lg"
-                >
-                  <Heart className="w-10 h-10 mx-auto mb-3 text-green-600" />
-                  <p className="text-3xl font-bold text-green-900">{Math.floor(client.hrv)}</p>
-                  <p className="text-sm font-bold text-green-700 mt-1">HRV</p>
-                  <p className="text-xs text-green-600 mt-1 font-medium">ms</p>
-                </motion.div>
-              )}
-              {client.spo2 && (
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -4 }}
-                  className="text-center p-6 bg-gradient-to-br from-red-50 to-red-100 rounded-2xl border-2 border-red-200 shadow-lg"
-                >
-                  <Droplet className="w-10 h-10 mx-auto mb-3 text-red-600" />
-                  <p className="text-3xl font-bold text-red-900">{client.spo2.toFixed(1)}%</p>
-                  <p className="text-sm font-bold text-red-700 mt-1">SpO2</p>
-                  <p className="text-xs text-red-600 mt-1 font-medium">Saturación O2</p>
-                </motion.div>
-              )}
-              {client.recoveryScore && (
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -4 }}
-                  className="text-center p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl border-2 border-purple-200 shadow-lg"
-                >
-                  <Zap className="w-10 h-10 mx-auto mb-3 text-purple-600" />
-                  <p className="text-3xl font-bold text-purple-900">{client.recoveryScore}%</p>
-                  <p className="text-sm font-bold text-purple-700 mt-1">Recuperación</p>
-                  <p
-                    className={`text-xs mt-2 font-bold px-3 py-1 rounded-full inline-block ${
-                      client.recoveryScore >= 70 ? 'bg-green-200 text-green-700' : client.recoveryScore >= 40 ? 'bg-yellow-200 text-yellow-700' : 'bg-red-200 text-red-700'
-                    }`}
-                  >
-                    {client.recoveryScore >= 70 ? '✨ Excelente' : client.recoveryScore >= 40 ? '⚡ Moderada' : '⚠️ Baja'}
-                  </p>
-                </motion.div>
-              )}
-            </div>
+                  {client.recoveryScore >= 70 ? 'Excelente' : client.recoveryScore >= 40 ? 'Moderada' : 'Baja'}
+                </p>
+              </div>
+            )}
           </div>
         </motion.div>
       )}
@@ -1671,72 +1345,48 @@ const IndividualView: React.FC<IndividualViewProps> = ({ client, period }) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/50 relative overflow-hidden"
+        className="bg-white p-6 rounded-xl shadow"
       >
-        {/* Decoración */}
-        <div className="absolute -left-20 -top-20 w-64 h-64 bg-gradient-to-br from-green-200 to-emerald-200 rounded-full blur-3xl opacity-20"></div>
-
-        <div className="relative z-10">
-          <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-            <div className="p-2 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl">
-              <Zap className="w-6 h-6 text-white" />
+        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+          <Zap className="w-5 h-5 text-green-600" />
+          Entrenamientos Recientes
+        </h3>
+        <div className="space-y-3">
+          {recentWorkouts.map((workout) => (
+            <div key={workout.id} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+              <div className="flex-shrink-0 p-3 bg-green-100 rounded-lg">
+                <Activity className="w-6 h-6 text-green-600" />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center justify-between mb-1">
+                  <p className="font-medium">{workout.type}</p>
+                  <p className="text-sm text-gray-600">
+                    {new Date(workout.date).toLocaleDateString('es-ES', { day: '2-digit', month: 'short' })}
+                  </p>
+                </div>
+                <div className="flex items-center gap-4 text-sm text-gray-600">
+                  <span className="flex items-center gap-1">
+                    <Clock className="w-4 h-4" />
+                    {workout.duration} min
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Flame className="w-4 h-4" />
+                    {workout.calories} kcal
+                  </span>
+                  {workout.distance && (
+                    <span className="flex items-center gap-1">
+                      <Footprints className="w-4 h-4" />
+                      {workout.distance} km
+                    </span>
+                  )}
+                  <span className="flex items-center gap-1">
+                    <Heart className="w-4 h-4" />
+                    {workout.avgHeartRate} bpm
+                  </span>
+                </div>
+              </div>
             </div>
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-600">
-              Entrenamientos Recientes
-            </span>
-          </h3>
-          <div className="space-y-4">
-            {recentWorkouts.map((workout, index) => (
-              <motion.div
-                key={workout.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.02, x: 4 }}
-                className="flex items-center gap-4 p-5 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl border border-green-100 hover:border-green-200 hover:shadow-lg transition-all duration-300 group"
-              >
-                <div className="flex-shrink-0 p-3 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <Activity className="w-7 h-7 text-white" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="font-bold text-gray-900 text-lg">{workout.type}</p>
-                    <p className="text-sm text-gray-500 font-medium bg-white/60 px-3 py-1 rounded-full">
-                      {new Date(workout.date).toLocaleDateString('es-ES', { day: '2-digit', month: 'short' })}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-6 text-sm text-gray-700">
-                    <span className="flex items-center gap-2 font-medium">
-                      <div className="p-1 bg-blue-100 rounded-lg">
-                        <Clock className="w-4 h-4 text-blue-600" />
-                      </div>
-                      {workout.duration} min
-                    </span>
-                    <span className="flex items-center gap-2 font-medium">
-                      <div className="p-1 bg-orange-100 rounded-lg">
-                        <Flame className="w-4 h-4 text-orange-600" />
-                      </div>
-                      {workout.calories} kcal
-                    </span>
-                    {workout.distance && (
-                      <span className="flex items-center gap-2 font-medium">
-                        <div className="p-1 bg-lime-100 rounded-lg">
-                          <Footprints className="w-4 h-4 text-lime-600" />
-                        </div>
-                        {workout.distance} km
-                      </span>
-                    )}
-                    <span className="flex items-center gap-2 font-medium">
-                      <div className="p-1 bg-red-100 rounded-lg">
-                        <Heart className="w-4 h-4 text-red-600" />
-                      </div>
-                      {workout.avgHeartRate} bpm
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          ))}
         </div>
       </motion.div>
     </div>

@@ -18,17 +18,7 @@
       "Bash(move \"src\\features\\biblioteca-contenidos\" \"src\\features\\plancreatorpro\\biblioteca-contenidos\\biblioteca-contenidos\")",
       "Bash(move \"src\\features\\email-broadcast\" \"src\\features\\plancreatorpro\\email-broadcast\\email-broadcast\")",
       "Bash(find:*)",
-      "Bash(npm run dev:*)",
-      "Bash(cp:*)",
-      "Bash(copy:*)",
-      "Bash(rm:*)",
-      "Bash(python:*)",
-      "Read(//c/**)",
-      "Bash(del nul)",
-      "Bash(git fetch:*)",
-      "Bash(git branch:*)",
-      "Bash(git merge:*)",
-      "Bash(git add:*)"
+      "Bash(npm run dev:*)"
     ],
     "deny": [],
     "ask": []

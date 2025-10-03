@@ -1,19 +1,58 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, Mail, Calendar, Star, MapPin, Clock, MessageSquare, MoreVertical, Edit, Trash2, Eye } from 'lucide-react';
 import { Lead } from '../leadsListadoApi';
+import { useNavigate } from 'react-router-dom';
+import { createPortal } from 'react-dom';
 
 interface LeadCardProps {
   lead: Lead;
+  dragHandleProps?: any;
 }
 
-const LeadCard: React.FC<LeadCardProps> = ({ lead }) => {
+const LeadCard: React.FC<LeadCardProps> = ({ lead, dragHandleProps }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const navigate = useNavigate();
+  const menuBtnRef = useRef<HTMLButtonElement | null>(null);
+  const [menuPos, setMenuPos] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (showMenu) {
+      const rect = menuBtnRef.current?.getBoundingClientRect();
+      if (rect) {
+        const MENU_WIDTH = 200;
+        const left = Math.max(8, Math.min(window.innerWidth - MENU_WIDTH - 8, rect.right - MENU_WIDTH));
+        const top = rect.bottom + window.scrollY + 6;
+        setMenuPos({ top, left });
+      }
+    }
+  }, [showMenu]);
+
+  useEffect(() => {
+    const onClickOutside = (e: PointerEvent) => {
+      if (!showMenu) return;
+      const target = e.target as Node;
+      if ((menuBtnRef.current && menuBtnRef.current.contains(target)) || (menuRef.current && menuRef.current.contains(target))) return;
+      setShowMenu(false);
+    };
+    const onEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowMenu(false);
+    };
+    document.addEventListener('pointerdown', onClickOutside);
+    document.addEventListener('keydown', onEsc);
+    return () => {
+      document.removeEventListener('pointerdown', onClickOutside);
+      document.removeEventListener('keydown', onEsc);
+    };
+  }, [showMenu]);
 
   const handleCall = () => alert(`Llamando a ${lead.name} (${lead.phone})`);
   const handleEmail = () => alert(`Enviando email a ${lead.name} (${lead.email})`);
-  const handleSchedule = () => alert(`Agendando cita con ${lead.name}`);
+  const handleSchedule = () => {
+    navigate('/pagina-reserva');
+  };
   const handleWhatsApp = () => alert(`Abriendo WhatsApp con ${lead.name}`);
   const handleEdit = () => alert(`Editando lead: ${lead.name}`);
   const handleDelete = () => alert(`Eliminando lead: ${lead.name}`);
@@ -49,10 +88,10 @@ const LeadCard: React.FC<LeadCardProps> = ({ lead }) => {
     >
       {/* Header with gradient */}
       <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-3 relative overflow-hidden">
-        <div className="absolute inset-0 bg-white/10 backdrop-blur-sm" />
-        <div className="relative flex items-start justify-between">
+        <div className="absolute inset-0 bg-white/10 backdrop-blur-sm pointer-events-none" />
+        <div className="relative z-10 flex items-start justify-between">
           <div className="flex-1">
-            <h3 className="text-base font-bold text-white mb-1 flex items-center space-x-2">
+            <h3 className="text-base font-bold text-white mb-1 flex items-center space-x-2" {...dragHandleProps}>
               <span>{lead.name}</span>
               <span className="text-lg">{getOriginIcon(lead.origin)}</span>
             </h3>
@@ -67,18 +106,38 @@ const LeadCard: React.FC<LeadCardProps> = ({ lead }) => {
           </div>
           <div className="relative">
             <button
-              onClick={() => setShowMenu(!showMenu)}
+              ref={menuBtnRef}
+              type="button"
+              onPointerDown={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                const rect = menuBtnRef.current?.getBoundingClientRect();
+                if (rect) {
+                  const MENU_WIDTH = 200;
+                  const left = Math.max(8, Math.min(window.innerWidth - MENU_WIDTH - 8, rect.right - MENU_WIDTH));
+                  const top = rect.bottom + window.scrollY + 6;
+                  setMenuPos({ top, left });
+                }
+                setShowMenu((prev) => !prev);
+              }}
               className="text-white hover:bg-white/20 p-1.5 rounded-lg transition-colors"
+              aria-haspopup="menu"
+              aria-expanded={showMenu}
             >
               <MoreVertical className="w-4 h-4" />
             </button>
             <AnimatePresence>
-              {showMenu && (
+              {showMenu && createPortal(
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.9, y: -10 }}
+                  initial={{ opacity: 0, scale: 0.96, y: -6 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, y: -10 }}
-                  className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-xl border border-gray-200 py-1 z-10"
+                  exit={{ opacity: 0, scale: 0.96, y: -6 }}
+                  style={{ position: 'fixed', top: menuPos.top, left: menuPos.left, width: 200 }}
+                  className="bg-white rounded-lg shadow-2xl border border-gray-200 py-1 z-[1000]"
+                  ref={menuRef}
                 >
                   <button
                     onClick={handleEdit}
@@ -101,7 +160,8 @@ const LeadCard: React.FC<LeadCardProps> = ({ lead }) => {
                     <Trash2 className="w-4 h-4" />
                     <span>Eliminar</span>
                   </button>
-                </motion.div>
+                </motion.div>,
+                document.body
               )}
             </AnimatePresence>
           </div>

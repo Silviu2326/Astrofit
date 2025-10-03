@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Trophy, Medal, Award, Star, Users } from 'lucide-react';
 
 interface Participante {
@@ -119,58 +118,35 @@ const TablaClasificacion: React.FC = () => {
   };
 
   return (
-    <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/50 relative overflow-hidden">
-      {/* Decoración de fondo */}
-      <div className="absolute -right-20 -top-20 w-64 h-64 bg-gradient-to-br from-yellow-200 to-orange-200 rounded-full blur-3xl opacity-20"></div>
-
-      {/* Dots pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 50% 50%, rgba(251,191,36,0.3) 1px, transparent 1px)`,
-          backgroundSize: '20px 20px'
-        }}></div>
-      </div>
-
-      <div className="relative z-10">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <div className="p-3 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-2xl shadow-lg">
-              <Trophy className="h-6 w-6 text-white" />
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900">Tabla de Clasificación</h3>
-              <p className="text-sm text-gray-600">Ranking de participantes</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-full px-4 py-2 border border-indigo-200">
-            <Users className="h-4 w-4 text-indigo-600" />
-            <span className="text-sm font-bold text-indigo-700">{participantes.length} participantes</span>
-          </div>
+    <div className="bg-white rounded-lg shadow-lg p-6">
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="text-xl font-bold text-gray-900 flex items-center">
+          <Trophy className="h-6 w-6 text-yellow-500 mr-2" />
+          Tabla de Clasificación
+        </h3>
+        <div className="flex items-center text-sm text-gray-500">
+          <Users className="h-4 w-4 mr-1" />
+          {participantes.length} participantes
         </div>
       </div>
 
-      <div className="relative z-10">
-        {/* Header */}
-        <div className="hidden md:grid grid-cols-7 gap-4 text-xs font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-200 pb-3 mb-4">
-          <div>Posición</div>
-          <div className="col-span-2">Participante</div>
-          <div className="text-center">Puntos</div>
-          <div className="text-center">Hábitos</div>
-          <div className="text-center">Racha</div>
-          <div className="text-center">Nivel</div>
-        </div>
+      {/* Header */}
+      <div className="hidden md:grid grid-cols-7 gap-4 text-xs font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-200 pb-3 mb-4">
+        <div>Posición</div>
+        <div className="col-span-2">Participante</div>
+        <div className="text-center">Puntos</div>
+        <div className="text-center">Hábitos</div>
+        <div className="text-center">Racha</div>
+        <div className="text-center">Nivel</div>
+      </div>
 
-        {/* Lista de participantes */}
-        <div className="space-y-3">
-          {participantes.map((participante, index) => (
-            <motion.div
-              key={participante.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.05, duration: 0.4 }}
-              whileHover={{ scale: 1.02, y: -2 }}
-              className={`rounded-2xl p-4 transition-all duration-200 ${getPosicionStyle(participante.posicion)} backdrop-blur-sm border border-white/50 shadow-md hover:shadow-xl group`}
-            >
+      {/* Lista de participantes */}
+      <div className="space-y-3">
+        {participantes.map((participante) => (
+          <div
+            key={participante.id}
+            className={`rounded-lg p-4 transition-all duration-200 ${getPosicionStyle(participante.posicion)}`}
+          >
             <div className="grid grid-cols-1 md:grid-cols-7 gap-4 items-center">
               {/* Posición */}
               <div className="flex items-center justify-center md:justify-start">
@@ -235,46 +211,30 @@ const TablaClasificacion: React.FC = () => {
                 <p className="text-xs text-gray-500">Racha</p>
               </div>
             </div>
-          </motion.div>
+          </div>
         ))}
-        </div>
+      </div>
 
-        {/* Estadísticas generales */}
-        <div className="mt-8 pt-6 border-t border-gray-200/50">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-              className="text-center p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200"
-            >
-              <p className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
-                {participantes.reduce((acc, p) => acc + p.puntos, 0).toLocaleString()}
-              </p>
-              <p className="text-sm font-semibold text-gray-600 mt-1">Puntos totales</p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
-              className="text-center p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl border border-green-200"
-            >
-              <p className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-600">
-                {participantes.reduce((acc, p) => acc + p.habitos_completados, 0)}
-              </p>
-              <p className="text-sm font-semibold text-gray-600 mt-1">Hábitos completados</p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7, duration: 0.5 }}
-              className="text-center p-4 bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl border border-orange-200"
-            >
-              <p className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-red-600">
-                {Math.round(participantes.reduce((acc, p) => acc + p.racha_actual, 0) / participantes.length)}
-              </p>
-              <p className="text-sm font-semibold text-gray-600 mt-1">Racha promedio</p>
-            </motion.div>
+      {/* Estadísticas generales */}
+      <div className="mt-6 pt-6 border-t border-gray-200">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="text-center">
+            <p className="text-2xl font-bold text-blue-600">
+              {participantes.reduce((acc, p) => acc + p.puntos, 0).toLocaleString()}
+            </p>
+            <p className="text-sm text-gray-500">Puntos totales</p>
+          </div>
+          <div className="text-center">
+            <p className="text-2xl font-bold text-green-600">
+              {participantes.reduce((acc, p) => acc + p.habitos_completados, 0)}
+            </p>
+            <p className="text-sm text-gray-500">Hábitos completados</p>
+          </div>
+          <div className="text-center">
+            <p className="text-2xl font-bold text-orange-600">
+              {Math.round(participantes.reduce((acc, p) => acc + p.racha_actual, 0) / participantes.length)}
+            </p>
+            <p className="text-sm text-gray-500">Racha promedio</p>
           </div>
         </div>
       </div>

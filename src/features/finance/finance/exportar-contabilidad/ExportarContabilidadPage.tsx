@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import toast from 'react-hot-toast';
 import {
   FileDown,
   Book,
@@ -97,6 +98,26 @@ const ExportarContabilidadPage: React.FC = () => {
   const [showValidationDetails, setShowValidationDetails] = useState(false);
   const [showMappingModal, setShowMappingModal] = useState(false);
   const [activeTab, setActiveTab] = useState<'export' | 'templates' | 'history' | 'integrations' | 'reports'>('export');
+  const [accountMappings, setAccountMappings] = useState([
+    { category: 'Ingresos por servicios', account: '705', description: 'Prestaciones de servicios' },
+    { category: 'Ingresos por ventas', account: '700', description: 'Ventas de mercaderías' },
+    { category: 'Gastos de personal', account: '640', description: 'Sueldos y salarios' },
+    { category: 'Alquiler oficina', account: '621', description: 'Arrendamientos' },
+    { category: 'Servicios profesionales', account: '623', description: 'Servicios profesionales indep.' }
+  ]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState<{id: string, name: string} | null>(null);
+  const [showPreviewModal, setShowPreviewModal] = useState(false);
+  const [previewData, setPreviewData] = useState<any>(null);
+  const [showFilters, setShowFilters] = useState(false);
+  const [filters, setFilters] = useState({
+    user: '',
+    format: '',
+    status: '',
+    dateFrom: '',
+    dateTo: '',
+    dataTypes: [] as string[]
+  });
 
   // Data cards
   const dataCards: DataCard[] = [
@@ -244,6 +265,25 @@ const ExportarContabilidadPage: React.FC = () => {
     }
   ];
 
+  // Filter options
+  const filterOptions = {
+    users: ['Juan Pérez', 'María García', 'Ana López'],
+    formats: ['excel', 'csv', 'pdf', 'xml'],
+    statuses: ['completed', 'error'],
+    dataTypes: dataCards.map(card => ({ value: card.id, label: card.title }))
+  };
+
+  // Filter logic
+  const filteredHistory = mockHistory.filter(item => {
+    if (filters.user && item.user !== filters.user) return false;
+    if (filters.format && item.format !== filters.format) return false;
+    if (filters.status && item.status !== filters.status) return false;
+    if (filters.dateFrom && new Date(item.date.split('/').reverse().join('-')) < new Date(filters.dateFrom)) return false;
+    if (filters.dateTo && new Date(item.date.split('/').reverse().join('-')) > new Date(filters.dateTo)) return false;
+    if (filters.dataTypes.length > 0 && !filters.dataTypes.some(type => item.dataTypes.includes(type as DataType))) return false;
+    return true;
+  });
+
   const validationItems: ValidationItem[] = [
     { label: 'Todas las facturas tienen número', passed: true },
     { label: 'No hay fechas inválidas', passed: true },
@@ -364,6 +404,172 @@ const ExportarContabilidadPage: React.FC = () => {
     const card = dataCards.find(c => c.id === type);
     return card?.title || type;
   };
+
+  const updateAccountMapping = (index: number, field: 'account' | 'description', value: string) => {
+    setAccountMappings(prev => prev.map((mapping, i) => 
+      i === index ? { ...mapping, [field]: value } : mapping
+    ));
+  };
+
+  // Template functions
+  const useTemplate = (templateId: string) => {
+    const template = mockTemplates.find(t => t.id === templateId);
+    if (template) {
+      setSelectedData(new Set(template.dataTypes));
+      setSelectedFormat(template.format);
+      toast.success(`Plantilla "${template.name}" aplicada correctamente`);
+    }
+  };
+
+  const editTemplate = (templateId: string) => {
+    const template = mockTemplates.find(t => t.id === templateId);
+    if (template) {
+      setSelectedData(new Set(template.dataTypes));
+      setSelectedFormat(template.format);
+      setNewTemplateName(template.name);
+      setShowTemplateModal(true);
+      toast.success(`Editando plantilla "${template.name}"`);
+    }
+  };
+
+  const deleteTemplate = (templateId: string) => {
+    const template = mockTemplates.find(t => t.id === templateId);
+    if (template) {
+      setItemToDelete({ id: templateId, name: template.name });
+      setShowDeleteModal(true);
+    }
+  };
+
+  const confirmDelete = () => {
+    if (itemToDelete) {
+      toast.success(`Plantilla "${itemToDelete.name}" eliminada`);
+      setShowDeleteModal(false);
+      setItemToDelete(null);
+    }
+  };
+
+  // History functions
+  const downloadHistoryItem = () => {
+    toast.success('Descargando archivo...');
+    // Simulate download
+    setTimeout(() => {
+      toast.success('Archivo descargado correctamente');
+    }, 2000);
+  };
+
+  const deleteHistoryItem = (itemId: string) => {
+    const item = mockHistory.find(h => h.id === itemId);
+    if (item) {
+      setItemToDelete({ id: itemId, name: `Exportación del ${item.date}` });
+      setShowDeleteModal(true);
+    }
+  };
+
+  // Integration functions
+  const toggleIntegration = (integrationName: string) => {
+    toast.success(`Integración con ${integrationName} ${Math.random() > 0.5 ? 'conectada' : 'desconectada'}`);
+  };
+
+  const generatePackGestoria = () => {
+    toast.loading('Generando Pack Gestoría...');
+    setTimeout(() => {
+      toast.success('Pack Gestoría generado correctamente');
+    }, 3000);
+  };
+
+  // Report functions
+  const generateReport = (reportName: string) => {
+    toast.loading(`Generando ${reportName}...`);
+    setTimeout(() => {
+      toast.success(`${reportName} generado correctamente`);
+    }, 2500);
+  };
+
+  const previewReport = (reportName: string) => {
+    setPreviewData({ name: reportName, content: 'Vista previa del reporte...' });
+    setShowPreviewModal(true);
+  };
+
+  // Help functions
+  const showHelp = (helpItem: string) => {
+    toast.success(`Abriendo ayuda: ${helpItem}`);
+  };
+
+  // Success modal functions
+  const downloadFile = () => {
+    toast.loading('Descargando archivo...');
+    setTimeout(() => {
+      toast.success('Archivo descargado correctamente');
+      setShowSuccessModal(false);
+    }, 2000);
+  };
+
+  const sendByEmail = () => {
+    toast.loading('Enviando por email...');
+    setTimeout(() => {
+      toast.success('Archivo enviado por email correctamente');
+    }, 2000);
+  };
+
+  const shareLink = () => {
+    navigator.clipboard.writeText('https://astrofit.com/export/12345');
+    toast.success('Link copiado al portapapeles');
+  };
+
+  // Filter functions
+  const toggleFilters = () => {
+    setShowFilters(!showFilters);
+  };
+
+  const updateFilter = (key: string, value: any) => {
+    setFilters(prev => ({ ...prev, [key]: value }));
+  };
+
+  const toggleDataTypeFilter = (dataType: string) => {
+    setFilters(prev => ({
+      ...prev,
+      dataTypes: prev.dataTypes.includes(dataType)
+        ? prev.dataTypes.filter(type => type !== dataType)
+        : [...prev.dataTypes, dataType]
+    }));
+  };
+
+  const clearFilters = () => {
+    setFilters({
+      user: '',
+      format: '',
+      status: '',
+      dateFrom: '',
+      dateTo: '',
+      dataTypes: []
+    });
+    toast.success('Filtros limpiados');
+  };
+
+  const applyFilters = () => {
+    setShowFilters(false);
+    toast.success(`Filtros aplicados - ${filteredHistory.length} resultados`);
+  };
+
+  const hasActiveFilters = () => {
+    return filters.user || filters.format || filters.status || filters.dateFrom || filters.dateTo || filters.dataTypes.length > 0;
+  };
+
+  // Close dropdown when clicking outside
+  const filterRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (filterRef.current && !filterRef.current.contains(event.target as Node)) {
+        setShowFilters(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 pb-12">
@@ -888,13 +1094,22 @@ const ExportarContabilidadPage: React.FC = () => {
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <button className="flex-1 px-3 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 font-medium text-sm transition-colors">
+                    <button 
+                      onClick={() => useTemplate(template.id)}
+                      className="flex-1 px-3 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 font-medium text-sm transition-colors"
+                    >
                       Usar
                     </button>
-                    <button className="p-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                    <button 
+                      onClick={() => editTemplate(template.id)}
+                      className="p-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                    >
                       <Edit2 className="w-4 h-4" />
                     </button>
-                    <button className="p-2 border border-gray-300 text-red-600 rounded-lg hover:bg-red-50 transition-colors">
+                    <button 
+                      onClick={() => deleteTemplate(template.id)}
+                      className="p-2 border border-gray-300 text-red-600 rounded-lg hover:bg-red-50 transition-colors"
+                    >
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
@@ -909,83 +1124,248 @@ const ExportarContabilidadPage: React.FC = () => {
       {activeTab === 'history' && (
         <div className="bg-white rounded-xl shadow-sm p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-900">Historial de Exportaciones</h2>
-            <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors">
-              <Filter className="w-4 h-4" />
-              Filtrar
-            </button>
+            <div className="flex items-center gap-4">
+              <h2 className="text-xl font-bold text-gray-900">Historial de Exportaciones</h2>
+              {hasActiveFilters() && (
+                <span className="px-3 py-1 bg-emerald-100 text-emerald-700 text-sm rounded-full font-medium">
+                  {filteredHistory.length} resultados
+                </span>
+              )}
+            </div>
+            <div className="relative" ref={filterRef}>
+              <button 
+                onClick={toggleFilters}
+                className={`flex items-center gap-2 px-4 py-2 border rounded-lg font-medium transition-colors ${
+                  hasActiveFilters()
+                    ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
+                    : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                <Filter className="w-4 h-4" />
+                Filtrar
+                {hasActiveFilters() && (
+                  <span className="w-2 h-2 bg-emerald-500 rounded-full"></span>
+                )}
+              </button>
+              
+              {/* Filter Dropdown */}
+              <AnimatePresence>
+                {showFilters && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                    className="absolute right-0 top-full mt-2 w-80 bg-white border border-gray-200 rounded-xl shadow-lg z-50 p-6"
+                  >
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <h3 className="font-bold text-gray-900">Filtros</h3>
+                        <button
+                          onClick={clearFilters}
+                          className="text-sm text-emerald-600 hover:text-emerald-700 font-medium"
+                        >
+                          Limpiar todo
+                        </button>
+                      </div>
+
+                      {/* Usuario */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Usuario</label>
+                        <select
+                          value={filters.user}
+                          onChange={(e) => updateFilter('user', e.target.value)}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                        >
+                          <option value="">Todos los usuarios</option>
+                          {filterOptions.users.map(user => (
+                            <option key={user} value={user}>{user}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {/* Formato */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Formato</label>
+                        <select
+                          value={filters.format}
+                          onChange={(e) => updateFilter('format', e.target.value)}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                        >
+                          <option value="">Todos los formatos</option>
+                          {filterOptions.formats.map(format => (
+                            <option key={format} value={format}>{format.toUpperCase()}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {/* Estado */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Estado</label>
+                        <select
+                          value={filters.status}
+                          onChange={(e) => updateFilter('status', e.target.value)}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                        >
+                          <option value="">Todos los estados</option>
+                          <option value="completed">Completado</option>
+                          <option value="error">Error</option>
+                        </select>
+                      </div>
+
+                      {/* Fechas */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">Desde</label>
+                          <input
+                            type="date"
+                            value={filters.dateFrom}
+                            onChange={(e) => updateFilter('dateFrom', e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">Hasta</label>
+                          <input
+                            type="date"
+                            value={filters.dateTo}
+                            onChange={(e) => updateFilter('dateTo', e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Tipos de datos */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Tipos de datos</label>
+                        <div className="space-y-2 max-h-32 overflow-y-auto">
+                          {filterOptions.dataTypes.map(dataType => (
+                            <label key={dataType.value} className="flex items-center gap-2 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={filters.dataTypes.includes(dataType.value)}
+                                onChange={() => toggleDataTypeFilter(dataType.value)}
+                                className="w-4 h-4 text-emerald-500 rounded focus:ring-emerald-500"
+                              />
+                              <span className="text-sm text-gray-700">{dataType.label}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Botones de acción */}
+                      <div className="flex gap-3 pt-4 border-t">
+                        <button
+                          onClick={clearFilters}
+                          className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium text-sm transition-colors"
+                        >
+                          Limpiar
+                        </button>
+                        <button
+                          onClick={applyFilters}
+                          className="flex-1 px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 font-medium text-sm transition-colors"
+                        >
+                          Aplicar
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fecha</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Usuario</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Datos</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Período</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Formato</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tamaño</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>
-                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Acciones</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {mockHistory.map((item) => (
-                  <tr key={item.id} className="hover:bg-gray-50">
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{item.date}</div>
-                      <div className="text-xs text-gray-500">{item.time}</div>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600">{item.user}</td>
-                    <td className="px-4 py-4">
-                      <div className="flex flex-wrap gap-1">
-                        {item.dataTypes.slice(0, 2).map((type) => (
-                          <span key={type} className="text-xs px-2 py-0.5 bg-gray-100 text-gray-600 rounded">
-                            {getDataTypeLabel(type)}
+          {filteredHistory.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="min-w-full">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fecha</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Usuario</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Datos</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Período</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Formato</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tamaño</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>
+                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {filteredHistory.map((item) => (
+                    <tr key={item.id} className="hover:bg-gray-50">
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">{item.date}</div>
+                        <div className="text-xs text-gray-500">{item.time}</div>
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600">{item.user}</td>
+                      <td className="px-4 py-4">
+                        <div className="flex flex-wrap gap-1">
+                          {item.dataTypes.slice(0, 2).map((type) => (
+                            <span key={type} className="text-xs px-2 py-0.5 bg-gray-100 text-gray-600 rounded">
+                              {getDataTypeLabel(type)}
+                            </span>
+                          ))}
+                          {item.dataTypes.length > 2 && (
+                            <span className="text-xs px-2 py-0.5 bg-gray-100 text-gray-600 rounded">
+                              +{item.dataTypes.length - 2}
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-4 py-4 text-sm text-gray-600">{item.period}</td>
+                      <td className="px-4 py-4">
+                        <span className="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full font-medium">
+                          {item.format.toUpperCase()}
+                        </span>
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600">{item.size}</td>
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        {item.status === 'completed' ? (
+                          <span className="flex items-center gap-1 text-green-700">
+                            <CheckCircle className="w-4 h-4" />
+                            <span className="text-sm font-medium">Completado</span>
                           </span>
-                        ))}
-                        {item.dataTypes.length > 2 && (
-                          <span className="text-xs px-2 py-0.5 bg-gray-100 text-gray-600 rounded">
-                            +{item.dataTypes.length - 2}
+                        ) : (
+                          <span className="flex items-center gap-1 text-red-700">
+                            <XCircle className="w-4 h-4" />
+                            <span className="text-sm font-medium">Error</span>
                           </span>
                         )}
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 text-sm text-gray-600">{item.period}</td>
-                    <td className="px-4 py-4">
-                      <span className="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full font-medium">
-                        {item.format.toUpperCase()}
-                      </span>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600">{item.size}</td>
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      {item.status === 'completed' ? (
-                        <span className="flex items-center gap-1 text-green-700">
-                          <CheckCircle className="w-4 h-4" />
-                          <span className="text-sm font-medium">Completado</span>
-                        </span>
-                      ) : (
-                        <span className="flex items-center gap-1 text-red-700">
-                          <XCircle className="w-4 h-4" />
-                          <span className="text-sm font-medium">Error</span>
-                        </span>
-                      )}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <button className="p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors">
-                          <Download className="w-4 h-4" />
-                        </button>
-                        <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <button 
+                            onClick={downloadHistoryItem}
+                            className="p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
+                          >
+                            <Download className="w-4 h-4" />
+                          </button>
+                          <button 
+                            onClick={() => deleteHistoryItem(item.id)}
+                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
+                <Filter className="w-8 h-8 text-gray-400" />
+              </div>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">No se encontraron resultados</h3>
+              <p className="text-gray-600 mb-4">Intenta ajustar los filtros para encontrar lo que buscas</p>
+              <button
+                onClick={clearFilters}
+                className="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 font-medium transition-colors"
+              >
+                Limpiar filtros
+              </button>
+            </div>
+          )}
           <div className="mt-4 text-sm text-gray-600 text-center">
             Los archivos se conservan durante 30 días
           </div>
@@ -1021,11 +1401,14 @@ const ExportarContabilidadPage: React.FC = () => {
                       <div className="w-3 h-3 bg-green-500 rounded-full" />
                     )}
                   </div>
-                  <button className={`w-full px-4 py-2 rounded-lg font-medium transition-colors ${
-                    integration.connected
-                      ? 'bg-emerald-500 text-white hover:bg-emerald-600'
-                      : 'border-2 border-gray-300 text-gray-700 hover:bg-gray-50'
-                  }`}>
+                  <button 
+                    onClick={() => toggleIntegration(integration.name)}
+                    className={`w-full px-4 py-2 rounded-lg font-medium transition-colors ${
+                      integration.connected
+                        ? 'bg-emerald-500 text-white hover:bg-emerald-600'
+                        : 'border-2 border-gray-300 text-gray-700 hover:bg-gray-50'
+                    }`}
+                  >
                     {integration.connected ? 'Enviar datos' : 'Conectar'}
                   </button>
                 </div>
@@ -1062,7 +1445,10 @@ const ExportarContabilidadPage: React.FC = () => {
                   Índice en PDF y protección con contraseña
                 </div>
               </div>
-              <button className="w-full px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-bold shadow-lg hover:shadow-xl transition-all">
+              <button 
+                onClick={generatePackGestoria}
+                className="w-full px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-bold shadow-lg hover:shadow-xl transition-all"
+              >
                 Generar Pack Gestoría
               </button>
             </div>
@@ -1100,11 +1486,17 @@ const ExportarContabilidadPage: React.FC = () => {
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 font-medium transition-colors">
+                      <button 
+                        onClick={() => generateReport(report.name)}
+                        className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 font-medium transition-colors"
+                      >
                         <Play className="w-4 h-4" />
                         Generar
                       </button>
-                      <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors">
+                      <button 
+                        onClick={() => previewReport(report.name)}
+                        className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors"
+                      >
                         Preview
                       </button>
                     </div>
@@ -1123,7 +1515,11 @@ const ExportarContabilidadPage: React.FC = () => {
                 'Mapeo de cuentas contables',
                 'Preguntas frecuentes (FAQs)'
               ].map((helpItem) => (
-                <button key={helpItem} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-emerald-300 hover:bg-emerald-50 transition-all text-left">
+                <button 
+                  key={helpItem} 
+                  onClick={() => showHelp(helpItem)}
+                  className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-emerald-300 hover:bg-emerald-50 transition-all text-left"
+                >
                   <span className="text-gray-900 font-medium">{helpItem}</span>
                   <Info className="w-5 h-5 text-gray-400" />
                 </button>
@@ -1174,16 +1570,25 @@ const ExportarContabilidadPage: React.FC = () => {
               </div>
 
               <div className="space-y-3">
-                <button className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-bold shadow-lg hover:shadow-xl transition-all">
+                <button 
+                  onClick={downloadFile}
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-bold shadow-lg hover:shadow-xl transition-all"
+                >
                   <Download className="w-5 h-5" />
                   Descargar ahora
                 </button>
                 <div className="grid grid-cols-2 gap-3">
-                  <button className="flex items-center justify-center gap-2 px-4 py-2.5 border-2 border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-colors">
+                  <button 
+                    onClick={sendByEmail}
+                    className="flex items-center justify-center gap-2 px-4 py-2.5 border-2 border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-colors"
+                  >
                     <Mail className="w-4 h-4" />
                     Enviar por email
                   </button>
-                  <button className="flex items-center justify-center gap-2 px-4 py-2.5 border-2 border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-colors">
+                  <button 
+                    onClick={shareLink}
+                    className="flex items-center justify-center gap-2 px-4 py-2.5 border-2 border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-colors"
+                  >
                     <Share2 className="w-4 h-4" />
                     Compartir link
                   </button>
@@ -1302,23 +1707,25 @@ const ExportarContabilidadPage: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {[
-                      { category: 'Ingresos por servicios', account: '705', description: 'Prestaciones de servicios' },
-                      { category: 'Ingresos por ventas', account: '700', description: 'Ventas de mercaderías' },
-                      { category: 'Gastos de personal', account: '640', description: 'Sueldos y salarios' },
-                      { category: 'Alquiler oficina', account: '621', description: 'Arrendamientos' },
-                      { category: 'Servicios profesionales', account: '623', description: 'Servicios profesionales indep.' }
-                    ].map((mapping, idx) => (
+                    {accountMappings.map((mapping, idx) => (
                       <tr key={idx}>
                         <td className="px-4 py-3 text-sm text-gray-900">{mapping.category}</td>
                         <td className="px-4 py-3">
                           <input
                             type="text"
                             value={mapping.account}
+                            onChange={(e) => updateAccountMapping(idx, 'account', e.target.value)}
                             className="w-24 px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                           />
                         </td>
-                        <td className="px-4 py-3 text-sm text-gray-600">{mapping.description}</td>
+                        <td className="px-4 py-3">
+                          <input
+                            type="text"
+                            value={mapping.description}
+                            onChange={(e) => updateAccountMapping(idx, 'description', e.target.value)}
+                            className="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                          />
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -1337,6 +1744,108 @@ const ExportarContabilidadPage: React.FC = () => {
                   className="flex-1 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-bold shadow-lg hover:shadow-xl transition-all"
                 >
                   Guardar Configuración
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Delete Confirmation Modal */}
+      <AnimatePresence>
+        {showDeleteModal && itemToDelete && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+            onClick={() => setShowDeleteModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8"
+            >
+              <div className="text-center mb-6">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-4">
+                  <Trash2 className="w-10 h-10 text-red-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Confirmar eliminación</h3>
+                <p className="text-gray-600">¿Estás seguro de que quieres eliminar "{itemToDelete.name}"?</p>
+                <p className="text-sm text-gray-500 mt-2">Esta acción no se puede deshacer.</p>
+              </div>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowDeleteModal(false)}
+                  className="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-xl font-bold hover:bg-gray-50 transition-colors"
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={confirmDelete}
+                  className="flex-1 px-6 py-3 bg-red-600 text-white rounded-xl font-bold shadow-lg hover:bg-red-700 transition-all"
+                >
+                  Eliminar
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Preview Modal */}
+      <AnimatePresence>
+        {showPreviewModal && previewData && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+            onClick={() => setShowPreviewModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full p-8 max-h-[80vh] overflow-y-auto"
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-2xl font-bold text-gray-900">Vista previa: {previewData.name}</h3>
+                <button
+                  onClick={() => setShowPreviewModal(false)}
+                  className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <XCircle className="w-6 h-6" />
+                </button>
+              </div>
+
+              <div className="bg-gray-50 rounded-xl p-6 mb-6">
+                <div className="text-center text-gray-600">
+                  <FileText className="w-16 h-16 mx-auto mb-4 text-gray-400" />
+                  <p className="text-lg font-medium mb-2">Vista previa del reporte</p>
+                  <p className="text-sm">Aquí se mostraría el contenido del reporte generado</p>
+                </div>
+              </div>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowPreviewModal(false)}
+                  className="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-xl font-bold hover:bg-gray-50 transition-colors"
+                >
+                  Cerrar
+                </button>
+                <button
+                  onClick={() => {
+                    generateReport(previewData.name);
+                    setShowPreviewModal(false);
+                  }}
+                  className="flex-1 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-bold shadow-lg hover:shadow-xl transition-all"
+                >
+                  Generar Reporte
                 </button>
               </div>
             </motion.div>

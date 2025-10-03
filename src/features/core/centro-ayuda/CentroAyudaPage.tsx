@@ -1,18 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Search, Sparkles, Users, Dumbbell, CreditCard, Settings,
   Plug, Wrench, BookOpen, MessageCircle, Video, ChevronDown,
-  ThumbsUp, ThumbsDown, Play, Clock, TrendingUp, FileText,
+  ThumbsUp, Play, Clock, TrendingUp, FileText,
   HelpCircle, Rocket, Phone, Calendar
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const CentroAyudaPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [sortBy, setSortBy] = useState<'relevance' | 'recent' | 'popular'>('relevance');
-  const [filterType, setFilterType] = useState<'all' | 'tutorials' | 'faqs' | 'videos'>('all');
+  // Opciones de orden y filtro no utilizadas por ahora; se eliminaron para evitar warnings
+  const navigate = useNavigate();
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const faqSectionRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      const isMac = navigator.platform.toLowerCase().includes('mac');
+      if ((isMac ? e.metaKey : e.ctrlKey) && (e.key === 'k' || e.key === 'K')) {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
 
   const categories = [
     { id: 'getting-started', name: 'Primeros Pasos', icon: Rocket, count: 12, gradient: 'from-blue-500 to-cyan-500' },
@@ -183,6 +198,7 @@ const CentroAyudaPage: React.FC = () => {
                 placeholder="Busca cualquier cosa... (Ctrl+K)"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                ref={searchInputRef}
                 className="w-full pl-16 pr-6 py-5 bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border-2 border-white/50 focus:border-yellow-300 focus:ring-4 focus:ring-yellow-200/50 transition-all duration-300 outline-none text-lg"
               />
             </div>
@@ -229,7 +245,13 @@ const CentroAyudaPage: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05, duration: 0.4 }}
                 whileHover={{ scale: 1.03, y: -8 }}
-                onClick={() => setSelectedCategory(category.id)}
+                onClick={() => {
+                  if (category.id === 'faq') {
+                    faqSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+                  } else {
+                    setSelectedCategory(category.id);
+                  }
+                }}
                 className={`relative overflow-hidden bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border-2 text-left group ${
                   selectedCategory === category.id
                     ? 'border-indigo-500 ring-4 ring-indigo-100'
@@ -278,7 +300,10 @@ const CentroAyudaPage: React.FC = () => {
           </h2>
           {selectedCategory !== 'all' && (
             <button
-              onClick={() => setSelectedCategory('all')}
+              onClick={() => {
+                setSearchTerm('');
+                setSelectedCategory('all');
+              }}
               className="text-sm text-indigo-600 hover:text-indigo-700 font-semibold"
             >
               Ver todos
@@ -297,6 +322,10 @@ const CentroAyudaPage: React.FC = () => {
                 transition={{ delay: index * 0.05, duration: 0.4 }}
                 whileHover={{ scale: 1.02 }}
                 className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-5 border border-white/50 group cursor-pointer"
+                onClick={() => {
+                  setSelectedCategory(article.category);
+                  setSearchTerm(article.title);
+                }}
               >
                 <div className="flex items-start gap-4">
                   {/* Icon */}
@@ -361,6 +390,10 @@ const CentroAyudaPage: React.FC = () => {
               transition={{ delay: index * 0.1, duration: 0.4 }}
               whileHover={{ scale: 1.05, y: -8 }}
               className="relative overflow-hidden bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-white/50 group cursor-pointer"
+              onClick={() => {
+                const query = encodeURIComponent(`${video.title} ${video.category} Astrofit`);
+                window.open(`https://www.youtube.com/results?search_query=${query}`, '_blank');
+              }}
             >
               {/* Thumbnail */}
               <div className="relative aspect-video bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center">
@@ -395,6 +428,7 @@ const CentroAyudaPage: React.FC = () => {
 
       {/* FAQ Section */}
       <motion.div
+        ref={faqSectionRef}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.6 }}
@@ -506,6 +540,11 @@ const CentroAyudaPage: React.FC = () => {
               whileHover={{ scale: 1.05, y: -4 }}
               whileTap={{ scale: 0.95 }}
               className="bg-white/90 backdrop-blur-xl rounded-2xl p-6 text-left hover:bg-white transition-all duration-300 shadow-xl hover:shadow-2xl group"
+              onClick={() => {
+                const subject = encodeURIComponent('Nuevo ticket de soporte');
+                const body = encodeURIComponent('Describe tu problema aquí:\n\n');
+                window.location.href = `mailto:soporte@fitness.com?subject=${subject}&body=${body}`;
+              }}
             >
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform duration-300">
                 <FileText className="w-6 h-6" />
@@ -519,6 +558,7 @@ const CentroAyudaPage: React.FC = () => {
               whileHover={{ scale: 1.05, y: -4 }}
               whileTap={{ scale: 0.95 }}
               className="bg-white/90 backdrop-blur-xl rounded-2xl p-6 text-left hover:bg-white transition-all duration-300 shadow-xl hover:shadow-2xl group"
+              onClick={() => navigate('/mensajeria')}
             >
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform duration-300">
                 <MessageCircle className="w-6 h-6" />
@@ -536,6 +576,7 @@ const CentroAyudaPage: React.FC = () => {
               whileHover={{ scale: 1.05, y: -4 }}
               whileTap={{ scale: 0.95 }}
               className="bg-white/90 backdrop-blur-xl rounded-2xl p-6 text-left hover:bg-white transition-all duration-300 shadow-xl hover:shadow-2xl group"
+              onClick={() => navigate('/calendario-publico')}
             >
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform duration-300">
                 <Phone className="w-6 h-6" />

@@ -425,6 +425,40 @@ const IntegracionesEsencialesPage: React.FC = () => {
 
   const statusFilters = ['Todas', 'Conectadas', 'Disponibles', 'Próximamente'];
 
+  // URLs de documentación por integración
+  const docsUrls: Record<string, string> = {
+    'stripe': 'https://stripe.com/docs',
+    'google-calendar': 'https://support.google.com/calendar',
+    'paypal': 'https://developer.paypal.com/docs/',
+    'mailchimp': 'https://mailchimp.com/help/',
+    'sendgrid': 'https://docs.sendgrid.com/',
+    'zoom': 'https://support.zoom.com/hc',
+    'google-meet': 'https://support.google.com/meet',
+    'whatsapp-business': 'https://www.whatsapp.com/business/',
+    'slack': 'https://api.slack.com/',
+    'quickbooks': 'https://quickbooks.intuit.com/learn-support/',
+    'xero': 'https://developer.xero.com/documentation',
+    'hubspot': 'https://knowledge.hubspot.com/',
+    'salesforce': 'https://help.salesforce.com/',
+    'instagram-business': 'https://business.instagram.com/resources',
+    'facebook-business': 'https://www.facebook.com/business/help',
+    'myfitnesspal': 'https://www.myfitnesspal.com/es/help',
+    'apple-health': 'https://support.apple.com/es-es/guide/iphone/iphb2b2b3b2/ios',
+    'fitbit': 'https://help.fitbit.com/',
+    'garmin': 'https://support.garmin.com/',
+    'google-drive': 'https://support.google.com/drive',
+    'dropbox': 'https://help.dropbox.com/es-es',
+    'notion': 'https://www.notion.so/help',
+    'trello': 'https://support.atlassian.com/trello/',
+    'asana': 'https://help.asana.com/',
+    'telegram': 'https://core.telegram.org/bots'
+  };
+
+  const openDocsForIntegration = (integration: Integration) => {
+    const url = docsUrls[integration.id] || `https://www.google.com/search?q=${encodeURIComponent(integration.name + ' documentación')}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
   const connectedIntegrations = integrations.filter(i => i.status === 'connected');
   const lastSyncTime = 'Hace 2 minutos';
 
@@ -758,7 +792,10 @@ const IntegracionesEsencialesPage: React.FC = () => {
                     >
                       Configurar
                     </button>
-                    <button className="p-2 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors duration-300">
+                    <button
+                      onClick={() => openDocsForIntegration(integration)}
+                      className="p-2 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors duration-300"
+                    >
                       <FileText className="w-5 h-5 text-gray-700" />
                     </button>
                   </div>
@@ -1003,11 +1040,25 @@ const IntegracionesEsencialesPage: React.FC = () => {
                 <div className="flex gap-4">
                   {selectedIntegration.status === 'connected' ? (
                     <>
-                      <button className="flex-1 py-4 px-6 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-2xl font-bold hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+                      <button
+                        onClick={() => {
+                          setShowConnectModal(true);
+                          setConnectStep(3);
+                        }}
+                        className="flex-1 py-4 px-6 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-2xl font-bold hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                      >
                         <FileText className="w-5 h-5" />
                         Ver Configuración
                       </button>
-                      <button className="flex-1 py-4 px-6 bg-gray-100 text-gray-700 rounded-2xl font-bold hover:bg-gray-200 transition-all duration-300 flex items-center justify-center gap-2">
+                      <button
+                        onClick={() => {
+                          if (confirm(`¿Seguro que deseas desconectar ${selectedIntegration.name}?`)) {
+                            alert(`${selectedIntegration.name} desconectada. Puedes reconectarla cuando quieras.`);
+                            setSelectedIntegration(null);
+                          }
+                        }}
+                        className="flex-1 py-4 px-6 bg-gray-100 text-gray-700 rounded-2xl font-bold hover:bg-gray-200 transition-all duration-300 flex items-center justify-center gap-2"
+                      >
                         <X className="w-5 h-5" />
                         Desconectar
                       </button>
@@ -1024,7 +1075,10 @@ const IntegracionesEsencialesPage: React.FC = () => {
                         <Zap className="w-5 h-5" />
                         Conectar Ahora
                       </button>
-                      <button className="py-4 px-6 bg-gray-100 text-gray-700 rounded-2xl font-bold hover:bg-gray-200 transition-all duration-300 flex items-center justify-center gap-2">
+                      <button
+                        onClick={() => openDocsForIntegration(selectedIntegration)}
+                        className="py-4 px-6 bg-gray-100 text-gray-700 rounded-2xl font-bold hover:bg-gray-200 transition-all duration-300 flex items-center justify-center gap-2"
+                      >
                         <ExternalLink className="w-5 h-5" />
                         Documentación
                       </button>

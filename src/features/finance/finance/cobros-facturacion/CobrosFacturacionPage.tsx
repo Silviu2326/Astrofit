@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import toast, { Toaster } from 'react-hot-toast';
 import {
   FileText,
   CheckCircle,
@@ -16,24 +17,18 @@ import {
   Mail,
   Eye,
   Edit,
-  Trash2,
   Grid3x3,
   List,
-  ChevronDown,
   X,
   DollarSign,
   CreditCard,
   Send,
-  Printer,
   TrendingUp,
   TrendingDown,
-  Users,
   BarChart3,
   FileSpreadsheet,
-  Copy,
   MoreVertical,
   ArrowUpDown,
-  Check,
 } from 'lucide-react';
 
 // Types
@@ -962,6 +957,53 @@ const CobrosFacturacionPage: React.FC = () => {
   const [amountMinFilter, setAmountMinFilter] = useState('');
   const [amountMaxFilter, setAmountMaxFilter] = useState('');
 
+  // Modal states
+  const [showConfigModal, setShowConfigModal] = useState(false);
+  const [showImportModal, setShowImportModal] = useState(false);
+  const [showInvoiceModal, setShowInvoiceModal] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showAnalyticsModal, setShowAnalyticsModal] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
+
+  // New Invoice Modal states
+  const [newInvoiceStep, setNewInvoiceStep] = useState(1);
+  const [newInvoiceData, setNewInvoiceData] = useState({
+    clientId: '',
+    clientName: '',
+    clientEmail: '',
+    concept: '',
+    lines: [] as InvoiceLine[],
+    dueDate: '',
+    notes: '',
+    paymentMethod: 'Transferencia bancaria'
+  });
+
+  // Configuration Modal states
+  const [configData, setConfigData] = useState({
+    companyName: 'Mi Empresa',
+    companyAddress: 'Calle Principal 123, Ciudad',
+    companyPhone: '+34 123 456 789',
+    companyEmail: 'info@miempresa.com',
+    taxId: 'B12345678',
+    bankAccount: 'ES12 1234 5678 9012 3456 7890',
+    invoicePrefix: 'INV',
+    defaultDueDays: 15,
+    taxRate: 21,
+    currency: 'EUR',
+    language: 'es'
+  });
+
+  // Confirmation Modal states
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [confirmAction, setConfirmAction] = useState<{
+    title: string;
+    message: string;
+    confirmText: string;
+    onConfirm: () => void;
+    type: 'success' | 'warning' | 'danger';
+  } | null>(null);
+
   // Calculate statistics
   const stats = useMemo(() => {
     const total = mockInvoices.reduce((sum, inv) => sum + inv.total, 0);
@@ -999,6 +1041,37 @@ const CobrosFacturacionPage: React.FC = () => {
   // Filter and sort invoices
   const filteredInvoices = useMemo(() => {
     let filtered = mockInvoices;
+
+    // Period filter
+    if (periodFilter !== 'all') {
+      const today = new Date();
+      const filterDate = new Date();
+      
+      switch (periodFilter) {
+        case 'today':
+          filtered = filtered.filter(inv => {
+            const issueDate = new Date(inv.issueDate);
+            return issueDate.toDateString() === today.toDateString();
+          });
+          break;
+        case 'week':
+          filterDate.setDate(today.getDate() - 7);
+          filtered = filtered.filter(inv => new Date(inv.issueDate) >= filterDate);
+          break;
+        case 'month':
+          filterDate.setMonth(today.getMonth() - 1);
+          filtered = filtered.filter(inv => new Date(inv.issueDate) >= filterDate);
+          break;
+        case 'quarter':
+          filterDate.setMonth(today.getMonth() - 3);
+          filtered = filtered.filter(inv => new Date(inv.issueDate) >= filterDate);
+          break;
+        case 'year':
+          filterDate.setFullYear(today.getFullYear() - 1);
+          filtered = filtered.filter(inv => new Date(inv.issueDate) >= filterDate);
+          break;
+      }
+    }
 
     // Tab filter
     if (activeTab !== 'all') {
@@ -1066,7 +1139,7 @@ const CobrosFacturacionPage: React.FC = () => {
     });
 
     return filtered;
-  }, [mockInvoices, activeTab, searchTerm, statusFilter, clientFilter, dateFromFilter, dateToFilter, amountMinFilter, amountMaxFilter, sortField, sortDirection]);
+  }, [mockInvoices, periodFilter, activeTab, searchTerm, statusFilter, clientFilter, dateFromFilter, dateToFilter, amountMinFilter, amountMaxFilter, sortField, sortDirection]);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -1123,37 +1196,191 @@ const CobrosFacturacionPage: React.FC = () => {
     });
   };
 
-  const StatCard = ({ icon: Icon, label, value, change, changePositive, color }: any) => (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-lg shadow-sm p-6 border border-gray-100"
-    >
-      <div className="flex items-start justify-between">
-        <div className="flex-1">
-          <div className="flex items-center gap-3 mb-3">
-            <div className={`w-12 h-12 rounded-lg ${color} bg-opacity-10 flex items-center justify-center`}>
-              <Icon className={`w-6 h-6 ${color}`} />
-            </div>
-          </div>
-          <p className="text-sm text-gray-600 mb-1">{label}</p>
-          <p className="text-2xl font-bold text-gray-900">{value}</p>
-          {change !== undefined && (
-            <div className="flex items-center gap-1 mt-2">
-              {changePositive ? (
-                <TrendingUp className="w-4 h-4 text-green-600" />
-              ) : (
-                <TrendingDown className="w-4 h-4 text-red-600" />
-              )}
-              <span className={`text-sm font-medium ${changePositive ? 'text-green-600' : 'text-red-600'}`}>
-                {change}% vs mes anterior
-              </span>
-            </div>
-          )}
-        </div>
-      </div>
-    </motion.div>
-  );
+  // Action handlers
+  const handleViewInvoice = (invoice: Invoice) => {
+    setSelectedInvoice(invoice);
+    setShowInvoiceModal(true);
+  };
+
+  const handleEditInvoice = (invoice: Invoice) => {
+    setSelectedInvoice(invoice);
+    setShowNewInvoiceModal(true);
+  };
+
+  const handleSendInvoice = (invoice: Invoice) => {
+    showConfirmation(
+      'Enviar Factura',
+      `¿Estás seguro de que quieres enviar la factura ${invoice.invoiceNumber} por email a ${invoice.clientEmail}?`,
+      'Enviar',
+      () => {
+        toast.success(`Factura ${invoice.invoiceNumber} enviada por email exitosamente`, {
+          duration: 4000,
+          icon: '📧',
+        });
+      },
+      'success'
+    );
+  };
+
+  const handleDownloadPDF = (invoice: Invoice) => {
+    // Simular descarga de PDF
+    const link = document.createElement('a');
+    link.href = '#';
+    link.download = `factura-${invoice.invoiceNumber}.pdf`;
+    link.click();
+    toast.success(`PDF de la factura ${invoice.invoiceNumber} descargado`, {
+      duration: 3000,
+      icon: '📄',
+    });
+  };
+
+  const handleRecordPayment = (invoice: Invoice) => {
+    setSelectedInvoice(invoice);
+    setShowPaymentModal(true);
+  };
+
+  const handleBulkSendReminders = () => {
+    const selectedInvoicesData = mockInvoices.filter(inv => selectedInvoices.includes(inv.id));
+    showConfirmation(
+      'Enviar Recordatorios',
+      `¿Estás seguro de que quieres enviar recordatorios a ${selectedInvoicesData.length} facturas?`,
+      'Enviar Recordatorios',
+      () => {
+        toast.success(`Recordatorios enviados a ${selectedInvoicesData.length} facturas`, {
+          duration: 4000,
+          icon: '📬',
+        });
+        setSelectedInvoices([]);
+      },
+      'success'
+    );
+  };
+
+  const handleBulkDownloadPDF = () => {
+    toast.success(`Descargando PDFs de ${selectedInvoices.length} facturas`, {
+      duration: 3000,
+      icon: '📄',
+    });
+  };
+
+  const handleBulkExportExcel = () => {
+    toast.success(`Exportando ${selectedInvoices.length} facturas a Excel`, {
+      duration: 3000,
+      icon: '📊',
+    });
+  };
+
+  const handleExportInvoices = () => {
+    toast.success(`Exportando ${filteredInvoices.length} facturas filtradas`, {
+      duration: 3000,
+      icon: '📊',
+    });
+  };
+
+  const handleShowAnalytics = () => {
+    setShowAnalyticsModal(true);
+  };
+
+  const handleGenerateReport = () => {
+    setShowReportModal(true);
+  };
+
+  // New Invoice handlers
+  const handleNewInvoiceNext = () => {
+    if (newInvoiceStep < 4) {
+      setNewInvoiceStep(newInvoiceStep + 1);
+    }
+  };
+
+  const handleNewInvoicePrev = () => {
+    if (newInvoiceStep > 1) {
+      setNewInvoiceStep(newInvoiceStep - 1);
+    }
+  };
+
+  const handleNewInvoiceSubmit = () => {
+    // Simular creación de factura
+    toast.success('Factura creada exitosamente', {
+      duration: 4000,
+      icon: '✅',
+    });
+    setShowNewInvoiceModal(false);
+    setNewInvoiceStep(1);
+    setNewInvoiceData({
+      clientId: '',
+      clientName: '',
+      clientEmail: '',
+      concept: '',
+      lines: [],
+      dueDate: '',
+      notes: '',
+      paymentMethod: 'Transferencia bancaria'
+    });
+  };
+
+  const addInvoiceLine = () => {
+    const newLine: InvoiceLine = {
+      id: `line_${Date.now()}`,
+      concept: '',
+      description: '',
+      quantity: 1,
+      unitPrice: 0,
+      discount: 0,
+      subtotal: 0
+    };
+    setNewInvoiceData(prev => ({
+      ...prev,
+      lines: [...prev.lines, newLine]
+    }));
+    toast.success('Nueva línea agregada', {
+      duration: 2000,
+      icon: '➕',
+    });
+  };
+
+  const updateInvoiceLine = (lineId: string, field: keyof InvoiceLine, value: any) => {
+    setNewInvoiceData(prev => ({
+      ...prev,
+      lines: prev.lines.map(line => {
+        if (line.id === lineId) {
+          const updatedLine = { ...line, [field]: value };
+          if (field === 'quantity' || field === 'unitPrice' || field === 'discount') {
+            updatedLine.subtotal = updatedLine.quantity * updatedLine.unitPrice - updatedLine.discount;
+          }
+          return updatedLine;
+        }
+        return line;
+      })
+    }));
+  };
+
+  const removeInvoiceLine = (lineId: string) => {
+    setNewInvoiceData(prev => ({
+      ...prev,
+      lines: prev.lines.filter(line => line.id !== lineId)
+    }));
+  };
+
+  // Helper function for confirmations
+  const showConfirmation = (title: string, message: string, confirmText: string, onConfirm: () => void, type: 'success' | 'warning' | 'danger' = 'warning') => {
+    setConfirmAction({
+      title,
+      message,
+      confirmText,
+      onConfirm,
+      type
+    });
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirm = () => {
+    if (confirmAction) {
+      confirmAction.onConfirm();
+      setShowConfirmModal(false);
+      setConfirmAction(null);
+    }
+  };
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 pb-12">
@@ -1201,24 +1428,30 @@ const CobrosFacturacionPage: React.FC = () => {
 
             {/* Action Buttons */}
             <div className="flex items-center gap-3">
-              <div className="flex bg-white/10 backdrop-blur-md border border-white/20 rounded-xl overflow-hidden">
+              <div className="relative">
                 <select
                   value={periodFilter}
                   onChange={(e) => setPeriodFilter(e.target.value)}
-                  className="px-3 py-2 text-sm font-semibold bg-transparent text-white border-none focus:outline-none cursor-pointer"
+                  className="appearance-none bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold rounded-xl px-4 py-2.5 pr-8 focus:outline-none focus:ring-2 focus:ring-white/30 cursor-pointer transition-all duration-300 hover:bg-white/20"
                 >
-                  <option value="all">Todo el periodo</option>
-                  <option value="today">Hoy</option>
-                  <option value="week">Esta semana</option>
-                  <option value="month">Este mes</option>
-                  <option value="quarter">Este trimestre</option>
-                  <option value="year">Este año</option>
+                  <option value="all" className="bg-gray-800 text-white">Todo el periodo</option>
+                  <option value="today" className="bg-gray-800 text-white">Hoy</option>
+                  <option value="week" className="bg-gray-800 text-white">Esta semana</option>
+                  <option value="month" className="bg-gray-800 text-white">Este mes</option>
+                  <option value="quarter" className="bg-gray-800 text-white">Este trimestre</option>
+                  <option value="year" className="bg-gray-800 text-white">Este año</option>
                 </select>
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
               </div>
 
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => setShowConfigModal(true)}
                 className="flex items-center gap-2 px-4 py-2.5 bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold rounded-xl hover:bg-white/20 transition-all duration-300"
               >
                 <Settings className="w-4 h-4" />
@@ -1228,6 +1461,7 @@ const CobrosFacturacionPage: React.FC = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => setShowImportModal(true)}
                 className="flex items-center gap-2 px-4 py-2.5 bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold rounded-xl hover:bg-white/20 transition-all duration-300"
               >
                 <Upload className="w-4 h-4" />
@@ -1444,7 +1678,10 @@ const CobrosFacturacionPage: React.FC = () => {
                 <span className="w-2 h-2 bg-blue-600 rounded-full" />
               )}
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+            <button 
+              onClick={handleExportInvoices}
+              className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            >
               <Download className="w-4 h-4" />
               <span className="text-sm font-medium">Exportar</span>
             </button>
@@ -1557,15 +1794,24 @@ const CobrosFacturacionPage: React.FC = () => {
                 {selectedInvoices.length} factura{selectedInvoices.length !== 1 ? 's' : ''} seleccionada{selectedInvoices.length !== 1 ? 's' : ''}
               </span>
               <div className="flex items-center gap-2">
-                <button className="flex items-center gap-2 px-3 py-1.5 bg-white border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors text-sm">
+                <button 
+                  onClick={handleBulkSendReminders}
+                  className="flex items-center gap-2 px-3 py-1.5 bg-white border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors text-sm"
+                >
                   <Mail className="w-4 h-4" />
                   Enviar recordatorios
                 </button>
-                <button className="flex items-center gap-2 px-3 py-1.5 bg-white border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors text-sm">
+                <button 
+                  onClick={handleBulkDownloadPDF}
+                  className="flex items-center gap-2 px-3 py-1.5 bg-white border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors text-sm"
+                >
                   <Download className="w-4 h-4" />
                   Descargar PDF
                 </button>
-                <button className="flex items-center gap-2 px-3 py-1.5 bg-white border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors text-sm">
+                <button 
+                  onClick={handleBulkExportExcel}
+                  className="flex items-center gap-2 px-3 py-1.5 bg-white border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors text-sm"
+                >
                   <FileSpreadsheet className="w-4 h-4" />
                   Exportar Excel
                 </button>
@@ -1760,24 +2006,28 @@ const CobrosFacturacionPage: React.FC = () => {
                           <div className="flex items-center justify-end gap-1">
                             <button
                               title="Ver factura"
+                              onClick={() => handleViewInvoice(invoice)}
                               className="p-2 hover:bg-gray-100 rounded transition-colors"
                             >
                               <Eye className="w-4 h-4 text-gray-600" />
                             </button>
                             <button
                               title="Editar"
+                              onClick={() => handleEditInvoice(invoice)}
                               className="p-2 hover:bg-gray-100 rounded transition-colors"
                             >
                               <Edit className="w-4 h-4 text-gray-600" />
                             </button>
                             <button
                               title="Enviar por email"
+                              onClick={() => handleSendInvoice(invoice)}
                               className="p-2 hover:bg-gray-100 rounded transition-colors"
                             >
                               <Send className="w-4 h-4 text-gray-600" />
                             </button>
                             <button
                               title="Descargar PDF"
+                              onClick={() => handleDownloadPDF(invoice)}
                               className="p-2 hover:bg-gray-100 rounded transition-colors"
                             >
                               <Download className="w-4 h-4 text-gray-600" />
@@ -1785,6 +2035,7 @@ const CobrosFacturacionPage: React.FC = () => {
                             {invoice.status !== 'paid' && invoice.status !== 'cancelled' && (
                               <button
                                 title="Registrar cobro"
+                                onClick={() => handleRecordPayment(invoice)}
                                 className="p-2 hover:bg-green-50 rounded transition-colors"
                               >
                                 <DollarSign className="w-4 h-4 text-green-600" />
@@ -1922,12 +2173,18 @@ const CobrosFacturacionPage: React.FC = () => {
 
                       {/* Actions */}
                       <div className="flex items-center gap-2 pt-4 border-t border-gray-100">
-                        <button className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors text-sm font-medium">
+                        <button 
+                          onClick={() => handleViewInvoice(invoice)}
+                          className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors text-sm font-medium"
+                        >
                           <Eye className="w-4 h-4" />
                           Ver
                         </button>
                         {invoice.status !== 'paid' && invoice.status !== 'cancelled' && (
-                          <button className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors text-sm font-medium">
+                          <button 
+                            onClick={() => handleRecordPayment(invoice)}
+                            className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors text-sm font-medium"
+                          >
                             <DollarSign className="w-4 h-4" />
                             Cobrar
                           </button>
@@ -1979,11 +2236,17 @@ const CobrosFacturacionPage: React.FC = () => {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+            <button 
+              onClick={handleShowAnalytics}
+              className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            >
               <BarChart3 className="w-4 h-4" />
               <span className="text-sm font-medium">Ver Analytics</span>
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+            <button 
+              onClick={handleGenerateReport}
+              className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            >
               <FileSpreadsheet className="w-4 h-4" />
               <span className="text-sm font-medium">Generar Reporte</span>
             </button>
@@ -1992,7 +2255,7 @@ const CobrosFacturacionPage: React.FC = () => {
         </div>
       </div>
 
-      {/* New Invoice Modal Placeholder */}
+      {/* New Invoice Modal */}
       <AnimatePresence>
         {showNewInvoiceModal && (
           <motion.div
@@ -2007,7 +2270,7 @@ const CobrosFacturacionPage: React.FC = () => {
               animate={{ scale: 1 }}
               exit={{ scale: 0.95 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+              className="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto"
             >
               <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
                 <h2 className="text-2xl font-bold text-gray-900">Nueva Factura</h2>
@@ -2018,38 +2281,548 @@ const CobrosFacturacionPage: React.FC = () => {
                   <X className="w-5 h-5" />
                 </button>
               </div>
+
+              {/* Progress Steps */}
+              <div className="px-6 py-4 border-b border-gray-100">
+                <div className="flex items-center justify-center gap-2">
+                  {[1, 2, 3, 4].map((step) => (
+                    <div key={step} className="flex items-center gap-2">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                        step <= newInvoiceStep ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-600'
+                      }`}>
+                        {step}
+                      </div>
+                      <span className={`text-sm font-medium ${
+                        step <= newInvoiceStep ? 'text-blue-600' : 'text-gray-500'
+                      }`}>
+                        {step === 1 && 'Cliente'}
+                        {step === 2 && 'Líneas'}
+                        {step === 3 && 'Totales'}
+                        {step === 4 && 'Revisión'}
+                      </span>
+                      {step < 4 && (
+                        <div className={`w-12 h-0.5 ${
+                          step < newInvoiceStep ? 'bg-blue-600' : 'bg-gray-300'
+                        }`}></div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               <div className="p-6">
-                <div className="text-center py-12">
-                  <FileText className="w-16 h-16 text-blue-500 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                    Wizard de Nueva Factura
-                  </h3>
-                  <p className="text-gray-600 mb-6">
-                    Aquí iría el wizard completo de 4 pasos para crear una nueva factura
-                  </p>
-                  <div className="flex items-center justify-center gap-2 mb-8">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold">1</div>
-                      <span className="text-sm font-medium">Cliente</span>
-                    </div>
-                    <div className="w-12 h-0.5 bg-gray-300"></div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-gray-300 text-white flex items-center justify-center text-sm font-bold">2</div>
-                      <span className="text-sm text-gray-500">Líneas</span>
-                    </div>
-                    <div className="w-12 h-0.5 bg-gray-300"></div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-gray-300 text-white flex items-center justify-center text-sm font-bold">3</div>
-                      <span className="text-sm text-gray-500">Totales</span>
-                    </div>
-                    <div className="w-12 h-0.5 bg-gray-300"></div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-gray-300 text-white flex items-center justify-center text-sm font-bold">4</div>
-                      <span className="text-sm text-gray-500">Revisión</span>
+                {/* Step 1: Client Information */}
+                {newInvoiceStep === 1 && (
+                  <div className="space-y-6">
+                    <h3 className="text-xl font-semibold text-gray-900">Información del Cliente</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Nombre del Cliente</label>
+                        <input
+                          type="text"
+                          value={newInvoiceData.clientName}
+                          onChange={(e) => setNewInvoiceData(prev => ({ ...prev, clientName: e.target.value }))}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="Nombre completo del cliente"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Email del Cliente</label>
+                        <input
+                          type="email"
+                          value={newInvoiceData.clientEmail}
+                          onChange={(e) => setNewInvoiceData(prev => ({ ...prev, clientEmail: e.target.value }))}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="cliente@email.com"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Concepto General</label>
+                        <input
+                          type="text"
+                          value={newInvoiceData.concept}
+                          onChange={(e) => setNewInvoiceData(prev => ({ ...prev, concept: e.target.value }))}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="Descripción general de la factura"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Fecha de Vencimiento</label>
+                        <input
+                          type="date"
+                          value={newInvoiceData.dueDate}
+                          onChange={(e) => setNewInvoiceData(prev => ({ ...prev, dueDate: e.target.value }))}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
                     </div>
                   </div>
+                )}
+
+                {/* Step 2: Invoice Lines */}
+                {newInvoiceStep === 2 && (
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-xl font-semibold text-gray-900">Líneas de Factura</h3>
+                      <button
+                        onClick={addInvoiceLine}
+                        className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                      >
+                        <Plus className="w-4 h-4" />
+                        Agregar Línea
+                      </button>
+                    </div>
+                    
+                    {newInvoiceData.lines.length === 0 ? (
+                      <div className="text-center py-12">
+                        <FileText className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+                        <p className="text-gray-500">No hay líneas agregadas</p>
+                        <p className="text-sm text-gray-400">Haz clic en "Agregar Línea" para comenzar</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        {newInvoiceData.lines.map((line, index) => (
+                          <div key={line.id} className="border border-gray-200 rounded-lg p-4">
+                            <div className="flex items-center justify-between mb-4">
+                              <h4 className="font-medium text-gray-900">Línea {index + 1}</h4>
+                              <button
+                                onClick={() => showConfirmation(
+                                  'Eliminar Línea',
+                                  '¿Estás seguro de que quieres eliminar esta línea de factura?',
+                                  'Eliminar',
+                                  () => {
+                                    removeInvoiceLine(line.id);
+                                    toast.success('Línea eliminada', {
+                                      duration: 2000,
+                                      icon: '🗑️',
+                                    });
+                                  },
+                                  'danger'
+                                )}
+                                className="text-red-600 hover:text-red-800"
+                              >
+                                <X className="w-4 h-4" />
+                              </button>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Concepto</label>
+                                <input
+                                  type="text"
+                                  value={line.concept}
+                                  onChange={(e) => updateInvoiceLine(line.id, 'concept', e.target.value)}
+                                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
+                                <input
+                                  type="text"
+                                  value={line.description}
+                                  onChange={(e) => updateInvoiceLine(line.id, 'description', e.target.value)}
+                                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Cantidad</label>
+                                <input
+                                  type="number"
+                                  value={line.quantity}
+                                  onChange={(e) => updateInvoiceLine(line.id, 'quantity', parseFloat(e.target.value) || 0)}
+                                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Precio Unit.</label>
+                                <input
+                                  type="number"
+                                  step="0.01"
+                                  value={line.unitPrice}
+                                  onChange={(e) => updateInvoiceLine(line.id, 'unitPrice', parseFloat(e.target.value) || 0)}
+                                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Descuento</label>
+                                <input
+                                  type="number"
+                                  step="0.01"
+                                  value={line.discount}
+                                  onChange={(e) => updateInvoiceLine(line.id, 'discount', parseFloat(e.target.value) || 0)}
+                                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                              </div>
+                            </div>
+                            <div className="mt-2 text-right">
+                              <span className="text-sm text-gray-600">Subtotal: </span>
+                              <span className="font-semibold">{formatCurrency(line.subtotal)}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Step 3: Totals */}
+                {newInvoiceStep === 3 && (
+                  <div className="space-y-6">
+                    <h3 className="text-xl font-semibold text-gray-900">Totales y Configuración</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">Método de Pago</label>
+                          <select
+                            value={newInvoiceData.paymentMethod}
+                            onChange={(e) => setNewInvoiceData(prev => ({ ...prev, paymentMethod: e.target.value }))}
+                            className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          >
+                            <option value="Transferencia bancaria">Transferencia bancaria</option>
+                            <option value="Tarjeta de crédito">Tarjeta de crédito</option>
+                            <option value="Efectivo">Efectivo</option>
+                            <option value="Cheque">Cheque</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">Notas</label>
+                          <textarea
+                            value={newInvoiceData.notes}
+                            onChange={(e) => setNewInvoiceData(prev => ({ ...prev, notes: e.target.value }))}
+                            rows={4}
+                            className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Notas adicionales para la factura..."
+                          />
+                        </div>
+                      </div>
+                      <div className="bg-gray-50 rounded-lg p-6">
+                        <h4 className="font-semibold text-gray-900 mb-4">Resumen de Totales</h4>
+                        <div className="space-y-2">
+                          <div className="flex justify-between">
+                            <span>Subtotal:</span>
+                            <span>{formatCurrency(newInvoiceData.lines.reduce((sum, line) => sum + line.subtotal, 0))}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>IVA (21%):</span>
+                            <span>{formatCurrency(newInvoiceData.lines.reduce((sum, line) => sum + line.subtotal, 0) * 0.21)}</span>
+                          </div>
+                          <div className="border-t border-gray-300 pt-2 flex justify-between font-semibold">
+                            <span>Total:</span>
+                            <span>{formatCurrency(newInvoiceData.lines.reduce((sum, line) => sum + line.subtotal, 0) * 1.21)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 4: Review */}
+                {newInvoiceStep === 4 && (
+                  <div className="space-y-6">
+                    <h3 className="text-xl font-semibold text-gray-900">Revisión Final</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 className="font-semibold text-gray-900 mb-3">Información del Cliente</h4>
+                        <div className="bg-gray-50 rounded-lg p-4 space-y-2">
+                          <p><span className="font-medium">Nombre:</span> {newInvoiceData.clientName}</p>
+                          <p><span className="font-medium">Email:</span> {newInvoiceData.clientEmail}</p>
+                          <p><span className="font-medium">Concepto:</span> {newInvoiceData.concept}</p>
+                          <p><span className="font-medium">Vencimiento:</span> {newInvoiceData.dueDate}</p>
+                          <p><span className="font-medium">Método de pago:</span> {newInvoiceData.paymentMethod}</p>
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-gray-900 mb-3">Líneas de Factura</h4>
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          {newInvoiceData.lines.map((line) => (
+                            <div key={line.id} className="flex justify-between text-sm mb-1">
+                              <span>{line.concept} x{line.quantity}</span>
+                              <span>{formatCurrency(line.subtotal)}</span>
+                            </div>
+                          ))}
+                          <div className="border-t border-gray-300 pt-2 mt-2 flex justify-between font-semibold">
+                            <span>Total:</span>
+                            <span>{formatCurrency(newInvoiceData.lines.reduce((sum, line) => sum + line.subtotal, 0) * 1.21)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {newInvoiceData.notes && (
+                      <div>
+                        <h4 className="font-semibold text-gray-900 mb-2">Notas</h4>
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          <p className="text-gray-700">{newInvoiceData.notes}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Navigation Buttons */}
+                <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-200">
                   <button
-                    onClick={() => setShowNewInvoiceModal(false)}
+                    onClick={newInvoiceStep === 1 ? () => setShowNewInvoiceModal(false) : handleNewInvoicePrev}
+                    className="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors"
+                  >
+                    {newInvoiceStep === 1 ? 'Cancelar' : 'Anterior'}
+                  </button>
+                  <div className="flex gap-3">
+                    {newInvoiceStep < 4 ? (
+                      <button
+                        onClick={handleNewInvoiceNext}
+                        disabled={newInvoiceStep === 1 && (!newInvoiceData.clientName || !newInvoiceData.clientEmail)}
+                        className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                      >
+                        Siguiente
+                      </button>
+                    ) : (
+                      <button
+                        onClick={handleNewInvoiceSubmit}
+                        className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                      >
+                        Crear Factura
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Configuration Modal */}
+      <AnimatePresence>
+        {showConfigModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+            onClick={() => setShowConfigModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+            >
+              <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
+                <h2 className="text-2xl font-bold text-gray-900">Configuración de Facturación</h2>
+                <button
+                  onClick={() => setShowConfigModal(false)}
+                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="p-6">
+                <div className="space-y-8">
+                  {/* Company Information */}
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Información de la Empresa</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Nombre de la Empresa</label>
+                        <input
+                          type="text"
+                          value={configData.companyName}
+                          onChange={(e) => setConfigData(prev => ({ ...prev, companyName: e.target.value }))}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input
+                          type="email"
+                          value={configData.companyEmail}
+                          onChange={(e) => setConfigData(prev => ({ ...prev, companyEmail: e.target.value }))}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Teléfono</label>
+                        <input
+                          type="tel"
+                          value={configData.companyPhone}
+                          onChange={(e) => setConfigData(prev => ({ ...prev, companyPhone: e.target.value }))}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">CIF/NIF</label>
+                        <input
+                          type="text"
+                          value={configData.taxId}
+                          onChange={(e) => setConfigData(prev => ({ ...prev, taxId: e.target.value }))}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div className="md:col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Dirección</label>
+                        <textarea
+                          value={configData.companyAddress}
+                          onChange={(e) => setConfigData(prev => ({ ...prev, companyAddress: e.target.value }))}
+                          rows={3}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Invoice Settings */}
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Configuración de Facturas</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Prefijo de Factura</label>
+                        <input
+                          type="text"
+                          value={configData.invoicePrefix}
+                          onChange={(e) => setConfigData(prev => ({ ...prev, invoicePrefix: e.target.value }))}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Días de Vencimiento por Defecto</label>
+                        <input
+                          type="number"
+                          value={configData.defaultDueDays}
+                          onChange={(e) => setConfigData(prev => ({ ...prev, defaultDueDays: parseInt(e.target.value) || 15 }))}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Tipo de IVA (%)</label>
+                        <input
+                          type="number"
+                          value={configData.taxRate}
+                          onChange={(e) => setConfigData(prev => ({ ...prev, taxRate: parseFloat(e.target.value) || 21 }))}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Moneda</label>
+                        <select
+                          value={configData.currency}
+                          onChange={(e) => setConfigData(prev => ({ ...prev, currency: e.target.value }))}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                          <option value="EUR">EUR (€)</option>
+                          <option value="USD">USD ($)</option>
+                          <option value="GBP">GBP (£)</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Banking Information */}
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Información Bancaria</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="md:col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Cuenta Bancaria</label>
+                        <input
+                          type="text"
+                          value={configData.bankAccount}
+                          onChange={(e) => setConfigData(prev => ({ ...prev, bankAccount: e.target.value }))}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="ES12 1234 5678 9012 3456 7890"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Language Settings */}
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Configuración Regional</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Idioma</label>
+                        <select
+                          value={configData.language}
+                          onChange={(e) => setConfigData(prev => ({ ...prev, language: e.target.value }))}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                          <option value="es">Español</option>
+                          <option value="en">English</option>
+                          <option value="fr">Français</option>
+                          <option value="de">Deutsch</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Save Button */}
+                  <div className="flex items-center justify-end gap-3 pt-6 border-t border-gray-200">
+                    <button
+                      onClick={() => setShowConfigModal(false)}
+                      className="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors"
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      onClick={() => {
+                        toast.success('Configuración guardada exitosamente', {
+                          duration: 4000,
+                          icon: '⚙️',
+                        });
+                        setShowConfigModal(false);
+                      }}
+                      className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    >
+                      Guardar Configuración
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Import Modal */}
+      <AnimatePresence>
+        {showImportModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+            onClick={() => setShowImportModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            >
+              <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
+                <h2 className="text-2xl font-bold text-gray-900">Importar Facturas</h2>
+                <button
+                  onClick={() => setShowImportModal(false)}
+                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="p-6">
+                <div className="text-center py-12">
+                  <Upload className="w-16 h-16 text-blue-500 mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    Importar Facturas
+                  </h3>
+                  <p className="text-gray-600 mb-6">
+                    Sube un archivo CSV o Excel con tus facturas para importarlas al sistema.
+                  </p>
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 mb-6">
+                    <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                    <p className="text-gray-600 mb-2">Arrastra y suelta tu archivo aquí</p>
+                    <p className="text-sm text-gray-500">o haz clic para seleccionar</p>
+                  </div>
+                  <button
+                    onClick={() => setShowImportModal(false)}
                     className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                   >
                     Cerrar
@@ -2060,6 +2833,408 @@ const CobrosFacturacionPage: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* View Invoice Modal */}
+      <AnimatePresence>
+        {showInvoiceModal && selectedInvoice && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+            onClick={() => setShowInvoiceModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+            >
+              <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
+                <h2 className="text-2xl font-bold text-gray-900">Factura {selectedInvoice.invoiceNumber}</h2>
+                <button
+                  onClick={() => setShowInvoiceModal(false)}
+                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-4">Información del Cliente</h3>
+                    <div className="space-y-2">
+                      <p><span className="font-medium">Nombre:</span> {selectedInvoice.clientName}</p>
+                      <p><span className="font-medium">Email:</span> {selectedInvoice.clientEmail}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold mb-4">Detalles de la Factura</h3>
+                    <div className="space-y-2">
+                      <p><span className="font-medium">Estado:</span> {getStatusBadge(selectedInvoice.status).label}</p>
+                      <p><span className="font-medium">Fecha emisión:</span> {formatDate(selectedInvoice.issueDate)}</p>
+                      <p><span className="font-medium">Fecha vencimiento:</span> {formatDate(selectedInvoice.dueDate)}</p>
+                      <p><span className="font-medium">Total:</span> {formatCurrency(selectedInvoice.total)}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-6">
+                  <h3 className="text-lg font-semibold mb-4">Líneas de Factura</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border border-gray-200 rounded-lg">
+                      <thead className="bg-gray-50">
+                        <tr>
+                          <th className="px-4 py-2 text-left">Concepto</th>
+                          <th className="px-4 py-2 text-left">Descripción</th>
+                          <th className="px-4 py-2 text-right">Cantidad</th>
+                          <th className="px-4 py-2 text-right">Precio</th>
+                          <th className="px-4 py-2 text-right">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {selectedInvoice.lines.map((line) => (
+                          <tr key={line.id} className="border-t border-gray-200">
+                            <td className="px-4 py-2">{line.concept}</td>
+                            <td className="px-4 py-2">{line.description}</td>
+                            <td className="px-4 py-2 text-right">{line.quantity}</td>
+                            <td className="px-4 py-2 text-right">{formatCurrency(line.unitPrice)}</td>
+                            <td className="px-4 py-2 text-right">{formatCurrency(line.subtotal)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Payment Modal */}
+      <AnimatePresence>
+        {showPaymentModal && selectedInvoice && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+            onClick={() => setShowPaymentModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            >
+              <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
+                <h2 className="text-2xl font-bold text-gray-900">Registrar Cobro</h2>
+                <button
+                  onClick={() => setShowPaymentModal(false)}
+                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="p-6">
+                <div className="text-center py-12">
+                  <DollarSign className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    Registrar Cobro - {selectedInvoice.invoiceNumber}
+                  </h3>
+                  <p className="text-gray-600 mb-6">
+                    Monto pendiente: <span className="font-bold text-green-600">{formatCurrency(selectedInvoice.remainingAmount)}</span>
+                  </p>
+                  <div className="space-y-4 max-w-md mx-auto">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Monto a cobrar</label>
+                      <input
+                        type="number"
+                        defaultValue={selectedInvoice.remainingAmount}
+                        className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Método de pago</label>
+                      <select className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option>Transferencia bancaria</option>
+                        <option>Tarjeta de crédito</option>
+                        <option>Efectivo</option>
+                        <option>Cheque</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Referencia</label>
+                      <input
+                        type="text"
+                        placeholder="Número de referencia del pago"
+                        className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex gap-3 mt-8">
+                    <button
+                      onClick={() => setShowPaymentModal(false)}
+                      className="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors"
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      onClick={() => {
+                        toast.success('Cobro registrado exitosamente', {
+                          duration: 4000,
+                          icon: '💰',
+                        });
+                        setShowPaymentModal(false);
+                      }}
+                      className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                    >
+                      Registrar Cobro
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Analytics Modal */}
+      <AnimatePresence>
+        {showAnalyticsModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+            onClick={() => setShowAnalyticsModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto"
+            >
+              <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
+                <h2 className="text-2xl font-bold text-gray-900">Analytics de Facturación</h2>
+                <button
+                  onClick={() => setShowAnalyticsModal(false)}
+                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="p-6">
+                <div className="text-center py-12">
+                  <BarChart3 className="w-16 h-16 text-blue-500 mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    Analytics Avanzadas
+                  </h3>
+                  <p className="text-gray-600 mb-6">
+                    Aquí se mostrarían gráficos de tendencias, análisis de cobros, proyecciones, etc.
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                    <div className="bg-gray-50 rounded-lg p-6">
+                      <h4 className="font-semibold mb-2">Tendencias de Cobro</h4>
+                      <div className="h-32 bg-gray-200 rounded flex items-center justify-center">
+                        <span className="text-gray-500">Gráfico de líneas</span>
+                      </div>
+                    </div>
+                    <div className="bg-gray-50 rounded-lg p-6">
+                      <h4 className="font-semibold mb-2">Distribución por Estado</h4>
+                      <div className="h-32 bg-gray-200 rounded flex items-center justify-center">
+                        <span className="text-gray-500">Gráfico circular</span>
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setShowAnalyticsModal(false)}
+                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors mt-6"
+                  >
+                    Cerrar
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Report Modal */}
+      <AnimatePresence>
+        {showReportModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+            onClick={() => setShowReportModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            >
+              <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
+                <h2 className="text-2xl font-bold text-gray-900">Generar Reporte</h2>
+                <button
+                  onClick={() => setShowReportModal(false)}
+                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="p-6">
+                <div className="text-center py-12">
+                  <FileSpreadsheet className="w-16 h-16 text-blue-500 mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    Generar Reporte de Facturación
+                  </h3>
+                  <p className="text-gray-600 mb-6">
+                    Selecciona el tipo de reporte y el período que deseas generar.
+                  </p>
+                  <div className="space-y-4 max-w-md mx-auto">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de reporte</label>
+                      <select className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option>Reporte de cobros</option>
+                        <option>Reporte de facturas vencidas</option>
+                        <option>Reporte de clientes</option>
+                        <option>Reporte completo</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Período</label>
+                      <select className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option>Último mes</option>
+                        <option>Últimos 3 meses</option>
+                        <option>Último año</option>
+                        <option>Personalizado</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Formato</label>
+                      <select className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option>PDF</option>
+                        <option>Excel</option>
+                        <option>CSV</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="flex gap-3 mt-8">
+                    <button
+                      onClick={() => setShowReportModal(false)}
+                      className="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors"
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      onClick={() => {
+                        toast.success('Reporte generado exitosamente', {
+                          duration: 4000,
+                          icon: '📊',
+                        });
+                        setShowReportModal(false);
+                      }}
+                      className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    >
+                      Generar Reporte
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Confirmation Modal */}
+      <AnimatePresence>
+        {showConfirmModal && confirmAction && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+            onClick={() => setShowConfirmModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-2xl shadow-2xl max-w-md w-full"
+            >
+              <div className="p-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                    confirmAction.type === 'success' ? 'bg-green-100' :
+                    confirmAction.type === 'warning' ? 'bg-yellow-100' :
+                    'bg-red-100'
+                  }`}>
+                    {confirmAction.type === 'success' && <CheckCircle className="w-6 h-6 text-green-600" />}
+                    {confirmAction.type === 'warning' && <AlertTriangle className="w-6 h-6 text-yellow-600" />}
+                    {confirmAction.type === 'danger' && <AlertTriangle className="w-6 h-6 text-red-600" />}
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">{confirmAction.title}</h3>
+                </div>
+                <p className="text-gray-600 mb-6">{confirmAction.message}</p>
+                <div className="flex items-center justify-end gap-3">
+                  <button
+                    onClick={() => setShowConfirmModal(false)}
+                    className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={handleConfirm}
+                    className={`px-4 py-2 rounded-lg text-white transition-colors ${
+                      confirmAction.type === 'success' ? 'bg-green-600 hover:bg-green-700' :
+                      confirmAction.type === 'warning' ? 'bg-yellow-600 hover:bg-yellow-700' :
+                      'bg-red-600 hover:bg-red-700'
+                    }`}
+                  >
+                    {confirmAction.confirmText}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Toast Notifications */}
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: '#363636',
+            color: '#fff',
+            borderRadius: '12px',
+            padding: '16px',
+            fontSize: '14px',
+            fontWeight: '500',
+          },
+          success: {
+            iconTheme: {
+              primary: '#10B981',
+              secondary: '#fff',
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: '#EF4444',
+              secondary: '#fff',
+            },
+          },
+        }}
+      />
     </div>
   );
 };

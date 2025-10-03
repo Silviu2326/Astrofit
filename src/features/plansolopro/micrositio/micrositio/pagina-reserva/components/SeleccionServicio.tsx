@@ -17,7 +17,7 @@ const SeleccionServicio: React.FC<SeleccionServicioProps> = ({ onNext, onDataCha
     const fetchServices = async () => {
       try {
         const fetchedServices = await getServices();
-        setServices(fetchedServices);
+        setServices(Array.isArray(fetchedServices) ? fetchedServices : []);
         setLoading(false);
       } catch (err) {
         setError('Error al cargar los servicios.');
@@ -76,7 +76,7 @@ const SeleccionServicio: React.FC<SeleccionServicioProps> = ({ onNext, onDataCha
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none bg-white pr-10"
           >
             <option value="">Selecciona un servicio</option>
-            {services.map((service) => (
+            {(Array.isArray(services) ? services : []).map((service) => (
               <option key={service.id} value={service.id}>
                 {service.name} - {service.price}€
               </option>
@@ -85,6 +85,9 @@ const SeleccionServicio: React.FC<SeleccionServicioProps> = ({ onNext, onDataCha
           <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
         </div>
       </div>
+      {(!services || services.length === 0) && (
+        <div className="text-sm text-gray-500">No hay servicios disponibles por el momento.</div>
+      )}
       <div className="flex justify-end mt-8 pt-6 border-t border-gray-200">
         <button
           onClick={handleNextClick}

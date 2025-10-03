@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 import {
   User,
   Clock,
   Star,
   Calendar,
   CheckCircle,
-  DollarSign,
-  Video,
   MapPin,
-  Phone,
   MessageCircle,
 } from 'lucide-react';
 import { getProductosByType, Producto } from '../productosServiciosApi';
@@ -19,11 +17,27 @@ const SesionesIndividuales: React.FC = () => {
 
   useEffect(() => {
     const fetchSesiones = async () => {
-      const data = await getProductosByType('individual');
-      setSesiones(data);
+      try {
+        const data = await getProductosByType('individual');
+        setSesiones(data);
+      } catch (error) {
+        toast.error('Error al cargar las sesiones individuales');
+      }
     };
     fetchSesiones();
   }, []);
+
+  const handleReserveSession = (sesion: Producto) => {
+    if (!sesion.disponibilidad) {
+      toast.error('Esta sesión no está disponible actualmente');
+      return;
+    }
+    toast.success(`Sesión "${sesion.nombre}" reservada exitosamente`);
+  };
+
+  const handleContactTrainer = (sesion: Producto) => {
+    toast.success(`Te hemos conectado con el entrenador de "${sesion.nombre}". Te contactará pronto.`);
+  };
 
   // Mock data para entrenadores
   const entrenadoresMock = [
@@ -197,6 +211,7 @@ const SesionesIndividuales: React.FC = () => {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={() => handleReserveSession(sesion)}
                     disabled={!sesion.disponibilidad}
                     className={`flex-1 py-3 rounded-xl font-bold text-white shadow-lg hover:shadow-xl transition-all duration-300 ${
                       sesion.disponibilidad
@@ -211,6 +226,7 @@ const SesionesIndividuales: React.FC = () => {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={() => handleContactTrainer(sesion)}
                     className="px-4 py-3 border-2 border-blue-500 text-blue-600 rounded-xl font-semibold hover:bg-blue-50 transition-colors duration-300"
                   >
                     <MessageCircle className="w-5 h-5" />

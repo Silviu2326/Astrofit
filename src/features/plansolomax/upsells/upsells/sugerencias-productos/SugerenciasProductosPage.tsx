@@ -30,13 +30,7 @@ import {
   Filter,
   X,
   ChevronRight,
-  Lightbulb,
-  Star,
-  Brain,
-  Layers,
-  Clock,
-  Tag,
-  ArrowUpRight
+  Lightbulb
 } from 'lucide-react';
 import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
@@ -259,7 +253,7 @@ const mockOffers: Offer[] = [
 
 const mockKPIs: KPI[] = [
   {
-    title: 'Upsells Este Mes',
+    title: 'Ingresos por Upsells Este Mes',
     value: '€15,770',
     change: 23.5,
     icon: DollarSign,
@@ -275,7 +269,7 @@ const mockKPIs: KPI[] = [
     ]
   },
   {
-    title: 'Tasa de Conversión',
+    title: 'Tasa de Conversión Global',
     value: '16.8%',
     change: 3.2,
     icon: Percent,
@@ -291,11 +285,11 @@ const mockKPIs: KPI[] = [
     ]
   },
   {
-    title: 'Ticket Promedio',
+    title: 'AOV Incrementado',
     value: '€22.40',
     change: 12.8,
     icon: TrendingUp,
-    color: 'text-teal-600',
+    color: 'text-amber-600',
     trend: [
       { date: '1', value: 18.5 },
       { date: '5', value: 19.2 },
@@ -307,167 +301,35 @@ const mockKPIs: KPI[] = [
     ]
   },
   {
-    title: 'ROI de Sugerencias',
-    value: '385%',
-    change: 42.3,
-    icon: Target,
-    color: 'text-cyan-600',
+    title: 'Ofertas Activas',
+    value: '6',
+    change: 0,
+    icon: Zap,
+    color: 'text-blue-600',
     trend: [
-      { date: '1', value: 280 },
-      { date: '5', value: 305 },
-      { date: '10', value: 320 },
-      { date: '15', value: 340 },
-      { date: '20', value: 355 },
-      { date: '25', value: 370 },
-      { date: '30', value: 385 }
-    ]
-  }
-];
-
-// Motor de recomendaciones - Algoritmos
-const recommendationAlgorithms = [
-  {
-    id: 'historial',
-    name: 'Basado en Historial',
-    description: 'Analiza compras previas del cliente',
-    weight: 35,
-    enabled: true,
-    icon: Clock
-  },
-  {
-    id: 'complementarios',
-    name: 'Productos Complementarios',
-    description: 'Encuentra productos que se compran juntos',
-    weight: 30,
-    enabled: true,
-    icon: Package
-  },
-  {
-    id: 'tendencias',
-    name: 'Tendencias Similares',
-    description: 'Clientes similares también compraron',
-    weight: 20,
-    enabled: true,
-    icon: Users
-  },
-  {
-    id: 'ia-predictiva',
-    name: 'IA Predictiva',
-    description: 'Predicción basada en machine learning',
-    weight: 15,
-    enabled: true,
-    icon: Brain
-  }
-];
-
-// Productos sugeridos con scores
-const suggestedProducts = [
-  {
-    id: 'p1',
-    name: 'Membresía Premium Anual',
-    baseProduct: 'Membresía Básica',
-    price: 199,
-    discount: 20,
-    relevanceScore: 94,
-    reason: 'Alta adherencia (15 sesiones/mes)',
-    image: '💎',
-    conversions: 156,
-    revenue: 31104,
-    reasons: [
-      { algorithm: 'Historial', weight: 32 },
-      { algorithm: 'IA Predictiva', weight: 28 },
-      { algorithm: 'Tendencias', weight: 24 },
-      { algorithm: 'Complementarios', weight: 10 }
+      { date: '1', value: 5 },
+      { date: '5', value: 5 },
+      { date: '10', value: 6 },
+      { date: '15', value: 6 },
+      { date: '20', value: 6 },
+      { date: '25', value: 6 },
+      { date: '30', value: 6 }
     ]
   },
   {
-    id: 'p2',
-    name: 'Plan de Nutrición Personalizado',
-    baseProduct: 'Membresía Premium',
-    price: 45,
-    discount: 0,
-    relevanceScore: 87,
-    reason: 'Perfil ideal: Sin plan nutricional activo',
-    image: '🥗',
-    conversions: 203,
-    revenue: 9135,
-    reasons: [
-      { algorithm: 'Complementarios', weight: 38 },
-      { algorithm: 'Tendencias', weight: 30 },
-      { algorithm: 'Historial', weight: 12 },
-      { algorithm: 'IA Predictiva', weight: 7 }
-    ]
-  },
-  {
-    id: 'p3',
-    name: 'Pack 10 Sesiones 1-on-1',
-    baseProduct: 'Membresía Premium',
-    price: 95,
-    discount: 15,
-    relevanceScore: 82,
-    reason: 'Clientes con LTV >€800',
-    image: '🎯',
-    conversions: 89,
-    revenue: 7605,
-    reasons: [
-      { algorithm: 'IA Predictiva', weight: 35 },
-      { algorithm: 'Historial', weight: 28 },
-      { algorithm: 'Tendencias', weight: 22 },
-      { algorithm: 'Complementarios', weight: 15 }
-    ]
-  },
-  {
-    id: 'p4',
-    name: 'Bundle Completo: Entreno + Nutrición + Coaching',
-    baseProduct: 'Cualquiera',
-    price: 129,
-    discount: 25,
-    relevanceScore: 78,
-    reason: 'Ahorro de 25% vs productos individuales',
-    image: '🎁',
-    conversions: 134,
-    revenue: 12978,
-    reasons: [
-      { algorithm: 'Complementarios', weight: 42 },
-      { algorithm: 'Tendencias', weight: 28 },
-      { algorithm: 'Historial', weight: 18 },
-      { algorithm: 'IA Predictiva', weight: 12 }
-    ]
-  },
-  {
-    id: 'p5',
-    name: 'Programa de Referidos VIP',
-    baseProduct: 'Membresía Premium',
-    price: 0,
-    discount: 0,
-    relevanceScore: 71,
-    reason: 'Cliente activo >6 meses con alta satisfacción',
-    image: '👥',
-    conversions: 267,
-    revenue: 8010,
-    reasons: [
-      { algorithm: 'Historial', weight: 40 },
-      { algorithm: 'IA Predictiva', weight: 30 },
-      { algorithm: 'Tendencias', weight: 20 },
-      { algorithm: 'Complementarios', weight: 10 }
-    ]
-  },
-  {
-    id: 'p6',
-    name: 'Acceso App Mobile Premium',
-    baseProduct: 'Membresía Básica',
-    price: 12,
-    discount: 0,
-    relevanceScore: 68,
-    reason: 'Clientes que entrenan fuera del gym',
-    image: '📱',
-    conversions: 412,
-    revenue: 4944,
-    reasons: [
-      { algorithm: 'Tendencias', weight: 35 },
-      { algorithm: 'Complementarios', weight: 30 },
-      { algorithm: 'Historial', weight: 20 },
-      { algorithm: 'IA Predictiva', weight: 15 }
+    title: 'Total Generado',
+    value: '€87,540',
+    change: 45.6,
+    icon: ShoppingCart,
+    color: 'text-purple-600',
+    trend: [
+      { date: '1', value: 65000 },
+      { date: '5', value: 68500 },
+      { date: '10', value: 72300 },
+      { date: '15', value: 76800 },
+      { date: '20', value: 80200 },
+      { date: '25', value: 84100 },
+      { date: '30', value: 87540 }
     ]
   }
 ];
@@ -611,53 +473,34 @@ const SugerenciasProductosPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-emerald-50/30 to-teal-50/20 pb-12">
-      {/* HERO SECTION */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-green-50/30 to-amber-50/20 p-8">
+      {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="relative overflow-hidden bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600 rounded-3xl shadow-2xl mb-8 p-8 md:p-12"
+        className="mb-8"
       >
-        {/* Efectos de fondo animados */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        </div>
-
-        {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: '50px 50px'
-          }}></div>
-        </div>
-
-        <div className="relative z-10">
-          {/* Título con icono animado */}
-          <div className="flex items-center gap-4 mb-4">
-            <div className="relative">
-              <Star className="w-12 h-12 text-yellow-300 animate-pulse" />
-              <div className="absolute inset-0 w-12 h-12 bg-yellow-300 rounded-full blur-lg opacity-50"></div>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <motion.div
+              animate={{ rotate: [0, 5, -5, 0] }}
+              transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+            >
+              <TrendingUp className="w-12 h-12 text-emerald-600" />
+            </motion.div>
+            <div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-600 via-green-600 to-amber-600 bg-clip-text text-transparent">
+                Sugerencias Inteligentes de Productos
+              </h1>
+              <p className="text-gray-600 mt-1">Aumenta tus ingresos con ofertas personalizadas</p>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
-              Sugerencias <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-yellow-400">Inteligentes</span>
-            </h1>
           </div>
-
-          {/* Descripción */}
-          <p className="text-xl md:text-2xl text-emerald-100 max-w-3xl leading-relaxed mb-6">
-            Aumenta tus ingresos con <span className="font-bold text-white px-2 py-1 bg-white/20 rounded-lg backdrop-blur-sm">recomendaciones personalizadas</span>
-          </p>
-
-          {/* Botones de acción */}
-          <div className="flex flex-wrap gap-4">
+          <div className="flex gap-3">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowCreateModal(true)}
-              className="flex items-center gap-2 px-6 py-3 bg-white text-emerald-700 rounded-xl font-bold shadow-xl hover:shadow-2xl transition-all"
+              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-600 to-green-600 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all"
             >
               <Plus className="w-5 h-5" />
               Crear Nueva Oferta
@@ -665,16 +508,16 @@ const SugerenciasProductosPage: React.FC = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-md text-white rounded-xl font-semibold border border-white/20 hover:bg-white/20 transition-all"
+              className="flex items-center gap-2 px-6 py-3 bg-white border-2 border-gray-200 text-gray-700 rounded-lg font-semibold hover:border-gray-300 transition-all"
             >
               <BarChart3 className="w-5 h-5" />
-              Analytics
+              Ver Estadísticas
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowConfigModal(true)}
-              className="flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-md text-white rounded-xl font-semibold border border-white/20 hover:bg-white/20 transition-all"
+              className="flex items-center gap-2 px-6 py-3 bg-white border-2 border-gray-200 text-gray-700 rounded-lg font-semibold hover:border-gray-300 transition-all"
             >
               <Settings className="w-5 h-5" />
               Configuración
@@ -683,334 +526,77 @@ const SugerenciasProductosPage: React.FC = () => {
         </div>
       </motion.div>
 
-      {/* ESTADÍSTICAS RÁPIDAS (4 cards con glassmorphism) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 px-8">
+      {/* KPIs */}
+      <div className="grid grid-cols-5 gap-4 mb-8">
         {mockKPIs.map((kpi, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1, duration: 0.5 }}
-            whileHover={{ scale: 1.03, y: -8 }}
-            className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
+            transition={{ delay: index * 0.1 }}
+            className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all"
           >
-            {/* Shimmer effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
-
-            {/* Decoración de fondo */}
-            <div className={`absolute -right-8 -top-8 w-32 h-32 ${
-              kpi.color === 'text-emerald-600' ? 'bg-gradient-to-br from-emerald-200 to-emerald-300' :
-              kpi.color === 'text-green-600' ? 'bg-gradient-to-br from-green-200 to-green-300' :
-              kpi.color === 'text-teal-600' ? 'bg-gradient-to-br from-teal-200 to-teal-300' :
-              'bg-gradient-to-br from-cyan-200 to-cyan-300'
-            } rounded-full blur-3xl opacity-20`}></div>
-
-            <div className="relative z-10">
-              {/* Icono */}
-              <div className={`w-16 h-16 rounded-2xl ${
-                kpi.color === 'text-emerald-600' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600' :
-                kpi.color === 'text-green-600' ? 'bg-gradient-to-br from-green-500 to-green-600' :
-                kpi.color === 'text-teal-600' ? 'bg-gradient-to-br from-teal-500 to-teal-600' :
-                'bg-gradient-to-br from-cyan-500 to-cyan-600'
-              } flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300`}>
-                <kpi.icon className="w-8 h-8" />
+            <div className="flex items-start justify-between mb-4">
+              <div className={`p-3 rounded-lg bg-gradient-to-br ${kpi.color === 'text-emerald-600' ? 'from-emerald-50 to-emerald-100' : kpi.color === 'text-green-600' ? 'from-green-50 to-green-100' : kpi.color === 'text-amber-600' ? 'from-amber-50 to-amber-100' : kpi.color === 'text-blue-600' ? 'from-blue-50 to-blue-100' : 'from-purple-50 to-purple-100'}`}>
+                <kpi.icon className={`w-6 h-6 ${kpi.color}`} />
               </div>
-
-              {/* Título */}
-              <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">
-                {kpi.title}
-              </p>
-
-              {/* Valor */}
-              <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 mb-3">
-                {kpi.value}
-              </p>
-
-              {/* Cambio */}
-              <div className="flex items-center gap-2">
-                <div className={`p-1 ${kpi.change > 0 ? 'bg-green-50' : 'bg-red-50'} rounded-lg`}>
-                  <ArrowUpRight className={`w-4 h-4 ${kpi.change > 0 ? 'text-green-600' : 'text-red-600 rotate-90'}`} />
-                </div>
-                <span className={`text-sm font-bold ${kpi.change > 0 ? 'text-green-600' : 'text-red-600'}`}>
+              {kpi.change !== 0 && (
+                <span className={`text-xs font-semibold px-2 py-1 rounded-full ${kpi.change > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                   {kpi.change > 0 ? '+' : ''}{kpi.change}%
                 </span>
-                <span className="text-xs text-gray-500 font-medium">vs anterior</span>
-              </div>
-
-              {/* Barra decorativa */}
-              <div className="mt-4 w-full h-1 bg-gray-100 rounded-full overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: '75%' }}
-                  transition={{ delay: index * 0.1 + 0.5, duration: 1 }}
-                  className={`h-full ${
-                    kpi.color === 'text-emerald-600' ? 'bg-gradient-to-r from-emerald-500 to-emerald-600' :
-                    kpi.color === 'text-green-600' ? 'bg-gradient-to-r from-green-500 to-green-600' :
-                    kpi.color === 'text-teal-600' ? 'bg-gradient-to-r from-teal-500 to-teal-600' :
-                    'bg-gradient-to-r from-cyan-500 to-cyan-600'
-                  } rounded-full`}
-                ></motion.div>
-              </div>
+              )}
+            </div>
+            <div className="mb-3">
+              <p className="text-sm text-gray-600 mb-1">{kpi.title}</p>
+              <p className="text-2xl font-bold text-gray-900">{kpi.value}</p>
+            </div>
+            <div className="h-12">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={kpi.trend}>
+                  <defs>
+                    <linearGradient id={`gradient-${index}`} x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor={kpi.color === 'text-emerald-600' ? '#10b981' : kpi.color === 'text-green-600' ? '#22c55e' : kpi.color === 'text-amber-600' ? '#f59e0b' : kpi.color === 'text-blue-600' ? '#3b82f6' : '#a855f7'} stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor={kpi.color === 'text-emerald-600' ? '#10b981' : kpi.color === 'text-green-600' ? '#22c55e' : kpi.color === 'text-amber-600' ? '#f59e0b' : kpi.color === 'text-blue-600' ? '#3b82f6' : '#a855f7'} stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <Area type="monotone" dataKey="value" stroke={kpi.color === 'text-emerald-600' ? '#10b981' : kpi.color === 'text-green-600' ? '#22c55e' : kpi.color === 'text-amber-600' ? '#f59e0b' : kpi.color === 'text-blue-600' ? '#3b82f6' : '#a855f7'} fill={`url(#gradient-${index})`} strokeWidth={2} />
+                </AreaChart>
+              </ResponsiveContainer>
             </div>
           </motion.div>
         ))}
       </div>
 
-      {/* MOTOR DE RECOMENDACIONES */}
-      <div className="px-8 mb-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/50 relative overflow-hidden"
-        >
-          {/* Decoración de fondo */}
-          <div className="absolute -right-20 -top-20 w-64 h-64 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full blur-3xl opacity-20"></div>
-
-          <div className="relative z-10">
-            {/* Header */}
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <div className="p-3 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl">
-                  <Brain className="w-8 h-8 text-white" />
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Motor de Recomendaciones IA</h2>
-                  <p className="text-gray-600">Algoritmos inteligentes para sugerencias personalizadas</p>
-                </div>
-              </div>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-4 py-2 bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700 rounded-xl font-semibold border border-purple-200 hover:border-purple-300 transition-all"
-              >
-                <Settings className="w-5 h-5" />
-              </motion.button>
-            </div>
-
-            {/* Algoritmos Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-              {recommendationAlgorithms.map((algo, index) => (
-                <motion.div
-                  key={algo.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.4 + index * 0.1 }}
-                  className="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-4 border-2 border-gray-200 hover:border-purple-300 transition-all"
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="p-2 bg-white rounded-xl shadow-sm">
-                      <algo.icon className="w-5 h-5 text-purple-600" />
-                    </div>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input type="checkbox" className="sr-only peer" defaultChecked={algo.enabled} />
-                      <div className="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-purple-600 after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
-                    </label>
-                  </div>
-                  <h3 className="font-bold text-gray-900 mb-1 text-sm">{algo.name}</h3>
-                  <p className="text-xs text-gray-600 mb-3">{algo.description}</p>
-
-                  {/* Peso del algoritmo */}
-                  <div className="space-y-1">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-gray-600 font-medium">Peso</span>
-                      <span className="font-bold text-purple-700">{algo.weight}%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${algo.weight}%` }}
-                        transition={{ delay: 0.5 + index * 0.1, duration: 0.8 }}
-                        className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"
-                      />
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Estado del motor */}
-            <div className="flex items-center justify-between bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-4 border border-purple-200">
-              <div className="flex items-center gap-3">
-                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="font-semibold text-gray-900">Motor activo y aprendiendo</span>
-                <span className="px-3 py-1 bg-white rounded-full text-xs font-bold text-purple-700">1,247 sugerencias esta semana</span>
-              </div>
-              <button className="text-sm font-semibold text-purple-700 hover:text-purple-800 flex items-center gap-1">
-                Ver rendimiento <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* PRODUCTOS SUGERIDOS */}
-      <div className="px-8 mb-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-        >
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900">Productos Recomendados</h2>
-              <p className="text-gray-600">Basado en análisis de IA y comportamiento de clientes</p>
-            </div>
-            <div className="flex gap-2">
-              <select className="px-4 py-2 bg-white border-2 border-gray-200 rounded-xl font-semibold text-gray-700 focus:border-emerald-500 focus:outline-none">
-                <option>Todos los segmentos</option>
-                <option>Nuevos clientes</option>
-                <option>Clientes activos</option>
-                <option>Alto valor</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {suggestedProducts.map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 + index * 0.1 }}
-                whileHover={{ scale: 1.02, y: -4 }}
-                className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 relative overflow-hidden group"
-              >
-                {/* Badge de relevancia */}
-                <div className="absolute top-4 right-4 z-20">
-                  <div className={`px-3 py-1 rounded-full font-bold text-sm ${
-                    product.relevanceScore >= 90 ? 'bg-gradient-to-r from-emerald-500 to-green-500 text-white' :
-                    product.relevanceScore >= 80 ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white' :
-                    product.relevanceScore >= 70 ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' :
-                    'bg-gradient-to-r from-gray-400 to-gray-500 text-white'
-                  } shadow-lg flex items-center gap-1`}>
-                    <Star className="w-3 h-3" />
-                    {product.relevanceScore}
-                  </div>
-                </div>
-
-                {/* Shimmer effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
-
-                <div className="relative z-10">
-                  {/* Imagen del producto */}
-                  <div className="w-20 h-20 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl flex items-center justify-center text-4xl mb-4 shadow-lg">
-                    {product.image}
-                  </div>
-
-                  {/* Nombre y base */}
-                  <h3 className="font-bold text-lg text-gray-900 mb-2">{product.name}</h3>
-                  <p className="text-sm text-gray-600 mb-3">Para: {product.baseProduct}</p>
-
-                  {/* Razón de sugerencia */}
-                  <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-3 mb-4 border border-purple-200">
-                    <div className="flex items-start gap-2">
-                      <Lightbulb className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" />
-                      <p className="text-sm text-purple-700 font-medium">{product.reason}</p>
-                    </div>
-                  </div>
-
-                  {/* Precio y descuento */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <p className="text-2xl font-bold text-gray-900">€{product.price}</p>
-                      {product.discount > 0 && (
-                        <p className="text-sm text-green-600 font-semibold">{product.discount}% descuento</p>
-                      )}
-                    </div>
-                    {product.discount > 0 && (
-                      <div className="p-2 bg-green-100 rounded-xl">
-                        <Tag className="w-5 h-5 text-green-600" />
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Score de relevancia - barras de razones */}
-                  <div className="space-y-2 mb-4">
-                    <p className="text-xs font-bold text-gray-600 uppercase tracking-wide">Factores de Relevancia</p>
-                    {product.reasons.map((reason, idx) => (
-                      <div key={idx}>
-                        <div className="flex items-center justify-between text-xs mb-1">
-                          <span className="text-gray-600">{reason.algorithm}</span>
-                          <span className="font-bold text-gray-700">{reason.weight}%</span>
-                        </div>
-                        <div className="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: `${reason.weight}%` }}
-                            transition={{ delay: 0.7 + index * 0.1 + idx * 0.05, duration: 0.6 }}
-                            className={`h-full ${
-                              idx === 0 ? 'bg-gradient-to-r from-purple-500 to-purple-600' :
-                              idx === 1 ? 'bg-gradient-to-r from-blue-500 to-blue-600' :
-                              idx === 2 ? 'bg-gradient-to-r from-teal-500 to-teal-600' :
-                              'bg-gradient-to-r from-emerald-500 to-emerald-600'
-                            } rounded-full`}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Métricas */}
-                  <div className="grid grid-cols-2 gap-3 mb-4 pb-4 border-b border-gray-200">
-                    <div className="text-center">
-                      <p className="text-xs text-gray-600 mb-1">Conversiones</p>
-                      <p className="text-lg font-bold text-gray-900">{product.conversions}</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-xs text-gray-600 mb-1">Ingresos</p>
-                      <p className="text-lg font-bold text-emerald-600">€{product.revenue.toLocaleString()}</p>
-                    </div>
-                  </div>
-
-                  {/* CTA */}
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-full px-4 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-bold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
-                  >
-                    <Plus className="w-5 h-5" />
-                    Crear Campaña
-                  </motion.button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Recomendaciones rápidas (las originales) */}
+      {/* Recomendaciones IA */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="px-8 mb-8"
+        className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6 mb-8 border border-indigo-200 shadow-lg"
       >
-        <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-3xl p-6 border border-indigo-200 shadow-lg">
-          <div className="flex items-center gap-3 mb-4">
-            <Sparkles className="w-6 h-6 text-indigo-600" />
-            <h2 className="text-xl font-bold text-gray-900">Oportunidades Detectadas</h2>
-          </div>
-          <div className="grid grid-cols-3 gap-4">
-            {mockRecommendations.map((rec) => (
-              <motion.div
-                key={rec.id}
-                whileHover={{ scale: 1.02 }}
-                className={`${rec.color} rounded-2xl p-4 border-2`}
-              >
-                <div className="flex items-start gap-3 mb-3">
-                  <rec.icon className="w-5 h-5 mt-1" />
-                  <div className="flex-1">
-                    <h3 className="font-semibold mb-1">{rec.title}</h3>
-                    <p className="text-sm opacity-80">{rec.description}</p>
-                  </div>
+        <div className="flex items-center gap-3 mb-4">
+          <Sparkles className="w-6 h-6 text-indigo-600" />
+          <h2 className="text-xl font-bold text-gray-900">Sugerencias Inteligentes</h2>
+        </div>
+        <div className="grid grid-cols-3 gap-4">
+          {mockRecommendations.map((rec) => (
+            <motion.div
+              key={rec.id}
+              whileHover={{ scale: 1.02 }}
+              className={`${rec.color} rounded-lg p-4 border-2`}
+            >
+              <div className="flex items-start gap-3 mb-3">
+                <rec.icon className="w-5 h-5 mt-1" />
+                <div className="flex-1">
+                  <h3 className="font-semibold mb-1">{rec.title}</h3>
+                  <p className="text-sm opacity-80">{rec.description}</p>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold">+€{rec.potentialRevenue} potencial</span>
-                  <button className="text-sm font-semibold hover:underline">Crear Oferta →</button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-semibold">+€{rec.potentialRevenue} potencial</span>
+                <button className="text-sm font-semibold hover:underline">Crear Oferta →</button>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </motion.div>
 

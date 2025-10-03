@@ -1,2072 +1,680 @@
-# 🚀 PROMPTS DE ESTILIZACIÓN - FEATURES PLANCREATORMAX
+# 🎨 PROMPTS DE ESTILIZACIÓN - FEATURES NUTRITION
 
 ---
 
-## 📋 PROMPT 1: Configuración de App White Label
+## 📋 PROMPT 5: Biblioteca de Recetas
 
-Transforma completamente la página de Configuración de App ([src/features/plancreatormax/app-white-label/app-white-label/configuracion-app/ConfiguracionAppPage.tsx](src/features/plancreatormax/app-white-label/app-white-label/configuracion-app/ConfiguracionAppPage.tsx)) aplicando el sistema de diseño moderno.
+Transforma completamente la página de Biblioteca de Recetas (src/features/nutrition/nutrition/recetas-biblioteca) aplicando el sistema de diseño moderno.
 
 **IMPORTANTE**:
-- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
-- Crea un configurador completo de app móvil white label
-- Facilita la personalización de branding y funcionalidades
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en `GUIA_ESTILOS_UI.md`
+- Crea una biblioteca visual e interactiva de recetas
+- Facilita búsqueda, filtrado y visualización de recetas saludables
 
 ### Requisitos de Diseño:
 
-1. **HERO SECTION - Configuración App**
-   - Gradiente `from-indigo-600 via-purple-600 to-pink-600`
-   - Título "Configuración de App White Label"
-   - Descripción: "Tu app personalizada lista para publicar"
-   - Preview de móvil con app animada
-
-2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
-   - Apps Generadas
-   - Descargas Totales
-   - Usuarios Activos
-   - Rating Promedio (estrellas)
-   - Cards con glassmorphism
-
-3. **TABS DE CONFIGURACIÓN**
-   - Navegación por tabs:
-     * Información General
-     * Branding y Diseño
-     * Funcionalidades
-     * Publicación
-     * Configuración Avanzada
-   - Pills activos con gradiente
-   - Progreso de completitud (%)
-
-4. **INFORMACIÓN GENERAL**
-   - Formulario básico:
-     * Nombre de la app
-     * Nombre de la empresa/entrenador
-     * Descripción corta (App Store/Play Store)
-     * Descripción larga
-     * Categoría (Salud y Fitness, Deportes, etc.)
-     * Idiomas soportados (multi-select)
-     * País/región
-   - Validación en tiempo real
-   - Preview de cómo se verá en stores
-
-5. **BRANDING Y DISEÑO**
-   - Configuración visual:
-     * **Logo de la app**:
-       - Upload de logo (múltiples tamaños)
-       - Preview en distintos contextos
-       - Generador automático de iconos (1024x1024, 512x512, etc.)
-     * **Colores de marca**:
-       - Color primario (picker)
-       - Color secundario (picker)
-       - Color de acento (picker)
-       - Preview en componentes de la app
-     * **Tipografía**:
-       - Fuente principal (dropdown)
-       - Fuente secundaria (dropdown)
-       - Preview de texto
-   - Vista previa en vivo en mockup de móvil
-
-6. **SPLASH SCREEN**
-   - Configurador de pantalla de carga:
-     * Logo o imagen (upload)
-     * Color de fondo (gradiente o sólido)
-     * Animación de entrada (seleccionar tipo)
-     * Preview animado
-   - Múltiples variantes para probar
-
-7. **FUNCIONALIDADES**
-   - Toggle switches para activar/desactivar:
-     * ✅ Inicio de sesión social (Google, Facebook, Apple)
-     * ✅ Seguimiento de entrenamientos
-     * ✅ Planes nutricionales
-     * ✅ Chat con entrenador
-     * ✅ Calendario de citas
-     * ✅ Pagos in-app
-     * ✅ Notificaciones push
-     * ✅ Integración con wearables (Apple Watch, Fitbit)
-     * ✅ Comunidad/Social feed
-     * ✅ Gamificación y logros
-   - Descripción de cada funcionalidad
-   - Impacto en tamaño de la app
-
-8. **NAVEGACIÓN DE LA APP**
-   - Configurar menú principal:
-     * Drag & drop de items del menú
-     * Iconos por item (selector)
-     * Renombrar items
-     * Mostrar/ocultar secciones
-   - Preview de bottom navigation
-
-9. **CONFIGURACIÓN DE PUBLICACIÓN**
-   - Información para stores:
-     * **Google Play**:
-       - Package name (com.tuempresa.app)
-       - Cuenta de desarrollador
-       - Screenshots (5 mínimo)
-       - Feature graphic
-       - Video promocional (opcional)
-     * **Apple App Store**:
-       - Bundle ID
-       - Apple Developer Account
-       - Screenshots por dispositivo
-       - App preview video
-   - Checklist de requisitos (✓/✗)
-
-10. **POLÍTICA DE PRIVACIDAD Y TÉRMINOS**
-    - Generador automático:
-      * Template base
-      * Personalización con datos de la empresa
-      * Preview
-      * Exportar (PDF/Web)
-    - URLs de políticas
-
-11. **CONFIGURACIÓN AVANZADA**
-    - Opciones técnicas:
-      * Deep linking
-      * Custom URL scheme
-      * Analytics (Firebase, Mixpanel)
-      * Crash reporting
-      * Versión mínima de SO (iOS/Android)
-    - API keys y credenciales (input seguro)
-
-12. **PREVIEW EN VIVO**
-    - Mockup de móvil interactivo:
-      * iPhone y Android side-by-side
-      * Navegar por la app simulada
-      * Ver cambios en tiempo real
-      * Cambiar entre screens
-    - Botón "Vista completa" (modal amplio)
-
-13. **PROCESO DE BUILD**
-    - Estado del build:
-      * En cola
-      * Compilando
-      * Completado
-      * Error
-    - Progress bar con pasos:
-      1. Validando configuración
-      2. Generando assets
-      3. Compilando código
-      4. Creando paquetes
-      5. Subiendo a stores
-    - Log de build (expandible)
-    - Descargar APK/IPA para testing
-
-14. **VERSIONES**
-    - Historial de versiones:
-      * Número de versión
-      * Fecha de build
-      * Changelog
-      * Estado en stores
-    - Crear nueva versión
-    - Rollback a versión anterior
-
-15. **DATOS MOCKEADOS**
-    - 3-5 apps configuradas
-    - Builds en distintos estados
-    - Historial de versiones
-    - Screenshots de ejemplo
-    - Estadísticas de descargas simuladas
-
-**ESTILOS CLAVE A USAR**:
-- Gradiente indigo-purple-pink para hero
-- Mockup de móvil con glassmorphism
-- Color pickers elegantes
-- Toggle switches animados
-- Drag & drop visual para menú
-- Progress bar de build animado
-- Upload zones con preview
-- Tabs con indicador de progreso
-
-**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatormax/app-white-label/app-white-label/configuracion-app](src/features/plancreatormax/app-white-label/app-white-label/configuracion-app).
-
----
-
-## 📋 PROMPT 2: Personalización de Push Notifications
-
-Transforma completamente la página de Personalización Push ([src/features/plancreatormax/app-white-label/app-white-label/personalizacion-push/PersonalizacionPushPage.tsx](src/features/plancreatormax/app-white-label/app-white-label/personalizacion-push/PersonalizacionPushPage.tsx)) aplicando el sistema de diseño moderno.
-
-**IMPORTANTE**:
-- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
-- Crea un sistema completo de gestión de notificaciones push
-- Facilita la segmentación y programación de mensajes
-
-### Requisitos de Diseño:
-
-1. **HERO SECTION - Push Notifications**
-   - Gradiente `from-blue-600 via-cyan-600 to-teal-600`
-   - Título "Notificaciones Push Personalizadas"
-   - Descripción: "Mantén a tus usuarios comprometidos"
-   - Icono de campana/móvil animado
-
-2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
-   - Notificaciones Enviadas Hoy
-   - Tasa de Apertura (%)
-   - Usuarios con Push Activo
-   - Engagement Rate (%)
-   - Cards con glassmorphism
-
-3. **COMPOSITOR DE NOTIFICACIÓN**
-   - Editor de push notification:
-     * **Título** (input con contador 40 chars)
-     * **Mensaje** (textarea con contador 120 chars)
-     * **Imagen** (opcional, upload)
-     * **Icono** (selector de emoji o upload)
-     * **Deep link** (URL dentro de la app)
-     * **Call-to-action** (texto del botón)
-   - Preview en tiempo real:
-     * Vista iOS (bandera, lock screen, notificación)
-     * Vista Android (expandida, colapsada)
-   - Soporte para Rich Notifications
-
-4. **SEGMENTACIÓN DE AUDIENCIA**
-   - Crear segmentos:
-     * **Todos los usuarios** (default)
-     * **Usuarios activos** (últimos 7/30 días)
-     * **Usuarios inactivos** (sin abrir app >X días)
-     * **Por plan** (Free, Premium, VIP)
-     * **Por ubicación** (geolocalización)
-     * **Por comportamiento**:
-       - Completaron entrenamiento hoy
-       - No han registrado comida
-       - Tienen sesión programada mañana
-     * **Custom** (query builder)
-   - Preview de tamaño de audiencia
-   - Guardar segmentos para reutilizar
-
-5. **PROGRAMACIÓN DE ENVÍO**
-   - Opciones de timing:
-     * **Enviar ahora** (inmediato)
-     * **Programar** (date/time picker)
-     * **Recurrente**:
-       - Diario (hora específica)
-       - Semanal (días y hora)
-       - Mensual
-     * **Basado en evento**:
-       - Al registrarse
-       - Antes de sesión (X horas)
-       - Cumpleaños
-       - Inactividad (X días sin abrir app)
-   - Zona horaria del usuario (toggle)
-   - Quiet hours (no enviar entre 22:00-08:00)
-
-6. **PERSONALIZACIÓN DINÁMICA**
-   - Variables dinámicas:
-     * {{nombre}} - Nombre del usuario
-     * {{apellido}} - Apellido
-     * {{objetivo}} - Objetivo del usuario
-     * {{dias_racha}} - Días consecutivos
-     * {{proxima_sesion}} - Fecha próxima sesión
-   - Preview con datos de usuario real
-   - Fallbacks si variable no existe
-
-7. **TIPOS DE NOTIFICACIONES**
-   - Templates predefinidos:
-     * **Motivacionales**:
-       - "¡Es hora de entrenar!"
-       - "Tu racha de {{dias_racha}} días 🔥"
-     * **Recordatorios**:
-       - "Sesión en 1 hora con [entrenador]"
-       - "¿Ya registraste tu comida?"
-     * **Logros**:
-       - "¡Nuevo récord personal!"
-       - "Badge desbloqueado: {{badge}}"
-     * **Promocionales**:
-       - "20% off en planes premium"
-       - "Nuevo contenido disponible"
-   - Usar template o crear desde cero
-
-8. **A/B TESTING**
-   - Crear variantes:
-     * Variante A: Título/mensaje
-     * Variante B: Título/mensaje alternativo
-   - Distribución de tráfico (slider 50/50, 70/30, etc.)
-   - Métrica de éxito (tasa apertura, clicks, conversiones)
-   - Ver resultados en tiempo real
-   - Declarar ganador automático
-
-9. **CALENDARIO DE NOTIFICACIONES**
-   - Vista de calendario:
-     * Notificaciones programadas
-     * Recurrentes marcadas
-     * Color por tipo/segmento
-   - Click en día: ver detalles
-   - Drag & drop para reprogramar
-   - Evitar saturación (máximo X por usuario/día)
-
-10. **HISTORIAL DE ENVÍOS**
-    - Lista de notificaciones enviadas:
-      * Título y preview
-      * Fecha/hora de envío
-      * Segmento
-      * Métricas:
-        - Enviadas
-        - Entregadas
-        - Abiertas (%)
-        - Clicks (%)
-      * Estado (Enviada, Programada, Fallida)
-    - Filtros y búsqueda
-    - Acción: Duplicar, Editar, Eliminar
-
-11. **ANALYTICS DE PUSH**
-    - Dashboard de métricas:
-      * Gráfico de envíos vs aperturas (temporal)
-      * Mejores horarios de envío (heatmap)
-      * Tipos de mensaje más efectivos (barras)
-      * Tasa de opt-out (%)
-    - Segmentación de métricas por:
-      * Tipo de notificación
-      * Segmento de usuarios
-      * Día de la semana
-      * Hora del día
-
-12. **CONFIGURACIÓN DE PERMISOS**
-    - Estado de permisos:
-      * Usuarios con push habilitado (%)
-      * Usuarios que rechazaron
-      * Usuarios sin responder
-    - Estrategias de opt-in:
-      * Timing de solicitud
-      * Mensaje previo (pre-prompt)
-      * Incentivos
-    - Gestión de opt-out
-
-13. **TESTING Y PREVIEW**
-    - Enviar notificación de prueba:
-      * A tu dispositivo
-      * A lista de testers
-      * A segmento pequeño (1%)
-    - Validación antes de enviar:
-      * Título/mensaje no vacíos
-      * Segmento seleccionado
-      * Deep link válido
-    - Confirmación con preview
-
-14. **DATOS MOCKEADOS**
-    - 20-30 notificaciones históricas
-    - Calendario con eventos programados
-    - Métricas de apertura/clicks simuladas
-    - Segmentos de usuarios
-    - Templates predefinidos
-    - Variantes de A/B testing
-
-**ESTILOS CLAVE A USAR**:
-- Gradiente blue-cyan-teal para hero
-- Preview de notificación (iOS/Android) realista
-- Editor con contador de caracteres
-- Date/time picker estilizado
-- Segmentador visual (query builder)
-- Calendario con eventos coloridos
-- Gráficos de analytics (Recharts)
-- Badges de estado (enviada, programada, etc.)
-
-**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatormax/app-white-label/app-white-label/personalizacion-push](src/features/plancreatormax/app-white-label/app-white-label/personalizacion-push).
-
----
-
-## 📋 PROMPT 3: Vista Preview de App
-
-Transforma completamente la página de Vista Preview ([src/features/plancreatormax/app-white-label/app-white-label/vista-preview-app/VistaPreviewAppPage.tsx](src/features/plancreatormax/app-white-label/app-white-label/vista-preview-app/VistaPreviewAppPage.tsx)) aplicando el sistema de diseño moderno.
-
-**IMPORTANTE**:
-- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
-- Crea un simulador interactivo de la app móvil
-- Facilita la visualización de la app antes de publicar
-
-### Requisitos de Diseño:
-
-1. **HERO SECTION - Preview**
-   - Gradiente `from-purple-600 via-fuchsia-600 to-pink-600`
-   - Título "Preview de tu App"
-   - Descripción: "Visualiza tu app antes de publicar"
-   - Toggle: iOS / Android
-
-2. **SELECTOR DE DISPOSITIVO**
-   - Dropdown de dispositivos:
-     * iOS:
-       - iPhone 15 Pro Max
-       - iPhone 15
-       - iPhone SE
-       - iPad Pro
-     * Android:
-       - Samsung Galaxy S24
-       - Google Pixel 8
-       - OnePlus 12
-   - Orientación (portrait/landscape)
-   - Tema (light/dark mode)
-
-3. **MOCKUP INTERACTIVO**
-   - Frame de dispositivo realista:
-     * Mockup 3D del teléfono
-     * Pantalla interactiva dentro
-     * Elementos del OS (hora, batería, señal)
-   - Tamaño real o escalado (zoom)
-   - Rotación del dispositivo (visual)
-
-4. **NAVEGACIÓN SIMULADA**
-   - Navegación funcional:
-     * Bottom navigation bar clickeable
-     * Tabs superiores
-     * Drawer lateral (si aplica)
-     * Back button
-   - Transiciones animadas entre screens
-   - Gestos simulados (swipe, scroll)
-
-5. **SCREENS PRINCIPALES**
-   - Pantallas incluidas en preview:
-     * **Splash Screen** (con logo y animación)
-     * **Onboarding** (carousel de bienvenida)
-     * **Login/Registro** (diseño con colores de marca)
-     * **Home Dashboard** (con widgets configurados)
-     * **Perfil de Usuario** (info y configuración)
-     * **Entrenamientos** (lista y detalles)
-     * **Nutrición** (planes y seguimiento)
-     * **Chat** (conversación con entrenador)
-     * **Calendario** (citas y sesiones)
-     * **Configuración** (ajustes de la app)
-   - Datos de ejemplo realistas
-
-6. **PANEL DE CONTROL LATERAL**
-   - Controles de preview:
-     * Cambiar entre screens (dropdown)
-     * Ir a screen específico
-     * Estado de sesión (logged in/out)
-     * Tipo de usuario (free/premium)
-   - Quick actions:
-     * Reset app
-     * Clear data
-     * Reload preview
-
-7. **ELEMENTOS INTERACTIVOS**
-   - Botones funcionan (con feedback)
-   - Inputs reciben texto (simulado)
-   - Modals se abren/cierran
-   - Notificaciones aparecen
-   - Loading states animados
-   - Toasts y snackbars
-
-8. **MODO COMPARACIÓN**
-   - Split view:
-     * iOS vs Android lado a lado
-     * Antes vs Después de cambios
-     * Light vs Dark theme
-   - Sincronización de navegación
-
-9. **CAPTURA DE PANTALLAS**
-   - Tomar screenshots:
-     * Del screen actual
-     * De múltiples screens (batch)
-     * En distintos dispositivos
-   - Exportar para stores:
-     * Tamaños correctos por plataforma
-     * Con/sin frame del dispositivo
-   - Descargar ZIP con todas
-
-10. **MODO PRESENTACIÓN**
-    - Fullscreen mode
-    - Autoplay de screens (slideshow)
-    - Anotaciones en pantalla (modo review)
-    - Compartir preview (link temporal)
-
-11. **FEEDBACK Y COMENTARIOS**
-    - Agregar comentarios en screens:
-      * Click para agregar nota
-      * Pin en posición específica
-      * Texto del comentario
-      * Prioridad (Alta/Media/Baja)
-    - Lista de comentarios
-    - Resolver/Cerrar comentarios
-
-12. **QR CODE PARA TESTING**
-    - Generar QR code:
-      * TestFlight (iOS)
-      * Firebase App Distribution (Android)
-      * APK directo para descargar
-    - Compartir con testers
-
-13. **DATOS MOCKEADOS**
-    - Usuarios de ejemplo con avatares
-    - Entrenamientos y rutinas simuladas
-    - Mensajes de chat
-    - Notificaciones de ejemplo
-    - Calendario con eventos
-    - Progreso y estadísticas
-
-**ESTILOS CLAVE A USAR**:
-- Gradiente purple-fuchsia-pink para hero
-- Mockup 3D de dispositivo con sombra
-- Pantalla interactiva con transiciones
-- Panel de controles lateral con glassmorphism
-- Botones de navegación estilizados
-- Split view con divisor arrastrable
-- Pins de comentarios coloridos
-
-**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatormax/app-white-label/app-white-label/vista-preview-app](src/features/plancreatormax/app-white-label/app-white-label/vista-preview-app).
-
----
-
-## 📋 PROMPT 4: Flujos de Retención
-
-Transforma completamente la página de Flujos de Retención ([src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/flujos-retencion/FlujosRetencionPage.tsx](src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/flujos-retencion/FlujosRetencionPage.tsx)) aplicando el sistema de diseño moderno.
-
-**IMPORTANTE**:
-- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
-- Crea un sistema de automatización de retención de clientes
-- Facilita la creación de flujos de comunicación automatizados
-
-### Requisitos de Diseño:
-
-1. **HERO SECTION - Flujos Retención**
-   - Gradiente `from-green-600 via-emerald-600 to-teal-600`
-   - Título "Flujos de Retención Automatizados"
-   - Descripción: "Mantén a tus clientes comprometidos en piloto automático"
-   - Icono de infinity loop/automated workflow
-
-2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
-   - Flujos Activos
-   - Clientes en Flujos
-   - Tasa de Retención (%)
-   - Conversiones Generadas
-   - Cards con glassmorphism
-
-3. **GALERÍA DE FLUJOS**
-   - Grid de flujos existentes:
-     * Card por flujo con:
-       - Nombre del flujo
-       - Trigger (evento que lo activa)
-       - Número de pasos
-       - Clientes activos en flujo
-       - Tasa de conversión
-       - Estado (Activo/Pausado/Draft)
-     * Hover: Ver métricas, Editar, Duplicar
-   - Botón "+ Crear nuevo flujo"
-   - Filtros: Activos, Pausados, Borradores
-
-4. **TEMPLATES DE FLUJOS**
-   - Templates predefinidos:
-     * **Onboarding de nuevos clientes**:
-       - Día 1: Bienvenida + tutorial
-       - Día 3: Primera sesión agendada?
-       - Día 7: Feedback inicial
-     * **Reactivación de inactivos**:
-       - Detectar inactividad >7 días
-       - Email: "Te extrañamos"
-       - Oferta especial
-     * **Upsell a plan premium**:
-       - Cliente usa features >80%
-       - Mostrar beneficios premium
-       - Descuento limitado
-     * **Renovación de suscripción**:
-       - 7 días antes de vencer
-       - 3 días antes
-       - Día de vencimiento
-     * **Recuperación de carrito abandonado**:
-       - Abandonó pago
-       - Recordatorio 1h después
-       - Descuento 24h después
-   - Click en template: usar como base
-
-5. **CONSTRUCTOR DE FLUJOS (FLOW BUILDER)**
-   - Canvas visual drag & drop:
-     * **Trigger** (punto de inicio):
-       - Evento específico (registro, inactividad, etc.)
-       - Icono distintivo
-     * **Acciones**:
-       - Enviar email
-       - Enviar SMS
-       - Notificación push
-       - Asignar tag
-       - Cambiar plan
-       - Ejecutar webhook
-     * **Condicionales** (if/then):
-       - Abrió email? Sí/No
-       - Hizo click? Sí/No
-       - Completó acción? Sí/No
-       - Valor de campo específico
-     * **Delays** (esperas):
-       - X horas/días
-       - Hasta fecha específica
-       - Hasta que ocurra evento
-     * **Splits** (A/B):
-       - Dividir tráfico 50/50
-       - Testear variantes
-   - Conectar nodos con líneas
-   - Zoom in/out del canvas
-   - Auto-layout para organizar
-
-6. **CONFIGURACIÓN DE NODOS**
-   - Panel lateral al seleccionar nodo:
-     * **Email**:
-       - Asunto
-       - Contenido (editor WYSIWYG)
-       - Variables dinámicas
-       - Template o desde cero
-     * **SMS**:
-       - Mensaje (160 chars)
-       - Variables
-     * **Push Notification**:
-       - Título
-       - Mensaje
-       - Deep link
-     * **Condicional**:
-       - Condición a evaluar
-       - Operadores (igual, mayor, contiene)
-       - Valor a comparar
-     * **Delay**:
-       - Duración (slider)
-       - Unidad (horas/días)
-
-7. **PREVIEW DEL FLUJO**
-   - Visualización simplificada:
-     * Diagrama de flujo completo
-     * Minimap para navegar
-     * Métricas por nodo:
-       - Clientes que llegaron
-       - Tasa de conversión
-       - Drop-off rate
-   - Click en nodo: ver detalles
-
-8. **TESTING DE FLUJOS**
-   - Modo test:
-     * Simular entrada al flujo
-     * Ver emails/mensajes generados
-     * Evaluar condicionales con datos de prueba
-     * Timeline de ejecución
-   - Enviar test a tu email/móvil
-   - Validación de errores:
-     * Nodos sin configurar
-     * Paths sin salida
-     * Variables no definidas
-
-9. **ANALYTICS DEL FLUJO**
-   - Métricas detalladas:
-     * Funnel de conversión (visual)
-     * Tasa de apertura por email
-     * Clicks por enlace
-     * Conversiones finales
-     * Ingresos generados (si aplica)
-   - Gráficos temporales
-   - Comparativa entre flujos
-
-10. **SEGMENTACIÓN DE ENTRADA**
-    - Quién entra al flujo:
-      * Todos los usuarios (que cumplan trigger)
-      * Solo segmento específico:
-        - Plan específico
-        - Ubicación
-        - Comportamiento
-        - Tags
-      * Excluir segmentos
-    - Preview de tamaño de audiencia
-
-11. **REGLAS DE SALIDA**
-    - Condiciones para salir del flujo:
-      * Completó objetivo (conversión)
-      * Canceló suscripción
-      * Cambió de segmento
-      * Tiempo límite alcanzado
-    - Acción al salir (opcional)
-
-12. **HISTORIAL DE EJECUCIONES**
-    - Log de clientes en flujo:
-      * Cliente
-      * Fecha de entrada
-      * Paso actual
-      * Próxima acción programada
-      * Estado (En progreso/Completado/Salió)
-    - Ver journey individual (timeline)
-    - Forzar salida manual
-
-13. **OPTIMIZACIÓN CON IA**
-    - Sugerencias automáticas:
-      * "Agregar delay de 2h mejora conversión 15%"
-      * "Email con subject X tiene mejor tasa apertura"
-      * "Nodo Y tiene alto drop-off, revisar"
-    - Auto-optimize (activar/desactivar)
-
-14. **DATOS MOCKEADOS**
-    - 10-15 flujos de ejemplo
-    - Templates predefinidos
-    - Métricas de conversión simuladas
-    - 50-100 clientes en flujos
-    - Historial de ejecuciones
-    - Analytics por flujo
-
-**ESTILOS CLAVE A USAR**:
-- Gradiente green-emerald-teal para hero
-- Canvas de flujo con drag & drop
-- Nodos con iconos distintivos
-- Líneas conectoras animadas
-- Panel lateral de configuración con glassmorphism
-- Minimap en esquina
-- Funnel chart de conversión
-- Badges de estado (activo/pausado)
-
-**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/flujos-retencion](src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/flujos-retencion).
-
----
-
-## 📋 PROMPT 5: Mensajes Personalizados
-
-Transforma completamente la página de Mensajes Personalizados ([src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/mensajes-personalizados/MensajesPersonalizadosPage.tsx](src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/mensajes-personalizados/MensajesPersonalizadosPage.tsx)) aplicando el sistema de diseño moderno.
-
-**IMPORTANTE**:
-- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
-- Crea un sistema de mensajería personalizada masiva
-- Facilita el envío de mensajes contextuales y relevantes
-
-### Requisitos de Diseño:
-
-1. **HERO SECTION - Mensajes Personalizados**
+1. **HERO SECTION - Biblioteca**
    - Gradiente `from-pink-600 via-rose-600 to-red-600`
-   - Título "Mensajes Personalizados a Escala"
-   - Descripción: "Comunicación relevante para cada cliente"
-   - Icono de mensaje/corazón
+   - Título "Biblioteca de Recetas Saludables"
+   - Barra de búsqueda destacada
+   - Contador de recetas disponibles
 
 2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
-   - Mensajes Enviados Este Mes
-   - Tasa de Apertura (%)
-   - Respuestas Recibidas
-   - Engagement Score
+   - Total de Recetas
+   - Recetas Favoritas
+   - Categorías Disponibles
+   - Recetas Más Usadas
    - Cards con glassmorphism
 
-3. **COMPOSITOR DE MENSAJE**
-   - Editor principal:
-     * Canal (tabs):
-       - Email
-       - SMS
-       - WhatsApp
-       - Push Notification
-       - In-app Message
-     * Asunto (si email)
-     * Mensaje principal (editor rico)
-     * Variables dinámicas (menú desplegable):
-       - {{nombre}}
-       - {{apellido}}
-       - {{objetivo}}
-       - {{dias_activo}}
-       - {{proxima_sesion}}
-       - {{progreso_objetivo}}
-       - Custom variables
-     * Preview en tiempo real con datos reales
+3. **BÚSQUEDA Y FILTROS** (RecetasFilters)
+   - Barra de búsqueda XL con autocomplete
+   - Panel de filtros:
+     * Tipo de comida (Desayuno, Almuerzo, Cena, Snack)
+     * Tiempo de preparación (0-15min, 15-30min, 30-60min, 60min+)
+     * Dificultad (Fácil, Media, Difícil)
+     * Restricciones (Vegano, Vegetariano, Sin gluten, Sin lactosa)
+     * Calorías por porción (rangos)
+     * Macros predominantes (Alta proteína, Baja en carbos, etc.)
+   - Pills activos con gradientes
 
-4. **PERSONALIZACIÓN AVANZADA**
-   - Bloques condicionales:
-     * Mostrar párrafo solo si:
-       - Cliente es premium
-       - Tiene >X días de racha
-       - No ha completado onboarding
-     * Syntax: `{{#if condicion}}texto{{/if}}`
-   - Variantes por segmento:
-     * Mensaje diferente para hombres/mujeres
-     * Por edad (18-25, 26-40, 40+)
-     * Por objetivo (pérdida peso, ganancia muscular)
-   - Preview de variantes
+4. **GRID DE RECETAS** (RecetasGrid + RecetaCard)
+   - Grid responsive: 1-2-3-4 columnas
+   - Cards de receta con:
+     * Imagen grande de la receta
+     * Play overlay si tiene video
+     * Nombre de la receta
+     * Tipo de comida y dificultad (badges)
+     * Tiempo de preparación (icono reloj)
+     * Calorías por porción (destacado)
+     * Macros resumidos (P/C/G)
+     * Rating (estrellas)
+     * Botón corazón favorito
+     * Hover: lift + shimmer
 
-5. **TEMPLATES DE MENSAJES**
-   - Biblioteca de templates:
-     * **Motivacionales**:
-       - "¡Sigue así, {{nombre}}!"
-       - "{{dias_activo}} días de racha 🔥"
-     * **Recordatorios**:
-       - "Sesión mañana a las {{hora_sesion}}"
-       - "No olvides registrar tu progreso"
-     * **Celebraciones**:
-       - "¡Feliz cumpleaños {{nombre}}! 🎂"
-       - "Objetivo cumplido: {{objetivo}}"
-     * **Educativos**:
-       - Tips de nutrición
-       - Técnicas de entrenamiento
-     * **Promocionales**:
-       - Oferta especial
-       - Nuevo servicio disponible
-   - Categorización y búsqueda
-   - Usar template o editar
+5. **MODAL VISOR DE RECETA** (RecetaViewer)
+   - Modal amplio tipo revista:
+     * **Hero**: Imagen grande de la receta
+     * **Header**: Nombre, rating, favorito
+     * **Info rápida**:
+       - Tiempo prep + cocción
+       - Porciones
+       - Dificultad
+       - Tipo de comida
+     * **Información nutricional**:
+       - Calorías por porción (grande)
+       - Macros (proteínas, carbos, grasas) con progress bars
+       - Micronutrientes destacados
+       - Gráfico de distribución
+     * **Ingredientes**:
+       - Lista con cantidades
+       - Checkboxes para marcar
+       - Botón "Ajustar porciones" (cambia cantidades)
+     * **Preparación**:
+       - Pasos numerados con iconos
+       - Tiempo estimado por paso
+       - Tips y notas del chef
+     * **Etiquetas y categorías**:
+       - Tags (vegano, sin gluten, etc.)
+       - Alergenos
+     * **Variaciones**:
+       - Sustituciones de ingredientes
+       - Versiones alternativas
+   - Botones: Agregar a dieta, Editar, Compartir, Imprimir
 
-6. **SEGMENTACIÓN DE AUDIENCIA**
-   - Query builder visual:
-     * Filtros combinables (AND/OR):
-       - Plan (Free/Premium/VIP)
-       - Ubicación
-       - Edad, género
-       - Días desde registro
-       - Última actividad
-       - Progreso en objetivo (%)
-       - Tags asignados
-       - Comportamiento:
-         * Abrió email anterior
-         * Completó entrenamiento hoy
-         * No ha registrado peso en 7 días
-   - Preview de audiencia:
-     * Tamaño del segmento (# usuarios)
-     * Clientes de ejemplo (primeros 5)
-   - Guardar segmento para reutilizar
+6. **CATEGORÍAS VISUALES**
+   - Acceso rápido por categoría:
+     * Cards por tipo de comida
+     * Icono representativo
+     * Contador de recetas
+     * Click filtra automáticamente
 
-7. **PROGRAMACIÓN DE ENVÍO**
-   - Opciones de timing:
-     * **Enviar ahora**
-     * **Programar fecha/hora**
-     * **Smart timing** (IA elige mejor momento por usuario)
-     * **Recurrente**:
-       - Diario
-       - Semanal (elegir días)
-       - Mensual
-   - Zona horaria:
-     * UTC fija
-     * Zona horaria del usuario (personalizado)
-   - Rate limiting (no más de X mensajes/día por usuario)
+7. **RECETAS DESTACADAS**
+   - Carrusel de recetas populares
+   - Cards más grandes con preview
+   - Badges "Más Popular", "Nuevo", "Chef's Choice"
 
-8. **A/B TESTING**
-   - Crear test multivariante:
-     * Variante A: Asunto y mensaje
-     * Variante B: Asunto y mensaje alternativo
-     * (hasta variante D)
-   - Distribución de tráfico (sliders)
-   - Métrica de éxito:
-     * Tasa de apertura
-     * Tasa de click
-     * Respuestas
-     * Conversiones
-   - Duración del test
-   - Auto-select ganador
+8. **ACCIONES RÁPIDAS**
+   - Botón flotante "+ Nueva Receta"
+   - Opciones de ordenamiento:
+     * Alfabético
+     * Popularidad
+     * Menor tiempo
+     * Menores calorías
+   - Export a PDF
 
-9. **ANÁLISIS DE RENDIMIENTO**
-   - Métricas por mensaje:
-     * Enviados
-     * Entregados (%)
-     * Aperturas (%)
-     * Clicks (%)
-     * Respuestas
-     * Conversiones
-     * Bounces/Errores
-   - Gráfico temporal de métricas
-   - Heatmap de clicks (si email con links)
-   - Device breakdown (móvil/desktop)
-
-10. **RESPUESTAS AUTOMÁTICAS**
-    - Configurar auto-replies:
-      * Si cliente responde "X"
-      * Enviar mensaje Y
-      * O ejecutar acción Z
-    - Keywords detectados:
-      * "Cancelar" → Proceso de retención
-      * "Ayuda" → Contactar soporte
-      * "Sí" → Confirmar cita
-    - Inteligencia con NLP (detectar intención)
-
-11. **COMPLIANCE Y REGULACIONES**
-    - Footer automático:
-      * Link de unsubscribe
-      * Dirección física (requerido por ley)
-      * Política de privacidad
-    - Gestión de opt-outs:
-      * Usuarios que se dieron de baja
-      * Blacklist automática
-    - Validación de contenido:
-      * Detectar palabras spam
-      * Score de spamicity
-      * Sugerencias de mejora
-
-12. **HISTORIAL DE MENSAJES**
-    - Lista de mensajes enviados:
-      * Título/asunto
-      * Canal
-      * Fecha de envío
-      * Segmento
-      * Métricas resumidas
-      * Estado (Enviado/Programado/Draft/Cancelado)
-    - Filtros y búsqueda
-    - Acciones: Ver, Duplicar, Editar, Eliminar
-
-13. **CALENDARIO DE MENSAJES**
-    - Vista de calendario:
-      * Mensajes programados por día
-      * Color por canal
-      * Recurrentes marcados
-    - Click en día: ver detalle
-    - Evitar saturación (alerta si >3 mensajes/día)
-
-14. **LIBRERÍA DE MEDIA**
-    - Banco de imágenes:
-      * Upload de imágenes
-      * Galería organizada
-      * Tags y categorías
-      * Optimización automática
-    - Uso en emails/push
-
-15. **DATOS MOCKEADOS**
-    - 50+ mensajes en historial
-    - 10-15 templates por categoría
-    - Segmentos de usuarios guardados
-    - Calendario con mensajes programados
-    - Métricas de rendimiento simuladas
-    - Tests A/B en progreso
+9. **DATOS MOCKEADOS**
+   - 50-100 recetas variadas
+   - Imágenes placeholder atractivas
+   - Información nutricional completa
+   - Pasos de preparación detallados
+   - Ratings y reviews
 
 **ESTILOS CLAVE A USAR**:
 - Gradiente pink-rose-red para hero
-- Editor de mensaje tipo email client
-- Query builder visual con pills
-- Preview de mensaje en tiempo real
-- Gráficos de métricas (Recharts)
-- Calendario con eventos coloridos
-- Badges de estado del mensaje
-- Heatmap de clicks en email
+- Cards: `bg-white/80 backdrop-blur-xl rounded-3xl`
+- Modal visor amplio tipo revista
+- Imágenes grandes de recetas
+- Progress bars de macros
+- Badges coloridos por categoría
+- Checkboxes estilizados en ingredientes
 
-**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/mensajes-personalizados](src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/mensajes-personalizados).
-
----
-
-## 📋 PROMPT 6: Reactivación de Clientes
-
-Transforma completamente la página de Reactivación de Clientes ([src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/reactivacion-clientes/ReactivacionClientesPage.tsx](src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/reactivacion-clientes/ReactivacionClientesPage.tsx)) aplicando el sistema de diseño moderno.
-
-**IMPORTANTE**:
-- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
-- Crea un sistema de recuperación de clientes inactivos
-- Facilita campañas de win-back automatizadas
-
-### Requisitos de Diseño:
-
-1. **HERO SECTION - Reactivación**
-   - Gradiente `from-orange-600 via-amber-600 to-yellow-600`
-   - Título "Reactivación de Clientes Inactivos"
-   - Descripción: "Recupera clientes antes de perderlos para siempre"
-   - Icono de usuario con flecha de retorno
-
-2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
-   - Clientes en Riesgo
-   - Clientes Reactivados Este Mes
-   - Tasa de Reactivación (%)
-   - Ingresos Recuperados ($)
-   - Cards con glassmorphism
-
-3. **DASHBOARD DE INACTIVIDAD**
-   - Segmentación por nivel de riesgo:
-     * **En riesgo** (7-14 días inactivo):
-       - Cantidad
-       - Acciones sugeridas
-       - Color amarillo
-     * **Inactivos** (15-30 días):
-       - Cantidad
-       - Urgencia media
-       - Color naranja
-     * **Casi perdidos** (30-60 días):
-       - Cantidad
-       - Urgencia alta
-       - Color rojo
-     * **Perdidos** (>60 días):
-       - Cantidad
-       - Difícil recuperación
-       - Color gris
-   - Click en segmento: ver lista de clientes
-
-4. **LISTA DE CLIENTES EN RIESGO**
-   - Tabla/Cards de clientes:
-     * Avatar y nombre
-     * Días desde última actividad
-     * Plan actual
-     * Valor de vida (LTV)
-     * Probabilidad de retorno (IA, %)
-     * Último motivo de contacto
-     * Acciones:
-       - Enviar mensaje
-       - Llamar
-       - Aplicar oferta
-       - Marcar como perdido
-   - Ordenar por:
-     * Días de inactividad
-     * LTV (priorizar alto valor)
-     * Probabilidad de retorno
-   - Filtros múltiples
-
-5. **CAMPAÑAS DE REACTIVACIÓN**
-   - Templates de campañas:
-     * **"Te extrañamos"**:
-       - Email emotivo
-       - Recordar beneficios
-       - Oferta de reintegración
-     * **Descuento de reactivación**:
-       - 20-50% off primer mes
-       - Tiempo limitado
-       - CTA claro
-     * **Nueva funcionalidad**:
-       - "Mira lo nuevo desde que te fuiste"
-       - Features agregados
-       - Invitación a probar
-     * **Feedback y mejora**:
-       - "¿Por qué te fuiste?"
-       - Encuesta breve
-       - Incentivo por responder
-     * **Última oportunidad**:
-       - "Antes de cerrar tu cuenta..."
-       - Oferta especial final
-       - Urgencia
-   - Personalizar y lanzar campaña
-
-6. **SECUENCIA DE REACTIVACIÓN**
-   - Flujo automatizado multi-paso:
-     * **Día 0** (detección de inactividad):
-       - Email: "¿Todo bien, {{nombre}}?"
-     * **Día 3** (sin respuesta):
-       - SMS: "Te extrañamos 😢"
-     * **Día 7** (sin respuesta):
-       - Email: Oferta 20% descuento
-     * **Día 14** (sin respuesta):
-       - Push: Última oportunidad
-     * **Día 21** (sin respuesta):
-       - Marcar como perdido o pausa
-   - Editar secuencia (agregar/quitar pasos)
-   - Pausar secuencia manualmente
-
-7. **OFERTAS PERSONALIZADAS**
-   - Generador de ofertas:
-     * Tipo de oferta:
-       - Descuento (%, $)
-       - Sesiones gratis
-       - Upgrade de plan
-       - Acceso temporal premium
-     * Duración de oferta
-     * Código de descuento único
-     * Límite de uso
-   - Preview de oferta
-   - Seguimiento de redenciones
-
-8. **ANÁLISIS DE CHURN**
-   - Predictor de abandono (IA):
-     * Score de riesgo por cliente (0-100)
-     * Factores contribuyentes:
-       - Frecuencia de uso decreciente
-       - No abre mensajes
-       - No completa objetivos
-       - Soporte contactado (quejas)
-     * Tendencia temporal (gráfico)
-   - Alertas proactivas:
-     * "Cliente X con 80% probabilidad de churn"
-
-9. **RAZONES DE INACTIVIDAD**
-   - Categorización (manual o detectada):
-     * Falta de tiempo
-     * Insatisfacción con servicio
-     * Precio elevado
-     * Lesión/salud
-     * Mudanza/viaje
-     * Logró objetivo
-     * Otro
-   - Análisis de razones principales (gráfico)
-   - Estrategia por razón
-
-10. **WIN-BACK SUCCESS STORIES**
-    - Timeline de reactivaciones exitosas:
-      * Cliente
-      * Días inactivo antes de retornar
-      * Estrategia que funcionó
-      * Fecha de retorno
-      * Estado actual
-    - Aprender de casos exitosos
-    - Replicar estrategias ganadoras
-
-11. **COMPARADOR DE ESTRATEGIAS**
-    - Efectividad de campañas:
-      * Campaña A: Tasa de reactivación X%
-      * Campaña B: Tasa de reactivación Y%
-      * Mejor performing
-    - Gráfico comparativo
-    - Recomendaciones de mejora
-
-12. **INCENTIVOS CREATIVOS**
-    - Ideas de incentivos:
-      * Buddy pass (trae un amigo gratis)
-      * Desafío de reintegración (30 días)
-      * Coaching call 1-1 gratis
-      * Upgrade temporal a premium
-      * Merch exclusivo
-    - Tracking de efectividad
-
-13. **PREVENCIÓN PROACTIVA**
-    - Detectar señales tempranas:
-      * Disminución de sesiones
-      * Menor engagement
-      * Feedback negativo
-    - Intervenir antes de inactividad:
-      * Check-in proactivo
-      * Ajustar plan
-      * Sesión de motivación
-
-14. **REPORTES DE RETENCIÓN**
-    - Métricas clave:
-      * Churn rate mensual (%)
-      * Tasa de reactivación (%)
-      * Valor recuperado ($)
-      * Costo de reactivación (CAC)
-      * ROI de campañas win-back
-    - Gráficos temporales
-    - Comparativa con meses anteriores
-
-15. **DATOS MOCKEADOS**
-    - 50-100 clientes en distintos niveles de riesgo
-    - Campañas de reactivación con métricas
-    - Secuencias automatizadas
-    - Historias de éxito
-    - Análisis de churn
-    - Reportes de retención
-
-**ESTILOS CLAVE A USAR**:
-- Gradiente orange-amber-yellow para hero
-- Segmentación visual con colores de alerta
-- Cards de clientes con score de riesgo
-- Progress bars de probabilidad de retorno
-- Timeline de secuencias de reactivación
-- Gráficos de tendencia de churn (Recharts)
-- Badges de estado (en riesgo, inactivo, perdido)
-- Comparador de estrategias visual
-
-**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/reactivacion-clientes](src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/reactivacion-clientes).
+**NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta.
 
 ---
 
-## 📋 PROMPT 7: Listado de Afiliados
+## 📋 PROMPT 6: Nueva Receta
 
-Transforma completamente la página de Listado de Afiliados ([src/features/plancreatormax/sistema-afiliados/sistema-afiliados/listado-afiliados/ListadoAfiliadosPage.tsx](src/features/plancreatormax/sistema-afiliados/sistema-afiliados/listado-afiliados/ListadoAfiliadosPage.tsx)) aplicando el sistema de diseño moderno.
+Transforma completamente la página de Nueva Receta (src/features/nutrition/nutrition/receta-nueva) aplicando el sistema de diseño moderno.
 
 **IMPORTANTE**:
-- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
-- Crea un sistema completo de gestión de afiliados
-- Facilita el seguimiento de partners y su rendimiento
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en `GUIA_ESTILOS_UI.md`
+- Crea un editor visual para crear recetas
+- Facilita carga de fotos y cálculo nutricional
 
 ### Requisitos de Diseño:
 
-1. **HERO SECTION - Afiliados**
-   - Gradiente `from-blue-600 via-indigo-600 to-purple-600`
-   - Título "Sistema de Afiliados"
-   - Descripción: "Gestiona tu red de partners"
-   - Icono de network/partners
-
-2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
-   - Total de Afiliados
-   - Afiliados Activos
-   - Ventas Generadas Este Mes ($)
-   - Comisiones Pendientes ($)
-   - Cards con glassmorphism
-
-3. **TABLA DE AFILIADOS**
-   - Lista completa con:
-     * Avatar y nombre
-     * Email
-     * Código de afiliado (único)
-     * Fecha de registro
-     * Estado:
-       - Activo (verde)
-       - Pendiente aprobación (amarillo)
-       - Suspendido (rojo)
-     * Nivel/Tier:
-       - Bronce (1-10 ventas)
-       - Plata (11-50 ventas)
-       - Oro (51-100 ventas)
-       - Platino (100+ ventas)
-     * Métricas:
-       - Clicks en link
-       - Conversiones
-       - Tasa de conversión (%)
-       - Ventas generadas ($)
-       - Comisiones ganadas ($)
-     * Acciones (dropdown):
-       - Ver perfil completo
-       - Ver reportes
-       - Editar comisión
-       - Suspender/Activar
-       - Contactar
-   - Ordenar por cualquier columna
-   - Filtros:
-     * Por estado
-     * Por tier
-     * Por rango de ventas
-     * Por fecha de registro
-   - Búsqueda por nombre/email
-
-4. **PERFIL DE AFILIADO (MODAL)**
-   - Vista detallada:
-     * **Información personal**:
-       - Avatar grande
-       - Nombre completo
-       - Email y teléfono
-       - Ubicación
-       - Redes sociales
-     * **Información del programa**:
-       - Fecha de ingreso
-       - Código único
-       - Tier actual
-       - Próximo tier (progreso visual)
-     * **Métricas de rendimiento**:
-       - Gráfico de ventas mensual
-       - Clicks vs conversiones (funnel)
-       - Productos más vendidos
-       - Fuentes de tráfico
-     * **Comisiones**:
-       - Total ganado (histórico)
-       - Pendiente de pago
-       - Último pago
-       - Método de pago configurado
-
-5. **APROBACIÓN DE NUEVOS AFILIADOS**
-   - Cola de solicitudes pendientes:
-     * Card por aplicación con:
-       - Datos del aplicante
-       - Razón para unirse
-       - Audiencia/plataformas
-       - Fecha de aplicación
-     * Botones:
-       - Aprobar (verde)
-       - Rechazar (rojo)
-       - Solicitar más info
-   - Notificación automática al aprobar/rechazar
-
-6. **ESTRUCTURA DE COMISIONES**
-   - Configuración por tier:
-     * **Bronce**: 10% por venta
-     * **Plata**: 15% por venta
-     * **Oro**: 20% por venta
-     * **Platino**: 25% por venta + bonos
-   - Edición de porcentajes
-   - Comisión custom por afiliado (override)
-   - Bonos especiales:
-     * Por volumen (100 ventas = $500 bonus)
-     * Por primer venta del mes
-     * Desafíos temporales
-
-7. **CÓDIGOS Y LINKS**
-   - Gestión de códigos:
-     * Código principal (único por afiliado)
-     * Códigos secundarios (campaña específica)
-     * Links de referido con UTM
-   - QR code generado
-   - Tracking de uso por código
-   - Deshabilitar/habilitar códigos
-
-8. **COMUNICACIÓN CON AFILIADOS**
-   - Enviar mensaje:
-     * Individual (email, SMS)
-     * Masivo (todos los afiliados)
-     * Por segmento (tier, rendimiento)
-   - Templates:
-     * Bienvenida
-     * Recordatorio de activación
-     * Felicitación por logro
-     * Update de programa
-   - Historial de comunicaciones
-
-9. **MATERIALES DE MARKETING**
-   - Biblioteca de recursos para afiliados:
-     * Banners (varios tamaños)
-     * Textos sugeridos (copy)
-     * Logos y brand assets
-     * Videos promocionales
-     * Email templates
-     * Guías de uso
-   - Descarga individual o bulk
-   - Upload de nuevos materiales
-
-10. **LEADERBOARD DE AFILIADOS**
-    - Ranking de top performers:
-      * Posición (#1, #2, #3 con badges especiales)
-      * Avatar y nombre
-      * Tier
-      * Ventas del mes ($)
-      * Conversiones
-    - Filtros temporales (mes, trimestre, año, all-time)
-    - Premios por posición
-
-11. **ANÁLISIS DE RENDIMIENTO**
-    - Dashboard analítico:
-      * Gráfico de ventas por afiliado (barras)
-      * Evolución temporal (líneas)
-      * Distribución por tier (dona)
-      * Fuentes de tráfico (barras horizontales)
-      * Productos más referidos
-    - Comparativas:
-      * Mes actual vs anterior
-      * Afiliado X vs promedio
-    - Exportar reportes
-
-12. **ALERTAS Y NOTIFICACIONES**
-    - Alertas automáticas:
-      * Nuevo afiliado registrado
-      * Primera venta de afiliado
-      * Afiliado alcanzó nuevo tier
-      * Comisión lista para pagar
-      * Afiliado inactivo >30 días
-    - Centro de notificaciones
-    - Configuración de alertas
-
-13. **REGLAS DEL PROGRAMA**
-    - Configuración de términos:
-      * Duración de cookie (30/60/90 días)
-      * Comisión por primera venta o recurrente
-      * Productos elegibles
-      * Regiones permitidas
-      * Métodos de promoción (email, social, paid ads)
-    - Términos y condiciones (editar)
-    - Política de pagos
-
-14. **ONBOARDING DE AFILIADOS**
-    - Proceso guiado para nuevos:
-      * Step 1: Completar perfil
-      * Step 2: Obtener link y código
-      * Step 3: Descargar materiales
-      * Step 4: Tutorial de uso
-      * Step 5: Primera promoción
-    - Progress tracker
-    - Checklist de tareas
-
-15. **DATOS MOCKEADOS**
-    - 50-100 afiliados simulados
-    - Distribución realista de tiers
-    - Métricas de clicks y conversiones
-    - Comisiones variadas
-    - Materiales de marketing
-    - Historial de comunicaciones
-    - Solicitudes pendientes
-
-**ESTILOS CLAVE A USAR**:
-- Gradiente blue-indigo-purple para hero
-- Tabla avanzada con ordenamiento
-- Badges de tier (Bronce/Plata/Oro/Platino)
-- Cards de afiliados con avatares
-- Leaderboard con podio visual (#1, #2, #3)
-- Progress bars de progreso a siguiente tier
-- Gráficos de rendimiento (Recharts)
-- Modal de perfil amplio
-
-**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatormax/sistema-afiliados/sistema-afiliados/listado-afiliados](src/features/plancreatormax/sistema-afiliados/sistema-afiliados/listado-afiliados).
-
----
-
-## 📋 PROMPT 8: Panel de Comisiones
-
-Transforma completamente la página de Panel de Comisiones ([src/features/plancreatormax/sistema-afiliados/sistema-afiliados/panel-comisiones/PanelComisionesPage.tsx](src/features/plancreatormax/sistema-afiliados/sistema-afiliados/panel-comisiones/PanelComisionesPage.tsx)) aplicando el sistema de diseño moderno.
-
-**IMPORTANTE**:
-- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
-- Crea un panel completo de gestión de comisiones
-- Facilita el cálculo y pago de comisiones a afiliados
-
-### Requisitos de Diseño:
-
-1. **HERO SECTION - Comisiones**
-   - Gradiente `from-green-600 via-emerald-600 to-teal-600`
-   - Título "Panel de Comisiones"
-   - Descripción: "Gestiona pagos a tus afiliados"
-   - Icono de dinero/calculadora
-
-2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
-   - Comisiones Totales Generadas ($)
-   - Pendientes de Pago ($)
-   - Pagadas Este Mes ($)
-   - Próximo Pago Programado (fecha)
-   - Cards con glassmorphism y números grandes
-
-3. **RESUMEN FINANCIERO**
-   - Overview de comisiones:
-     * Gráfico de barras apiladas:
-       - Comisiones generadas (verde)
-       - Comisiones pagadas (azul)
-       - Comisiones pendientes (amarillo)
-     * Por mes (últimos 12 meses)
-   - Filtros temporales
-   - Total acumulado
-
-4. **TABLA DE COMISIONES**
-   - Lista detallada:
-     * **Comisión ID** (único)
-     * **Afiliado** (nombre y avatar)
-     * **Fecha de venta**
-     * **Cliente referido** (nombre)
-     * **Producto/Plan vendido**
-     * **Valor de venta** ($)
-     * **% Comisión**
-     * **Monto comisión** ($ destacado)
-     * **Estado**:
-       - Pendiente validación (amarillo)
-       - Aprobada (verde)
-       - Pagada (azul)
-       - Revertida (rojo)
-     * **Fecha de pago** (si aplica)
-     * **Acciones**:
-       - Ver detalles
-       - Aprobar/Rechazar (si pendiente)
-       - Marcar como pagada
-       - Revertir
-   - Filtros múltiples:
-     * Por afiliado
-     * Por estado
-     * Por rango de fechas
-     * Por monto (min-max)
-   - Exportar a Excel/CSV
-
-5. **COMISIONES PENDIENTES DE APROBACIÓN**
-   - Cola de validación:
-     * Cards de comisiones que requieren revisión
-     * Motivos de revisión:
-       - Primera venta del afiliado
-       - Monto alto (>$500)
-       - Cliente nuevo vs returning
-       - Posible fraude detectado
-     * Información de la venta:
-       - Detalles del producto
-       - Forma de pago
-       - IP y geolocalización
-     * Botones de acción:
-       - Aprobar (check)
-       - Rechazar (X)
-       - Solicitar más info
-   - Notificaciones de nuevas pendientes
-
-6. **PROCESAMIENTO DE PAGOS**
-   - Sección de pago masivo:
-     * Seleccionar comisiones aprobadas no pagadas
-     * Agrupar por afiliado
-     * Total a pagar por afiliado (suma)
-     * Método de pago:
-       - Transferencia bancaria
-       - PayPal
-       - Stripe
-       - Wire transfer
-     * Fecha programada de pago
-     * Notas del pago (opcional)
-   - Botón "Procesar pagos" (confirmación)
-   - Generar comprobantes automáticos
-
-7. **HISTORIAL DE PAGOS**
-   - Timeline de pagos realizados:
-     * Fecha de pago
-     * Afiliado(s) pagados
-     * Monto total
-     * Método de pago
-     * Referencia/ID de transacción
-     * Estado (Completado/Fallido/Pendiente)
-     * Ver recibo (PDF)
-   - Filtros por fecha y afiliado
-   - Resend notification a afiliado
-
-8. **COMISIONES POR AFILIADO**
-   - Vista agrupada por afiliado:
-     * Card por afiliado con:
-       - Nombre y avatar
-       - Total comisiones generadas (histórico)
-       - Pendientes de pago ($)
-       - Última fecha de pago
-       - Método de pago preferido
-     * Click: ver detalles de ese afiliado
-   - Ordenar por pendientes (mayor a menor)
-
-9. **CALCULADORA DE COMISIONES**
-   - Simulador:
-     * Input: Valor de venta ($)
-     * Seleccionar tier del afiliado
-     * Output:
-       - Comisión calculada ($)
-       - Tu ganancia neta ($)
-       - Porcentaje de cada uno
-   - Tabla de ejemplos por tier
-
-10. **REGLAS DE COMISIÓN**
-    - Configuración avanzada:
-      * **Comisión base** por tier (%)
-      * **Comisión recurrente** (si suscripción):
-        - Primera vez: X%
-        - Recurrencias: Y% (menor)
-        - Duración (lifetime, 12 meses, etc.)
-      * **Productos excluidos** (no generan comisión)
-      * **Período de validación** (días antes de aprobar)
-      * **Política de reembolsos**:
-        - Cliente pide reembolso → revertir comisión
-        - Período de gracia (30 días)
-      * **Bonificaciones especiales**:
-        - Por volumen (10+ ventas = +5%)
-        - Por primer cliente
-        - Desafíos mensuales
-    - Guardar configuración
-
-11. **REPORTES FINANCIEROS**
-    - Generar reportes:
-      * **Reporte mensual**:
-        - Total comisiones generadas
-        - Total pagado
-        - Pendiente
-        - Por afiliado
-      * **Reporte anual** (fiscal)
-      * **Reporte por producto**
-      * **Reporte por afiliado individual**
-    - Formato PDF profesional
-    - Enviar por email automático
-
-12. **PROYECCIONES**
-    - Predicción de comisiones futuras:
-      * Basado en tendencia histórica
-      * Comisiones recurrentes programadas
-      * Gráfico de proyección (3-6 meses)
-      * Escenarios (optimista/realista)
-    - Planificación de cash flow
-
-13. **ALERTAS Y APROBACIONES**
-    - Sistema de alertas:
-      * Comisión pendiente de aprobación
-      * Pago programado próximo (3 días antes)
-      * Reembolso afecta comisión
-      * Límite de comisiones mensuales alcanzado
-    - Workflow de aprobación:
-      * Si comisión >$X requiere aprobación manual
-      * Asignar aprobadores
-      * Historial de aprobaciones
-
-14. **INTEGRACIÓN CON CONTABILIDAD**
-    - Export para software contable:
-      * QuickBooks
-      * Xero
-      * Zoho Books
-    - Formato compatible
-    - Categorización automática
-
-15. **DATOS MOCKEADOS**
-    - 200-500 comisiones simuladas
-    - Distintos estados (pendiente, aprobada, pagada)
-    - Historial de pagos
-    - Comisiones agrupadas por afiliado
-    - Proyecciones de comisiones futuras
-    - Reportes de ejemplo
-
-**ESTILOS CLAVE A USAR**:
-- Gradiente green-emerald-teal para hero
-- Tabla de comisiones con filas alternadas
-- Números grandes ($) con animación de conteo
-- Badges de estado coloridos
-- Cards de comisiones pendientes con acciones
-- Gráficos financieros (Recharts)
-- Timeline de pagos con línea conectora
-- Calculadora con resultado destacado
-
-**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatormax/sistema-afiliados/sistema-afiliados/panel-comisiones](src/features/plancreatormax/sistema-afiliados/sistema-afiliados/panel-comisiones).
-
----
-
-*[Continuaré con los prompts restantes en la siguiente sección debido a la longitud...]*
-
-## 📋 PROMPT 9: Pagos a Afiliados
-
-Transforma completamente la página de Pagos a Afiliados ([src/features/plancreatormax/sistema-afiliados/sistema-afiliados/pagos-afiliados/PagosAfiliadosPage.tsx](src/features/plancreatormax/sistema-afiliados/sistema-afiliados/pagos-afiliados/PagosAfiliadosPage.tsx)) aplicando el sistema de diseño moderno.
-
-**IMPORTANTE**:
-- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
-- Crea un sistema de procesamiento de pagos a afiliados
-- Facilita pagos individuales y masivos
-
-### Requisitos de Diseño:
-
-1. **HERO SECTION - Pagos**
-   - Gradiente `from-cyan-600 via-blue-600 to-indigo-600`
-   - Título "Pagos a Afiliados"
-   - Descripción: "Procesa pagos rápidamente y sin errores"
-   - Icono de pago/transferencia
-
-2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
-   - Total a Pagar Hoy ($)
-   - Pagos Procesados Este Mes
-   - Métodos de Pago Activos
-   - Próximo Pago Programado
-   - Cards con glassmorphism
-
-3. **COLA DE PAGOS PENDIENTES**
-   - Lista de afiliados con pago pendiente:
-     * Checkbox (selección múltiple)
-     * Avatar y nombre del afiliado
-     * Monto total pendiente ($)
-     * Número de comisiones acumuladas
-     * Método de pago preferido (icono)
-     * Última vez pagado
-     * Urgencia (badge: Normal/Urgente)
-   - Select all / Select none
-   - Ordenar por monto (mayor primero)
-
-4. **PROCESADOR DE PAGO MASIVO**
-   - Panel de pago batch:
-     * Afiliados seleccionados (# y avatares)
-     * Total a transferir ($)
-     * Método de pago (dropdown):
-       - PayPal (batch payment)
-       - Stripe Connect
-       - Transferencia bancaria
-       - Wire transfer
-       - Cheque
-     * Fecha de pago (date picker)
-     * Nota interna (textarea)
-   - Validaciones:
-     * Fondos suficientes
-     * Datos de pago completos
-     * Sin pagos duplicados
-   - Botón "Procesar X pagos" (grande, gradiente)
-   - Confirmación con resumen
-
-5. **PAGO INDIVIDUAL**
-   - Modal para pago único:
-     * Información del afiliado
-     * Monto a pagar (editable)
-     * Método de pago
-     * Referencia/ID de transacción
-     * Comprobante (upload opcional)
-     * Notas
-   - Preview de email de notificación
-   - Botón "Confirmar pago"
-
-6. **MÉTODOS DE PAGO CONFIGURADOS**
-   - Cards de métodos disponibles:
-     * **PayPal**:
-       - API conectada (status)
-       - Email de negocio
-       - Límite diario ($)
-       - Tarifas (%)
-     * **Stripe**:
-       - Account ID
-       - Balance disponible
-       - Tarifas
-     * **Banco**:
-       - Cuenta origen
-       - Routing number
-       - Límites
-   - Agregar nuevo método
-   - Editar existentes
-
-7. **VALIDACIÓN DE DATOS DE AFILIADOS**
-   - Verificar información de pago:
-     * Lista de afiliados sin datos completos (alerta)
-     * Datos faltantes:
-       - Email PayPal
-       - Cuenta bancaria
-       - Información fiscal
-     * Enviar recordatorio automático
-     * Bloquear pago hasta completar
-
-8. **PROGRAMACIÓN DE PAGOS**
-   - Configurar pagos automáticos:
-     * Frecuencia:
-       - Semanal (cada viernes)
-       - Quincenal (días 1 y 15)
-       - Mensual (día X del mes)
-     * Monto mínimo para pagar ($50, $100, etc.)
-     * Método de pago default
-     * Notificaciones automáticas
-   - Próximos pagos programados (calendario)
-   - Historial de pagos automáticos
-
-9. **HISTORIAL DE TRANSACCIONES**
-   - Lista de pagos realizados:
-     * ID de transacción (único)
-     * Fecha y hora
-     * Afiliado(s) pagados (si batch, múltiples)
-     * Monto total
-     * Método de pago
-     * Estado:
-       - Completado (verde)
-       - Procesando (amarillo)
-       - Fallido (rojo)
-       - Revertido (gris)
-     * Acciones:
-       - Ver recibo
-       - Reenviar notificación
-       - Revertir (si aplica)
-   - Filtros por fecha, método, estado
-   - Exportar historial
-
-10. **COMPROBANTES Y RECIBOS**
-    - Generación automática:
-      * Template profesional (PDF)
-      * Logo de la empresa
-      * Información fiscal
-      * Desglose de comisiones incluidas
-      * Firma digital (opcional)
-    - Envío automático por email
-    - Descarga manual
-    - Personalizar template
-
-11. **CONCILIACIÓN BANCARIA**
-    - Importar extractos bancarios:
-      * Upload CSV/OFX/QFX
-      * Mapeo automático de columnas
-      * Match con pagos registrados
-    - Pagos sin conciliar (alertas)
-    - Diferencias detectadas (revisar)
-    - Marcar como conciliados
-
-12. **MANEJO DE ERRORES**
-    - Pagos fallidos:
-      * Motivo del error:
-        - Fondos insuficientes
-        - Datos incorrectos
-        - Cuenta cerrada
-        - Límite excedido
-      * Acciones:
-        - Reintentar pago
-        - Cambiar método
-        - Contactar afiliado
-        - Marcar como problema
-    - Log de intentos
-    - Notificación automática
-
-13. **REPORTES FISCALES**
-    - Generación de forms:
-      * 1099 (USA) - para contratistas
-      * Información fiscal por país
-      * Threshold de reporte ($600+ en USA)
-    - Export para contabilidad
-    - Envío automático a afiliados
-
-14. **ANÁLISIS DE PAGOS**
-    - Dashboard analítico:
-      * Gráfico de pagos mensuales ($)
-      * Distribución por método (dona)
-      * Promedio de pago por afiliado
-      * Top 10 afiliados por comisiones
-    - Tendencias y proyecciones
-    - Costos de procesamiento (tarifas)
-
-15. **NOTIFICACIONES A AFILIADOS**
-    - Email automático al procesar pago:
-      * Asunto: "Pago procesado - $X"
-      * Monto recibido
-      * Fecha
-      * Método
-      * Adjuntar recibo
-      * Link al portal de afiliado
-    - Personalizar template
-    - Preview antes de enviar
-
-16. **DATOS MOCKEADOS**
-    - 30-50 pagos pendientes
-    - Historial de 100+ transacciones
-    - Distintos métodos de pago
-    - Algunos pagos fallidos
-    - Afiliados con datos incompletos
-    - Programaciones futuras
-
-**ESTILOS CLAVE A USAR**:
-- Gradiente cyan-blue-indigo para hero
-- Tabla con checkboxes para selección
-- Panel de pago masivo destacado
-- Badges de urgencia y estado
-- Cards de métodos de pago con iconos
-- Timeline de historial de pagos
-- Modal de confirmación elegante
-- Alertas de errores/validaciones coloridas
-
-**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatormax/sistema-afiliados/sistema-afiliados/pagos-afiliados](src/features/plancreatormax/sistema-afiliados/sistema-afiliados/pagos-afiliados).
-
----
-
-## 📋 PROMPT 10: Recursos para Afiliados
-
-Transforma completamente la página de Recursos para Afiliados ([src/features/plancreatormax/sistema-afiliados/sistema-afiliados/recursos-afiliados/RecursosAfiliadosPage.tsx](src/features/plancreatormax/sistema-afiliados/sistema-afiliados/recursos-afiliados/RecursosAfiliadosPage.tsx)) aplicando el sistema de diseño moderno.
-
-**IMPORTANTE**:
-- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
-- Crea una biblioteca completa de materiales de marketing
-- Facilita que afiliados promocionen efectivamente
-
-### Requisitos de Diseño:
-
-1. **HERO SECTION - Recursos**
+1. **HERO SECTION - Editor**
    - Gradiente `from-purple-600 via-pink-600 to-rose-600`
-   - Título "Recursos para Afiliados"
-   - Descripción: "Todo lo que necesitan para tener éxito"
-   - Icono de caja de herramientas/recursos
+   - Título "Crear Nueva Receta"
+   - Breadcrumb: Recetas > Nueva
 
-2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
-   - Total de Recursos
-   - Descargas Este Mes
-   - Recurso Más Popular
-   - Última Actualización
-   - Cards con glassmorphism
+2. **LAYOUT PRINCIPAL**
+   - Dos columnas (desktop):
+     * Izquierda: Formulario
+     * Derecha: Preview en vivo
 
-3. **CATEGORÍAS DE RECURSOS**
-   - Navegación por categorías (pills):
-     * Banners y Gráficos
-     * Textos y Copy
-     * Videos
-     * Email Templates
-     * Social Media
-     * Brand Assets
-     * Guías y Tutoriales
-     * Todos
-   - Contador por categoría
+3. **FORMULARIO DE RECETA** (RecetaForm)
+   - Información básica:
+     * Nombre de la receta
+     * Tipo de comida (dropdown)
+     * Dificultad (selector visual)
+     * Tiempo de preparación
+     * Tiempo de cocción
+     * Número de porciones
+     * Descripción breve
 
-4. **GRID DE RECURSOS**
-   - Cards de recursos:
-     * **Preview visual**:
-       - Thumbnail (imagen)
-       - Play button (si video)
-       - Icon (si documento)
-     * **Información**:
-       - Nombre del recurso
-       - Categoría (badge)
-       - Formato (JPG, PNG, PDF, MP4)
-       - Tamaño del archivo
-       - Dimensiones (si imagen)
-       - Descargas (#)
-       - Fecha de subida
-     * **Hover actions**:
-       - Vista previa (quick view)
-       - Descargar
-       - Copiar link
-       - Compartir
-   - Grid responsive (1-2-3-4 columnas)
-   - Búsqueda por nombre
+4. **UPLOAD DE FOTOS** (FotoUpload)
+   - Zona drag & drop grande:
+     * `border-dashed border-4`
+     * Icono cámara animado
+     * Soporte múltiples fotos
+   - Galería de fotos:
+     * Thumbnails con preview
+     * Hacer foto principal
+     * Eliminar foto
+     * Progress bar de upload
 
-5. **BANNERS Y GRÁFICOS**
-   - Variedad de tamaños:
-     * **Web banners**:
-       - 728x90 (leaderboard)
-       - 300x250 (medium rectangle)
-       - 160x600 (skyscraper)
-       - 320x50 (mobile banner)
-     * **Social media**:
-       - 1080x1080 (Instagram post)
-       - 1200x628 (Facebook post)
-       - 1080x1920 (Instagram story)
-       - 1500x500 (Facebook cover)
-     * **Display ads**:
-       - Varias dimensiones estándar
-   - Variantes por campaña/temporada
-   - Descargar individual o pack completo (ZIP)
+5. **EDITOR DE INGREDIENTES** (IngredientesEditor)
+   - Lista dinámica de ingredientes:
+     * Input nombre ingrediente
+     * Cantidad (input numérico)
+     * Unidad (dropdown: g, ml, taza, etc.)
+     * Botón "+ Agregar ingrediente"
+     * Drag & drop para reordenar
+     * Botón eliminar por ingrediente
+   - Calculadora nutricional automática
 
-6. **TEXTOS Y COPY**
-   - Snippets de texto listo para usar:
-     * **Email templates**:
-       - Bienvenida
-       - Promoción
-       - Case study
-       - Testimonio
-     * **Posts para redes**:
-       - Caption corto
-       - Caption largo
-       - Historia inspiracional
-       - Tips y consejos
-     * **Ads copy**:
-       - Headlines (5-10 variantes)
-       - Descriptions
-       - CTAs
-     * **Blog posts**:
-       - Artículos completos (500-1000 palabras)
-       - Outline para expandir
-   - Botón "Copiar texto"
-   - Variables para personalizar ({{name}}, {{link}})
+6. **EDITOR DE PASOS** (PasosEditor)
+   - Pasos de preparación:
+     * Textarea por cada paso
+     * Botón "+ Agregar paso"
+     * Numeración automática
+     * Drag & drop para reordenar
+     * Tiempo estimado por paso (opcional)
+     * Agregar foto por paso (opcional)
 
-7. **VIDEOS PROMOCIONALES**
-   - Biblioteca de videos:
-     * **Tipos**:
-       - Testimoniales de clientes
-       - Tour del producto/app
-       - Explicaciones de beneficios
-       - Before & After
-       - Behind the scenes
-     * **Formatos**:
-       - Horizontal (16:9)
-       - Vertical (9:16)
-       - Cuadrado (1:1)
-     * **Duraciones**:
-       - 15s (stories)
-       - 30s (ads)
-       - 60s (posts)
-       - 2-5min (explicativos)
-   - Player integrado (preview)
-   - Descargar en distintas resoluciones (1080p, 720p, 480p)
-   - Subtítulos incluidos (SRT)
+7. **CALCULADORA NUTRICIONAL** (NutricionCalculator)
+   - Cálculo automático basado en ingredientes:
+     * Calorías totales y por porción
+     * Macros (P/C/G) en gramos y %
+     * Gráfico de dona
+     * Micronutrientes principales
+     * Ajuste manual si es necesario
 
-8. **EMAIL TEMPLATES**
-   - Templates HTML responsivos:
-     * Drag & drop personalizable
-     * Variables dinámicas
-     * Link de afiliado incluido
-   - Categorías:
-     * Lanzamiento de producto
-     * Oferta especial
-     * Newsletter semanal
-     * Caso de éxito
-   - Preview desktop/móvil
-   - Descargar HTML o copiar código
-   - Importar a Mailchimp/SendGrid
+8. **ETIQUETAS Y CATEGORIZACIÓN**
+   - Multi-select de tags:
+     * Vegano, Vegetariano
+     * Sin gluten, Sin lactosa
+     * Baja en carbos, Alta proteína
+     * etc.
+   - Selección de alergenos
+   - Categorías (Mediterránea, Asiática, etc.)
 
-9. **BRAND ASSETS**
-   - Identidad visual:
-     * **Logos**:
-       - PNG (fondo transparente)
-       - SVG (vectorial)
-       - JPG (fondo blanco/negro)
-       - Variantes (horizontal, vertical, icon only)
-       - Versión light/dark
-     * **Paleta de colores**:
-       - Códigos HEX
-       - RGB
-       - CMYK (para impresión)
-       - Copiar código con un click
-     * **Tipografías**:
-       - Fuentes principales
-       - Links de descarga
-       - Ejemplos de uso
-     * **Guidelines**:
-       - PDF con guía de marca
-       - Uso correcto/incorrecto
-       - Espaciado y márgenes
-   - Descargar brand kit completo (ZIP)
+9. **PREVIEW EN VIVO**
+   - Card lateral mostrando:
+     * Vista previa como se verá
+     * Foto principal
+     * Info nutricional
+     * Lista de ingredientes
+     * Pasos
+     * Actualización en tiempo real
 
-10. **GUÍAS Y TUTORIALES**
-    - Documentación para afiliados:
-      * **Getting started guide**:
-        - Cómo empezar
-        - Obtener link de afiliado
-        - Primeras promociones
-      * **Best practices**:
-        - Estrategias que funcionan
-        - Errores a evitar
-        - Optimización de conversiones
-      * **Tutoriales técnicos**:
-        - Cómo insertar banners en blog
-        - Tracking con Google Analytics
-        - Email marketing para afiliados
-      * **FAQs**:
-        - Preguntas frecuentes
-        - Solución de problemas
-    - Formato PDF descargable
-    - Videos tutoriales embebidos
+10. **ACCIONES FINALES**
+    - Botones:
+      * Guardar (gradiente)
+      * Guardar y crear otra
+      * Cancelar
+      * Vista previa completa
 
-11. **GENERADOR DE CONTENIDO**
-    - Herramientas de personalización:
-      * **Custom banner generator**:
-        - Elegir template
-        - Agregar tu nombre/logo
-        - Cambiar colores
-        - Agregar tu link
-        - Descargar personalizado
-      * **QR code generator**:
-        - Con tu link de afiliado
-        - Logo en el centro
-        - Descargar PNG/SVG
-      * **Bio link page**:
-        - Landing page simple
-        - Con tus links
-        - Customizable
-
-12. **SOCIAL MEDIA KIT**
-    - Pack para redes sociales:
-      * Post templates (Canva-style)
-      * Story templates
-      * Highlight covers
-      * Hashtags sugeridos (#15-30 por nicho)
-      * Calendario de contenido sugerido
-    - Descargar pack completo
-    - Integración con Canva (templates editables)
-
-13. **ESTADÍSTICAS DE USO**
-    - Analytics de recursos:
-      * Recurso más descargado (top 10)
-      * Recurso más efectivo (más conversiones)
-      * Descargas por día/semana/mes (gráfico)
-      * Recursos no utilizados (sugerir)
-    - Feedback de afiliados (ratings)
-    - Sugerencias de nuevos recursos (recopilar ideas)
-
-14. **SUBIDA DE NUEVOS RECURSOS (ADMIN)**
-    - Formulario de upload:
-      * Archivo (drag & drop, múltiple)
-      * Nombre
-      * Descripción
-      * Categoría
-      * Tags
-      * Quién puede acceder (todos/tier específico)
-    - Preview antes de publicar
-    - Notificar a afiliados de nuevo recurso
-
-15. **SOLICITUDES DE RECURSOS**
-    - Afiliados pueden solicitar:
-      * Tipo de recurso necesitado
-      * Formato deseado
-      * Uso específico
-      * Urgencia
-    - Lista de solicitudes pendientes (admin)
-    - Votos de otros afiliados (prioritize by demand)
-
-16. **DATOS MOCKEADOS**
-    - 50-100 recursos variados
-    - Banners en múltiples tamaños
-    - 5-10 videos
-    - 20-30 textos/copy
-    - Email templates listos
-    - Brand assets completos
-    - Guías en PDF
-    - Estadísticas de descargas
+11. **DATOS MOCKEADOS**
+    - Base de datos de ingredientes (500+)
+    - Unidades de medida comunes
+    - Categorías predefinidas
+    - Tags populares
 
 **ESTILOS CLAVE A USAR**:
 - Gradiente purple-pink-rose para hero
-- Grid de recursos con previews grandes
-- Lightbox para vista rápida (modal)
-- Cards con hover para ver acciones
-- Badges de categoría coloridos
-- Player de video integrado
-- Color palette display elegante
-- Botón "Copiar" con feedback visual
-- Download progress bar
+- Formulario: `bg-white/80 backdrop-blur-xl rounded-3xl`
+- Upload zone con `border-dashed border-4`
+- Lista de ingredientes con drag handles
+- Preview lateral con glassmorphism
+- Calculadora nutricional con gráficos
 
-**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatormax/sistema-afiliados/sistema-afiliados/recursos-afiliados](src/features/plancreatormax/sistema-afiliados/sistema-afiliados/recursos-afiliados).
+**NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta.
 
 ---
 
-## 📋 PROMPT 11-14: Tests A/B, Tienda Merchandising
+## 📋 PROMPT 7: Editar Receta
 
-*[Debido a la longitud, incluiré los últimos prompts de manera resumida]*
+Transforma completamente la página de Editar Receta (src/features/nutrition/nutrition/receta-editar) aplicando el sistema de diseño moderno.
 
-### PROMPT 11: Experimentos A/B
-- Gradiente: red-orange-yellow
-- Crear y gestionar tests A/B
-- Constructor visual de variantes
-- Métricas y resultados en tiempo real
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en `GUIA_ESTILOS_UI.md`
+- Crea un editor completo con historial de versiones
+- Facilita actualización de ingredientes y valores nutricionales
 
-### PROMPT 12: Historial de Experimentos
-- Gradiente: amber-yellow-lime
-- Archivo de tests pasados
-- Análisis de resultados históricos
-- Insights y aprendizajes
+### Requisitos de Diseño:
 
-### PROMPT 13: Resultados de Tests
-- Gradiente: green-emerald-teal
-- Dashboard de resultados A/B
-- Significancia estadística
-- Recomendaciones de implementación
+1. **HERO SECTION - Editor**
+   - Gradiente `from-fuchsia-600 via-pink-600 to-rose-600`
+   - Título "Editar Receta"
+   - Breadcrumb: Recetas > [Nombre] > Editar
+   - Auto-save indicator
 
-### PROMPT 14: Catálogo de Productos (Tienda)
-- Gradiente: blue-indigo-purple
-- Gestión de productos de merchandising
-- Variantes y SKUs
-- Inventario y precios
+2. **TABS PRINCIPALES**
+   - Tabs estilizados:
+     * Editar Contenido
+     * Actualizar Nutrición
+     * Historial de Versiones
+     * Estadísticas de Uso
 
-### PROMPT 15: Configuración de Tienda
-- Gradiente: purple-fuchsia-pink
-- Personalización de tienda online
-- Métodos de pago y envío
-- Configuración de impuestos
+3. **EDITOR DE RECETA** (RecetaEditor)
+   - Similar a creación pero con datos cargados
+   - Edición inline de todos los campos
+   - Comparación con versión anterior (opcional)
 
-### PROMPT 16: Pedidos de Clientes
-- Gradiente: cyan-blue-indigo
-- Gestión de órdenes
-- Estados de envío
-- Comunicación con clientes
+4. **MANAGER DE INGREDIENTES** (IngredientesManager)
+   - Lista editable de ingredientes:
+     * Editar cantidades inline
+     * Agregar nuevos ingredientes
+     * Eliminar ingredientes
+     * Sustituir ingredientes (sugerencias)
+     * Recalcular nutrición automáticamente
+   - Alertas si hay cambios significativos en calorías/macros
 
-### PROMPT 17: Informes de Ventas
-- Gradiente: green-teal-cyan
-- Analytics de ventas
-- Productos más vendidos
-- Proyecciones y tendencias
+5. **MANAGER DE PASOS** (PasosManager)
+   - Editor de pasos de preparación:
+     * Editar texto de pasos
+     * Agregar/eliminar pasos
+     * Reordenar con drag & drop
+     * Agregar/cambiar fotos por paso
+
+6. **ACTUALIZADOR DE NUTRICIÓN** (NutricionUpdater)
+   - Interfaz para ajustar valores nutricionales:
+     * Auto-calculado vs manual
+     * Comparación antes/después
+     * Gráfico de cambios en macros
+     * Validación de datos
+   - Botón "Recalcular automáticamente"
+
+7. **HISTORIAL DE VERSIONES** (HistorialVersiones)
+   - Timeline de cambios:
+     * Fecha y hora
+     * Usuario que editó
+     * Tipo de cambio
+     * Comparación (diff visual)
+     * Notas del cambio
+   - Opción "Restaurar versión"
+   - Vista de diferencias lado a lado
+
+8. **ESTADÍSTICAS DE USO**
+   - Métricas de la receta:
+     * Veces usada en dietas
+     * Clientes que la han consumido
+     * Rating promedio
+     * Comentarios/Feedback
+   - Gráfico de uso en el tiempo
+
+9. **ACCIONES FINALES**
+   - Botones:
+     * Guardar cambios
+     * Guardar como nueva versión
+     * Duplicar receta
+     * Eliminar receta
+     * Publicar cambios
+
+10. **DATOS MOCKEADOS**
+    - Receta completa con todos los datos
+    - Historial de 3-5 versiones
+    - Estadísticas de uso simuladas
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente fuchsia-pink-rose para hero
+- Editor: `bg-white/80 backdrop-blur-xl rounded-3xl`
+- Timeline de versiones con línea conectora
+- Diff visual con colores (verde añadido, rojo eliminado)
+- Gráficos de cambios con Recharts
+- Confirmaciones antes de eliminar
+
+**NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta.
+
+---
+
+## 📋 PROMPT 8: Calculadoras Nutricionales
+
+Transforma completamente la página de Calculadoras Nutricionales (src/features/nutrition/nutrition/calculadoras-nutricionales) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en `GUIA_ESTILOS_UI.md`
+- Crea calculadoras interactivas y precisas
+- Facilita cálculos nutricionales complejos
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Calculadoras**
+   - Gradiente `from-cyan-600 via-blue-600 to-indigo-600`
+   - Título "Calculadoras Nutricionales"
+   - Descripción de herramientas disponibles
+
+2. **NAVEGACIÓN POR CALCULADORAS**
+   - Tabs/Pills estilizados:
+     * TDEE Calculator
+     * Macros Calculator
+     * Hidratación Calculator
+     * Fibra Calculator
+   - Pills activos con gradiente
+
+3. **TDEE CALCULATOR** (TDEECalculator)
+   - Calculadora de gasto energético:
+     * **Inputs**:
+       - Edad, género
+       - Peso, altura
+       - Nivel de actividad (sedentario a atleta)
+       - Fórmula (Harris-Benedict, Mifflin-St Jeor, etc.)
+     * **Resultados**:
+       - BMR (metabolismo basal) destacado
+       - TDEE calculado (grande con gradiente)
+       - Gauge visual de nivel metabólico
+       - Calorías para déficit/superávit
+       - Recomendaciones según objetivo
+
+4. **MACROS CALCULATOR** (MacrosCalculator)
+   - Calculadora de distribución de macros:
+     * **Inputs**:
+       - TDEE o calorías objetivo
+       - Objetivo (pérdida, ganancia, mantenimiento)
+       - Preferencia de dieta (balanceada, keto, alta proteína)
+       - Actividad física
+     * **Resultados**:
+       - Gramos de proteína (destacado)
+       - Gramos de carbohidratos
+       - Gramos de grasas
+       - Gráfico de dona con distribución %
+       - Calorías por macro
+       - Ajuste manual con sliders
+
+5. **HIDRATACIÓN CALCULATOR** (HidratacionCalculator)
+   - Calculadora de agua diaria:
+     * **Inputs**:
+       - Peso corporal
+       - Nivel de actividad
+       - Clima (templado, caluroso)
+       - Duración de ejercicio
+     * **Resultados**:
+       - Litros de agua recomendados (grande)
+       - Vasos equivalentes (visual con iconos)
+       - Distribución durante el día
+       - Ajuste por sudoración
+       - Recordatorios sugeridos
+
+6. **FIBRA CALCULATOR** (FibraCalculator)
+   - Calculadora de fibra diaria:
+     * **Inputs**:
+       - Edad, género
+       - Calorías consumidas
+       - Objetivo de salud digestiva
+     * **Resultados**:
+       - Gramos de fibra recomendados
+       - Fuentes principales (tabla)
+       - Distribución en comidas
+       - Progreso vs objetivo (progress bar)
+
+7. **EXPORT DE RESULTADOS** (ResultadosExport)
+   - Botón "Exportar resultados"
+   - Formatos: PDF, imagen, copiar
+   - Template profesional con todos los cálculos
+
+8. **HISTORIAL DE CÁLCULOS**
+   - Cards de cálculos recientes:
+     * Tipo de calculadora
+     * Fecha
+     * Inputs y resultados resumidos
+     * Botón "Reutilizar"
+
+9. **INFORMACIÓN Y AYUDA**
+   - Tooltips explicativos (icono ?)
+   - Explicación de fórmulas (collapsible)
+   - Referencias científicas
+   - FAQs por calculadora
+
+10. **DATOS MOCKEADOS**
+    - Fórmulas de TDEE implementadas
+    - Presets de distribución de macros
+    - Historial de 5-10 cálculos
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente cyan-blue-indigo para hero
+- Cards: `bg-white/80 backdrop-blur-xl rounded-3xl`
+- Inputs grandes con unidades visuales
+- Resultados destacados con gradientes
+- Gráficos con Recharts
+- Gauge/medidores animados
+- Sliders modernos para ajustes
+
+**NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta.
+
+---
+
+## 📋 PROMPT 9: Adherencia Nutricional
+
+Transforma completamente la página de Adherencia Nutricional (src/features/nutrition/nutrition/adherencia-nutricional) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en `GUIA_ESTILOS_UI.md`
+- Crea un sistema de tracking de adherencia
+- Facilita el seguimiento diario del cliente
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Adherencia**
+   - Gradiente `from-teal-600 via-green-600 to-lime-600`
+   - Título "Seguimiento de Adherencia Nutricional"
+   - Métricas globales de adherencia
+
+2. **ESTADÍSTICAS RÁPIDAS** (EstadisticasAdherencia)
+   - Adherencia Semanal (%)
+   - Días Consecutivos
+   - Comidas Registradas
+   - Objetivo Calórico Cumplido
+   - Cards con glassmorphism y progress circular
+
+3. **CHECKLIST DIARIO** (ChecklistDiario)
+   - Calendario interactivo con heatmap:
+     * Días con alta adherencia (verde)
+     * Días con adherencia media (amarillo)
+     * Días con baja adherencia (rojo)
+     * Click en día muestra detalle
+   - Checklist del día actual:
+     * Desayuno ✓
+     * Media mañana ✓
+     * Almuerzo ✓
+     * Merienda ✓
+     * Cena ✓
+     * Hidratación ✓
+   - Checkboxes estilizados con animación
+
+4. **RESUMEN SEMANAL** (ResumenSemanal)
+   - Vista semanal de adherencia:
+     * Gráfico de barras por día
+     * Adherencia % por día
+     * Calorías consumidas vs objetivo
+     * Distribución de macros real vs objetivo
+   - Comparación con semana anterior
+   - Tendencias (mejorando, estable, declinando)
+
+5. **FEEDBACK DEL CLIENTE** (FeedbackCliente)
+   - Sección de notas del cliente:
+     * Cómo se sintió hoy (emojis)
+     * Nivel de energía (1-10)
+     * Nivel de hambre/saciedad
+     * Antojos experimentados
+     * Notas libres
+   - Timeline de feedback histórico
+
+6. **GRÁFICOS DE PROGRESO**
+   - Line chart: Adherencia semanal (últimas 8 semanas)
+   - Bar chart: Comidas registradas por día
+   - Heatmap: Adherencia mensual (calendario)
+   - Comparativa: Meta vs Real
+
+7. **ALERTAS Y RECORDATORIOS**
+   - Sistema de alertas:
+     * "3 días sin registrar comidas"
+     * "Adherencia bajó del 70%"
+     * "¡7 días consecutivos! 🎉"
+   - Sugerencias de mejora
+   - Motivación personalizada
+
+8. **ACCIONES RÁPIDAS**
+   - Botones:
+     * Registrar comida de hoy
+     * Ver dieta asignada
+     * Contactar nutricionista
+     * Ajustar recordatorios
+
+9. **DATOS MOCKEADOS**
+   - 30 días de datos de adherencia
+   - Variación realista (70-95%)
+   - Feedback del cliente simulado
+   - Tendencias de mejora
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente teal-green-lime para hero
+- Heatmap calendar colorido
+- Checkboxes animados con checkmark
+- Progress bars circulares
+- Gráficos con Recharts
+- Emojis para feedback
+- Badges de logros/streaks
+
+**NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta.
+
+---
+
+## 📋 PROMPT 10: Derivaciones a Nutrición
+
+Transforma completamente la página de Derivaciones a Nutrición (src/features/nutrition/nutrition/derivaciones-nutricion) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en `GUIA_ESTILOS_UI.md`
+- Crea un sistema de referidos a nutricionistas
+- Facilita la comunicación entre entrenadores y nutricionistas
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Derivaciones**
+   - Gradiente `from-indigo-600 via-blue-600 to-cyan-600`
+   - Título "Derivaciones a Nutrición"
+   - Descripción del sistema de referidos
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Derivaciones Realizadas
+   - Derivaciones Aceptadas
+   - Clientes en Seguimiento
+   - Nutricionistas Colaboradores
+   - Cards con glassmorphism
+
+3. **DERIVAR CLIENTE** (DerivarCliente)
+   - Formulario de derivación:
+     * Seleccionar cliente (búsqueda)
+     * Información del cliente:
+       - Objetivo
+       - Restricciones alimentarias
+       - Condiciones médicas
+       - Medicamentos
+     * Motivo de derivación (textarea)
+     * Urgencia (Normal, Alta, Urgente)
+     * Nutricionista sugerido (dropdown)
+     * Documentos adjuntos (upload)
+   - Preview de derivación
+   - Botón "Enviar derivación"
+
+4. **DIRECTORIO DE NUTRICIONISTAS** (NutricionistasDirectorio)
+   - Grid de nutricionistas colaboradores:
+     * Avatar grande
+     * Nombre y credenciales
+     * Especialidades (badges)
+     * Rating (estrellas)
+     * Disponibilidad
+     * Botón "Ver perfil"
+     * Botón "Derivar cliente"
+   - Filtros:
+     * Por especialidad
+     * Por disponibilidad
+     * Por ubicación
+
+5. **LISTA DE DERIVACIONES** (DerivacionesLista)
+   - Tabla/Cards de derivaciones:
+     * Cliente derivado
+     * Nutricionista asignado
+     * Fecha de derivación
+     * Estado (Pendiente, Aceptada, En proceso, Completada)
+     * Urgencia (badge colorido)
+     * Última actualización
+     * Acciones: Ver detalles, Seguimiento
+   - Filtros por estado
+   - Ordenar por fecha, urgencia
+
+6. **MODAL DE DETALLES DE DERIVACIÓN**
+   - Información completa:
+     * Datos del cliente
+     * Motivo de derivación
+     * Nutricionista asignado
+     * Estado actual
+     * Timeline de acciones:
+       - Derivación enviada
+       - Aceptada por nutricionista
+       - Primera consulta agendada
+       - Plan nutricional creado
+       - etc.
+     * Notas compartidas (entrenador ↔ nutricionista)
+     * Documentos compartidos
+
+7. **SEGUIMIENTO DE DERIVACIÓN** (SeguimientoDerivar)
+   - Panel de seguimiento:
+     * Estado actual del cliente
+     * Plan nutricional asignado (resumen)
+     * Progreso del cliente (peso, adherencia)
+     * Comunicación con nutricionista:
+       - Chat o notas compartidas
+       - Actualizaciones del caso
+     * Próxima revisión programada
+   - Botón "Solicitar actualización"
+
+8. **PERFIL DE NUTRICIONISTA**
+   - Modal con información detallada:
+     * Avatar grande
+     * Nombre completo y credenciales
+     * Bio profesional
+     * Especialidades y certificaciones
+     * Años de experiencia
+     * Rating y reviews
+     * Clientes derivados exitosamente
+     * Tarifas (si aplica)
+     * Horarios de disponibilidad
+     * Información de contacto
+   - Botones: Derivar cliente, Contactar
+
+9. **COMUNICACIÓN**
+   - Sistema de mensajería:
+     * Chat con nutricionista
+     * Notificaciones de actualizaciones
+     * Compartir documentos
+     * Videoconferencia (link)
+
+10. **DATOS MOCKEADOS**
+    - 5-10 nutricionistas en directorio
+    - 15-20 derivaciones con estados variados
+    - Timeline de seguimiento por derivación
+    - Mensajes de comunicación simulados
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente indigo-blue-cyan para hero
+- Cards de nutricionistas con avatares grandes
+- Timeline de seguimiento con línea conectora
+- Badges de estado coloridos (pendiente, aceptada, etc.)
+- Chat/mensajería estilizado
+- Modal de perfil amplio
+- Upload zone para documentos
+
+**NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta.
 
 ---
 
 # 📝 NOTAS GENERALES PARA TODOS LOS PROMPTS
 
 ## ⚠️ IMPORTANTE:
-1. **SIEMPRE** revisar [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md) antes de empezar
+1. **SIEMPRE** revisar `GUIA_ESTILOS_UI.md` antes de empezar
 2. **NO CREAR NUEVOS ARCHIVOS** - Solo editar existentes
 3. Usar **TypeScript** correctamente
 4. Implementar **framer-motion** para animaciones
@@ -2080,15 +688,28 @@ Transforma completamente la página de Recursos para Afiliados ([src/features/pl
 - [ ] `bg-white/80 backdrop-blur-xl` para glassmorphism
 - [ ] `border border-white/50` para definición
 - [ ] Gradientes de 3 colores en headers
+- [ ] Patrones sutiles (dots/grid) en backgrounds
 - [ ] Animaciones de entrada con framer-motion
 - [ ] `whileHover` para interactividad
 - [ ] `shadow-xl` y `hover:shadow-2xl`
-- [ ] Gráficos con Recharts (cuando aplique)
+- [ ] Iconos en contenedores con backdrop blur
 - [ ] Progress bars con gradientes animados
+
+## Paleta de Colores Principales:
+- **Green/Emerald/Teal**: Plantillas de dietas (natural, saludable)
+- **Lime/Green/Emerald**: Listado de dietas (energía, vida)
+- **Amber/Orange/Red**: Nueva dieta (creación, calor)
+- **Yellow/Amber/Orange**: Editar dieta (ajuste, refinamiento)
+- **Pink/Rose/Red**: Recetas biblioteca (pasión, sabor)
+- **Purple/Pink/Rose**: Nueva receta (creatividad)
+- **Fuchsia/Pink/Rose**: Editar receta (perfeccionamiento)
+- **Cyan/Blue/Indigo**: Calculadoras (precisión, ciencia)
+- **Teal/Green/Lime**: Adherencia (seguimiento, progreso)
+- **Indigo/Blue/Cyan**: Derivaciones (colaboración, profesional)
 
 ---
 
 **Versión:** 1.0
-**Fecha:** Enero 2025
+**Fecha:** Diciembre 2024
 **Sistema de Diseño:** Moderno con Glassmorphism
-**Área:** PlanCreatorMax Features (Tier Avanzado)
+**Área:** Nutrition Features

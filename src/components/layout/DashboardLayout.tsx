@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 import InicioPage from '../../features/core/inicio/InicioPage';
@@ -7,6 +8,7 @@ import AsistenteOnboardingPage from '../../features/core/asistente-onboarding/As
 import CentroAyudaPage from '../../features/core/centro-ayuda/CentroAyudaPage';
 import ImportadorDatosPage from '../../features/core/importador-datos/ImportadorDatosPage';
 import IntegracionesEsencialesPage from '../../features/core/integraciones-esenciales/IntegracionesEsencialesPage';
+import ConfiguracionPage from '../../features/core/configuracion/ConfiguracionPage';
 import { BandejaEntradaPage } from '../../features/crm/crm/bandeja-entrada/BandejaEntradaPage';
 import ClientesListadoPage from '../../features/crm/crm/clientes-listado/ClientesListadoPage';
 import ClienteDetallePage from '../../features/crm/crm/cliente-detalle/ClienteDetallePage';
@@ -97,13 +99,11 @@ import ContenidosDescargablesPage from '../../features/plancreatorpro/biblioteca
 import FeedComunidadPage from '../../features/plancreatorpro/comunidad/comunidad/feed-comunidad/FeedComunidadPage';
 import GruposComunidadPage from '../../features/plancreatorpro/comunidad/comunidad/grupos-comunidad/GruposComunidadPage';
 import ModeracionComunidadPage from '../../features/plancreatorpro/comunidad/comunidad/moderacion-comunidad/ModeracionComunidadPage';
-import { CommunityModerationAgent } from '../../features/agente-moderacion/CommunityModerationAgent';
 import RankingActividadPage from '../../features/plancreatorpro/comunidad/comunidad/ranking-actividad/RankingActividadPage';
 import ListadoCursosPage from '../../features/plancreatorpro/cursos-online/cursos-online/listado-cursos/ListadoCursosPage';
 import CrearCursoPage from '../../features/plancreatorpro/cursos-online/cursos-online/crear-curso/CrearCursoPage';
 import CursoDetallePage from '../../features/plancreatorpro/cursos-online/cursos-online/curso-detalle/CursoDetallePage';
 import GestionLeccionesPage from '../../features/plancreatorpro/cursos-online/cursos-online/gestion-lecciones/GestionLeccionesPage';
-import { GestionLecciones } from '../../features/gestion-lecciones';
 import QuizzesEvaluacionesPage from '../../features/plancreatorpro/cursos-online/cursos-online/quizzes-evaluaciones/QuizzesEvaluacionesPage';
 import ListadoEmailsPage from '../../features/plancreatorpro/email-broadcast/email-broadcast/listado-emails/ListadoEmailsPage';
 import CrearEmailPage from '../../features/plancreatorpro/email-broadcast/email-broadcast/crear-email/CrearEmailPage';
@@ -127,7 +127,6 @@ import RecursosAfiliadosPage from '../../features/plancreatormax/sistema-afiliad
 import ExperimentosPage from '../../features/plancreatormax/tests-ab/tests-ab/experimentos/ExperimentosPage';
 import ResultadosTestPage from '../../features/plancreatormax/tests-ab/tests-ab/resultados-test/ResultadosTestPage';
 import HistorialExperimentosPage from '../../features/plancreatormax/tests-ab/tests-ab/historial-experimentos/HistorialExperimentosPage';
-import { ExperimentosABPage } from '../../features/experimentos-ab/pages/ExperimentosABPage';
 import CatalogoProductosPage from '../../features/plancreatormax/tienda-merchandising/tienda-merchandising/catalogo-productos/CatalogoProductosPage';
 import ConfiguracionTiendaPage from '../../features/plancreatormax/tienda-merchandising/tienda-merchandising/configuracion-tienda/ConfiguracionTiendaPage';
 import PedidosClientesPage from '../../features/plancreatormax/tienda-merchandising/tienda-merchandising/pedidos-clientes/PedidosClientesPage';
@@ -199,23 +198,24 @@ import HistorialScoutingPage from '../../features/planteamselite/scouting/histor
 import DispositivosConectadosElitePage from '../../features/planteamselite/sensores/dispositivos-conectados/DispositivosConectadosPage';
 import DatosTiempoRealPage from '../../features/planteamselite/sensores/datos-tiempo-real/DatosTiempoRealPage';
 import InformesSensoresPage from '../../features/planteamselite/sensores/informes-sensores/InformesSensoresPage';
+import MensajeriaPage from '../../features/messaging/messaging/MensajeriaPage';
+import DashboardEstadisticasPage from '../../features/core/dashboard-estadisticas/DashboardEstadisticasPage';
 
 interface DashboardLayoutProps {
   onLogout: () => void;
 }
 
 export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onLogout }) => {
-  const [activePage, setActivePage] = useState('inicio');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true); // Siempre inicia colapsada
-
-  const handleToggleSidebar = () => {
-    setSidebarCollapsed(!sidebarCollapsed);
-  };
+  const location = useLocation();
+  const activePage = (location.pathname || '/').replace(/^\//, '') || 'inicio';
 
   const renderPage = () => {
     switch (activePage) {
       case 'inicio':
         return <InicioPage />;
+      case 'configuracion':
+        return <ConfiguracionPage />;
       case 'panel-control':
         return <PanelControlPage />;
       case 'asistente-onboarding':
@@ -248,8 +248,6 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onLogout }) =>
         return <AgenteFinancieroPage />;
       case 'agente-marketing':
         return <AgenteMarketingPage />;
-      case 'agente-moderacion':
-        return <CommunityModerationAgent />;
       case 'biblioteca-ejercicios':
         return <BibliotecaEjerciciosPage />;
       case 'editor-ejercicio':
@@ -414,7 +412,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onLogout }) =>
       case 'curso-detalle':
         return <CursoDetallePage />;
       case 'gestion-lecciones':
-        return <GestionLecciones />;
+        return <GestionLeccionesPage />;
       case 'quizzes-evaluaciones':
         return <QuizzesEvaluacionesPage />;
       case 'listado-emails':
@@ -456,8 +454,6 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onLogout }) =>
         return <RecursosAfiliadosPage />;
       case 'experimentos':
         return <ExperimentosPage />;
-      case 'experimentos-ab':
-        return <ExperimentosABPage />;
       case 'resultados-test':
         return <ResultadosTestPage />;
       case 'historial-experimentos':
@@ -600,28 +596,36 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onLogout }) =>
         return <DatosTiempoRealPage />;
       case 'informes-sensores':
         return <InformesSensoresPage />;
+      case 'mensajeria':
+      case 'mensajes':
+        return <MensajeriaPage />;
+      case 'dashboard-estadisticas':
+        return <DashboardEstadisticasPage />;
       default:
         return <InicioPage />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50/20 to-pink-50/20">
+    <div className="min-h-screen bg-gray-50">
       <Sidebar
         activePage={activePage}
-        onPageChange={setActivePage}
         collapsed={sidebarCollapsed}
-        onToggleCollapse={handleToggleSidebar}
+        onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
       />
-
+      
       <div className="transition-all duration-500">
         <Header
           onLogout={onLogout}
-          onToggleSidebar={handleToggleSidebar}
+          onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
         />
-
+        
         <main className="p-6">
-          {renderPage()}
+          <Routes>
+            <Route index element={<Navigate to="/inicio" replace />} />
+            {/* Fallback: usa el renderer existente segun id en URL */}
+            <Route path="*" element={renderPage()} />
+          </Routes>
         </main>
       </div>
     </div>

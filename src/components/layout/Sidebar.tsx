@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Home, BarChart3, Inbox, Menu, Dumbbell, Activity, DollarSign, Megaphone, Settings, HelpCircle, Download, Zap, Users, UserCheck, TrendingUp, FileText, Target, CheckSquare, Library, Edit3, File, List, Plus, Calculator, Apple, ChefHat, Utensils, BookOpen, PieChart, Heart, Share, CreditCard, Receipt, RefreshCw, Banknote, FileDown, Package, Tag, Percent, UserPlus, Star, MessageSquare, Monitor, ChevronDown, ChevronRight, Globe, Calendar, ShoppingCart, ThumbsUp, CheckCircle, BarChart, Trophy, Video, Clock, MessageCircle, FileEdit, Map, Milestone, AlertTriangle, Palette, Smartphone, Wifi, Workflow, Bot, Gift, Search, FileVideo, Download as DownloadIcon, MessagesSquare, UserCircle, Award, Mail, Send, BarChart2, CreditCard as CardIcon, Shield, Bell, History, FlaskConical, Store, Box, QrCode, ClipboardList, CalendarCheck, RotateCcw, Receipt as ReceiptIcon, Ticket, Lock, Building2, PackageSearch, MonitorSmartphone, Building, ClipboardCheck, Stethoscope, GitCompare, UserSquare2, CalendarRange, ShieldCheck, LineChart, Swords, Flag, UserSearch, Radar, Sparkles, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Home, BarChart3, Inbox, Menu, Dumbbell, Activity, DollarSign, Megaphone, Settings, HelpCircle, Download, Zap, Users, UserCheck, TrendingUp, FileText, Target, CheckSquare, Library, Edit3, File, List, Plus, Calculator, Apple, ChefHat, Utensils, BookOpen, PieChart, Heart, Share, CreditCard, Receipt, RefreshCw, Banknote, FileDown, Package, Tag, Percent, UserPlus, Star, MessageSquare, Monitor, ChevronDown, ChevronRight, Globe, Calendar, ShoppingCart, ThumbsUp, CheckCircle, BarChart, Trophy, Video, Clock, MessageCircle, FileEdit, Map, Milestone, AlertTriangle, Palette, Smartphone, Wifi, Workflow, Bot, Gift, Search, FileVideo, Download as DownloadIcon, MessagesSquare, UserCircle, Award, Mail, Send, BarChart2, CreditCard as CardIcon, Shield, Bell, History, FlaskConical, Store, Box, QrCode, ClipboardList, CalendarCheck, RotateCcw, Receipt as ReceiptIcon, Ticket, Lock, Building2, PackageSearch, MonitorSmartphone, Building, ClipboardCheck, Stethoscope, GitCompare, UserSquare2, CalendarRange, ShieldCheck, LineChart, Swords, Flag, UserSearch, Radar } from 'lucide-react';
 import type { User, PlanType } from '../../features/core/login/mockUsers';
 
 interface SidebarProps {
   activePage: string;
-  onPageChange: (page: string) => void;
   collapsed: boolean;
   onToggleCollapse: () => void;
 }
@@ -86,6 +85,7 @@ const menuModules = [
     icon: Settings,
     items: [
       { id: 'inicio', label: 'Inicio', icon: Home },
+      { id: 'configuracion', label: 'Configuración', icon: Settings },
       { id: 'panel-control', label: 'Panel de Control', icon: BarChart3 },
       { id: 'asistente-onboarding', label: 'Asistente Inicial', icon: Settings },
       { id: 'centro-ayuda', label: 'Centro de Ayuda', icon: HelpCircle },
@@ -176,6 +176,14 @@ const menuModules = [
       { id: 'agente-entrenador', label: 'Agente Entrenador', icon: Activity },
       { id: 'agente-financiero', label: 'Agente Financiero', icon: DollarSign },
       { id: 'agente-marketing', label: 'Agente Marketing', icon: Megaphone },
+    ]
+  },
+  {
+    id: 'messaging',
+    label: 'Mensajería',
+    icon: MessageSquare,
+    items: [
+      { id: 'mensajeria', label: 'Chat con Clientes', icon: MessageSquare },
     ]
   },
   {
@@ -377,7 +385,6 @@ const menuModules = [
     label: 'Tests A/B',
     icon: FlaskConical,
     items: [
-      { id: 'experimentos-ab', label: '🧪 Experimentos A/B', icon: FlaskConical },
       { id: 'experimentos', label: 'Experimentos', icon: FlaskConical },
       { id: 'resultados-test', label: 'Resultados Test', icon: BarChart3 },
       { id: 'historial-experimentos', label: 'Historial Experimentos', icon: History },
@@ -608,10 +615,10 @@ const menuModules = [
 
 export const Sidebar: React.FC<SidebarProps> = ({
   activePage,
-  onPageChange,
   collapsed,
   onToggleCollapse,
 }) => {
+  const navigate = useNavigate();
   const [expandedModules, setExpandedModules] = useState<string[]>(['core']); // Core expandido por defecto
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
@@ -655,224 +662,171 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <>
-      {/* Overlay con animación */}
-      <AnimatePresence>
-        {!collapsed && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-20"
-            onClick={onToggleCollapse}
-          />
-        )}
-      </AnimatePresence>
+      {/* Overlay */}
+      {!collapsed && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-20"
+          onClick={onToggleCollapse}
+        />
+      )}
 
-      <motion.div
-        initial={{ x: -320 }}
-        animate={{ x: collapsed ? -320 : 0 }}
-        transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-        className="fixed left-0 top-0 h-full w-80 bg-white/90 backdrop-blur-xl shadow-2xl z-30 border-r border-white/50"
-      >
-        {/* Decoración de fondo */}
-        <div className="absolute -right-20 -top-20 w-64 h-64 bg-gradient-to-br from-indigo-200 to-purple-200 rounded-full blur-3xl opacity-20"></div>
-        <div className="absolute -right-8 -bottom-8 w-48 h-48 bg-gradient-to-br from-pink-200 to-purple-200 rounded-full blur-3xl opacity-20"></div>
+      <div className={`fixed left-0 top-0 h-full bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 shadow-2xl transition-all duration-500 ease-in-out z-30 border-r border-slate-700 flex flex-col
+        ${collapsed ? '-translate-x-full' : 'translate-x-0 w-80'}`}>
 
         {/* Header */}
-        <div className="relative overflow-hidden rounded-br-3xl">
-          {/* Background con gradiente vibrante */}
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600">
-            {/* Pattern de puntos */}
-            <div className="absolute inset-0 opacity-20">
-              <div className="absolute inset-0" style={{
-                backgroundImage: `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3) 1px, transparent 1px)`,
-                backgroundSize: '20px 20px'
-              }}></div>
-            </div>
-            {/* Blur orbs animados */}
-            <div className="absolute top-0 left-0 w-32 h-32 bg-white rounded-full blur-3xl opacity-20 animate-pulse"></div>
-            <div className="absolute bottom-0 right-0 w-40 h-40 bg-white rounded-full blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="relative overflow-hidden flex-shrink-0">
+          {/* Background Pattern */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700">
+            <div className="absolute inset-0 opacity-30" style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='1.5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+            }}></div>
           </div>
 
-          <div className="relative flex items-center justify-between p-6 border-b border-white/10">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
-              className="flex items-center gap-3"
-            >
+          <div className="relative flex items-center justify-between p-5 border-b border-white/10">
+            <div className={`flex items-center space-x-3 ${collapsed ? 'justify-center w-full' : ''}`}>
               <div className="relative">
-                {/* Icono con backdrop blur */}
-                <div className="p-2 bg-white/20 rounded-xl backdrop-blur-sm border border-white/20 shadow-xl">
-                  <Dumbbell className="w-7 h-7 text-white" />
+                <div className="bg-gradient-to-br from-white to-blue-50 p-3 rounded-xl shadow-lg backdrop-blur-sm">
+                  <Dumbbell className="h-6 w-6 text-blue-600" />
                 </div>
-                {/* Pulse indicator */}
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full border-2 border-white animate-pulse shadow-lg"></div>
-                {/* Glow effect */}
-                <div className="absolute inset-0 w-full h-full bg-white rounded-xl blur-lg opacity-30"></div>
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-white animate-pulse"></div>
               </div>
-              <div className="space-y-0.5">
-                <h1 className="text-xl font-bold text-white tracking-tight">TrainerPro</h1>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-1.5 h-1.5 bg-emerald-300 rounded-full animate-pulse"></div>
-                  <p className="text-xs text-white/80 font-medium">ERP Entrenadores</p>
+              {!collapsed && (
+                <div className="space-y-1">
+                  <h1 className="text-xl font-bold text-white tracking-tight">TrainerPro</h1>
+                  <div className="flex items-center space-x-1">
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <p className="text-xs text-blue-100 font-medium">ERP Entrenadores • Online</p>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              )}
+            </div>
+            <button
               onClick={onToggleCollapse}
-              className="p-2 bg-white/10 hover:bg-white/20 rounded-xl text-white transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-white/30 shadow-lg"
+              className="p-2 hover:bg-white/10 rounded-lg text-white transition-all duration-200 backdrop-blur-sm border border-white/20 hover:border-white/30"
             >
-              <X className="h-5 w-5" />
-            </motion.button>
+              <Menu className="h-4 w-4" />
+            </button>
           </div>
         </div>
 
         {/* Navigation */}
-        <nav className="relative mt-6 h-[calc(100vh-8rem)] overflow-y-auto pb-32 px-4 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-transparent">
-          {visibleModules.map((module, moduleIndex) => {
+        <nav className="mt-6 flex-1 overflow-y-auto pb-32 sm:pb-20 px-3" style={{ maxHeight: 'calc(100vh - 200px)' }}>
+          {visibleModules.map((module) => {
             const ModuleIcon = module.icon;
             const isExpanded = expandedModules.includes(module.id);
             const hasActiveItem = module.items.some(item => item.id === activePage);
 
             return (
-              <motion.div
-                key={module.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: moduleIndex * 0.03, duration: 0.4 }}
-                className="mb-2 relative"
-              >
+              <div key={module.id} className="mb-3">
                 {/* Module Header */}
-                <motion.button
-                  whileHover={{ scale: 1.02, x: 4 }}
-                  whileTap={{ scale: 0.98 }}
+                <button
                   onClick={() => toggleModule(module.id)}
-                  className={`w-full flex items-center justify-between px-4 py-3 text-left rounded-2xl transition-all duration-300 group relative overflow-hidden ${
+                  className={`w-full flex items-center justify-between px-4 py-3 text-left rounded-xl transition-all duration-300 group backdrop-blur-sm ${
                     hasActiveItem
-                      ? 'bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-pink-500/20 border border-indigo-400/40 shadow-xl'
-                      : 'bg-white/60 hover:bg-white/80 border border-white/50 hover:border-indigo-200 shadow-md hover:shadow-lg'
-                  }`}
+                      ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 shadow-lg shadow-blue-500/10'
+                      : 'hover:bg-white/5 border border-transparent hover:border-white/10'
+                  } ${collapsed ? 'justify-center' : ''}`}
                 >
-                  {/* Shimmer effect en hover */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
-
-                  {/* Decoración de fondo */}
-                  {hasActiveItem && (
-                    <div className="absolute -right-4 -top-4 w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full blur-2xl opacity-20"></div>
-                  )}
-
-                  <div className="flex items-center gap-3 relative z-10">
-                    <div className={`p-2 rounded-xl transition-all duration-300 shadow-lg ${
+                  <div className="flex items-center space-x-3">
+                    <div className={`p-2 rounded-lg transition-all duration-300 ${
                       hasActiveItem
-                        ? 'bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500'
-                        : 'bg-gradient-to-br from-gray-100 to-gray-200 group-hover:from-indigo-100 group-hover:to-purple-100'
+                        ? 'bg-gradient-to-br from-blue-400 to-purple-500 shadow-lg'
+                        : 'bg-white/5 group-hover:bg-white/10'
                     }`}>
-                      <ModuleIcon className={`w-5 h-5 transition-all duration-300 ${
-                        hasActiveItem ? 'text-white' : 'text-gray-600 group-hover:text-indigo-600'
-                      }`} />
+                      <ModuleIcon className={`h-4 w-4 ${
+                        hasActiveItem ? 'text-white' : 'text-gray-300'
+                      } group-hover:text-white transition-colors duration-300`} />
                     </div>
-                    <div className="flex-1">
-                      <span className={`font-bold text-sm tracking-wide transition-colors duration-300 ${
-                        hasActiveItem
-                          ? 'bg-clip-text text-transparent bg-gradient-to-r from-indigo-700 to-purple-700'
-                          : 'text-gray-700 group-hover:text-indigo-700'
-                      }`}>
-                        {module.label}
-                      </span>
-                    </div>
+                    {!collapsed && (
+                      <div className="flex-1">
+                        <span className={`font-semibold text-sm tracking-wide ${
+                          hasActiveItem ? 'text-blue-300' : 'text-gray-300'
+                        } group-hover:text-white transition-colors duration-300`}>
+                          {module.label}
+                        </span>
+                        <div className={`h-0.5 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full transition-all duration-300 ${
+                          hasActiveItem ? 'w-full mt-1' : 'w-0 group-hover:w-1/2'
+                        }`}></div>
+                      </div>
+                    )}
                   </div>
+                  {!collapsed && (
+                    <div className={`transition-all duration-300 ${
+                      isExpanded ? 'rotate-90' : ''
+                    }`}>
+                      <ChevronRight className={`h-4 w-4 ${
+                        hasActiveItem ? 'text-blue-300' : 'text-gray-400'
+                      } group-hover:text-white transition-colors duration-300`} />
+                    </div>
+                  )}
+                </button>
 
-                  <motion.div
-                    animate={{ rotate: isExpanded ? 90 : 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="relative z-10"
-                  >
-                    <ChevronRight className={`w-5 h-5 transition-colors duration-300 ${
-                      hasActiveItem ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-500'
-                    }`} />
-                  </motion.div>
-                </motion.button>
-
-                {/* Module Items con AnimatePresence */}
-                <AnimatePresence>
-                  {isExpanded && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="mt-2 ml-6 space-y-1 overflow-hidden"
-                    >
-                      {/* Línea vertical decorativa */}
-                      <div className="absolute left-8 top-14 bottom-0 w-0.5 bg-gradient-to-b from-indigo-200 via-purple-200 to-transparent rounded-full"></div>
-
+                {/* Module Items */}
+                {(!collapsed && isExpanded) && (
+                  <div className="mt-2 ml-4 space-y-1">
+                    <div className="border-l-2 border-gradient-to-b from-blue-400/30 to-purple-500/30 pl-4">
                       {module.items.map((item, index) => {
                         const ItemIcon = item.icon;
                         const isActive = activePage === item.id;
 
                         return (
-                          <motion.div
-                            key={item.id}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: index * 0.03, duration: 0.3 }}
-                            className="relative"
-                          >
-                            <motion.button
-                              whileHover={{ scale: 1.02, x: 4 }}
-                              whileTap={{ scale: 0.98 }}
-                              onClick={() => onPageChange(item.id)}
-                              className={`w-full flex items-center gap-3 px-3 py-2.5 text-left rounded-xl transition-all duration-300 group relative overflow-hidden ${
+                          <div key={item.id} className="relative">
+                            <button
+                              onClick={() => navigate(`/${item.id}`)}
+                              className={`w-full flex items-center px-4 py-2.5 text-left rounded-lg transition-all duration-300 group ${
                                 isActive
-                                  ? 'bg-gradient-to-r from-indigo-500/30 via-purple-500/30 to-pink-500/30 border border-indigo-400/50 shadow-lg'
-                                  : 'bg-white/40 hover:bg-white/70 border border-white/40 hover:border-indigo-200 hover:shadow-md'
+                                  ? 'bg-gradient-to-r from-blue-500/30 to-purple-500/30 border border-blue-400/40 shadow-lg backdrop-blur-sm transform scale-[1.02]'
+                                  : 'hover:bg-white/5 border border-transparent hover:border-white/10 hover:transform hover:scale-[1.01]'
                               }`}
                             >
-                              {/* Shimmer effect */}
-                              {!isActive && (
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-40 transform -skew-x-12 group-hover:translate-x-full transition-all duration-700"></div>
-                              )}
-
-                              <div className="flex items-center gap-3 w-full relative z-10">
-                                <div className={`p-1.5 rounded-lg transition-all duration-300 ${
+                              <div className={`flex items-center space-x-3 w-full`}>
+                                <div className={`p-1.5 rounded-md transition-all duration-300 ${
                                   isActive
-                                    ? 'bg-gradient-to-br from-indigo-500 to-purple-600 shadow-md'
-                                    : 'bg-gray-100 group-hover:bg-indigo-100'
+                                    ? 'bg-gradient-to-br from-blue-400 to-purple-500 shadow-md'
+                                    : 'bg-white/5 group-hover:bg-white/10'
                                 }`}>
-                                  <ItemIcon className={`w-4 h-4 transition-colors duration-300 ${
-                                    isActive ? 'text-white' : 'text-gray-500 group-hover:text-indigo-600'
-                                  }`} />
+                                  <ItemIcon className={`h-3.5 w-3.5 ${
+                                    isActive ? 'text-white' : 'text-gray-400'
+                                  } group-hover:text-white transition-colors duration-300`} />
                                 </div>
-                                <span className={`text-sm font-medium flex-1 transition-colors duration-300 ${
-                                  isActive ? 'text-indigo-900 font-semibold' : 'text-gray-600 group-hover:text-indigo-700'
-                                }`}>
+                                <span className={`text-sm font-medium flex-1 ${
+                                  isActive ? 'text-blue-200' : 'text-gray-300'
+                                } group-hover:text-white transition-colors duration-300`}>
                                   {item.label}
                                 </span>
                                 {isActive && (
-                                  <motion.div
-                                    initial={{ scale: 0 }}
-                                    animate={{ scale: 1 }}
-                                    className="w-2 h-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full animate-pulse shadow-lg"
-                                  />
+                                  <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full animate-pulse"></div>
                                 )}
                               </div>
-                            </motion.button>
-                          </motion.div>
+                            </button>
+
+                            {/* Connection Line */}
+                            {index < module.items.length - 1 && (
+                              <div className="absolute left-2 top-full w-0.5 h-2 bg-gradient-to-b from-white/20 to-transparent"></div>
+                            )}
+                          </div>
                         );
                       })}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Collapsed state - show tooltip on hover */}
+                {collapsed && (
+                  <div className="relative group">
+                    <div className="absolute left-16 top-1/2 -translate-y-1/2 invisible group-hover:visible bg-gradient-to-r from-gray-900 to-gray-800 text-white text-xs rounded-lg py-2 px-3 whitespace-nowrap z-50 shadow-xl border border-gray-700 backdrop-blur-sm">
+                      <div className="font-medium">{module.label}</div>
+                      <div className="text-xs text-gray-400 mt-0.5">{module.items.length} elementos</div>
+                      {/* Arrow */}
+                      <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 w-2 h-2 bg-gray-900 rotate-45 border-l border-b border-gray-700"></div>
+                    </div>
+                  </div>
+                )}
+              </div>
             );
           })}
         </nav>
-      </motion.div>
+      </div>
     </>
   );
 };

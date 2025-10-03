@@ -106,6 +106,66 @@ const mockClientes: Cliente[] = nombres.map((n, idx) => {
   };
 });
 
+export type NewClienteInput = {
+  nombre: string;
+  email: string;
+  telefono: string;
+  estado?: Cliente['estado'];
+  etiquetas?: string[];
+};
+
+export function findClienteByEmailOrPhone(email?: string, telefono?: string): Cliente | undefined {
+  const e = (email || '').trim().toLowerCase();
+  const t = (telefono || '').replace(/\s+/g, '');
+  return mockClientes.find(c =>
+    (!!e && c.email.toLowerCase() === e) || (!!t && c.telefono.replace(/\s+/g, '') === t)
+  );
+}
+
+export function createOrGetCliente(input: NewClienteInput): { cliente: Cliente; existed: boolean } {
+  const today = fmt(new Date());
+  const existedCliente = findClienteByEmailOrPhone(input.email, input.telefono);
+  if (existedCliente) {
+    return { cliente: existedCliente, existed: true };
+  }
+  const nextId = String(mockClientes.length + 1);
+  const avatarIdx = (mockClientes.length % 70) + 1;
+  const nuevo: Cliente = {
+    id: nextId,
+    foto: `https://i.pravatar.cc/100?img=${avatarIdx}`,
+    nombre: input.nombre.trim(),
+    email: input.email.trim(),
+    telefono: input.telefono.trim(),
+    estado: input.estado || 'activo',
+    etiquetas: (input.etiquetas && input.etiquetas.length ? input.etiquetas : ['nuevo']).map(e => e.trim()).filter(Boolean),
+    fechaAlta: today,
+    ultimaActividad: today,
+  };
+  mockClientes.unshift(nuevo);
+  return { cliente: nuevo, existed: false };
+}
+
+export function updateCliente(id: string, input: NewClienteInput): Cliente {
+  const index = mockClientes.findIndex(c => c.id === id);
+  if (index === -1) {
+    throw new Error('Cliente no encontrado');
+  }
+  const current = mockClientes[index];
+  const updated: Cliente = {
+    ...current,
+    nombre: input.nombre?.trim() || current.nombre,
+    email: input.email?.trim() || current.email,
+    telefono: input.telefono?.trim() || current.telefono,
+    estado: (input.estado as Cliente['estado']) || current.estado,
+    etiquetas: (input.etiquetas && input.etiquetas.length
+      ? input.etiquetas.map(e => e.trim()).filter(Boolean)
+      : current.etiquetas),
+    ultimaActividad: fmt(new Date()),
+  };
+  mockClientes[index] = updated;
+  return updated;
+}
+
 function dateDiffInDays(a: string, b: string) {
   const d1 = new Date(a).getTime();
   const d2 = new Date(b).getTime();

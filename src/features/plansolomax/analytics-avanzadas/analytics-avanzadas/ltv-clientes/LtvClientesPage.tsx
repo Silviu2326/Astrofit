@@ -391,263 +391,212 @@ const LtvClientesPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-emerald-50/30 to-teal-50/30 pb-12">
-      {/* Hero Section */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 p-6">
+      {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="relative overflow-hidden bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 rounded-3xl shadow-2xl mb-8 p-8 md:p-12"
+        className="mb-8"
       >
-        {/* Efectos de fondo animados */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        </div>
-
-        {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: '50px 50px'
-          }}></div>
-        </div>
-
-        <div className="relative z-10">
-          {/* Título con icono animado */}
-          <div className="flex items-center gap-3 mb-4">
-            <div className="relative">
-              <DollarSign className="w-10 h-10 text-yellow-300 animate-pulse" />
-              <div className="absolute inset-0 w-10 h-10 bg-yellow-300 rounded-full blur-lg opacity-50"></div>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <motion.div
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="p-3 bg-gradient-to-br from-yellow-400 to-blue-600 rounded-xl"
+            >
+              <TrendingUp className="w-8 h-8 text-white" />
+            </motion.div>
+            <div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-yellow-600 via-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Lifetime Value de Clientes
+              </h1>
+              <p className="text-gray-600 mt-1">
+                Analiza el valor real de cada cliente a lo largo del tiempo
+              </p>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
-              Lifetime Value <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-yellow-400">(LTV)</span>
-            </h1>
           </div>
-
-          {/* Descripción */}
-          <p className="text-xl md:text-2xl text-emerald-100 max-w-3xl leading-relaxed mb-6">
-            Predice y <span className="font-bold text-white px-2 py-1 bg-white/20 rounded-lg backdrop-blur-sm">maximiza el valor</span> de tus clientes a largo plazo
-          </p>
-
-          {/* Indicadores pills */}
-          <div className="flex flex-wrap gap-4">
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
-              <TrendingUp className="w-5 h-5 text-green-300" />
-              <span className="text-sm font-semibold text-white">Predicción con IA</span>
-            </div>
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
-              <Target className="w-5 h-5 text-yellow-300" />
-              <span className="text-sm font-semibold text-white">Análisis de Cohortes</span>
-            </div>
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
-              <Users className="w-5 h-5 text-blue-300" />
-              <span className="text-sm font-semibold text-white">Segmentación Avanzada</span>
-            </div>
+          <div className="flex gap-3">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-2"
+            >
+              <Download className="w-4 h-4" />
+              Exportar Análisis
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-2"
+            >
+              <Settings className="w-4 h-4" />
+              Configurar
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:shadow-lg flex items-center gap-2"
+            >
+              <Users className="w-4 h-4" />
+              Ver Top Clientes
+            </motion.button>
           </div>
         </div>
       </motion.div>
 
-      {/* KPIs Principales - Estadísticas Rápidas */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {[
-          {
-            title: 'LTV Promedio',
-            value: `€${kpis.ltvPromedio.toLocaleString()}`,
-            icon: DollarSign,
-            gradient: 'from-emerald-500 to-teal-600',
-            change: `+${kpis.variacionMensual}%`,
-            changePositive: true,
-            detail: 'vs mes anterior'
-          },
-          {
-            title: 'LTV Predicho 12 Meses',
-            value: `€${kpis.ltvProyectado.toLocaleString()}`,
-            icon: Target,
-            gradient: 'from-green-500 to-emerald-600',
-            change: '+18%',
-            changePositive: true,
-            detail: 'proyección con IA'
-          },
-          {
-            title: 'CAC/LTV Ratio',
-            value: `1:${(1 / kpis.cacLtvRatio).toFixed(1)}`,
-            icon: Activity,
-            gradient: 'from-teal-500 to-cyan-600',
-            change: kpis.cacLtvRatio <= 0.33 ? 'Excelente' : kpis.cacLtvRatio <= 0.5 ? 'Bueno' : 'Mejorar',
-            changePositive: kpis.cacLtvRatio <= 0.33,
-            detail: 'ideal: 1:3'
-          },
-          {
-            title: 'Segmento de Mayor Valor',
-            value: segmentos[0]?.nombre || 'Premium',
-            icon: Crown,
-            gradient: 'from-yellow-500 to-amber-600',
-            change: `${segmentos[0]?.porcentajeIngresos}%`,
-            changePositive: true,
-            detail: 'de ingresos totales'
-          }
-        ].map((stat, index) => (
-          <motion.div
-            key={stat.title}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1, duration: 0.5 }}
-            whileHover={{ scale: 1.03, y: -8 }}
-            className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
-          >
-            {/* Shimmer effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
-
-            {/* Decoración de fondo */}
-            <div className={`absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br ${stat.gradient} opacity-5 rounded-full blur-2xl`}></div>
-
-            <div className="relative z-10">
-              {/* Icono */}
-              <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300`}>
-                <stat.icon className="w-8 h-8" />
-              </div>
-
-              {/* Título */}
-              <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">
-                {stat.title}
-              </p>
-
-              {/* Valor */}
-              <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 mb-3">
-                {stat.value}
-              </p>
-
-              {/* Cambio */}
-              <div className="flex items-center gap-2">
-                <div className={`p-1 ${stat.changePositive ? 'bg-green-50' : 'bg-gray-50'} rounded-lg`}>
-                  {stat.changePositive ? (
-                    <ArrowUp className="w-4 h-4 text-green-600" />
-                  ) : (
-                    <Minus className="w-4 h-4 text-gray-600" />
-                  )}
-                </div>
-                <span className={`text-sm font-bold ${stat.changePositive ? 'text-green-600' : 'text-gray-600'}`}>{stat.change}</span>
-                <span className="text-xs text-gray-500 font-medium">{stat.detail}</span>
-              </div>
-
-              {/* Barra decorativa */}
-              <div className="mt-4 w-full h-1 bg-gray-100 rounded-full overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: '75%' }}
-                  transition={{ delay: index * 0.1 + 0.5, duration: 1 }}
-                  className={`h-full bg-gradient-to-r ${stat.gradient} rounded-full`}
-                ></motion.div>
-              </div>
+      {/* KPIs Principales */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="bg-white rounded-xl p-6 shadow-lg border border-gray-100"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-gray-600 font-medium">LTV Promedio</h3>
+            <DollarSign className="w-5 h-5 text-blue-600" />
+          </div>
+          <div className="text-3xl font-bold text-gray-900 mb-2">
+            €{kpis.ltvPromedio.toLocaleString()}
+          </div>
+          <div className="flex items-center gap-2 text-sm">
+            <div className="flex items-center gap-1 text-green-600">
+              <ArrowUp className="w-4 h-4" />
+              <span>+{kpis.variacionMensual}%</span>
             </div>
-          </motion.div>
-        ))}
+            <span className="text-gray-500">vs mes anterior</span>
+          </div>
+          <div className="mt-4 h-12">
+            <ResponsiveContainer width="100%" height="100%">
+              <RechartsLineChart data={Array.from({ length: 12 }, (_, i) => ({
+                mes: i + 1,
+                valor: kpis.ltvPromedio * (0.85 + i * 0.015)
+              }))}>
+                <Line type="monotone" dataKey="valor" stroke="#3b82f6" strokeWidth={2} dot={false} />
+              </RechartsLineChart>
+            </ResponsiveContainer>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="bg-white rounded-xl p-6 shadow-lg border border-gray-100"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-gray-600 font-medium">LTV Proyectado</h3>
+            <Target className="w-5 h-5 text-purple-600" />
+          </div>
+          <div className="text-3xl font-bold text-gray-900 mb-2">
+            €{kpis.ltvProyectado.toLocaleString()}
+          </div>
+          <div className="text-sm text-gray-600">
+            Proyección a 12 meses
+          </div>
+          <div className="mt-4 bg-gradient-to-r from-purple-100 to-purple-50 rounded-lg p-3">
+            <div className="text-xs text-purple-700 font-medium mb-1">Intervalo de confianza</div>
+            <div className="text-sm text-purple-900">
+              €{Math.round(kpis.ltvProyectado * 0.9).toLocaleString()} - €{Math.round(kpis.ltvProyectado * 1.1).toLocaleString()}
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="bg-white rounded-xl p-6 shadow-lg border border-gray-100"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-gray-600 font-medium">CAC:LTV Ratio</h3>
+            <Activity className="w-5 h-5 text-green-600" />
+          </div>
+          <div className="text-3xl font-bold text-gray-900 mb-2">
+            1:{(1 / kpis.cacLtvRatio).toFixed(1)}
+          </div>
+          <div className="flex items-center gap-2">
+            <div className={`px-2 py-1 rounded-full text-xs font-medium ${
+              kpis.cacLtvRatio <= 0.33 ? 'bg-green-100 text-green-700' :
+              kpis.cacLtvRatio <= 0.5 ? 'bg-yellow-100 text-yellow-700' :
+              'bg-red-100 text-red-700'
+            }`}>
+              {kpis.cacLtvRatio <= 0.33 ? 'Excelente' : kpis.cacLtvRatio <= 0.5 ? 'Bueno' : 'Mejorar'}
+            </div>
+            <span className="text-sm text-gray-500">Ideal: 1:3</span>
+          </div>
+          <div className="mt-4">
+            <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div
+                className={`h-full rounded-full ${
+                  kpis.cacLtvRatio <= 0.33 ? 'bg-green-500' :
+                  kpis.cacLtvRatio <= 0.5 ? 'bg-yellow-500' : 'bg-red-500'
+                }`}
+                style={{ width: `${Math.min((1/kpis.cacLtvRatio) / 5 * 100, 100)}%` }}
+              />
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="bg-white rounded-xl p-6 shadow-lg border border-gray-100"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-gray-600 font-medium">Payback Period</h3>
+            <Clock className="w-5 h-5 text-orange-600" />
+          </div>
+          <div className="text-3xl font-bold text-gray-900 mb-2">
+            {kpis.paybackPeriod} meses
+          </div>
+          <div className="text-sm text-gray-600 mb-4">
+            Tiempo para recuperar inversión
+          </div>
+          <div className="flex items-center gap-2 text-sm">
+            <TrendingDown className="w-4 h-4 text-green-600" />
+            <span className="text-green-600">-2.1 meses vs promedio</span>
+          </div>
+        </motion.div>
       </div>
 
-      {/* Segmentación por Valor con Acciones Recomendadas */}
+      {/* Segmentación por Valor */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        {[
-          {
-            ...segmentos[0],
-            color: 'from-yellow-400 via-amber-500 to-orange-600',
-            titulo: 'VIP (Top 10%)',
-            acciones: ['Programa de lealtad exclusivo', 'Sesiones personalizadas premium', 'Eventos VIP'],
-            badge: 'Prioridad Alta'
-          },
-          {
-            ...segmentos[1],
-            color: 'from-emerald-400 via-teal-500 to-cyan-600',
-            titulo: 'Alto Valor (Top 25%)',
-            acciones: ['Ofertas de upgrade', 'Contenido premium', 'Descuentos especiales'],
-            badge: 'Crecimiento'
-          },
-          {
-            ...segmentos[2],
-            color: 'from-blue-400 via-indigo-500 to-purple-600',
-            titulo: 'Valor Medio',
-            acciones: ['Programas de engagement', 'Challenges grupales', 'Incentivos referidos'],
-            badge: 'Activación'
-          }
-        ].map((seg, index) => (
+        {segmentos.map((seg, index) => (
           <motion.div
             key={seg.nombre}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 * index }}
-            className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/50 overflow-hidden group hover:shadow-2xl transition-all duration-300"
+            className={`bg-gradient-to-br ${seg.color} rounded-xl p-6 shadow-lg text-white`}
           >
-            {/* Header con gradiente */}
-            <div className={`bg-gradient-to-br ${seg.color} p-6 relative overflow-hidden`}>
-              {/* Pattern de fondo */}
-              <div className="absolute inset-0 opacity-20">
-                <div className="absolute inset-0" style={{
-                  backgroundImage: `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3) 1px, transparent 1px)`,
-                  backgroundSize: '20px 20px'
-                }}></div>
-              </div>
-
-              <div className="relative z-10">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="p-2 bg-white/20 rounded-xl backdrop-blur-sm">
-                    {seg.icono}
-                  </div>
-                  <div className="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full border border-white/20">
-                    <span className="text-xs font-semibold text-white">{seg.badge}</span>
-                  </div>
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-1">{seg.titulo}</h3>
-                <div className="text-white/90 text-sm">{seg.clientes} clientes</div>
-              </div>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-bold">{seg.nombre}</h3>
+              {seg.icono}
             </div>
-
-            {/* Body */}
-            <div className="p-6">
-              <div className="space-y-4 mb-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">LTV Promedio</span>
-                  <span className="text-2xl font-bold text-gray-900">€{seg.ltvPromedio.toLocaleString()}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">% de Ingresos</span>
-                  <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-teal-600">
-                    {seg.porcentajeIngresos}%
-                  </span>
-                </div>
-
-                {/* Progress bar */}
-                <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${seg.porcentajeIngresos}%` }}
-                    transition={{ delay: index * 0.2 + 0.5, duration: 1 }}
-                    className={`h-full bg-gradient-to-r ${seg.color} rounded-full`}
+            <div className="space-y-3">
+              <div>
+                <div className="text-sm opacity-90">Clientes</div>
+                <div className="text-3xl font-bold">{seg.clientes}</div>
+              </div>
+              <div>
+                <div className="text-sm opacity-90">LTV Promedio</div>
+                <div className="text-2xl font-bold">€{seg.ltvPromedio.toLocaleString()}</div>
+              </div>
+              <div>
+                <div className="text-sm opacity-90">% de Ingresos Totales</div>
+                <div className="text-2xl font-bold">{seg.porcentajeIngresos}%</div>
+              </div>
+              <div className="pt-2 border-t border-white/20">
+                <div className="h-2 bg-white/30 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-white rounded-full"
+                    style={{ width: `${seg.porcentajeIngresos}%` }}
                   />
                 </div>
               </div>
-
-              {/* Acciones recomendadas */}
-              <div className="border-t border-gray-100 pt-4">
-                <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Acciones Recomendadas</div>
-                <div className="space-y-2">
-                  {seg.acciones.map((accion, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                      <span className="text-sm text-gray-700">{accion}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Botón de acción */}
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className={`w-full mt-4 px-4 py-3 bg-gradient-to-r ${seg.color} text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300`}
-              >
-                Ver Clientes
-              </motion.button>
             </div>
           </motion.div>
         ))}
@@ -707,217 +656,74 @@ const LtvClientesPage: React.FC = () => {
         </div>
       </motion.div>
 
-      {/* Distribución de LTV con Percentiles */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 mb-8"
-      >
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-            <div className="p-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl">
-              <BarChart3 className="w-5 h-5 text-white" />
-            </div>
-            Distribución de LTV
-          </h3>
-          <div className="flex items-center gap-2">
-            <div className="px-3 py-1 bg-gradient-to-r from-green-50 to-emerald-50 rounded-full border border-green-200">
-              <span className="text-sm font-bold text-green-700">Top 10% identificados</span>
-            </div>
-          </div>
-        </div>
-
-        <ResponsiveContainer width="100%" height={350}>
-          <BarChart data={distribucionLtv}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-            <XAxis
-              dataKey="rango"
-              tick={{ fill: '#6b7280', fontSize: 12 }}
-              axisLine={{ stroke: '#d1d5db' }}
-            />
-            <YAxis
-              tick={{ fill: '#6b7280', fontSize: 12 }}
-              axisLine={{ stroke: '#d1d5db' }}
-              label={{ value: 'Clientes', angle: -90, position: 'insideLeft', fill: '#6b7280' }}
-            />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                border: 'none',
-                borderRadius: '12px',
-                boxShadow: '0 10px 40px rgba(0,0,0,0.1)'
-              }}
-            />
-            <Bar dataKey="clientes" radius={[12, 12, 0, 0]}>
-              {distribucionLtv.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={
-                    index >= 5 ? 'url(#gradientVIP)' :
-                    index >= 3 ? 'url(#gradientAlto)' :
-                    'url(#gradientMedio)'
-                  }
-                />
-              ))}
-            </Bar>
-            <defs>
-              <linearGradient id="gradientVIP" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#fbbf24" stopOpacity={1}/>
-                <stop offset="100%" stopColor="#f59e0b" stopOpacity={1}/>
-              </linearGradient>
-              <linearGradient id="gradientAlto" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#10b981" stopOpacity={1}/>
-                <stop offset="100%" stopColor="#059669" stopOpacity={1}/>
-              </linearGradient>
-              <linearGradient id="gradientMedio" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#60a5fa" stopOpacity={1}/>
-                <stop offset="100%" stopColor="#3b82f6" stopOpacity={1}/>
-              </linearGradient>
-            </defs>
-          </BarChart>
-        </ResponsiveContainer>
-
-        {/* Percentiles marcados */}
-        <div className="mt-6 grid grid-cols-4 gap-4">
-          {[
-            { label: 'P25', value: '€520', color: 'from-blue-500 to-indigo-600', desc: '25% inferior' },
-            { label: 'P50 (Mediana)', value: '€1,250', color: 'from-emerald-500 to-teal-600', desc: 'punto medio' },
-            { label: 'P75', value: '€2,100', color: 'from-green-500 to-emerald-600', desc: '25% superior' },
-            { label: 'P90', value: '€3,800', color: 'from-yellow-500 to-amber-600', desc: '10% superior' }
-          ].map((percentil, i) => (
-            <div key={i} className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 border border-gray-200">
-              <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">{percentil.label}</div>
-              <div className={`text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r ${percentil.color} mb-1`}>
-                {percentil.value}
-              </div>
-              <div className="text-xs text-gray-600">{percentil.desc}</div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-6 flex items-center justify-center gap-6 text-sm">
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded bg-gradient-to-br from-blue-500 to-indigo-600" />
-            <span className="text-gray-700 font-medium">Bajo (&lt;€800)</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded bg-gradient-to-br from-emerald-500 to-teal-600" />
-            <span className="text-gray-700 font-medium">Medio (€800-€2K)</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded bg-gradient-to-br from-yellow-500 to-amber-600" />
-            <span className="text-gray-700 font-medium">Alto (€2K+)</span>
-          </div>
-        </div>
-      </motion.div>
-
       {/* Gráficos principales */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        {/* Distribución de LTV */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="bg-white rounded-xl p-6 shadow-lg"
+        >
+          <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <BarChart3 className="w-5 h-5 text-blue-600" />
+            Distribución de LTV
+          </h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={distribucionLtv}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="rango" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="clientes" radius={[8, 8, 0, 0]}>
+                {distribucionLtv.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={
+                    index < 2 ? '#f59e0b' :
+                    index < 4 ? '#9ca3af' :
+                    '#fbbf24'
+                  } />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+          <div className="mt-4 flex items-center justify-center gap-4 text-sm">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-amber-600" />
+              <span>Bajo</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-gray-400" />
+              <span>Medio</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-yellow-400" />
+              <span>Alto</span>
+            </div>
+          </div>
+        </motion.div>
 
-        {/* LTV Acumulado por Cohorte - Análisis Temporal */}
+        {/* LTV Acumulado por Cohorte */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50"
+          className="bg-white rounded-xl p-6 shadow-lg"
         >
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-              <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl">
-                <LineChart className="w-5 h-5 text-white" />
-              </div>
-              LTV Acumulado por Cohorte
-            </h3>
-            <div className="flex items-center gap-2">
-              <div className="px-3 py-1 bg-gradient-to-r from-purple-50 to-pink-50 rounded-full border border-purple-200">
-                <span className="text-sm font-bold text-purple-700">Tendencias y Proyecciones</span>
-              </div>
-            </div>
-          </div>
-
-          <ResponsiveContainer width="100%" height={350}>
+          <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <LineChart className="w-5 h-5 text-purple-600" />
+            LTV Acumulado por Cohorte
+          </h3>
+          <ResponsiveContainer width="100%" height={300}>
             <RechartsLineChart data={ltvAcumulado}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis
-                dataKey="mes"
-                tick={{ fill: '#6b7280', fontSize: 12 }}
-                axisLine={{ stroke: '#d1d5db' }}
-                label={{ value: 'Meses desde registro', position: 'insideBottom', offset: -5, fill: '#6b7280' }}
-              />
-              <YAxis
-                tick={{ fill: '#6b7280', fontSize: 12 }}
-                axisLine={{ stroke: '#d1d5db' }}
-                label={{ value: 'LTV Acumulado (€)', angle: -90, position: 'insideLeft', fill: '#6b7280' }}
-              />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                  border: 'none',
-                  borderRadius: '12px',
-                  boxShadow: '0 10px 40px rgba(0,0,0,0.1)'
-                }}
-              />
-              <Legend
-                wrapperStyle={{ paddingTop: '20px' }}
-                iconType="line"
-              />
-              <Line
-                type="monotone"
-                dataKey="Q1"
-                stroke="#10b981"
-                strokeWidth={3}
-                dot={false}
-                name="Q1 2024 (más reciente)"
-                activeDot={{ r: 6 }}
-              />
-              <Line
-                type="monotone"
-                dataKey="Q2"
-                stroke="#3b82f6"
-                strokeWidth={3}
-                dot={false}
-                name="Q2 2024"
-                activeDot={{ r: 6 }}
-              />
-              <Line
-                type="monotone"
-                dataKey="Q3"
-                stroke="#8b5cf6"
-                strokeWidth={3}
-                dot={false}
-                name="Q3 2023"
-                activeDot={{ r: 6 }}
-              />
-              <Line
-                type="monotone"
-                dataKey="Q4"
-                stroke="#f59e0b"
-                strokeWidth={3}
-                dot={false}
-                name="Q4 2023 (más antigua)"
-                activeDot={{ r: 6 }}
-              />
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="mes" label={{ value: 'Meses desde registro', position: 'insideBottom', offset: -5 }} />
+              <YAxis label={{ value: 'LTV (€)', angle: -90, position: 'insideLeft' }} />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="Q1" stroke="#3b82f6" strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="Q2" stroke="#8b5cf6" strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="Q3" stroke="#ec4899" strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="Q4" stroke="#f59e0b" strokeWidth={2} dot={false} />
             </RechartsLineChart>
           </ResponsiveContainer>
-
-          {/* Insights de cohortes */}
-          <div className="mt-6 grid grid-cols-2 gap-4">
-            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200">
-              <div className="flex items-center gap-2 mb-2">
-                <TrendingUp className="w-5 h-5 text-green-600" />
-                <span className="text-sm font-bold text-green-900">Cohorte Destacada</span>
-              </div>
-              <div className="text-2xl font-bold text-green-600 mb-1">Q1 2024</div>
-              <div className="text-sm text-green-700">+23% mejor LTV vs promedio histórico</div>
-            </div>
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-200">
-              <div className="flex items-center gap-2 mb-2">
-                <Clock className="w-5 h-5 text-blue-600" />
-                <span className="text-sm font-bold text-blue-900">Tiempo al Pico</span>
-              </div>
-              <div className="text-2xl font-bold text-blue-600 mb-1">18 meses</div>
-              <div className="text-sm text-blue-700">Punto máximo de valor generado</div>
-            </div>
-          </div>
         </motion.div>
       </div>
 
@@ -1093,151 +899,11 @@ const LtvClientesPage: React.FC = () => {
         </div>
       </motion.div>
 
-      {/* Predictor de LTV con IA */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 mb-8"
-      >
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-            <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl">
-              <Zap className="w-5 h-5 text-white" />
-            </div>
-            Predictor de LTV con IA
-          </h3>
-          <div className="px-3 py-1 bg-gradient-to-r from-purple-50 to-pink-50 rounded-full border border-purple-200">
-            <span className="text-sm font-bold text-purple-700">Modelo ML v2.1</span>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Escenarios predictivos */}
-          <div className="space-y-4">
-            <div className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">Escenarios de Predicción</div>
-
-            {[
-              {
-                tipo: 'Optimista',
-                valor: Math.round(kpis.ltvProyectado * 1.2),
-                probabilidad: 25,
-                color: 'from-green-500 to-emerald-600',
-                icon: TrendingUp,
-                desc: 'Con mejoras en retención'
-              },
-              {
-                tipo: 'Realista',
-                valor: kpis.ltvProyectado,
-                probabilidad: 55,
-                color: 'from-blue-500 to-indigo-600',
-                icon: Target,
-                desc: 'Manteniendo tendencia actual'
-              },
-              {
-                tipo: 'Pesimista',
-                valor: Math.round(kpis.ltvProyectado * 0.85),
-                probabilidad: 20,
-                color: 'from-orange-500 to-red-600',
-                icon: TrendingDown,
-                desc: 'Si aumenta el churn'
-              }
-            ].map((escenario, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-4 border border-gray-200 hover:shadow-lg transition-all duration-300"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-3">
-                    <div className={`p-2 bg-gradient-to-br ${escenario.color} rounded-xl`}>
-                      <escenario.icon className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <div className="font-bold text-gray-900">{escenario.tipo}</div>
-                      <div className="text-xs text-gray-600">{escenario.desc}</div>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className={`text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r ${escenario.color}`}>
-                      €{escenario.valor.toLocaleString()}
-                    </div>
-                    <div className="text-xs text-gray-500">{escenario.probabilidad}% prob.</div>
-                  </div>
-                </div>
-                <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${escenario.probabilidad}%` }}
-                    transition={{ delay: i * 0.2 + 0.5, duration: 1 }}
-                    className={`h-full bg-gradient-to-r ${escenario.color} rounded-full`}
-                  />
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Factores de influencia */}
-          <div className="space-y-4">
-            <div className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">Factores de Influencia en LTV</div>
-
-            {[
-              { factor: 'Adherencia al programa', impacto: 92, icon: Activity, color: 'emerald' },
-              { factor: 'Frecuencia de uso', impacto: 85, icon: Calendar, color: 'blue' },
-              { factor: 'Tipo de membresía', impacto: 78, icon: Crown, color: 'yellow' },
-              { factor: 'NPS y satisfacción', impacto: 71, icon: Star, color: 'purple' },
-              { factor: 'Canal de adquisición', impacto: 64, icon: Users, color: 'teal' },
-              { factor: 'Edad del cliente', impacto: 52, icon: Clock, color: 'gray' }
-            ].map((item, i) => (
-              <div key={i} className="flex items-center gap-3">
-                <div className={`p-2 bg-${item.color}-100 rounded-lg`}>
-                  <item.icon className={`w-4 h-4 text-${item.color}-600`} />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm font-medium text-gray-700">{item.factor}</span>
-                    <span className={`text-sm font-bold text-${item.color}-600`}>{item.impacto}%</span>
-                  </div>
-                  <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${item.impacto}%` }}
-                      transition={{ delay: i * 0.1 + 0.3, duration: 0.8 }}
-                      className={`h-full bg-${item.color}-500 rounded-full`}
-                    />
-                  </div>
-                </div>
-              </div>
-            ))}
-
-            {/* Confianza del modelo */}
-            <div className="mt-6 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-4 border border-purple-200">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-bold text-purple-900">Confianza del Modelo</span>
-                <span className="text-2xl font-bold text-purple-600">87%</span>
-              </div>
-              <div className="w-full h-3 bg-purple-200 rounded-full overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: '87%' }}
-                  transition={{ delay: 0.5, duration: 1.2 }}
-                  className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full relative"
-                >
-                  <div className="absolute inset-0 bg-white/30 animate-pulse"></div>
-                </motion.div>
-              </div>
-              <p className="text-xs text-purple-700 mt-2">Basado en 2,847 predicciones históricas</p>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-
       {/* Simulador de Impacto de Churn */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl p-6 shadow-xl border border-green-200 mb-8"
+        className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 shadow-lg mb-8"
       >
         <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
           <Activity className="w-5 h-5 text-green-600" />
@@ -1311,13 +977,11 @@ const LtvClientesPage: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50"
+        className="bg-white rounded-xl p-6 shadow-lg"
       >
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+        <div className="flex items-center justify-between mb-6">
           <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-            <div className="p-2 bg-gradient-to-br from-yellow-500 to-amber-600 rounded-xl">
-              <Trophy className="w-5 h-5 text-white" />
-            </div>
+            <Trophy className="w-5 h-5 text-yellow-500" />
             Ranking de Clientes por LTV
           </h3>
           <div className="flex items-center gap-3">
@@ -1328,7 +992,7 @@ const LtvClientesPage: React.FC = () => {
                 placeholder="Buscar cliente..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-emerald-100 focus:border-emerald-500 transition-all duration-300 outline-none bg-white/80 backdrop-blur-sm"
+                className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
@@ -1337,33 +1001,30 @@ const LtvClientesPage: React.FC = () => {
         {/* Tabs de filtros */}
         <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
           {[
-            { key: 'todos', label: 'Todos', count: clientes.length, gradient: 'from-gray-500 to-gray-600', icon: Users },
-            { key: 'alto-valor', label: 'VIP', count: clientes.filter(c => c.ltvTotal >= 2000).length, gradient: 'from-yellow-500 to-amber-600', icon: Crown },
-            { key: 'riesgo', label: 'En Riesgo', count: clientes.filter(c => c.probabilidadChurn >= 40).length, gradient: 'from-red-500 to-orange-600', icon: AlertTriangle },
-            { key: 'nuevos', label: 'Nuevos', count: clientes.filter(c => c.mesesActivo <= 3).length, gradient: 'from-green-500 to-emerald-600', icon: Star }
+            { key: 'todos', label: 'Todos', count: clientes.length },
+            { key: 'alto-valor', label: 'Alto Valor', count: clientes.filter(c => c.ltvTotal >= 2000).length },
+            { key: 'riesgo', label: 'En Riesgo', count: clientes.filter(c => c.probabilidadChurn >= 40).length },
+            { key: 'nuevos', label: 'Nuevos', count: clientes.filter(c => c.mesesActivo <= 3).length }
           ].map(tab => (
-            <motion.button
+            <button
               key={tab.key}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
               onClick={() => {
                 setSelectedTab(tab.key);
                 setCurrentPage(1);
               }}
-              className={`px-4 py-2 rounded-xl whitespace-nowrap flex items-center gap-2 font-semibold transition-all duration-300 ${
+              className={`px-4 py-2 rounded-lg whitespace-nowrap flex items-center gap-2 ${
                 selectedTab === tab.key
-                  ? `bg-gradient-to-r ${tab.gradient} text-white shadow-lg`
+                  ? 'bg-blue-600 text-white'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
-              <tab.icon className="w-4 h-4" />
               {tab.label}
-              <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
+              <span className={`px-2 py-0.5 rounded-full text-xs ${
                 selectedTab === tab.key ? 'bg-white/20' : 'bg-gray-200'
               }`}>
                 {tab.count}
               </span>
-            </motion.button>
+            </button>
           ))}
         </div>
 
@@ -1455,14 +1116,7 @@ const LtvClientesPage: React.FC = () => {
                       </div>
                     </td>
                     <td className="p-3 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <span className="font-bold text-gray-900">€{cliente.ltvTotal.toLocaleString()}</span>
-                        {cliente.ltvTotal >= 3000 && (
-                          <div className="px-2 py-0.5 bg-gradient-to-r from-yellow-400 to-amber-500 text-white text-xs font-bold rounded-full">
-                            VIP
-                          </div>
-                        )}
-                      </div>
+                      <span className="font-bold text-gray-900">€{cliente.ltvTotal.toLocaleString()}</span>
                     </td>
                     <td className="p-3 text-right">
                       <span className="text-gray-600">€{cliente.ltvProyectado.toLocaleString()}</span>

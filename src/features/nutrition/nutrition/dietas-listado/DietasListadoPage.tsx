@@ -281,7 +281,10 @@ const DietasListadoPage: React.FC = () => {
           <Apple className="w-16 h-16 text-gray-400 mx-auto mb-4" />
           <h3 className="text-2xl font-bold text-gray-900 mb-2">No se encontraron dietas</h3>
           <p className="text-gray-600 mb-6">Intenta ajustar los filtros o crea una nueva dieta</p>
-          <button className="px-6 py-3 bg-gradient-to-br from-lime-500 to-green-500 text-white rounded-2xl font-semibold hover:shadow-xl transition-all duration-300 flex items-center gap-2 mx-auto">
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent('app:navigate', { detail: { page: 'dieta-nueva' } }))}
+            className="px-6 py-3 bg-gradient-to-br from-lime-500 to-green-500 text-white rounded-2xl font-semibold hover:shadow-xl transition-all duration-300 flex items-center gap-2 mx-auto"
+          >
             <Plus className="w-5 h-5" />
             Nueva Dieta
           </button>
@@ -305,6 +308,7 @@ const DietasListadoPage: React.FC = () => {
 
       {/* Botón flotante Nueva Dieta */}
       <motion.button
+        onClick={() => window.dispatchEvent(new CustomEvent('app:navigate', { detail: { page: 'dieta-nueva' } }))}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         className="fixed bottom-8 right-8 w-16 h-16 bg-gradient-to-br from-lime-500 to-green-600 rounded-full shadow-2xl flex items-center justify-center text-white hover:shadow-lime-500/50 transition-all duration-300 z-50"

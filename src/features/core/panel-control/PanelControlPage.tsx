@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   RefreshCw,
   Download,
   Settings,
-  Calendar,
-  Server,
   Database,
   Wifi,
-  HardDrive,
   Activity,
   AlertTriangle,
   Users,
@@ -16,12 +13,8 @@ import {
   DollarSign,
   Target,
   Award,
-  LifeBuoy,
   Clock,
   UserPlus,
-  ChevronUp,
-  ChevronDown,
-  Minus,
   Search,
   Filter,
   Eye,
@@ -30,14 +23,10 @@ import {
   Trash2,
   Shield,
   Lock,
-  Unlock,
-  Bell,
-  Power,
   HardDriveDownload,
   Cloud,
   Globe,
   Cpu,
-  MemoryStick,
   Zap,
   CheckCircle,
   XCircle,
@@ -46,17 +35,18 @@ import {
   BarChart3,
   PieChart,
   LineChart,
-  TrendingDown,
   Sparkles,
   ArrowUpRight,
   ArrowDownRight,
   CircleDollarSign,
-  ShoppingCart,
   Repeat,
+  X,
+  Save,
+  MapPin,
+  Calendar as CalendarIcon,
+  CreditCard,
 } from 'lucide-react';
 import {
-  LineChart as RechartsLine,
-  Line,
   AreaChart,
   Area,
   BarChart as RechartsBar,
@@ -73,14 +63,6 @@ import {
 } from 'recharts';
 
 // Tipos
-interface SystemStatus {
-  name: string;
-  status: 'online' | 'warning' | 'offline';
-  metric: string;
-  subMetric: string;
-  icon: React.ReactNode;
-  trend: number[];
-}
 
 interface KPI {
   label: string;
@@ -146,7 +128,7 @@ interface OnlineUser {
 
 const PanelControlPage: React.FC = () => {
   // Estados
-  const [dateRange, setDateRange] = useState<'today' | 'week' | 'month' | 'custom'>('week');
+  const [dateRange, setDateRange] = useState<'today' | 'week' | 'month' | 'year' | 'custom'>('week');
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
   const [searchTerm, setSearchTerm] = useState('');
   const [logFilter, setLogFilter] = useState<'ALL' | 'INFO' | 'WARN' | 'ERROR' | 'DEBUG'>('ALL');
@@ -161,57 +143,52 @@ const PanelControlPage: React.FC = () => {
     { id: 'cors', label: 'CORS Settings', description: 'Configuración CORS', enabled: true },
   ]);
 
-  // Datos mockeados - Estado del Sistema
-  const systemStatus: SystemStatus[] = [
-    {
-      name: 'Servidor',
-      status: 'online',
-      metric: 'CPU: 34%',
-      subMetric: 'RAM: 8.2GB / 16GB',
-      icon: <Server className="w-6 h-6" />,
-      trend: [20, 35, 28, 40, 34, 38, 34],
-    },
-    {
-      name: 'Base de Datos',
-      status: 'online',
-      metric: '24 conexiones',
-      subMetric: '1,245 queries/seg',
-      icon: <Database className="w-6 h-6" />,
-      trend: [800, 1200, 1100, 1300, 1245, 1400, 1245],
-    },
-    {
-      name: 'APIs Externas',
-      status: 'online',
-      metric: '5/5 activas',
-      subMetric: 'Latencia: 124ms',
-      icon: <Wifi className="w-6 h-6" />,
-      trend: [100, 120, 110, 130, 124, 115, 124],
-    },
-    {
-      name: 'Almacenamiento',
-      status: 'warning',
-      metric: '425GB / 500GB',
-      subMetric: '85% utilizado',
-      icon: <HardDrive className="w-6 h-6" />,
-      trend: [70, 72, 75, 78, 80, 83, 85],
-    },
-    {
-      name: 'Tráfico de Red',
-      status: 'online',
-      metric: '234 Mbps',
-      subMetric: 'Pico: 450 Mbps',
-      icon: <Activity className="w-6 h-6" />,
-      trend: [200, 250, 220, 300, 234, 280, 234],
-    },
-    {
-      name: 'Errores Recientes',
-      status: 'online',
-      metric: '3 errores',
-      subMetric: 'Última hora',
-      icon: <AlertTriangle className="w-6 h-6" />,
-      trend: [5, 3, 7, 2, 3, 4, 3],
-    },
-  ];
+  // Estados para gestión de usuarios
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [showUserProfile, setShowUserProfile] = useState(false);
+  const [showEditUser, setShowEditUser] = useState(false);
+  const [showSuspendModal, setShowSuspendModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  // Estados para filtros y paginación
+  const [showFilters, setShowFilters] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
+  const [filters, setFilters] = useState({
+    plan: 'ALL',
+    status: 'ALL',
+    country: 'ALL',
+    dateRange: 'ALL'
+  });
+
+  // Estados para gestión de backups
+  const [showCreateBackup, setShowCreateBackup] = useState(false);
+  const [showRestoreModal, setShowRestoreModal] = useState(false);
+  const [showDeleteBackupModal, setShowDeleteBackupModal] = useState(false);
+  const [selectedBackup, setSelectedBackup] = useState<Backup | null>(null);
+  const [backupList, setBackupList] = useState<Backup[]>([]);
+  const [backupLoading, setBackupLoading] = useState(false);
+
+  // Estados para funcionalidades del dashboard
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [showExportModal, setShowExportModal] = useState(false);
+  const [exportLoading, setExportLoading] = useState(false);
+
+  // Estados para exportación de ingresos
+  const [showRevenueExportModal, setShowRevenueExportModal] = useState(false);
+  const [revenueExportLoading, setRevenueExportLoading] = useState(false);
+
+  // Estados para gestión de alertas
+  const [showAlertDetails, setShowAlertDetails] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [showBlockIPModal, setShowBlockIPModal] = useState(false);
+  const [selectedAlert, setSelectedAlert] = useState<any>(null);
+  const [alerts, setAlerts] = useState<any[]>([]);
+  const [alertLoading, setAlertLoading] = useState(false);
+
 
   // Datos de gráficos - 12 meses históricos
   const monthlyData: MonthlyData[] = [
@@ -294,7 +271,21 @@ const PanelControlPage: React.FC = () => {
     { id: '3', name: 'María López', email: 'maria.lopez@email.com', plan: 'Enterprise', status: 'online', joinDate: '2025-09-27', country: 'Argentina' },
     { id: '4', name: 'Juan Pérez', email: 'juan.perez@email.com', plan: 'Pro', status: 'online', joinDate: '2025-09-27', country: 'Colombia' },
     { id: '5', name: 'Laura Martín', email: 'laura.martin@email.com', plan: 'Free', status: 'offline', joinDate: '2025-09-26', country: 'España' },
+    { id: '6', name: 'Pedro Sánchez', email: 'pedro.sanchez@email.com', plan: 'Pro', status: 'online', joinDate: '2025-09-25', country: 'Chile' },
+    { id: '7', name: 'Sofía Torres', email: 'sofia.torres@email.com', plan: 'Enterprise', status: 'offline', joinDate: '2025-09-24', country: 'Perú' },
+    { id: '8', name: 'Roberto Gómez', email: 'roberto.gomez@email.com', plan: 'Free', status: 'online', joinDate: '2025-09-23', country: 'Uruguay' },
+    { id: '9', name: 'Elena Castro', email: 'elena.castro@email.com', plan: 'Pro', status: 'online', joinDate: '2025-09-22', country: 'Venezuela' },
+    { id: '10', name: 'Luis Fernández', email: 'luis.fernandez@email.com', plan: 'Free', status: 'offline', joinDate: '2025-09-21', country: 'Ecuador' },
+    { id: '11', name: 'Carmen Vega', email: 'carmen.vega@email.com', plan: 'Enterprise', status: 'online', joinDate: '2025-09-20', country: 'Bolivia' },
+    { id: '12', name: 'Diego Morales', email: 'diego.morales@email.com', plan: 'Pro', status: 'offline', joinDate: '2025-09-19', country: 'Paraguay' },
   ];
+
+  // Inicializar usuarios, backups y alertas
+  useEffect(() => {
+    setUsers(recentUsers);
+    setBackupList(backups);
+    setAlerts(criticalAlerts);
+  }, []);
 
   // Logs del sistema
   const systemLogs: LogEntry[] = [
@@ -386,8 +377,98 @@ const PanelControlPage: React.FC = () => {
   const COLORS = ['#6b7280', '#3b82f6', '#8b5cf6'];
 
   // Funciones
-  const handleRefresh = () => {
-    setLastUpdate(new Date());
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    try {
+      // Simular actualización de datos
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Actualizar timestamp
+      setLastUpdate(new Date());
+      
+      // Simular actualización de métricas (en una app real, aquí se harían llamadas a la API)
+      console.log('Datos actualizados exitosamente');
+    } catch (error) {
+      console.error('Error al actualizar datos:', error);
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
+  const handleExport = () => {
+    setShowExportModal(true);
+  };
+
+  const handleDateRangeChange = (newRange: 'today' | 'week' | 'month' | 'year' | 'custom') => {
+    setDateRange(newRange);
+    // En una app real, aquí se filtrarían los datos según el rango seleccionado
+    console.log('Rango de fechas cambiado a:', newRange);
+  };
+
+  const exportData = async (format: 'csv' | 'excel' | 'pdf') => {
+    setExportLoading(true);
+    try {
+      // Simular exportación
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // En una app real, aquí se generaría y descargaría el archivo
+      console.log(`Exportando datos en formato ${format} para el período: ${dateRange}`);
+      
+      // Simular descarga
+      const fileName = `dashboard-data-${dateRange}-${new Date().toISOString().split('T')[0]}.${format}`;
+      alert(`Archivo ${fileName} descargado exitosamente`);
+      
+      setShowExportModal(false);
+    } catch (error) {
+      console.error('Error al exportar datos:', error);
+    } finally {
+      setExportLoading(false);
+    }
+  };
+
+  // Funciones específicas para exportación de ingresos
+  const handleRevenueExport = () => {
+    setShowRevenueExportModal(true);
+  };
+
+  const exportRevenueData = async (format: 'csv' | 'excel' | 'pdf' | 'json') => {
+    setRevenueExportLoading(true);
+    try {
+      // Simular exportación de datos de ingresos
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Preparar datos de ingresos para exportación
+      const revenueData = {
+        period: dateRange,
+        exportDate: new Date().toISOString(),
+        data: monthlyData.map(item => ({
+          mes: item.month,
+          ingresos_totales: item.ingresos,
+          ingresos_recurrentes: item.recurrentes,
+          ingresos_unicos: item.unicos,
+          nuevos_clientes: item.clientes,
+          clientes_activos: item.activos
+        })),
+        summary: {
+          total_ingresos: monthlyData.reduce((sum, item) => sum + item.ingresos, 0),
+          promedio_mensual: Math.round(monthlyData.reduce((sum, item) => sum + item.ingresos, 0) / monthlyData.length),
+          crecimiento_anual: 15.8,
+          total_clientes: monthlyData[monthlyData.length - 1].clientes
+        }
+      };
+      
+      console.log(`Exportando datos de ingresos en formato ${format}:`, revenueData);
+      
+      // Simular descarga
+      const fileName = `evolucion-ingresos-${dateRange}-${new Date().toISOString().split('T')[0]}.${format}`;
+      alert(`Archivo de ingresos ${fileName} descargado exitosamente`);
+      
+      setShowRevenueExportModal(false);
+    } catch (error) {
+      console.error('Error al exportar datos de ingresos:', error);
+    } finally {
+      setRevenueExportLoading(false);
+    }
   };
 
   const handleToggleSetting = (id: string) => {
@@ -398,27 +479,313 @@ const PanelControlPage: React.FC = () => {
     );
   };
 
-  const getStatusColor = (status: 'online' | 'warning' | 'offline') => {
-    switch (status) {
-      case 'online':
-        return 'bg-green-500';
-      case 'warning':
-        return 'bg-yellow-500';
-      case 'offline':
-        return 'bg-red-500';
+  // Funciones para gestión de usuarios
+  const handleViewUser = (user: User) => {
+    setSelectedUser(user);
+    setShowUserProfile(true);
+  };
+
+  const handleEditUser = (user: User) => {
+    setEditingUser({ ...user });
+    setShowEditUser(true);
+  };
+
+  const handleSuspendUser = (user: User) => {
+    setSelectedUser(user);
+    setShowSuspendModal(true);
+  };
+
+  const handleDeleteUser = (user: User) => {
+    setSelectedUser(user);
+    setShowDeleteModal(true);
+  };
+
+  const confirmSuspendUser = async () => {
+    if (!selectedUser) return;
+    
+    setLoading(true);
+    try {
+      // Simular llamada a API
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      setUsers(prev => prev.map(user => 
+        user.id === selectedUser.id 
+          ? { ...user, status: 'offline' as const }
+          : user
+      ));
+      
+      setShowSuspendModal(false);
+      setSelectedUser(null);
+    } catch (error) {
+      console.error('Error al suspender usuario:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const getStatusTextColor = (status: 'online' | 'warning' | 'offline') => {
-    switch (status) {
-      case 'online':
-        return 'text-green-600';
-      case 'warning':
-        return 'text-yellow-600';
-      case 'offline':
-        return 'text-red-600';
+  const confirmDeleteUser = async () => {
+    if (!selectedUser) return;
+    
+    setLoading(true);
+    try {
+      // Simular llamada a API
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      setUsers(prev => prev.filter(user => user.id !== selectedUser.id));
+      
+      setShowDeleteModal(false);
+      setSelectedUser(null);
+    } catch (error) {
+      console.error('Error al eliminar usuario:', error);
+    } finally {
+      setLoading(false);
     }
   };
+
+  const saveUserChanges = async () => {
+    if (!editingUser) return;
+    
+    setLoading(true);
+    try {
+      // Simular llamada a API
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      setUsers(prev => prev.map(user => 
+        user.id === editingUser.id ? editingUser : user
+      ));
+      
+      setShowEditUser(false);
+      setEditingUser(null);
+    } catch (error) {
+      console.error('Error al guardar cambios:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const closeModals = () => {
+    setShowUserProfile(false);
+    setShowEditUser(false);
+    setShowSuspendModal(false);
+    setShowDeleteModal(false);
+    setSelectedUser(null);
+    setEditingUser(null);
+  };
+
+  // Funciones para filtros y paginación
+  const handleFilterChange = (filterType: string, value: string) => {
+    setFilters(prev => ({ ...prev, [filterType]: value }));
+    setCurrentPage(1); // Reset a la primera página cuando se cambian filtros
+  };
+
+  const clearFilters = () => {
+    setFilters({
+      plan: 'ALL',
+      status: 'ALL',
+      country: 'ALL',
+      dateRange: 'ALL'
+    });
+    setSearchTerm('');
+    setCurrentPage(1);
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  // Filtrar usuarios
+  const filteredUsers = users.filter(user => {
+    const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         user.email.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesPlan = filters.plan === 'ALL' || user.plan === filters.plan;
+    const matchesStatus = filters.status === 'ALL' || user.status === filters.status;
+    const matchesCountry = filters.country === 'ALL' || user.country === filters.country;
+    
+    return matchesSearch && matchesPlan && matchesStatus && matchesCountry;
+  });
+
+  // Paginación
+  const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentUsers = filteredUsers.slice(startIndex, endIndex);
+
+  // Obtener países únicos para el filtro
+  const uniqueCountries = Array.from(new Set(users.map(user => user.country))).sort();
+
+  // Funciones para gestión de backups
+  const handleCreateBackup = async () => {
+    setBackupLoading(true);
+    try {
+      // Simular creación de backup
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      const newBackup: Backup = {
+        id: Date.now().toString(),
+        date: new Date().toLocaleString('es-ES', { 
+          year: 'numeric', 
+          month: '2-digit', 
+          day: '2-digit', 
+          hour: '2-digit', 
+          minute: '2-digit' 
+        }),
+        size: '428 GB',
+        status: 'success',
+        type: 'manual'
+      };
+      
+      setBackupList(prev => [newBackup, ...prev]);
+      setShowCreateBackup(false);
+    } catch (error) {
+      console.error('Error al crear backup:', error);
+    } finally {
+      setBackupLoading(false);
+    }
+  };
+
+  const handleDownloadBackup = async (backup: Backup) => {
+    setBackupLoading(true);
+    try {
+      // Simular descarga
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // En una aplicación real, aquí se iniciaría la descarga
+      console.log(`Descargando backup: ${backup.id}`);
+      
+      // Simular notificación de descarga completada
+      alert(`Backup ${backup.date} descargado exitosamente`);
+    } catch (error) {
+      console.error('Error al descargar backup:', error);
+    } finally {
+      setBackupLoading(false);
+    }
+  };
+
+  const handleRestoreBackup = (backup: Backup) => {
+    setSelectedBackup(backup);
+    setShowRestoreModal(true);
+  };
+
+  const handleDeleteBackup = (backup: Backup) => {
+    setSelectedBackup(backup);
+    setShowDeleteBackupModal(true);
+  };
+
+  const confirmRestoreBackup = async () => {
+    if (!selectedBackup) return;
+    
+    setBackupLoading(true);
+    try {
+      // Simular restauración
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      
+      console.log(`Restaurando backup: ${selectedBackup.id}`);
+      alert(`Backup ${selectedBackup.date} restaurado exitosamente`);
+      
+      setShowRestoreModal(false);
+      setSelectedBackup(null);
+    } catch (error) {
+      console.error('Error al restaurar backup:', error);
+    } finally {
+      setBackupLoading(false);
+    }
+  };
+
+  const confirmDeleteBackup = async () => {
+    if (!selectedBackup) return;
+    
+    setBackupLoading(true);
+    try {
+      // Simular eliminación
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      setBackupList(prev => prev.filter(backup => backup.id !== selectedBackup.id));
+      
+      setShowDeleteBackupModal(false);
+      setSelectedBackup(null);
+    } catch (error) {
+      console.error('Error al eliminar backup:', error);
+    } finally {
+      setBackupLoading(false);
+    }
+  };
+
+  const closeBackupModals = () => {
+    setShowCreateBackup(false);
+    setShowRestoreModal(false);
+    setShowDeleteBackupModal(false);
+    setSelectedBackup(null);
+  };
+
+  // Funciones para gestión de alertas
+  const handleViewAlertDetails = (alert: any) => {
+    setSelectedAlert(alert);
+    setShowAlertDetails(true);
+  };
+
+  const handleUpdateSystem = () => {
+    setShowUpdateModal(true);
+  };
+
+  const handleBlockIP = (alert: any) => {
+    setSelectedAlert(alert);
+    setShowBlockIPModal(true);
+  };
+
+  const confirmUpdateSystem = async () => {
+    setAlertLoading(true);
+    try {
+      // Simular actualización del sistema
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      
+      // Actualizar alertas para remover la de actualización
+      setAlerts(prev => prev.filter(alert => alert.id !== '2'));
+      
+      console.log('Sistema actualizado exitosamente');
+      alert('Sistema actualizado exitosamente. Se reiniciará en 5 minutos.');
+      
+      setShowUpdateModal(false);
+    } catch (error) {
+      console.error('Error al actualizar sistema:', error);
+    } finally {
+      setAlertLoading(false);
+    }
+  };
+
+  const confirmBlockIP = async () => {
+    if (!selectedAlert) return;
+    
+    setAlertLoading(true);
+    try {
+      // Simular bloqueo de IP
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Actualizar alertas para remover la de IP sospechosa
+      setAlerts(prev => prev.filter(alert => alert.id !== selectedAlert.id));
+      
+      console.log(`IP bloqueada: ${selectedAlert.ip || 'IP sospechosa'}`);
+      alert(`IP bloqueada exitosamente. Se ha agregado a la lista de IPs bloqueadas.`);
+      
+      setShowBlockIPModal(false);
+      setSelectedAlert(null);
+    } catch (error) {
+      console.error('Error al bloquear IP:', error);
+    } finally {
+      setAlertLoading(false);
+    }
+  };
+
+  const dismissAlert = (alertId: string) => {
+    setAlerts(prev => prev.filter(alert => alert.id !== alertId));
+  };
+
+  const closeAlertModals = () => {
+    setShowAlertDetails(false);
+    setShowUpdateModal(false);
+    setShowBlockIPModal(false);
+    setSelectedAlert(null);
+  };
+
 
   const getPlanBadgeColor = (plan: string) => {
     switch (plan) {
@@ -542,12 +909,18 @@ const PanelControlPage: React.FC = () => {
             <div className="flex flex-wrap items-center gap-3">
               <button
                 onClick={handleRefresh}
+                disabled={isRefreshing}
+                className="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-xl transition-all backdrop-blur-md border border-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <RefreshCw className={`w-4 h-4 text-white ${isRefreshing ? 'animate-spin' : ''}`} />
+                <span className="text-sm font-semibold text-white">
+                  {isRefreshing ? 'Actualizando...' : 'Actualizar'}
+                </span>
+              </button>
+              <button 
+                onClick={handleExport}
                 className="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-xl transition-all backdrop-blur-md border border-white/20"
               >
-                <RefreshCw className="w-4 h-4 text-white" />
-                <span className="text-sm font-semibold text-white">Actualizar</span>
-              </button>
-              <button className="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-xl transition-all backdrop-blur-md border border-white/20">
                 <Download className="w-4 h-4 text-white" />
                 <span className="text-sm font-semibold text-white">Exportar</span>
               </button>
@@ -555,7 +928,7 @@ const PanelControlPage: React.FC = () => {
               {/* Selector de período elegante */}
               <select
                 value={dateRange}
-                onChange={(e) => setDateRange(e.target.value as any)}
+                onChange={(e) => handleDateRangeChange(e.target.value as any)}
                 className="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-xl transition-all backdrop-blur-md border border-white/20 text-white font-semibold text-sm cursor-pointer outline-none"
               >
                 <option value="today" className="text-gray-900">Hoy</option>
@@ -587,11 +960,11 @@ const PanelControlPage: React.FC = () => {
               </div>
               <h3 className="text-xl font-bold text-gray-900">Alertas y Notificaciones</h3>
               <span className="ml-auto bg-orange-500 text-white px-4 py-1 rounded-full text-sm font-bold">
-                {criticalAlerts.length}
+                {alerts.length}
               </span>
             </div>
             <div className="space-y-3">
-              {criticalAlerts.map((alert, index) => (
+              {alerts.map((alert, index) => (
                 <motion.div
                   key={alert.id}
                   initial={{ opacity: 0, x: -20 }}
@@ -608,13 +981,33 @@ const PanelControlPage: React.FC = () => {
                     <p className="text-sm font-semibold text-gray-900 mb-1">{alert.message}</p>
                     <p className="text-xs text-gray-500">{alert.time}</p>
                   </div>
-                  <button className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                    alert.type === 'error' ? 'bg-red-50 text-red-600 hover:bg-red-100' :
-                    alert.type === 'warning' ? 'bg-yellow-50 text-yellow-600 hover:bg-yellow-100' :
-                    'bg-blue-50 text-blue-600 hover:bg-blue-100'
-                  }`}>
-                    {alert.action}
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button 
+                      onClick={() => {
+                        if (alert.action === 'Ver detalles') {
+                          handleViewAlertDetails(alert);
+                        } else if (alert.action === 'Actualizar') {
+                          handleUpdateSystem();
+                        } else if (alert.action === 'Bloquear IP') {
+                          handleBlockIP(alert);
+                        }
+                      }}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                        alert.type === 'error' ? 'bg-red-50 text-red-600 hover:bg-red-100' :
+                        alert.type === 'warning' ? 'bg-yellow-50 text-yellow-600 hover:bg-yellow-100' :
+                        'bg-blue-50 text-blue-600 hover:bg-blue-100'
+                      }`}
+                    >
+                      {alert.action}
+                    </button>
+                    <button
+                      onClick={() => dismissAlert(alert.id)}
+                      className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+                      title="Descartar alerta"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -707,7 +1100,10 @@ const PanelControlPage: React.FC = () => {
                   <p className="text-sm text-gray-600">Últimos 12 meses</p>
                 </div>
               </div>
-              <button className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200 hover:bg-gradient-to-r hover:from-blue-100 hover:to-indigo-100 transition-all">
+              <button 
+                onClick={handleRevenueExport}
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200 hover:bg-gradient-to-r hover:from-blue-100 hover:to-indigo-100 transition-all"
+              >
                 <Download className="w-4 h-4 text-blue-600" />
                 <span className="text-sm font-semibold text-blue-600">Exportar</span>
               </button>
@@ -822,7 +1218,7 @@ const PanelControlPage: React.FC = () => {
                   fill="#8884d8"
                   dataKey="value"
                 >
-                  {membershipDistribution.map((entry, index) => (
+                  {membershipDistribution.map((_, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
@@ -869,7 +1265,10 @@ const PanelControlPage: React.FC = () => {
                   className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                 />
               </div>
-              <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+              <button 
+                onClick={() => setShowFilters(true)}
+                className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              >
                 <Filter className="w-4 h-4" />
                 <span className="hidden sm:inline">Filtros</span>
               </button>
@@ -890,7 +1289,7 @@ const PanelControlPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {recentUsers.map((user) => (
+              {currentUsers.map((user) => (
                 <tr key={user.id} className="hover:bg-gray-50 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div>
@@ -917,16 +1316,32 @@ const PanelControlPage: React.FC = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <div className="flex items-center gap-2">
-                      <button className="text-blue-600 hover:text-blue-800" title="Ver perfil">
+                      <button 
+                        onClick={() => handleViewUser(user)}
+                        className="text-blue-600 hover:text-blue-800 transition-colors p-1 rounded hover:bg-blue-50" 
+                        title="Ver perfil"
+                      >
                         <Eye className="w-4 h-4" />
                       </button>
-                      <button className="text-green-600 hover:text-green-800" title="Editar">
+                      <button 
+                        onClick={() => handleEditUser(user)}
+                        className="text-green-600 hover:text-green-800 transition-colors p-1 rounded hover:bg-green-50" 
+                        title="Editar"
+                      >
                         <Edit className="w-4 h-4" />
                       </button>
-                      <button className="text-yellow-600 hover:text-yellow-800" title="Suspender">
+                      <button 
+                        onClick={() => handleSuspendUser(user)}
+                        className="text-yellow-600 hover:text-yellow-800 transition-colors p-1 rounded hover:bg-yellow-50" 
+                        title="Suspender"
+                      >
                         <Ban className="w-4 h-4" />
                       </button>
-                      <button className="text-red-600 hover:text-red-800" title="Eliminar">
+                      <button 
+                        onClick={() => handleDeleteUser(user)}
+                        className="text-red-600 hover:text-red-800 transition-colors p-1 rounded hover:bg-red-50" 
+                        title="Eliminar"
+                      >
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
@@ -938,13 +1353,53 @@ const PanelControlPage: React.FC = () => {
         </div>
 
         <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
-          <span className="text-sm text-gray-600">Mostrando 5 de 12,487 usuarios</span>
+          <span className="text-sm text-gray-600">
+            Mostrando {startIndex + 1}-{Math.min(endIndex, filteredUsers.length)} de {filteredUsers.length} usuarios
+          </span>
           <div className="flex gap-2">
-            <button className="px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-sm">Anterior</button>
-            <button className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">1</button>
-            <button className="px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-sm">2</button>
-            <button className="px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-sm">3</button>
-            <button className="px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-sm">Siguiente</button>
+            <button 
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Anterior
+            </button>
+            
+            {/* Páginas */}
+            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+              let pageNum;
+              if (totalPages <= 5) {
+                pageNum = i + 1;
+              } else if (currentPage <= 3) {
+                pageNum = i + 1;
+              } else if (currentPage >= totalPages - 2) {
+                pageNum = totalPages - 4 + i;
+              } else {
+                pageNum = currentPage - 2 + i;
+              }
+              
+              return (
+                <button
+                  key={pageNum}
+                  onClick={() => handlePageChange(pageNum)}
+                  className={`px-3 py-1 rounded text-sm ${
+                    currentPage === pageNum
+                      ? 'bg-blue-600 text-white'
+                      : 'border border-gray-300 hover:bg-gray-50'
+                  }`}
+                >
+                  {pageNum}
+                </button>
+              );
+            })}
+            
+            <button 
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Siguiente
+            </button>
           </div>
         </div>
       </div>
@@ -1343,14 +1798,17 @@ const PanelControlPage: React.FC = () => {
               <HardDriveDownload className="w-6 h-6 text-gray-700" />
               <h3 className="text-xl font-bold text-gray-900">Backups</h3>
             </div>
-            <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+            <button 
+              onClick={() => setShowCreateBackup(true)}
+              className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            >
               <Cloud className="w-4 h-4" />
               <span className="hidden sm:inline">Crear Backup</span>
             </button>
           </div>
 
           <div className="space-y-3 max-h-80 overflow-y-auto">
-            {backups.map((backup) => (
+            {backupList.map((backup) => (
               <div key={backup.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
                 <div className="flex items-center gap-3">
                   <div className={`p-2 rounded-lg ${backup.status === 'success' ? 'bg-green-100' : 'bg-red-100'}`}>
@@ -1374,13 +1832,28 @@ const PanelControlPage: React.FC = () => {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <button className="p-2 text-blue-600 hover:bg-blue-50 rounded transition-colors" title="Descargar">
+                  <button 
+                    onClick={() => handleDownloadBackup(backup)}
+                    disabled={backupLoading || backup.status === 'failed'}
+                    className="p-2 text-blue-600 hover:bg-blue-50 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed" 
+                    title="Descargar"
+                  >
                     <Download className="w-4 h-4" />
                   </button>
-                  <button className="p-2 text-green-600 hover:bg-green-50 rounded transition-colors" title="Restaurar">
+                  <button 
+                    onClick={() => handleRestoreBackup(backup)}
+                    disabled={backupLoading || backup.status === 'failed'}
+                    className="p-2 text-green-600 hover:bg-green-50 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed" 
+                    title="Restaurar"
+                  >
                     <RefreshCw className="w-4 h-4" />
                   </button>
-                  <button className="p-2 text-red-600 hover:bg-red-50 rounded transition-colors" title="Eliminar">
+                  <button 
+                    onClick={() => handleDeleteBackup(backup)}
+                    disabled={backupLoading}
+                    className="p-2 text-red-600 hover:bg-red-50 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed" 
+                    title="Eliminar"
+                  >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
@@ -1523,6 +1996,1271 @@ const PanelControlPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* MODALES */}
+      <AnimatePresence>
+        {/* Modal Ver Perfil */}
+        {showUserProfile && selectedUser && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={closeModals}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6 border-b border-gray-200">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-2xl font-bold text-gray-900">Perfil de Usuario</h3>
+                  <button
+                    onClick={closeModals}
+                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                  >
+                    <X className="w-6 h-6 text-gray-500" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="p-6">
+                <div className="flex items-start gap-6 mb-6">
+                  <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                    {selectedUser.name.split(' ').map(n => n[0]).join('')}
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold text-gray-900 mb-2">{selectedUser.name}</h4>
+                    <p className="text-gray-600 mb-4">{selectedUser.email}</p>
+                    <div className="flex items-center gap-4">
+                      <span className={`px-3 py-1 rounded-full text-sm font-semibold ${getPlanBadgeColor(selectedUser.plan)}`}>
+                        {selectedUser.plan}
+                      </span>
+                      <div className="flex items-center gap-2">
+                        <div className={`w-2 h-2 rounded-full ${selectedUser.status === 'online' ? 'bg-green-500' : 'bg-gray-400'}`}></div>
+                        <span className="text-sm text-gray-600">{selectedUser.status === 'online' ? 'Online' : 'Offline'}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
+                      <CalendarIcon className="w-5 h-5 text-gray-500" />
+                      <div>
+                        <p className="text-sm font-semibold text-gray-900">Fecha de Registro</p>
+                        <p className="text-sm text-gray-600">{selectedUser.joinDate}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
+                      <MapPin className="w-5 h-5 text-gray-500" />
+                      <div>
+                        <p className="text-sm font-semibold text-gray-900">País</p>
+                        <p className="text-sm text-gray-600">{selectedUser.country}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
+                      <CreditCard className="w-5 h-5 text-gray-500" />
+                      <div>
+                        <p className="text-sm font-semibold text-gray-900">Plan Actual</p>
+                        <p className="text-sm text-gray-600">{selectedUser.plan}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
+                      <Activity className="w-5 h-5 text-gray-500" />
+                      <div>
+                        <p className="text-sm font-semibold text-gray-900">Estado</p>
+                        <p className="text-sm text-gray-600">{selectedUser.status === 'online' ? 'Activo' : 'Inactivo'}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6 border-t border-gray-200 flex justify-end gap-3">
+                <button
+                  onClick={() => {
+                    closeModals();
+                    handleEditUser(selectedUser);
+                  }}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors"
+                >
+                  Editar Usuario
+                </button>
+                <button
+                  onClick={closeModals}
+                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors"
+                >
+                  Cerrar
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Modal Editar Usuario */}
+        {showEditUser && editingUser && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={closeModals}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6 border-b border-gray-200">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-2xl font-bold text-gray-900">Editar Usuario</h3>
+                  <button
+                    onClick={closeModals}
+                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                  >
+                    <X className="w-6 h-6 text-gray-500" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="p-6 space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Nombre</label>
+                    <input
+                      type="text"
+                      value={editingUser.name}
+                      onChange={(e) => setEditingUser({ ...editingUser, name: e.target.value })}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Email</label>
+                    <input
+                      type="email"
+                      value={editingUser.email}
+                      onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Plan</label>
+                    <select
+                      value={editingUser.plan}
+                      onChange={(e) => setEditingUser({ ...editingUser, plan: e.target.value as 'Free' | 'Pro' | 'Enterprise' })}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                    >
+                      <option value="Free">Free</option>
+                      <option value="Pro">Pro</option>
+                      <option value="Enterprise">Enterprise</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Estado</label>
+                    <select
+                      value={editingUser.status}
+                      onChange={(e) => setEditingUser({ ...editingUser, status: e.target.value as 'online' | 'offline' })}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                    >
+                      <option value="online">Online</option>
+                      <option value="offline">Offline</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">País</label>
+                    <input
+                      type="text"
+                      value={editingUser.country}
+                      onChange={(e) => setEditingUser({ ...editingUser, country: e.target.value })}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Fecha de Registro</label>
+                    <input
+                      type="date"
+                      value={editingUser.joinDate}
+                      onChange={(e) => setEditingUser({ ...editingUser, joinDate: e.target.value })}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6 border-t border-gray-200 flex justify-end gap-3">
+                <button
+                  onClick={closeModals}
+                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors"
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={saveUserChanges}
+                  disabled={loading}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                >
+                  {loading ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Guardando...
+                    </>
+                  ) : (
+                    <>
+                      <Save className="w-4 h-4" />
+                      Guardar Cambios
+                    </>
+                  )}
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Modal Suspender Usuario */}
+        {showSuspendModal && selectedUser && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={closeModals}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-3xl shadow-2xl max-w-md w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-3 bg-yellow-100 rounded-full">
+                    <Ban className="w-6 h-6 text-yellow-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">Suspender Usuario</h3>
+                    <p className="text-sm text-gray-600">Esta acción deshabilitará el acceso del usuario</p>
+                  </div>
+                </div>
+
+                <div className="bg-gray-50 rounded-xl p-4 mb-6">
+                  <p className="text-sm text-gray-700">
+                    ¿Estás seguro de que quieres suspender a <strong>{selectedUser.name}</strong>?
+                  </p>
+                  <p className="text-xs text-gray-500 mt-2">
+                    El usuario no podrá acceder a su cuenta hasta que sea reactivado.
+                  </p>
+                </div>
+
+                <div className="flex justify-end gap-3">
+                  <button
+                    onClick={closeModals}
+                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={confirmSuspendUser}
+                    disabled={loading}
+                    className="px-4 py-2 bg-yellow-600 text-white rounded-xl hover:bg-yellow-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  >
+                    {loading ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        Suspendiendo...
+                      </>
+                    ) : (
+                      <>
+                        <Ban className="w-4 h-4" />
+                        Suspender
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Modal Eliminar Usuario */}
+        {showDeleteModal && selectedUser && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={closeModals}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-3xl shadow-2xl max-w-md w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-3 bg-red-100 rounded-full">
+                    <Trash2 className="w-6 h-6 text-red-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">Eliminar Usuario</h3>
+                    <p className="text-sm text-gray-600">Esta acción no se puede deshacer</p>
+                  </div>
+                </div>
+
+                <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
+                  <p className="text-sm text-red-700">
+                    ¿Estás seguro de que quieres eliminar permanentemente a <strong>{selectedUser.name}</strong>?
+                  </p>
+                  <p className="text-xs text-red-600 mt-2">
+                    Todos los datos del usuario serán eliminados permanentemente.
+                  </p>
+                </div>
+
+                <div className="flex justify-end gap-3">
+                  <button
+                    onClick={closeModals}
+                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={confirmDeleteUser}
+                    disabled={loading}
+                    className="px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  >
+                    {loading ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        Eliminando...
+                      </>
+                    ) : (
+                      <>
+                        <Trash2 className="w-4 h-4" />
+                        Eliminar
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Modal de Filtros */}
+        {showFilters && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setShowFilters(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6 border-b border-gray-200">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-2xl font-bold text-gray-900">Filtros Avanzados</h3>
+                  <button
+                    onClick={() => setShowFilters(false)}
+                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                  >
+                    <X className="w-6 h-6 text-gray-500" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="p-6 space-y-6">
+                {/* Filtro por Plan */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-3">Plan</label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {['ALL', 'Free', 'Pro', 'Enterprise'].map((plan) => (
+                      <button
+                        key={plan}
+                        onClick={() => handleFilterChange('plan', plan)}
+                        className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+                          filters.plan === plan
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        }`}
+                      >
+                        {plan}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Filtro por Estado */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-3">Estado</label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {['ALL', 'online', 'offline'].map((status) => (
+                      <button
+                        key={status}
+                        onClick={() => handleFilterChange('status', status)}
+                        className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+                          filters.status === status
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        }`}
+                      >
+                        {status === 'ALL' ? 'Todos' : status === 'online' ? 'Online' : 'Offline'}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Filtro por País */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-3">País</label>
+                  <select
+                    value={filters.country}
+                    onChange={(e) => handleFilterChange('country', e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                  >
+                    <option value="ALL">Todos los países</option>
+                    {uniqueCountries.map((country) => (
+                      <option key={country} value={country}>
+                        {country}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Filtro por Rango de Fechas */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-3">Rango de Fechas</label>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs text-gray-600 mb-1">Desde</label>
+                      <input
+                        type="date"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-600 mb-1">Hasta</label>
+                      <input
+                        type="date"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Resumen de filtros activos */}
+                <div className="bg-gray-50 rounded-xl p-4">
+                  <h4 className="text-sm font-semibold text-gray-900 mb-2">Filtros Activos:</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {filters.plan !== 'ALL' && (
+                      <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
+                        Plan: {filters.plan}
+                      </span>
+                    )}
+                    {filters.status !== 'ALL' && (
+                      <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">
+                        Estado: {filters.status === 'online' ? 'Online' : 'Offline'}
+                      </span>
+                    )}
+                    {filters.country !== 'ALL' && (
+                      <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-medium">
+                        País: {filters.country}
+                      </span>
+                    )}
+                    {searchTerm && (
+                      <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-xs font-medium">
+                        Búsqueda: "{searchTerm}"
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6 border-t border-gray-200 flex justify-between">
+                <button
+                  onClick={clearFilters}
+                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors"
+                >
+                  Limpiar Filtros
+                </button>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setShowFilters(false)}
+                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors"
+                  >
+                    Cerrar
+                  </button>
+                  <button
+                    onClick={() => setShowFilters(false)}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors"
+                  >
+                    Aplicar Filtros
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Modal Crear Backup */}
+        {showCreateBackup && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={closeBackupModals}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-3xl shadow-2xl max-w-md w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-3 bg-blue-100 rounded-full">
+                    <Cloud className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">Crear Backup Manual</h3>
+                    <p className="text-sm text-gray-600">Se creará un respaldo completo del sistema</p>
+                  </div>
+                </div>
+
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+                  <p className="text-sm text-blue-700">
+                    Esta operación puede tomar varios minutos dependiendo del tamaño de los datos.
+                    Se recomienda no realizar otras operaciones durante el proceso.
+                  </p>
+                </div>
+
+                <div className="flex justify-end gap-3">
+                  <button
+                    onClick={closeBackupModals}
+                    disabled={backupLoading}
+                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors disabled:opacity-50"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={handleCreateBackup}
+                    disabled={backupLoading}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  >
+                    {backupLoading ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        Creando...
+                      </>
+                    ) : (
+                      <>
+                        <Cloud className="w-4 h-4" />
+                        Crear Backup
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Modal Restaurar Backup */}
+        {showRestoreModal && selectedBackup && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={closeBackupModals}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-3xl shadow-2xl max-w-md w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-3 bg-green-100 rounded-full">
+                    <RefreshCw className="w-6 h-6 text-green-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">Restaurar Backup</h3>
+                    <p className="text-sm text-gray-600">Esta acción restaurará el sistema a un estado anterior</p>
+                  </div>
+                </div>
+
+                <div className="bg-gray-50 rounded-xl p-4 mb-6">
+                  <p className="text-sm text-gray-700 mb-2">
+                    <strong>Backup seleccionado:</strong> {selectedBackup.date}
+                  </p>
+                  <p className="text-sm text-gray-700 mb-2">
+                    <strong>Tamaño:</strong> {selectedBackup.size}
+                  </p>
+                  <p className="text-sm text-gray-700">
+                    <strong>Tipo:</strong> {selectedBackup.type === 'automatic' ? 'Automático' : 'Manual'}
+                  </p>
+                </div>
+
+                <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
+                  <p className="text-sm text-red-700">
+                    <strong>⚠️ Advertencia:</strong> Esta operación reemplazará todos los datos actuales.
+                    Asegúrate de crear un backup actual antes de proceder.
+                  </p>
+                </div>
+
+                <div className="flex justify-end gap-3">
+                  <button
+                    onClick={closeBackupModals}
+                    disabled={backupLoading}
+                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors disabled:opacity-50"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={confirmRestoreBackup}
+                    disabled={backupLoading}
+                    className="px-4 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  >
+                    {backupLoading ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        Restaurando...
+                      </>
+                    ) : (
+                      <>
+                        <RefreshCw className="w-4 h-4" />
+                        Restaurar
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Modal Eliminar Backup */}
+        {showDeleteBackupModal && selectedBackup && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={closeBackupModals}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-3xl shadow-2xl max-w-md w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-3 bg-red-100 rounded-full">
+                    <Trash2 className="w-6 h-6 text-red-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">Eliminar Backup</h3>
+                    <p className="text-sm text-gray-600">Esta acción no se puede deshacer</p>
+                  </div>
+                </div>
+
+                <div className="bg-gray-50 rounded-xl p-4 mb-6">
+                  <p className="text-sm text-gray-700 mb-2">
+                    <strong>Backup a eliminar:</strong> {selectedBackup.date}
+                  </p>
+                  <p className="text-sm text-gray-700 mb-2">
+                    <strong>Tamaño:</strong> {selectedBackup.size}
+                  </p>
+                  <p className="text-sm text-gray-700">
+                    <strong>Tipo:</strong> {selectedBackup.type === 'automatic' ? 'Automático' : 'Manual'}
+                  </p>
+                </div>
+
+                <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
+                  <p className="text-sm text-red-700">
+                    ¿Estás seguro de que quieres eliminar este backup permanentemente?
+                    Esta acción liberará {selectedBackup.size} de espacio de almacenamiento.
+                  </p>
+                </div>
+
+                <div className="flex justify-end gap-3">
+                  <button
+                    onClick={closeBackupModals}
+                    disabled={backupLoading}
+                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors disabled:opacity-50"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={confirmDeleteBackup}
+                    disabled={backupLoading}
+                    className="px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  >
+                    {backupLoading ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        Eliminando...
+                      </>
+                    ) : (
+                      <>
+                        <Trash2 className="w-4 h-4" />
+                        Eliminar
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Modal de Exportación */}
+        {showExportModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setShowExportModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-3xl shadow-2xl max-w-md w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-3 bg-blue-100 rounded-full">
+                    <Download className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">Exportar Datos</h3>
+                    <p className="text-sm text-gray-600">Selecciona el formato de exportación</p>
+                  </div>
+                </div>
+
+                <div className="bg-gray-50 rounded-xl p-4 mb-6">
+                  <p className="text-sm text-gray-700 mb-2">
+                    <strong>Período seleccionado:</strong> {
+                      dateRange === 'today' ? 'Hoy' : 
+                      dateRange === 'week' ? 'Esta semana' :
+                      dateRange === 'month' ? 'Este mes' :
+                      dateRange === 'year' ? 'Este año' : 
+                      dateRange === 'custom' ? 'Personalizado' : 'Este mes'
+                    }
+                  </p>
+                  <p className="text-sm text-gray-700">
+                    <strong>Datos incluidos:</strong> Métricas, gráficos, usuarios y logs del sistema
+                  </p>
+                </div>
+
+                <div className="space-y-3 mb-6">
+                  <button
+                    onClick={() => exportData('csv')}
+                    disabled={exportLoading}
+                    className="w-full flex items-center gap-3 p-4 bg-green-50 border border-green-200 rounded-xl hover:bg-green-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <div className="p-2 bg-green-100 rounded-lg">
+                      <Download className="w-5 h-5 text-green-600" />
+                    </div>
+                    <div className="text-left">
+                      <p className="font-semibold text-gray-900">CSV</p>
+                      <p className="text-sm text-gray-600">Datos tabulares para Excel/Google Sheets</p>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => exportData('excel')}
+                    disabled={exportLoading}
+                    className="w-full flex items-center gap-3 p-4 bg-blue-50 border border-blue-200 rounded-xl hover:bg-blue-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <div className="p-2 bg-blue-100 rounded-lg">
+                      <Download className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <div className="text-left">
+                      <p className="font-semibold text-gray-900">Excel</p>
+                      <p className="text-sm text-gray-600">Archivo .xlsx con gráficos incluidos</p>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => exportData('pdf')}
+                    disabled={exportLoading}
+                    className="w-full flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-xl hover:bg-red-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <div className="p-2 bg-red-100 rounded-lg">
+                      <Download className="w-5 h-5 text-red-600" />
+                    </div>
+                    <div className="text-left">
+                      <p className="font-semibold text-gray-900">PDF</p>
+                      <p className="text-sm text-gray-600">Reporte completo con gráficos</p>
+                    </div>
+                  </button>
+                </div>
+
+                <div className="flex justify-end gap-3">
+                  <button
+                    onClick={() => setShowExportModal(false)}
+                    disabled={exportLoading}
+                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors disabled:opacity-50"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+
+                {exportLoading && (
+                  <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl">
+                    <div className="flex items-center gap-3">
+                      <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                      <p className="text-sm text-blue-700 font-medium">Generando archivo de exportación...</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Modal de Exportación de Ingresos */}
+        {showRevenueExportModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setShowRevenueExportModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-3xl shadow-2xl max-w-lg w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-3 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full">
+                    <LineChart className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">Exportar Evolución de Ingresos</h3>
+                    <p className="text-sm text-gray-600">Datos financieros detallados</p>
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4 mb-6">
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <p className="text-gray-600">Período:</p>
+                      <p className="font-semibold text-gray-900">
+                        {dateRange === 'today' ? 'Hoy' : 
+                         dateRange === 'week' ? 'Esta semana' :
+                         dateRange === 'month' ? 'Este mes' :
+                         dateRange === 'year' ? 'Este año' : 
+                         dateRange === 'custom' ? 'Personalizado' : 'Este mes'}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-gray-600">Meses incluidos:</p>
+                      <p className="font-semibold text-gray-900">{monthlyData.length} meses</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-600">Total ingresos:</p>
+                      <p className="font-semibold text-emerald-600">
+                        ${monthlyData.reduce((sum, item) => sum + item.ingresos, 0).toLocaleString()}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-gray-600">Promedio mensual:</p>
+                      <p className="font-semibold text-blue-600">
+                        ${Math.round(monthlyData.reduce((sum, item) => sum + item.ingresos, 0) / monthlyData.length).toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-3 mb-6">
+                  <button
+                    onClick={() => exportRevenueData('csv')}
+                    disabled={revenueExportLoading}
+                    className="w-full flex items-center gap-3 p-4 bg-green-50 border border-green-200 rounded-xl hover:bg-green-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <div className="p-2 bg-green-100 rounded-lg">
+                      <Download className="w-5 h-5 text-green-600" />
+                    </div>
+                    <div className="text-left">
+                      <p className="font-semibold text-gray-900">CSV</p>
+                      <p className="text-sm text-gray-600">Datos tabulares para análisis financiero</p>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => exportRevenueData('excel')}
+                    disabled={revenueExportLoading}
+                    className="w-full flex items-center gap-3 p-4 bg-blue-50 border border-blue-200 rounded-xl hover:bg-blue-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <div className="p-2 bg-blue-100 rounded-lg">
+                      <Download className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <div className="text-left">
+                      <p className="font-semibold text-gray-900">Excel</p>
+                      <p className="text-sm text-gray-600">Hoja de cálculo con gráficos incluidos</p>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => exportRevenueData('pdf')}
+                    disabled={revenueExportLoading}
+                    className="w-full flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-xl hover:bg-red-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <div className="p-2 bg-red-100 rounded-lg">
+                      <Download className="w-5 h-5 text-red-600" />
+                    </div>
+                    <div className="text-left">
+                      <p className="font-semibold text-gray-900">PDF</p>
+                      <p className="text-sm text-gray-600">Reporte ejecutivo con gráficos</p>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => exportRevenueData('json')}
+                    disabled={revenueExportLoading}
+                    className="w-full flex items-center gap-3 p-4 bg-purple-50 border border-purple-200 rounded-xl hover:bg-purple-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <div className="p-2 bg-purple-100 rounded-lg">
+                      <Download className="w-5 h-5 text-purple-600" />
+                    </div>
+                    <div className="text-left">
+                      <p className="font-semibold text-gray-900">JSON</p>
+                      <p className="text-sm text-gray-600">Datos estructurados para desarrolladores</p>
+                    </div>
+                  </button>
+                </div>
+
+                <div className="bg-gray-50 rounded-xl p-4 mb-6">
+                  <h4 className="text-sm font-semibold text-gray-900 mb-2">Datos incluidos:</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>• Ingresos totales por mes</li>
+                    <li>• Ingresos recurrentes vs únicos</li>
+                    <li>• Nuevos clientes y clientes activos</li>
+                    <li>• Resumen ejecutivo con métricas clave</li>
+                    <li>• Crecimiento anual y tendencias</li>
+                  </ul>
+                </div>
+
+                <div className="flex justify-end gap-3">
+                  <button
+                    onClick={() => setShowRevenueExportModal(false)}
+                    disabled={revenueExportLoading}
+                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors disabled:opacity-50"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+
+                {revenueExportLoading && (
+                  <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl">
+                    <div className="flex items-center gap-3">
+                      <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                      <p className="text-sm text-blue-700 font-medium">Generando archivo de ingresos...</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Modal Ver Detalles de Alerta */}
+        {showAlertDetails && selectedAlert && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={closeAlertModals}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6 border-b border-gray-200">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-2xl font-bold text-gray-900">Detalles de la Alerta</h3>
+                  <button
+                    onClick={closeAlertModals}
+                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                  >
+                    <X className="w-6 h-6 text-gray-500" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="p-6">
+                <div className="flex items-start gap-4 mb-6">
+                  <div className={`p-3 rounded-full ${selectedAlert.type === 'error' ? 'bg-red-100' : selectedAlert.type === 'warning' ? 'bg-yellow-100' : 'bg-blue-100'}`}>
+                    {selectedAlert.type === 'error' ? <XCircle className="w-6 h-6 text-red-600" /> :
+                     selectedAlert.type === 'warning' ? <AlertCircle className="w-6 h-6 text-yellow-600" /> :
+                     <Info className="w-6 h-6 text-blue-600" />}
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-lg font-bold text-gray-900 mb-2">{selectedAlert.message}</h4>
+                    <p className="text-sm text-gray-600 mb-4">{selectedAlert.time}</p>
+                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                      selectedAlert.type === 'error' ? 'bg-red-100 text-red-800' :
+                      selectedAlert.type === 'warning' ? 'bg-yellow-100 text-yellow-800' :
+                      'bg-blue-100 text-blue-800'
+                    }`}>
+                      {selectedAlert.type === 'error' ? 'Error Crítico' :
+                       selectedAlert.type === 'warning' ? 'Advertencia' : 'Información'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div className="p-4 bg-gray-50 rounded-xl">
+                      <h5 className="text-sm font-semibold text-gray-900 mb-2">Información del Sistema</h5>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">ID de Alerta:</span>
+                          <span className="font-medium">{selectedAlert.id}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Tipo:</span>
+                          <span className="font-medium">{selectedAlert.type}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Timestamp:</span>
+                          <span className="font-medium">{new Date().toLocaleString()}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="p-4 bg-gray-50 rounded-xl">
+                      <h5 className="text-sm font-semibold text-gray-900 mb-2">Acciones Disponibles</h5>
+                      <div className="space-y-2">
+                        <button 
+                          onClick={() => {
+                            closeAlertModals();
+                            if (selectedAlert.action === 'Actualizar') {
+                              handleUpdateSystem();
+                            } else if (selectedAlert.action === 'Bloquear IP') {
+                              handleBlockIP(selectedAlert);
+                            }
+                          }}
+                          className={`w-full px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                            selectedAlert.type === 'error' ? 'bg-red-50 text-red-600 hover:bg-red-100' :
+                            selectedAlert.type === 'warning' ? 'bg-yellow-50 text-yellow-600 hover:bg-yellow-100' :
+                            'bg-blue-50 text-blue-600 hover:bg-blue-100'
+                          }`}
+                        >
+                          {selectedAlert.action}
+                        </button>
+                        <button 
+                          onClick={() => dismissAlert(selectedAlert.id)}
+                          className="w-full px-3 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
+                        >
+                          Descartar Alerta
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Modal Actualizar Sistema */}
+        {showUpdateModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={closeAlertModals}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-3xl shadow-2xl max-w-md w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-3 bg-blue-100 rounded-full">
+                    <RefreshCw className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">Actualizar Sistema</h3>
+                    <p className="text-sm text-gray-600">Instalar actualización de seguridad</p>
+                  </div>
+                </div>
+
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+                  <p className="text-sm text-blue-700 mb-2">
+                    <strong>Actualización disponible:</strong> Parche de seguridad v2.1.4
+                  </p>
+                  <p className="text-sm text-blue-700 mb-2">
+                    <strong>Tamaño:</strong> 45.2 MB
+                  </p>
+                  <p className="text-sm text-blue-700">
+                    <strong>Descripción:</strong> Corrección de vulnerabilidades críticas y mejoras de rendimiento.
+                  </p>
+                </div>
+
+                <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-6">
+                  <p className="text-sm text-yellow-700">
+                    <strong>⚠️ Advertencia:</strong> El sistema se reiniciará automáticamente después de la actualización.
+                    Se recomienda programar la actualización durante horarios de menor actividad.
+                  </p>
+                </div>
+
+                <div className="flex justify-end gap-3">
+                  <button
+                    onClick={closeAlertModals}
+                    disabled={alertLoading}
+                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors disabled:opacity-50"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={confirmUpdateSystem}
+                    disabled={alertLoading}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  >
+                    {alertLoading ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        Actualizando...
+                      </>
+                    ) : (
+                      <>
+                        <RefreshCw className="w-4 h-4" />
+                        Actualizar Ahora
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Modal Bloquear IP */}
+        {showBlockIPModal && selectedAlert && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={closeAlertModals}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-3xl shadow-2xl max-w-md w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-3 bg-red-100 rounded-full">
+                    <Shield className="w-6 h-6 text-red-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">Bloquear IP</h3>
+                    <p className="text-sm text-gray-600">Agregar IP a la lista de bloqueadas</p>
+                  </div>
+                </div>
+
+                <div className="bg-gray-50 rounded-xl p-4 mb-6">
+                  <p className="text-sm text-gray-700 mb-2">
+                    <strong>Alerta:</strong> {selectedAlert.message}
+                  </p>
+                  <p className="text-sm text-gray-700 mb-2">
+                    <strong>IP detectada:</strong> 45.123.67.89
+                  </p>
+                  <p className="text-sm text-gray-700">
+                    <strong>Actividad:</strong> 3 intentos de login fallidos en 5 minutos
+                  </p>
+                </div>
+
+                <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
+                  <p className="text-sm text-red-700">
+                    <strong>⚠️ Advertencia:</strong> Esta acción bloqueará permanentemente la IP 45.123.67.89.
+                    La IP no podrá acceder al sistema hasta que sea removida manualmente de la lista de bloqueadas.
+                  </p>
+                </div>
+
+                <div className="flex justify-end gap-3">
+                  <button
+                    onClick={closeAlertModals}
+                    disabled={alertLoading}
+                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors disabled:opacity-50"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={confirmBlockIP}
+                    disabled={alertLoading}
+                    className="px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  >
+                    {alertLoading ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        Bloqueando...
+                      </>
+                    ) : (
+                      <>
+                        <Shield className="w-4 h-4" />
+                        Bloquear IP
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -328,280 +328,188 @@ const CohortesClientesPage: React.FC = () => {
   }, [cohortesData, sortColumn, sortDirection]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 p-6 pb-12">
-      {/* Hero Section */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
+      {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-3xl shadow-2xl mb-8 p-8 md:p-12"
+        className="mb-8"
       >
-        {/* Efectos de fondo animados */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        </div>
-
-        {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: '50px 50px'
-          }}></div>
-        </div>
-
-        <div className="relative z-10">
-          {/* Título con icono animado */}
-          <div className="flex items-center gap-3 mb-4">
-            <div className="relative">
-              <Users className="w-10 h-10 text-yellow-300 animate-pulse" />
-              <div className="absolute inset-0 w-10 h-10 bg-yellow-300 rounded-full blur-lg opacity-50"></div>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-4">
+            <motion.div
+              animate={{ rotate: [0, 5, -5, 0] }}
+              transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+              className="p-3 bg-gradient-to-br from-violet-500 to-purple-600 rounded-xl shadow-lg"
+            >
+              <Users className="w-8 h-8 text-white" />
+            </motion.div>
+            <div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                Análisis de Cohortes de Clientes
+              </h1>
+              <p className="text-gray-600 mt-1">
+                Analiza la retención y comportamiento por grupos de registro
+              </p>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
-              Análisis de <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-yellow-400">Cohortes</span>
-            </h1>
           </div>
-
-          {/* Descripción */}
-          <p className="text-xl md:text-2xl text-blue-100 max-w-3xl leading-relaxed">
-            Comprende el comportamiento de tus clientes a través del tiempo
-          </p>
-
-          {/* Indicadores pills */}
-          <div className="mt-8 flex flex-wrap gap-4">
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
-              <Download className="w-5 h-5 text-green-300" />
-              <span className="text-sm font-semibold text-white">Exportar Análisis</span>
-            </div>
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
-              <Settings className="w-5 h-5 text-blue-300" />
-              <span className="text-sm font-semibold text-white">Configurar</span>
-            </div>
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
-              <BookOpen className="w-5 h-5 text-purple-300" />
-              <span className="text-sm font-semibold text-white">Tutorial</span>
-            </div>
+          <div className="flex gap-3">
+            <button className="px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-lg shadow-md transition-all flex items-center gap-2 border border-gray-200">
+              <Download className="w-4 h-4" />
+              Exportar Análisis
+            </button>
+            <button className="px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-lg shadow-md transition-all flex items-center gap-2 border border-gray-200">
+              <Settings className="w-4 h-4" />
+              Configurar
+            </button>
+            <button className="px-4 py-2 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white rounded-lg shadow-md transition-all flex items-center gap-2">
+              <BookOpen className="w-4 h-4" />
+              Tutorial
+            </button>
           </div>
         </div>
       </motion.div>
 
-      {/* Configurador de Análisis - Glassmorphism */}
+      {/* Filters */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8"
+        className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6"
       >
-        <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 relative overflow-hidden">
-          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-blue-200 to-indigo-200 rounded-full blur-3xl opacity-20"></div>
-          <div className="relative z-10">
-            <label className="block text-sm font-bold text-gray-700 mb-3 flex items-center gap-2 uppercase tracking-wider">
-              <div className="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl text-white">
-                <Calendar className="w-4 h-4" />
-              </div>
-              Período
-            </label>
-            <select className="w-full px-4 py-3 rounded-2xl border-2 border-gray-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 transition-all duration-300 outline-none bg-white/80 backdrop-blur-sm">
-              <option>Últimos 6 meses</option>
-              <option>Último año</option>
-              <option>Últimos 18 meses</option>
-              <option>Todo el histórico</option>
-            </select>
-          </div>
+        <div className="bg-white p-4 rounded-xl shadow-md border border-gray-200">
+          <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+            <Calendar className="w-4 h-4" />
+            Período de Análisis
+          </label>
+          <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent">
+            <option>Últimos 6 meses</option>
+            <option>Último año</option>
+            <option>Últimos 18 meses</option>
+            <option>Todo el histórico</option>
+          </select>
         </div>
 
-        <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 relative overflow-hidden">
-          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full blur-3xl opacity-20"></div>
-          <div className="relative z-10">
-            <label className="block text-sm font-bold text-gray-700 mb-3 flex items-center gap-2 uppercase tracking-wider">
-              <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl text-white">
-                <BarChart3 className="w-4 h-4" />
-              </div>
-              Agrupación
-            </label>
-            <select
-              className="w-full px-4 py-3 rounded-2xl border-2 border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-100 transition-all duration-300 outline-none bg-white/80 backdrop-blur-sm"
-              value={grouping}
-              onChange={(e) => setGrouping(e.target.value as GroupingType)}
-            >
-              <option value="weekly">Semanal</option>
-              <option value="monthly">Mensual</option>
-              <option value="quarterly">Trimestral</option>
-            </select>
-          </div>
+        <div className="bg-white p-4 rounded-xl shadow-md border border-gray-200">
+          <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+            <BarChart3 className="w-4 h-4" />
+            Agrupación
+          </label>
+          <select
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+            value={grouping}
+            onChange={(e) => setGrouping(e.target.value as GroupingType)}
+          >
+            <option value="weekly">Semanal</option>
+            <option value="monthly">Mensual</option>
+            <option value="quarterly">Trimestral</option>
+          </select>
         </div>
 
-        <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 relative overflow-hidden">
-          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-indigo-200 to-blue-200 rounded-full blur-3xl opacity-20"></div>
-          <div className="relative z-10">
-            <label className="block text-sm font-bold text-gray-700 mb-3 flex items-center gap-2 uppercase tracking-wider">
-              <div className="p-2 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl text-white">
-                <Activity className="w-4 h-4" />
-              </div>
-              Métrica
-            </label>
-            <select
-              className="w-full px-4 py-3 rounded-2xl border-2 border-gray-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 transition-all duration-300 outline-none bg-white/80 backdrop-blur-sm"
-              value={selectedMetric}
-              onChange={(e) => setSelectedMetric(e.target.value as MetricType)}
-            >
-              <option value="retention">Retención (%)</option>
-              <option value="revenue">Ingresos acumulados</option>
-              <option value="sessions">Sesiones completadas</option>
-              <option value="adherence">Adherencia promedio</option>
-            </select>
-          </div>
+        <div className="bg-white p-4 rounded-xl shadow-md border border-gray-200">
+          <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+            <Activity className="w-4 h-4" />
+            Métrica Principal
+          </label>
+          <select
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+            value={selectedMetric}
+            onChange={(e) => setSelectedMetric(e.target.value as MetricType)}
+          >
+            <option value="retention">Retención (%)</option>
+            <option value="revenue">Ingresos acumulados</option>
+            <option value="sessions">Sesiones completadas</option>
+            <option value="adherence">Adherencia promedio</option>
+          </select>
         </div>
 
-        <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50 relative overflow-hidden">
-          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-pink-200 to-purple-200 rounded-full blur-3xl opacity-20"></div>
-          <div className="relative z-10">
-            <label className="block text-sm font-bold text-gray-700 mb-3 flex items-center gap-2 uppercase tracking-wider">
-              <div className="p-2 bg-gradient-to-br from-pink-500 to-purple-600 rounded-xl text-white">
-                <Filter className="w-4 h-4" />
-              </div>
-              Segmento
-            </label>
-            <select
-              className="w-full px-4 py-3 rounded-2xl border-2 border-gray-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-100 transition-all duration-300 outline-none bg-white/80 backdrop-blur-sm"
-              value={selectedSegment}
-              onChange={(e) => setSelectedSegment(e.target.value as SegmentType)}
-            >
-              <option value="all">Todos los clientes</option>
-              <option value="basic">Membresía Básica</option>
-              <option value="premium">Membresía Premium</option>
-              <option value="elite">Membresía Elite</option>
-            </select>
-          </div>
+        <div className="bg-white p-4 rounded-xl shadow-md border border-gray-200">
+          <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+            <Filter className="w-4 h-4" />
+            Segmentación
+          </label>
+          <select
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+            value={selectedSegment}
+            onChange={(e) => setSelectedSegment(e.target.value as SegmentType)}
+          >
+            <option value="all">Todos los clientes</option>
+            <option value="basic">Membresía Básica</option>
+            <option value="premium">Membresía Premium</option>
+            <option value="elite">Membresía Elite</option>
+          </select>
         </div>
       </motion.div>
 
-      {/* Estadísticas Rápidas - Glassmorphism Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {/* Total Cohortes */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.5 }}
-          whileHover={{ scale: 1.03, y: -8 }}
-          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
-        >
-          {/* Shimmer effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
-
-          {/* Decoración de fondo */}
-          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-blue-500 to-indigo-600 opacity-5 rounded-full blur-2xl"></div>
-
-          <div className="relative z-10">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300">
-              <Users className="w-8 h-8" />
-            </div>
-            <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">
-              Total Cohortes
-            </p>
-            <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 mb-3">
-              {cohortesData.length}
-            </p>
-            <div className="flex items-center gap-2">
-              <div className="p-1 bg-green-50 rounded-lg">
-                <TrendingUp className="w-4 h-4 text-green-600" />
-              </div>
-              <span className="text-sm font-bold text-green-600">+3 este mes</span>
-            </div>
+      {/* Stats Cards */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+        className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6"
+      >
+        <div className="bg-white p-4 rounded-xl shadow-md border border-gray-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-gray-600">Retención Mes 1</span>
+            <TrendingUp className="w-4 h-4 text-green-500" />
           </div>
-        </motion.div>
+          <div className="text-2xl font-bold text-gray-800">{avgRetentionMonth1}%</div>
+          <div className="text-xs text-green-600 mt-1">+3% vs anterior</div>
+        </div>
 
-        {/* Cohorte Más Grande */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-          whileHover={{ scale: 1.03, y: -8 }}
-          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
-          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-purple-500 to-pink-600 opacity-5 rounded-full blur-2xl"></div>
-
-          <div className="relative z-10">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300">
-              <Target className="w-8 h-8" />
-            </div>
-            <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">
-              Cohorte Más Grande
-            </p>
-            <p className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 mb-1">
-              {bestCohort.name}
-            </p>
-            <p className="text-sm text-gray-600 mb-3">{bestCohort.initialSize} clientes</p>
-            <div className="w-full h-1 bg-gray-100 rounded-full overflow-hidden">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: '100%' }}
-                transition={{ delay: 0.3, duration: 1 }}
-                className="h-full bg-gradient-to-r from-purple-500 to-pink-600 rounded-full"
-              ></motion.div>
-            </div>
+        <div className="bg-white p-4 rounded-xl shadow-md border border-gray-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-gray-600">Retención Mes 3</span>
+            <TrendingUp className="w-4 h-4 text-green-500" />
           </div>
-        </motion.div>
+          <div className="text-2xl font-bold text-gray-800">{avgRetentionMonth3}%</div>
+          <div className="text-xs text-green-600 mt-1">+2% vs anterior</div>
+        </div>
 
-        {/* Retención Promedio */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-          whileHover={{ scale: 1.03, y: -8 }}
-          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
-          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-green-500 to-emerald-600 opacity-5 rounded-full blur-2xl"></div>
-
-          <div className="relative z-10">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300">
-              <Activity className="w-8 h-8" />
-            </div>
-            <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">
-              Retención Promedio
-            </p>
-            <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 mb-3">
-              {avgRetentionMonth3}%
-            </p>
-            <div className="flex items-center gap-2">
-              <div className="p-1 bg-green-50 rounded-lg">
-                <TrendingUp className="w-4 h-4 text-green-600" />
-              </div>
-              <span className="text-sm font-bold text-green-600">+2% vs anterior</span>
-            </div>
+        <div className="bg-white p-4 rounded-xl shadow-md border border-gray-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-gray-600">Retención Mes 6</span>
+            <Minus className="w-4 h-4 text-yellow-500" />
           </div>
-        </motion.div>
+          <div className="text-2xl font-bold text-gray-800">{avgRetentionMonth6}%</div>
+          <div className="text-xs text-gray-600 mt-1">Sin cambios</div>
+        </div>
 
-        {/* Análisis Activos */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          whileHover={{ scale: 1.03, y: -8 }}
-          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
-          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-indigo-500 to-blue-600 opacity-5 rounded-full blur-2xl"></div>
-
-          <div className="relative z-10">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300">
-              <BarChart3 className="w-8 h-8" />
-            </div>
-            <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">
-              Análisis Activos
-            </p>
-            <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 mb-3">
-              {cohortesData.filter(c => c.activeClients > 0).length}
-            </p>
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-500 font-medium">De {cohortesData.length} totales</span>
-            </div>
+        <div className="bg-white p-4 rounded-xl shadow-md border border-gray-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-gray-600">Mejor Cohorte</span>
+            <Target className="w-4 h-4 text-violet-500" />
           </div>
-        </motion.div>
-      </div>
+          <div className="text-sm font-bold text-gray-800">{bestCohort.name}</div>
+          <div className="text-xs text-violet-600 mt-1">
+            {Math.round(bestCohort.retentionByPeriod.reduce((a, b) => a + b, 0) / bestCohort.retentionByPeriod.length)}% promedio
+          </div>
+        </div>
+
+        <div className="bg-white p-4 rounded-xl shadow-md border border-gray-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-gray-600">Peor Cohorte</span>
+            <AlertCircle className="w-4 h-4 text-red-500" />
+          </div>
+          <div className="text-sm font-bold text-gray-800">{worstCohort.name}</div>
+          <div className="text-xs text-red-600 mt-1">
+            {Math.round(worstCohort.retentionByPeriod.reduce((a, b) => a + b, 0) / worstCohort.retentionByPeriod.length)}% promedio
+          </div>
+        </div>
+
+        <div className="bg-white p-4 rounded-xl shadow-md border border-gray-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-gray-600">Tendencia General</span>
+            <TrendingUp className="w-4 h-4 text-green-500" />
+          </div>
+          <div className="text-sm font-bold text-green-600">Mejorando</div>
+          <div className="mt-1">
+            <span className="inline-block px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">
+              +5% trimestral
+            </span>
+          </div>
+        </div>
+      </motion.div>
 
       {/* Insights Panel */}
       <AnimatePresence>
@@ -664,29 +572,17 @@ const CohortesClientesPage: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Cohort Heat Map Table - Mejorado */}
+      {/* Cohort Heat Map Table */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 md:p-8 border border-white/50 mb-8 overflow-hidden relative"
+        className="bg-white p-6 rounded-xl shadow-lg border border-gray-200 mb-6 overflow-hidden"
       >
-        {/* Decoración de fondo */}
-        <div className="absolute -right-20 -top-20 w-64 h-64 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full blur-3xl opacity-20"></div>
-
-        <div className="relative z-10">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-3">
-              <div className="p-3 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-xl">
-                <Activity className="w-6 h-6 text-white" />
-              </div>
-              Matriz de Retención - Heat Map
-            </h2>
-            <div className="flex items-center gap-2 bg-gradient-to-r from-indigo-50 to-purple-50 px-4 py-2 rounded-full border border-indigo-200">
-              <Info className="w-4 h-4 text-indigo-600" />
-              <span className="text-sm font-semibold text-indigo-700">Hover para detalles</span>
-            </div>
-          </div>
+        <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+          <Activity className="w-5 h-5 text-violet-600" />
+          Matriz de Retención - Heat Map
+        </h2>
         <div className="overflow-x-auto">
           <table className="w-full min-w-[1200px]">
             <thead>
@@ -760,221 +656,161 @@ const CohortesClientesPage: React.FC = () => {
             </tbody>
           </table>
         </div>
-          <div className="mt-6 bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 p-4 rounded-2xl border border-purple-200">
-            <div className="flex items-center justify-between flex-wrap gap-3">
-              <span className="text-sm font-bold text-gray-700 flex items-center gap-2">
-                <Lightbulb className="w-4 h-4 text-purple-600" />
-                Escala de Retención:
-              </span>
-              <div className="flex flex-wrap items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-green-600 rounded-lg shadow-md"></div>
-                  <span className="text-sm font-semibold text-gray-700">≥80% Excelente</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-green-400 rounded-lg shadow-md"></div>
-                  <span className="text-sm font-semibold text-gray-700">60-80% Bueno</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-yellow-400 rounded-lg shadow-md"></div>
-                  <span className="text-sm font-semibold text-gray-700">40-60% Regular</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-orange-400 rounded-lg shadow-md"></div>
-                  <span className="text-sm font-semibold text-gray-700">20-40% Bajo</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-red-500 rounded-lg shadow-md"></div>
-                  <span className="text-sm font-semibold text-gray-700">&lt;20% Crítico</span>
-                </div>
-              </div>
-            </div>
+        <div className="mt-4 flex items-center gap-4 text-xs text-gray-600">
+          <span className="font-semibold">Leyenda:</span>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-green-600 rounded"></div>
+            <span>≥80%</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-green-400 rounded"></div>
+            <span>60-80%</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-yellow-400 rounded"></div>
+            <span>40-60%</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-orange-400 rounded"></div>
+            <span>20-40%</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-red-500 rounded"></div>
+            <span>&lt;20%</span>
           </div>
         </div>
       </motion.div>
 
-      {/* Retention Line Chart - Mejorado */}
+      {/* Retention Line Chart */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 md:p-8 border border-white/50 mb-8 relative overflow-hidden"
+        className="bg-white p-6 rounded-xl shadow-lg border border-gray-200 mb-6"
       >
-        {/* Decoración de fondo */}
-        <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-gradient-to-br from-blue-200 to-indigo-200 rounded-full blur-3xl opacity-20"></div>
-
-        <div className="relative z-10">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-            <div className="p-3 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-xl">
-              <TrendingUp className="w-6 h-6 text-white" />
-            </div>
-            Curvas de Retención por Cohorte
-          </h2>
-          <ResponsiveContainer width="100%" height={400}>
-            <LineChart data={lineChartData}>
-              <defs>
-                <linearGradient id="lineGradient1" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#8b5cf6" />
-                  <stop offset="100%" stopColor="#ec4899" />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="period" stroke="#6b7280" style={{ fontSize: '12px', fontWeight: 500 }} />
-              <YAxis stroke="#6b7280" style={{ fontSize: '12px', fontWeight: 500 }} />
-              <RechartsTooltip
-                contentStyle={{
-                  backgroundColor: '#1f2937',
-                  border: 'none',
-                  borderRadius: '12px',
-                  color: '#fff',
-                  boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
-                  padding: '12px',
-                }}
+        <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+          <TrendingUp className="w-5 h-5 text-violet-600" />
+          Curvas de Retención por Cohorte
+        </h2>
+        <ResponsiveContainer width="100%" height={400}>
+          <LineChart data={lineChartData}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <XAxis dataKey="period" stroke="#6b7280" />
+            <YAxis stroke="#6b7280" />
+            <RechartsTooltip
+              contentStyle={{
+                backgroundColor: '#1f2937',
+                border: 'none',
+                borderRadius: '8px',
+                color: '#fff',
+              }}
+            />
+            <Legend />
+            {cohortesData.slice(0, 8).map((cohort, idx) => (
+              <Line
+                key={cohort.id}
+                type="monotone"
+                dataKey={cohort.name}
+                stroke={cohortColors[idx]}
+                strokeWidth={2}
+                dot={{ r: 4 }}
+                activeDot={{ r: 6 }}
               />
-              <Legend wrapperStyle={{ fontSize: '12px', fontWeight: 600 }} />
-              {cohortesData.slice(0, 8).map((cohort, idx) => (
-                <Line
-                  key={cohort.id}
-                  type="monotone"
-                  dataKey={cohort.name}
-                  stroke={cohortColors[idx]}
-                  strokeWidth={3}
-                  dot={{ r: 5, strokeWidth: 2 }}
-                  activeDot={{ r: 7, strokeWidth: 2 }}
-                />
-              ))}
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
+            ))}
+          </LineChart>
+        </ResponsiveContainer>
       </motion.div>
 
-      {/* Charts Row - Mejorados */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        {/* Pie Chart - LTV por Cohorte */}
+      {/* Charts Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        {/* Pie Chart */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.5 }}
-          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 md:p-8 border border-white/50 relative overflow-hidden"
+          className="bg-white p-6 rounded-xl shadow-lg border border-gray-200"
         >
-          <div className="absolute -right-20 -top-20 w-64 h-64 bg-gradient-to-br from-pink-200 to-purple-200 rounded-full blur-3xl opacity-20"></div>
-
-          <div className="relative z-10">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-              <div className="p-3 bg-gradient-to-br from-pink-500 to-purple-600 rounded-2xl shadow-xl">
-                <DollarSign className="w-6 h-6 text-white" />
-              </div>
-              Lifetime Value por Cohorte
-            </h2>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={pieChartData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={100}
-                  fill="#8884d8"
-                  dataKey="value"
-                  animationBegin={0}
-                  animationDuration={800}
-                >
-                  {pieChartData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={cohortColors[index % cohortColors.length]} />
-                  ))}
-                </Pie>
-                <RechartsTooltip
-                  contentStyle={{
-                    backgroundColor: '#1f2937',
-                    border: 'none',
-                    borderRadius: '12px',
-                    color: '#fff',
-                    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
-                    padding: '12px',
-                  }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
+          <h2 className="text-xl font-bold text-gray-800 mb-4">Distribución de Clientes Activos</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={pieChartData}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                outerRadius={100}
+                fill="#8884d8"
+                dataKey="value"
+                animationBegin={0}
+                animationDuration={800}
+              >
+                {pieChartData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={cohortColors[index % cohortColors.length]} />
+                ))}
+              </Pie>
+              <RechartsTooltip />
+            </PieChart>
+          </ResponsiveContainer>
         </motion.div>
 
-        {/* Survival Analysis - Curva de Supervivencia */}
+        {/* Survival Analysis */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.5 }}
-          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 md:p-8 border border-white/50 relative overflow-hidden"
+          className="bg-white p-6 rounded-xl shadow-lg border border-gray-200"
         >
-          <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-gradient-to-br from-emerald-200 to-teal-200 rounded-full blur-3xl opacity-20"></div>
-
-          <div className="relative z-10">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-              <div className="p-3 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl shadow-xl">
-                <Activity className="w-6 h-6 text-white" />
-              </div>
-              Curva de Supervivencia
-            </h2>
-            <ResponsiveContainer width="100%" height={300}>
-              <AreaChart data={lineChartData}>
-                <defs>
-                  <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0.1} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                <XAxis dataKey="period" stroke="#6b7280" style={{ fontSize: '12px', fontWeight: 500 }} />
-                <YAxis stroke="#6b7280" style={{ fontSize: '12px', fontWeight: 500 }} />
-                <RechartsTooltip
-                  contentStyle={{
-                    backgroundColor: '#1f2937',
-                    border: 'none',
-                    borderRadius: '12px',
-                    color: '#fff',
-                    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
-                    padding: '12px',
-                  }}
-                />
-                <Area
-                  type="monotone"
-                  dataKey={cohortesData[0]?.name}
-                  stroke="#8b5cf6"
-                  fill="url(#colorGradient)"
-                  strokeWidth={3}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-            <div className="mt-6 grid grid-cols-2 gap-4">
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-4 rounded-2xl border border-blue-200">
-                <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">189 días</div>
-                <div className="text-sm text-gray-600 font-semibold mt-1">Tiempo medio hasta churn</div>
-              </div>
-              <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-4 rounded-2xl border border-green-200">
-                <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-600">67%</div>
-                <div className="text-sm text-gray-600 font-semibold mt-1">Prob. retención 6 meses</div>
-              </div>
+          <h2 className="text-xl font-bold text-gray-800 mb-4">Análisis de Supervivencia</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <AreaChart data={lineChartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <XAxis dataKey="period" stroke="#6b7280" />
+              <YAxis stroke="#6b7280" />
+              <RechartsTooltip
+                contentStyle={{
+                  backgroundColor: '#1f2937',
+                  border: 'none',
+                  borderRadius: '8px',
+                  color: '#fff',
+                }}
+              />
+              <Area
+                type="monotone"
+                dataKey={cohortesData[0]?.name}
+                stroke="#8b5cf6"
+                fill="url(#colorGradient)"
+                strokeWidth={2}
+              />
+              <defs>
+                <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0.1} />
+                </linearGradient>
+              </defs>
+            </AreaChart>
+          </ResponsiveContainer>
+          <div className="mt-4 grid grid-cols-2 gap-4">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-gray-800">189 días</div>
+              <div className="text-sm text-gray-600">Tiempo medio hasta churn</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-green-600">67%</div>
+              <div className="text-sm text-gray-600">Prob. retención 6 meses</div>
             </div>
           </div>
         </motion.div>
       </div>
 
-      {/* Detailed Table - Mejorada */}
+      {/* Detailed Table */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6 }}
-        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 md:p-8 border border-white/50 relative overflow-hidden"
+        className="bg-white p-6 rounded-xl shadow-lg border border-gray-200"
       >
-        <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-gradient-to-br from-indigo-200 to-blue-200 rounded-full blur-3xl opacity-20"></div>
-
-        <div className="relative z-10">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-            <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl shadow-xl">
-              <BarChart3 className="w-6 h-6 text-white" />
-            </div>
-            Tabla Detallada de Cohortes
-          </h2>
+        <h2 className="text-xl font-bold text-gray-800 mb-4">Tabla Detallada de Cohortes</h2>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -1055,7 +891,7 @@ const CohortesClientesPage: React.FC = () => {
                         setSelectedCohort(cohort);
                         setShowDetailModal(true);
                       }}
-                      className="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white text-xs font-semibold rounded-xl transition-all shadow-md hover:shadow-lg"
+                      className="px-3 py-1 bg-violet-600 hover:bg-violet-700 text-white text-xs rounded-lg transition-colors"
                     >
                       Ver Detalles
                     </button>
@@ -1064,7 +900,6 @@ const CohortesClientesPage: React.FC = () => {
               ))}
             </tbody>
           </table>
-        </div>
         </div>
       </motion.div>
 
@@ -1085,29 +920,16 @@ const CohortesClientesPage: React.FC = () => {
               className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Modal Header - Mejorado */}
-              <div className="relative bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 p-8 rounded-t-xl overflow-hidden">
-                {/* Pattern de fondo */}
-                <div className="absolute inset-0 opacity-20">
-                  <div className="absolute inset-0" style={{
-                    backgroundImage: `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3) 1px, transparent 1px)`,
-                    backgroundSize: '20px 20px'
-                  }}></div>
-                </div>
-
-                <div className="relative z-10 flex items-center justify-between">
+              {/* Modal Header */}
+              <div className="bg-gradient-to-r from-violet-600 to-purple-600 p-6 rounded-t-xl">
+                <div className="flex items-center justify-between">
                   <div>
-                    <h2 className="text-3xl font-bold text-white flex items-center gap-3">
-                      <div className="p-2 bg-white/20 rounded-xl backdrop-blur-sm">
-                        <Users className="w-7 h-7" />
-                      </div>
-                      Cohorte: {selectedCohort.name}
-                    </h2>
-                    <p className="text-blue-100 mt-2 text-lg">Análisis detallado de comportamiento</p>
+                    <h2 className="text-2xl font-bold text-white">Cohorte: {selectedCohort.name}</h2>
+                    <p className="text-violet-100 mt-1">Análisis detallado de comportamiento</p>
                   </div>
                   <button
                     onClick={() => setShowDetailModal(false)}
-                    className="text-white hover:bg-white hover:bg-opacity-20 p-3 rounded-xl transition-all backdrop-blur-sm"
+                    className="text-white hover:bg-white hover:bg-opacity-20 p-2 rounded-lg transition-colors"
                   >
                     <X className="w-6 h-6" />
                   </button>
@@ -1224,19 +1046,19 @@ const CohortesClientesPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Action Buttons - Mejorados */}
+                {/* Action Buttons */}
                 <div className="flex gap-3 mt-6">
-                  <button className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-2xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl font-semibold">
-                    <Download className="w-5 h-5" />
+                  <button className="flex-1 px-4 py-2 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white rounded-lg transition-all flex items-center justify-center gap-2">
+                    <Download className="w-4 h-4" />
                     Exportar Datos
                   </button>
-                  <button className="flex-1 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white rounded-2xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl font-semibold">
-                    <Users className="w-5 h-5" />
+                  <button className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all flex items-center justify-center gap-2">
+                    <Users className="w-4 h-4" />
                     Contactar Grupo
                   </button>
                   <button
                     onClick={() => setShowDetailModal(false)}
-                    className="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-2xl transition-all font-semibold"
+                    className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition-all"
                   >
                     Cerrar
                   </button>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 import {
   Monitor,
   Play,
@@ -22,11 +23,27 @@ const ProgramasOnline: React.FC = () => {
 
   useEffect(() => {
     const fetchProgramas = async () => {
-      const data = await getProductosByType('programa');
-      setProgramas(data);
+      try {
+        const data = await getProductosByType('programa');
+        setProgramas(data);
+      } catch (error) {
+        toast.error('Error al cargar los programas online');
+      }
     };
     fetchProgramas();
   }, []);
+
+  const handleStartProgram = (programa: Producto) => {
+    if (!programa.disponibilidad) {
+      toast.error('Este programa no está disponible actualmente');
+      return;
+    }
+    toast.success(`Te has inscrito al programa "${programa.nombre}" exitosamente`);
+  };
+
+  const handleViewAllPrograms = () => {
+    toast.success('Redirigiendo a todos los programas disponibles...');
+  };
 
   // Mock: contenido del programa
   const generarContenido = (index: number) => {
@@ -242,6 +259,7 @@ const ProgramasOnline: React.FC = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={() => handleStartProgram(programa)}
                   disabled={!programa.disponibilidad}
                   className={`w-full py-4 rounded-xl font-bold text-white shadow-lg hover:shadow-xl transition-all duration-300 ${
                     programa.disponibilidad
@@ -336,6 +354,7 @@ const ProgramasOnline: React.FC = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={handleViewAllPrograms}
             className="bg-white text-orange-600 px-8 py-3 rounded-xl font-bold shadow-xl hover:shadow-2xl transition-all duration-300"
           >
             Ver Todos los Programas

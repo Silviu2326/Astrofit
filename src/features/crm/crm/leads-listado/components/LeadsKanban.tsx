@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
 import { UserPlus, Phone, Calendar, CheckCircle, XCircle, Plus } from 'lucide-react';
 import { Lead, updateLeadStatus } from '../leadsListadoApi';
 import LeadCard from './LeadCard';
 
 interface LeadsKanbanProps {
   leads: Lead[];
+  onAddLead?: (stage?: Lead['status']) => void;
 }
 
-const LeadsKanban: React.FC<LeadsKanbanProps> = ({ leads: initialLeads }) => {
+const LeadsKanban: React.FC<LeadsKanbanProps> = ({ leads: initialLeads, onAddLead }) => {
   const columnsConfig = {
     'Nuevo contacto': {
       id: 'Nuevo contacto',
@@ -158,6 +159,7 @@ const LeadsKanban: React.FC<LeadsKanbanProps> = ({ leads: initialLeads }) => {
                       <motion.button
                         whileHover={{ scale: 1.1, rotate: 90 }}
                         whileTap={{ scale: 0.9 }}
+                        onClick={() => onAddLead?.(column.id as Lead['status'])}
                         className="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition-colors"
                       >
                         <Plus className="w-4 h-4 text-white" />
@@ -198,7 +200,6 @@ const LeadsKanban: React.FC<LeadsKanbanProps> = ({ leads: initialLeads }) => {
                             <motion.div
                               ref={provided.innerRef}
                               {...provided.draggableProps}
-                              {...provided.dragHandleProps}
                               initial={{ opacity: 0, scale: 0.9 }}
                               animate={{ opacity: 1, scale: 1 }}
                               transition={{ delay: index * 0.05 }}
@@ -208,7 +209,7 @@ const LeadsKanban: React.FC<LeadsKanbanProps> = ({ leads: initialLeads }) => {
                                   : ''
                               } transition-transform duration-200`}
                             >
-                              <LeadCard lead={lead} />
+                              <LeadCard lead={lead} dragHandleProps={provided.dragHandleProps} />
                             </motion.div>
                           )}
                         </Draggable>
@@ -219,7 +220,7 @@ const LeadsKanban: React.FC<LeadsKanbanProps> = ({ leads: initialLeads }) => {
 
                   {/* Column Footer */}
                   <div className={`${column.bgColor} border-t-2 ${column.borderColor} p-3`}>
-                    <button className={`w-full py-2 px-4 ${column.textColor} bg-white hover:bg-opacity-80 font-medium text-sm rounded-lg transition-all duration-200 flex items-center justify-center space-x-2 shadow-sm`}>
+                    <button onClick={() => onAddLead?.(column.id as Lead['status'])} className={`w-full py-2 px-4 ${column.textColor} bg-white hover:bg-opacity-80 font-medium text-sm rounded-lg transition-all duration-200 flex items-center justify-center space-x-2 shadow-sm`}>
                       <Plus className="w-4 h-4" />
                       <span>Agregar Lead</span>
                     </button>

@@ -1,5 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import toast from 'react-hot-toast';
 import {
   Ticket,
   CheckCircle,
@@ -9,7 +10,6 @@ import {
   DollarSign,
   Plus,
   Calendar,
-  Filter,
   Download,
   QrCode,
   Share2,
@@ -19,10 +19,6 @@ import {
   Play,
   Pause,
   Eye,
-  AlertTriangle,
-  TrendingUp,
-  Users,
-  Tag,
   Gift,
   Zap,
   Truck,
@@ -31,10 +27,13 @@ import {
   Grid,
   List,
   MoreVertical,
-  Settings,
   Send,
-  BarChart3
+  BarChart3,
+  Mail,
+  FileText
 } from 'lucide-react';
+import ConfirmationModal from '../../../../components/ui/confirmation-modal';
+import InputModal from '../../../../components/ui/input-modal';
 import {
   LineChart,
   Line,
@@ -47,7 +46,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer
 } from 'recharts';
 
@@ -661,7 +659,33 @@ const CuponesPage: React.FC = () => {
   const [showAnalyticsModal, setShowAnalyticsModal] = useState(false);
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
   const [newCouponStep, setNewCouponStep] = useState(1);
-  const [selectedCoupons, setSelectedCoupons] = useState<string[]>([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [showQRModal, setShowQRModal] = useState(false);
+  const [showExportModal, setShowExportModal] = useState(false);
+  const [couponToDelete, setCouponToDelete] = useState<Coupon | null>(null);
+  const [couponToEdit, setCouponToEdit] = useState<Coupon | null>(null);
+  const [couponToShare, setCouponToShare] = useState<Coupon | null>(null);
+  const [couponToEmail, setCouponToEmail] = useState<Coupon | null>(null);
+  const [couponToQR, setCouponToQR] = useState<Coupon | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Cerrar menú desplegable al hacer clic fuera
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setSelectedCoupon(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // New coupon form state
   const [newCoupon, setNewCoupon] = useState({
@@ -778,7 +802,185 @@ const CuponesPage: React.FC = () => {
   };
 
   const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
+    navigator.clipboard.writeText(text).then(() => {
+      toast.success('Código copiado al portapapeles');
+    }).catch(() => {
+      toast.error('Error al copiar el código');
+    });
+  };
+
+  const handleDeleteCoupon = (coupon: Coupon) => {
+    setCouponToDelete(coupon);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDeleteCoupon = async () => {
+    if (!couponToDelete) return;
+    
+    setIsLoading(true);
+    try {
+      // Simular llamada API
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      toast.success(`Cupón ${couponToDelete.code} eliminado correctamente`);
+      setShowDeleteModal(false);
+      setCouponToDelete(null);
+    } catch (error) {
+      toast.error('Error al eliminar el cupón');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleEditCoupon = (coupon: Coupon) => {
+    setCouponToEdit(coupon);
+    setShowEditModal(true);
+  };
+
+  const handleShareCoupon = (coupon: Coupon) => {
+    setCouponToShare(coupon);
+    setShowShareModal(true);
+  };
+
+  const handleEmailCoupon = (coupon: Coupon) => {
+    setCouponToEmail(coupon);
+    setShowEmailModal(true);
+  };
+
+  const handleGenerateQR = (coupon: Coupon) => {
+    setCouponToQR(coupon);
+    setShowQRModal(true);
+  };
+
+  const handleExportData = () => {
+    setShowExportModal(true);
+  };
+
+  const handleToggleCouponStatus = async (coupon: Coupon) => {
+    setIsLoading(true);
+    try {
+      // Simular llamada API
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      const newStatus = coupon.status === 'paused' ? 'active' : 'paused';
+      toast.success(`Cupón ${newStatus === 'active' ? 'activado' : 'pausado'} correctamente`);
+    } catch (error) {
+      toast.error('Error al cambiar el estado del cupón');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
+  const handleCreateCoupon = async () => {
+    if (!newCoupon.code || !newCoupon.description) {
+      toast.error('Completa todos los campos obligatorios');
+      return;
+    }
+    
+    setIsLoading(true);
+    try {
+      // Simular llamada API
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      toast.success(`Cupón ${newCoupon.code} creado correctamente`);
+      setShowNewCouponModal(false);
+      setNewCouponStep(1);
+      setNewCoupon({
+        code: '',
+        type: 'percentage',
+        value: 0,
+        description: '',
+        applicableTo: 'all',
+        startDate: '',
+        endDate: '',
+        usageLimit: null,
+        onePerCustomer: false,
+        minPurchase: 0,
+        campaign: '',
+        tags: []
+      });
+    } catch (error) {
+      toast.error('Error al crear el cupón');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleCreateCampaign = async () => {
+    setIsLoading(true);
+    try {
+      // Simular llamada API
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      toast.success('Campaña creada correctamente');
+      setShowCampaignModal(false);
+    } catch (error) {
+      toast.error('Error al crear la campaña');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleShareViaSocial = (platform: string) => {
+    if (!couponToShare) return;
+    
+    const shareText = `¡Descubre este increíble descuento! Código: ${couponToShare.code} - ${couponToShare.description}`;
+    const shareUrl = `${window.location.origin}/cupon/${couponToShare.code}`;
+    
+    let url = '';
+    switch (platform) {
+      case 'twitter':
+        url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+        break;
+      case 'facebook':
+        url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+        break;
+      case 'whatsapp':
+        url = `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`;
+        break;
+      case 'telegram':
+        url = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
+        break;
+    }
+    
+    if (url) {
+      window.open(url, '_blank', 'width=600,height=400');
+      toast.success(`Compartiendo en ${platform}...`);
+    }
+  };
+
+  const handleSendEmail = async (email: string) => {
+    if (!couponToEmail) return;
+    
+    setIsLoading(true);
+    try {
+      // Simular llamada API
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      toast.success(`Cupón enviado a ${email}`);
+      setShowEmailModal(false);
+      setCouponToEmail(null);
+    } catch (error) {
+      toast.error('Error al enviar el email');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleExportToFormat = async (format: string) => {
+    setIsLoading(true);
+    try {
+      // Simular generación de archivo
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      toast.success(`Datos exportados en formato ${format.toUpperCase()}`);
+      setShowExportModal(false);
+    } catch (error) {
+      toast.error('Error al exportar los datos');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -965,7 +1167,10 @@ const CuponesPage: React.FC = () => {
               <BarChart3 className="w-5 h-5" />
               Análisis
             </button>
-            <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-2">
+            <button 
+              onClick={handleExportData}
+              className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-2"
+            >
               <Download className="w-5 h-5" />
               Exportar
             </button>
@@ -1094,15 +1299,69 @@ const CuponesPage: React.FC = () => {
                     <Eye className="w-4 h-4" />
                     Ver
                   </button>
-                  <button className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                  <button 
+                    onClick={() => copyToClipboard(coupon.code)}
+                    className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+                    title="Copiar código"
+                  >
                     <Copy className="w-4 h-4" />
                   </button>
-                  <button className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                  <button 
+                    onClick={() => handleShareCoupon(coupon)}
+                    className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+                    title="Compartir cupón"
+                  >
                     <Share2 className="w-4 h-4" />
                   </button>
-                  <button className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
-                    <MoreVertical className="w-4 h-4" />
-                  </button>
+                  <div className="relative" ref={dropdownRef}>
+                    <button 
+                      onClick={() => setSelectedCoupon(selectedCoupon?.id === coupon.id ? null : coupon)}
+                      className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+                      title="Más opciones"
+                    >
+                      <MoreVertical className="w-4 h-4" />
+                    </button>
+                    {selectedCoupon?.id === coupon.id && (
+                      <div className="absolute right-0 top-full mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                        <button 
+                          onClick={() => handleEditCoupon(coupon)}
+                          className="w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center gap-2"
+                        >
+                          <Edit className="w-4 h-4" />
+                          Editar
+                        </button>
+                        <button 
+                          onClick={() => handleToggleCouponStatus(coupon)}
+                          className="w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center gap-2"
+                        >
+                          {coupon.status === 'paused' ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
+                          {coupon.status === 'paused' ? 'Activar' : 'Pausar'}
+                        </button>
+                        <button 
+                          onClick={() => handleGenerateQR(coupon)}
+                          className="w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center gap-2"
+                        >
+                          <QrCode className="w-4 h-4" />
+                          Generar QR
+                        </button>
+                        <button 
+                          onClick={() => handleEmailCoupon(coupon)}
+                          className="w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center gap-2"
+                        >
+                          <Mail className="w-4 h-4" />
+                          Enviar por Email
+                        </button>
+                        <hr className="my-1" />
+                        <button 
+                          onClick={() => handleDeleteCoupon(coupon)}
+                          className="w-full px-4 py-2 text-left hover:bg-red-50 text-red-600 flex items-center gap-2"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                          Eliminar
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -1176,13 +1435,25 @@ const CuponesPage: React.FC = () => {
                       >
                         <Eye className="w-4 h-4" />
                       </button>
-                      <button className="p-1 hover:bg-gray-100 rounded">
+                      <button 
+                        onClick={() => handleEditCoupon(coupon)}
+                        className="p-1 hover:bg-gray-100 rounded"
+                        title="Editar cupón"
+                      >
                         <Edit className="w-4 h-4" />
                       </button>
-                      <button className="p-1 hover:bg-gray-100 rounded">
+                      <button 
+                        onClick={() => copyToClipboard(coupon.code)}
+                        className="p-1 hover:bg-gray-100 rounded"
+                        title="Copiar código"
+                      >
                         <Copy className="w-4 h-4" />
                       </button>
-                      <button className="p-1 hover:bg-gray-100 rounded">
+                      <button 
+                        onClick={() => handleToggleCouponStatus(coupon)}
+                        className="p-1 hover:bg-gray-100 rounded"
+                        title={coupon.status === 'paused' ? 'Activar cupón' : 'Pausar cupón'}
+                      >
                         {coupon.status === 'paused' ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
                       </button>
                     </div>
@@ -1456,12 +1727,15 @@ const CuponesPage: React.FC = () => {
                     if (newCouponStep < 4) {
                       setNewCouponStep(newCouponStep + 1);
                     } else {
-                      setShowNewCouponModal(false);
-                      setNewCouponStep(1);
+                      handleCreateCoupon();
                     }
                   }}
-                  className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                  disabled={isLoading}
+                  className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                 >
+                  {isLoading && (
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  )}
                   {newCouponStep === 4 ? 'Crear Cupón' : 'Siguiente'}
                 </button>
               </div>
@@ -1564,7 +1838,13 @@ const CuponesPage: React.FC = () => {
                 >
                   Cerrar
                 </button>
-                <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                <button 
+                  onClick={() => {
+                    setShowDetailsModal(false);
+                    handleEditCoupon(selectedCoupon);
+                  }}
+                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                >
                   Editar Cupón
                 </button>
               </div>
@@ -1619,12 +1899,12 @@ const CuponesPage: React.FC = () => {
                         cx="50%"
                         cy="50%"
                         labelLine={false}
-                        label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                        label={(props: any) => `${props.name}: ${(props.percent * 100).toFixed(0)}%`}
                         outerRadius={100}
                         fill="#8884d8"
                         dataKey="value"
                       >
-                        {channelData.map((entry, index) => (
+                        {channelData.map((_, index) => (
                           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                         ))}
                       </Pie>
@@ -1775,10 +2055,350 @@ const CuponesPage: React.FC = () => {
                   Cancelar
                 </button>
                 <button
-                  onClick={() => setShowCampaignModal(false)}
-                  className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+                  onClick={handleCreateCampaign}
+                  disabled={isLoading}
+                  className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                 >
+                  {isLoading && (
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  )}
                   Crear Campaña
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={showDeleteModal}
+        onClose={() => {
+          setShowDeleteModal(false);
+          setCouponToDelete(null);
+        }}
+        onConfirm={confirmDeleteCoupon}
+        title="Eliminar Cupón"
+        message={`¿Estás seguro de que quieres eliminar el cupón "${couponToDelete?.code}"? Esta acción no se puede deshacer.`}
+        confirmText="Eliminar"
+        cancelText="Cancelar"
+        type="danger"
+        isLoading={isLoading}
+      />
+
+      {/* Share Modal */}
+      <AnimatePresence>
+        {showShareModal && couponToShare && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+            onClick={() => setShowShareModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-2xl shadow-2xl max-w-md w-full"
+            >
+              <div className="p-6 border-b border-gray-200">
+                <h2 className="text-xl font-bold text-gray-900">Compartir Cupón</h2>
+                <p className="text-gray-600 mt-1">Comparte el cupón {couponToShare.code} en redes sociales</p>
+              </div>
+              <div className="p-6 space-y-3">
+                <button
+                  onClick={() => handleShareViaSocial('twitter')}
+                  className="w-full p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center gap-3"
+                >
+                  <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
+                    <span className="text-blue-500 text-xs font-bold">𝕏</span>
+                  </div>
+                  Compartir en Twitter
+                </button>
+                <button
+                  onClick={() => handleShareViaSocial('facebook')}
+                  className="w-full p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center gap-3"
+                >
+                  <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
+                    <span className="text-blue-600 text-xs font-bold">f</span>
+                  </div>
+                  Compartir en Facebook
+                </button>
+                <button
+                  onClick={() => handleShareViaSocial('whatsapp')}
+                  className="w-full p-3 bg-green-500 text-white rounded-lg hover:bg-green-600 flex items-center gap-3"
+                >
+                  <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
+                    <span className="text-green-500 text-xs font-bold">W</span>
+                  </div>
+                  Compartir en WhatsApp
+                </button>
+                <button
+                  onClick={() => handleShareViaSocial('telegram')}
+                  className="w-full p-3 bg-blue-400 text-white rounded-lg hover:bg-blue-500 flex items-center gap-3"
+                >
+                  <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
+                    <span className="text-blue-400 text-xs font-bold">T</span>
+                  </div>
+                  Compartir en Telegram
+                </button>
+                <button
+                  onClick={() => copyToClipboard(couponToShare.code)}
+                  className="w-full p-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 flex items-center gap-3"
+                >
+                  <Copy className="w-5 h-5" />
+                  Copiar Código
+                </button>
+              </div>
+              <div className="p-6 border-t border-gray-200 flex justify-end">
+                <button
+                  onClick={() => setShowShareModal(false)}
+                  className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+                >
+                  Cerrar
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Email Modal */}
+      <InputModal
+        isOpen={showEmailModal}
+        onClose={() => {
+          setShowEmailModal(false);
+          setCouponToEmail(null);
+        }}
+        onConfirm={handleSendEmail}
+        title="Enviar Cupón por Email"
+        message={`Envía el cupón ${couponToEmail?.code} por correo electrónico`}
+        placeholder="email@ejemplo.com"
+        confirmText="Enviar"
+        cancelText="Cancelar"
+        type="email"
+        isLoading={isLoading}
+      />
+
+      {/* QR Modal */}
+      <AnimatePresence>
+        {showQRModal && couponToQR && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+            onClick={() => setShowQRModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-2xl shadow-2xl max-w-md w-full"
+            >
+              <div className="p-6 border-b border-gray-200">
+                <h2 className="text-xl font-bold text-gray-900">Código QR</h2>
+                <p className="text-gray-600 mt-1">Código QR para el cupón {couponToQR.code}</p>
+              </div>
+              <div className="p-6 text-center">
+                <div className="w-48 h-48 bg-gray-100 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                  <QrCode className="w-32 h-32 text-gray-400" />
+                </div>
+                <p className="text-sm text-gray-600 mb-4">
+                  El código QR contiene el enlace directo al cupón
+                </p>
+                <div className="flex gap-3">
+                  <button className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2">
+                    <Download className="w-4 h-4" />
+                    Descargar
+                  </button>
+                  <button className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center justify-center gap-2">
+                    <Share2 className="w-4 h-4" />
+                    Compartir
+                  </button>
+                </div>
+              </div>
+              <div className="p-6 border-t border-gray-200 flex justify-end">
+                <button
+                  onClick={() => setShowQRModal(false)}
+                  className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+                >
+                  Cerrar
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Export Modal */}
+      <AnimatePresence>
+        {showExportModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+            onClick={() => setShowExportModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-2xl shadow-2xl max-w-md w-full"
+            >
+              <div className="p-6 border-b border-gray-200">
+                <h2 className="text-xl font-bold text-gray-900">Exportar Datos</h2>
+                <p className="text-gray-600 mt-1">Selecciona el formato de exportación</p>
+              </div>
+              <div className="p-6 space-y-3">
+                <button
+                  onClick={() => handleExportToFormat('csv')}
+                  className="w-full p-3 border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-3"
+                >
+                  <FileText className="w-5 h-5 text-green-600" />
+                  <div className="text-left">
+                    <div className="font-medium">CSV</div>
+                    <div className="text-sm text-gray-600">Para Excel y Google Sheets</div>
+                  </div>
+                </button>
+                <button
+                  onClick={() => handleExportToFormat('xlsx')}
+                  className="w-full p-3 border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-3"
+                >
+                  <FileText className="w-5 h-5 text-green-600" />
+                  <div className="text-left">
+                    <div className="font-medium">Excel</div>
+                    <div className="text-sm text-gray-600">Archivo Excel completo</div>
+                  </div>
+                </button>
+                <button
+                  onClick={() => handleExportToFormat('pdf')}
+                  className="w-full p-3 border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-3"
+                >
+                  <FileText className="w-5 h-5 text-red-600" />
+                  <div className="text-left">
+                    <div className="font-medium">PDF</div>
+                    <div className="text-sm text-gray-600">Reporte en PDF</div>
+                  </div>
+                </button>
+                <button
+                  onClick={() => handleExportToFormat('json')}
+                  className="w-full p-3 border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-3"
+                >
+                  <FileText className="w-5 h-5 text-blue-600" />
+                  <div className="text-left">
+                    <div className="font-medium">JSON</div>
+                    <div className="text-sm text-gray-600">Datos estructurados</div>
+                  </div>
+                </button>
+              </div>
+              <div className="p-6 border-t border-gray-200 flex justify-end">
+                <button
+                  onClick={() => setShowExportModal(false)}
+                  className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Edit Modal */}
+      <AnimatePresence>
+        {showEditModal && couponToEdit && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+            onClick={() => setShowEditModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            >
+              <div className="p-6 border-b border-gray-200">
+                <h2 className="text-xl font-bold text-gray-900">Editar Cupón</h2>
+                <p className="text-gray-600 mt-1">Modifica los datos del cupón {couponToEdit.code}</p>
+              </div>
+              <div className="p-6 space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Código del Cupón</label>
+                  <input
+                    type="text"
+                    defaultValue={couponToEdit.code}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 font-mono"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Descripción</label>
+                  <textarea
+                    defaultValue={couponToEdit.description}
+                    rows={3}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Fecha de Inicio</label>
+                    <input
+                      type="date"
+                      defaultValue={couponToEdit.startDate}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Fecha de Fin</label>
+                    <input
+                      type="date"
+                      defaultValue={couponToEdit.endDate || ''}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Límite de Usos</label>
+                  <input
+                    type="number"
+                    defaultValue={couponToEdit.usageLimit || ''}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    defaultChecked={couponToEdit.onePerCustomer}
+                    className="rounded"
+                  />
+                  <label className="text-sm font-medium text-gray-700">Un uso por cliente</label>
+                </div>
+              </div>
+              <div className="p-6 border-t border-gray-200 flex justify-end gap-3">
+                <button
+                  onClick={() => setShowEditModal(false)}
+                  className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={() => {
+                    toast.success('Cupón actualizado correctamente');
+                    setShowEditModal(false);
+                    setCouponToEdit(null);
+                  }}
+                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                >
+                  Guardar Cambios
                 </button>
               </div>
             </motion.div>

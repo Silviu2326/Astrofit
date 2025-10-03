@@ -1,54 +1,36 @@
 import React from 'react';
 
-interface FiltrosCuponesProps {
-  filterEstado: string;
-  setFilterEstado: (value: string) => void;
-  filterTipo: string;
-  setFilterTipo: (value: string) => void;
-}
-
-export const FiltrosCupones: React.FC<FiltrosCuponesProps> = ({
-  filterEstado,
-  setFilterEstado,
-  filterTipo,
-  setFilterTipo
-}) => {
+export const FiltrosCupones: React.FC = () => {
   return (
-    <>
-      {/* Estado */}
+    <div className="flex flex-wrap gap-4 mb-4 p-4 bg-gray-50 rounded-lg shadow-sm">
       <div className="flex flex-col">
-        <label htmlFor="estado" className="text-sm font-semibold text-gray-700 mb-2">
+        <label htmlFor="estado" className="text-sm font-medium text-gray-700 mb-1">
           Estado
         </label>
         <select
           id="estado"
-          value={filterEstado}
-          onChange={(e) => setFilterEstado(e.target.value)}
-          className="w-full px-4 py-3 rounded-2xl border-2 border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 transition-all duration-300 outline-none bg-white/80 backdrop-blur-sm font-medium"
+          className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
         >
-          <option value="">Todos los estados</option>
-          <option value="activo">✅ Activo</option>
-          <option value="caducado">⏰ Caducado</option>
-          <option value="agotado">🚫 Agotado</option>
+          <option value="">Todos</option>
+          <option value="activo">Activo</option>
+          <option value="caducado">Caducado</option>
+          <option value="agotado">Agotado</option>
         </select>
       </div>
 
-      {/* Tipo */}
       <div className="flex flex-col">
-        <label htmlFor="tipoDescuento" className="text-sm font-semibold text-gray-700 mb-2">
+        <label htmlFor="tipoDescuento" className="text-sm font-medium text-gray-700 mb-1">
           Tipo de Descuento
         </label>
         <select
           id="tipoDescuento"
-          value={filterTipo}
-          onChange={(e) => setFilterTipo(e.target.value)}
-          className="w-full px-4 py-3 rounded-2xl border-2 border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 transition-all duration-300 outline-none bg-white/80 backdrop-blur-sm font-medium"
+          className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
         >
-          <option value="">Todos los tipos</option>
-          <option value="porcentaje">📊 Porcentaje</option>
-          <option value="fijo">💵 Monto Fijo</option>
+          <option value="">Todos</option>
+          <option value="porcentaje">Porcentaje</option>
+          <option value="fijo">Fijo</option>
         </select>
       </div>
-    </>
+    </div>
   );
 };
