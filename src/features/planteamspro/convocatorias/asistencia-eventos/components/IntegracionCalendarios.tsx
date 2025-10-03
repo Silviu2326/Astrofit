@@ -1,12 +1,43 @@
-
 import React from 'react';
+import { motion } from 'framer-motion';
+import { Calendar, Link } from 'lucide-react';
 
 const IntegracionCalendarios: React.FC = () => {
   return (
-    <div>
-      <h2>Integración de Calendarios Personales</h2>
-      {/* Lógica para la integración de calendarios personales para detectar conflictos */}
-    </div>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.4, delay: 0.3 }}
+      whileHover={{ scale: 1.03, y: -8 }}
+      className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
+    >
+      {/* Shimmer effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
+
+      {/* Decoración de fondo */}
+      <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-green-200 to-emerald-200 rounded-full blur-3xl opacity-20"></div>
+
+      <div className="relative z-10">
+        {/* Icono en backdrop blur */}
+        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300">
+          <Calendar className="w-7 h-7" />
+        </div>
+
+        <h3 className="text-xl font-bold text-gray-800 mb-3">
+          Integración Calendarios
+        </h3>
+
+        <p className="text-sm text-gray-600 leading-relaxed mb-4">
+          Integración de calendarios personales para detectar conflictos automáticamente.
+        </p>
+
+        {/* Indicador visual */}
+        <div className="flex items-center gap-2 p-3 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-200">
+          <Link className="w-4 h-4 text-green-600" />
+          <span className="text-xs font-bold text-green-700">Sincronización activa</span>
+        </div>
+      </div>
+    </motion.div>
   );
 };
 

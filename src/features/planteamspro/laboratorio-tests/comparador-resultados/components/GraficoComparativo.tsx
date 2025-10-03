@@ -74,8 +74,11 @@ const GraficoComparativo: React.FC<GraficoComparativoProps> = ({ data }) => {
   }, [data]);
 
   return (
-    <div className="relative h-96 w-full">
-      <canvas ref={chartRef}></canvas>
+    <div className="relative bg-white/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-100">
+      <div className="absolute -right-4 -top-4 w-24 h-24 bg-gradient-to-br from-blue-200 to-purple-200 rounded-full blur-2xl opacity-20"></div>
+      <div className="relative h-96 w-full">
+        <canvas ref={chartRef}></canvas>
+      </div>
     </div>
   );
 };
