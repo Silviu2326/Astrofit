@@ -24,7 +24,11 @@
       "Bash(rm:*)",
       "Bash(python:*)",
       "Read(//c/**)",
-      "Bash(del nul)"
+      "Bash(del nul)",
+      "Bash(git fetch:*)",
+      "Bash(git branch:*)",
+      "Bash(git merge:*)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []

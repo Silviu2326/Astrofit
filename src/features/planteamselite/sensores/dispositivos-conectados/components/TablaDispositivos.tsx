@@ -1,5 +1,7 @@
 
 import React from 'react';
+import { motion } from 'framer-motion';
+import { Satellite, Heart, Zap, Settings, WifiOff, Wifi, RefreshCw, AlertTriangle } from 'lucide-react';
 
 interface Device {
   id: string;
@@ -33,71 +35,139 @@ const getStatusColor = (status: Device['status']) => {
 const getDeviceIcon = (type: Device['type']) => {
   switch (type) {
     case 'GPS':
-      return '📡'; // Satellite dish icon
+      return Satellite;
     case 'Pulsómetro':
-      return '❤️'; // Heart icon
+      return Heart;
     case 'Medidor de Potencia':
-      return '⚡'; // High voltage sign icon
+      return Zap;
     default:
-      return '⚙️'; // Gear icon
+      return Settings;
   }
 };
 
 export const TablaDispositivos: React.FC<TablaDispositivosProps> = ({ devices }) => {
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full bg-white shadow-md rounded-lg">
-        <thead>
-          <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-            <th className="py-3 px-6 text-left">Dispositivo</th>
-            <th className="py-3 px-6 text-left">Tipo</th>
-            <th className="py-3 px-6 text-left">Estado</th>
-            <th className="py-3 px-6 text-left">Batería</th>
-            <th className="py-3 px-6 text-left">Última Sinc.</th>
-            <th className="py-3 px-6 text-left">Jugador Asignado</th>
-            <th className="py-3 px-6 text-left">Acciones</th>
-          </tr>
-        </thead>
-        <tbody className="text-gray-600 text-sm font-light">
-          {devices.map((device) => (
-            <tr key={device.id} className="border-b border-gray-200 hover:bg-gray-100">
-              <td className="py-3 px-6 text-left whitespace-nowrap">
-                <div className="flex items-center">
-                  <span className="mr-2 text-xl">{getDeviceIcon(device.type)}</span>
-                  <span className="font-medium">{device.name}</span>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {devices.map((device, index) => {
+        const DeviceIcon = getDeviceIcon(device.type);
+        const statusIcons = {
+          'conectado': <Wifi className="w-4 h-4 text-green-500 animate-pulse" />,
+          'desconectado': <WifiOff className="w-4 h-4 text-red-500" />,
+          'batería baja': <AlertTriangle className="w-4 h-4 text-yellow-500 animate-pulse" />,
+          'sincronizando': <RefreshCw className="w-4 h-4 text-blue-500 animate-spin" />
+        };
+
+        return (
+          <motion.div
+            key={device.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.05, duration: 0.4 }}
+            whileHover={{ scale: 1.02, y: -4 }}
+            className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
+          >
+            {/* Shimmer effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
+
+            {/* Decoración de fondo */}
+            <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-cyan-500 to-blue-600 opacity-5 rounded-full blur-2xl"></div>
+
+            <div className="relative z-10">
+              {/* Header con icono del dispositivo */}
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform duration-300">
+                    <DeviceIcon className="w-7 h-7" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900">{device.name}</h3>
+                    <p className="text-sm text-gray-600">{device.type}</p>
+                  </div>
                 </div>
-              </td>
-              <td className="py-3 px-6 text-left">{device.type}</td>
-              <td className="py-3 px-6 text-left">
-                <span className={`font-bold ${getStatusColor(device.status)}`}>
-                  {device.status}
-                </span>
-              </td>
-              <td className="py-3 px-6 text-left">
-                <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                  <div
-                    className="h-2.5 rounded-full"
-                    style={{
-                      width: `${device.batteryLevel}%`,
-                      backgroundColor: device.batteryLevel < 20 ? '#EF4444' : '#22C55E', // Red for low, Green otherwise
-                    }}
-                  ></div>
+
+                {/* Badge de estado */}
+                <div className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold ${
+                  device.status === 'conectado' ? 'bg-green-100 text-green-700' :
+                  device.status === 'desconectado' ? 'bg-red-100 text-red-700' :
+                  device.status === 'batería baja' ? 'bg-yellow-100 text-yellow-700' :
+                  'bg-blue-100 text-blue-700'
+                }`}>
+                  {statusIcons[device.status]}
+                  <span className="ml-1">{device.status}</span>
                 </div>
-                <span className="text-xs text-gray-500">{device.batteryLevel}%</span>
-              </td>
-              <td className="py-3 px-6 text-left">{new Date(device.lastSync).toLocaleString()}</td>
-              <td className="py-3 px-6 text-left">
-                {device.assignedPlayer || 'Sin asignar'}
-              </td>
-              <td className="py-3 px-6 text-left">
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded text-xs">
-                  Gestionar
+              </div>
+
+              {/* Batería */}
+              <div className="mb-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-semibold text-gray-700">Batería</span>
+                  <span className="text-sm font-bold text-gray-900">{device.batteryLevel}%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden shadow-inner">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${device.batteryLevel}%` }}
+                    transition={{ duration: 1, ease: "easeOut", delay: index * 0.05 }}
+                    className={`h-full rounded-full relative ${
+                      device.batteryLevel < 20 ? 'bg-gradient-to-r from-red-500 to-orange-500' :
+                      device.batteryLevel < 50 ? 'bg-gradient-to-r from-yellow-500 to-orange-500' :
+                      'bg-gradient-to-r from-green-500 to-emerald-500'
+                    }`}
+                  >
+                    {/* Efecto de brillo interno */}
+                    <div className="absolute inset-0 bg-white/30 animate-pulse"></div>
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* Información adicional */}
+              <div className="space-y-2 mb-4">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-gray-600">Última Sinc:</span>
+                  <span className="font-medium text-gray-900">
+                    {new Date(device.lastSync).toLocaleString('es-ES', {
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-gray-600">Jugador:</span>
+                  <span className={`font-medium ${device.assignedPlayer ? 'text-gray-900' : 'text-gray-500 italic'}`}>
+                    {device.assignedPlayer || 'Sin asignar'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Botones de acción */}
+              <div className="flex gap-2">
+                {device.status === 'sincronizando' ? (
+                  <button className="flex-1 px-4 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2">
+                    <RefreshCw className="w-4 h-4 animate-spin" />
+                    Sincronizando...
+                  </button>
+                ) : device.status === 'desconectado' ? (
+                  <button className="flex-1 px-4 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 hover:scale-105 active:scale-95">
+                    <Wifi className="w-4 h-4" />
+                    Conectar
+                  </button>
+                ) : (
+                  <button className="flex-1 px-4 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 hover:scale-105 active:scale-95">
+                    <RefreshCw className="w-4 h-4" />
+                    Sincronizar
+                  </button>
+                )}
+                <button className="px-4 py-2.5 border-2 border-cyan-500 text-cyan-600 rounded-xl font-semibold hover:bg-cyan-50 transition-all duration-300 hover:scale-105 active:scale-95">
+                  <Settings className="w-4 h-4" />
                 </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+              </div>
+            </div>
+          </motion.div>
+        );
+      })}
     </div>
   );
 };

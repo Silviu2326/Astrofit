@@ -1,0 +1,1881 @@
+# 🚀 PROMPTS DE ESTILIZACIÓN - TESTS A/B Y TIENDA MERCHANDISING
+
+---
+
+## 📋 PROMPT 1: Experimentos A/B (PlanCreatorMax)
+
+Transforma completamente la página de Experimentos ([src/features/plancreatormax/tests-ab/tests-ab/experimentos/ExperimentosPage.tsx](src/features/plancreatormax/tests-ab/tests-ab/experimentos/ExperimentosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema completo de gestión de experimentos A/B
+- Facilita la creación y configuración de tests de conversión
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Experimentos A/B**
+   - Gradiente `from-red-600 via-orange-600 to-yellow-600`
+   - Título "Experimentos A/B"
+   - Descripción: "Optimiza tus conversiones con tests basados en datos"
+   - Icono de laboratorio/experimento animado
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Experimentos Activos
+   - Tests Completados
+   - Mejora Promedio de Conversión (%)
+   - Ganancia Total Estimada ($)
+   - Cards con glassmorphism
+
+3. **GALERÍA DE EXPERIMENTOS**
+   - Grid de experimentos activos/programados:
+     * Card por experimento con:
+       - Nombre del test
+       - Tipo (Landing Page, Email, Precio, CTA, etc.)
+       - Estado (Activo/Pausado/Completado/Draft)
+       - Fecha de inicio/fin
+       - Tráfico asignado (%)
+       - Conversión actual por variante
+       - Ganador provisional (si hay significancia)
+     * Hover: Ver detalles, Editar, Pausar/Reanudar
+   - Botón "+ Crear nuevo experimento"
+   - Filtros: Activos, Completados, Borradores
+
+4. **CONSTRUCTOR DE EXPERIMENTO**
+   - Wizard de creación paso a paso:
+     * **Paso 1: Información básica**:
+       - Nombre del experimento
+       - Objetivo/hipótesis
+       - Métrica principal (conversión, clicks, ventas)
+       - Duración estimada
+     * **Paso 2: Configuración de variantes**:
+       - Variante A (Control): Configuración actual
+       - Variante B, C, D... (hasta 5 variantes)
+       - Editor visual para cada variante:
+         * Título/headline
+         * Descripción
+         * Imagen (upload)
+         * CTA (texto y color)
+         * Precio (si aplica)
+     * **Paso 3: Distribución de tráfico**:
+       - Slider para cada variante (total 100%)
+       - Preview visual de distribución
+       - Calculadora de muestra necesaria
+     * **Paso 4: Segmentación** (opcional):
+       - Todos los usuarios o segmento específico
+       - Filtros: ubicación, plan, comportamiento
+     * **Paso 5: Programación**:
+       - Iniciar ahora o programar fecha
+       - Duración fija o hasta significancia estadística
+       - Auto-detener si hay ganador claro
+   - Barra de progreso de pasos
+   - Preview en tiempo real
+
+5. **TIPOS DE EXPERIMENTOS**
+   - Templates predefinidos:
+     * **Landing Page Test**:
+       - Variantes de diseño completo
+       - Headlines diferentes
+       - Imágenes hero
+     * **Email Subject Line**:
+       - Asuntos alternativos
+       - Preheaders
+       - Remitente
+     * **Pricing Test**:
+       - Diferentes precios
+       - Formas de presentar precio
+       - Descuentos
+     * **CTA Test**:
+       - Texto del botón
+       - Color
+       - Posición
+     * **Copy Test**:
+       - Descripciones de producto
+       - Beneficios destacados
+   - Usar template o crear desde cero
+
+6. **VISTA DE EXPERIMENTO ACTIVO**
+   - Dashboard en tiempo real:
+     * Gráfico de conversión por variante (líneas)
+     * Tabla comparativa:
+       - Visitantes por variante
+       - Conversiones (#)
+       - Tasa de conversión (%)
+       - Mejora vs control (+/- %)
+       - Significancia estadística (p-value)
+       - Intervalo de confianza
+     * Indicador visual de ganador (si existe)
+     * Progress bar de confianza estadística (95% target)
+   - Acciones:
+     * Pausar experimento
+     * Declarar ganador manualmente
+     * Extender duración
+     * Ajustar tráfico
+
+7. **SIGNIFICANCIA ESTADÍSTICA**
+   - Calculadora visual:
+     * Muestra actual vs muestra necesaria
+     * Progress bar de confianza
+     * Días restantes estimados
+     * Badge de estado:
+       - "Recolectando datos" (amarillo)
+       - "Resultados preliminares" (azul)
+       - "Significancia alcanzada" (verde)
+       - "No concluyente" (gris)
+   - Explicación simple de p-value
+   - Recomendaciones automáticas
+
+8. **ANÁLISIS DE RESULTADOS**
+   - Métricas detalladas por variante:
+     * Impresiones totales
+     * Visitantes únicos
+     * Clicks en CTA
+     * Conversiones
+     * Revenue generado (si aplica)
+     * Tiempo en página
+     * Bounce rate
+   - Gráficos comparativos:
+     * Funnel de conversión
+     * Evolución temporal (líneas)
+     * Distribución demográfica
+   - Segmentación de resultados:
+     * Por dispositivo (móvil/desktop)
+     * Por ubicación
+     * Por día de la semana
+     * Por hora del día
+
+9. **IMPLEMENTACIÓN DE GANADOR**
+   - Workflow de implementación:
+     * Declarar ganador (automático o manual)
+     * Preview del cambio
+     * Programar roll-out:
+       - Inmediato (100%)
+       - Gradual (10%, 25%, 50%, 100%)
+       - Programado (fecha específica)
+     * Confirmación y aplicación
+   - Notificación al equipo
+   - Documentación automática del cambio
+
+10. **HISTORIAL DE VARIANTES PROBADAS**
+    - Biblioteca de variantes pasadas:
+      * Elemento testeado (headline, CTA, imagen)
+      * Todas las variantes probadas
+      * Ganador histórico
+      * Mejora lograda
+      * Fecha del test
+    - Reutilizar variantes exitosas
+    - Evitar duplicar tests
+
+11. **ALERTAS Y RECOMENDACIONES (IA)**
+    - Sugerencias automáticas:
+      * "Test de precio puede aumentar ingresos 15%"
+      * "Headline actual tiene baja engagement, probar alternativas"
+      * "CTA 'Empieza gratis' convierte 20% más que 'Registrarse'"
+    - Alertas de experimentos:
+      * Variante perdiendo significativamente
+      * Experimento estancado (sin cambios en 7 días)
+      * Muestra insuficiente (extender duración)
+    - Ideas basadas en industria
+
+12. **CALENDARIO DE EXPERIMENTOS**
+    - Vista de calendario:
+      * Experimentos activos (marcados en fecha)
+      * Programados (futuro)
+      * Finalizados (pasado)
+      * Color por tipo de test
+    - Evitar solapamiento de tests en mismo elemento
+    - Planning de roadmap de optimización
+
+13. **INTEGRACIÓN CON ANALYTICS**
+    - Conexión con herramientas:
+      * Google Analytics
+      * Mixpanel
+      * Segment
+      * Custom events
+    - Mapeo de eventos:
+      * Conversión = X evento
+      * Click CTA = Y evento
+    - Validación de tracking
+
+14. **MULTIVARIATE TESTING**
+    - Tests de múltiples elementos simultáneos:
+      * Headline (3 variantes)
+      * Imagen (2 variantes)
+      * CTA (2 variantes)
+      * = 12 combinaciones totales
+    - Análisis de interacciones
+    - Identificar mejor combinación
+    - Calculadora de muestra necesaria (más alta)
+
+15. **DATOS MOCKEADOS**
+    - 10-15 experimentos en distintos estados
+    - Variantes con datos de conversión realistas
+    - Gráficos con evolución temporal
+    - Algunos tests con ganador claro
+    - Otros sin significancia aún
+    - Templates de distintos tipos
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente red-orange-yellow para hero
+- Cards de experimentos con badges de estado
+- Editor visual de variantes lado a lado
+- Gráficos de conversión en tiempo real (Recharts)
+- Progress bar de significancia estadística
+- Sliders de distribución de tráfico
+- Wizard de creación con steps visuales
+- Tabla comparativa con colores de ganador/perdedor
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatormax/tests-ab/tests-ab/experimentos](src/features/plancreatormax/tests-ab/tests-ab/experimentos).
+
+---
+
+## 📋 PROMPT 2: Historial de Experimentos
+
+Transforma completamente la página de Historial de Experimentos ([src/features/plancreatormax/tests-ab/tests-ab/historial-experimentos/HistorialExperimentosPage.tsx](src/features/plancreatormax/tests-ab/tests-ab/historial-experimentos/HistorialExperimentosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un archivo completo de experimentos pasados
+- Facilita el aprendizaje de tests previos
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Historial**
+   - Gradiente `from-amber-600 via-yellow-600 to-lime-600`
+   - Título "Historial de Experimentos"
+   - Descripción: "Aprende de tus tests anteriores"
+   - Icono de archivo/historial
+
+2. **ESTADÍSTICAS GENERALES** (4 cards)
+   - Total de Experimentos Realizados
+   - Tasa de Éxito (% con mejora)
+   - Mejora Acumulada de Conversión (%)
+   - Ingresos Incrementales Totales ($)
+   - Cards con glassmorphism
+
+3. **LÍNEA DE TIEMPO DE EXPERIMENTOS**
+   - Timeline cronológica:
+     * Card por experimento finalizado:
+       - Fecha de inicio y fin
+       - Nombre del test
+       - Tipo de experimento (badge)
+       - Elemento testeado
+       - Número de variantes probadas
+       - Resultado (ganador identificado o no concluyente)
+       - Mejora lograda (+X% conversión)
+       - Estado de implementación:
+         * Implementado (verde)
+         * Pendiente implementación (amarillo)
+         * Descartado (gris)
+     * Línea conectora vertical entre cards
+     * Click en card: expandir detalles
+   - Ordenar por: Fecha, Impacto, Tipo
+   - Filtros: Año, Tipo de test, Con/sin mejora
+
+4. **VISTA DETALLADA DE EXPERIMENTO**
+   - Modal o página expandida:
+     * **Información del test**:
+       - Nombre y descripción
+       - Hipótesis original
+       - Fechas (inicio, fin, duración)
+       - Objetivo del test
+     * **Variantes probadas**:
+       - Visual de cada variante (screenshot o descripción)
+       - Métricas finales por variante
+       - Tabla comparativa
+     * **Resultados estadísticos**:
+       - Ganador declarado (destacado)
+       - Significancia estadística alcanzada
+       - P-value, intervalo de confianza
+       - Mejora sobre control
+     * **Aprendizajes clave**:
+       - ¿Qué funcionó?
+       - ¿Qué no funcionó?
+       - Insights obtenidos
+       - Próximos pasos recomendados
+     * **Implementación**:
+       - Fecha de roll-out
+       - Porcentaje implementado
+       - Impacto post-implementación
+
+5. **ANÁLISIS DE TENDENCIAS**
+   - Dashboard analítico:
+     * Gráfico de mejora de conversión en el tiempo (líneas)
+     * Tipos de test más exitosos (barras)
+     * Elementos más optimizados (dona):
+       - Headlines
+       - CTAs
+       - Precios
+       - Imágenes
+       - Copy
+     * Tasa de éxito por tipo de test (%)
+   - Comparativa temporal (mes a mes, quarter)
+
+6. **APRENDIZAJES Y PATRONES**
+   - Biblioteca de insights:
+     * **Headlines ganadoras**:
+       - Lista de headlines que funcionaron
+       - Patrón común (urgencia, beneficio, pregunta)
+       - Ejemplos concretos
+     * **CTAs efectivos**:
+       - Textos de botones que convierten
+       - Colores preferidos
+       - Posición óptima
+     * **Precios óptimos**:
+       - Rangos de precio testeados
+       - Punto dulce identificado
+       - Elasticidad de precio
+     * **Segmentos respondientes**:
+       - Qué segmentos responden mejor a qué variantes
+       - Personalización por audiencia
+   - Exportar insights (PDF)
+
+7. **COMPARATIVA DE EXPERIMENTOS**
+   - Herramienta de comparación:
+     * Seleccionar 2-3 experimentos
+     * Lado a lado:
+       - Configuración
+       - Resultados
+       - Aprendizajes
+     * Identificar patrones comunes
+     * Recomendaciones basadas en comparación
+
+8. **EXPERIMENTOS FALLIDOS (LEARNINGS)**
+   - Sección especial para tests sin mejora:
+     * ¿Por qué falló?
+     * Hipótesis incorrecta
+     * Muestra insuficiente
+     * Implementación defectuosa
+   - Aprender del fracaso
+   - Evitar repetir errores
+   - Pivots sugeridos
+
+9. **EXPORTACIÓN Y REPORTES**
+   - Generar reportes:
+     * Reporte mensual de tests
+     * Reporte anual de optimización
+     * Presentación ejecutiva (PowerPoint template)
+     * Datos crudos (CSV/Excel)
+   - Personalizar contenido del reporte
+   - Compartir con equipo
+
+10. **BÚSQUEDA Y FILTROS AVANZADOS**
+    - Búsqueda inteligente:
+      * Por nombre de experimento
+      * Por elemento testeado (headline, CTA, etc.)
+      * Por resultado (exitoso/fallido)
+      * Por rango de mejora (>10%, >20%, etc.)
+      * Por fecha (última semana, mes, año)
+    - Filtros combinables (AND/OR)
+    - Guardar búsquedas frecuentes
+
+11. **CALENDARIO DE TESTS PASADOS**
+    - Vista de calendario histórico:
+      * Tests por mes/año
+      * Densidad de experimentación (heatmap)
+      * Períodos de alta/baja actividad
+      * Estacionalidad de resultados
+    - Identificar mejores momentos para testear
+
+12. **REPLICAR EXPERIMENTO**
+    - Acción rápida:
+      * Desde experimento pasado
+      * Botón "Replicar test"
+      * Precarga configuración
+      * Ajustar y lanzar nuevamente
+    - Útil para:
+      * Re-testear en nueva audiencia
+      * Validar resultados
+      * Testear variación de ganador previo
+
+13. **IMPACTO ACUMULADO**
+    - Métrica de valor agregado:
+      * Suma de todas las mejoras
+      * Conversiones adicionales totales
+      * Revenue incremental acumulado
+      * ROI de programa de optimización
+    - Gráfico de crecimiento acumulado
+    - Proyección de impacto futuro
+
+14. **DATOS MOCKEADOS**
+    - 30-50 experimentos históricos
+    - Variedad de tipos y resultados
+    - Algunos exitosos, otros fallidos
+    - Timeline de 6-12 meses
+    - Métricas realistas de conversión
+    - Screenshots/mockups de variantes
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente amber-yellow-lime para hero
+- Timeline vertical con línea conectora
+- Cards expandibles con hover
+- Badges de resultado (ganador/perdedor/no concluyente)
+- Gráficos de tendencias (Recharts)
+- Comparador visual lado a lado
+- Biblioteca de insights con iconos
+- Heatmap de calendario
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatormax/tests-ab/tests-ab/historial-experimentos](src/features/plancreatormax/tests-ab/tests-ab/historial-experimentos).
+
+---
+
+## 📋 PROMPT 3: Resultados de Tests
+
+Transforma completamente la página de Resultados de Tests ([src/features/plancreatormax/tests-ab/tests-ab/resultados-test/ResultadosTestPage.tsx](src/features/plancreatormax/tests-ab/tests-ab/resultados-test/ResultadosTestPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un dashboard completo de análisis de resultados
+- Facilita la toma de decisiones basada en datos
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Resultados**
+   - Gradiente `from-green-600 via-emerald-600 to-teal-600`
+   - Título "Resultados de Tests A/B"
+   - Descripción: "Decisiones basadas en datos estadísticamente significativos"
+   - Icono de gráfico/análisis
+
+2. **SELECTOR DE EXPERIMENTO**
+   - Dropdown elegante:
+     * Lista de experimentos activos/finalizados
+     * Preview con métricas clave
+     * Badge de estado
+     * Ordenar por: Fecha, Conversión, Significancia
+   - Filtros rápidos: Solo activos, Solo completados
+
+3. **OVERVIEW DEL EXPERIMENTO SELECCIONADO**
+   - Card destacado con:
+     * Nombre del experimento
+     * Estado (badge animado)
+     * Duración (días transcurridos)
+     * Tráfico total procesado
+     * Número de variantes
+     * Ganador actual (si existe)
+   - Glassmorphism con gradiente sutil
+
+4. **TABLA COMPARATIVA DE VARIANTES**
+   - Tabla profesional con:
+     * Columnas:
+       - Variante (nombre + visual preview)
+       - Visitantes únicos
+       - Conversiones (#)
+       - Tasa de conversión (%)
+       - Mejora vs Control (+/- %)
+       - Significancia estadística (badge)
+       - Intervalo de confianza (95%)
+       - Revenue (si aplica)
+     * Filas ordenables
+     * Row de control destacada (fondo sutil)
+     * Ganador con badge dorado y fondo verde sutil
+     * Perdedores con indicador visual
+   - Tooltip en encabezados explicando métricas
+
+5. **GRÁFICO DE CONVERSIÓN EN TIEMPO REAL**
+   - Gráfico de líneas (Recharts):
+     * Eje X: Tiempo (días/horas)
+     * Eje Y: Tasa de conversión (%)
+     * Una línea por variante (colores distintos)
+     * Leyenda interactiva (show/hide líneas)
+     * Punto actual destacado
+     * Área sombreada de intervalo de confianza
+   - Zoom y pan habilitados
+   - Exportar gráfico (PNG)
+
+6. **EMBUDO DE CONVERSIÓN**
+   - Funnel chart por variante:
+     * Paso 1: Impresiones
+     * Paso 2: Clicks/Visitantes
+     * Paso 3: Engagement (scroll, tiempo)
+     * Paso 4: Conversión
+   - Comparación lado a lado de variantes
+   - Identificar puntos de fuga (drop-off)
+   - Porcentaje de avance por paso
+
+7. **SIGNIFICANCIA ESTADÍSTICA**
+   - Panel destacado:
+     * Progress bar de confianza (0-100%)
+     * Nivel actual (ej: 87%)
+     * Target (95% o 99%)
+     * P-value explicado visualmente
+     * Tamaño de muestra:
+       - Actual
+       - Requerido para 95% confianza
+       - Días restantes estimados
+     * Badge de estado:
+       - "Recolectando datos" 📊
+       - "Preliminar" ⚠️
+       - "Significativo" ✅
+       - "Altamente significativo" 🌟
+   - Explicación simple en lenguaje no técnico
+
+8. **ANÁLISIS POR SEGMENTO**
+   - Desglose de resultados:
+     * **Por dispositivo**:
+       - Móvil vs Desktop vs Tablet
+       - Conversión por tipo
+       - Ganador puede variar por dispositivo
+     * **Por ubicación**:
+       - Top países/regiones
+       - Mapa de calor interactivo
+       - Conversión por geografía
+     * **Por hora del día**:
+       - Heatmap 24h
+       - Mejores horas para cada variante
+     * **Por día de la semana**:
+       - Lunes a Domingo
+       - Patrones de comportamiento
+     * **Por fuente de tráfico**:
+       - Orgánico, Paid, Directo, Social
+       - Conversión por canal
+   - Filtrar dashboard completo por segmento
+
+9. **DISTRIBUCIÓN DE TRÁFICO**
+   - Visualización de split actual:
+     * Gráfico de dona/pie
+     * Porcentaje por variante
+     * Visitantes únicos por variante
+     * Balance de distribución (¿equitativo?)
+   - Opción de ajustar distribución en caliente:
+     * Sliders por variante
+     * Enviar más tráfico a ganador
+     * Reducir tráfico a perdedor claro
+     * Confirmación de cambio
+
+10. **INTERVALO DE CONFIANZA**
+    - Visualización de rangos:
+      * Gráfico de barras con error bars
+      * Rango min-max por variante
+      * Solapamiento de intervalos (indica si hay diferencia real)
+    - Explicación visual:
+      * Si intervalos NO solapan → diferencia clara
+      * Si solapan → no concluyente aún
+
+11. **PROYECCIÓN DE IMPACTO**
+    - Calculadora de impacto futuro:
+      * Si implementamos ganador:
+        - Conversiones adicionales/mes
+        - Revenue incremental/mes
+        - Visitantes proyectados
+      * ROI estimado del test
+      * Payback period
+    - Escenarios: conservador, realista, optimista
+
+12. **RECOMENDACIONES AUTOMÁTICAS**
+    - Sistema de sugerencias IA:
+      * ✅ "Variante B ganando con 95% confianza → Implementar ya"
+      * ⏳ "Experimento necesita 3 días más para significancia"
+      * ⚠️ "Tráfico muy bajo → Extender duración o aumentar volumen"
+      * 🔄 "Sin diferencia significativa → Probar variantes más extremas"
+      * 🎯 "Segmento móvil prefiere Variante C → Considerar personalización"
+    - Acciones sugeridas (botones directos)
+
+13. **EXPORTACIÓN DE RESULTADOS**
+    - Múltiples formatos:
+      * **PDF profesional**:
+        - Resumen ejecutivo
+        - Gráficos incluidos
+        - Conclusiones y recomendaciones
+        - Branded con logo
+      * **PowerPoint**:
+        - Slides listas para presentar
+        - Visualizaciones claras
+      * **Excel/CSV**:
+        - Datos crudos
+        - Para análisis adicional
+      * **Imagen**:
+        - Gráficos individuales (PNG)
+    - Compartir vía email
+
+14. **DECLARAR GANADOR**
+    - Proceso guiado:
+      * Paso 1: Confirmar ganador (preview)
+      * Paso 2: Plan de implementación
+        - Inmediata (100%)
+        - Gradual (10% → 50% → 100%)
+        - Programada (fecha específica)
+      * Paso 3: Monitoreo post-implementación
+        - Tracking de 7 días
+        - Validar resultados se mantienen
+      * Paso 4: Cerrar experimento
+    - Notificaciones al equipo
+    - Documentación automática
+
+15. **DATOS MOCKEADOS**
+    - 5-10 experimentos con resultados
+    - Variantes con métricas realistas
+    - Algunos con ganador claro (>95% confianza)
+    - Otros en progreso (60-90% confianza)
+    - Algunos no concluyentes (<60%)
+    - Datos de segmentación simulados
+    - Gráficos con evolución temporal
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente green-emerald-teal para hero
+- Tabla con filas destacadas (ganador/control)
+- Gráficos de líneas interactivos (Recharts)
+- Funnel chart comparativo
+- Progress bar de significancia con gradiente
+- Badges de estado coloridos (significativo/no significativo)
+- Heatmaps de segmentación
+- Panel de recomendaciones con iconos
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatormax/tests-ab/tests-ab/resultados-test](src/features/plancreatormax/tests-ab/tests-ab/resultados-test).
+
+---
+
+## 📋 PROMPT 4: Catálogo de Productos (Tienda)
+
+Transforma completamente la página de Catálogo de Productos ([src/features/plancreatormax/tienda-merchandising/tienda-merchandising/catalogo-productos/CatalogoProductosPage.tsx](src/features/plancreatormax/tienda-merchandising/tienda-merchandising/catalogo-productos/CatalogoProductosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un catálogo completo de productos de merchandising
+- Facilita la gestión de inventario y variantes
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Catálogo**
+   - Gradiente `from-blue-600 via-indigo-600 to-purple-600`
+   - Título "Catálogo de Productos"
+   - Descripción: "Gestiona tu tienda de merchandising"
+   - Icono de tienda/productos
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Total de Productos
+   - Productos Activos/Publicados
+   - Valor Total del Inventario ($)
+   - Productos con Stock Bajo (alerta)
+   - Cards con glassmorphism
+
+3. **GRID DE PRODUCTOS**
+   - Galería visual de productos:
+     * Card por producto con:
+       - Imagen principal (hover: ver galería)
+       - Nombre del producto
+       - SKU
+       - Precio (destacado)
+       - Stock disponible
+       - Estado:
+         * Publicado (verde)
+         * Borrador (gris)
+         * Agotado (rojo)
+         * Programado (azul)
+       - Categoría (badge)
+       - Acciones rápidas (iconos):
+         * Editar
+         * Duplicar
+         * Ver en tienda
+         * Eliminar
+     * Hover: Lift + shadow
+     * Grid responsive (1-2-3-4 columnas)
+   - Botón "+ Agregar producto" (destacado)
+
+4. **FILTROS Y BÚSQUEDA**
+   - Panel de filtros lateral o superior:
+     * Búsqueda por nombre/SKU
+     * Categorías:
+       - Ropa (Camisetas, Sudaderas, Gorras)
+       - Accesorios (Botellas, Toallas, Mochilas)
+       - Equipo (Mancuernas, Bandas, Esterillas)
+       - Digital (eBooks, Programas)
+     * Estado (Publicado, Borrador, Agotado)
+     * Rango de precio (slider)
+     * Stock (Con stock, Stock bajo, Agotado)
+     * Ordenar por:
+       - Nombre (A-Z)
+       - Precio (bajo-alto, alto-bajo)
+       - Stock
+       - Más vendidos
+       - Recién agregados
+   - Clear all filters
+   - Resultados: "X productos encontrados"
+
+5. **CREACIÓN/EDICIÓN DE PRODUCTO**
+   - Modal o página dedicada con tabs:
+     * **Información General**:
+       - Nombre del producto
+       - Descripción corta (150 chars)
+       - Descripción larga (editor rico WYSIWYG)
+       - Categoría (dropdown)
+       - Tags (multi-select)
+       - SKU (auto-generado o manual)
+       - Código de barras (opcional)
+     * **Imágenes**:
+       - Upload múltiple (drag & drop)
+       - Galería con reorden (drag)
+       - Imagen principal (destacar)
+       - Hasta 10 imágenes
+       - Preview de cómo se verá en tienda
+     * **Precios e Inventario**:
+       - Precio regular ($)
+       - Precio de oferta (opcional)
+       - Porcentaje de descuento (calculado)
+       - Costo del producto (para márgenes)
+       - Margen de ganancia (% calculado)
+       - Stock total
+       - Alertar cuando stock < X unidades
+       - Permitir venta sin stock (backorder)
+     * **Variantes** (si aplica):
+       - Opciones (Talla, Color, Material)
+       - Matriz de variantes:
+         * Talla S/M/L/XL × Color Negro/Blanco/Azul
+         * = 12 variantes
+       - SKU individual por variante
+       - Precio por variante (override)
+       - Stock por variante
+       - Imagen por variante (opcional)
+     * **Envío**:
+       - Peso
+       - Dimensiones (L×W×H)
+       - Requiere envío (toggle)
+       - Tarifa de envío (gratis/fija/calculada)
+     * **SEO**:
+       - Meta título
+       - Meta descripción
+       - URL slug (editable)
+       - Alt text de imágenes
+   - Botones: Guardar borrador, Publicar, Cancelar
+   - Auto-save cada 30s
+
+6. **GESTIÓN DE VARIANTES**
+   - Constructor visual de variantes:
+     * Agregar opción (Talla, Color, etc.)
+     * Valores por opción (S, M, L)
+     * Tabla de todas las combinaciones
+     * Edición bulk:
+       - Aplicar precio a todas
+       - Aplicar stock a todas
+       - Aplicar SKU pattern
+   - Import/export de variantes (CSV)
+
+7. **CATEGORÍAS Y COLECCIONES**
+   - Gestión de categorías:
+     * Crear nueva categoría
+     * Jerarquía (categoría > subcategoría)
+     * Imagen de categoría
+     * Descripción
+     * SEO de categoría
+   - Colecciones especiales:
+     * "Novedades"
+     * "Más vendidos"
+     * "Ofertas"
+     * "Verano 2024"
+   - Asignar productos a colecciones
+
+8. **GESTIÓN DE INVENTARIO**
+   - Vista de stock:
+     * Tabla de productos con:
+       - Nombre
+       - SKU
+       - Stock actual
+       - Stock mínimo
+       - Estado (OK/Bajo/Agotado)
+     * Acciones:
+       - Ajustar stock (+/-)
+       - Registrar entrada de inventario
+       - Registrar salida (damaged, lost)
+   - Alertas automáticas:
+     * Email cuando stock < mínimo
+     * Dashboard notification
+   - Historial de movimientos:
+     * Fecha
+     * Tipo (entrada/salida/venta/ajuste)
+     * Cantidad
+     * Usuario
+     * Nota
+
+9. **IMPORTACIÓN/EXPORTACIÓN**
+   - Importar productos:
+     * Subir CSV
+     * Mapeo de columnas
+     * Preview de importación
+     * Validación de datos
+     * Confirmar y ejecutar
+   - Exportar catálogo:
+     * CSV completo
+     * Filtrado (solo seleccionados)
+     * Template para importación
+
+10. **VISTA PREVIA DE TIENDA**
+    - Preview de cómo se ve el producto:
+      * En página de producto individual
+      * En listado de categoría
+      * En resultados de búsqueda
+    - Dispositivos: Desktop, Tablet, Móvil
+    - Link directo a tienda pública
+
+11. **ACCIONES MASIVAS**
+    - Selección múltiple (checkboxes)
+    - Acciones bulk:
+      * Cambiar estado (publicar/ocultar)
+      * Cambiar categoría
+      * Aplicar descuento (%)
+      * Ajustar stock
+      * Eliminar (con confirmación)
+    - "Seleccionar todos" en página/filtro
+
+12. **ANÁLISIS DE PRODUCTOS**
+    - Métricas por producto:
+      * Vistas del producto
+      * Add to cart (%)
+      * Conversión (%)
+      * Revenue generado
+      * Margen de ganancia
+    - Ordenar por rendimiento
+    - Identificar productos estrella vs bajo rendimiento
+
+13. **RECOMENDACIONES Y UPSELLS**
+    - Configurar productos relacionados:
+      * "Sugeridos" (related)
+      * "Completa tu look" (cross-sell)
+      * "También te puede gustar" (upsell)
+    - Drag & drop para ordenar
+    - Auto-sugerencias basadas en categoría
+
+14. **DATOS MOCKEADOS**
+    - 30-50 productos variados:
+      * Ropa (camisetas, sudaderas, gorras)
+      * Accesorios (botellas, toallas, mochilas)
+      * Equipo (mancuernas, bandas, esterillas)
+      * Digital (programas, ebooks)
+    - Imágenes de productos (placeholders elegantes)
+    - Variantes (tallas y colores)
+    - Distintos estados y niveles de stock
+    - Precios variados ($10 - $200)
+    - Categorías organizadas
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente blue-indigo-purple para hero
+- Grid de productos con imágenes grandes
+- Cards con hover lift + shadow
+- Badges de estado coloridos (publicado/agotado)
+- Modal de edición con tabs
+- Tabla de variantes con edición inline
+- Upload zone con drag & drop
+- Preview de producto en mockup de tienda
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatormax/tienda-merchandising/tienda-merchandising/catalogo-productos](src/features/plancreatormax/tienda-merchandising/tienda-merchandising/catalogo-productos).
+
+---
+
+## 📋 PROMPT 5: Configuración de Tienda
+
+Transforma completamente la página de Configuración de Tienda ([src/features/plancreatormax/tienda-merchandising/tienda-merchandising/configuracion-tienda/ConfiguracionTiendaPage.tsx](src/features/plancreatormax/tienda-merchandising/tienda-merchandising/configuracion-tienda/ConfiguracionTiendaPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un panel completo de configuración de e-commerce
+- Facilita la personalización de la tienda online
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Configuración**
+   - Gradiente `from-purple-600 via-fuchsia-600 to-pink-600`
+   - Título "Configuración de Tienda"
+   - Descripción: "Personaliza la experiencia de compra"
+   - Icono de ajustes/configuración
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Estado de la Tienda (Activa/Inactiva)
+   - Métodos de Pago Configurados
+   - Zonas de Envío Activas
+   - Configuración Completa (%)
+   - Cards con glassmorphism
+
+3. **NAVEGACIÓN POR TABS**
+   - Tabs principales:
+     * General
+     * Pagos
+     * Envíos
+     * Impuestos
+     * Checkout
+     * Notificaciones
+     * Diseño
+   - Pills con iconos
+   - Indicador de sección activa
+   - Progress de completitud por sección
+
+4. **TAB: GENERAL**
+   - Información básica:
+     * **Nombre de la tienda**
+     * **Dominio/URL**:
+       - Subdominio (tunombre.miapp.com)
+       - Dominio custom (tienda.tudominio.com)
+       - Verificación de DNS
+     * **Logo de la tienda**:
+       - Upload (PNG/SVG)
+       - Preview en distintos tamaños
+     * **Favicon**:
+       - Upload (.ico o .png)
+       - Preview en tab del navegador
+     * **Información de contacto**:
+       - Email de contacto
+       - Teléfono
+       - Dirección física
+     * **Redes sociales**:
+       - Facebook, Instagram, Twitter URLs
+       - Preview de links en footer
+     * **Moneda**:
+       - Seleccionar (USD, EUR, MXN, etc.)
+       - Símbolo y posición ($100 vs 100$)
+     * **Idioma**:
+       - Principal (español, inglés)
+       - Multiidioma (toggle)
+   - Guardar cambios
+
+5. **TAB: PAGOS**
+   - Métodos de pago disponibles:
+     * **Tarjetas de crédito/débito**:
+       - Stripe (configurar API keys)
+       - PayPal (conectar cuenta)
+       - Mercado Pago (LATAM)
+       - Square
+       - Status: Conectado/No conectado (badge)
+     * **Transferencia bancaria**:
+       - Habilitar/Deshabilitar
+       - Instrucciones para cliente
+       - Datos bancarios
+       - Confirmación manual de pago
+     * **Pago contra entrega** (COD):
+       - Habilitar en ciertas zonas
+       - Recargo adicional (opcional)
+     * **Otros métodos**:
+       - Crypto (Bitcoin, Ethereum)
+       - Apple Pay / Google Pay
+       - Klarna (buy now, pay later)
+   - Configurar por método:
+     * API keys (input seguro)
+     * Modo: Test/Producción
+     * Países soportados
+     * Monedas aceptadas
+   - Test de conexión (botón)
+   - Status general: "3 de 5 métodos activos"
+
+6. **TAB: ENVÍOS**
+   - Configuración de envíos:
+     * **Zonas de envío**:
+       - Crear zona (ej: "España", "México", "Internacional")
+       - Países incluidos (multi-select)
+       - Tarifas por zona:
+         * Envío gratis (mínimo de compra)
+         * Tarifa fija ($5, $10, etc.)
+         * Calculado por peso/dimensiones
+         * Calculado por API (USPS, FedEx, DHL)
+       - Tiempo estimado de entrega (2-5 días)
+     * **Métodos de envío**:
+       - Estándar
+       - Express (24-48h)
+       - Retiro en tienda (pickup)
+     * **Configuración de carriers**:
+       - Integración con APIs de envío
+       - Tracking automático
+       - Impresión de etiquetas
+     * **Restricciones**:
+       - Productos no enviables (solo pickup)
+       - Peso máximo por paquete
+       - Zonas excluidas
+   - Calculadora de envío (preview)
+   - Tabla de todas las zonas y tarifas
+
+7. **TAB: IMPUESTOS**
+   - Configuración fiscal:
+     * **Habilitar cobro de impuestos** (toggle)
+     * **Tipo de impuesto**:
+       - IVA (Europa)
+       - Sales Tax (USA, por estado)
+       - GST (otros países)
+     * **Tasas de impuesto**:
+       - Por país/región
+       - Porcentaje (%)
+       - Productos exentos
+     * **Configuración USA**:
+       - Tax Jar integration (auto-cálculo)
+       - Nexus states (donde tienes presencia fiscal)
+       - Rates por estado/zip code
+     * **Configuración EU**:
+       - VIES validation (VAT numbers)
+       - OSS (One-Stop-Shop)
+       - Digital products (diferentes rates)
+     * **Mostrar precios**:
+       - Con impuestos incluidos
+       - Sin impuestos (se agregan en checkout)
+   - Calculadora de impuestos (preview)
+
+8. **TAB: CHECKOUT**
+   - Configuración del proceso de compra:
+     * **Pasos del checkout**:
+       - Single page (todo en una)
+       - Multi-step (shipping → payment → confirm)
+     * **Campos requeridos**:
+       - Email (obligatorio)
+       - Teléfono (opcional/obligatorio)
+       - Dirección línea 2 (opcional/obligatorio)
+       - Nota del pedido (habilitar/deshabilitar)
+     * **Opciones de cuenta**:
+       - Permitir checkout como invitado
+       - Crear cuenta durante checkout
+       - Requerir cuenta (login obligatorio)
+     * **Cupones y descuentos**:
+       - Habilitar campo de cupón
+       - Posición (antes/después de subtotal)
+     * **Gift cards** (tarjetas de regalo):
+       - Habilitar
+       - Campo de código
+     * **Términos y condiciones**:
+       - Checkbox obligatorio
+       - Link a términos
+       - Texto customizable
+     * **Marketing opt-in**:
+       - Checkbox para newsletter
+       - Texto del consentimiento
+   - Preview del checkout
+
+9. **TAB: NOTIFICACIONES**
+   - Emails automáticos:
+     * **Al cliente**:
+       - Confirmación de pedido
+       - Envío/tracking
+       - Entrega confirmada
+       - Cancelación/reembolso
+     * **Al administrador**:
+       - Nuevo pedido (alerta)
+       - Pago recibido
+       - Stock bajo
+     * **Recordatorios**:
+       - Carrito abandonado (1h, 24h, 72h)
+       - Review del producto (7 días post-compra)
+   - Configurar por email:
+     * Asunto (editable)
+     * Contenido (template editor)
+     * Variables dinámicas ({{order_number}}, {{customer_name}})
+     * Previsualización
+     * Enviar email de prueba
+     * Activar/Desactivar
+   - SMTP settings:
+     * Provider (SendGrid, Mailgun, etc.)
+     * API key
+     * From email
+     * From name
+
+10. **TAB: DISEÑO**
+    - Personalización visual:
+      * **Tema de la tienda**:
+        - Templates predefinidos (5-10 opciones)
+        - Preview visual de cada tema
+        - Cambiar tema (aplicar)
+      * **Colores de marca**:
+        - Color primario (picker)
+        - Color secundario (picker)
+        - Color de acento (picker)
+        - Botones (color y estilo)
+        - Preview en mockup
+      * **Tipografía**:
+        - Fuente de encabezados (Google Fonts)
+        - Fuente de cuerpo
+        - Tamaños (S/M/L)
+      * **Layout**:
+        - Ancho del contenedor (boxed/full)
+        - Espaciado (compact/normal/spacious)
+      * **Header**:
+        - Estilo (sticky/normal)
+        - Menú principal (items y orden)
+        - Carrito de compras (posición)
+      * **Footer**:
+        - Columnas (1-4)
+        - Links de navegación
+        - Redes sociales
+        - Newsletter signup
+      * **Página de inicio**:
+        - Hero section (slider/video/imagen)
+        - Secciones destacadas (productos, colecciones)
+        - Testimonios
+        - Instagram feed
+    - Live preview (iframe de tienda)
+    - Guardar y publicar cambios
+
+11. **TAB: AVANZADO**
+    - Configuraciones técnicas:
+      * **Analytics**:
+        - Google Analytics ID
+        - Facebook Pixel
+        - Google Tag Manager
+      * **SEO Global**:
+        - Meta título de la tienda
+        - Meta descripción
+        - Open Graph image
+        - Twitter Card
+      * **Scripts personalizados**:
+        - Header scripts (tracking)
+        - Footer scripts (chat, etc.)
+      * **Política de privacidad**:
+        - Editor de texto o upload
+        - URL de política
+      * **Términos y condiciones**:
+        - Editor o upload
+        - URL de términos
+      * **Cookies (GDPR)**:
+        - Habilitar banner de cookies
+        - Personalizar mensaje
+        - Políticas de cookies
+
+12. **PREVISUALIZACIÓN EN VIVO**
+    - Iframe de tienda:
+      * Ver cambios en tiempo real
+      * Navegar por la tienda
+      * Cambiar entre páginas:
+        - Home
+        - Categoría
+        - Producto
+        - Carrito
+        - Checkout (preview)
+      * Dispositivos (desktop/tablet/móvil)
+    - Botón "Ver tienda en nueva pestaña"
+
+13. **ESTADO DE CONFIGURACIÓN**
+    - Checklist de completitud:
+      * ✅ Información general
+      * ✅ Método de pago activo
+      * ✅ Zona de envío configurada
+      * ⏳ Impuestos pendientes
+      * ✅ Diseño personalizado
+    - Progress bar general (0-100%)
+    - Sugerencias de pasos faltantes
+
+14. **DATOS MOCKEADOS**
+    - Configuraciones pre-llenadas
+    - Métodos de pago simulados (Stripe, PayPal)
+    - 3-5 zonas de envío
+    - Templates de emails
+    - Temas de diseño con previews
+    - Colores de marca de ejemplo
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente purple-fuchsia-pink para hero
+- Tabs con pills animados
+- Cards de configuración por sección
+- Toggle switches elegantes
+- Color pickers integrados
+- Upload zones con preview
+- Iframe de preview con controles
+- Progress bar de completitud
+- Badges de estado (conectado/desconectado)
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatormax/tienda-merchandising/tienda-merchandising/configuracion-tienda](src/features/plancreatormax/tienda-merchandising/tienda-merchandising/configuracion-tienda).
+
+---
+
+## 📋 PROMPT 6: Pedidos de Clientes
+
+Transforma completamente la página de Pedidos de Clientes ([src/features/plancreatormax/tienda-merchandising/tienda-merchandising/pedidos-clientes/PedidosClientesPage.tsx](src/features/plancreatormax/tienda-merchandising/tienda-merchandising/pedidos-clientes/PedidosClientesPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema completo de gestión de pedidos
+- Facilita el seguimiento y procesamiento de órdenes
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Pedidos**
+   - Gradiente `from-cyan-600 via-blue-600 to-indigo-600`
+   - Título "Gestión de Pedidos"
+   - Descripción: "Procesa y entrega con eficiencia"
+   - Icono de paquete/pedido
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Pedidos Pendientes
+   - Pedidos en Proceso
+   - Revenue Hoy ($)
+   - Tiempo Promedio de Entrega
+   - Cards con glassmorphism
+
+3. **TABLA DE PEDIDOS**
+   - Lista completa con:
+     * **Columnas**:
+       - # Pedido (link al detalle)
+       - Fecha y hora
+       - Cliente (nombre + avatar)
+       - Items (# productos)
+       - Total ($)
+       - Método de pago (icono)
+       - Estado:
+         * Pendiente (amarillo)
+         * Procesando (azul)
+         * Enviado (púrpura)
+         * Entregado (verde)
+         * Cancelado (rojo)
+         * Reembolsado (gris)
+       - Método de envío
+       - Acciones (dropdown):
+         * Ver detalles
+         * Actualizar estado
+         * Imprimir factura
+         * Imprimir etiqueta de envío
+         * Contactar cliente
+         * Reembolsar
+         * Cancelar
+     * Filas con colores sutiles por estado
+     * Ordenar por columna
+     * Paginación
+   - Búsqueda rápida (# pedido, cliente, email)
+
+4. **FILTROS AVANZADOS**
+   - Panel de filtros:
+     * Estado del pedido (multi-select)
+     * Rango de fechas (date picker)
+     * Método de pago
+     * Método de envío
+     * Rango de total ($min - $max)
+     * Cliente específico
+   - Filtros activos (pills con X para quitar)
+   - "Clear all"
+   - Guardar filtro favorito
+
+5. **VISTA DETALLADA DE PEDIDO**
+   - Modal o página expandida:
+     * **Header del pedido**:
+       - # Pedido grande
+       - Fecha y hora
+       - Estado actual (badge animado)
+       - Acciones rápidas (botones)
+     * **Timeline de estado**:
+       - Visual con iconos:
+         * Pedido recibido ✅
+         * Pago confirmado ✅
+         * En preparación ✅
+         * Enviado ⏳
+         * En tránsito ⏳
+         * Entregado ⏳
+       - Fecha/hora de cada paso
+       - Línea conectora con progreso
+     * **Información del cliente**:
+       - Nombre completo
+       - Email (con botón copiar)
+       - Teléfono (con botón llamar)
+       - Dirección de envío (con mapa)
+       - Dirección de facturación (si diferente)
+       - Nota del cliente (si existe)
+     * **Items del pedido**:
+       - Tabla de productos:
+         * Imagen (thumbnail)
+         * Nombre del producto
+         * Variante (talla, color)
+         * SKU
+         * Cantidad
+         * Precio unitario
+         * Subtotal
+       - Cálculo de totales:
+         * Subtotal
+         * Envío
+         * Impuestos
+         * Descuentos (si aplica)
+         * **Total** (destacado)
+     * **Información de pago**:
+       - Método usado (icono + texto)
+       - Estado del pago (Pagado/Pendiente)
+       - ID de transacción
+       - Fecha de pago
+       - Recibo (link para descargar PDF)
+     * **Información de envío**:
+       - Método de envío
+       - Carrier (FedEx, USPS, etc.)
+       - Número de tracking (con link)
+       - Fecha estimada de entrega
+       - Dirección de entrega (verificada)
+     * **Historial de actividad**:
+       - Log de acciones:
+         * Fecha/hora
+         * Acción (creado, pagado, enviado, etc.)
+         * Usuario que realizó acción
+         * Notas
+   - Botones de acción principales
+
+6. **ACTUALIZACIÓN DE ESTADO**
+   - Workflow de cambio de estado:
+     * Seleccionar nuevo estado (dropdown)
+     * Agregar nota interna (opcional)
+     * Notificar al cliente (toggle)
+       - Preview del email
+       - Personalizar mensaje
+     * Confirmar cambio
+   - Tracking de quién y cuándo cambió estado
+   - Estados automáticos (ej: Pagado → En preparación)
+
+7. **PROCESAMIENTO DE ENVÍO**
+   - Panel de fulfillment:
+     * Verificar dirección (validación)
+     * Seleccionar carrier
+     * Método de envío
+     * Generar etiqueta de envío:
+       - Integración con ShipStation, Shippo
+       - Imprimir etiqueta (PDF)
+       - QR code para escanear
+     * Ingresar tracking number
+     * Marcar como enviado
+   - Envío masivo (seleccionar múltiples pedidos)
+   - Imprimir packing slips
+
+8. **GESTIÓN DE REEMBOLSOS**
+   - Proceso de reembolso:
+     * Razón del reembolso (dropdown):
+       - Cliente lo solicitó
+       - Producto defectuoso
+       - Artículo equivocado
+       - No llegó a tiempo
+       - Otro (especificar)
+     * Monto a reembolsar:
+       - Total completo
+       - Parcial (especificar $)
+     * Método de reembolso:
+       - Mismo método de pago original
+       - Gift card / crédito de tienda
+       - Transferencia manual
+     * Inventario:
+       - Regresar items a stock (toggle)
+     * Notificar cliente (email automático)
+     * Confirmar reembolso
+   - Tracking de reembolsos procesados
+   - Reportes de reembolsos
+
+9. **COMUNICACIÓN CON CLIENTE**
+   - Enviar mensaje:
+     * Templates predefinidos:
+       - Confirmación de pedido
+       - Actualización de envío
+       - Solicitud de review
+       - Disculpa por retraso
+       - Seguimiento post-entrega
+     * Personalizar mensaje
+     * Adjuntar archivos (facturas, imágenes)
+     * Enviar por:
+       - Email
+       - SMS (si habilitado)
+   - Historial de comunicación
+   - Respuestas del cliente (inbox)
+
+10. **FACTURACIÓN Y DOCUMENTOS**
+    - Generar documentos:
+      * **Factura**:
+        - PDF profesional
+        - Logo de la tienda
+        - Detalles fiscales
+        - Descargar o enviar por email
+      * **Packing slip**:
+        - Lista de items incluidos
+        - Sin precios (para incluir en paquete)
+      * **Etiqueta de devolución**:
+        - Pre-pagada (si aplica)
+        - Instrucciones de devolución
+      * **Recibo de regalo**:
+        - Sin precios
+        - Mensaje personalizado
+    - Templates customizables
+    - Imprimir en batch
+
+11. **PEDIDOS PROBLEMÁTICOS**
+    - Alertas especiales:
+      * Pago fallido (badge rojo)
+      * Dirección inválida (validar)
+      * Producto agotado después de pedido
+      * Retraso en envío (>X días)
+      * Cliente solicitó cancelación
+    - Vista filtrada de problemas
+    - Acciones sugeridas por problema
+    - Priorizar resolución
+
+12. **ANÁLISIS DE PEDIDOS**
+    - Dashboard analítico:
+      * Gráfico de pedidos por día/semana/mes (barras)
+      * Ticket promedio ($) evolución (líneas)
+      * Productos más vendidos (tabla)
+      * Métodos de pago más usados (dona)
+      * Estados de pedidos (distribución)
+      * Zonas de envío más frecuentes (mapa)
+    - Comparativa temporal
+    - Exportar reportes
+
+13. **ACCIONES MASIVAS**
+    - Selección múltiple (checkboxes)
+    - Acciones bulk:
+      * Cambiar estado (ej: todos a "Enviado")
+      * Marcar como pagados
+      * Asignar a carrier
+      * Imprimir etiquetas (batch)
+      * Exportar a CSV
+      * Enviar email masivo
+    - Confirmación antes de ejecutar
+
+14. **EXPORTACIÓN**
+    - Exportar pedidos:
+      * CSV completo
+      * Filtrado (solo seleccionados)
+      * Por rango de fechas
+      * Campos customizables (elegir columnas)
+    - Formatos:
+      * Excel
+      * CSV
+      * PDF (reporte)
+    - Programar exportación automática (diaria/semanal)
+
+15. **DATOS MOCKEADOS**
+    - 50-100 pedidos simulados
+    - Distintos estados (pendiente, enviado, entregado)
+    - Variedad de productos
+    - Clientes con nombres/avatares
+    - Direcciones de envío variadas
+    - Métodos de pago diversos
+    - Algunos con problemas (alertas)
+    - Historial de actividad por pedido
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente cyan-blue-indigo para hero
+- Tabla con filas coloridas por estado
+- Modal de detalle amplio con tabs
+- Timeline de estado con iconos
+- Badges de estado animados
+- Mapa de dirección de entrega
+- Cards de información del cliente
+- Botones de acción destacados
+- Alertas de problemas coloridas
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatormax/tienda-merchandising/tienda-merchandising/pedidos-clientes](src/features/plancreatormax/tienda-merchandising/tienda-merchandising/pedidos-clientes).
+
+---
+
+## 📋 PROMPT 7: Informes de Ventas
+
+Transforma completamente la página de Informes de Ventas ([src/features/plancreatormax/tienda-merchandising/tienda-merchandising/informes-ventas/InformesVentasPage.tsx](src/features/plancreatormax/tienda-merchandising/tienda-merchandising/informes-ventas/InformesVentasPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un dashboard completo de analytics de ventas
+- Facilita la visualización de métricas clave del negocio
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Informes**
+   - Gradiente `from-green-600 via-teal-600 to-cyan-600`
+   - Título "Informes de Ventas"
+   - Descripción: "Analiza el rendimiento de tu tienda"
+   - Icono de gráfico/analytics
+
+2. **SELECTOR DE PERÍODO**
+   - Filtro temporal destacado:
+     * Quick filters (pills):
+       - Hoy
+       - Ayer
+       - Últimos 7 días
+       - Últimos 30 días
+       - Este mes
+       - Mes anterior
+       - Este año
+       - Custom (date range picker)
+     * Comparar con período anterior (toggle)
+   - Actualización automática de todas las métricas
+
+3. **MÉTRICAS PRINCIPALES** (8 cards en grid)
+   - **Ingresos Totales**:
+     * Monto ($)
+     * Cambio vs período anterior (+/- %)
+     * Gráfico sparkline de tendencia
+   - **Pedidos**:
+     * Número total
+     * Cambio vs anterior
+     * Promedio por día
+   - **Ticket Promedio**:
+     * Valor ($)
+     * Cambio vs anterior
+     * Distribución (min-max)
+   - **Tasa de Conversión**:
+     * Porcentaje (%)
+     * Cambio vs anterior
+     * Visitantes vs compradores
+   - **Productos Vendidos**:
+     * Unidades totales
+     * Cambio vs anterior
+     * Top 3 más vendidos
+   - **Nuevos Clientes**:
+     * Cantidad
+     * Cambio vs anterior
+     * % de clientes nuevos vs recurrentes
+   - **Reembolsos**:
+     * Monto ($)
+     * % del revenue
+     * Número de reembolsos
+   - **Margen de Ganancia**:
+     * Porcentaje (%)
+     * Ganancia neta ($)
+     * Cambio vs anterior
+   - Cards con glassmorphism
+   - Iconos representativos
+   - Colores según positivo/negativo
+
+4. **GRÁFICO DE INGRESOS**
+   - Gráfico principal (grande):
+     * Tipo seleccionable:
+       - Líneas (evolución temporal)
+       - Barras (comparativa)
+       - Área (acumulado)
+     * Eje X: Tiempo (días/semanas/meses)
+     * Eje Y: Ingresos ($)
+     * Línea de tendencia (opcional)
+     * Comparativa con período anterior (línea punteada)
+     * Tooltip al hacer hover:
+       - Fecha
+       - Ingresos exactos
+       - Pedidos del día
+       - Ticket promedio
+     * Zoom y pan
+   - Exportar gráfico (PNG/PDF)
+
+5. **PRODUCTOS MÁS VENDIDOS**
+   - Tabla/Cards de top productos:
+     * Top 10-20 productos
+     * Información por producto:
+       - Imagen thumbnail
+       - Nombre
+       - Unidades vendidas
+       - Revenue generado ($)
+       - % del total de ventas
+       - Margen de ganancia
+     * Barra visual de participación
+     * Ordenar por: ventas, revenue, margen
+   - Ver producto (link)
+   - Exportar lista
+
+6. **ANÁLISIS POR CATEGORÍA**
+   - Distribución de ventas:
+     * Gráfico de dona/pie:
+       - Categorías de productos
+       - % de participación
+       - Revenue por categoría
+     * Tabla complementaria:
+       - Categoría
+       - Productos vendidos
+       - Revenue
+       - Margen
+       - Crecimiento vs anterior
+   - Click en segmento: filtrar dashboard por categoría
+
+7. **FUENTES DE TRÁFICO Y CONVERSIÓN**
+   - Análisis de canales:
+     * Gráfico de barras horizontales:
+       - Orgánico (SEO)
+       - Directo
+       - Redes sociales (FB, IG, TW)
+       - Email marketing
+       - Paid ads (Google, Facebook)
+       - Referidos
+       - Otros
+     * Métricas por canal:
+       - Visitantes
+       - Conversión (%)
+       - Revenue
+       - ROI (si hay costo)
+   - Identificar mejor canal
+   - Sugerencias de optimización
+
+8. **GEOGRAFÍA DE VENTAS**
+   - Análisis por ubicación:
+     * Mapa de calor interactivo:
+       - Países/regiones
+       - Intensidad = revenue
+       - Hover: ver datos
+     * Tabla de top países:
+       - País (con bandera)
+       - Pedidos
+       - Revenue
+       - Ticket promedio
+       - % del total
+     * Zoom en regiones específicas
+   - Identificar oportunidades de expansión
+
+9. **ANÁLISIS TEMPORAL**
+   - Patrones de compra:
+     * **Por día de la semana**:
+       - Gráfico de barras (L-D)
+       - Mejor día de ventas
+       - Peor día
+     * **Por hora del día**:
+       - Heatmap 24h
+       - Picos de actividad
+       - Horarios óptimos para promociones
+     * **Estacionalidad**:
+       - Gráfico anual (12 meses)
+       - Temporadas altas/bajas
+       - Proyección siguiente año
+   - Insights automáticos
+
+10. **CLIENTES Y RETENCIÓN**
+    - Análisis de clientes:
+      * **Clientes nuevos vs recurrentes**:
+        - Gráfico de área apilada
+        - % de cada tipo
+        - Revenue por tipo
+      * **Frecuencia de compra**:
+        - 1 compra, 2-3, 4-5, 6+
+        - Distribución (gráfico de barras)
+      * **Customer Lifetime Value (CLV)**:
+        - Promedio ($)
+        - Top 10 clientes VIP
+        - Proyección de valor
+      * **Tasa de retorno**:
+        - % de clientes que recompran
+        - Días promedio entre compras
+      * **Churn rate**:
+        - % de clientes perdidos
+        - Tendencia temporal
+    - Segmentación RFM (Recency, Frequency, Monetary)
+
+11. **RENDIMIENTO DE PROMOCIONES**
+    - Análisis de cupones y descuentos:
+      * Tabla de cupones activos:
+        - Código
+        - Tipo (%, $)
+        - Uso (#)
+        - Revenue generado
+        - Descuento total aplicado
+        - ROI
+      * Efectividad:
+        - Conversión con cupón vs sin cupón
+        - Ticket promedio con/sin cupón
+      * Mejores cupones (mayor ROI)
+    - Sugerencias de promociones futuras
+
+12. **MÉTODOS DE PAGO**
+    - Distribución de pagos:
+      * Gráfico de dona:
+        - Tarjeta de crédito
+        - PayPal
+        - Transferencia
+        - Otros
+      * % de uso por método
+      * Revenue por método
+      * Tasa de éxito (pagos completados vs fallidos)
+    - Costos de procesamiento por método
+    - Recomendaciones de optimización
+
+13. **PROYECCIONES Y FORECASTING**
+    - Predicción de ventas:
+      * Basado en histórico (IA/ML)
+      * Próximos 7, 30, 90 días
+      * Escenarios:
+        - Conservador (- 10%)
+        - Realista (tendencia)
+        - Optimista (+ 15%)
+      * Gráfico de proyección (línea punteada)
+    - Alcance de objetivos:
+      * Meta mensual ($)
+      * Progreso actual (%)
+      * Proyección de cumplimiento
+      * Días/ventas faltantes
+
+14. **REPORTES EXPORTABLES**
+    - Generar reportes:
+      * Formatos:
+        - PDF profesional (con gráficos)
+        - Excel (datos crudos)
+        - CSV
+        - PowerPoint (presentación)
+      * Contenido customizable:
+        - Métricas a incluir
+        - Gráficos seleccionados
+        - Período de tiempo
+      * Programar envío automático:
+        - Diario (resumen)
+        - Semanal (dashboard)
+        - Mensual (completo)
+        - Destinatarios (email)
+    - Template profesional con branding
+
+15. **COMPARATIVAS Y BENCHMARKS**
+    - Comparar períodos:
+      * Mes actual vs mes anterior
+      * Q1 vs Q2 vs Q3 vs Q4
+      * Año actual vs año anterior
+      * Tabla de comparación
+      * Gráficos lado a lado
+    - Benchmarks de industria:
+      * Conversión promedio sector (%)
+      * Ticket promedio
+      * Retención típica
+      * Tu posición vs promedio
+
+16. **DATOS MOCKEADOS**
+    - 6-12 meses de datos históricos
+    - Ingresos diarios variados ($500 - $5000)
+    - 50-100 productos vendidos
+    - 10-20 categorías
+    - Distintos métodos de pago
+    - Múltiples países
+    - Cupones con uso
+    - Mix de clientes nuevos/recurrentes
+    - Gráficos con tendencias realistas
+    - Proyecciones futuras
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente green-teal-cyan para hero
+- Cards de métricas con sparklines
+- Gráficos interactivos (Recharts)
+- Mapa de calor geográfico
+- Tabla de productos con imágenes
+- Dona charts coloridos
+- Barras de progreso de objetivos
+- Badges de comparación (+/- %)
+- Timeline de ventas
+- Exportación con iconos de formatos
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatormax/tienda-merchandising/tienda-merchandising/informes-ventas](src/features/plancreatormax/tienda-merchandising/tienda-merchandising/informes-ventas).
+
+---
+
+## 📋 PROMPT 8: Experimentos A/B (Base)
+
+Transforma completamente la página de Experimentos A/B Base ([src/features/experimentos-ab/ExperimentosABPage.tsx](src/features/experimentos-ab/ExperimentosABPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea una versión simplificada de experimentos A/B para el tier básico
+- Facilita tests sencillos sin toda la complejidad del tier avanzado
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Tests A/B**
+   - Gradiente `from-orange-600 via-amber-600 to-yellow-600`
+   - Título "Experimentos A/B"
+   - Descripción: "Optimiza con tests simples y efectivos"
+   - Icono de test/experimento
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Tests Activos
+   - Tests Completados
+   - Mejor Mejora Lograda (%)
+   - Tests Este Mes
+   - Cards con glassmorphism
+
+3. **LISTA DE EXPERIMENTOS ACTIVOS**
+   - Cards de experimentos simples:
+     * Nombre del test
+     * Tipo (Headline, CTA, Imagen)
+     * Estado (Activo/Completado)
+     * Fecha de inicio
+     * Variantes (A vs B)
+     * Conversión actual:
+       - Variante A: X%
+       - Variante B: Y%
+       - Diferencia (+/- %)
+     * Progress de confianza (simple)
+     * Acción: Ver resultados, Pausar
+   - Máximo 5 tests activos (limitación tier básico)
+   - "+ Crear nuevo test" (si no hay límite alcanzado)
+
+4. **CREADOR SIMPLE DE TEST**
+   - Wizard básico (3 pasos):
+     * **Paso 1: ¿Qué quieres testear?**:
+       - Opciones:
+         * Headline (título)
+         * Call-to-Action (botón)
+         * Imagen principal
+       - Objetivo: Clicks, Conversiones
+     * **Paso 2: Crea tus variantes**:
+       - Variante A (Original):
+         * Input de texto o upload de imagen
+       - Variante B (Nueva):
+         * Input de texto o upload de imagen
+       - Preview lado a lado
+     * **Paso 3: Lanzar test**:
+       - Duración sugerida (7-14 días)
+       - Confirmar y activar
+   - Sin opciones de segmentación avanzada
+   - Distribución automática 50/50
+
+5. **RESULTADOS SIMPLES**
+   - Vista de resultados básica:
+     * Comparación A vs B:
+       - Métrica principal (conversión %)
+       - Visitantes por variante
+       - Conversiones (#)
+     * Ganador indicado (si hay suficiente data)
+     * Recomendación simple:
+       - "Variante B está ganando por 15%"
+       - "Continuar test 3 días más"
+       - "No hay diferencia clara, probar algo distinto"
+   - Gráfico simple de barras (A vs B)
+   - Botón "Aplicar ganador"
+
+6. **TEMPLATES PREDEFINIDOS**
+   - Tests pre-configurados:
+     * "Test de Headline Motivacional":
+       - Original vs variante sugerida
+     * "Test de CTA Color":
+       - Azul vs Verde
+     * "Test de Imagen Hero":
+       - Persona vs Producto
+   - Click para usar template
+   - Personalizar y lanzar
+
+7. **HISTORIAL BÁSICO**
+   - Lista de tests pasados:
+     * Nombre
+     * Ganador
+     * Mejora lograda (%)
+     * Fecha
+   - Click: ver detalles simples
+   - Máximo últimos 10 tests
+
+8. **LIMITACIONES DEL TIER**
+   - Indicadores visuales:
+     * "Máximo 5 tests activos" (badge)
+     * "Upgrade para tests ilimitados" (CTA)
+     * "Solo 2 variantes A/B" (vs multivariate)
+     * "Sin segmentación avanzada"
+   - Comparación con tier Pro (tabla)
+
+9. **DATOS MOCKEADOS**
+   - 3-5 tests activos
+   - 5-10 tests completados
+   - Métricas simples
+   - Algunos con ganador claro
+   - Otros en progreso
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente orange-amber-yellow para hero
+- Cards simples y limpios
+- Wizard de 3 pasos visual
+- Comparación A vs B lado a lado
+- Gráfico de barras básico
+- Badges de limitación
+- CTA de upgrade destacado
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/experimentos-ab](src/features/experimentos-ab).
+
+---
+
+# 📝 NOTAS GENERALES
+
+## ⚠️ IMPORTANTE:
+1. **SIEMPRE** revisar [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md) antes de empezar
+2. **NO CREAR NUEVOS ARCHIVOS** - Solo editar existentes
+3. Usar **TypeScript** correctamente
+4. Implementar **framer-motion** para animaciones
+5. Incluir **Lucide React** para iconos
+6. Datos **mockeados realistas**
+7. **Responsive** completo (mobile-first)
+8. **Código limpio** y bien comentado
+
+## Checklist de Estilización:
+- [ ] `rounded-3xl` para cards principales
+- [ ] `bg-white/80 backdrop-blur-xl` para glassmorphism
+- [ ] `border border-white/50` para definición
+- [ ] Gradientes de 3 colores en headers
+- [ ] Animaciones de entrada con framer-motion
+- [ ] `whileHover` para interactividad
+- [ ] `shadow-xl` y `hover:shadow-2xl`
+- [ ] Gráficos con Recharts (cuando aplique)
+- [ ] Progress bars con gradientes animados
+
+---
+
+**Versión:** 1.0
+**Fecha:** Enero 2025
+**Sistema de Diseño:** Moderno con Glassmorphism
+**Área:** Tests A/B y Tienda Merchandising (PlanCreatorMax)

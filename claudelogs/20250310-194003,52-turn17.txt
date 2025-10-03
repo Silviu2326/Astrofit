@@ -1,0 +1,18 @@
+﻿
+
+Ô£à M├│dulo "Permisos de Entrenadores" estilizado completamente. He aplicado los estilos de GUIA_ESTILOS_UI.md a todos los archivos:
+
+**Archivos editados:**
+
+1. **PermisosEntrenadoresPage.tsx** - Hero section con gradiente indigo-purple-pink, badges informativos y layout con grid animado
+2. **MatrizPermisos.tsx** - Tabla glassmorphism con toggles estilizados, badges de estado (Activo/Bloqueado), header con gradiente y bot├│n de guardar cambios
+3. **GestorRoles.tsx** - Cards de roles con badges de nivel de acceso (admin, moderator, read)
+4. **AuditoriaAccesos.tsx** - Timeline de logs con badges de estado (exitoso, alerta, error)
+5. **PlantillasPermisos.tsx** - Lista de plantillas con bot├│n "Aplicar" y estrella para populares
+6. **PermisosGranulares.tsx** - Lista de permisos con toggles y m├│dulos
+7. **HerenciaPermisos.tsx** - Visualizaci├│n de herencia con flechas y badges
+8. **AlertasSeguridad.tsx** - Alertas cr├¡ticas, warning e info con iconos y badges
+9. **AprobacionMultinivel.tsx** - Sistema de aprobaci├│n con niveles conectados visualmente
+10. **LogsAcceso.tsx** - Tabla de logs con filtros y bot├│n de descarga
+
+Todos los componentes incluyen glassmorphism, gradientes, badges estilizados, animaciones con framer-motion y efectos hover.

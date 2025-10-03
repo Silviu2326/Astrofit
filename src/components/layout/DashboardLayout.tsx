@@ -208,6 +208,10 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onLogout }) =>
   const [activePage, setActivePage] = useState('inicio');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true); // Siempre inicia colapsada
 
+  const handleToggleSidebar = () => {
+    setSidebarCollapsed(!sidebarCollapsed);
+  };
+
   const renderPage = () => {
     switch (activePage) {
       case 'inicio':
@@ -602,20 +606,20 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onLogout }) =>
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50/20 to-pink-50/20">
       <Sidebar
         activePage={activePage}
         onPageChange={setActivePage}
         collapsed={sidebarCollapsed}
-        onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
+        onToggleCollapse={handleToggleSidebar}
       />
-      
+
       <div className="transition-all duration-500">
         <Header
           onLogout={onLogout}
-          onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
+          onToggleSidebar={handleToggleSidebar}
         />
-        
+
         <main className="p-6">
           {renderPage()}
         </main>

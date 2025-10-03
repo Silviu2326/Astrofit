@@ -1,9 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, BarChart3, DollarSign, Sparkles } from 'lucide-react';
-import DashboardVentas from './components/DashboardVentas';
+import SelectorPeriodo from './components/SelectorPeriodo';
+import MetricasPrincipales from './components/MetricasPrincipales';
+import GraficoIngresos from './components/GraficoIngresos';
 import TopProductos from './components/TopProductos';
 import AnalisisMargen from './components/AnalisisMargen';
+import AnalisisCategoria from './components/AnalisisCategoria';
+import FuentesTrafico from './components/FuentesTrafico';
+import GeografiaVentas from './components/GeografiaVentas';
+import AnalisisTemporal from './components/AnalisisTemporal';
+import ClientesRetencion from './components/ClientesRetencion';
+import MetodosPago from './components/MetodosPago';
+import ProyeccionesForecasting from './components/ProyeccionesForecasting';
 import TendenciasVenta from './components/TendenciasVenta';
 
 const InformesVentasPage: React.FC = () => {
@@ -14,7 +23,7 @@ const InformesVentasPage: React.FC = () => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="relative overflow-hidden bg-gradient-to-r from-green-500 via-teal-500 to-cyan-500 rounded-3xl shadow-2xl mb-8 p-8 md:p-12"
+        className="relative overflow-hidden bg-gradient-to-r from-green-600 via-teal-600 to-cyan-600 rounded-3xl shadow-2xl mb-8 p-8 md:p-12"
       >
         {/* Efectos de fondo animados */}
         <div className="absolute inset-0 opacity-10">
@@ -45,7 +54,7 @@ const InformesVentasPage: React.FC = () => {
 
           {/* Descripción */}
           <p className="text-xl md:text-2xl text-emerald-100 max-w-3xl leading-relaxed">
-            Analytics completo de ventas, productos más vendidos y <span className="font-bold text-white px-2 py-1 bg-white/20 rounded-lg backdrop-blur-sm">proyecciones</span> de tendencias
+            Analiza el rendimiento de tu tienda con <span className="font-bold text-white px-2 py-1 bg-white/20 rounded-lg backdrop-blur-sm">analytics completo</span> y proyecciones inteligentes
           </p>
 
           {/* Indicadores pills */}
@@ -56,26 +65,56 @@ const InformesVentasPage: React.FC = () => {
             </div>
             <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
               <DollarSign className="w-5 h-5 text-yellow-300" />
-              <span className="text-sm font-semibold text-white">Proyecciones Inteligentes</span>
+              <span className="text-sm font-semibold text-white">Proyecciones con IA</span>
             </div>
             <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
               <Sparkles className="w-5 h-5 text-cyan-300" />
-              <span className="text-sm font-semibold text-white">Tendencias Avanzadas</span>
+              <span className="text-sm font-semibold text-white">Insights Avanzados</span>
             </div>
           </div>
         </div>
       </motion.div>
 
+      {/* Selector de Período */}
+      <SelectorPeriodo />
+
+      {/* Métricas Principales - 8 Cards */}
+      <MetricasPrincipales />
+
+      {/* Gráfico Principal de Ingresos */}
+      <GraficoIngresos />
+
       {/* Grid de Componentes */}
       <div className="space-y-8">
-        <DashboardVentas />
-
+        {/* Top Productos y Análisis de Margen */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <TopProductos />
           <AnalisisMargen />
         </div>
 
-        <TendenciasVenta />
+        {/* Análisis por Categoría y Fuentes de Tráfico */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <AnalisisCategoria />
+          <FuentesTrafico />
+        </div>
+
+        {/* Geografía de Ventas */}
+        <GeografiaVentas />
+
+        {/* Análisis Temporal */}
+        <AnalisisTemporal />
+
+        {/* Clientes y Retención */}
+        <ClientesRetencion />
+
+        {/* Métodos de Pago y Tendencias */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <MetodosPago />
+          <TendenciasVenta />
+        </div>
+
+        {/* Proyecciones y Forecasting */}
+        <ProyeccionesForecasting />
       </div>
     </div>
   );

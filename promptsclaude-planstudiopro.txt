@@ -1,0 +1,2150 @@
+# 🚀 PROMPTS DE ESTILIZACIÓN - PLANSTUDIOPRO
+
+---
+
+## 📋 PROMPT 1: Calendario de Clases
+
+Transforma completamente la página de Calendario de Clases ([src/features/planstudiopro/gestion-clases/gestion-clases/CalendarioClasesPage.tsx](src/features/planstudiopro/gestion-clases/gestion-clases/CalendarioClasesPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema completo de gestión de clases para estudios fitness
+- Facilita la creación y organización de horarios de clases
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Calendario de Clases**
+   - Gradiente `from-blue-600 via-cyan-600 to-teal-600`
+   - Título "Calendario de Clases"
+   - Descripción: "Organiza y gestiona tu horario de clases grupales"
+   - Icono de calendario animado
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Clases Programadas Hoy
+   - Clases Esta Semana
+   - Total de Reservas Hoy
+   - Capacidad Promedio Ocupada (%)
+   - Cards con glassmorphism
+
+3. **VISTA DE CALENDARIO**
+   - Múltiples vistas seleccionables:
+     * **Vista Día**:
+       - Timeline vertical (6am - 10pm)
+       - Slots cada 30 min
+       - Clases como bloques con:
+         * Nombre de la clase (ej: "CrossFit WOD")
+         * Horario (9:00 - 10:00 AM)
+         * Coach asignado (con avatar)
+         * Capacidad (15/20)
+         * Estado (confirmada/cancelada)
+         * Sala/Área
+       - Color por tipo de clase
+       - Click: ver detalles/editar
+     * **Vista Semana**:
+       - Grid de 7 columnas (L-D)
+       - Bloques de clases apilados
+       - Vista compacta con info esencial
+       - Scroll horizontal en móvil
+     * **Vista Mes**:
+       - Calendario tradicional
+       - Indicadores de número de clases por día
+       - Color coding por tipo
+       - Click en día: ver clases del día
+   - Navegación:
+     * Botones ← Hoy →
+     * Date picker para saltar a fecha
+     * Botones de vista (Día/Semana/Mes)
+
+4. **CREAR/EDITAR CLASE**
+   - Modal o panel lateral con formulario:
+     * **Información Básica**:
+       - Nombre de la clase (dropdown de tipos predefinidos)
+       - Tipo de clase:
+         * CrossFit WOD
+         * Yoga
+         * Spinning
+         * Funcional
+         * Zumba
+         * Pilates
+         * HIIT
+         * Personalizado
+       - Descripción breve
+       - Nivel (Principiante/Intermedio/Avanzado)
+     * **Horario**:
+       - Fecha (date picker)
+       - Hora de inicio (time picker)
+       - Duración (30min, 45min, 60min, 90min)
+       - Hora de fin (auto-calculada)
+     * **Capacidad y Ubicación**:
+       - Capacidad máxima (slider 1-50)
+       - Sala/Área (dropdown: Sala 1, Sala 2, Área Funcional)
+       - Permitir lista de espera (toggle)
+     * **Coach**:
+       - Seleccionar coach (dropdown con avatares)
+       - Coach sustituto (opcional)
+     * **Recurrencia**:
+       - Una sola vez
+       - Recurrente:
+         * Frecuencia (Diaria/Semanal/Mensual)
+         * Días de la semana (checkboxes L-D)
+         * Repetir hasta (fecha o # de ocurrencias)
+       - Excepciones (fechas a excluir)
+     * **Configuración Avanzada**:
+       - Tiempo límite de reserva (hasta X horas antes)
+       - Permitir cancelación (hasta X horas antes)
+       - Visible para miembros (toggle)
+       - Requiere pase específico (dropdown)
+   - Preview de la clase
+   - Botones: Guardar, Guardar y duplicar, Cancelar
+
+5. **TIPOS DE CLASE Y COLOR CODING**
+   - Sistema de colores por tipo:
+     * CrossFit: Rojo/Naranja
+     * Yoga: Verde/Teal
+     * Spinning: Azul/Cyan
+     * Funcional: Púrpura
+     * Zumba: Rosa/Fucsia
+     * Pilates: Lavanda
+     * HIIT: Amarillo/Naranja
+   - Leyenda visual en esquina
+   - Filtrar por tipo (multi-select)
+
+6. **DETALLES DE CLASE (Vista Expandida)**
+   - Modal al hacer click en clase:
+     * **Header**:
+       - Nombre de la clase (grande)
+       - Badge de tipo (colorido)
+       - Horario completo
+       - Estado (Confirmada/Llena/Cancelada)
+     * **Información del Coach**:
+       - Avatar grande
+       - Nombre
+       - Especialidad
+       - Rating/Estrellas
+       - Botón "Ver perfil"
+     * **Detalles**:
+       - Descripción de la clase
+       - Nivel de dificultad
+       - Equipo necesario (lista con iconos)
+       - Duración
+       - Calorías promedio quemadas
+       - Músculos trabajados
+     * **Capacidad y Reservas**:
+       - Progress bar visual (15/20)
+       - Lista de participantes inscritos:
+         * Avatar
+         * Nombre
+         * Estado de pase (activo)
+         * Acción: Remover
+       - Lista de espera (si existe)
+       - Botón "Ver todos los inscritos"
+     * **Acciones**:
+       - Editar clase
+       - Cancelar clase (con confirmación)
+       - Duplicar clase
+       - Enviar recordatorio a inscritos
+       - Tomar asistencia (si es hoy)
+       - Registrar como completada
+
+7. **GESTIÓN DE RESERVAS**
+   - Agregar participante manualmente:
+     * Buscar miembro (autocomplete)
+     * Seleccionar y confirmar
+     * Validar disponibilidad de pase
+   - Remover participante:
+     * Confirmación
+     * Notificar al miembro (opcional)
+     * Liberar espacio
+   - Lista de espera:
+     * Promover automáticamente cuando haya espacio
+     * Notificación automática
+
+8. **CANCELACIÓN DE CLASES**
+   - Proceso de cancelación:
+     * Razón de cancelación (dropdown):
+       - Coach enfermo
+       - Baja asistencia
+       - Mantenimiento de instalaciones
+       - Evento especial
+       - Otro (especificar)
+     * Notificar a inscritos (toggle)
+       - Preview del mensaje
+       - Email y/o push notification
+     * Opciones para inscritos:
+       - Crédito automático
+       - Transferir a otra clase
+     * Confirmar cancelación
+   - Clases canceladas marcadas en calendario (gris con tachado)
+
+9. **CLASES RECURRENTES**
+   - Gestión de series:
+     * Editar una ocurrencia:
+       - Solo esta clase
+       - Esta y futuras
+       - Toda la serie
+     * Visualización de serie:
+       - Badge "Recurrente"
+       - Icono de repetición
+       - Tooltip con patrón de recurrencia
+     * Excepciones resaltadas
+
+10. **FILTROS Y BÚSQUEDA**
+    - Panel de filtros:
+      * Buscar por nombre de clase
+      * Tipo de clase (multi-select)
+      * Coach (multi-select)
+      * Sala/Área
+      * Nivel de dificultad
+      * Estado (Confirmada/Cancelada/Llena)
+      * Horario:
+        - Mañana (6am-12pm)
+        - Tarde (12pm-6pm)
+        - Noche (6pm-10pm)
+    - Filtros activos (pills)
+    - Clear all
+
+11. **ASISTENCIA RÁPIDA**
+    - Para clases de hoy o pasadas:
+      * Vista de lista de inscritos
+      * Checkboxes de asistencia
+      * Marcar todos presentes
+      * Agregar no-inscritos (walk-ins)
+      * Notas por participante
+      * Guardar asistencia
+    - Estadísticas post-clase:
+      * % de asistencia
+      * No-shows
+      * Walk-ins
+
+12. **PLANTILLAS DE CLASE**
+    - Guardar configuración como plantilla:
+      * Nombre de plantilla
+      * Tipo, duración, capacidad guardados
+      * Descripción pre-llenada
+      * Coach preferido
+    - Crear clase desde plantilla:
+      * Seleccionar plantilla
+      * Ajustar fecha/hora
+      * Confirmar y crear
+    - Biblioteca de plantillas editables
+
+13. **VISTA DE COACH**
+    - Filtro especial "Mis clases":
+      * Solo clases asignadas al coach logueado
+      * Vista semanal personal
+      * Estadísticas de asistencia
+      * Próximas clases destacadas
+
+14. **CONFLICTOS Y VALIDACIONES**
+    - Detección automática de conflictos:
+      * Coach asignado a 2 clases simultáneas
+      * Sala ocupada en mismo horario
+      * Sobrecapacidad
+    - Alertas visuales:
+      * Badge de advertencia
+      * Tooltip explicando conflicto
+      * Sugerencias de resolución
+    - Prevenir guardado si hay conflictos críticos
+
+15. **EXPORTACIÓN E IMPRESIÓN**
+    - Exportar calendario:
+      * PDF (vista semana/mes)
+      * Excel (lista de clases)
+      * iCal/Google Calendar (sync)
+    - Imprimir horario:
+      * Vista imprimible optimizada
+      * Logo del estudio
+      * Rango de fechas seleccionable
+
+16. **DATOS MOCKEADOS**
+    - 30-50 clases distribuidas en el mes
+    - Variedad de tipos (CrossFit, Yoga, Spinning, etc.)
+    - 5-10 coaches con nombres y avatares
+    - Clases con distintos niveles de ocupación
+    - Algunas recurrentes, otras únicas
+    - Algunas canceladas
+    - Lista de espera en clases populares
+    - Mix de horarios (mañana, tarde, noche)
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente blue-cyan-teal para hero
+- Calendario con grid limpio y espaciado
+- Bloques de clase con color coding por tipo
+- Hover: lift + shadow en bloques
+- Modal de detalles amplio y visual
+- Progress bar de capacidad
+- Avatares de coaches y participantes
+- Badges de estado coloridos
+- Date/time pickers elegantes
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiopro/gestion-clases/gestion-clases](src/features/planstudiopro/gestion-clases/gestion-clases).
+
+---
+
+## 📋 PROMPT 2: Reservas de Clase
+
+Transforma completamente la página de Reservas de Clase ([src/features/planstudiopro/gestion-clases/reservas-clase/ReservasClasePage.tsx](src/features/planstudiopro/gestion-clases/reservas-clase/ReservasClasePage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema completo para gestionar reservas de miembros
+- Facilita la reserva y cancelación de clases
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Reservas**
+   - Gradiente `from-purple-600 via-fuchsia-600 to-pink-600`
+   - Título "Gestión de Reservas"
+   - Descripción: "Administra las inscripciones a tus clases"
+   - Icono de ticket/reserva
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Reservas Hoy
+   - Reservas Pendientes
+   - Cancelaciones Hoy
+   - Tasa de No-Show (%)
+   - Cards con glassmorphism
+
+3. **TABLA DE RESERVAS**
+   - Lista completa con columnas:
+     * Fecha y Hora
+     * Clase (nombre + tipo badge)
+     * Miembro (avatar + nombre)
+     * Coach
+     * Estado:
+       - Confirmada (verde)
+       - En espera (amarillo)
+       - Cancelada (rojo)
+       - Completada (azul)
+       - No-show (gris)
+     * Fecha de reserva
+     * Acciones (dropdown):
+       - Ver detalles
+       - Cancelar
+       - Marcar como no-show
+       - Contactar miembro
+   - Paginación
+   - Ordenar por columna
+
+4. **FILTROS AVANZADOS**
+   - Panel de filtros:
+     * Rango de fechas
+     * Estado de reserva (multi-select)
+     * Tipo de clase
+     * Coach
+     * Miembro (buscar)
+     * Método de reserva (app/web/presencial)
+   - Filtros activos (pills con X)
+   - Guardar filtro favorito
+   - Clear all
+
+5. **VISTA DETALLADA DE RESERVA**
+   - Modal expandido:
+     * **Información de la reserva**:
+       - ID de reserva (#12345)
+       - Estado (badge grande)
+       - Fecha de creación
+       - Método de reserva (icono)
+     * **Información de la clase**:
+       - Nombre y tipo
+       - Fecha y horario completo
+       - Coach con avatar
+       - Ubicación/Sala
+       - Link a detalles de clase
+     * **Información del miembro**:
+       - Avatar grande
+       - Nombre completo
+       - Email y teléfono
+       - Tipo de pase
+       - Créditos restantes
+       - Historial de asistencia (últimas 5)
+       - Link a perfil completo
+     * **Timeline de eventos**:
+       - Reserva creada (fecha/hora)
+       - Recordatorios enviados
+       - Cambios de estado
+       - Asistencia registrada
+     * **Acciones disponibles**:
+       - Cancelar reserva
+       - Marcar asistencia
+       - Mover a otra clase
+       - Contactar miembro
+       - Ver pase del miembro
+
+6. **CREAR RESERVA MANUALMENTE**
+   - Wizard de reserva:
+     * **Paso 1: Seleccionar miembro**:
+       - Búsqueda con autocomplete
+       - Ver tipo de pase y créditos
+       - Validar elegibilidad
+     * **Paso 2: Seleccionar clase**:
+       - Mini calendario
+       - Lista de clases disponibles
+       - Filtros (tipo, coach, horario)
+       - Ver disponibilidad en tiempo real
+     * **Paso 3: Confirmar**:
+       - Resumen de reserva
+       - Usar crédito o pago adicional
+       - Enviar confirmación (toggle)
+       - Finalizar reserva
+   - Validaciones automáticas
+
+7. **CANCELACIÓN DE RESERVAS**
+   - Flujo de cancelación:
+     * Razón de cancelación:
+       - Miembro solicitó
+       - Clase cancelada
+       - No-show
+       - Cambio de horario
+       - Otro
+     * Política de cancelación:
+       - Dentro de límite: reembolso total
+       - Fuera de límite: sin reembolso
+       - Indicador visual de tiempo restante
+     * Acción de créditos:
+       - Devolver crédito
+       - No devolver (late cancellation)
+       - Penalizar (múltiples no-shows)
+     * Notificar al miembro (toggle)
+     * Confirmar cancelación
+   - Historial de cancelaciones
+
+8. **LISTA DE ESPERA**
+   - Gestión de espera:
+     * Vista de clases con lista de espera
+     * Lista de miembros en espera:
+       - Posición en fila
+       - Fecha de ingreso a espera
+       - Contacto
+       - Acción: Promover manualmente
+     * Auto-promoción:
+       - Cuando se libera espacio
+       - Notificación automática
+       - Tiempo para confirmar (24h)
+       - Si no confirma, siguiente en lista
+   - Configuración de lista de espera por clase
+
+9. **NO-SHOWS Y PENALIZACIONES**
+   - Marcar no-show:
+     * Confirmación
+     * Aplicar penalización (opcional):
+       - Deducir crédito extra
+       - Agregar a contador de no-shows
+       - Suspender reservas si >3 no-shows
+     * Notificar al miembro
+   - Reportes de no-shows:
+     * Miembros con más no-shows
+     * Clases con más no-shows
+     * Tendencias por día/hora
+
+10. **RESERVAS RECURRENTES**
+    - Crear serie de reservas:
+      * Seleccionar clase recurrente
+      * Reservar todas las ocurrencias
+      * O seleccionar fechas específicas
+      * Validar créditos suficientes
+    - Gestionar serie:
+      * Cancelar una ocurrencia
+      * Cancelar todas
+      * Ver estado de cada reserva
+
+11. **CHECK-IN RÁPIDO**
+    - Para clases de hoy:
+      * Vista de lista de reservas
+      * Botón de check-in grande
+      * Marcar todos presentes
+      * Agregar walk-ins sin reserva
+      * Estadísticas en tiempo real:
+        - Checked-in
+        - Pendientes
+        - No-shows
+
+12. **COMUNICACIÓN CON MIEMBROS**
+    - Enviar mensajes:
+      * Templates predefinidos:
+        - Confirmación de reserva
+        - Recordatorio (24h antes)
+        - Clase cancelada
+        - Cambio de horario/coach
+        - Invitación a dejar review
+      * Personalizar mensaje
+      * Enviar por email/SMS/push
+    - Historial de comunicaciones
+
+13. **POLÍTICAS DE RESERVA**
+    - Configuración de reglas:
+      * Tiempo máximo de anticipación (ej: 30 días)
+      * Tiempo mínimo de anticipación (ej: 2 horas)
+      * Límite de cancelación (ej: 12 horas antes)
+      * Máximo de reservas simultáneas por miembro
+      * Penalización por no-show
+      * Límite de lista de espera
+    - Aplicación automática de políticas
+
+14. **REPORTES DE RESERVAS**
+    - Dashboard analítico:
+      * Reservas por día/semana/mes (gráfico)
+      * Tasa de ocupación promedio
+      * Cancelaciones vs confirmadas
+      * No-shows por período
+      * Clases más/menos reservadas
+      * Horarios pico
+      * Métodos de reserva más usados
+    - Exportar reportes (PDF/Excel)
+
+15. **BÚSQUEDA Y ACCIONES MASIVAS**
+    - Búsqueda avanzada:
+      * Por miembro, clase, fecha, estado
+      * Guardar búsquedas
+    - Acciones en batch:
+      * Selección múltiple
+      * Cancelar todas
+      * Enviar recordatorio masivo
+      * Exportar selección
+      * Marcar asistencia en lote
+
+16. **DATOS MOCKEADOS**
+    - 100-200 reservas variadas
+    - Distintos estados (confirmada, espera, cancelada)
+    - Mix temporal (pasadas, hoy, futuras)
+    - Variedad de miembros y clases
+    - Algunas en lista de espera
+    - Historial de no-shows
+    - Timeline de eventos por reserva
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente purple-fuchsia-pink para hero
+- Tabla con filas coloridas por estado
+- Badges de estado animados
+- Modal de detalle amplio
+- Timeline vertical de eventos
+- Progress bar de tiempo de cancelación
+- Cards de miembro con avatar
+- Check-in rápido con botones grandes
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiopro/gestion-clases/reservas-clase](src/features/planstudiopro/gestion-clases/reservas-clase).
+
+---
+
+## 📋 PROMPT 3: Gestión de Coaches
+
+Transforma completamente la página de Gestión de Coaches ([src/features/planstudiopro/gestion-clases/gestion-coach/GestionCoachPage.tsx](src/features/planstudiopro/gestion-clases/gestion-coach/GestionCoachPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema completo para administrar instructores
+- Facilita la gestión de horarios, especialidades y rendimiento
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Coaches**
+   - Gradiente `from-indigo-600 via-purple-600 to-pink-600`
+   - Título "Gestión de Coaches"
+   - Descripción: "Administra tu equipo de instructores"
+   - Icono de usuario/coach
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Total de Coaches
+   - Coaches Activos Hoy
+   - Rating Promedio
+   - Clases Impartidas Este Mes
+   - Cards con glassmorphism
+
+3. **GRID DE COACHES**
+   - Galería de coaches (cards):
+     * Avatar grande (imagen de perfil)
+     * Nombre completo
+     * Especialidades (badges):
+       - CrossFit
+       - Yoga
+       - Spinning
+       - etc.
+     * Rating/Estrellas (⭐⭐⭐⭐⭐)
+     * Estado:
+       - Activo (verde)
+       - Inactivo (gris)
+       - Ausente (naranja)
+     * Estadísticas rápidas:
+       - Clases este mes
+       - Alumnos totales
+       - Años de experiencia
+     * Próxima clase programada
+     * Acciones (iconos):
+       - Ver perfil
+       - Editar
+       - Ver horario
+       - Enviar mensaje
+   - Hover: lift + shadow
+   - Grid responsive (1-2-3-4 columnas)
+   - Botón "+ Agregar nuevo coach"
+
+4. **PERFIL COMPLETO DE COACH**
+   - Modal o página dedicada:
+     * **Header del perfil**:
+       - Avatar grande (editable)
+       - Nombre y apellidos
+       - Badge de estado
+       - Botón "Editar perfil"
+     * **Información Personal**:
+       - Email (con botón copiar)
+       - Teléfono (con botón llamar)
+       - Fecha de nacimiento
+       - Dirección
+       - Fecha de contratación
+       - Tipo de contrato (empleado/freelance)
+     * **Especialidades y Certificaciones**:
+       - Lista de tipos de clase que puede impartir
+       - Certificaciones (con fecha de vencimiento):
+         * CPR/First Aid
+         * Certificación CrossFit Level 1
+         * RYT 200 Yoga
+         * Spinning Instructor
+         * etc.
+       - Habilidades especiales
+     * **Disponibilidad**:
+       - Horario semanal (grid L-D × horas)
+       - Días/horas disponibles (editable)
+       - Días libres/vacaciones
+       - Preferencias de horario
+     * **Estadísticas de Rendimiento**:
+       - Total de clases impartidas
+       - Promedio de asistencia
+       - Rating promedio (estrellas)
+       - Feedback de alumnos (últimos 10)
+       - Tendencia de rating (gráfico)
+     * **Historial de Clases**:
+       - Lista de clases pasadas (últimas 20)
+       - Clases futuras programadas
+       - Clases canceladas
+     * **Compensación** (si aplica):
+       - Tarifa por clase
+       - Bonos/comisiones
+       - Historial de pagos
+
+5. **CREAR/EDITAR COACH**
+   - Formulario con tabs:
+     * **Datos Personales**:
+       - Nombre y apellidos
+       - Email
+       - Teléfono
+       - Fecha de nacimiento
+       - Género
+       - Dirección completa
+       - Foto de perfil (upload)
+     * **Información Profesional**:
+       - Fecha de inicio
+       - Tipo de contrato (dropdown)
+       - Estado (activo/inactivo)
+       - Especialidades (multi-select):
+         * Lista de tipos de clase
+         * Nivel de experticia (Básico/Intermedio/Experto)
+       - Bio/Descripción (textarea)
+       - Años de experiencia
+       - Redes sociales (Instagram, Facebook, etc.)
+     * **Certificaciones**:
+       - Agregar certificación:
+         * Nombre de certificación
+         * Institución emisora
+         * Fecha de obtención
+         * Fecha de vencimiento (opcional)
+         * Archivo PDF (upload)
+       - Lista de certificaciones con estado:
+         * Vigente (verde)
+         * Por vencer (amarillo)
+         * Vencida (rojo)
+     * **Disponibilidad**:
+       - Grid de horarios (L-D × 6am-10pm)
+       - Click para marcar disponible/no disponible
+       - Copiar horario de otro día
+       - Plantillas de disponibilidad
+     * **Compensación**:
+       - Tarifa por clase ($)
+       - Bono por asistencia (%)
+       - Comisión por venta de pases (%)
+       - Método de pago preferido
+   - Validación de campos
+   - Auto-save
+   - Botones: Guardar, Guardar y crear otro, Cancelar
+
+6. **HORARIO SEMANAL DEL COACH**
+   - Vista de calendario individual:
+     * Grid semanal (L-D)
+     * Clases asignadas como bloques
+     * Disponibilidad marcada en fondo
+     * Horas libres vs ocupadas
+     * Conflictos resaltados (clase fuera de disponibilidad)
+   - Arrastrar y soltar para reasignar clases
+   - Filtrar por semana
+   - Exportar horario (PDF/iCal)
+
+7. **ASIGNACIÓN DE CLASES**
+   - Asignar coach a clase:
+     * Ver disponibilidad del coach
+     * Ver especialidades compatibles
+     * Ver carga actual de clases
+     * Confirmar asignación
+   - Sustituciones:
+     * Coach original no disponible
+     * Buscar sustituto disponible:
+       - Misma especialidad
+       - Disponible en horario
+       - Ordenar por compatibilidad
+     * Notificar a alumnos del cambio
+
+8. **RATINGS Y FEEDBACK**
+   - Sistema de calificación:
+     * Estrellas (1-5)
+     * Comentarios de alumnos
+     * Fecha de review
+     * Clase en la que fue el review
+   - Vista de todos los reviews:
+     * Ordenar por fecha/rating
+     * Filtrar por clase
+     * Responder a reviews (opcional)
+   - Estadísticas de rating:
+     * Promedio general
+     * Desglose por tipo de clase
+     * Evolución temporal (gráfico)
+     * Comparativa con otros coaches
+
+9. **GESTIÓN DE AUSENCIAS**
+   - Registrar ausencia:
+     * Tipo:
+       - Vacaciones
+       - Enfermedad
+       - Personal
+       - Capacitación
+     * Fecha de inicio y fin
+     * Requiere sustituto (toggle)
+     * Notas internas
+   - Calendario de ausencias:
+     * Vista de todos los coaches
+     * Fechas ocupadas/libres
+     * Planificación de rotaciones
+   - Notificaciones automáticas
+
+10. **CERTIFICACIONES Y RENOVACIONES**
+    - Dashboard de certificaciones:
+      * Todas las certificaciones del equipo
+      * Estado (vigente/por vencer/vencida)
+      * Alertas:
+        - 30 días antes de vencer
+        - Vencida (alerta roja)
+      * Acciones:
+        - Subir renovación
+        - Enviar recordatorio al coach
+        - Marcar en proceso
+    - Reportes de compliance
+
+11. **ANÁLISIS DE RENDIMIENTO**
+    - Métricas por coach:
+      * Asistencia promedio a clases
+      * Tasa de cancelación de clases
+      * Puntualidad
+      * Feedback score
+      * Retención de alumnos
+      * Clases impartidas por mes
+    - Gráficos comparativos:
+      * Top 5 coaches (por rating)
+      * Evolución de clases por coach
+      * Distribución de especialidades
+    - Identificar coaches estrella vs que necesitan apoyo
+
+12. **COMUNICACIÓN CON COACHES**
+    - Enviar mensajes:
+      * Individual o grupal
+      * Templates:
+        - Recordatorio de clase
+        - Cambio de horario
+        - Nuevo protocolo/política
+        - Felicitación por buen rating
+      * Adjuntar archivos
+      * Email y/o SMS
+    - Historial de comunicaciones
+    - Anuncios generales
+
+13. **GESTIÓN DE PAGOS (si aplica)**
+    - Resumen de compensación:
+      * Clases impartidas este mes
+      * Cálculo de pago:
+        - Tarifa × clases
+        - Bonos
+        - Comisiones
+        - Total a pagar
+      * Historial de pagos:
+        - Fecha
+        - Monto
+        - Método
+        - Recibo (PDF)
+    - Exportar para nómina
+
+14. **FILTROS Y BÚSQUEDA**
+    - Filtros:
+      * Estado (activo/inactivo)
+      * Especialidad
+      * Disponibilidad (disponible hoy/esta semana)
+      * Rating (≥4 estrellas, etc.)
+      * Certificación específica
+    - Búsqueda por nombre
+    - Ordenar por: nombre, rating, clases, antigüedad
+
+15. **EXPORTACIÓN E IMPRESIÓN**
+    - Exportar lista de coaches (Excel/CSV)
+    - Imprimir perfiles
+    - Directorio de coaches (PDF):
+      * Foto
+      * Nombre
+      * Especialidades
+      * Contacto
+    - Horarios semanales (PDF)
+
+16. **DATOS MOCKEADOS**
+    - 8-15 coaches variados
+    - Nombres, fotos de avatar
+    - Variedad de especialidades
+    - Ratings entre 3.5-5 estrellas
+    - Certificaciones con estados diversos
+    - Horarios de disponibilidad
+    - Clases asignadas pasadas y futuras
+    - Feedback de alumnos
+    - Algunos activos, algunos inactivos
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente indigo-purple-pink para hero
+- Grid de cards con avatares grandes
+- Estrellas para rating (⭐)
+- Badges de especialidades coloridos
+- Modal de perfil amplio con tabs
+- Grid de disponibilidad interactivo
+- Timeline de clases
+- Gráficos de rendimiento (Recharts)
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiopro/gestion-clases/gestion-coach](src/features/planstudiopro/gestion-clases/gestion-coach).
+
+---
+
+## 📋 PROMPT 4: Reportes de Asistencia
+
+Transforma completamente la página de Reportes de Asistencia ([src/features/planstudiopro/gestion-clases/reportes-asistencia/ReportesAsistenciaPage.tsx](src/features/planstudiopro/gestion-clases/reportes-asistencia/ReportesAsistenciaPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema completo de analytics de asistencia
+- Facilita la visualización de tendencias y patrones
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Reportes**
+   - Gradiente `from-green-600 via-emerald-600 to-teal-600`
+   - Título "Reportes de Asistencia"
+   - Descripción: "Analiza patrones y optimiza tu oferta de clases"
+   - Icono de gráfico/analytics
+
+2. **SELECTOR DE PERÍODO**
+   - Filtro temporal destacado:
+     * Quick filters (pills):
+       - Hoy
+       - Esta semana
+       - Este mes
+       - Últimos 30 días
+       - Últimos 3 meses
+       - Este año
+       - Custom (date range)
+     * Comparar con período anterior (toggle)
+   - Actualización de métricas
+
+3. **MÉTRICAS PRINCIPALES** (6 cards)
+   - Total de Asistencias
+   - Promedio Diario
+   - Tasa de Ocupación (%)
+   - No-Shows (# y %)
+   - Walk-ins
+   - Clases Llenas (#)
+   - Cards con glassmorphism y cambio vs anterior
+
+4. **GRÁFICO DE ASISTENCIA**
+   - Gráfico principal (grande):
+     * Tipo seleccionable:
+       - Líneas (tendencia temporal)
+       - Barras (comparativa diaria)
+       - Área (acumulado)
+     * Eje X: Tiempo (días/semanas/meses)
+     * Eje Y: Número de asistencias
+     * Línea de capacidad total (referencia)
+     * Comparativa con período anterior (opcional)
+     * Tooltip detallado
+   - Exportar gráfico (PNG/PDF)
+
+5. **ASISTENCIA POR TIPO DE CLASE**
+   - Análisis por categoría:
+     * Gráfico de dona/pie:
+       - CrossFit
+       - Yoga
+       - Spinning
+       - Funcional
+       - etc.
+     * % de participación por tipo
+     * Tabla complementaria:
+       - Tipo de clase
+       - # Clases ofrecidas
+       - Total asistencias
+       - Promedio por clase
+       - Tasa de ocupación
+       - Tendencia vs anterior
+   - Identificar tipos más/menos populares
+
+6. **ASISTENCIA POR HORARIO**
+   - Análisis temporal:
+     * **Heatmap por hora del día**:
+       - Eje X: Horas (6am-10pm)
+       - Eje Y: Días de semana (L-D)
+       - Color: Intensidad de asistencia
+       - Identificar horarios pico
+     * **Gráfico de barras por día**:
+       - Lunes a Domingo
+       - Promedio de asistencia
+       - Mejor/peor día
+     * **Gráfico de barras por franja**:
+       - Mañana (6am-12pm)
+       - Tarde (12pm-6pm)
+       - Noche (6pm-10pm)
+   - Insights automáticos
+
+7. **ASISTENCIA POR COACH**
+   - Ranking de coaches:
+     * Tabla con:
+       - Avatar y nombre
+       - # Clases impartidas
+       - Total asistencias
+       - Promedio por clase
+       - Tasa de ocupación
+       - Rating promedio
+     * Ordenar por métrica
+     * Top 3 destacados (podio)
+   - Gráfico comparativo (barras)
+   - Identificar coaches estrella
+
+8. **ASISTENCIA POR SALA/ÁREA**
+   - Análisis de espacios:
+     * Distribución de uso:
+       - Sala 1, Sala 2, Área Funcional, etc.
+       - # Clases por sala
+       - Asistencia total
+       - Ocupación promedio (%)
+     * Gráfico de barras comparativo
+     * Optimización de uso de espacios
+
+9. **TENDENCIAS Y PATRONES**
+   - Dashboard de insights:
+     * **Crecimiento/Decrecimiento**:
+       - Tendencia general (↗↘)
+       - % de cambio vs mes anterior
+       - Proyección próximo mes
+     * **Estacionalidad**:
+       - Meses de alta/baja asistencia
+       - Patrón anual (gráfico de líneas)
+     * **Correlaciones**:
+       - Clima vs asistencia
+       - Eventos especiales
+       - Promociones y su impacto
+   - Recomendaciones automáticas
+
+10. **ANÁLISIS DE NO-SHOWS**
+    - Métricas de inasistencia:
+      * Total de no-shows
+      * % sobre reservas
+      * Tendencia temporal (gráfico)
+      * Top clases con más no-shows
+      * Top miembros con más no-shows
+    - Análisis de causas:
+      * Cancelaciones tardías
+      * Sin aviso
+      * Patrones por día/hora
+    - Estrategias de reducción sugeridas
+
+11. **ANÁLISIS DE WALK-INS**
+    - Llegadas sin reserva:
+      * Total de walk-ins
+      * % sobre asistencia total
+      * Tendencia (¿aumentando/disminuyendo?)
+      * Clases con más walk-ins
+      * Horarios frecuentes
+    - Impacto:
+      * Ingresos adicionales
+      * Problemas de sobrecupo
+    - Recomendaciones de política
+
+12. **CLASES LLENAS Y LISTAS DE ESPERA**
+    - Análisis de demanda alta:
+      * # Clases que llegaron a capacidad máxima
+      * % sobre total de clases
+      * Tipos de clase más demandados
+      * Horarios con mayor demanda
+      * Promedio de lista de espera
+    - Oportunidades:
+      * Sugerencias de clases adicionales
+      * Horarios alternativos
+      * Expansión de capacidad
+
+13. **COMPARATIVA TEMPORAL**
+    - Comparar períodos:
+      * Mes actual vs mes anterior
+      * Q1 vs Q2 vs Q3 vs Q4
+      * Año actual vs año anterior
+      * Tabla de comparación
+      * Gráficos lado a lado
+    - Métricas clave con variación (+/- %)
+
+14. **FILTROS AVANZADOS**
+    - Segmentar reportes por:
+      * Tipo de clase
+      * Coach específico
+      * Sala/Área
+      * Horario (mañana/tarde/noche)
+      * Día de semana
+      * Nivel de clase
+    - Combinación de filtros
+    - Guardar vistas personalizadas
+
+15. **EXPORTACIÓN DE REPORTES**
+    - Generar reportes:
+      * Formatos:
+        - PDF profesional (con gráficos)
+        - Excel (datos crudos)
+        - CSV
+        - PowerPoint (presentación ejecutiva)
+      * Contenido customizable:
+        - Métricas a incluir
+        - Gráficos seleccionados
+        - Período de tiempo
+        - Comparativas
+      * Programar envío automático:
+        - Semanal
+        - Mensual
+        - Trimestral
+        - Destinatarios (email)
+    - Template con branding del estudio
+
+16. **DATOS MOCKEADOS**
+    - 3-6 meses de datos históricos
+    - Asistencias diarias variadas (50-200)
+    - Distribución realista por tipo de clase
+    - Heatmap con patrones lógicos (picos en mañana/tarde)
+    - Tendencias de crecimiento
+    - No-shows (5-15% de reservas)
+    - Walk-ins ocasionales
+    - Clases llenas en horarios populares
+    - Datos de coaches con variación
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente green-emerald-teal para hero
+- Cards de métricas con sparklines
+- Gráficos interactivos (Recharts)
+- Heatmap de horarios colorido
+- Tabla de ranking con avatares
+- Dona charts por categoría
+- Badges de tendencia (+/- %)
+- Exportación con iconos de formatos
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiopro/gestion-clases/reportes-asistencia](src/features/planstudiopro/gestion-clases/reportes-asistencia).
+
+---
+
+## 📋 PROMPT 5: WOD del Día (Whiteboard)
+
+Transforma completamente la página de WOD del Día ([src/features/planstudiopro/whiteboard/wod-dia/WodDiaPage.tsx](src/features/planstudiopro/whiteboard/wod-dia/WodDiaPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema completo para publicar y gestionar WODs (Workout of the Day)
+- Facilita la programación y visualización de entrenamientos
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - WOD**
+   - Gradiente `from-red-600 via-orange-600 to-yellow-600`
+   - Título "WOD del Día"
+   - Descripción: "Workout of the Day - Entrena con propósito"
+   - Icono de pesa/workout
+
+2. **WOD PRINCIPAL (Display Grande)**
+   - Card destacado del WOD actual:
+     * **Fecha grande** (Lunes, 3 de Enero 2025)
+     * **Nombre del WOD** (ej: "Fran", "Murph", o nombre custom)
+     * **Tipo de WOD** (badge):
+       - AMRAP (As Many Reps As Possible)
+       - For Time
+       - EMOM (Every Minute On the Minute)
+       - Chipper
+       - Strength
+       - Hero WOD
+       - Girl WOD
+     * **Descripción del workout** (grande y legible):
+       - Formato markdown
+       - Número de reps
+       - Movimientos
+       - Peso recomendado
+       - Escalamientos (RX, Scaled, Beginner)
+       - Ejemplo:
+         ```
+         21-15-9 (For Time)
+         • Thrusters (95/65 lbs)
+         • Pull-ups
+
+         Time Cap: 10 minutes
+         ```
+     * **Objetivo/Stimulus**:
+       - Descripción de la intención del WOD
+       - Zonas de FC esperadas
+       - Duración estimada
+     * **Escalamientos** (tabs):
+       - RX (como prescrito)
+       - Scaled (modificado)
+       - Beginner (principiante)
+       - Cada uno con ajustes específicos
+     * **Media**:
+       - Video demo (embed de YouTube/Vimeo)
+       - Imágenes de movimientos
+     * **Notas del Coach**:
+       - Tips de estrategia
+       - Puntos de enfoque
+       - Calentamiento sugerido
+   - Diseño estilo "pizarra digital" moderna
+   - Opción de imprimir (PDF)
+
+3. **CREAR/EDITAR WOD**
+   - Formulario completo:
+     * **Información Básica**:
+       - Fecha (date picker, default: hoy)
+       - Nombre del WOD (input)
+       - Tipo de WOD (dropdown)
+       - Objetivo/Stimulus (textarea)
+     * **Descripción del Workout**:
+       - Editor de texto enriquecido:
+         * Formato (bold, italic, lista)
+         * Insertar movimientos desde biblioteca
+         * Sugerencias de formato automático
+       - Templates predefinidos:
+         * AMRAP template
+         * For Time template
+         * EMOM template
+     * **Escalamientos**:
+       - RX (textarea)
+       - Scaled (textarea)
+       - Beginner (textarea)
+       - Checkbox: Auto-generar scaled basado en RX
+     * **Detalles Adicionales**:
+       - Duración estimada (min)
+       - Time cap (min)
+       - Zonas de FC objetivo (%)
+       - Equipamiento necesario (multi-select):
+         * Barbell
+         * Pull-up bar
+         * Rower
+         * Assault bike
+         * Box
+         * Kettlebell
+         * etc.
+     * **Media**:
+       - URL de video (YouTube/Vimeo)
+       - Upload de imágenes
+       - Preview de media
+     * **Notas del Coach**:
+       - Calentamiento sugerido
+       - Tips de estrategia
+       - Puntos de enfoque técnico
+       - Cool down
+     * **Visibilidad**:
+       - Publicar ahora
+       - Programar para fecha futura
+       - Solo visible para coaches
+   - Preview en tiempo real
+   - Guardar como borrador
+   - Biblioteca de WODs guardados (reutilizar)
+
+4. **CALENDARIO DE WODs**
+   - Vista mensual:
+     * Cada día muestra:
+       - Nombre del WOD
+       - Tipo (badge pequeño)
+       - Indicador de completitud (% de clase que lo hizo)
+     * Click en día: ver WOD completo
+     * Días sin WOD marcados
+   - Navegación mes a mes
+   - Vista de semana (más detallada)
+
+5. **BIBLIOTECA DE WODs GUARDADOS**
+   - Colección de WODs creados:
+     * Búsqueda por:
+       - Nombre
+       - Tipo
+       - Movimientos incluidos
+       - Fecha de creación
+     * Filtros:
+       - Tipo de WOD
+       - Nivel (RX/Scaled/Beginner)
+       - Equipamiento necesario
+       - Benchmarks (Girl WODs, Hero WODs)
+     * Categorías:
+       - Mis WODs
+       - Benchmark WODs
+       - Hero WODs
+       - Favoritos
+     * Acciones:
+       - Ver detalles
+       - Usar para hoy
+       - Editar
+       - Duplicar
+       - Eliminar
+       - Marcar como favorito
+   - Importar WOD de CrossFit.com (API)
+
+6. **BENCHMARK WODS (Girl & Hero WODs)**
+   - Sección especial para benchmarks:
+     * **Girl WODs**:
+       - Fran, Annie, Diane, etc.
+       - Descripción oficial
+       - Records del box
+       - Última vez realizado
+     * **Hero WODs**:
+       - Murph, DT, Michael, etc.
+       - Historia del WOD
+       - En honor a quién
+       - Fecha de realización programada
+   - Marcar como "Benchmark Day"
+   - Tracking especial de PRs
+
+7. **REGISTRO DE RESULTADOS**
+   - Para cada WOD del día:
+     * Lista de miembros que asistieron
+     * Registro de resultados:
+       - Time (para For Time WODs)
+       - Reps (para AMRAP)
+       - Peso usado (para Strength)
+       - Escalamiento usado (RX/Scaled/Beginner)
+     * Leaderboard del día:
+       - Top 3 RX (masculino/femenino)
+       - Top 3 Scaled
+       - Ordenar por resultado
+     * Comparación con PRs previos
+   - Los miembros pueden ingresar su propio resultado
+   - Coaches pueden validar/editar resultados
+
+8. **COMENTARIOS Y FEEDBACK**
+   - Sección de comentarios:
+     * Miembros pueden:
+       - Comentar sobre el WOD
+       - Compartir cómo les fue
+       - Hacer preguntas
+       - Reacciones (💪🔥❤️)
+     * Coaches responden
+     * Ordenar por fecha/populares
+   - Fomenta comunidad
+
+9. **ESTADÍSTICAS DEL WOD**
+   - Métricas del WOD actual:
+     * # de personas que lo completaron
+     * Tiempo promedio (For Time)
+     * Reps promedio (AMRAP)
+     * Distribución RX vs Scaled (%)
+     * Comparación con veces anteriores
+   - Gráfico de distribución de resultados
+
+10. **PROGRAMACIÓN SEMANAL**
+    - Vista de la semana completa:
+      * Lunes a Domingo
+      * WOD de cada día (si está programado)
+      * Balance de estímulos:
+        - Día de pierna vs upper body
+        - Gimnástico vs pesado
+        - Metcon vs strength
+      * Indicador de variedad (debe haber balance)
+    - Sugerencias de programación (IA):
+      * "Mucho pressing esta semana, agregar pulling"
+      * "Falta trabajo de pierna"
+
+11. **PLANTILLAS DE CICLOS**
+    - Macrociclos predefinidos:
+      * Ciclo de Fuerza (6 semanas)
+      * Ciclo de Resistencia (4 semanas)
+      * Preparación para Open
+      * Off-season
+    - Aplicar plantilla a rango de fechas
+    - Customizar por semana
+
+12. **COMPARTIR WOD**
+    - Opciones de compartir:
+      * Generar imagen (para Instagram/Facebook)
+        - Diseño atractivo con branding
+        - WOD formateado visualmente
+      * Link público al WOD
+      * Enviar a miembros por:
+        - Email
+        - Push notification (app)
+        - WhatsApp
+      * Exportar como PDF
+    - Programar publicación automática cada día
+
+13. **MOVIMIENTOS Y DEMOS**
+    - Biblioteca de movimientos:
+      * Cada movimiento con:
+        - Nombre oficial
+        - Alias/variaciones
+        - Video demo
+        - Descripción técnica
+        - Escalamientos comunes
+        - Errores frecuentes
+      * Enlazar desde WOD a demo de movimiento
+    - Crear nuevos movimientos personalizados
+
+14. **HISTORIAL DE WODs**
+    - Ver WODs pasados:
+      * Ordenar por fecha
+      * Buscar por nombre/tipo
+      * Ver resultados históricos
+      * Repetir WOD (comparar progreso)
+    - Estadísticas de progreso:
+      * PRs en benchmarks
+      * Mejora en tiempos promedio
+      * Aumento de volumen
+
+15. **NOTIFICACIONES**
+    - Alertas automáticas:
+      * WOD publicado (cada día a las 6pm)
+      * Recordatorio de registrar resultado
+      * Nuevo PR alcanzado
+      * Benchmark day próximo
+    - Configuración de notificaciones
+
+16. **DATOS MOCKEADOS**
+    - 30 días de WODs variados
+    - Mix de tipos (AMRAP, For Time, EMOM, Strength)
+    - Algunos Benchmark WODs (Fran, Murph, etc.)
+    - Descripciones completas con escalamientos
+    - Resultados de miembros simulados
+    - Comentarios y feedback
+    - Videos de demo (URLs de YouTube)
+    - Biblioteca de 20-30 WODs guardados
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente red-orange-yellow para hero
+- Card grande estilo "pizarra" para WOD del día
+- Tipografía bold y legible para workout
+- Badges de tipo de WOD coloridos
+- Tabs para escalamientos
+- Calendario visual
+- Leaderboard con podio
+- Biblioteca de WODs en grid
+- Iconos de equipamiento
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiopro/whiteboard/wod-dia](src/features/planstudiopro/whiteboard/wod-dia).
+
+---
+
+## 📋 PROMPT 6: Leaderboard
+
+Transforma completamente la página de Leaderboard ([src/features/planstudiopro/whiteboard/leaderboard/LeaderboardPage.tsx](src/features/planstudiopro/whiteboard/leaderboard/LeaderboardPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema de rankings motivacional y competitivo
+- Facilita la gamificación y seguimiento de progreso
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Leaderboard**
+   - Gradiente `from-yellow-600 via-orange-600 to-red-600`
+   - Título "Leaderboard"
+   - Descripción: "Compite, mejora y celebra tus logros"
+   - Icono de trofeo animado
+
+2. **SELECTOR DE LEADERBOARD**
+   - Tabs principales para distintos tipos:
+     * WOD del Día
+     * Benchmark WODs (Fran, Murph, etc.)
+     * PRs Personales
+     * Mes Actual
+     * All-Time
+   - Filtros adicionales:
+     * Género (Todos/Masculino/Femenino)
+     * División (RX/Scaled/Beginner)
+     * Rango de edad (Todos/18-29/30-39/40+)
+     * Categoría de peso (si aplica)
+
+3. **PODIO TOP 3**
+   - Display destacado de top 3:
+     * **Posición #1** (centro, más grande):
+       - Avatar grande (con borde dorado)
+       - Nombre
+       - Resultado (tiempo/reps/peso)
+       - Badge "🥇 1st Place"
+       - Efecto de brillo/shimmer
+     * **Posición #2** (izquierda):
+       - Avatar mediano (borde plateado)
+       - Nombre
+       - Resultado
+       - Badge "🥈 2nd Place"
+     * **Posición #3** (derecha):
+       - Avatar mediano (borde bronce)
+       - Nombre
+       - Resultado
+       - Badge "🥉 3rd Place"
+   - Diseño visual de podio (escalones)
+   - Animación de entrada
+
+4. **TABLA COMPLETA DE RANKINGS**
+   - Lista ordenada desde posición #4 en adelante:
+     * Columnas:
+       - Posición (#)
+       - Avatar
+       - Nombre del atleta
+       - Resultado (tiempo/reps/peso)
+       - División (RX/Scaled badge)
+       - Fecha de resultado
+       - Diferencia con #1 (gap)
+       - Acción: Ver detalles
+     * Resaltar posición del usuario actual:
+       - Fondo destacado
+       - Badge "Tú"
+       - Scroll automático a su posición
+     * Colores alternados en filas
+     * Ordenable por columna
+     * Paginación (25-50 resultados por página)
+   - Sticky header al hacer scroll
+
+5. **LEADERBOARD DEL WOD DEL DÍA**
+   - Rankings del WOD actual:
+     * Separado por división:
+       - RX Masculino
+       - RX Femenino
+       - Scaled Masculino
+       - Scaled Femenino
+       - Beginner
+     * Actualización en tiempo real
+     * Indicador de "Nuevo resultado" (badge)
+     * Comparación con PRs anteriores:
+       - Badge de "PR!" si es nuevo récord
+       - % de mejora vs anterior
+   - Estadísticas del día:
+     * Total de participantes
+     * Tiempo/reps promedio
+     * Mejor resultado del día
+
+6. **BENCHMARK WODS LEADERBOARD**
+   - Rankings de WODs clásicos:
+     * Selector de benchmark (dropdown):
+       - Fran
+       - Murph
+       - Cindy
+       - Diane
+       - etc.
+     * All-time best por benchmark
+     * Histórico de mejoras:
+       - Primera vez vs mejor tiempo
+       - Gráfico de progresión
+     * Comparativa con estándares globales:
+       - Elite
+       - Advanced
+       - Intermediate
+       - Beginner
+       - Tu posición marcada
+
+7. **PERSONAL RECORDS (PRs)**
+   - Sección de récords personales:
+     * **Lifts (Levantamientos)**:
+       - Back Squat
+       - Front Squat
+       - Deadlift
+       - Bench Press
+       - Clean
+       - Snatch
+       - Clean & Jerk
+       - Shoulder Press
+       - etc.
+     * **Gimnásticos**:
+       - Max Pull-ups
+       - Max Push-ups
+       - Max HSPU
+       - Handstand Walk (metros)
+       - etc.
+     * **Cardio**:
+       - 500m Row
+       - 1000m Row
+       - 2000m Row
+       - 5K Run
+       - etc.
+   - Vista de tabla con:
+     * Movimiento
+     * Tu PR actual
+     * Fecha de PR
+     * Ranking en el box (#X de Y)
+     * % del mejor del box
+   - Click para ver leaderboard completo del movimiento
+
+8. **LEADERBOARD MENSUAL**
+   - Competencia del mes:
+     * Métrica principal (ej: Total de clases asistidas)
+     * O sistema de puntos:
+       - Puntos por asistencia
+       - Puntos por PRs
+       - Puntos por participación en benchmarks
+       - Bonos especiales
+     * Tabla de posiciones mensuales
+     * Top 3 del mes (destacado)
+     * Progreso en tiempo real
+     * Reseteo automático cada mes
+   - Premios/reconocimientos:
+     * Badges digitales
+     * Reconocimiento en redes
+     * Descuentos/beneficios
+
+9. **PERFIL DE ATLETA**
+   - Click en nombre: ver perfil completo
+     * Avatar y nombre
+     * Badges/logros obtenidos
+     * Todos los PRs personales
+     * Gráfico de progresión (últimos 6 meses)
+     * Histórico de participación
+     * Benchmarks completados
+     * Estadísticas:
+       - Asistencia promedio
+       - Clases totales
+       - PRs en último mes
+       - Racha actual (días consecutivos)
+     * WODs favoritos
+     * Comparación con promedios del box
+
+10. **BADGES Y LOGROS**
+    - Sistema de gamificación:
+      * Badges por logros:
+        - "100 Club" (100 clases)
+        - "PR Machine" (10 PRs en un mes)
+        - "Benchmark Beast" (todos los Girl WODs RX)
+        - "Iron Person" (asistencia perfecta)
+        - "Early Bird" (50 clases de 6am)
+        - "Murph Survivor"
+        - etc.
+      * Progreso hacia badges:
+        - Barra de progreso
+        - Requisitos restantes
+      * Galería de badges desbloqueados
+      * Compartir en redes sociales
+
+11. **COMPARACIONES Y RIVALIDADES**
+    - Comparar con otro atleta:
+      * Seleccionar 2 atletas
+      * Lado a lado:
+        - Todos los PRs
+        - Benchmarks
+        - Estadísticas
+        - Quién gana en cada categoría
+      * Gráfico de radar comparativo
+    - "Rivalidades amistosas":
+      * Seguir a competidores
+      * Notificación cuando te superan
+      * Motivación para mejorar
+
+12. **GRÁFICOS DE PROGRESIÓN**
+    - Visualización de mejora:
+      * **Línea de tiempo**:
+        - PRs a lo largo del año
+        - Tendencia ascendente
+        - Mesetas identificadas
+      * **Distribución de resultados**:
+        - Campana de Gauss
+        - Tu posición marcada
+      * **Comparativa temporal**:
+        - Tú hace 6 meses vs ahora
+        - Mejora en %
+    - Exportar gráficos
+
+13. **FILTROS Y SEGMENTACIÓN**
+    - Filtrar leaderboard por:
+      * Período (día/semana/mes/año/all-time)
+      * Género
+      * Grupo de edad
+      * División (RX/Scaled)
+      * Categoría de peso
+      * Tipo de WOD
+    - Crear rankings personalizados:
+      * "Mi grupo de edad + género + RX"
+      * Guardar filtro favorito
+
+14. **NOTIFICACIONES Y ALERTAS**
+    - Alertas motivacionales:
+      * "¡Nuevo PR! 🎉"
+      * "Subiste al Top 10 📈"
+      * "Alguien superó tu marca 😱"
+      * "Estás cerca de un badge 🏆"
+      * "Racha de asistencia: 7 días 🔥"
+    - Configurar notificaciones
+
+15. **COMPARTIR Y CELEBRAR**
+    - Opciones de compartir:
+      * Generar imagen de logro:
+        - "Nuevo PR en Fran: 3:45"
+        - Diseño atractivo con branding
+      * Compartir en:
+        - Instagram Stories
+        - Facebook
+        - Twitter
+        - WhatsApp
+      * Publicación automática en feed del box
+      * Hall of Fame mensual
+
+16. **DATOS MOCKEADOS**
+    - 50-100 atletas simulados
+    - Nombres y avatares variados
+    - Resultados de WOD del día (variados)
+    - PRs en todos los lifts principales
+    - Benchmarks completados
+    - Distribución realista (curva normal)
+    - Algunos con badges
+    - Fechas de PRs variadas
+    - Sistema de puntos mensual
+    - Progresiones temporales
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente yellow-orange-red para hero
+- Podio con escalones visuales (1st más alto)
+- Avatares con bordes dorados/plateados/bronce
+- Tabla con filas alternadas
+- Highlight de posición del usuario
+- Badges de logros coloridos y animados
+- Gráficos de progresión (Recharts)
+- Efectos de brillo en top 3
+- Compartir con preview de imagen generada
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiopro/whiteboard/leaderboard](src/features/planstudiopro/whiteboard/leaderboard).
+
+---
+
+## 📋 PROMPT 7: Historial de Marcas
+
+Transforma completamente la página de Historial de Marcas ([src/features/planstudiopro/whiteboard/historial-marcas/HistorialMarcasPage.tsx](src/features/planstudiopro/whiteboard/historial-marcas/HistorialMarcasPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema completo de tracking de PRs (Personal Records)
+- Facilita el seguimiento de progreso a largo plazo
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Historial**
+   - Gradiente `from-purple-600 via-pink-600 to-red-600`
+   - Título "Historial de Marcas"
+   - Descripción: "Registra y celebra cada progreso"
+   - Icono de trofeo/medalla
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Total de PRs
+   - PRs Este Mes
+   - Racha Actual (días)
+   - Último PR (hace X días)
+   - Cards con glassmorphism
+
+3. **CATEGORÍAS DE MARCAS**
+   - Navegación por tabs/pills:
+     * **Levantamientos (Lifts)**:
+       - Back Squat
+       - Front Squat
+       - Deadlift
+       - Bench Press
+       - Overhead Press
+       - Clean
+       - Snatch
+       - Clean & Jerk
+       - Thruster
+       - etc.
+     * **Gimnásticos**:
+       - Max Pull-ups
+       - Max Push-ups
+       - Max HSPU
+       - Max Ring Dips
+       - Handstand Walk (distancia)
+       - Rope Climbs (consecutivos)
+       - etc.
+     * **Cardio**:
+       - 500m Row (tiempo)
+       - 1000m Row
+       - 2000m Row
+       - 5K Run
+       - Mile Run
+       - 100m Sprint
+       - Assault Bike (calorías/min)
+       - etc.
+     * **Benchmarks**:
+       - Fran
+       - Murph
+       - Cindy
+       - Annie
+       - Diane
+       - Grace
+       - Isabel
+       - etc.
+     * **Todos los PRs**
+
+4. **GRID DE MARCAS**
+   - Vista de cards por movimiento:
+     * Card por ejercicio:
+       - Icono del movimiento
+       - Nombre del ejercicio
+       - **Marca actual** (grande y destacada):
+         * Peso/tiempo/reps
+         * Unidad (lbs, kg, min, reps)
+       - Fecha del PR
+       - Badge de progreso:
+         * "Nuevo!" (verde, si <7 días)
+         * Estancado (amarillo, si >3 meses sin mejora)
+       - Gráfico sparkline de progresión
+       - Acciones:
+         * Registrar nueva marca
+         * Ver historial completo
+         * Compartir PR
+   - Grid responsive
+   - Ordenar por: nombre, fecha, categoría
+   - Filtrar por categoría
+
+5. **REGISTRAR NUEVA MARCA**
+   - Modal/form para agregar PR:
+     * **Seleccionar movimiento**:
+       - Dropdown con todos los movimientos
+       - O búsqueda con autocomplete
+       - Icono del movimiento
+     * **Ingresar resultado**:
+       - Input numérico
+       - Unidad automática según movimiento:
+         * lbs/kg (lifts)
+         * tiempo (min:seg)
+         * reps (gimnásticos)
+         * distancia (metros)
+       - Convertir unidades (lbs ⇄ kg)
+     * **Fecha**:
+       - Date picker (default: hoy)
+       - Permitir fechas pasadas
+     * **Notas** (opcional):
+       - Cómo te sentiste
+       - Condiciones (post-WOD, fresco, etc.)
+       - Coach que validó
+     * **Foto/Video** (opcional):
+       - Upload de evidencia
+       - Celebración del momento
+     * **Validar vs marca anterior**:
+       - Mostrar PR previo
+       - Confirmar si es mejor
+       - Advertir si es peor (¿seguro?)
+   - Guardar PR
+   - Notificación de éxito 🎉
+
+6. **HISTORIAL COMPLETO POR MOVIMIENTO**
+   - Click en movimiento: ver timeline completa
+     * **Gráfico de progresión**:
+       - Línea de tiempo (eje X: fechas)
+       - Marca (eje Y: peso/tiempo/reps)
+       - Puntos por cada PR registrado
+       - Línea de tendencia
+       - Zoom y pan
+     * **Tabla de todas las marcas**:
+       - Fecha
+       - Marca
+       - Mejora vs anterior (+X lbs, -10 seg)
+       - % de mejora
+       - Notas
+       - Foto/video (si existe)
+       - Acción: Ver/Editar/Eliminar
+     * **Estadísticas del movimiento**:
+       - Marca inicial (primera vez)
+       - Marca actual (última)
+       - Mejora total (%)
+       - Promedio de mejora por sesión
+       - Tiempo desde último PR
+       - Proyección de siguiente PR (IA)
+   - Exportar historial (CSV/PDF)
+
+7. **COMPARACIÓN TEMPORAL**
+   - Comparar períodos:
+     * "Yo hace 6 meses vs ahora"
+     * "Yo hace 1 año vs ahora"
+     * Tabla lado a lado:
+       - Movimiento
+       - Antes
+       - Ahora
+       - Mejora (absoluta y %)
+     * Gráfico de barras comparativo
+   - Identificar áreas de más/menos progreso
+
+8. **METAS Y OBJETIVOS**
+   - Establecer metas:
+     * Por movimiento:
+       - "Back Squat: 400 lbs"
+       - Fecha objetivo
+       - Marca actual
+       - Gap restante
+       - Progress bar visual
+     * Lista de metas activas
+     * Notificación al alcanzar meta 🎯
+   - Sugerencias de metas basadas en:
+     * Tu tasa de progreso
+     * Estándares de la industria
+     * Percentiles del box
+
+9. **PERCENTILES Y RANKINGS**
+   - Comparación con el box:
+     * "Tu Back Squat está en el percentil 75 del box"
+     * Ranking: #12 de 150
+     * Distribución visual (campana)
+     * Cuánto falta para top 10
+   - Comparación con estándares:
+     * Elite
+     * Advanced
+     * Intermediate
+     * Beginner
+     * Basado en peso corporal y edad
+
+10. **RATIOS Y BALANCES**
+    - Análisis de proporciones:
+      * Squat:Deadlift ratio (debería ser ~0.8)
+      * Bench:Squat ratio
+      * Clean:Snatch ratio (~1.2)
+      * Identificar desbalances
+      * Sugerencias de enfoque:
+        - "Tu deadlift es fuerte, pero squat se queda atrás"
+        - "Trabaja más upper body"
+    - Gráfico de radar de capacidades
+
+11. **CELEBRACIÓN DE HITOS**
+    - Reconocimiento automático:
+      * Badge al alcanzar hitos:
+        - "400 Club" (Back Squat 400+ lbs)
+        - "2x BW Deadlift" (2× peso corporal)
+        - "Sub-3 Fran" (<3 min)
+        - "Murph Under 40" (<40 min)
+        - etc.
+      * Publicación automática en feed del box
+      * Opción de compartir en redes
+      * Foto del momento (si se subió)
+
+12. **CALENDARIO DE PRs**
+    - Vista de calendario:
+      * Cada día muestra PRs logrados
+      * Heatmap de actividad:
+        - Días con PR (verde intenso)
+        - Días sin PR (gris)
+      * Identificar rachas y períodos productivos
+    - Click en día: ver PRs del día
+
+13. **EXPORTACIÓN Y REPORTES**
+    - Generar reportes:
+      * PDF de progreso:
+        - Todos los PRs actuales
+        - Gráficos de progresión
+        - Comparativas temporales
+        - Badges obtenidos
+      * Excel con datos crudos
+      * Infografía visual (para compartir)
+    - Programar reporte mensual automático
+
+14. **CICLOS DE FUERZA**
+    - Tracking de ciclos:
+      * Registrar inicio de ciclo (ej: "Squat Cycle 12 weeks")
+      * Test inicial (baseline)
+      * Tests intermedios
+      * Test final (retest)
+      * Comparación pre/post ciclo
+      * Efectividad del ciclo (% de mejora)
+    - Histórico de ciclos completados
+
+15. **NOTAS Y CONTEXTO**
+    - Por cada PR:
+      * Notas personales:
+        - Cómo te sentiste
+        - Condiciones (post-WOD, fresco)
+        - Técnica usada
+        - Coach que supervisó
+      * Tags/etiquetas:
+        - #fresco
+        - #post-wod
+        - #pr-day
+        - #ciclo-fuerza
+      * Filtrar PRs por tag
+
+16. **DATOS MOCKEADOS**
+    - 20-30 movimientos con marcas
+    - Histórico de 6-12 meses por movimiento
+    - Progresiones realistas (incrementos lógicos)
+    - Algunas mesetas identificables
+    - Fechas variadas
+    - Notas en algunos PRs
+    - Fotos/videos en PRs destacados
+    - Metas activas (algunas cerca, otras lejanas)
+    - Badges obtenidos
+    - Ciclos de fuerza completados
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente purple-pink-red para hero
+- Grid de cards con iconos de movimiento
+- Marca actual grande y destacada
+- Sparklines de progresión
+- Gráficos de línea temporal (Recharts)
+- Progress bars de metas
+- Badges de hitos animados
+- Timeline vertical de PRs
+- Comparaciones lado a lado
+- Heatmap de calendario
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiopro/whiteboard/historial-marcas](src/features/planstudiopro/whiteboard/historial-marcas).
+
+---
+
+## 📋 PROMPT 8: Escáner de Entrada (Check-in QR)
+
+Transforma completamente la página de Escáner de Entrada ([src/features/planstudiopro/check-in-qr/escaner-entrada/EscanerEntradaPage.tsx](src/features/planstudiopro/check-in-qr/escaner-entrada/EscanerEntradaPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema de check-in rápido y eficiente con QR
+- Facilita el control de acceso y asistencia
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Check-in**
+   - Gradiente `from-cyan-600 via-blue-600 to-indigo-600`
+   - Título "Check-in QR"
+   - Descripción: "Escanea y registra asistencia al instante"
+   - Icono de QR code animado
+
+2. **ESTADÍSTICAS DE HOY** (4 cards)
+   - Check-ins Hoy
+   - Check-ins Última Hora
+   - Promedio de Check-in (tiempo)
+   - Capacidad Actual
+   - Cards con glassmorphism
+
+3. **ESCÁNER QR (Principal)**
+   - Área de escaneo grande y prominente:
+     * **Cámara en vivo**:
+       - Acceso a cámara del dispositivo
+       - Recuadro de enfoque (overlay)
+       - Guías visuales para alinear QR
+       - Feedback visual de detección
+     * **Instrucciones claras**:
+       - "Coloca el código QR dentro del recuadro"
+       - Animación de ejemplo
+     * **Estados**:
+       - Esperando código (azul)
+       - Procesando (amarillo)
+       - Éxito (verde con ✓)
+       - Error (rojo con ✗)
+     * **Efectos sonoros** (opcional):
+       - Beep de éxito
+       - Buzzer de error
+       - Toggle para silenciar
+   - Botón para cambiar cámara (frontal/trasera)
+   - Botón para activar/desactivar flash
+   - Modo pantalla completa
+
+4. **RESULTADO DE ESCANEO (Modal/Card)**
+   - Al escanear exitosamente:
+     * **Información del miembro**:
+       - Foto grande (avatar)
+       - Nombre completo
+       - Tipo de membresía (badge)
+       - Estado del pase:
+         * Activo (verde) ✓
+         * Vencido (rojo) ✗
+         * Por vencer (amarillo) ⚠️
+       - Créditos restantes (si aplica)
+       - Fecha de vencimiento
+     * **Clase actual** (si aplica):
+       - Nombre de la clase
+       - Horario
+       - Coach
+       - Reserva confirmada (✓) o Walk-in
+     * **Acciones**:
+       - ✓ Confirmar check-in (botón grande verde)
+       - ✗ Denegar acceso
+       - 📝 Ver perfil completo
+       - 💬 Agregar nota
+     * **Animación de éxito**:
+       - Confetti 🎉
+       - Sonido de éxito
+       - Mensaje "¡Bienvenido, [Nombre]!"
+   - Auto-cerrar después de 3 segundos (confirmación automática)
+
+5. **VALIDACIONES Y ALERTAS**
+   - Casos especiales mostrados visualmente:
+     * **Membresía vencida**:
+       - Alerta roja grande
+       - "Membresía vencida desde [fecha]"
+       - Opciones:
+         * Denegar acceso
+         * Permitir esta vez (con nota)
+         * Renovar ahora (link a renovación)
+     * **Sin créditos**:
+       - "No hay créditos disponibles"
+       - Opciones:
+         * Comprar pase adicional
+         * Permitir (cobrar después)
+     * **Sin reserva**:
+       - "Sin reserva para esta clase"
+       - Opciones:
+         * Agregar a clase (si hay espacio)
+         * Walk-in (cobro adicional)
+         * Denegar
+     * **Clase llena**:
+       - "Capacidad máxima alcanzada"
+       - Lista de espera activa
+     * **Restricción de horario**:
+       - "Pase válido solo para horarios AM"
+       - Denegar o permitir excepción
+
+6. **CHECK-IN MANUAL**
+   - Opción alternativa sin QR:
+     * Búsqueda de miembro:
+       - Autocomplete por nombre
+       - Buscar por email
+       - Buscar por teléfono
+       - Buscar por ID de miembro
+     * Seleccionar miembro
+     * Mismo flujo de validación
+     * Confirmar check-in manualmente
+   - Útil si el miembro olvidó código QR
+
+7. **REGISTRO DE ACTIVIDAD EN TIEMPO REAL**
+   - Lista de check-ins recientes:
+     * Stream en vivo (últimos 20):
+       - Timestamp (hace 2 min)
+       - Avatar
+       - Nombre
+       - Clase (si aplica)
+       - Estado (✓ exitoso, ⚠️ alerta)
+     * Auto-actualización
+     * Click para ver detalles
+   - Filtrar por:
+     * Exitosos
+     * Con alertas
+     * Walk-ins
+
+8. **MODO KIOSKO**
+   - Modo auto-servicio para miembros:
+     * Pantalla táctil optimizada
+     * El miembro escanea su propio QR
+     * Confirmación automática si todo OK
+     * Alertas requieren intervención de staff
+     * Instrucciones grandes y claras
+     * Accesibilidad mejorada
+   - Toggle para activar modo kiosko
+   - Bloqueo de configuraciones en modo kiosko
+
+9. **GENERACIÓN DE QR CODES**
+   - Para miembros sin código:
+     * Generar QR único por miembro
+     * Asociado a ID de miembro
+     * Descargar:
+       - PNG (alta resolución)
+       - PDF (para imprimir)
+       - Enviar por email
+     * Opción de re-generar (si perdió/robó)
+   - QR dinámicos con fecha de expiración
+
+10. **CONFIGURACIÓN DE CHECK-IN**
+    - Ajustes del sistema:
+      * **Ventana de check-in**:
+        - Permitir check-in X min antes de clase
+        - Permitir check-in hasta X min después
+      * **Validaciones automáticas**:
+        - Requerir reserva (toggle)
+        - Permitir walk-ins (toggle)
+        - Verificar créditos (toggle)
+        - Validar horario de pase (toggle)
+      * **Notificaciones**:
+        - Email de confirmación
+        - SMS de check-in
+        - Push notification
+      * **Sonidos y feedback**:
+        - Habilitar sonidos
+        - Volumen
+        - Tipo de feedback visual
+      * **Modo automático**:
+        - Confirmar automáticamente si todo OK
+        - Tiempo de auto-cierre (segundos)
+
+11. **REPORTES DE CHECK-IN**
+    - Estadísticas de acceso:
+      * Check-ins por día/semana/mes (gráfico)
+      * Horas pico de llegada (heatmap)
+      * Promedio de check-ins por clase
+      * Tasa de walk-ins vs reservas (%)
+      * Tiempo promedio de check-in
+    - Exportar reportes
+
+12. **INTEGRACIÓN CON CLASES**
+    - Al hacer check-in:
+      * Detectar clase actual automáticamente
+      * Marcar asistencia en clase
+      * Actualizar lista de participantes
+      * Notificar al coach (opcional)
+    - Dashboard de clase en curso:
+      * Clase actual
+      * Checked-in / Total inscritos
+      * Faltantes por llegar
+      * Progress bar visual
+
+13. **MULTI-DISPOSITIVO**
+    - Sincronización:
+      * Múltiples tablets/móviles escaneando
+      * Check-ins sincronizados en tiempo real
+      * Prevención de check-in duplicado
+      * Coordinación entre dispositivos
+    - Asignar dispositivo a:
+      * Entrada principal
+      * Entrada secundaria
+      * Área de clases
+      * Recepción
+
+14. **OFFLINE MODE**
+    - Funcionamiento sin internet:
+      * Cache de membresías activas
+      * Check-in offline (se sincroniza después)
+      * Validaciones básicas (fecha de vencimiento)
+      * Indicador de modo offline
+      * Sincronización automática al reconectar
+
+15. **SEGURIDAD Y CONTROL**
+    - Prevención de fraude:
+      * QR único por miembro
+      * Timestamp de generación
+      * Expiración de códigos temporales
+      * Log de todos los accesos
+      * Detección de intentos sospechosos:
+        - Múltiples check-ins en poco tiempo
+        - Código ya usado hoy
+        - Código inválido/expirado
+    - Historial de accesos por miembro
+
+16. **DATOS MOCKEADOS**
+    - 50-100 miembros con QR codes
+    - Check-ins de hoy (20-50 registros)
+    - Mix de estados (activos, vencidos, por vencer)
+    - Algunos con alertas (sin créditos, sin reserva)
+    - Clases en curso con asistencia
+    - Timestamps realistas (distribuidos en el día)
+    - Walk-ins ocasionales
+    - Diferentes tipos de membresía
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente cyan-blue-indigo para hero
+- Área de escáner grande y centrada
+- Overlay de cámara con recuadro animado
+- Modal de resultado con avatar grande
+- Badges de estado coloridos (activo/vencido)
+- Alertas visuales destacadas (rojo/verde/amarillo)
+- Lista de actividad con timestamps
+- Confetti animation en éxito
+- Progress bar de capacidad de clase
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiopro/check-in-qr/escaner-entrada](src/features/planstudiopro/check-in-qr/escaner-entrada).
+
+---
+
+**[Continúa en siguiente mensaje debido a límite de caracteres...]**

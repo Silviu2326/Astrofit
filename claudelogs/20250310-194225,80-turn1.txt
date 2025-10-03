@@ -1,0 +1,32 @@
+﻿
+
+Ô£à He completado la estilizaci├│n del m├│dulo "Dashboards de Equipos". Los cambios aplicados incluyen:
+
+**DashboardsEquiposPage.tsx:**
+- Hero section con gradiente `from-blue-600 via-indigo-600 to-purple-600`
+- Grid de m├®tricas con cards glassmorphism (`bg-white/80 backdrop-blur-xl`)
+- Efectos blur orbs en fondos
+- Progress bars animadas con gradientes
+- Badge de performance general con gradiente
+- Contenedor de gr├íficos con backdrop blur
+- Animaciones framer-motion (initial, animate, whileHover)
+- Efectos shimmer en hover para todas las cards
+
+**Componentes estilizados:**
+1. **MetricasKPI**: Cards con KPIs, iconos con gradientes, efectos hover
+2. **AlertasRendimiento**: Alertas con badges de estado (Activo/Descanso/Competici├│n), iconos diferenciados por tipo
+3. **DashboardTiempoReal**: M├®tricas en vivo con badge "EN VIVO", progress bars animadas
+4. **TarjetasComparativas**: Comparaci├│n de equipos con progress bars y flechas de tendencia
+5. **AnalisisPredictivo**: Predicciones con barras de confianza y gradientes
+6. **FiltrosAvanzados**: Botones interactivos de filtros con estados activos
+7. **ExportadorReportes**: Botones de exportaci├│n con gradientes (PDF, Excel, CSV)
+8. **IntegracionVideoanalisis**: Lista de videos con badge "Sistema Conectado"
+9. **WidgetsConfigurables**: Grid de equipos con m├®tricas detalladas y progress bars
+
+Todos los componentes incluyen:
+- Glassmorphism (`backdrop-blur-xl`)
+- Bordes redondeados `rounded-3xl`
+- Decoraciones blur orbs
+- Efectos shimmer en hover
+- Animaciones de entrada con framer-motion
+- Gradientes de 3 colores seg├║n la gu├¡a

@@ -1,0 +1,41 @@
+﻿
+
+Ô£à He estilizado completamente el m├│dulo "Listado de Roles" siguiendo la gu├¡a de estilos UI. Los cambios incluyen:
+
+**ListadoRolesPage.tsx:**
+- Hero section con gradiente indigo-purple-pink
+- Efectos de fondo animados con blur orbs
+- Grid pattern de fondo
+- Buscador moderno con icono y efectos de focus
+- Cards de roles con badges de cantidad por rol
+- Animaciones de entrada escalonadas con framer-motion
+- Pills con iconos para estad├¡sticas (miembros y roles activos)
+
+**TablaEquipo.tsx:**
+- Convertida de tabla a cards individuales
+- Avatares con bordes gradientes seg├║n rol
+- Badge de rol con icono Shield
+- Badges con colores espec├¡ficos por tipo de rol
+- Indicador especial Ô¡É para Capitanes
+- Botones de acci├│n que aparecen en hover
+- Efecto shimmer en hover
+- Animaciones de entrada
+
+**Componentes adicionales estilizados:**
+- **BotonesAccionRapida**: Grid de botones con gradientes y animaciones
+- **EditorRoles**: Header con gradiente y lista de roles con drag indicators
+- **HistorialCambios**: Timeline con iconos y justificaciones
+- **JerarquiaVisual**: Organigrama visual con niveles jer├írquicos
+- **SistemaNotificaciones**: Lista de notificaciones con iconos por tipo
+- **ValidacionesRoles**: Estados de validaci├│n con colores sem├ínticos
+- **RolesTemporales**: Cards con barras de progreso animadas
+- **IntegracionCalendario**: Eventos del d├¡a con hora y ubicaci├│n
+
+Todos los componentes incluyen:
+- Glassmorphism (backdrop-blur)
+- Gradientes vibrantes
+- Iconos en backdrop blur
+- Animaciones de entrada
+- Efectos hover
+- Bordes redondeados (rounded-3xl)
+- Sombras y decoraciones

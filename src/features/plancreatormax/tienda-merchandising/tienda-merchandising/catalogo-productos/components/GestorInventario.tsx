@@ -67,7 +67,7 @@ const GestorInventario: React.FC = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {productos.map((producto) => (
+            {Array.isArray(productos) && productos.map((producto) => (
               <tr key={producto.id}>
                 <td className="px-6 py-4 whitespace-nowrap">{producto.nombre}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{producto.stock}</td>

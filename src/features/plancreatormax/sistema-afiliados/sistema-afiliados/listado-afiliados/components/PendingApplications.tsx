@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { UserPlus, CheckCircle, XCircle, MessageSquare, Calendar, Users, Instagram, Youtube, Facebook } from 'lucide-react';
+import { UserPlus, CheckCircle, XCircle, MessageSquare, Calendar, Users, Instagram, Youtube, Facebook, Mail } from 'lucide-react';
 import { mockPendingApplications } from '../data/mockData';
 
 export const PendingApplications: React.FC = () => {

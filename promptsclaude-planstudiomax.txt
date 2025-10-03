@@ -1,0 +1,3620 @@
+# 🚀 PROMPTS DE ESTILIZACIÓN - PLANSTUDIOMAX
+
+## Este archivo contiene los prompts para todos los módulos de PlanStudioMax (Tier Empresarial)
+
+---
+
+## 📋 PROMPT 1: Tarjetas de Socios (Control de Accesos)
+
+Transforma completamente la página de Tarjetas de Socios ([src/features/planstudiomax/control-accesos/tarjetas-socios/TarjetasSociosPage.tsx](src/features/planstudiomax/control-accesos/tarjetas-socios/TarjetasSociosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema completo de gestión de tarjetas físicas/NFC
+- Facilita la asignación y control de tarjetas de acceso
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Tarjetas**
+   - Gradiente `from-blue-600 via-indigo-600 to-purple-600`
+   - Título "Tarjetas de Socios"
+   - Descripción: "Gestión de tarjetas físicas y control de acceso"
+   - Icono de tarjeta/credencial
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Total de Tarjetas Activas
+   - Tarjetas Pendientes de Asignar
+   - Tarjetas Bloqueadas/Perdidas
+   - Accesos Registrados Hoy
+   - Cards con glassmorphism
+
+3. **GESTIÓN DE TARJETAS**
+   - Tabla de tarjetas:
+     * Columnas:
+       - # de Tarjeta (código único)
+       - Socio asignado (avatar + nombre)
+       - Tipo de tarjeta (RFID/NFC/Barcode)
+       - Fecha de asignación
+       - Fecha de expiración
+       - Estado:
+         * Activa (verde) ✅
+         * Bloqueada (rojo) 🚫
+         * Perdida (amarillo) ⚠️
+         * Sin asignar (gris)
+       - Último acceso (fecha/hora)
+       - Acciones:
+         * Ver detalles
+         * Asignar/Reasignar
+         * Bloquear/Desbloquear
+         * Reportar perdida
+         * Reemplazar
+     * Búsqueda por # tarjeta o socio
+     * Filtros por estado, tipo
+     * Ordenar por columnas
+
+4. **ASIGNACIÓN DE TARJETAS**
+   - Modal de asignación:
+     * Buscar socio (autocomplete)
+     * Escanear tarjeta o ingresar código
+     * Tipo de tarjeta (RFID/NFC/Barcode)
+     * Fecha de vencimiento
+     * Permisos de acceso:
+       - Todas las áreas
+       - Solo área fitness
+       - Solo clases
+       - Solo vestuarios
+       - Acceso 24/7 o restringido
+     * Confirmar asignación
+   - Notificación automática al socio
+
+5. **VISUALIZACIÓN DE TARJETA**
+   - Card de tarjeta virtual (diseño realista):
+     * Front de tarjeta:
+       - Logo del gimnasio
+       - Nombre del socio
+       - Foto
+       - # de tarjeta
+       - Código de barras/QR
+       - Fecha de vencimiento
+       - Tipo de membresía (badge)
+     * Diseño con gradientes corporativos
+     * Glassmorphism y efectos modernos
+
+6. **SCANNER DE TARJETAS**
+   - Interfaz de lectura:
+     * Activar lector (simulado)
+     * Input manual de código
+     * Validación en tiempo real
+     * Respuesta inmediata:
+       - ✅ Acceso permitido (verde)
+       - ❌ Acceso denegado (rojo)
+       - Razón de denegación
+       - Información del socio
+     * Registro automático del acceso
+     * Sonido de confirmación/error
+
+7. **TIPOS DE TARJETAS**
+   - Configuración de tipos:
+     * RFID (proximidad)
+     * NFC (contactless)
+     * Barcode (código de barras)
+     * QR code
+     * Biométrica (huella)
+   - Características por tipo
+   - Compatibilidad con torniquetes
+
+8. **INVENTARIO DE TARJETAS**
+   - Stock de tarjetas:
+     * Total disponibles
+     * En uso
+     * Bloqueadas/Perdidas
+     * Por tipo
+   - Solicitar nuevas tarjetas
+   - Registro de recepción
+   - Costo por tarjeta
+
+9. **REPORTAR TARJETA PERDIDA**
+   - Proceso de reporte:
+     * Socio reporta pérdida
+     * Bloqueo automático inmediato
+     * Registro de fecha/hora
+     * Razón de pérdida
+     * Generar reemplazo:
+       - Nueva tarjeta
+       - Costo de reemplazo ($)
+       - Actualizar # en sistema
+     * Notificación de seguridad
+
+10. **REEMPLAZO DE TARJETAS**
+    - Proceso de cambio:
+      * Tarjeta antigua → nueva
+      * Transferir permisos
+      * Invalidar tarjeta anterior
+      * Actualizar registros
+      * Cobrar fee (si aplica)
+    - Historial de reemplazos
+
+11. **CONFIGURACIÓN DE PERMISOS**
+    - Permisos por tarjeta:
+      * Áreas permitidas:
+        - Recepción
+        - Gimnasio
+        - Salas de clase
+        - Vestuarios
+        - Zona de entrenamiento funcional
+        - Spa/Sauna
+        - Zona VIP
+      * Horarios permitidos:
+        - 24/7
+        - Solo AM (5am-12pm)
+        - Solo PM (12pm-10pm)
+        - Horario custom
+      * Restricciones especiales
+    - Perfiles de permisos predefinidos
+
+12. **HISTORIAL DE ACCESOS**
+    - Log de accesos por tarjeta:
+      * Timestamp
+      * Punto de acceso (torniquete/puerta)
+      * Tipo de acceso (entrada/salida)
+      * Duración de estancia
+      * Estado del acceso (permitido/denegado)
+    - Filtrar por fecha, socio, punto de acceso
+    - Exportar historial
+
+13. **ALERTAS Y SEGURIDAD**
+    - Alertas automáticas:
+      * Tarjeta usada en múltiples ubicaciones (sospechoso)
+      * Acceso fuera de horario habitual
+      * Tarjeta bloqueada intentó acceder
+      * Múltiples intentos fallidos
+    - Registro de incidentes
+    - Notificaciones a seguridad
+
+14. **INTEGRACIÓN CON TORNIQUETES**
+    - Estado de dispositivos:
+      * Torniquetes conectados (#)
+      * Estado (online/offline)
+      * Última sincronización
+    - Configuración de puntos de acceso
+    - Test de conectividad
+
+15. **REPORTES**
+    - Analytics de tarjetas:
+      * Gráfico de asignaciones por mes
+      * Tarjetas activas vs totales
+      * Tasa de reemplazo
+      * Tarjetas más usadas
+      * Horas pico de acceso
+    - Exportar reportes (PDF/Excel)
+
+16. **DATOS MOCKEADOS**
+    - 100-200 tarjetas simuladas
+    - Mix de estados (activas, bloqueadas, sin asignar)
+    - Socios asignados
+    - Historial de accesos (últimos 30 días)
+    - Algunos reportes de pérdida
+    - Alertas de seguridad
+    - Dispositivos conectados
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente blue-indigo-purple para hero
+- Card de tarjeta virtual estilo credencial real
+- Scanner con feedback visual inmediato
+- Tabla con badges de estado coloridos
+- Timeline de accesos
+- Alertas de seguridad destacadas
+- Dashboard de dispositivos conectados
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiomax/control-accesos/tarjetas-socios](src/features/planstudiomax/control-accesos/tarjetas-socios).
+
+---
+
+## 📋 PROMPT 2: Gestión de Tornos
+
+Transforma completamente la página de Gestión de Tornos ([src/features/planstudiomax/control-accesos/gestion-tornos/GestionTornosPage.tsx](src/features/planstudiomax/control-accesos/gestion-tornos/GestionTornosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema de monitoreo de torniquetes y puertas
+- Facilita el control de dispositivos de acceso en tiempo real
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Tornos**
+   - Gradiente `from-cyan-600 via-teal-600 to-green-600`
+   - Título "Gestión de Torniquetes"
+   - Descripción: "Control en tiempo real de puntos de acceso"
+   - Icono de puerta/torniquete
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Tornos Online/Total
+   - Accesos Permitidos Hoy
+   - Accesos Denegados Hoy
+   - Tiempo Promedio de Respuesta (ms)
+   - Cards con glassmorphism
+
+3. **MAPA DE INSTALACIÓN**
+   - Vista del layout del gimnasio:
+     * Ubicación de cada torno (icono en mapa)
+     * Color por estado:
+       - Verde: Online y funcionando
+       - Rojo: Offline/Error
+       - Amarillo: Advertencia
+       - Azul: En mantenimiento
+     * Click en torno: ver detalles
+     * Vista 2D/3D del edificio
+   - Zoom in/out
+   - Leyenda de estados
+
+4. **LISTA DE DISPOSITIVOS**
+   - Tabla de tornos:
+     * Columnas:
+       - # ID del dispositivo
+       - Nombre/Ubicación (Entrada principal, Gym, Vestuario)
+       - Tipo (Torniquete, Puerta, Molinete)
+       - Estado (Online/Offline)
+       - Última actividad (timestamp)
+       - Accesos hoy (#)
+       - Tasa de error (%)
+       - IP/Conexión
+       - Versión de firmware
+       - Acciones:
+         * Ver detalles
+         * Reiniciar
+         * Configurar
+         * Modo mantenimiento
+         * Test de conectividad
+     * Ordenar por estado, actividad
+     * Filtrar por ubicación, tipo
+
+5. **DETALLE DE DISPOSITIVO**
+   - Modal con información completa:
+     * **Información general**:
+       - Modelo y fabricante
+       - # de serie
+       - Fecha de instalación
+       - Último mantenimiento
+     * **Estado actual**:
+       - Online/Offline (badge grande)
+       - Uptime (tiempo encendido)
+       - Temperatura del dispositivo
+       - Estado de batería (si aplica)
+     * **Estadísticas**:
+       - Accesos procesados hoy
+       - Tasa de éxito (%)
+       - Tiempo promedio de respuesta
+       - Gráfico de uso por hora
+     * **Configuración**:
+       - Modo de operación (entrada/salida/bidireccional)
+       - Sensibilidad del sensor
+       - Timeout de apertura
+       - Alertas activadas
+     * **Logs recientes**:
+       - Últimos 20 eventos
+       - Timestamp, tipo, resultado
+
+6. **MONITOREO EN TIEMPO REAL**
+   - Dashboard en vivo:
+     * Stream de accesos (últimos 100):
+       - Timestamp
+       - Torno
+       - Socio (nombre + foto)
+       - Tarjeta usada
+       - Resultado (permitido/denegado)
+       - Auto-refresh cada 2 segundos
+     * Animación de entrada cuando hay nuevo acceso
+     * Sonido opcional de notificación
+
+7. **CONFIGURACIÓN DE TORNOS**
+   - Panel de configuración:
+     * **Modo de operación**:
+       - Solo entrada
+       - Solo salida
+       - Bidireccional
+     * **Sensibilidad**:
+       - Alta (acceso rápido)
+       - Media (balance)
+       - Baja (mayor seguridad)
+     * **Timeout**:
+       - Tiempo de apertura (segundos)
+       - Tiempo para cerrar
+     * **Alarmas**:
+       - Activar alarma si forzado
+       - Activar alarma si bloqueado
+       - Notificar a seguridad
+     * **Integración**:
+       - API endpoint
+       - Protocolo (HTTP/MQTT/WebSocket)
+       - Credenciales
+   - Aplicar a uno o múltiples dispositivos
+
+8. **ALERTAS Y NOTIFICACIONES**
+   - Centro de alertas:
+     * Lista de alertas activas:
+       - Dispositivo offline
+       - Tasa de error alta (>10%)
+       - Puerta forzada
+       - Batería baja
+       - Firmware desactualizado
+     * Prioridad (crítica/alta/media/baja)
+     * Click: ver detalles y resolver
+     * Marcar como resuelta
+   - Configurar notificaciones (email/SMS/push)
+
+9. **MANTENIMIENTO**
+   - Programación de mantenimiento:
+     * Calendario de mantenimientos:
+       - Preventivo (cada X meses)
+       - Correctivo (cuando falla)
+       - Limpieza regular
+     * Asignar técnico
+     * Checklist de tareas
+     * Registrar ejecución
+   - Historial de mantenimientos
+   - Próximos mantenimientos programados
+
+10. **CONTROL REMOTO**
+    - Acciones remotas:
+      * Abrir puerta manualmente
+      * Cerrar/Bloquear
+      * Reiniciar dispositivo
+      * Actualizar firmware
+      * Cambiar modo de operación
+      * Habilitar/Deshabilitar
+    - Confirmación de seguridad
+    - Log de acciones remotas
+
+11. **ESTADÍSTICAS DE USO**
+    - Analytics de tornos:
+      * Gráfico de accesos por hora (heatmap)
+      * Distribución por torno (barras)
+      * Accesos permitidos vs denegados (dona)
+      * Tendencia semanal (líneas)
+      * Torno más utilizado
+      * Horas pico
+    - Filtros temporales (hoy, semana, mes)
+    - Exportar datos
+
+12. **GESTIÓN DE INCIDENTES**
+    - Registro de problemas:
+      * Tipo de incidente:
+        - Dispositivo offline
+        - Puerta atascada
+        - Sensor dañado
+        - Error de software
+        - Vandalismo
+      * Fecha/hora
+      * Torno afectado
+      * Descripción
+      * Prioridad
+      * Estado (abierto/en proceso/resuelto)
+      * Asignado a (técnico)
+    - Timeline de resolución
+    - Galería de fotos (evidencia)
+
+13. **INTEGRACIÓN CON CÁMARAS**
+    - Vista de cámaras de seguridad:
+      * Cámara por punto de acceso
+      * Stream en vivo
+      * Grabación de eventos
+      * Captura automática en acceso denegado
+    - Reproducción de eventos pasados
+    - Descarga de clips
+
+14. **CONFIGURACIÓN DE HORARIOS**
+    - Horarios de acceso:
+      * Horario normal de operación
+      * Horarios especiales (días festivos)
+      * Cierre técnico
+      * Acceso 24/7 para VIP
+    - Aplicar restricciones por torno
+    - Calendar view de horarios
+
+15. **REPORTES**
+    - Generación de reportes:
+      * Uptime de dispositivos (%)
+      * Accesos procesados (total)
+      * Tasa de error por dispositivo
+      * Incidentes registrados
+      * Tiempo promedio de resolución
+      * Costo de mantenimiento
+    - Exportar (PDF/Excel)
+    - Programar reportes automáticos
+
+16. **DATOS MOCKEADOS**
+    - 5-10 tornos simulados
+    - Estados variados (algunos online, uno offline)
+    - Stream de accesos en tiempo real (mock)
+    - Historial de eventos
+    - Alertas activas
+    - Incidentes pasados
+    - Programación de mantenimientos
+    - Estadísticas de uso
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente cyan-teal-green para hero
+- Mapa de instalación con iconos de estado
+- Dashboard de monitoreo en tiempo real
+- Badges de estado (online/offline) con colores
+- Stream de accesos con animaciones
+- Gráficos de estadísticas (Recharts)
+- Alertas críticas destacadas
+- Timeline de mantenimientos
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiomax/control-accesos/gestion-tornos](src/features/planstudiomax/control-accesos/gestion-tornos).
+
+---
+
+## 📋 PROMPT 3: Reportes de Accesos
+
+Transforma completamente la página de Reportes de Accesos ([src/features/planstudiomax/control-accesos/reportes-accesos/ReportesAccesosPage.tsx](src/features/planstudiomax/control-accesos/reportes-accesos/ReportesAccesosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema completo de analytics de accesos
+- Facilita la generación de reportes de seguridad y uso
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Reportes**
+   - Gradiente `from-orange-600 via-amber-600 to-yellow-600`
+   - Título "Reportes de Accesos"
+   - Descripción: "Analytics completo de control de acceso"
+   - Icono de gráfico/reporte
+
+2. **ESTADÍSTICAS GENERALES** (6 cards)
+   - Total de Accesos Hoy
+   - Promedio Diario (últimos 30 días)
+   - Hora Pico de Entrada
+   - Hora Pico de Salida
+   - Tasa de Accesos Denegados (%)
+   - Tiempo Promedio de Permanencia
+   - Cards con glassmorphism
+
+3. **FILTROS DE REPORTE**
+   - Panel de filtros avanzados:
+     * Rango de fechas (date picker)
+     * Tipo de acceso (entrada/salida/ambos)
+     * Punto de acceso (multi-select tornos)
+     * Tipo de socio (todos/VIP/regular/corporativo)
+     * Estado (permitido/denegado/bloqueado)
+     * Hora del día (rango)
+   - Guardar filtro favorito
+   - Clear all filters
+   - Aplicar filtros
+
+4. **GRÁFICO DE ACCESOS POR HORA**
+   - Heatmap por día y hora:
+     * Eje X: Horas (00:00 - 23:59)
+     * Eje Y: Días de la semana
+     * Color intensity: Cantidad de accesos
+       - Verde claro: Pocos accesos
+       - Verde oscuro: Muchos accesos
+     * Tooltip con número exacto
+     * Click: ver detalles de esa hora/día
+   - Identificar patrones de uso
+
+5. **DISTRIBUCIÓN DE ACCESOS**
+   - Gráficos múltiples:
+     * **Por punto de acceso** (dona):
+       - Entrada principal
+       - Gimnasio
+       - Vestuarios
+       - Área VIP
+       - % de cada uno
+     * **Por tipo de socio** (barras):
+       - Regular
+       - Premium
+       - VIP
+       - Corporativo
+       - Staff
+     * **Por día de la semana** (barras):
+       - Lunes, martes, etc.
+       - Identificar días más concurridos
+     * **Permitidos vs Denegados** (gauge):
+       - Tasa de aprobación (%)
+       - Objetivo: >95%
+
+6. **TENDENCIAS TEMPORALES**
+   - Gráfico de líneas:
+     * Últimos 30/60/90 días
+     * Accesos por día
+     * Línea de tendencia
+     * Comparativa con período anterior
+     * Identificar crecimiento/caída
+   - Anomalías detectadas (picos/valles inusuales)
+
+7. **TOP USUARIOS**
+   - Ranking de socios:
+     * Top 20 con más accesos:
+       - Posición (#)
+       - Avatar y nombre
+       - Tipo de membresía
+       - # de accesos en período
+       - Promedio diario
+       - Última visita
+     * Ordenar por accesos, frecuencia
+   - Ver todos los socios (tabla completa)
+
+8. **ANÁLISIS DE PERMANENCIA**
+   - Tiempo de estancia:
+     * Distribución de duraciones (histograma):
+       - <30 min
+       - 30-60 min
+       - 1-2 horas
+       - 2-3 horas
+       - >3 horas
+     * Promedio de permanencia
+     * Por tipo de socio
+     * Por día de la semana
+   - Identificar patrones de uso
+
+9. **ACCESOS DENEGADOS**
+   - Análisis de rechazos:
+     * Total de intentos denegados
+     * Razones de denegación (dona):
+       - Tarjeta bloqueada
+       - Membresía vencida
+       - Fuera de horario
+       - Sin créditos
+       - Tarjeta no reconocida
+       - Otro
+     * Socios con más rechazos
+     * Acciones sugeridas (reactivar, renovar)
+   - Timeline de intentos fallidos
+
+10. **OCUPACIÓN EN TIEMPO REAL**
+    - Aforo actual:
+      * Personas dentro (#)
+      * Capacidad máxima
+      * % de ocupación (gauge visual)
+      * Advertencia si cerca del límite
+    - Gráfico de ocupación del día (líneas)
+    - Estimación de ocupación por hora (predictivo)
+
+11. **REPORTES DE SEGURIDAD**
+    - Incidentes detectados:
+      * Accesos duplicados (misma tarjeta en <1 min)
+      * Uso de tarjeta bloqueada
+      * Múltiples rechazos consecutivos
+      * Acceso fuera de horario autorizado
+      * Tailgating (múltiples entradas con 1 tarjeta)
+    - Lista de incidentes con detalles
+    - Prioridad y estado
+    - Asignar para investigación
+
+12. **COMPARATIVA DE PERÍODOS**
+    - Comparar dos rangos de fechas:
+      * Período 1 vs Período 2
+      * Métricas lado a lado:
+        - Total de accesos (+/- %)
+        - Promedio diario (+/- %)
+        - Hora pico (cambió?)
+        - Tasa de denegación (+/- %)
+      * Gráficos superpuestos (líneas)
+      * Insight de cambios significativos
+    - Útil para evaluar campañas, estacionalidad
+
+13. **EXPORTACIÓN DE DATOS**
+    - Exportar reportes:
+      * Formatos:
+        - PDF (con gráficos)
+        - Excel (datos detallados)
+        - CSV (datos crudos)
+      * Contenido:
+        - Resumen ejecutivo
+        - Todos los gráficos
+        - Tabla de accesos
+        - Incidentes de seguridad
+      * Personalizar logo y branding
+    - Programar envío automático (semanal/mensual)
+
+14. **ALERTAS AUTOMÁTICAS**
+    - Configurar alertas:
+      * Ocupación >90% de capacidad
+      * Tasa de denegación >10%
+      * Caída de accesos >20% vs promedio
+      * Incidente de seguridad detectado
+    - Canales de notificación (email/SMS/push)
+    - Destinatarios
+
+15. **ANÁLISIS PREDICTIVO**
+    - Predicciones con IA:
+      * Ocupación esperada por hora (próximas 24h)
+      * Días de mayor afluencia (próxima semana)
+      * Recomendaciones:
+        - "Programar más personal para mañana 6pm"
+        - "Capacidad crítica esperada el sábado"
+      * Basado en históricos y patrones
+
+16. **DATOS MOCKEADOS**
+    - 5000-10000 accesos simulados
+    - Distribuidos en últimos 30-60 días
+    - Patrones realistas (picos AM y PM)
+    - Algunos accesos denegados
+    - Variedad de puntos de acceso
+    - Mix de tipos de socio
+    - Incidentes de seguridad
+    - Datos de permanencia
+    - Ocupación histórica
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente orange-amber-yellow para hero
+- Heatmap de accesos por hora (calendar-style)
+- Gráficos de analytics (Recharts):
+  * Líneas para tendencias
+  * Barras para distribuciones
+  * Dona para proporciones
+  * Gauge para métricas clave
+- Cards de estadísticas con números grandes
+- Tabla de top usuarios con ranking
+- Alertas de seguridad destacadas
+- Dashboard de ocupación en tiempo real
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiomax/control-accesos/reportes-accesos](src/features/planstudiomax/control-accesos/reportes-accesos).
+
+---
+
+## 📋 PROMPT 4: Interfaz de Cliente (Kiosko)
+
+Transforma completamente la página de Interfaz de Cliente ([src/features/planstudiomax/kiosko/interfaz-cliente/InterfazClientePage.tsx](src/features/planstudiomax/kiosko/interfaz-cliente/InterfazClientePage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea una interfaz de kiosko touch-friendly para autoservicio
+- Facilita el check-in, reservas y compras sin personal
+
+### Requisitos de Diseño:
+
+1. **PANTALLA DE BIENVENIDA**
+   - Gradiente `from-purple-600 via-fuchsia-600 to-pink-600`
+   - Título "Bienvenido a [Nombre del Gym]"
+   - Logo grande del gimnasio
+   - Botón grande: "Iniciar Check-in"
+   - Animación de idle (atrae atención)
+   - Touch anywhere para comenzar
+
+2. **IDENTIFICACIÓN**
+   - Opciones de login:
+     * **Escanear tarjeta**:
+       - Instrucciones visuales
+       - Icono de tarjeta grande
+       - "Acerca tu tarjeta al lector"
+       - Animación de escaneo
+     * **Escanear QR** (desde app móvil):
+       - Activar cámara
+       - Marco de escaneo
+       - Preview de cámara
+     * **Buscar por nombre**:
+       - Teclado virtual en pantalla
+       - Autocomplete
+       - Lista de resultados con fotos
+     * **Ingresar código de socio**:
+       - Teclado numérico grande
+       - Input visible
+   - Botones grandes (touch-optimized)
+
+3. **DASHBOARD DEL SOCIO**
+   - Pantalla principal post-login:
+     * **Header personalizado**:
+       - "¡Hola, [Nombre]!"
+       - Foto de perfil grande
+       - Tipo de membresía (badge)
+     * **Tarjetas de acción** (grid 2x2):
+       - 📍 **Check-in Ahora**
+       - 📅 **Reservar Clase**
+       - 🛒 **Comprar en Tienda**
+       - ⚙️ **Mi Cuenta**
+     * Cada card:
+       - Icono grande
+       - Texto claro
+       - Gradiente de fondo
+       - Animación hover
+   - Botón "Cerrar sesión" visible
+
+4. **CHECK-IN RÁPIDO**
+   - Proceso simplificado:
+     * Confirmar identidad (foto grande)
+     * Seleccionar actividad:
+       - Gimnasio general
+       - Clase específica (si tiene reserva)
+       - Área funcional
+       - Zona cardio
+     * Botón grande "Confirmar Check-in"
+     * Animación de éxito ✅
+     * Mensaje: "¡Bienvenido! Disfruta tu entrenamiento"
+     * Resumen:
+       - Hora de entrada
+       - Créditos restantes (si aplica)
+       - Clases reservadas hoy
+     * Auto-logout en 10 segundos
+
+5. **RESERVAR CLASE**
+   - Calendario de clases:
+     * Vista de hoy y próximos 7 días
+     * Lista de clases disponibles:
+       - Nombre de clase
+       - Hora
+       - Coach (nombre + foto)
+       - Cupos disponibles (X/20)
+       - Duración
+       - Nivel (Principiante/Intermedio/Avanzado)
+     * Filtrar por:
+       - Tipo de clase (Yoga, Spinning, HIIT, etc.)
+       - Hora (AM/PM)
+       - Disponibilidad
+     * Card por clase (grande, touch-friendly)
+   - Seleccionar clase:
+     * Confirmar cupo
+     * Usar crédito (si pack)
+     * Confirmación visual
+     * "¡Reserva confirmada!"
+     * Opción de agregar al calendario
+
+6. **COMPRAS EN TIENDA**
+   - Catálogo de productos:
+     * Grid de productos:
+       - Foto grande
+       - Nombre
+       - Precio ($)
+       - Stock disponible
+       - Categoría (badge)
+     * Categorías:
+       - Bebidas
+       - Snacks
+       - Suplementos
+       - Merchandise
+     * Agregar al carrito (botón +)
+   - Carrito de compra:
+     * Productos agregados
+     * Cantidad (+ / -)
+     * Subtotal
+     * Total
+     * Botón "Proceder al pago"
+   - Proceso de pago:
+     * Método:
+       - Cargar a cuenta de socio
+       - Tarjeta (terminal integrado)
+       - Efectivo (llamar a staff)
+     * Confirmación
+     * Recibo digital (email/SMS)
+
+7. **MI CUENTA**
+   - Información del socio:
+     * Datos personales (solo lectura)
+     * Tipo de membresía
+     * Fecha de vencimiento
+     * Créditos restantes
+     * Clases reservadas (próximas)
+     * Historial de asistencias (últimas 10)
+   - Acciones disponibles:
+     * Ver clases reservadas
+     * Cancelar reserva (si permite)
+     * Actualizar contacto (limitado)
+     * Solicitar ayuda (llamar a staff)
+
+8. **NAVEGACIÓN TOUCH-OPTIMIZED**
+   - Botones grandes (mínimo 80px altura)
+   - Espaciado generoso (tap targets)
+   - Feedback visual inmediato (tap)
+   - Animaciones suaves
+   - Scroll vertical (no horizontal)
+   - Botón "Volver" siempre visible
+
+9. **TIMEOUT Y SEGURIDAD**
+   - Inactividad:
+     * Countdown visible (últimos 10 seg)
+     * "¿Sigues ahí?"
+     * Auto-logout después de 30-60 seg
+     * Regresar a pantalla de bienvenida
+   - Protección de datos:
+     * No mostrar info sensible completa
+     * Ocultar últimos dígitos de tarjeta
+     * Limpiar cache al cerrar sesión
+
+10. **ACCESIBILIDAD**
+    - Textos grandes y legibles
+    - Alto contraste
+    - Iconos descriptivos
+    - Instrucciones claras
+    - Botón de ayuda siempre visible
+    - Opción de llamar a staff
+    - Modo de alto contraste
+
+11. **MODO TABLET/KIOSKO**
+    - Full screen mode
+    - Deshabilitar gestos del sistema
+    - Prevenir salida de app
+    - Orientación fija (portrait/landscape)
+    - Protector de pantalla (idle)
+    - Modo oscuro/claro
+
+12. **AYUDA Y SOPORTE**
+    - Botón de ayuda (?)
+    - Opciones:
+      * Ver tutorial (video/gif)
+      * Llamar a recepción (alert staff)
+      * FAQs comunes
+      * Reiniciar sesión
+    - Código QR para descargar app móvil
+
+13. **PROMOCIONES Y ANUNCIOS**
+    - Banner rotativo (idle):
+      * Nuevas clases
+      * Ofertas de tienda
+      * Eventos próximos
+      * Retos del mes
+    - Fullscreen interactivo
+    - Auto-avance cada 10 seg
+
+14. **REPORTES DE USO (Admin)**
+    - Analytics del kiosko:
+      * Check-ins por día
+      * Reservas realizadas
+      * Compras procesadas
+      * Tiempo promedio de uso
+      * Acciones más usadas
+    - Identificar problemas o mejoras
+
+15. **CONFIGURACIÓN (Admin)**
+    - Panel de configuración:
+      * Logo del gimnasio
+      * Colores de marca
+      * Timeout de inactividad
+      * Funcionalidades habilitadas
+      * Dispositivos conectados (lector, cámara)
+      * Modo de operación (kiosko/tablet)
+    - Test de dispositivos
+
+16. **DATOS MOCKEADOS**
+    - Socios de ejemplo para login
+    - Clases disponibles (próximos 7 días)
+    - Productos en tienda
+    - Historial de check-ins
+    - Promociones activas
+    - Configuración de kiosko
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente purple-fuchsia-pink para welcome
+- Botones extra grandes (touch-optimized)
+- Cards con iconos grandes y claros
+- Animaciones de feedback inmediato
+- Teclado virtual en pantalla
+- Grid de productos con fotos grandes
+- Countdown timer visual
+- Protector de pantalla animado
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiomax/kiosko/interfaz-cliente](src/features/planstudiomax/kiosko/interfaz-cliente).
+
+---
+
+## 📋 PROMPT 5: Historial de Kiosko
+
+Transforma completamente la página de Historial de Kiosko ([src/features/planstudiomax/kiosko/historial-kiosko/HistorialKioskoPage.tsx](src/features/planstudiomax/kiosko/historial-kiosko/HistorialKioskoPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema de analytics y logs del kiosko
+- Facilita el monitoreo de uso y problemas
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Historial**
+   - Gradiente `from-indigo-600 via-blue-600 to-cyan-600`
+   - Título "Historial de Kiosko"
+   - Descripción: "Monitoreo de actividad y uso del kiosko"
+   - Icono de historial/log
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Total de Sesiones Hoy
+   - Tiempo Promedio de Uso (min)
+   - Acción Más Realizada
+   - Tasa de Completación (%)
+   - Cards con glassmorphism
+
+3. **LOG DE ACTIVIDAD**
+   - Timeline de eventos:
+     * Lista cronológica (más reciente primero):
+       - Timestamp (fecha/hora)
+       - Usuario (nombre + avatar)
+       - Acción realizada:
+         * Check-in
+         * Reserva de clase
+         * Compra en tienda
+         * Consulta de info
+         * Logout
+       - Duración de sesión
+       - Resultado (exitoso/fallido/incompleto)
+       - Método de login usado
+     * Colores por tipo de acción
+     * Paginación (50-100 por página)
+   - Búsqueda por usuario/acción
+   - Filtros por fecha, acción, resultado
+
+4. **ESTADÍSTICAS DE USO**
+   - Gráficos de analytics:
+     * **Sesiones por hora** (barras):
+       - Distribución horaria
+       - Identificar horas pico
+     * **Acciones más realizadas** (dona):
+       - Check-in (%)
+       - Reservas (%)
+       - Compras (%)
+       - Consultas (%)
+     * **Métodos de login** (barras):
+       - Tarjeta RFID
+       - QR code
+       - Búsqueda por nombre
+       - Código de socio
+     * **Tendencia de uso** (líneas):
+       - Últimos 30 días
+       - Sesiones por día
+
+5. **ANÁLISIS DE CONVERSIÓN**
+   - Funnel de acciones:
+     * Inicio de sesión (100%)
+     * Dashboard visto (X%)
+     * Acción seleccionada (X%)
+     * Acción completada (X%)
+     * Logout exitoso (X%)
+   - Identificar drop-offs
+   - Tasa de abandono por paso
+   - Recomendaciones de mejora
+
+6. **SESIONES INCOMPLETAS**
+   - Análisis de abandonos:
+     * Lista de sesiones no completadas:
+       - Usuario
+       - Punto de abandono (paso)
+       - Tiempo antes de abandonar
+       - Razón (si se detecta):
+         * Timeout por inactividad
+         * Error del sistema
+         * Cancelación del usuario
+         * Otro
+     * Total de abandonos (%)
+     * Pasos más problemáticos
+   - Acciones sugeridas para mejorar UX
+
+7. **TIEMPO DE USO**
+   - Análisis de duración:
+     * Distribución de tiempos de sesión (histograma):
+       - <1 min (muy rápido)
+       - 1-2 min (normal)
+       - 2-5 min (largo)
+       - >5 min (muy largo)
+     * Promedio por tipo de acción
+     * Comparativa de métodos de login
+   - Identificar cuellos de botella
+
+8. **ERRORES Y PROBLEMAS**
+   - Log de errores:
+     * Lista de errores registrados:
+       - Timestamp
+       - Tipo de error:
+         * Lector de tarjeta no responde
+         * Cámara no disponible
+         * Error de red
+         * Timeout de API
+         * Error de pago
+       - Usuario afectado (si aplica)
+       - Pantalla donde ocurrió
+       - Mensaje de error
+       - Estado (resuelto/pendiente)
+     * Ordenar por frecuencia
+     * Filtrar por tipo, fecha
+   - Tasa de errores (%)
+   - Alertas de errores frecuentes
+
+9. **COMPRAS REALIZADAS**
+   - Análisis de ventas del kiosko:
+     * Total vendido ($)
+     * # de transacciones
+     * Ticket promedio ($)
+     * Productos más vendidos:
+       - Nombre
+       - Unidades vendidas
+       - Revenue generado
+     * Métodos de pago usados (%)
+     * Gráfico de ventas por hora
+   - Comparativa con ventas en mostrador
+
+10. **RESERVAS REALIZADAS**
+    - Analytics de reservas:
+      * Total de reservas vía kiosko
+      * Clases más reservadas
+      * Horarios más populares
+      * Cancelaciones hechas vía kiosko
+      * Tasa de show-up (asistieron?)
+    - Comparativa con reservas por app/web
+
+11. **USUARIOS MÁS ACTIVOS**
+    - Ranking de uso del kiosko:
+      * Top 20 usuarios:
+        - Avatar y nombre
+        - # de sesiones en período
+        - Acciones favoritas
+        - Última vez usado
+      * Usuarios que nunca lo han usado (alerta)
+    - Promover adopción del kiosko
+
+12. **COMPARATIVA DE KIOSKOS**
+    - Si hay múltiples kioskos:
+      * Tabla comparativa:
+        - Kiosko (ubicación)
+        - Sesiones (#)
+        - Tiempo promedio
+        - Tasa de error (%)
+        - Revenue generado ($)
+      * Identificar kioskos más/menos usados
+      * Razones de diferencias
+    - Optimizar ubicación y configuración
+
+13. **FEEDBACK DE USUARIOS**
+    - Recopilación de opiniones:
+      * Encuesta rápida al finalizar (opcional):
+        - "¿Fue fácil de usar?" (1-5 estrellas)
+        - Comentario breve
+      * Promedio de satisfacción
+      * Comentarios recientes (lista)
+      * Identificar problemas recurrentes
+    - Implementar mejoras basadas en feedback
+
+14. **REPORTES PROGRAMADOS**
+    - Generación automática:
+      * Reporte diario:
+        - # de sesiones
+        - Acciones realizadas
+        - Errores encontrados
+        - Ventas generadas
+      * Reporte semanal/mensual (resumen)
+      * Envío por email automático
+    - Exportar reportes (PDF/Excel)
+
+15. **MANTENIMIENTO DEL KIOSKO**
+    - Registro de mantenimientos:
+      * Fecha de último mantenimiento
+      * Próximo mantenimiento programado
+      * Checklist de tareas:
+        - Limpiar pantalla
+        - Verificar lector de tarjetas
+        - Actualizar software
+        - Revisar conexión de red
+      * Historial de mantenimientos
+    - Alertas de mantenimiento debido
+
+16. **DATOS MOCKEADOS**
+    - 200-500 sesiones simuladas
+    - Distribuidas en últimos 30 días
+    - Mix de acciones (check-in, reservas, compras)
+    - Algunos errores y abandonos
+    - Feedback de usuarios
+    - Métricas de conversión
+    - Tiempos de uso variados
+    - Datos de múltiples kioskos (si aplica)
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente indigo-blue-cyan para hero
+- Timeline de eventos con colores por tipo
+- Gráficos de analytics (Recharts)
+- Funnel de conversión visual
+- Cards de estadísticas con números grandes
+- Badges de estado (exitoso/fallido/incompleto)
+- Tabla de errores con alertas
+- Comparativa de kioskos (tabla)
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiomax/kiosko/historial-kiosko](src/features/planstudiomax/kiosko/historial-kiosko).
+
+---
+
+## 📋 PROMPT 6: Listado de Sedes
+
+Transforma completamente la página de Listado de Sedes ([src/features/planstudiomax/multi-sedes/listado-sedes/ListadoSedesPage.tsx](src/features/planstudiomax/multi-sedes/listado-sedes/ListadoSedesPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema de gestión multi-sede
+- Facilita la administración centralizada de múltiples ubicaciones
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Sedes**
+   - Gradiente `from-green-600 via-emerald-600 to-teal-600`
+   - Título "Gestión Multi-Sede"
+   - Descripción: "Administra todas tus ubicaciones desde un solo lugar"
+   - Icono de ubicaciones/mapa
+
+2. **ESTADÍSTICAS GLOBALES** (4 cards)
+   - Total de Sedes Activas
+   - Miembros Totales (todas las sedes)
+   - Revenue Total del Mes ($)
+   - Sede con Mejor Performance
+   - Cards con glassmorphism
+
+3. **MAPA DE SEDES**
+   - Vista de mapa interactivo:
+     * Marcadores por cada sede
+     * Color por estado:
+       - Verde: Activa y operando
+       - Amarillo: En mantenimiento
+       - Rojo: Cerrada temporalmente
+       - Azul: Próxima apertura
+     * Click en marcador: ver detalles
+     * Zoom in/out
+     * Centrar en ubicación
+   - Opción de vista lista/mapa
+
+4. **GRID DE SEDES**
+   - Cards de sedes:
+     * Card por ubicación:
+       - Foto de la sede (fachada/interior)
+       - Nombre de la sede
+       - Dirección completa
+       - Estado (badge)
+       - Métricas rápidas:
+         * Miembros activos (#)
+         * Ocupación actual (%)
+         * Revenue del mes ($)
+         * Rating promedio (estrellas)
+       - Botones de acción:
+         * Ver detalles
+         * Dashboard de sede
+         * Configurar
+         * Editar
+     * Hover: lift con sombra
+     * Grid responsive (1-2-3 columnas)
+
+5. **DETALLE DE SEDE**
+   - Modal/Página con información completa:
+     * **Información general**:
+       - Nombre
+       - Dirección completa
+       - Teléfono, email
+       - Gerente de sede (nombre + foto)
+       - Horario de operación
+       - Capacidad máxima
+       - Fecha de apertura
+     * **Instalaciones**:
+       - Área total (m²)
+       - Zonas disponibles:
+         * Gimnasio
+         * Salas de clase (#)
+         * Vestuarios
+         * Cafetería
+         * Tienda
+         * Área funcional
+         * Spa/Sauna
+       - Equipamiento:
+         * Máquinas de cardio (#)
+         * Máquinas de fuerza (#)
+         * Peso libre
+         * Otros
+     * **Estadísticas**:
+       - Miembros activos
+       - Check-ins promedio/día
+       - Revenue mensual ($)
+       - Tasa de ocupación (%)
+       - Clases ofrecidas (#)
+       - Personal (#)
+     * **Galería de fotos**:
+       - Múltiples fotos de la sede
+       - Carousel interactivo
+
+6. **CONFIGURACIÓN DE SEDE**
+   - Panel de configuración:
+     * **Información básica**:
+       - Nombre
+       - Logo de la sede (upload)
+       - Dirección
+       - Contacto
+     * **Horarios**:
+       - Horario por día de la semana
+       - Horarios especiales (festivos)
+       - Cierre técnico
+     * **Capacidad**:
+       - Aforo máximo
+       - Alertas de ocupación (%)
+     * **Servicios**:
+       - Servicios disponibles (checkboxes)
+       - Clases ofrecidas
+       - Amenidades
+     * **Integración**:
+       - Software de acceso (torniquetes)
+       - Sistema de reservas
+       - POS
+   - Guardar cambios
+
+7. **PERSONAL DE LA SEDE**
+   - Equipo asignado:
+     * Lista de staff:
+       - Avatar y nombre
+       - Puesto:
+         * Gerente
+         * Coach
+         * Recepcionista
+         * Mantenimiento
+         * Limpieza
+       - Email y teléfono
+       - Horario asignado
+       - Estado (activo/inactivo)
+       - Acciones (editar, eliminar)
+     * Agregar nuevo staff
+     * Asignar permisos por sede
+
+8. **COMPARATIVA DE SEDES**
+   - Tabla comparativa:
+     * Columnas:
+       - Sede
+       - Miembros (#)
+       - Revenue ($)
+       - Ocupación promedio (%)
+       - Check-ins/día
+       - Rating (estrellas)
+       - Margen (%)
+     * Ordenar por cualquier métrica
+     * Identificar mejores y peores performers
+     * Gráficos comparativos (barras)
+   - Exportar comparativa
+
+9. **TRANSFERENCIAS ENTRE SEDES**
+   - Gestión de transfers:
+     * Miembros que cambiaron de sede:
+       - Nombre del miembro
+       - Sede origen → Sede destino
+       - Fecha de transferencia
+       - Razón (mudanza, conveniencia, etc.)
+       - Estado de membresía
+     * Proceso de transferencia:
+       - Buscar miembro
+       - Seleccionar nueva sede
+       - Confirmar disponibilidad
+       - Actualizar sistema
+       - Notificar al miembro
+     * Historial de transferencias
+
+10. **REPLICAR CONFIGURACIÓN**
+    - Copiar config entre sedes:
+      * Seleccionar sede origen
+      * Seleccionar sedes destino (multi-select)
+      * Qué copiar:
+        - Horarios de operación
+        - Servicios ofrecidos
+        - Configuración de clases
+        - Precios y planes
+        - Políticas
+      * Aplicar cambios en batch
+    - Útil para mantener consistencia
+
+11. **ALERTAS POR SEDE**
+    - Dashboard de alertas:
+      * Por sede:
+        - Ocupación >90%
+        - Mantenimiento debido
+        - Personal faltante
+        - Inventario bajo
+        - Equipamiento dañado
+        - Quejas de clientes
+      * Prioridad (crítica/alta/media/baja)
+      * Asignar responsable
+      * Estado (abierta/en proceso/resuelta)
+    - Notificaciones automáticas
+
+12. **REPORTES CONSOLIDADOS**
+    - Reportes multi-sede:
+      * Revenue total y por sede
+      * Miembros totales y distribución
+      * Check-ins agregados
+      * Clases más populares (global)
+      * Productos más vendidos
+      * Performance por gerente
+    - Gráficos comparativos
+    - Exportar (PDF/Excel)
+
+13. **PRÓXIMAS APERTURAS**
+    - Sedes en desarrollo:
+      * Card por sede futura:
+        - Ubicación planeada
+        - Fecha estimada de apertura
+        - Progreso de construcción (%)
+        - Inversión ($)
+        - Gerente asignado
+        - Estado del proyecto:
+          * Planificación
+          * Construcción
+          * Equipamiento
+          * Pre-apertura
+          * Abierta
+      * Timeline de milestones
+      * Galería de fotos de construcción
+
+14. **COMUNICACIÓN MULTI-SEDE**
+    - Enviar anuncios:
+      * A todas las sedes (broadcast)
+      * A sedes específicas (multi-select)
+      * Por canal (email/SMS/app)
+      * Templates de mensajes
+    - Historial de comunicaciones
+
+15. **INTEGRACIÓN CENTRALIZADA**
+    - Dashboard de integración:
+      * Sistemas conectados:
+        - CRM
+        - POS
+        - Control de acceso
+        - Reservas
+        - Contabilidad
+      * Estado por sede (conectado/desconectado)
+      * Última sincronización
+      * Errores de integración
+    - Test de conectividad
+
+16. **DATOS MOCKEADOS**
+    - 3-10 sedes simuladas
+    - Ubicaciones en diferentes ciudades
+    - Métricas variadas por sede
+    - Personal asignado
+    - Historial de transferencias
+    - Alertas activas
+    - Próximas aperturas (2-3)
+    - Comparativas de rendimiento
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente green-emerald-teal para hero
+- Mapa interactivo con marcadores
+- Grid de cards de sedes con fotos
+- Tabla comparativa con ordenamiento
+- Modal de detalle amplio con tabs
+- Badges de estado coloridos
+- Gráficos comparativos (Recharts)
+- Timeline de próximas aperturas
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiomax/multi-sedes/listado-sedes](src/features/planstudiomax/multi-sedes/listado-sedes).
+
+---
+
+## 📋 PROMPT 7: Comparativa de Sedes
+
+Transforma completamente la página de Comparativa de Sedes ([src/features/planstudiomax/multi-sedes/comparativa-sedes/ComparativaSedesPage.tsx](src/features/planstudiomax/multi-sedes/comparativa-sedes/ComparativaSedesPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema de benchmarking entre sedes
+- Facilita la identificación de mejores prácticas
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Comparativa**
+   - Gradiente `from-orange-600 via-red-600 to-pink-600`
+   - Título "Comparativa de Sedes"
+   - Descripción: "Benchmarking y análisis de performance"
+   - Icono de gráficos/comparación
+
+2. **SELECTOR DE SEDES**
+   - Filtro de sedes a comparar:
+     * Multi-select de sedes (checkboxes)
+     * Seleccionar todas / Ninguna
+     * Mínimo 2, máximo 6 sedes
+     * Preview de sedes seleccionadas (chips)
+     * Botón "Comparar"
+   - Selector de período:
+     * Esta semana
+     * Este mes
+     * Últimos 3 meses
+     * Este año
+     * Custom (date range)
+
+3. **TABLA COMPARATIVA**
+   - Tabla side-by-side:
+     * Filas = Métricas:
+       - **Miembros**:
+         * Total de miembros
+         * Nuevos este mes
+         * Bajas este mes
+         * Tasa de retención (%)
+       - **Revenue**:
+         * Total del período ($)
+         * Revenue por miembro ($)
+         * Margen de ganancia (%)
+         * Crecimiento vs período anterior (%)
+       - **Operacional**:
+         * Check-ins/día promedio
+         * Ocupación promedio (%)
+         * Clases ofrecidas (#)
+         * Utilización de salas (%)
+       - **Satisfacción**:
+         * Rating promedio (estrellas)
+         * NPS score
+         * Quejas registradas (#)
+         * Recomendaciones (#)
+       - **Personal**:
+         * Número de staff
+         * Ratio miembros/staff
+         * Rotación de personal (%)
+     * Columnas = Sedes seleccionadas
+     * Colores:
+       - Verde: Mejor valor
+       - Rojo: Peor valor
+       - Gris: Promedio
+     * Ordenar por métrica
+
+4. **GRÁFICOS DE COMPARACIÓN**
+   - Visualizaciones:
+     * **Barras agrupadas**:
+       - Revenue por sede
+       - Miembros por sede
+       - Check-ins por sede
+     * **Líneas temporales**:
+       - Evolución de revenue (sedes superpuestas)
+       - Tendencia de miembros
+       - Check-ins diarios
+     * **Radar chart**:
+       - Múltiples métricas por sede
+       - Identificar fortalezas/debilidades
+     * **Scatter plot**:
+       - Revenue vs Satisfacción
+       - Identificar outliers
+   - Interactivos (hover para valores)
+
+5. **RANKING DE SEDES**
+   - Leaderboard:
+     * Por métrica seleccionada:
+       - Revenue
+       - Miembros
+       - Satisfacción
+       - Ocupación
+       - Rentabilidad
+     * Ranking 1-N:
+       - Posición (#1, #2, #3 con medallas)
+       - Nombre de sede
+       - Valor de métrica
+       - Diferencia con #1 (%)
+     * Cambio de posición vs mes anterior (↗↘)
+
+6. **MEJORES PRÁCTICAS**
+   - Identificación automática:
+     * Sede con mejor performance en cada categoría
+     * Qué están haciendo bien:
+       - Estrategias de marketing
+       - Servicios ofrecidos
+       - Programación de clases
+       - Gestión de personal
+     * Replicar prácticas exitosas
+   - Casos de éxito (cards)
+
+7. **ÁREAS DE MEJORA**
+   - Análisis de gaps:
+     * Sedes con bajo performance:
+       - Identificar sede
+       - Métrica problemática
+       - Comparar con promedio
+       - Gap a cerrar
+       - Recomendaciones:
+         * "Aumentar clases de yoga en Sede A"
+         * "Mejorar atención al cliente en Sede B"
+         * "Optimizar horarios en Sede C"
+     * Plan de acción sugerido
+   - Alertas de underperformance
+
+8. **ANÁLISIS DE RENTABILIDAD**
+   - Comparativa financiera:
+     * Revenue por sede
+     * Costos operacionales
+     * Margen de ganancia (%)
+     * ROI
+     * Punto de equilibrio alcanzado?
+   - Gráfico de waterfall (ingresos vs gastos)
+   - Identificar sedes más/menos rentables
+
+9. **EFICIENCIA OPERACIONAL**
+   - Métricas de eficiencia:
+     * Revenue por m²
+     * Revenue por empleado
+     * Utilización de equipamiento (%)
+     * Costo por check-in
+     * Ratio de conversión (visitas → ventas)
+   - Comparar eficiencia entre sedes
+   - Identificar optimizaciones
+
+10. **SATISFACCIÓN DEL CLIENTE**
+    - Análisis de NPS por sede:
+      * NPS score por sede
+      * Distribución de respuestas:
+        - Promotores (9-10)
+        - Pasivos (7-8)
+        - Detractores (0-6)
+      * Comentarios comunes (word cloud)
+      * Razones de insatisfacción
+    - Comparar ratings de Google/Yelp
+
+11. **PROGRAMACIÓN DE CLASES**
+    - Comparativa de oferta:
+      * Clases por tipo (Yoga, Spinning, HIIT):
+        - # de clases/semana por sede
+        - Promedio de asistentes
+        - Tasa de ocupación (%)
+      * Horarios más populares
+      * Coaches más solicitados
+    - Identificar gaps en programación
+
+12. **ANÁLISIS DE MIEMBROS**
+    - Demographics por sede:
+      * Distribución de edad
+      * Género (%)
+      * Tipo de membresía
+      * Frecuencia de visita
+    - Comparar perfiles de clientes
+    - Adaptar oferta por demografía
+
+13. **SERVICIOS Y AMENIDADES**
+    - Comparativa de servicios:
+      * Tabla de servicios disponibles:
+        - Cada fila = Servicio (Sauna, Spa, Cafetería, etc.)
+        - Cada columna = Sede
+        - ✅ Disponible / ❌ No disponible
+      * Correlación con satisfacción
+      * Recomendaciones de expansión
+
+14. **EXPORTACIÓN DE REPORTES**
+    - Generar reportes:
+      * Formato PDF ejecutivo:
+        - Resumen ejecutivo
+        - Gráficos principales
+        - Tabla comparativa
+        - Recomendaciones
+      * Excel detallado:
+        - Todas las métricas
+        - Datos crudos
+        - Fórmulas de cálculo
+      * PowerPoint para presentación:
+        - Slides con gráficos
+        - Highlights
+        - Insights clave
+    - Programar envío automático
+
+15. **METAS Y OBJETIVOS**
+    - Establecer targets por sede:
+      * Objetivo de revenue
+      * Objetivo de miembros
+      * Objetivo de satisfacción
+      * Objetivo de ocupación
+    - Tracking de progreso (%)
+    - Alertas si se desvían del objetivo
+
+16. **DATOS MOCKEADOS**
+    - 3-10 sedes con métricas completas
+    - Variabilidad realista de performance
+    - Algunos líderes, algunos rezagados
+    - Datos históricos (3-12 meses)
+    - NPS scores variados
+    - Servicios diferentes por sede
+    - Programación de clases variada
+    - Comentarios de clientes
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente orange-red-pink para hero
+- Tabla comparativa con colores por performance
+- Gráficos múltiples (Recharts):
+  * Barras agrupadas
+  * Líneas superpuestas
+  * Radar chart
+  * Scatter plot
+- Leaderboard con medallas (#1, #2, #3)
+- Cards de mejores prácticas
+- Badges de estado y alertas
+- Exportación multi-formato
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiomax/multi-sedes/comparativa-sedes](src/features/planstudiomax/multi-sedes/comparativa-sedes).
+
+---
+
+## 📋 PROMPT 8: Transferencias de Clientes
+
+Transforma completamente la página de Transferencias de Clientes ([src/features/planstudiomax/multi-sedes/transferencias-clientes/TransferenciasClientesPage.tsx](src/features/planstudiomax/multi-sedes/transferencias-clientes/TransferenciasClientesPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema de transferencia de miembros entre sedes
+- Facilita la movilidad de clientes en la red
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Transferencias**
+   - Gradiente `from-purple-600 via-pink-600 to-rose-600`
+   - Título "Transferencias de Clientes"
+   - Descripción: "Gestiona cambios de sede de tus miembros"
+   - Icono de transferencia/flechas
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Transferencias Este Mes
+   - Transferencias Pendientes
+   - Sede con Más Salidas
+   - Sede con Más Entradas
+   - Cards con glassmorphism
+
+3. **SOLICITAR TRANSFERENCIA**
+   - Formulario de solicitud:
+     * **Paso 1: Buscar miembro**:
+       - Autocomplete por nombre/email/ID
+       - Mostrar resultado con foto y datos
+       - Sede actual destacada
+       - Tipo de membresía
+       - Créditos restantes
+     * **Paso 2: Seleccionar nueva sede**:
+       - Lista de sedes disponibles
+       - Información por sede:
+         * Nombre y dirección
+         * Disponibilidad (cupos)
+         * Horarios
+         * Servicios similares
+         * Distancia desde ubicación actual
+       - Seleccionar sede destino
+     * **Paso 3: Razón de transferencia**:
+       - Dropdown de razones:
+         * Mudanza residencial
+         * Cambio de trabajo
+         * Preferencia de ubicación
+         * Disponibilidad de clases
+         * Cercanía
+         * Otro (especificar)
+     * **Paso 4: Confirmar detalles**:
+       - Resumen de transferencia
+       - Fecha efectiva
+       - Cambios en membresía (si aplica)
+       - Términos y condiciones
+       - Confirmar y procesar
+   - Wizard visual con progreso
+
+4. **TABLA DE TRANSFERENCIAS**
+   - Lista de transfers:
+     * Columnas:
+       - Miembro (avatar + nombre)
+       - Sede origen → Sede destino (con flecha)
+       - Fecha de solicitud
+       - Fecha efectiva
+       - Razón
+       - Estado:
+         * Pendiente aprobación (amarillo)
+         * Aprobada (verde)
+         * En proceso (azul)
+         * Completada (verde oscuro)
+         * Rechazada (rojo)
+       - Solicitado por (staff/miembro)
+       - Acciones:
+         * Ver detalles
+         * Aprobar/Rechazar (si pendiente)
+         * Cancelar (si en proceso)
+     * Filtros por estado, sede, fecha
+     * Búsqueda por miembro
+     * Ordenar por columnas
+
+5. **DETALLE DE TRANSFERENCIA**
+   - Modal con información completa:
+     * **Información del miembro**:
+       - Foto y nombre
+       - Tipo de membresía
+       - Fecha de inicio original
+       - Historial en sede origen:
+         * Tiempo como miembro (meses)
+         * # de check-ins
+         * Clases favoritas
+         * Rating de satisfacción
+     * **Detalles de transferencia**:
+       - Sede origen (card)
+       - Sede destino (card)
+       - Razón detallada
+       - Notas adicionales
+     * **Cambios en servicio**:
+       - Membresía se mantiene igual?
+       - Ajustes de precio (si hay)
+       - Créditos transferidos
+       - Clases disponibles
+     * **Timeline de proceso**:
+       - Solicitud recibida
+       - En revisión
+       - Aprobada
+       - Notificado al miembro
+       - Migración de datos
+       - Completada
+     * **Acciones disponibles**:
+       - Aprobar transfer
+       - Rechazar con razón
+       - Solicitar más información
+       - Contactar al miembro
+
+6. **APROBACIÓN DE TRANSFERENCIAS**
+   - Cola de aprobación:
+     * Cards de transfers pendientes:
+       - Información resumida
+       - Razón destacada
+       - Impacto en cupos de sede destino
+       - Recomendación (aprobar/rechazar)
+     * Botones de acción rápida:
+       - Aprobar (verde)
+       - Rechazar (rojo)
+       - Solicitar info (amarillo)
+     * Aprobación en batch (selección múltiple)
+   - Notificación automática al miembro
+
+7. **FLUJO DE TRANSFERENCIA**
+   - Proceso paso a paso:
+     * **Etapa 1: Solicitud**:
+       - Recibir solicitud
+       - Validar elegibilidad
+       - Verificar cupos en destino
+     * **Etapa 2: Aprobación**:
+       - Revisar detalles
+       - Aprobar/Rechazar
+       - Notificar decisión
+     * **Etapa 3: Migración**:
+       - Transferir datos de miembro
+       - Actualizar membresía
+       - Transferir créditos
+       - Actualizar tarjeta de acceso
+     * **Etapa 4: Onboarding**:
+       - Bienvenida en nueva sede
+       - Tour de instalaciones (opcional)
+       - Introducción a staff
+       - Actualizar preferencias
+     * **Etapa 5: Completado**:
+       - Confirmar satisfacción
+       - Cerrar caso
+   - Timeline visual de progreso
+
+8. **ANÁLISIS DE FLUJO**
+   - Analytics de transferencias:
+     * **Matriz de transferencias**:
+       - Tabla cruzada:
+         * Filas: Sedes origen
+         * Columnas: Sedes destino
+         * Valores: # de transferencias
+       - Identificar rutas más comunes
+     * **Gráfico de flujo (Sankey)**:
+       - Visualizar movimiento entre sedes
+       - Grosor de línea = volumen
+     * **Razones más comunes** (barras):
+       - Mudanza, conveniencia, etc.
+       - % de cada razón
+   - Exportar analytics
+
+9. **IMPACTO EN CUPOS**
+   - Gestión de capacidad:
+     * Cupos disponibles por sede:
+       - Sede A: 120/150 (80%)
+       - Sede B: 95/120 (79%)
+       - Sede C: 140/140 (100%) ⚠️
+     * Proyección con transfers pendientes:
+       - Cupos después de transfers
+       - Alertas de sobre-capacidad
+     * Aprobación condicionada a disponibilidad
+
+10. **COMUNICACIÓN CON MIEMBROS**
+    - Templates de mensajes:
+      * Confirmación de solicitud:
+        - "Recibimos tu solicitud de transferencia"
+      * Aprobación:
+        - "¡Tu transferencia fue aprobada!"
+        - Próximos pasos
+        - Fecha efectiva
+        - Bienvenida a nueva sede
+      * Rechazo:
+        - Razón del rechazo
+        - Alternativas
+      * Recordatorios:
+        - "Tu transferencia es en 3 días"
+    - Personalización de mensajes
+    - Envío automático
+
+11. **HISTORIAL DE TRANSFERENCIAS**
+    - Por miembro:
+      * Ver todas las transferencias pasadas
+      * Sedes donde ha estado
+      * Duración en cada sede
+      * Razones de cambios
+    - Por sede:
+      * Entradas y salidas
+      * Balance neto (ganancia/pérdida)
+      * Tendencias temporales
+
+12. **RETENCIÓN EN TRANSFERENCIAS**
+    - Estrategia de retención:
+      * Cuando miembro solicita transfer por insatisfacción:
+        - Ofrecer mejoras en sede actual
+        - Descuento temporal
+        - Sesión con gerente
+        - Cambio de horarios/clases
+      * Intentos de retención registrados
+      * Tasa de éxito de retención
+
+13. **TRANSFERENCIAS TEMPORALES**
+    - Acceso temporal a otra sede:
+      * Miembro puede usar otra sede sin transferirse:
+        - Viaje temporal
+        - Proyecto de trabajo
+        - Visita familiar
+      * Duración limitada (días/semanas)
+      * Acceso a ambas sedes
+      * No cuenta como transfer permanente
+    - Configurar acceso temporal
+
+14. **REPORTES**
+    - Generación de reportes:
+      * Reporte mensual de transferencias:
+        - Total de transfers
+        - Por sede (entradas/salidas)
+        - Razones principales
+        - Impacto en revenue
+      * Reporte de retención
+      * Análisis de causas
+    - Exportar (PDF/Excel)
+
+15. **CONFIGURACIÓN DE POLÍTICAS**
+    - Políticas de transferencia:
+      * Límite de transferencias por año
+      * Período mínimo en sede (meses)
+      * Fee de transferencia ($) (si aplica)
+      * Aprobación automática vs manual
+      * Sedes elegibles para transfer
+      * Restricciones especiales
+    - Guardar configuración global
+
+16. **DATOS MOCKEADOS**
+    - 50-100 transferencias simuladas
+    - Estados variados (pendiente, aprobada, completada)
+    - Múltiples sedes origen y destino
+    - Razones variadas
+    - Algunos rechazos
+    - Historial de miembros con transfers
+    - Matriz de flujo entre sedes
+    - Impacto en cupos
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente purple-pink-rose para hero
+- Wizard de transferencia con steps visuales
+- Tabla con badges de estado coloridos
+- Modal de detalle amplio con timeline
+- Matriz de transferencias (heatmap)
+- Gráfico de flujo (Sankey diagram)
+- Cards de aprobación con acciones rápidas
+- Alerts de sobre-capacidad
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiomax/multi-sedes/transferencias-clientes](src/features/planstudiomax/multi-sedes/transferencias-clientes).
+
+---
+
+## 📋 PROMPT 9: Catálogo de Stock (Inventario Avanzado)
+
+Transforma completamente la página de Catálogo de Stock ([src/features/planstudiomax/inventario-avanzado/catalogo-stock/CatalogoStockPage.tsx](src/features/planstudiomax/inventario-avanzado/catalogo-stock/CatalogoStockPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema avanzado de gestión de inventario multi-sede
+- Facilita el control de stock, proveedores y reorden automático
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Inventario**
+   - Gradiente `from-blue-600 via-indigo-600 to-purple-600`
+   - Título "Gestión de Inventario"
+   - Descripción: "Control avanzado de stock en todas tus sedes"
+   - Icono de caja/inventario
+
+2. **ESTADÍSTICAS GLOBALES** (6 cards)
+   - Valor Total del Inventario ($)
+   - Productos en Stock (#)
+   - Productos con Stock Bajo (#)
+   - Productos por Vencer (30 días)
+   - Rotación Promedio de Inventario (días)
+   - Merma del Mes ($)
+   - Cards con glassmorphism
+
+3. **CATÁLOGO DE PRODUCTOS**
+   - Tabla completa de productos:
+     * Columnas:
+       - Imagen del producto
+       - SKU / Código
+       - Nombre del producto
+       - Categoría (Suplementos, Bebidas, Snacks, Merch, etc.)
+       - Stock actual (todas las sedes)
+       - Stock por sede (expandible)
+       - Stock mínimo (alerta)
+       - Stock máximo
+       - Precio de costo ($)
+       - Precio de venta ($)
+       - Margen (%)
+       - Proveedor
+       - Fecha de caducidad (si aplica)
+       - Estado:
+         * Stock OK (verde) ✅
+         * Stock bajo (amarillo) ⚠️
+         * Sin stock (rojo) ❌
+         * Por vencer (naranja) 📅
+       - Acciones:
+         * Ver detalles
+         * Editar
+         * Ajustar stock
+         * Ordenar más
+         * Transferir entre sedes
+     * Búsqueda por nombre, SKU, categoría
+     * Filtros avanzados
+     * Ordenar por columnas
+     * Paginación
+
+4. **DETALLE DE PRODUCTO**
+   - Modal amplio con información completa:
+     * **Información general**:
+       - Foto grande del producto
+       - Galería de imágenes
+       - Nombre y descripción
+       - SKU / Código de barras
+       - Categoría y subcategoría
+       - Marca
+     * **Información de stock**:
+       - Stock total (todas las sedes)
+       - Desglose por sede:
+         * Sede A: X unidades
+         * Sede B: Y unidades
+         * Sede C: Z unidades
+       - Stock mínimo / máximo
+       - Punto de reorden
+       - Ubicación en almacén
+     * **Información financiera**:
+       - Precio de costo
+       - Precio de venta
+       - Margen de ganancia (%)
+       - Descuentos aplicables
+       - Historial de precios
+     * **Proveedor**:
+       - Nombre del proveedor
+       - Contacto
+       - Tiempo de entrega (días)
+       - Cantidad mínima de orden
+       - Última compra (fecha y cantidad)
+     * **Movimientos recientes**:
+       - Timeline de entradas/salidas
+       - Ventas (últimas 10)
+       - Recepciones (últimas 10)
+       - Ajustes de inventario
+       - Transferencias entre sedes
+     * **Analytics**:
+       - Gráfico de ventas (últimos 6 meses)
+       - Velocidad de rotación
+       - Proyección de agotamiento
+       - Recomendación de reorden
+
+5. **AJUSTE DE INVENTARIO**
+   - Registro de ajustes:
+     * Tipo de ajuste:
+       - Entrada manual (compra directa)
+       - Salida manual (merma, robo, error)
+       - Transferencia entre sedes
+       - Devolución
+       - Corrección de conteo
+     * Producto afectado
+     * Cantidad (+/-)
+     * Sede
+     * Razón del ajuste (dropdown + textarea)
+     * Usuario responsable
+     * Fecha y hora
+     * Evidencia (foto opcional)
+   - Requiere aprobación (si es ajuste grande)
+   - Log completo de ajustes
+
+6. **ALERTAS DE INVENTARIO**
+   - Dashboard de alertas:
+     * **Stock bajo**:
+       - Lista de productos bajo stock mínimo
+       - Cantidad actual vs mínimo
+       - Acción: Ordenar ahora
+     * **Sin stock**:
+       - Productos agotados
+       - Última venta (hace X días)
+       - Ventas perdidas estimadas
+       - Urgencia de reorden
+     * **Por vencer**:
+       - Productos con caducidad próxima (<30 días)
+       - Cantidad en riesgo
+       - Acción: Promoción / Descuento
+     * **Sobre-stock**:
+       - Productos con exceso de inventario
+       - Tiempo estimado para agotar
+       - Capital inmovilizado ($)
+       - Acción: Promocionar / Transferir
+     * **Productos vencidos**:
+       - Registrar como merma
+       - Dar de baja
+   - Prioridad por alerta (crítica/alta/media)
+   - Acciones rápidas desde alerta
+
+7. **CATEGORIZACIÓN**
+   - Gestión de categorías:
+     * Árbol de categorías:
+       - Categoría principal
+         * Subcategoría 1
+         * Subcategoría 2
+     * Ejemplos:
+       - **Suplementos**:
+         * Proteínas
+         * Pre-workout
+         * Creatina
+         * BCAAs
+       - **Bebidas**:
+         * Agua
+         * Bebidas deportivas
+         * Batidos
+       - **Snacks**:
+         * Barras de proteína
+         * Frutos secos
+       - **Merchandise**:
+         * Ropa
+         * Accesorios
+         * Equipamiento
+     * Agregar/editar categorías
+     * Asignar productos a categorías
+
+8. **PROVEEDORES**
+   - Gestión de proveedores:
+     * Lista de proveedores:
+       - Nombre de la empresa
+       - Contacto (nombre, email, teléfono)
+       - Productos que suministra
+       - Tiempo de entrega (días)
+       - Términos de pago
+       - Rating (estrellas)
+       - Estado (activo/inactivo)
+     * Agregar nuevo proveedor
+     * Editar información
+     * Ver historial de compras
+   - Comparativa de proveedores por producto
+
+9. **TRANSFERENCIAS ENTRE SEDES**
+   - Sistema de transferencias:
+     * Solicitar transferencia:
+       - Producto
+       - Sede origen (con stock disponible)
+       - Sede destino
+       - Cantidad a transferir
+       - Razón
+       - Fecha estimada de llegada
+     * Estado de transferencia:
+       - Solicitada
+       - Aprobada
+       - En tránsito
+       - Recibida
+       - Completada
+     * Timeline del envío
+     * Confirmación de recepción
+   - Historial de transferencias
+
+10. **CONTEO DE INVENTARIO**
+    - Proceso de conteo físico:
+      * Iniciar conteo (por sede):
+        - Seleccionar sede
+        - Seleccionar categorías a contar
+        - Asignar responsable
+        - Fecha de inicio
+      * Interfaz de conteo:
+        - Lista de productos
+        - Cantidad en sistema
+        - Ingresar cantidad física
+        - Diferencia (varianza)
+        - Notas
+      * Resultados del conteo:
+        - Productos con varianza
+        - Faltantes (-)
+        - Sobrantes (+)
+        - Valor de la diferencia ($)
+        - Ajustar inventario automáticamente
+      * Historial de conteos
+
+11. **ANÁLISIS DE ROTACIÓN**
+    - Métricas de rotación:
+      * Por producto:
+        - Días promedio de rotación
+        - Velocidad (rápida/media/lenta)
+        - Clasificación ABC:
+          * A: Alto volumen, alta importancia
+          * B: Volumen medio
+          * C: Bajo volumen
+      * Productos de rápida rotación (top 20)
+      * Productos de lenta rotación (bottom 20)
+      * Productos obsoletos (sin movimiento >90 días)
+    - Recomendaciones de optimización
+
+12. **VALUACIÓN DE INVENTARIO**
+    - Valor del inventario:
+      * Método PEPS (FIFO)
+      * Método UEPS (LIFO)
+      * Método Promedio Ponderado
+    - Desglose por:
+      * Total general ($)
+      * Por sede
+      * Por categoría
+      * Por proveedor
+    - Evolución temporal (gráfico de líneas)
+
+13. **MERMA Y PÉRDIDAS**
+    - Registro de merma:
+      * Producto afectado
+      * Cantidad
+      * Tipo de merma:
+        - Vencimiento
+        - Daño
+        - Robo
+        - Error de conteo
+        - Otro
+      * Valor de la pérdida ($)
+      * Sede
+      * Evidencia (fotos)
+    - Total de merma del mes
+    - Tasa de merma (% del inventario)
+    - Identificar patrones de pérdida
+
+14. **EXPORTACIÓN DE DATOS**
+    - Exportar inventario:
+      * Formatos:
+        - Excel (completo)
+        - CSV (datos crudos)
+        - PDF (reporte con gráficos)
+      * Opciones:
+        - Todo el catálogo
+        - Por sede
+        - Por categoría
+        - Solo con alertas
+      * Incluir valorización
+    - Programar exportación automática
+
+15. **INTEGRACIÓN CON POS**
+    - Sincronización automática:
+      * Venta en POS → Reduce stock
+      * Compra procesada → Aumenta stock
+      * Stock actualizado en tiempo real
+      * Alertas si discrepancia
+    - Dashboard de sincronización
+
+16. **DATOS MOCKEADOS**
+    - 100-300 productos variados
+    - Múltiples categorías
+    - Stock distribuido en varias sedes
+    - Algunos con stock bajo/agotado
+    - Productos por vencer
+    - Historial de movimientos
+    - Proveedores asignados
+    - Transferencias en proceso
+    - Alertas activas
+    - Datos de rotación
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente blue-indigo-purple para hero
+- Tabla con imágenes de productos
+- Badges de estado de stock (coloridos)
+- Modal de detalle amplio con tabs
+- Alertas destacadas por prioridad
+- Gráficos de rotación (Recharts)
+- Timeline de movimientos
+- Dashboard de valuación
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiomax/inventario-avanzado/catalogo-stock](src/features/planstudiomax/inventario-avanzado/catalogo-stock).
+
+---
+
+## 📋 PROMPT 10: Control de Pedidos
+
+Transforma completamente la página de Control de Pedidos ([src/features/planstudiomax/inventario-avanzado/control-pedidos/ControlPedidosPage.tsx](src/features/planstudiomax/inventario-avanzado/control-pedidos/ControlPedidosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema completo de órdenes de compra
+- Facilita el tracking de pedidos y recepción de mercancía
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Pedidos**
+   - Gradiente `from-cyan-600 via-blue-600 to-indigo-600`
+   - Título "Control de Pedidos"
+   - Descripción: "Gestión de órdenes de compra a proveedores"
+   - Icono de pedido/entrega
+
+2. **ESTADÍSTICAS** (4 cards)
+   - Pedidos Activos (#)
+   - Pedidos Pendientes de Recepción
+   - Monto Total en Pedidos ($)
+   - Tiempo Promedio de Entrega (días)
+   - Cards con glassmorphism
+
+3. **CREAR ORDEN DE COMPRA**
+   - Wizard de creación:
+     * **Paso 1: Información general**:
+       - # de orden (auto-generado)
+       - Proveedor (dropdown)
+       - Sede destino
+       - Fecha de orden
+       - Fecha de entrega estimada
+     * **Paso 2: Productos**:
+       - Buscar productos del catálogo
+       - Agregar al pedido:
+         * Producto
+         * Cantidad
+         * Precio unitario
+         * Subtotal
+       - Lista de productos agregados
+       - Totales (subtotal, impuestos, total)
+     * **Paso 3: Términos**:
+       - Método de pago (contado/crédito)
+       - Días de crédito (si aplica)
+       - Notas especiales
+       - Condiciones de entrega
+     * **Paso 4: Revisión**:
+       - Resumen completo
+       - Confirmar y crear pedido
+   - Generar PDF de orden de compra
+
+4. **TABLA DE PEDIDOS**
+   - Lista de órdenes:
+     * Columnas:
+       - # de Orden
+       - Proveedor
+       - Fecha de orden
+       - Fecha estimada de entrega
+       - Sede destino
+       - # de productos
+       - Monto total ($)
+       - Estado:
+         * Borrador (gris)
+         * Enviada al proveedor (azul)
+         * Confirmada (verde claro)
+         * En tránsito (amarillo)
+         * Parcialmente recibida (naranja)
+         * Recibida completa (verde)
+         * Cancelada (rojo)
+       - Días transcurridos
+       - Acciones:
+         * Ver detalles
+         * Recibir mercancía
+         * Cancelar
+         * Duplicar
+     * Filtros por estado, proveedor, sede
+     * Ordenar por fecha, monto
+     * Búsqueda por # orden
+
+5. **DETALLE DE PEDIDO**
+   - Modal con información completa:
+     * **Header**:
+       - # de orden grande
+       - Estado (badge)
+       - Fecha de creación
+     * **Información del proveedor**:
+       - Nombre
+       - Contacto
+       - Términos de pago
+     * **Detalles de entrega**:
+       - Sede destino
+       - Dirección de entrega
+       - Fecha estimada
+       - Fecha real de entrega (si ya llegó)
+     * **Productos ordenados**:
+       - Tabla detallada:
+         * Producto
+         * Cantidad ordenada
+         * Cantidad recibida
+         * Pendiente
+         * Precio unitario
+         * Subtotal
+       - Totales (subtotal, impuestos, total)
+     * **Timeline de eventos**:
+       - Orden creada
+       - Enviada al proveedor
+       - Confirmada por proveedor
+       - Despachada
+       - En tránsito
+       - Recibida
+     * **Documentos**:
+       - Orden de compra (PDF)
+       - Factura del proveedor (upload)
+       - Guía de envío
+       - Notas de recepción
+     * **Notas internas**:
+       - Comentarios del staff
+       - Historial de comunicaciones
+
+6. **RECEPCIÓN DE MERCANCÍA**
+   - Proceso de recepción:
+     * Seleccionar pedido a recibir
+     * Lista de productos esperados:
+       - Producto
+       - Cantidad ordenada
+       - Cantidad recibida (input)
+       - Estado (completo/parcial/faltante)
+       - Condición:
+         * Buen estado ✅
+         * Dañado ⚠️
+         * Incorrecto ❌
+       - Fotos de evidencia
+     * Validaciones:
+       - Verificar cantidades
+       - Verificar calidad
+       - Verificar caducidad (si aplica)
+     * Discrepancias:
+       - Productos faltantes
+       - Productos extra
+       - Productos dañados
+       - Reportar al proveedor
+     * Confirmar recepción:
+       - Actualizar stock automáticamente
+       - Generar nota de recepción
+       - Notificar a contabilidad
+       - Cambiar estado del pedido
+
+7. **TRACKING DE PEDIDOS**
+   - Vista de seguimiento:
+     * Pedidos en tránsito (mapa/timeline)
+     * Días desde orden
+     * Días hasta entrega estimada
+     * Alertas de retraso
+     * Contactar al proveedor
+   - Notificaciones automáticas:
+     * Pedido confirmado
+     * Pedido despachado
+     * Llegada estimada mañana
+     * Pedido retrasado
+
+8. **PEDIDOS AUTOMÁTICOS**
+   - Configurar reorden automático:
+     * Por producto:
+       - Activar reorden auto (toggle)
+       - Stock mínimo para reorden
+       - Cantidad a ordenar
+       - Proveedor preferido
+     * Sistema genera orden automática:
+       - Cuando stock < mínimo
+       - Envía a aprobación
+       - O procesa automáticamente
+   - Lista de pedidos auto-generados
+
+9. **HISTORIAL DE COMPRAS**
+   - Por producto:
+     * Todas las compras históricas
+     * Fecha, proveedor, cantidad, precio
+     * Evolución de precios (gráfico)
+     * Proveedor con mejor precio
+   - Por proveedor:
+     * Total comprado ($)
+     * # de órdenes
+     * Tiempo promedio de entrega
+     * Tasa de cumplimiento (%)
+     * Rating
+
+10. **COMPARATIVA DE PROVEEDORES**
+    - Para mismo producto:
+      * Tabla comparativa:
+        - Proveedor A vs B vs C
+        - Precio
+        - Tiempo de entrega
+        - Cantidad mínima
+        - Calidad (rating)
+        - Historial de entregas
+      * Mejor opción (recomendación)
+
+11. **APROBACIÓN DE PEDIDOS**
+    - Flujo de aprobación:
+      * Pedidos >$X requieren aprobación
+      * Notificar a gerente/admin
+      * Revisar orden:
+        - Justificación
+        - Presupuesto disponible
+        - Alternativas más baratas
+      * Aprobar / Rechazar / Solicitar modificación
+    - Cola de aprobaciones pendientes
+
+12. **DEVOLUCIONES**
+    - Gestión de devoluciones:
+      * Crear devolución:
+        - Pedido original
+        - Productos a devolver
+        - Cantidad
+        - Razón:
+          * Producto dañado
+          * Producto incorrecto
+          * Producto vencido
+          * Otro
+        - Evidencia (fotos)
+      * Proceso:
+        - Solicitar RMA al proveedor
+        - Enviar mercancía de regreso
+        - Recibir reembolso/reemplazo
+      * Tracking de devolución
+    - Historial de devoluciones
+
+13. **ANÁLISIS DE COMPRAS**
+    - Dashboard de analytics:
+      * Gasto total en compras (mes/año)
+      * Por categoría de producto (dona)
+      * Por proveedor (barras)
+      * Tendencia de gastos (líneas)
+      * Comparativa vs presupuesto
+    - Top productos más comprados
+    - Identificar oportunidades de ahorro
+
+14. **PRESUPUESTO DE COMPRAS**
+    - Gestión presupuestal:
+      * Presupuesto mensual ($)
+      * Gastado vs disponible
+      * Proyección hasta fin de mes
+      * Alertas si excede presupuesto
+    - Presupuesto por categoría
+    - Histórico de cumplimiento
+
+15. **COMUNICACIÓN CON PROVEEDORES**
+    - Centro de mensajes:
+      * Enviar orden de compra por email
+      * Templates de mensajes
+      * Historial de comunicaciones
+      * Recordatorios de entrega
+      * Reclamaciones por retrasos
+    - Integración con email del proveedor
+
+16. **DATOS MOCKEADOS**
+    - 20-50 órdenes de compra
+    - Estados variados
+    - Múltiples proveedores
+    - Productos variados
+    - Algunas recepciones completas
+    - Algunas parciales
+    - Algunos retrasos
+    - Historial de compras
+    - Devoluciones procesadas
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente cyan-blue-indigo para hero
+- Wizard de creación con steps
+- Tabla con badges de estado
+- Modal de detalle con tabs
+- Timeline de eventos del pedido
+- Gráficos de análisis (Recharts)
+- Proceso de recepción paso a paso
+- Alertas de retrasos
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiomax/inventario-avanzado/control-pedidos](src/features/planstudiomax/inventario-avanzado/control-pedidos).
+
+---
+
+## 📋 PROMPT 11: Alertas de Inventario
+
+Transforma completamente la página de Alertas de Inventario ([src/features/planstudiomax/inventario-avanzado/alertas-inventario/AlertasInventarioPage.tsx](src/features/planstudiomax/inventario-avanzado/alertas-inventario/AlertasInventarioPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema proactivo de alertas de inventario
+- Facilita la prevención de quiebres de stock y mermas
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Alertas**
+   - Gradiente `from-orange-600 via-red-600 to-pink-600`
+   - Título "Alertas de Inventario"
+   - Descripción: "Sistema proactivo de gestión de stock"
+   - Icono de alerta/campana
+
+2. **RESUMEN DE ALERTAS** (4 cards)
+   - Alertas Críticas (#)
+   - Alertas de Alta Prioridad (#)
+   - Productos Sin Stock (#)
+   - Productos por Vencer (7 días) (#)
+   - Cards con glassmorphism
+   - Colores de alerta (rojo/naranja)
+
+3. **DASHBOARD DE ALERTAS**
+   - Vista general por prioridad:
+     * **Críticas** (rojo):
+       - Productos sin stock con ventas recientes
+       - Productos vencidos
+       - Sobre-stock crítico (capital inmovilizado)
+     * **Alta** (naranja):
+       - Stock muy bajo (<5 unidades)
+       - Por vencer en 7 días
+       - Pedido retrasado significativamente
+     * **Media** (amarillo):
+       - Stock bajo (< stock mínimo)
+       - Por vencer en 30 días
+       - Rotación muy lenta
+     * **Baja** (azul):
+       - Stock cerca del mínimo
+       - Por vencer en 60 días
+   - Contador por cada nivel
+   - Acciones rápidas disponibles
+
+4. **ALERTAS DE STOCK BAJO**
+   - Lista detallada:
+     * Cards de productos:
+       - Foto del producto
+       - Nombre y SKU
+       - Stock actual (grande y rojo)
+       - Stock mínimo configurado
+       - Déficit (cuánto falta)
+       - Última venta (hace X días)
+       - Proyección de agotamiento (días)
+       - Sede afectada
+       - Acciones rápidas:
+         * Crear orden de compra
+         * Transferir de otra sede
+         * Ajustar stock mínimo
+         * Marcar como resuelto
+     * Ordenar por urgencia
+     * Filtrar por sede, categoría
+
+5. **ALERTAS DE PRODUCTOS SIN STOCK**
+   - Productos agotados:
+     * Lista crítica:
+       - Producto
+       - Desde cuándo sin stock (días)
+       - Ventas perdidas (estimadas #)
+       - Revenue perdido ($)
+       - Demanda histórica
+       - Pedido en curso? (sí/no)
+       - Fecha estimada de llegada (si hay pedido)
+     * Priorizar por demanda
+     * Acción: Ordenar urgente
+   - Impacto en ventas (gráfico)
+
+6. **ALERTAS DE PRODUCTOS POR VENCER**
+   - Por fecha de caducidad:
+     * **Vencen en 7 días** (crítico):
+       - Lista de productos
+       - Cantidad en riesgo
+       - Valor en riesgo ($)
+       - Acciones sugeridas:
+         * Promoción flash (descuento 50%)
+         * Donación
+         * Dar de baja
+     * **Vencen en 30 días** (advertencia):
+       - Promocionar con descuento moderado
+       - Destacar en tienda
+     * **Vencen en 60 días** (monitoreo):
+       - Seguimiento preventivo
+   - Calendario de vencimientos
+   - Historial de merma por vencimiento
+
+7. **ALERTAS DE SOBRE-STOCK**
+   - Productos con exceso:
+     * Identificar productos con stock >máximo
+     * Métricas:
+       - Stock actual
+       - Stock máximo configurado
+       - Exceso (unidades)
+       - Días estimados para agotar (>90)
+       - Capital inmovilizado ($)
+       - Rotación muy lenta
+     * Acciones recomendadas:
+       - Transferir a otra sede (con más demanda)
+       - Promocionar para liquidar
+       - Ajustar stock máximo
+       - No ordenar más
+   - Total de capital inmovilizado
+
+8. **ALERTAS DE PEDIDOS**
+   - Tracking de pedidos atrasados:
+     * # de orden
+     * Proveedor
+     * Días de retraso
+     * Productos afectados
+     * Impacto (¿hay quiebre de stock?)
+     * Acción:
+       - Contactar proveedor
+       - Buscar proveedor alternativo
+       - Cancelar pedido
+   - Notificaciones automáticas
+
+9. **CONFIGURACIÓN DE ALERTAS**
+   - Panel de configuración:
+     * **Por producto**:
+       - Stock mínimo (trigger de alerta)
+       - Stock máximo (sobre-stock)
+       - Días de anticipación para vencimiento
+     * **Global**:
+       - Activar/Desactivar tipos de alerta
+       - Frecuencia de notificaciones
+       - Canales (email/SMS/push/in-app)
+       - Destinatarios por tipo de alerta
+     * **Umbrales**:
+       - Crítico: <5 unidades
+       - Alto: <stock mínimo
+       - Medio: <stock mínimo + 20%
+   - Guardar configuración
+
+10. **ACCIONES AUTOMATIZADAS**
+    - Reglas de automatización:
+      * Si stock <mínimo → Crear orden automática
+      * Si por vencer en 7 días → Aplicar descuento auto
+      * Si sin stock >3 días → Notificar a gerencia
+      * Si pedido retrasado >7 días → Escalar alerta
+    - Configurar reglas
+    - Log de acciones automáticas
+
+11. **RESOLUCIÓN DE ALERTAS**
+    - Proceso de cierre:
+      * Seleccionar alerta
+      * Acción tomada:
+        - Pedido creado (#orden)
+        - Transferencia realizada
+        - Promoción aplicada
+        - Stock ajustado
+        - Producto dado de baja
+        - Falsa alerta (ignorar)
+      * Responsable
+      * Notas
+      * Marcar como resuelta
+    - Historial de alertas resueltas
+    - Tiempo promedio de resolución
+
+12. **ANÁLISIS DE TENDENCIAS**
+    - Dashboard de análisis:
+      * Gráfico de alertas por mes (líneas):
+        - Tendencia de alertas
+        - ¿Están aumentando o disminuyendo?
+      * Distribución de alertas por tipo (dona):
+        - Stock bajo (%)
+        - Sin stock (%)
+        - Por vencer (%)
+        - Sobre-stock (%)
+      * Alertas por sede (barras):
+        - Identificar sede con más problemas
+      * Alertas por categoría:
+        - Qué categorías son más problemáticas
+    - Identificar patrones y causas raíz
+
+13. **NOTIFICACIONES**
+    - Centro de notificaciones:
+      * Alertas nuevas (en tiempo real)
+      * Resumen diario por email:
+        - # de alertas críticas
+        - # de alertas nuevas
+        - # de alertas resueltas
+        - Acciones pendientes
+      * Alertas push (para móvil)
+      * Configurar preferencias de notificación
+    - Snooze de alertas (posponer)
+
+14. **PRIORIZACIÓN INTELIGENTE**
+    - AI/ML para priorizar:
+      * Factores considerados:
+        - Impacto en ventas (histórico)
+        - Valor del producto
+        - Demanda actual
+        - Urgencia temporal
+      * Score de urgencia (0-100)
+      * Lista ordenada por prioridad
+    - Recomendaciones de acción
+
+15. **REPORTES DE ALERTAS**
+    - Generación de reportes:
+      * Reporte semanal/mensual:
+        - Total de alertas generadas
+        - Alertas resueltas vs pendientes
+        - Tiempo promedio de resolución
+        - Impacto en ventas (por alertas no atendidas)
+        - Merma evitada (por alertas de vencimiento)
+      * Por responsable:
+        - Quién resuelve más alertas
+        - Quién es más rápido
+      * Exportar (PDF/Excel)
+
+16. **DATOS MOCKEADOS**
+    - 50-100 alertas activas
+    - Mix de prioridades (críticas, altas, medias)
+    - Productos variados afectados
+    - Alertas de todos los tipos:
+      * Stock bajo (30%)
+      * Sin stock (15%)
+      * Por vencer (20%)
+      * Sobre-stock (15%)
+      * Pedidos atrasados (10%)
+      * Otras (10%)
+    - Historial de alertas resueltas
+    - Configuraciones de umbrales
+    - Datos de tendencias
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente orange-red-pink para hero
+- Cards de alertas con colores por prioridad
+- Badges de urgencia (crítico/alto/medio/bajo)
+- Lista ordenada por urgencia
+- Gráficos de tendencias (Recharts)
+- Timeline de resolución
+- Botones de acción rápida destacados
+- Contador de alertas en tiempo real
+- Notificaciones tipo toast
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiomax/inventario-avanzado/alertas-inventario](src/features/planstudiomax/inventario-avanzado/alertas-inventario).
+
+---
+
+## 📋 PROMPT 12: Convenios Corporativos (CRM Empresas)
+
+Transforma completamente la página de Convenios Corporativos ([src/features/planstudiomax/crm-empresas/convenios-corporativos/ConveniosCorporativosPage.tsx](src/features/planstudiomax/crm-empresas/convenios-corporativos/ConveniosCorporativosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema B2B de convenios empresariales
+- Facilita la gestión de contratos corporativos
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Corporativos**
+   - Gradiente `from-green-600 via-emerald-600 to-teal-600`
+   - Título "Convenios Corporativos"
+   - Descripción: "Gestión de contratos con empresas B2B"
+   - Icono de edificio/empresa
+
+2. **ESTADÍSTICAS** (4 cards)
+   - Empresas Activas (#)
+   - Empleados Inscritos (#)
+   - Revenue Corporativo del Mes ($)
+   - Tasa de Uso Promedio (%)
+   - Cards con glassmorphism
+
+3. **LISTA DE EMPRESAS**
+   - Cards de empresas:
+     * Card por convenio:
+       - Logo de la empresa
+       - Nombre de la empresa
+       - Industria/Sector
+       - # de empleados elegibles
+       - # de empleados inscritos
+       - Tasa de adopción (%)
+       - Fecha de inicio del convenio
+       - Fecha de renovación
+       - Estado:
+         * Activo (verde) ✅
+         * Por renovar (amarillo) ⚠️
+         * Vencido (rojo) ❌
+         * En negociación (azul)
+       - Revenue generado ($)
+       - Acciones:
+         * Ver detalles
+         * Ver empleados
+         * Generar factura
+         * Renovar convenio
+     * Grid responsive
+     * Búsqueda por nombre
+     * Filtros por estado, industria
+
+4. **CREAR CONVENIO**
+   - Wizard de creación:
+     * **Paso 1: Información de la empresa**:
+       - Nombre de la empresa
+       - RFC/Tax ID
+       - Industria
+       - Tamaño (# de empleados)
+       - Dirección
+       - Contacto principal:
+         * Nombre
+         * Puesto
+         * Email
+         * Teléfono
+     * **Paso 2: Términos del convenio**:
+       - Tipo de convenio:
+         * Descuento corporativo (% o $)
+         * Cuota fija por empleado
+         * Paquete personalizado
+       - # de empleados cubiertos
+       - Servicios incluidos:
+         * Membresía ilimitada
+         * Pack de clases
+         * Acceso a todas las sedes
+         * Descuentos en tienda
+         * Sesiones de PT
+       - Restricciones (si aplica)
+     * **Paso 3: Precios y facturación**:
+       - Precio por empleado/mes ($)
+       - Descuento aplicado (%)
+       - Mínimo de inscripciones requerido
+       - Método de facturación:
+         * Mensual
+         * Trimestral
+         * Anual
+       - Forma de pago (transferencia/cheque)
+       - Días de crédito
+     * **Paso 4: Vigencia**:
+       - Fecha de inicio
+       - Duración (6 meses/1 año/2 años)
+       - Fecha de renovación
+       - Auto-renovación (toggle)
+     * **Paso 5: Documentos**:
+       - Subir contrato firmado (PDF)
+       - Términos y condiciones
+       - Lista de empleados elegibles (Excel)
+     * Confirmar y crear convenio
+
+5. **DETALLE DE CONVENIO**
+   - Modal amplio:
+     * **Información de la empresa**:
+       - Logo y nombre
+       - Contacto principal
+       - Datos fiscales
+     * **Términos actuales**:
+       - Tipo de convenio
+       - Servicios incluidos
+       - Precio por empleado
+       - Descuentos
+       - Vigencia
+     * **Estadísticas de uso**:
+       - Empleados elegibles
+       - Empleados inscritos
+       - Tasa de adopción (%)
+       - Check-ins totales (mes)
+       - Promedio de visitas por empleado
+       - Satisfacción (NPS)
+     * **Financiero**:
+       - Revenue mensual ($)
+       - Total facturado (año)
+       - Pagos pendientes
+       - Historial de pagos
+     * **Documentos**:
+       - Contrato firmado
+       - Facturas generadas
+       - Comunicaciones
+     * **Timeline**:
+       - Convenio creado
+       - Empleados agregados
+       - Renovaciones
+       - Modificaciones
+
+6. **GESTIÓN DE EMPLEADOS ELEGIBLES**
+   - Lista de empleados de la empresa:
+     * Subir lista (Excel/CSV):
+       - Nombre
+       - Email corporativo
+       - Puesto
+       - Departamento
+       - Fecha de contratación
+     * Validar elegibilidad:
+       - Email de dominio corporativo
+       - Antigüedad mínima (si aplica)
+     * Estados:
+       - Elegible, no inscrito
+       - Inscrito y activo
+       - Inscrito y pausado
+       - Dado de baja
+   - Invitación automática por email
+
+7. **FACTURACIÓN CORPORATIVA**
+   - Generar facturas:
+     * Período de facturación (mes/trimestre)
+     * Cálculo automático:
+       - # de empleados activos
+       - Precio por empleado
+       - Subtotal
+       - Descuentos
+       - Impuestos
+       - Total a facturar
+     * Detalle de uso (opcional):
+       - Empleado por empleado
+       - # de visitas
+       - Servicios utilizados
+     * Generar PDF de factura
+     * Enviar por email
+   - Historial de facturas
+   - Tracking de pagos (pagado/pendiente/vencido)
+
+8. **RENOVACIÓN DE CONVENIOS**
+   - Proceso de renovación:
+     * Alertas 60/30/15 días antes del vencimiento
+     * Revisar términos actuales
+     * Proponer nuevos términos:
+       - Ajuste de precio (inflación)
+       - Cambios en servicios
+       - Nuevas condiciones
+     * Negociación:
+       - Historial de comunicaciones
+       - Notas de reuniones
+       - Propuestas enviadas
+     * Confirmar renovación:
+       - Nuevo contrato firmado
+       - Actualizar sistema
+       - Extender vigencia
+   - Tasa de renovación (%)
+
+9. **ANÁLISIS DE ADOPCIÓN**
+   - Métricas de uso:
+     * Por empresa:
+       - Tasa de adopción (%)
+       - Tendencia (↗↘)
+       - Comparativa con otras empresas
+       - Gráfico de inscripciones por mes
+     * Factores de éxito:
+       - Empresas con alta adopción (>70%)
+       - Estrategias exitosas
+       - Replicar buenas prácticas
+     * Empresas con baja adopción (<30%):
+       - Identificar barreras
+       - Plan de activación
+       - Comunicación interna
+
+10. **COMUNICACIÓN CON EMPRESAS**
+    - Centro de comunicaciones:
+      * Templates de emails:
+        - Bienvenida a nuevo convenio
+        - Invitación a empleados
+        - Recordatorio de uso
+        - Próxima renovación
+        - Factura del mes
+      * Historial de mensajes
+      * Programar comunicaciones
+    - Portal de empresa (opcional):
+      * Dashboard para HR
+      * Ver empleados inscritos
+      * Descargar reportes
+
+11. **REPORTES PARA EMPRESAS**
+    - Generar reportes para HR:
+      * Reporte mensual de uso:
+        - Empleados que usaron el servicio
+        - # de visitas por empleado
+        - Clases más populares
+        - Horarios de mayor uso
+        - Beneficio de bienestar (insights)
+      * Exportar (PDF/Excel)
+      * Envío automático mensual
+
+12. **PRICING Y PROPUESTAS**
+    - Calculadora de propuestas:
+      * Ingresar datos de empresa:
+        - # de empleados
+        - Servicios deseados
+        - Duración del contrato
+      * Calcular precio sugerido:
+        - Por empleado/mes
+        - Total mensual
+        - Total anual
+        - Descuentos por volumen
+      * Generar propuesta (PDF branded)
+    - Historial de propuestas enviadas
+
+13. **COMPARATIVA DE CONVENIOS**
+    - Benchmarking:
+      * Tabla comparativa:
+        - Empresa
+        - # de empleados
+        - Precio/empleado
+        - Tasa de adopción
+        - Revenue
+        - NPS
+      * Identificar mejores convenios
+      * Ajustar precios competitivos
+
+14. **WELLNESS REPORTS**
+    - Reportes de bienestar:
+      * Para la empresa cliente:
+        - Participación de empleados (%)
+        - Promedio de visitas/semana
+        - Clases preferidas
+        - Horarios de uso
+        - Impacto en salud (estimado)
+      * Valor agregado del servicio
+      * Justificar inversión en bienestar
+
+15. **PIPELINE DE VENTAS**
+    - CRM de empresas prospecto:
+      * Etapas:
+        - Lead (contacto inicial)
+        - Calificado (interés confirmado)
+        - Propuesta enviada
+        - Negociación
+        - Cerrado-Ganado
+        - Cerrado-Perdido
+      * Tracking de oportunidades
+      * Valor potencial ($)
+      * Probabilidad de cierre (%)
+      * Próxima acción
+    - Forecast de revenue corporativo
+
+16. **DATOS MOCKEADOS**
+    - 10-20 empresas con convenio
+    - Estados variados (activos, por renovar)
+    - Diferentes industrias
+    - Tamaños variados (50-500 empleados)
+    - Tasas de adopción variadas
+    - Empleados inscritos
+    - Facturas generadas
+    - Historial de pagos
+    - Reportes de uso
+    - Pipeline de prospectos
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente green-emerald-teal para hero
+- Cards de empresas con logos
+- Wizard de creación de convenio
+- Dashboard de adopción (Recharts)
+- Tabla de empleados
+- Facturas con diseño profesional
+- Timeline de renovación
+- Pipeline de ventas visual
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiomax/crm-empresas/convenios-corporativos](src/features/planstudiomax/crm-empresas/convenios-corporativos).
+
+---
+
+## 📋 PROMPT 13: Empleados Socios
+
+Transforma completamente la página de Empleados Socios ([src/features/planstudiomax/crm-empresas/empleados-socios/EmpleadosSociosPage.tsx](src/features/planstudiomax/crm-empresas/empleados-socios/EmpleadosSociosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema de gestión de empleados corporativos
+- Facilita la validación y uso de beneficios
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Empleados**
+   - Gradiente `from-purple-600 via-fuchsia-600 to-pink-600`
+   - Título "Empleados Corporativos"
+   - Descripción: "Gestión de socios con beneficio empresarial"
+   - Icono de grupo/usuarios
+
+2. **ESTADÍSTICAS** (4 cards)
+   - Total Empleados Inscritos
+   - Activos Este Mes
+   - Check-ins Totales (mes)
+   - Empresas Representadas (#)
+   - Cards con glassmorphism
+
+3. **TABLA DE EMPLEADOS**
+   - Lista completa:
+     * Columnas:
+       - Avatar y nombre
+       - Email corporativo
+       - Empresa
+       - Puesto/Departamento
+       - Fecha de inscripción
+       - Estado de membresía:
+         * Activa (verde) ✅
+         * Pausada (amarillo) ⏸
+         * Pendiente activación (azul)
+         * Dada de baja (gris)
+       - # de visitas (mes)
+       - Última visita
+       - Tipo de beneficio
+       - Acciones:
+         * Ver perfil
+         * Ver uso
+         * Pausar/Reactivar
+         * Dar de baja
+         * Contactar
+     * Búsqueda por nombre, email, empresa
+     * Filtros por empresa, estado, departamento
+     * Ordenar por columnas
+     * Paginación
+
+4. **ALTA DE EMPLEADO**
+   - Proceso de inscripción:
+     * **Método 1: Auto-registro** (por el empleado):
+       - Página de registro pública
+       - Ingresar código de empresa
+       - Datos personales
+       - Email corporativo (validación)
+       - Crear contraseña
+       - Aceptar términos
+       - Confirmación por email
+     * **Método 2: Alta masiva** (por HR):
+       - Subir Excel con lista
+       - Validar datos
+       - Enviar invitaciones automáticas
+     * **Método 3: Alta individual** (por staff):
+       - Formulario manual
+       - Seleccionar empresa
+       - Datos del empleado
+       - Asignar beneficio
+   - Validación de elegibilidad automática
+
+5. **PERFIL DE EMPLEADO**
+   - Vista detallada:
+     * **Información personal**:
+       - Foto
+       - Nombre completo
+       - Email personal y corporativo
+       - Teléfono
+       - Fecha de nacimiento
+       - Género
+     * **Información laboral**:
+       - Empresa
+       - Puesto
+       - Departamento
+       - Fecha de ingreso a la empresa
+       - # de empleado (si aplica)
+     * **Membresía**:
+       - Tipo de beneficio
+       - Fecha de alta
+       - Vigencia
+       - Restricciones (horarios/sedes)
+       - Créditos (si pack)
+     * **Estadísticas de uso**:
+       - Total de visitas (lifetime)
+       - Visitas este mes
+       - Promedio mensual
+       - Clases favoritas
+       - Horario preferido
+       - Sede preferida
+     * **Historial**:
+       - Últimas 20 visitas
+       - Clases tomadas
+       - Compras en tienda
+
+6. **VALIDACIÓN DE EMPLEADO**
+   - Verificación de elegibilidad:
+     * Email corporativo (dominio de empresa)
+     * Empleado aparece en lista de HR
+     * Estado laboral activo
+     * Cumple antigüedad mínima (si aplica)
+     * Badges de validación:
+       - ✅ Email verificado
+       - ✅ Empleado confirmado
+       - ✅ Empresa activa
+       - ⚠️ Pendiente verificación
+       - ❌ No elegible
+   - Proceso de verificación manual (si falla auto)
+
+7. **GESTIÓN DE ACCESO**
+   - Control de beneficios:
+     * Activar membresía:
+       - Al confirmar elegibilidad
+       - Generar pase virtual
+       - Enviar credenciales de acceso
+       - Notificar bienvenida
+     * Pausar membresía:
+       - Ausencia temporal (licencia, vacaciones)
+       - Duración de pausa
+       - Fecha de reactivación
+     * Dar de baja:
+       - Ya no trabaja en la empresa
+       - Solicitó baja voluntaria
+       - Incumplimiento de términos
+       - Revocar acceso inmediato
+
+8. **USO DE BENEFICIOS**
+   - Tracking de uso:
+     * Por empleado:
+       - Check-ins del mes
+       - Clases tomadas
+       - Servicios utilizados
+       - Descuentos aplicados
+     * Por empresa:
+       - Total de check-ins
+       - Promedio por empleado activo
+       - Distribución de uso (gráfico)
+       - Horarios más usados
+       - Sedes más visitadas
+   - Reportes de uso para facturación
+
+9. **COMUNICACIÓN**
+   - Mensajería:
+     * Enviar a empleados individuales
+     * Enviar a todos de una empresa
+     * Templates:
+       - Bienvenida
+       - Recordatorio de uso
+       - Nuevas clases/servicios
+       - Eventos especiales
+       - Encuestas de satisfacción
+     * Historial de comunicaciones
+
+10. **INVITACIONES PENDIENTES**
+    - Gestión de invitaciones:
+      * Lista de empleados invitados pero no activados:
+        - Nombre
+        - Email
+        - Empresa
+        - Fecha de invitación
+        - Estado:
+          * Invitación enviada
+          * Email abierto
+          * Pendiente de registro
+          * Expirada
+        - Acciones:
+          * Reenviar invitación
+          * Cancelar
+      * Tasa de conversión (invitados → activados)
+      * Seguimiento de invitaciones
+
+11. **RENOVACIÓN AUTOMÁTICA**
+    - Sincronización con empresa:
+      * Empleado activo en empresa = Membresía activa
+      * Empleado dado de baja en empresa = Pausar membresía automáticamente
+      * Actualización mensual de lista de empleados
+      * Alertas de discrepancias
+
+12. **REPORTES POR EMPRESA**
+    - Dashboard por cliente corporativo:
+      * Filtrar por empresa específica
+      * Ver todos los empleados de esa empresa
+      * Estadísticas agregadas:
+        - Tasa de adopción (%)
+        - Check-ins totales
+        - Distribución de uso
+        - Satisfacción (NPS)
+      * Generar reporte para HR (PDF)
+      * Envío automático mensual
+
+13. **ANÁLISIS DE ENGAGEMENT**
+    - Métricas de compromiso:
+      * Empleados por nivel de actividad:
+        - 🔥 Muy activo (>10 visitas/mes)
+        - ✅ Activo (5-10 visitas/mes)
+        - ⚠️ Poco activo (1-4 visitas/mes)
+        - 💤 Inactivo (0 visitas/mes)
+      * Identificar empleados en riesgo
+      * Estrategias de activación
+    - Comparar engagement entre empresas
+
+14. **SATISFACCIÓN**
+    - Encuestas a empleados corporativos:
+      * NPS específico para corporativos
+      * Preguntas:
+        - ¿Qué tan satisfecho estás?
+        - ¿Recomendarías este beneficio?
+        - ¿Qué mejorarías?
+      * Resultados por empresa
+      * Compartir feedback con cliente corporativo
+
+15. **EXPORTACIÓN**
+    - Exportar datos:
+      * Formatos: Excel, CSV, PDF
+      * Opciones:
+        - Todos los empleados
+        - Por empresa
+        - Por estado
+        - Con historial de uso
+      * Para auditoría o reporting
+
+16. **DATOS MOCKEADOS**
+    - 100-300 empleados corporativos
+    - De 5-10 empresas diferentes
+    - Estados variados (activos, pausados, pendientes)
+    - Historial de visitas
+    - Diferentes niveles de engagement
+    - Invitaciones pendientes
+    - Validaciones completadas
+    - Datos demográficos variados
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente purple-fuchsia-pink para hero
+- Tabla con avatares y badges de estado
+- Cards de empleados con foto
+- Dashboard de engagement (Recharts)
+- Badges de validación (verificado/pendiente)
+- Proceso de alta con steps
+- Reportes con branding de empresa
+- Gráficos de uso por empresa
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiomax/crm-empresas/empleados-socios](src/features/planstudiomax/crm-empresas/empleados-socios).
+
+---
+
+## 📋 PROMPT 14: Facturación a Empresas
+
+Transforma completamente la página de Facturación a Empresas ([src/features/planstudiomax/crm-empresas/facturacion-empresas/FacturacionEmpresasPage.tsx](src/features/planstudiomax/crm-empresas/facturacion-empresas/FacturacionEmpresasPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema profesional de facturación B2B
+- Facilita el tracking de pagos y reportes corporativos
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Facturación**
+   - Gradiente `from-amber-600 via-yellow-600 to-orange-600`
+   - Título "Facturación Corporativa"
+   - Descripción: "Gestión de facturas y pagos empresariales"
+   - Icono de factura/documento
+
+2. **ESTADÍSTICAS** (4 cards)
+   - Facturado Este Mes ($)
+   - Facturas Pendientes de Pago ($)
+   - Facturas Vencidas (#)
+   - Tiempo Promedio de Pago (días)
+   - Cards con glassmorphism
+
+3. **TABLA DE FACTURAS**
+   - Lista de facturas corporativas:
+     * Columnas:
+       - # de Factura
+       - Empresa
+       - Fecha de emisión
+       - Período facturado (mes/trimestre)
+       - # de empleados facturados
+       - Subtotal ($)
+       - Impuestos ($)
+       - Total ($)
+       - Fecha de vencimiento
+       - Estado:
+         * Borrador (gris)
+         * Enviada (azul)
+         * Pagada (verde) ✅
+         * Pendiente (amarillo) ⏳
+         * Vencida (rojo) ❌
+         * Cancelada (gris oscuro)
+       - Método de pago
+       - Acciones:
+         * Ver factura
+         * Descargar PDF
+         * Enviar por email
+         * Registrar pago
+         * Cancelar
+     * Búsqueda por # factura o empresa
+     * Filtros por estado, empresa, período
+     * Ordenar por fecha, monto
+     * Totales de página
+
+4. **GENERAR FACTURA**
+   - Proceso de facturación:
+     * **Paso 1: Seleccionar empresa**:
+       - Dropdown de clientes corporativos
+       - Ver convenio activo
+       - Datos fiscales pre-cargados
+     * **Paso 2: Período de facturación**:
+       - Seleccionar mes/trimestre
+       - Fechas de inicio y fin
+     * **Paso 3: Cálculo automático**:
+       - Empleados activos en el período:
+         * Lista de empleados
+         * # de visitas por empleado (si factura por uso)
+         * Precio por empleado
+         * Subtotal por empleado
+       - Total de empleados activos (#)
+       - Cálculo de monto:
+         * Precio base × # de empleados
+         * O precio por uso (visitas × tarifa)
+         * Descuentos (si aplica)
+         * Subtotal
+         * Impuestos (%)
+         * Total a facturar
+     * **Paso 4: Conceptos adicionales**:
+       - Agregar items extra (opcional):
+         * Eventos especiales
+         * Servicios adicionales
+         * Ajustes
+     * **Paso 5: Revisar y generar**:
+       - Preview de factura
+       - Confirmar datos
+       - Generar factura
+       - Asignar # de factura (auto)
+       - Establecer fecha de vencimiento
+
+5. **DETALLE DE FACTURA**
+   - Vista completa:
+     * **Header profesional**:
+       - Logo del gimnasio
+       - Datos fiscales del emisor
+       - # de Factura grande
+       - Fecha de emisión
+     * **Información del cliente**:
+       - Logo de la empresa
+       - Nombre legal
+       - RFC/Tax ID
+       - Dirección fiscal
+       - Contacto
+     * **Detalles de facturación**:
+       - Período facturado
+       - Tabla de conceptos:
+         * Concepto (Membresía corporativa)
+         * Cantidad (# empleados)
+         * Precio unitario
+         * Subtotal
+       - Desglose de empleados (expandible):
+         * Nombre del empleado
+         * # de visitas (si aplica)
+         * Monto
+     * **Totales**:
+       - Subtotal
+       - Descuentos
+       - Impuestos (desglosados)
+       - **Total** (grande y destacado)
+     * **Condiciones de pago**:
+       - Método de pago aceptado
+       - Fecha de vencimiento
+       - Datos bancarios para transferencia
+     * **Footer**:
+       - Términos y condiciones
+       - Notas adicionales
+       - Firma digital (si aplica)
+
+6. **DESCARGAR/ENVIAR FACTURA**
+   - Acciones de distribución:
+     * Descargar PDF:
+       - Formato profesional
+       - Branding del gimnasio
+       - Código QR (para validación)
+     * Enviar por email:
+       - A contacto de facturación de empresa
+       - CC a otros emails
+       - Asunto y mensaje personalizables
+       - Factura adjunta
+       - Confirmación de envío
+     * Compartir link (portal)
+
+7. **REGISTRAR PAGO**
+   - Marcar factura como pagada:
+     * # de factura
+     * Fecha de pago
+     * Monto recibido
+     * Método de pago:
+       - Transferencia bancaria
+       - Cheque
+       - Efectivo (raro en B2B)
+     * Referencia de pago
+     * Comprobante (upload PDF)
+     * Notas
+   - Actualizar estado automáticamente
+   - Generar recibo de pago
+
+8. **FACTURACIÓN RECURRENTE**
+   - Automatización:
+     * Configurar facturación automática:
+       - Por empresa
+       - Frecuencia (mensual/trimestral)
+       - Día de generación (ej: día 1 de cada mes)
+       - Día de vencimiento (ej: 30 días después)
+     * Sistema genera factura automática:
+       - Calcula empleados activos
+       - Genera PDF
+       - Envía por email
+       - Registra en sistema
+     * Notificaciones a contabilidad
+
+9. **TRACKING DE PAGOS**
+   - Dashboard de cobranza:
+     * **Por vencer** (próximos 7 días):
+       - Lista de facturas
+       - Enviar recordatorio amigable
+     * **Vencidas**:
+       - Días de atraso
+       - Monto acumulado
+       - Acciones:
+         * Enviar recordatorio (automático)
+         * Llamar a empresa
+         * Escalar a gerencia
+         * Suspender servicio (extremo)
+     * **Pagadas a tiempo**:
+       - % de facturas pagadas puntualmente
+       - Por empresa (rating)
+   - Aging report (antigüedad de saldos)
+
+10. **REPORTES DE CONSUMO**
+    - Por empresa cliente:
+      * Reporte detallado de uso:
+        - Período
+        - Total de empleados con beneficio
+        - Empleados activos (#)
+        - Total de visitas
+        - Promedio de visitas por empleado
+        - Distribución por:
+          * Sede
+          * Horario
+          * Tipo de clase
+        - Monto facturado
+      * Gráficos visuales
+      * Exportar (PDF/Excel)
+      * Enviar a cliente (transparencia)
+
+11. **NOTAS DE CRÉDITO**
+    - Gestión de devoluciones:
+      * Crear nota de crédito:
+        - Vinculada a factura original
+        - Razón:
+          * Error en facturación
+          * Descuento retroactivo
+          * Devolución de pago
+          * Ajuste de empleados
+        - Monto a acreditar
+        - Aplicar a próxima factura
+        - O reembolsar
+      * Generar PDF de nota de crédito
+      * Actualizar saldo de empresa
+
+12. **ANÁLISIS FINANCIERO**
+    - Dashboard de analytics:
+      * Revenue corporativo mensual (gráfico de líneas)
+      * Distribución por empresa (dona):
+        - Qué empresas generan más revenue
+      * Comparativa de períodos:
+        - Este mes vs mes anterior
+        - Este trimestre vs trimestre anterior
+      * Proyección de revenue (próximos 3 meses)
+      * Días promedio de cobro (DSO)
+    - Identificar mejores clientes
+
+13. **RECORDATORIOS AUTOMÁTICOS**
+    - Sistema de cobranza automática:
+      * Workflow de recordatorios:
+        - 7 días antes del vencimiento: Recordatorio amigable
+        - Día de vencimiento: Aviso de vencimiento
+        - 3 días después: Primer recordatorio
+        - 7 días después: Segundo recordatorio
+        - 15 días después: Alerta de suspensión
+        - 30 días después: Escalación a gerencia
+      * Templates personalizables
+      * Envío automático por email
+      * Log de recordatorios enviados
+
+14. **CONCILIACIÓN BANCARIA**
+    - Match de pagos:
+      * Importar movimientos bancarios (CSV)
+      * Detectar pagos recibidos
+      * Sugerir match con facturas pendientes:
+        - Por monto
+        - Por referencia
+        - Por empresa
+      * Confirmar match
+      * Marcar factura como pagada
+    - Automatizar conciliación
+
+15. **EXPORTACIÓN CONTABLE**
+    - Integración con contabilidad:
+      * Exportar facturas a software contable:
+        - Formato CONTPAQi
+        - Formato QuickBooks
+        - Formato SAP
+        - XML/CSV genérico
+      * Pólizas contables
+      * Libro de ventas
+      * Declaraciones fiscales
+    - Programar exportación mensual
+
+16. **DATOS MOCKEADOS**
+    - 30-50 facturas corporativas
+    - De 5-10 empresas diferentes
+    - Estados variados (pagadas, pendientes, vencidas)
+    - Múltiples períodos (últimos 6 meses)
+    - Historial de pagos
+    - Algunos recordatorios enviados
+    - Notas de crédito
+    - Reportes de consumo generados
+    - Datos de conciliación
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente amber-yellow-orange para hero
+- Tabla de facturas con badges de estado
+- Factura PDF profesional y branded
+- Dashboard financiero (Recharts):
+  * Líneas para revenue mensual
+  * Dona para distribución por empresa
+  * Barras para comparativas
+- Aging report con colores por antigüedad
+- Timeline de recordatorios
+- Wizard de generación de factura
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiomax/crm-empresas/facturacion-empresas](src/features/planstudiomax/crm-empresas/facturacion-empresas).
+
+---
+
+# 📝 NOTAS GENERALES PARA TODOS LOS PROMPTS
+
+## ⚠️ IMPORTANTE:
+1. **SIEMPRE** revisar [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md) antes de empezar
+2. **NO CREAR NUEVOS ARCHIVOS** - Solo editar existentes
+3. Usar **TypeScript** correctamente
+4. Implementar **framer-motion** para animaciones
+5. Incluir **Lucide React** para iconos
+6. Datos **mockeados realistas**
+7. **Responsive** completo (mobile-first)
+8. **Código limpio** y bien comentado
+
+## Checklist de Estilización:
+- [ ] `rounded-3xl` para cards principales
+- [ ] `bg-white/80 backdrop-blur-xl` para glassmorphism
+- [ ] `border border-white/50` para definición
+- [ ] Gradientes de 3 colores en headers
+- [ ] Animaciones de entrada con framer-motion
+- [ ] `whileHover` para interactividad
+- [ ] `shadow-xl` y `hover:shadow-2xl`
+- [ ] Gráficos con Recharts (cuando aplique)
+- [ ] Progress bars con gradientes animados
+- [ ] Avatares y badges consistentes
+- [ ] Iconos de Lucide React
+- [ ] Responsive breakpoints (sm/md/lg/xl)
+
+---
+
+**Versión:** 1.0
+**Fecha:** Enero 2025
+**Sistema de Diseño:** Moderno con Glassmorphism
+**Área:** PlanStudioMax (Tier Empresarial Multi-Sede)

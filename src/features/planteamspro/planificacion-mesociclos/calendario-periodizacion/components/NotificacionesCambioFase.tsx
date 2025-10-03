@@ -1,12 +1,39 @@
-
 import React from 'react';
+import { motion } from 'framer-motion';
+import { Bell, Send } from 'lucide-react';
 
 const NotificacionesCambioFase: React.FC = () => {
   return (
-    <div>
-      <h3>Notificaciones Automáticas de Cambios de Fase al Equipo Técnico</h3>
-      {/* Lógica para enviar notificaciones */}
-    </div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: 0.7 }}
+      whileHover={{ scale: 1.02, y: -4 }}
+      className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
+    >
+      {/* Shimmer effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
+
+      {/* Decoración de fondo */}
+      <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-pink-500 to-rose-600 opacity-5 rounded-full blur-2xl"></div>
+
+      <div className="relative z-10">
+        {/* Icono */}
+        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300">
+          <Bell className="w-8 h-8" />
+        </div>
+
+        {/* Título */}
+        <h3 className="text-xl font-bold text-gray-800 mb-2">Notificaciones Automáticas</h3>
+        <p className="text-sm text-gray-600 mb-4">Cambios de fase al equipo técnico</p>
+
+        {/* Indicador de funcionalidad */}
+        <div className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-pink-50 to-rose-50 rounded-xl border border-pink-200">
+          <Send className="w-4 h-4 text-pink-600" />
+          <span className="text-xs font-semibold text-pink-700">Envío automático</span>
+        </div>
+      </div>
+    </motion.div>
   );
 };
 

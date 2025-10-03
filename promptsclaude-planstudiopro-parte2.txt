@@ -1,0 +1,2596 @@
+# 🚀 PROMPTS DE ESTILIZACIÓN - PLANSTUDIOPRO (PARTE 2)
+
+## Este archivo es continuación de promptsclaude-planstudiopro.txt
+## Contiene los prompts 9-16 de los módulos restantes
+
+---
+
+## 📋 PROMPT 9: Pases Virtuales
+
+Transforma completamente la página de Pases Virtuales ([src/features/planstudiopro/gestion-miembros/pases-virtuales/PasesVirtualesPage.tsx](src/features/planstudiopro/gestion-miembros/pases-virtuales/PasesVirtualesPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema completo de pases virtuales con QR codes
+- Facilita el check-in sin contacto y la gestión digital de membresías
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Pases Virtuales**
+   - Gradiente `from-indigo-600 via-purple-600 to-pink-600`
+   - Título "Pases Virtuales"
+   - Descripción: "Acceso digital sin contacto para tus miembros"
+   - Icono de QR code o tarjeta digital
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Total de Pases Activos
+   - Check-ins Hoy
+   - Pases Generados Este Mes
+   - Tasa de Uso Digital (%)
+   - Cards con glassmorphism
+
+3. **GENERADOR DE PASES**
+   - Sección principal para crear/regenerar pases:
+     * Buscar miembro:
+       - Autocomplete por nombre/email/ID
+       - Mostrar membresía activa
+       - Validar que tenga membresía válida
+     * **Generar pase** (botón destacado):
+       - Crear QR code único
+       - Asociar con membresía
+       - Fecha de generación
+       - Fecha de expiración (coincide con membresía)
+     * **Regenerar pase**:
+       - Si perdió su pase
+       - Invalidar QR anterior
+       - Crear nuevo QR
+       - Enviar automáticamente
+
+4. **VISUALIZACIÓN DE PASE**
+   - Card de pase virtual (formato tarjeta):
+     * **Front de la tarjeta**:
+       - Logo del box
+       - Nombre del miembro (grande)
+       - Foto/Avatar
+       - Tipo de membresía (badge)
+       - # de membresía
+       - QR code grande y centrado
+       - "Válido hasta: [fecha]"
+       - Diseño con gradiente del tipo de membresía
+     * **Back de la tarjeta** (flip animation):
+       - Créditos restantes (si aplica)
+       - Restricciones (horarios/días)
+       - Contacto del box
+       - Términos básicos
+     * Animación de flip 3D al hacer hover/click
+     * Glassmorphism y sombras modernas
+
+5. **DESCARGA Y ENVÍO**
+   - Opciones de distribución:
+     * **Descargar**:
+       - Formato PNG (para móvil)
+       - Formato PDF (para imprimir)
+       - Ambas resoluciones (alta/baja)
+       - Incluir en Apple Wallet (.pkpass)
+       - Incluir en Google Pay (.gpay)
+     * **Enviar**:
+       - Email automático:
+         * Template branded
+         * Pase adjunto (PNG + PDF)
+         * Instrucciones de uso
+         * QR embebido en el email
+       - SMS:
+         * Link de descarga
+         * Mensaje personalizado
+       - WhatsApp:
+         * Envío directo del pase
+         * Link para app móvil
+     * Preview antes de enviar
+
+6. **LISTADO DE PASES ACTIVOS**
+   - Tabla de todos los pases generados:
+     * Columnas:
+       - Miembro (avatar + nombre)
+       - Tipo de membresía
+       - QR code (miniatura)
+       - Fecha de generación
+       - Última actualización
+       - Último uso (check-in)
+       - Estado:
+         * Activo (verde) ✅
+         * Expirado (rojo) ❌
+         * Suspendido (amarillo) ⚠️
+         * Revocado (gris) 🚫
+       - Acciones:
+         * Ver pase
+         * Descargar
+         * Reenviar
+         * Regenerar
+         * Revocar
+     * Búsqueda rápida
+     * Filtrar por estado/tipo
+     * Ordenar por columnas
+
+7. **SCANNER DE QR (Modal/Pantalla)**
+   - Interfaz de escaneo:
+     * **Activar cámara**:
+       - Solicitar permisos
+       - Preview de cámara en tiempo real
+       - Marco de escaneo destacado
+       - Instrucciones visuales
+     * **O input manual**:
+       - Ingresar código numérico
+       - Validación en tiempo real
+     * **Respuesta inmediata**:
+       - ✅ **Acceso permitido** (verde):
+         * Foto y nombre del miembro
+         * Tipo de membresía
+         * Créditos restantes
+         * Última asistencia
+         * Mensaje: "¡Bienvenido/a [nombre]!"
+         * Sonido de éxito
+       - ❌ **Acceso denegado** (rojo):
+         * Razón:
+           - Membresía vencida
+           - Sin créditos
+           - Pase revocado
+           - Restricción de horario
+           - Ya hizo check-in hoy
+           - Otro
+         * Acción sugerida
+         * Sonido de error
+       - ⚠️ **Advertencias** (amarillo):
+         * Último crédito
+         * Membresía por vencer (días)
+         * Alerta de pago pendiente
+     * Animación de escaneo exitoso/fallido
+     * Log de escaneo automático
+
+8. **CÓDIGOS QR**
+   - Especificaciones técnicas:
+     * Generar con librería (qrcode.react o similar)
+     * **Formato del código**:
+       - Alfanumérico único
+       - Incluir:
+         * ID de miembro
+         * ID de membresía
+         * Hash de seguridad
+         * Fecha de expiración
+       - Ejemplo: `BOX-M123-MEM456-abc123xyz-20250630`
+     * **Seguridad**:
+       - No reutilizable después de revocado
+       - Expiración automática con membresía
+       - Detección de duplicados
+       - Rate limiting (no escanear múltiples veces en X minutos)
+     * **Personalización**:
+       - Logo en el centro del QR
+       - Colores del box (mantener contraste)
+       - Error correction level: High
+
+9. **WALLET INTEGRATION**
+   - Integración con billeteras digitales:
+     * **Apple Wallet** (.pkpass):
+       - Generar pass con PassKit
+       - Incluir:
+         * Logo del box
+         * Nombre del miembro
+         * QR code
+         * Fecha de expiración
+         * Créditos restantes (campo dinámico)
+         * Notificaciones push cuando:
+           - Clase próxima (si tiene reserva)
+           - Membresía por vencer
+           - Créditos bajos
+       - Actualización automática (push updates)
+     * **Google Pay** (.gpay):
+       - Generar pass con Google Pay API
+       - Funcionalidad similar a Apple Wallet
+       - Notificaciones Android
+     * Instrucciones de instalación
+     * Preview de cómo se ve en wallet
+
+10. **PERSONALIZACIÓN DE DISEÑO**
+    - Configurar apariencia de pases:
+      * **Plantillas por tipo de membresía**:
+        - Unlimited: Gradiente gold
+        - Pack de clases: Gradiente blue
+        - Estudiante: Gradiente green
+        - Corporativo: Gradiente purple
+        - etc.
+      * **Elementos personalizables**:
+        - Logo del box
+        - Colores principales (gradientes)
+        - Fondo (imagen o gradiente)
+        - Posición de elementos
+        - Fuente de texto
+        - Estilo del QR (color, logo)
+      * Preview en vivo
+      * Guardar plantilla
+      * Aplicar a todos o por tipo
+
+11. **HISTORIAL DE ESCANEOS**
+    - Log de todos los check-ins:
+      * Lista cronológica:
+        - Timestamp (fecha/hora)
+        - Miembro (avatar + nombre)
+        - Tipo de acceso (check-in/check-out)
+        - Método (QR scan/manual)
+        - Ubicación (puerta/recepción)
+        - Usuario que escaneó (si aplica)
+        - Estado del escaneo:
+          * Exitoso
+          * Denegado (con razón)
+      * Búsqueda por miembro/fecha
+      * Filtrar por estado
+      * Exportar log (CSV/Excel)
+
+12. **VALIDACIÓN Y SEGURIDAD**
+    - Medidas de seguridad:
+      * **Anti-duplicación**:
+        - Cada QR es único
+        - No se puede clonar
+        - Watermark invisible
+      * **Rate limiting**:
+        - No permitir escaneo duplicado en X minutos
+        - Prevenir ataques de replay
+      * **Revocación inmediata**:
+        - Al cancelar membresía
+        - Al reportar pase perdido
+        - Al detectar uso fraudulento
+      * **Alertas**:
+        - Escaneos desde múltiples ubicaciones
+        - Uso fuera de horario normal
+        - Intentos de acceso denegados repetidos
+      * **Audit log**:
+        - Registro de todas las acciones
+        - Quién generó/revocó pases
+        - Cambios en configuración
+
+13. **GESTIÓN DE PASES FÍSICOS (Opcional)**
+    - Si también usan tarjetas físicas:
+      * Vincular tarjeta física con pase virtual:
+        - Ingresar # de tarjeta
+        - Escanear barcode/NFC
+        - Asociar con miembro
+      * Estado de tarjeta:
+        - Activa
+        - Perdida (deshabilitar)
+        - Dañada (reemplazar)
+      * Reemplazo de tarjeta:
+        - Cobro por reemplazo (si aplica)
+        - Transferir a nueva tarjeta
+        - Invalidar anterior
+
+14. **NOTIFICACIONES AUTOMÁTICAS**
+    - Alertas proactivas:
+      * **Para miembros**:
+        - Pase generado y listo
+        - Membresía por vencer (afecta pase)
+        - Créditos bajos
+        - Pase revocado (con razón)
+      * **Para staff**:
+        - Múltiples intentos de acceso denegados
+        - Pico de check-ins (alerta de capacidad)
+        - Problemas con escaneo (fallas técnicas)
+
+15. **REPORTES DE USO**
+    - Analytics de pases:
+      * **Adopción digital**:
+        - % de miembros usando pase virtual
+        - Tendencia de adopción (líneas)
+        - Comparativa con métodos tradicionales
+      * **Check-ins por método**:
+        - QR scan
+        - Manual
+        - Tarjeta física
+        - Distribución (dona)
+      * **Uso de wallet**:
+        - # de pases en Apple Wallet
+        - # de pases en Google Pay
+        - Engagement con notificaciones push
+      * **Problemas de acceso**:
+        - Top razones de denegación
+        - Pases expirados usados
+        - Intentos fraudulentos
+      * **Horarios pico de escaneo**:
+        - Heatmap por hora del día
+        - Días de la semana
+        - Planificar staffing
+
+16. **DATOS MOCKEADOS**
+    - 50-100 pases virtuales activos
+    - QR codes únicos generados
+    - Mix de tipos de membresía
+    - Algunos pases recién generados, otros antiguos
+    - Historial de escaneos del día (30-50)
+    - Algunos accesos denegados con razones variadas
+    - Estadísticas de adopción digital
+    - Plantillas de diseño de pases
+    - Configuraciones de wallet (iOS/Android)
+    - Log de acciones de seguridad
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente indigo-purple-pink para hero
+- Card de pase virtual con flip 3D animation
+- QR code grande y destacado
+- Glassmorphism en todas las cards
+- Scanner con overlay de cámara en tiempo real
+- Feedback visual inmediato (verde/rojo) al escanear
+- Badges de estado coloridos
+- Timeline de escaneos
+- Gráficos de adopción (Recharts)
+- Botones de descarga/envío destacados
+- Preview de wallet integration
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiopro/gestion-miembros/pases-virtuales](src/features/planstudiopro/gestion-miembros/pases-virtuales).
+
+---
+
+## 📋 PROMPT 10: Historial de Asistencias
+
+Transforma completamente la página de Historial de Asistencias ([src/features/planstudiopro/gestion-miembros/historial-asistencias/HistorialAsistenciasPage.tsx](src/features/planstudiopro/gestion-miembros/historial-asistencias/HistorialAsistenciasPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema completo de seguimiento de asistencias
+- Facilita el análisis de patrones y engagement de miembros
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Historial**
+   - Gradiente `from-teal-600 via-cyan-600 to-blue-600`
+   - Título "Historial de Asistencias"
+   - Descripción: "Seguimiento completo de check-ins y engagement"
+   - Icono de calendario con check
+
+2. **ESTADÍSTICAS GENERALES** (6 cards)
+   - Total Check-ins Hoy
+   - Total Este Mes
+   - Promedio Diario (últimos 30 días)
+   - Tasa de Asistencia (%)
+   - Miembros Activos (asistieron este mes)
+   - Hora Pico de Check-in
+   - Cards con glassmorphism
+
+3. **BUSCADOR DE MIEMBRO**
+   - Búsqueda principal:
+     * Autocomplete por:
+       - Nombre
+       - Email
+       - # de membresía
+       - Teléfono
+     * Resultados con avatar
+     * Click: cargar historial individual
+
+4. **VISTA DE TABLA - Todos los Check-ins**
+   - Lista completa de asistencias:
+     * Columnas:
+       - Miembro (avatar + nombre)
+       - Fecha y Hora
+       - Clase (nombre y tipo)
+       - Coach
+       - Método de Check-in:
+         * QR scan
+         * Manual (staff)
+         * Reserva confirmada
+         * Walk-in
+         * App móvil
+       - Duración de estancia (si hay check-out)
+       - Estado:
+         * Asistió ✅
+         * Late Cancel ⚠️
+         * No-Show ❌
+       - Créditos usados (si aplica)
+       - Notas (si hay)
+     * Filas con colores por estado
+     * Ordenar por cualquier columna
+     * Paginación (25-50-100)
+   - Búsqueda rápida
+   - Filtros (fecha, clase, coach, método)
+
+5. **FILTROS AVANZADOS**
+   - Panel de filtros lateral:
+     * **Rango de fechas**:
+       - Hoy
+       - Esta semana
+       - Este mes
+       - Últimos 30 días
+       - Personalizado (desde-hasta)
+     * **Tipo de clase**:
+       - CrossFit
+       - Yoga
+       - HIIT
+       - Open Gym
+       - etc.
+     * **Coach**:
+       - Multi-select de coaches
+       - Ver asistencia por coach
+     * **Método de check-in**:
+       - QR
+       - Manual
+       - Reserva
+       - etc.
+     * **Estado**:
+       - Asistió
+       - Late cancel
+       - No-show
+     * **Horario**:
+       - Mañana (antes 12pm)
+       - Tarde (12pm-6pm)
+       - Noche (después 6pm)
+     * **Tipo de membresía**:
+       - Unlimited
+       - Pack
+       - Drop-in
+   - Filtros activos (pills)
+   - Clear all
+   - Guardar filtro
+
+6. **HISTORIAL INDIVIDUAL**
+   - Al seleccionar un miembro:
+     * **Header del miembro**:
+       - Avatar grande
+       - Nombre
+       - Tipo de membresía
+       - Estado (activo/pausado/vencido)
+       - Fecha de inicio como miembro
+       - Link a perfil completo
+     * **Resumen de asistencia**:
+       - Total de check-ins (lifetime)
+       - Promedio por semana
+       - Promedio por mes
+       - Racha actual (días consecutivos)
+       - Mejor racha
+       - Última asistencia (hace X días)
+       - Check-ins este mes
+       - % de asistencia (vs clases disponibles)
+     * **Timeline de asistencias**:
+       - Lista cronológica (más reciente primero)
+       - Por asistencia:
+         * Fecha y hora
+         * Clase y coach
+         * Método de check-in
+         * Notas (si hay)
+       - Agrupado por mes
+       - Infinite scroll o paginación
+
+7. **CALENDARIO DE ASISTENCIAS**
+   - Vista de calendario mensual:
+     * Cada día muestra:
+       - Número de check-ins
+       - Color coding:
+         * Verde intenso: Asistió
+         * Verde claro: Asistió (pero menos de lo usual)
+         * Amarillo: Late cancel
+         * Rojo: No-show
+         * Gris: Sin actividad
+     * Heatmap visual (github-style)
+     * Click en día: ver detalle de asistencias
+     * Navegación entre meses
+     * Exportar calendario (iCal)
+
+8. **GRÁFICOS DE TENDENCIAS**
+   - Análisis visual:
+     * **Asistencias por mes** (barras):
+       - Últimos 6-12 meses
+       - Identificar tendencias
+       - Comparativa año anterior
+     * **Asistencias por día de la semana** (barras):
+       - Lunes, martes, etc.
+       - Identificar patrón semanal
+       - Días más/menos populares
+     * **Asistencias por hora del día** (líneas):
+       - Distribución horaria
+       - Horas pico
+       - Planificar oferta de clases
+     * **Distribución de tipos de clase** (dona):
+       - % por tipo de clase
+       - Preferencias del miembro/box
+     * **Racha de asistencias** (líneas):
+       - Días consecutivos a lo largo del tiempo
+       - Identificar compromiso
+       - Celebrar rachas largas
+
+9. **ANÁLISIS DE ENGAGEMENT**
+   - Métricas de compromiso:
+     * **Score de engagement** (0-100):
+       - Basado en:
+         * Frecuencia de asistencia
+         * Consistencia (racha)
+         * Variedad de clases
+         * Participación en eventos
+         * Interacción social
+       - Visual: gauge chart
+       - Color coding (rojo/amarillo/verde)
+     * **Categorización de miembros**:
+       - 🔥 Super activo (>12 check-ins/mes)
+       - ✅ Activo (8-12 check-ins/mes)
+       - ⚠️ Moderado (4-7 check-ins/mes)
+       - ❌ En riesgo (<4 check-ins/mes)
+       - 💤 Inactivo (0 check-ins en 30 días)
+     * **Identificar miembros en riesgo**:
+       - No han asistido en X días
+       - Caída en frecuencia
+       - Patrón de cancelaciones
+       - Acción sugerida: outreach personal
+
+10. **COMPARATIVA DE ASISTENCIA**
+    - Benchmarking:
+      * **Individual vs Promedio del Box**:
+        - Comparar check-ins del miembro con promedio
+        - Gráfico de barras lado a lado
+        - % arriba/debajo del promedio
+      * **Por tipo de membresía**:
+        - Comparar Unlimited vs Pack vs Drop-in
+        - Tasa de utilización
+        - ROI del miembro (¿vale la pena?)
+      * **Por cohorte**:
+        - Miembros que empezaron en mismo mes
+        - Retención comparativa
+        - Quién es más activo
+
+11. **CHECK-IN MANUAL**
+    - Registro manual de asistencia:
+      * Desde esta pantalla poder hacer check-in:
+        - Buscar miembro
+        - Seleccionar clase (actual o pasada)
+        - Confirmar check-in
+        - Agregar nota (opcional)
+      * Para casos:
+        - Olvidó escanear QR
+        - Problema técnico
+        - Clase privada (sin reserva)
+        - Corrección de error
+
+12. **CORRECCIONES Y AJUSTES**
+    - Editar historial:
+      * **Modificar asistencia**:
+        - Cambiar estado (asistió/no-show)
+        - Ajustar hora
+        - Cambiar clase asignada
+        - Agregar/editar notas
+        - Log de quién hizo el cambio
+      * **Eliminar check-in** (con razón):
+        - Duplicado
+        - Error de sistema
+        - Otro
+        - Confirmación requerida
+      * **Agregar check-in retroactivo**:
+        - Fecha y hora
+        - Clase
+        - Razón de registro tardío
+      * Audit trail de todos los cambios
+
+13. **LATE CANCELS Y NO-SHOWS**
+    - Gestión de penalizaciones:
+      * **Late Cancel Policy**:
+        - Definir tiempo límite (ej: 2 horas antes)
+        - Acción:
+          * Perder crédito
+          * Warning (1ra vez)
+          * Multa ($)
+          * Suspensión temporal
+        - Registrar en historial
+      * **No-Show Policy**:
+        - Más estricto que late cancel
+        - Múltiples no-shows:
+          * 1ro: Warning
+          * 2do: Perder crédito extra
+          * 3ro: Revisión de membresía
+        - Tracking automático
+      * **Perdones** (una vez):
+        - Dar gracia por razones válidas
+        - Nota en historial
+        - Límite de perdones por año
+
+14. **EXPORTACIÓN**
+    - Exportar datos:
+      * Formatos:
+        - Excel (detallado)
+        - CSV (datos crudos)
+        - PDF (reporte con gráficos)
+      * Opciones:
+        - Rango de fechas
+        - Miembro específico o todos
+        - Filtros aplicados
+        - Incluir gráficos (PDF)
+        - Resumen ejecutivo
+      * Programar exportación automática
+
+15. **REPORTES EJECUTIVOS**
+    - Dashboard para gerencia:
+      * **KPIs principales**:
+        - Tasa de asistencia global (%)
+        - Promedio check-ins por miembro
+        - Tasa de no-show (%)
+        - Horas pico de operación
+        - Clases más populares
+        - Coaches más solicitados
+      * **Tendencias**:
+        - Crecimiento de asistencias (M/M)
+        - Estacionalidad (meses fuertes/débiles)
+        - Impacto de promociones
+      * **Alertas**:
+        - Caída en asistencias
+        - Aumento de no-shows
+        - Capacidad de clases (llenas/vacías)
+      * Exportar dashboard (PDF)
+
+16. **DATOS MOCKEADOS**
+    - 200-500 check-ins distribuidos
+    - Últimos 30-60 días
+    - 50-100 miembros diferentes
+    - Mix de métodos de check-in
+    - Algunos late cancels (5%)
+    - Algunos no-shows (3%)
+    - Variedad de clases
+    - Distribución realista por hora/día
+    - Patrones de engagement variados
+    - Algunos miembros super activos, otros en riesgo
+    - Rachas de asistencia
+    - Historial de correcciones
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente teal-cyan-blue para hero
+- Tabla con filas coloridas por estado
+- Calendario heatmap (github-style)
+- Gráficos de tendencias (Recharts):
+  * Barras para comparativas
+  * Líneas para tendencias temporales
+  * Dona para distribuciones
+  * Gauge para score de engagement
+- Timeline cronológica de asistencias
+- Badges de estado (asistió/no-show/late cancel)
+- Cards de estadísticas con iconos
+- Color coding por categoría de engagement
+- Modal de detalle individual
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiopro/gestion-miembros/historial-asistencias](src/features/planstudiopro/gestion-miembros/historial-asistencias).
+
+---
+
+## 📋 PROMPT 11: Ventas Rápidas (POS Ligero)
+
+Transforma completamente la página de Ventas Rápidas ([src/features/planstudiopro/pos-ligero/ventas-rapidas/VentasRapidasPage.tsx](src/features/planstudiopro/pos-ligero/ventas-rapidas/VentasRapidasPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema POS simplificado para ventas rápidas
+- Facilita ventas de productos, bebidas y servicios adicionales
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - POS**
+   - Gradiente `from-green-600 via-emerald-600 to-teal-600`
+   - Título "Punto de Venta Rápido"
+   - Descripción: "Ventas simples y eficientes"
+   - Icono de caja registradora
+
+2. **ESTADÍSTICAS DE HOY** (4 cards)
+   - Ventas de Hoy ($)
+   - Transacciones (#)
+   - Ticket Promedio ($)
+   - Top Producto Vendido
+   - Cards con glassmorphism
+
+3. **CATÁLOGO DE PRODUCTOS**
+   - Grid de productos/servicios:
+     * Card por producto con:
+       - Imagen (foto o icono)
+       - Nombre del producto
+       - Precio ($)
+       - Stock disponible (si aplica)
+       - Badge si está en oferta
+       - Click rápido para agregar al carrito
+     * Categorías:
+       - 💧 **Bebidas**:
+         * Agua
+         * Bebidas deportivas
+         * Batidos de proteína
+         * Suplementos líquidos
+       - 🍫 **Snacks**:
+         * Barras de proteína
+         * Frutos secos
+         * Energy bars
+       - 👕 **Merch**:
+         * Camisetas del box
+         * Sudaderas
+         * Gorras
+         * Muñequeras
+       - 💪 **Suplementos**:
+         * Proteína en polvo
+         * Creatina
+         * Pre-workout
+         * BCAAs
+       - 🎟️ **Pases y Servicios**:
+         * Drop-in (1 clase)
+         * Paquete de 5 clases
+         * Paquete de 10 clases
+         * Sesión PT (personal training)
+         * Masaje deportivo
+     * Tabs o pills para filtrar por categoría
+   - Grid responsive (2-3-4 columnas)
+   - Búsqueda rápida de producto
+
+4. **CARRITO DE COMPRA**
+   - Panel lateral o sección derecha:
+     * **Lista de items**:
+       - Producto
+       - Cantidad (+ / -)
+       - Precio unitario
+       - Subtotal
+       - Botón eliminar (X)
+     * **Cálculo de totales**:
+       - Subtotal
+       - Descuentos (si aplica)
+       - Impuestos (%)
+       - **Total** (grande y destacado)
+     * **Cliente** (opcional):
+       - Buscar miembro (autocomplete)
+       - O "Cliente genérico"
+       - Aplicar descuento de miembro (si aplica)
+     * **Botones de acción**:
+       - Limpiar carrito
+       - Aplicar cupón
+       - Proceder al pago (grande y verde)
+   - Carrito visible siempre
+   - Contador de items (badge)
+
+5. **FLUJO DE PAGO**
+   - Modal de checkout:
+     * **Resumen de compra**:
+       - Items y cantidades
+       - Total a pagar
+     * **Método de pago**:
+       - 💳 Tarjeta de crédito/débito
+       - 💵 Efectivo
+       - 📱 Transferencia
+       - 💰 Crédito de cuenta (si es miembro)
+     * **Procesamiento**:
+       - Si es tarjeta:
+         * Integración con terminal
+         * O ingreso manual
+         * Confirmación de pago
+       - Si es efectivo:
+         * Monto recibido
+         * Calcular cambio
+         * Mostrar cambio grande
+     * **Finalizar venta**:
+       - Confirmación visual ✅
+       - Opción de imprimir recibo
+       - Opción de enviar por email
+       - Volver a inicio
+
+6. **DESCUENTOS Y CUPONES**
+   - Aplicar descuentos:
+     * Porcentaje (%)
+     * Monto fijo ($)
+     * Código de cupón:
+       - Input de código
+       - Validación
+       - Aplicación automática
+     * Descuento de miembro (automático si está asociado)
+   - Ver descuento aplicado en carrito
+   - Remover descuento
+
+7. **PRODUCTOS RÁPIDOS**
+   - Atajos para productos más vendidos:
+     * Botones grandes en la parte superior
+     * Productos configurables:
+       - Agua ($1)
+       - Batido de proteína ($5)
+       - Drop-in ($15)
+     * Click = agregar automáticamente
+   - Personalizar productos rápidos
+
+8. **GESTIÓN DE STOCK**
+   - Indicador de stock por producto:
+     * Disponible (verde)
+     * Stock bajo (amarillo, <10 unidades)
+     * Agotado (rojo)
+   - Prevenir venta de producto agotado
+   - Alertas de reabastecimiento
+   - Ajustar stock manualmente:
+     * Agregar inventario
+     * Corregir cantidad
+
+9. **SESIONES DE CAJA**
+   - Abrir/Cerrar turno:
+     * **Abrir caja**:
+       - Monto inicial en efectivo
+       - Usuario responsable
+       - Hora de apertura
+     * **Durante el turno**:
+       - Todas las ventas registradas
+       - Running total
+     * **Cerrar caja**:
+       - Monto final en efectivo
+       - Comparar con ventas registradas
+       - Diferencia (faltante/sobrante)
+       - Resumen del turno:
+         * Total vendido
+         * # de transacciones
+         * Métodos de pago usados
+       - Imprimir reporte de cierre
+
+10. **RECIBOS**
+    - Generar recibo:
+      * Información del negocio:
+        - Logo
+        - Nombre del studio
+        - Dirección
+        - Teléfono
+        - RFC/Tax ID
+      * Detalles de transacción:
+        - Fecha y hora
+        - # de ticket
+        - Cajero (usuario)
+        - Items comprados
+        - Cantidades y precios
+        - Subtotal, impuestos, total
+        - Método de pago
+      * Footer:
+        - "Gracias por tu compra"
+        - Redes sociales
+        - Website
+      * Formato:
+        - Térmico (80mm) para imprimir
+        - Digital (PDF) para email
+    - Preview de recibo
+    - Reimprimir recibo anterior
+
+11. **HISTORIAL DE VENTAS**
+    - Lista de transacciones:
+      * Tabla con:
+        - Fecha/hora
+        - # de ticket
+        - Cliente (si se registró)
+        - Items (#)
+        - Total ($)
+        - Método de pago
+        - Cajero
+        - Estado (completada/reembolsada)
+        - Acción: Ver detalles, Reimprimir, Reembolsar
+      * Ordenar por columna
+      * Paginación
+    - Búsqueda rápida (# de ticket, cliente)
+    - Filtrar por:
+      * Fecha
+      * Método de pago
+      * Cajero
+      * Categoría de producto
+
+12. **REEMBOLSOS**
+    - Proceso de devolución:
+      * Buscar transacción original
+      * Seleccionar items a reembolsar:
+        - Todos
+        - Parcial (algunos items)
+      * Razón del reembolso:
+        - Cliente cambió de opinión
+        - Producto defectuoso
+        - Error en venta
+        - Otro
+      * Método de reembolso:
+        - Mismo método de pago original
+        - Crédito de cuenta
+        - Efectivo
+      * Confirmar reembolso
+    - Actualizar stock (devolver items)
+    - Generar nota de crédito
+
+13. **REPORTES DIARIOS**
+    - Dashboard de ventas del día:
+      * Gráfico de ventas por hora (barras)
+      * Distribución por método de pago (dona)
+      * Top productos vendidos (tabla)
+      * Categoría más vendida
+      * Comparativa con ayer
+    - Exportar reporte (PDF/Excel)
+
+14. **CALCULADORA RÁPIDA**
+    - Tool de calculadora:
+      * Para cálculos rápidos
+      * Conversión de moneda (si aplica)
+      * Calcular descuentos
+      * Calcular impuestos
+    - Acceso rápido (modal flotante)
+
+15. **INTEGRACIÓN CON MEMBRESÍAS**
+    - Al asociar miembro:
+      * Ver tipo de membresía
+      * Aplicar precio preferencial (si aplica)
+      * Acumular puntos (si hay programa de lealtad)
+      * Cargar a cuenta de miembro (pagar después)
+    - Historial de compras del miembro
+
+16. **DATOS MOCKEADOS**
+    - 30-50 productos variados
+    - Precios desde $1 hasta $100
+    - Imágenes o iconos por producto
+    - Stock variado (algunos bajos, otros abundantes)
+    - Categorías organizadas
+    - 20-30 transacciones de hoy
+    - Mix de métodos de pago
+    - Algunos reembolsos
+    - Sesión de caja abierta con ventas
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente green-emerald-teal para hero
+- Grid de productos con imágenes
+- Cards clickeables con hover
+- Carrito lateral sticky
+- Botones grandes de método de pago
+- Calculator style para montos
+- Recibo estilo ticket térmico
+- Tabla de transacciones
+- Badges de stock (verde/amarillo/rojo)
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiopro/pos-ligero/ventas-rapidas](src/features/planstudiopro/pos-ligero/ventas-rapidas).
+
+---
+
+## 📋 PROMPT 12: Tickets Diarios
+
+Transforma completamente la página de Tickets Diarios ([src/features/planstudiopro/pos-ligero/tickets-diarios/TicketsDiariosPage.tsx](src/features/planstudiopro/pos-ligero/tickets-diarios/TicketsDiariosPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema de visualización de todas las ventas del día
+- Facilita el seguimiento y auditoría de transacciones
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Tickets**
+   - Gradiente `from-blue-600 via-indigo-600 to-purple-600`
+   - Título "Tickets del Día"
+   - Descripción: "Registro completo de transacciones"
+   - Icono de recibo/ticket
+
+2. **ESTADÍSTICAS DEL DÍA** (4 cards)
+   - Total Vendido ($)
+   - Número de Tickets (#)
+   - Ticket Promedio ($)
+   - Reembolsos del Día ($)
+   - Cards con glassmorphism
+
+3. **LISTA DE TICKETS**
+   - Tabla completa de transacciones:
+     * Columnas:
+       - # Ticket (link al detalle)
+       - Hora
+       - Cliente (nombre o "Genérico")
+       - Items (#)
+       - Total ($)
+       - Método de pago (icono + texto)
+       - Cajero
+       - Estado:
+         * Completada (verde) ✅
+         * Reembolsada (rojo) ❌
+         * Parcialmente reembolsada (amarillo) ⚠️
+       - Acciones (dropdown):
+         * Ver detalles
+         * Reimprimir recibo
+         * Enviar por email
+         * Reembolsar
+         * Agregar nota
+     * Filas con colores alternados
+     * Ordenar por columna
+     * Paginación
+   - Búsqueda rápida (# ticket, cliente)
+   - Total de página (suma de tickets visibles)
+
+4. **DETALLE DE TICKET**
+   - Modal con información completa:
+     * **Header**:
+       - # Ticket grande
+       - Fecha y hora completa
+       - Estado (badge)
+       - Cajero que procesó
+     * **Información del cliente**:
+       - Nombre (si se registró)
+       - Email y teléfono
+       - Tipo de membresía (si aplica)
+       - Link a perfil (si es miembro)
+     * **Items comprados**:
+       - Tabla detallada:
+         * Imagen/icono
+         * Producto
+         * Categoría
+         * Cantidad
+         * Precio unitario
+         * Descuento (si aplica)
+         * Subtotal
+       - Cálculo de totales:
+         * Subtotal
+         * Descuentos
+         * Impuestos
+         * **Total**
+     * **Información de pago**:
+       - Método usado
+       - Monto pagado
+       - Cambio (si efectivo)
+       - Referencia de pago (si tarjeta)
+     * **Timeline de eventos**:
+       - Ticket creado
+       - Pago procesado
+       - Recibo enviado (si aplica)
+       - Reembolso (si aplica)
+     * **Acciones disponibles**:
+       - Reimprimir recibo
+       - Descargar PDF
+       - Enviar por email
+       - Reembolsar (parcial/total)
+       - Agregar nota interna
+
+5. **FILTROS AVANZADOS**
+   - Panel de filtros:
+     * Rango de horas (desde-hasta)
+     * Método de pago (multi-select)
+     * Cajero (multi-select)
+     * Cliente (buscar)
+     * Categoría de producto
+     * Rango de monto ($min - $max)
+     * Estado (completada/reembolsada)
+   - Filtros activos (pills)
+   - Clear all
+   - Guardar filtro favorito
+
+6. **ANÁLISIS DE VENTAS POR HORA**
+   - Gráfico de ventas temporales:
+     * Gráfico de barras:
+       - Eje X: Horas del día (6am-10pm)
+       - Eje Y: Monto vendido ($)
+     * Identificar horas pico
+     * Comparar con promedio
+   - Tabla de resumen por hora:
+     * Hora
+     * # Tickets
+     * Total vendido
+     * Ticket promedio
+
+7. **ANÁLISIS POR MÉTODO DE PAGO**
+   - Distribución de pagos:
+     * Gráfico de dona:
+       - Efectivo
+       - Tarjeta
+       - Transferencia
+       - Crédito de cuenta
+     * Tabla complementaria:
+       - Método
+       - # Transacciones
+       - Monto total
+       - % del total
+       - Ticket promedio
+   - Costos de procesamiento (si aplica)
+
+8. **ANÁLISIS POR CAJERO**
+   - Rendimiento de cajeros:
+     * Tabla de cajeros:
+       - Avatar y nombre
+       - # Tickets procesados
+       - Total vendido
+       - Ticket promedio
+       - Reembolsos (#)
+     * Ordenar por métrica
+   - Comparativa visual (barras)
+
+9. **PRODUCTOS MÁS VENDIDOS**
+   - Top productos del día:
+     * Tabla de top 10:
+       - Imagen
+       - Producto
+       - Categoría
+       - Unidades vendidas
+       - Revenue generado
+       - % del total
+     * Gráfico de barras horizontal
+   - Ver todos los productos vendidos
+
+10. **REEMBOLSOS Y DEVOLUCIONES**
+    - Sección especial de reembolsos:
+      * Lista de tickets reembolsados:
+        - # Ticket original
+        - Hora de reembolso
+        - Razón
+        - Monto reembolsado
+        - Cajero que procesó
+      * Total reembolsado del día
+      * % sobre ventas totales
+    - Análisis de razones de reembolso:
+      * Distribución por razón
+      * Identificar problemas recurrentes
+
+11. **EXPORTACIÓN**
+    - Exportar tickets:
+      * Formatos:
+        - Excel (detallado)
+        - CSV (datos crudos)
+        - PDF (reporte con gráficos)
+      * Opciones:
+        - Todos los tickets del día
+        - Solo filtrados
+        - Con detalles de items
+        - Resumen ejecutivo
+    - Programar exportación automática (EOD)
+
+12. **REIMPRESIÓN MASIVA**
+    - Selección múltiple de tickets
+    - Reimprimir en batch:
+      * Todos juntos
+      * Uno por uno
+    - Útil para auditorías o backup
+
+13. **NOTAS Y COMENTARIOS**
+    - Agregar notas a tickets:
+      * Nota interna (no visible en recibo)
+      * Razón de descuento aplicado
+      * Detalles de situación especial
+      * Timestamp y usuario
+    - Ver historial de notas
+
+14. **BÚSQUEDA AVANZADA**
+    - Búsqueda inteligente:
+      * Por # de ticket
+      * Por cliente (nombre/email)
+      * Por producto comprado
+      * Por monto exacto
+      * Por referencia de pago
+    - Resultados instantáneos
+    - Guardar búsquedas frecuentes
+
+15. **COMPARATIVA CON DÍAS ANTERIORES**
+    - Comparar con:
+      * Ayer
+      * Mismo día semana pasada
+      * Promedio de últimos 7 días
+    - Métricas comparadas:
+      * Total vendido (+/- %)
+      * # de tickets (+/- %)
+      * Ticket promedio (+/- %)
+      * Mix de productos (cambios)
+    - Gráfico de tendencia (últimos 7 días)
+
+16. **DATOS MOCKEADOS**
+    - 30-50 tickets del día
+    - Distribuidos en horario de operación (6am-10pm)
+    - Mix de métodos de pago
+    - Variedad de productos vendidos
+    - Algunos tickets grandes, muchos pequeños
+    - 2-3 reembolsos
+    - Diferentes cajeros
+    - Algunos con cliente registrado, otros genéricos
+    - Timestamps realistas (concentración en horas pico)
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente blue-indigo-purple para hero
+- Tabla con filas alternadas y hover
+- Badges de estado coloridos
+- Modal de detalle amplio
+- Gráficos de análisis (Recharts)
+- Pills de filtros activos
+- Iconos de métodos de pago
+- Timeline de eventos
+- Cards de estadísticas con comparativas
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiopro/pos-ligero/tickets-diarios](src/features/planstudiopro/pos-ligero/tickets-diarios).
+
+---
+
+## 📋 PROMPT 13: Caja Diaria
+
+Transforma completamente la página de Caja Diaria ([src/features/planstudiopro/pos-ligero/caja-diaria/CajaDiariaPage.tsx](src/features/planstudiopro/pos-ligero/caja-diaria/CajaDiariaPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema completo de gestión de caja y cuadre diario
+- Facilita el control de efectivo y cierre de turno
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Caja**
+   - Gradiente `from-yellow-600 via-orange-600 to-red-600`
+   - Título "Caja Diaria"
+   - Descripción: "Control de efectivo y cierre de turno"
+   - Icono de caja fuerte/dinero
+
+2. **ESTADO DE CAJA** (Card destacado)
+   - Estado actual grande:
+     * **Abierta** (verde) o **Cerrada** (gris)
+     * Turno actual:
+       - Cajero responsable (avatar + nombre)
+       - Hora de apertura
+       - Tiempo transcurrido
+     * Monto inicial
+     * Monto actual en caja (actualizado en tiempo real)
+   - Botones principales:
+     * Abrir caja (si está cerrada)
+     * Cerrar caja (si está abierta)
+     * Movimiento de efectivo (entrada/salida)
+
+3. **RESUMEN FINANCIERO** (4 cards)
+   - Efectivo en Caja ($)
+   - Ventas en Efectivo Hoy ($)
+   - Ventas con Tarjeta Hoy ($)
+   - Total Vendido Hoy ($)
+   - Cards con glassmorphism
+
+4. **ABRIR CAJA**
+   - Modal de apertura de turno:
+     * Usuario responsable (automático, logueado)
+     * Fecha y hora automática
+     * **Conteo inicial de efectivo**:
+       - Input de denominaciones:
+         * Billetes (1000, 500, 200, 100, 50, 20)
+         * Monedas (10, 5, 2, 1, 0.50)
+       - Cantidad de cada denominación
+       - Calculadora automática de total
+       - O input manual de total
+     * Notas opcionales (ej: "Fondo fijo de $1000")
+     * Confirmar apertura
+   - Registro de hora exacta
+   - Bloquear uso de POS hasta abrir caja
+
+5. **MOVIMIENTOS DE EFECTIVO**
+   - Registrar entradas/salidas:
+     * **Entrada de efectivo**:
+       - Razón:
+         * Cambio para caja
+         * Depósito de ventas
+         * Otro (especificar)
+       - Monto ($)
+       - Notas
+       - Usuario que registra
+     * **Salida de efectivo**:
+       - Razón:
+         * Depósito a banco
+         * Gastos operativos
+         * Compra de cambio
+         * Retiro de efectivo excedente
+         * Otro (especificar)
+       - Monto ($)
+       - Notas
+       - Usuario que registra
+     * Timestamp automático
+   - Actualizar monto en caja en tiempo real
+
+6. **HISTORIAL DE MOVIMIENTOS**
+   - Timeline de transacciones del turno:
+     * Lista cronológica:
+       - Hora
+       - Tipo (entrada/salida/venta)
+       - Concepto
+       - Monto
+       - Saldo resultante
+       - Usuario
+     * Colores por tipo:
+       - Verde: Entradas
+       - Rojo: Salidas
+       - Azul: Ventas
+   - Exportar historial
+
+7. **VENTAS DEL TURNO**
+   - Resumen de ventas desde apertura:
+     * **Por método de pago**:
+       - Efectivo:
+         * # Transacciones
+         * Monto total
+         * Debería estar en caja
+       - Tarjeta:
+         * # Transacciones
+         * Monto total
+         * A depositar por terminal
+       - Transferencia:
+         * # Transacciones
+         * Monto total
+       - Crédito de cuenta:
+         * # Transacciones
+         * Monto total
+     * Gráfico de distribución (dona)
+     * Total general de ventas
+
+8. **CÁLCULO ESPERADO VS REAL**
+   - Comparativa automática:
+     * **Efectivo esperado**:
+       - Monto inicial
+       - + Ventas en efectivo
+       - + Entradas registradas
+       - - Salidas registradas
+       - = Total esperado
+     * **Efectivo real** (se ingresa al cerrar)
+     * **Diferencia**:
+       - Faltante (rojo)
+       - Sobrante (verde)
+       - Exacto (verde) ✅
+   - Visual destacado de diferencia
+   - Tolerancia configurable (ej: ±$10 es aceptable)
+
+9. **CERRAR CAJA**
+   - Proceso de cierre de turno:
+     * **Paso 1: Conteo final**:
+       - Contar efectivo en caja:
+         * Por denominaciones (como apertura)
+         * O total manual
+       - Calculadora de denominaciones
+       - Total contado
+     * **Paso 2: Verificación**:
+       - Comparar esperado vs real
+       - Mostrar diferencia
+       - Si hay diferencia:
+         * Razón de diferencia (textarea)
+         * Responsable (quién contó)
+       - Si es exacto: ✅ Todo correcto
+     * **Paso 3: Depósitos**:
+       - Monto a depositar en banco
+       - Dejar fondo fijo para mañana
+       - Monto en sobre/bolsa
+     * **Paso 4: Resumen final**:
+       - Total vendido
+       - # de tickets
+       - Métodos de pago
+       - Movimientos de efectivo
+       - Diferencia final
+     * **Paso 5: Confirmar cierre**:
+       - Usuario confirma
+       - Firma digital (opcional)
+       - Imprimir reporte de cierre
+       - Cerrar turno
+   - No permitir reabrir una vez cerrado (solo admin)
+
+10. **REPORTE DE CIERRE**
+    - Documento generado al cerrar:
+      * **Información del turno**:
+        - Fecha
+        - Cajero responsable
+        - Hora de apertura
+        - Hora de cierre
+        - Duración del turno
+      * **Resumen financiero**:
+        - Monto inicial
+        - Ventas por método de pago
+        - Movimientos de efectivo
+        - Total esperado
+        - Total real
+        - Diferencia
+      * **Estadísticas de ventas**:
+        - # de tickets
+        - Ticket promedio
+        - Producto más vendido
+        - Hora pico
+      * **Firma del cajero** (espacio)
+      * **Firma del supervisor** (espacio)
+    - Formato imprimible (PDF)
+    - Envío automático por email
+
+11. **HISTORIAL DE TURNOS**
+    - Lista de turnos pasados:
+      * Tabla con:
+        - Fecha
+        - Cajero
+        - Hora apertura/cierre
+        - Duración
+        - Monto inicial
+        - Total vendido
+        - Diferencia (faltante/sobrante)
+        - Estado (cerrado correctamente/con diferencias)
+        - Acción: Ver reporte
+      * Ordenar por fecha
+      * Filtrar por cajero
+      * Filtrar por estado (con/sin diferencias)
+    - Click en turno: ver reporte completo
+
+12. **ANÁLISIS DE DIFERENCIAS**
+    - Dashboard de auditoría:
+      * Turnos con diferencias:
+        - Lista de turnos problemáticos
+        - Monto de diferencia
+        - Frecuencia por cajero
+        - Tendencias
+      * Alertas:
+        - Diferencias >$50
+        - Cajero con múltiples diferencias
+        - Patrón de faltantes
+      * Gráfico de diferencias por mes
+    - Recomendaciones de acción
+
+13. **GESTIÓN DE FONDO FIJO**
+    - Configuración de efectivo base:
+      * Monto de fondo fijo (ej: $1000)
+      * Denominaciones sugeridas para cambio:
+        - Billetes pequeños ($20, $50)
+        - Monedas variadas
+      * Alertar si fondo está bajo
+    - Solicitar cambio:
+      * Request para cambio de billetes grandes
+      * Estado: pendiente/entregado
+
+14. **MÚLTIPLES CAJAS (si aplica)**
+    - Si hay varias cajas/cajeros simultáneos:
+      * Vista de todas las cajas:
+        - Caja 1, Caja 2, etc.
+        - Estado (abierta/cerrada)
+        - Cajero actual
+        - Monto en caja
+      * Consolidado del día:
+        - Total de todas las cajas
+        - Total vendido global
+        - Comparativas entre cajas
+    - Reportes individuales y consolidados
+
+15. **SEGURIDAD Y PERMISOS**
+    - Control de acceso:
+      * Solo cajeros pueden abrir/cerrar su caja
+      * Supervisores pueden:
+        - Ver todas las cajas
+        - Forzar cierre (con razón)
+        - Ver historial completo
+        - Ajustar diferencias
+      * Administradores pueden:
+        - Reabrir turno cerrado (excepcional)
+        - Editar montos (con log)
+    - Log de todos los accesos y cambios
+
+16. **DATOS MOCKEADOS**
+    - Turno actual abierto:
+      * Cajero asignado
+      * Monto inicial $1000
+      * 10-15 ventas en efectivo
+      * 20-30 ventas con tarjeta
+      * 2-3 movimientos de efectivo
+      * Monto actual calculado
+    - 5-10 turnos pasados:
+      * Algunos con diferencias pequeñas
+      * Mayoría cerrados correctamente
+      * Diferentes cajeros
+      * Fechas variadas (última semana)
+    - Historial de movimientos del día
+    - Reportes de cierre generados
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente yellow-orange-red para hero
+- Card grande de estado de caja (abierta/cerrada)
+- Timeline de movimientos con colores
+- Calculadora de denominaciones (grid de inputs)
+- Comparativa esperado vs real (destacada)
+- Badges de estado (exacto/faltante/sobrante)
+- Reporte de cierre estilo documento formal
+- Tabla de turnos con filas coloridas
+- Alertas visuales de diferencias
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiopro/pos-ligero/caja-diaria](src/features/planstudiopro/pos-ligero/caja-diaria).
+
+---
+
+## 📋 PROMPT 14: Crear Contrato/Pase
+
+Transforma completamente la página de Crear Contrato ([src/features/planstudiopro/pases-contratos/crear-contrato/CrearContratoPage.tsx](src/features/planstudiopro/pases-contratos/crear-contrato/CrearContratoPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema completo para venta y generación de membresías
+- Facilita la creación de contratos personalizados
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Crear Contrato**
+   - Gradiente `from-purple-600 via-pink-600 to-red-600`
+   - Título "Crear Contrato de Membresía"
+   - Descripción: "Vende y configura nuevas membresías"
+   - Icono de contrato/documento
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Contratos Este Mes
+   - Revenue de Contratos ($)
+   - Tipo Más Vendido
+   - Tasa de Conversión (%)
+   - Cards con glassmorphism
+
+3. **WIZARD DE CREACIÓN**
+   - Proceso guiado en pasos:
+     * Progress bar visual (1/5, 2/5, etc.)
+     * Navegación entre pasos
+     * Botones: Atrás, Siguiente, Finalizar
+   - Auto-save de progreso
+   - Preview lateral del contrato en construcción
+
+4. **PASO 1: SELECCIONAR CLIENTE**
+   - Búsqueda de miembro:
+     * Autocomplete por:
+       - Nombre
+       - Email
+       - Teléfono
+       - ID de miembro
+     * Resultados con avatar y datos básicos
+   - O crear nuevo cliente:
+     * Formulario básico:
+       - Nombre completo
+       - Email
+       - Teléfono
+       - Fecha de nacimiento
+       - Género
+       - Dirección
+     * Se creará perfil automáticamente
+   - Validar que no tenga membresía activa:
+     * Advertencia si ya tiene una
+     * Opción de proceder (upgrade/cambio)
+
+5. **PASO 2: TIPO DE MEMBRESÍA**
+   - Catálogo de planes disponibles:
+     * Cards de planes:
+       - **Unlimited**:
+         * Acceso ilimitado
+         * Todas las clases
+         * Precio mensual
+         * Badge "Más popular"
+       - **Pack de Clases**:
+         * 5, 10, 20 clases
+         * Válido por 30, 60, 90 días
+         * Precio del paquete
+       - **Drop-in**:
+         * 1 clase
+         * Pago único
+       - **Estudiante/Senior**:
+         * Descuento especial
+         * Requiere validación
+       - **Corporativo**:
+         * Para empresas
+         * Facturación especial
+       - **Personalizado**:
+         * Crear plan a medida
+     * Hover: destacar plan
+     * Click: seleccionar
+   - Cada plan muestra:
+     * Nombre
+     * Descripción breve
+     * Precio (mensual/total)
+     * Duración
+     * Créditos incluidos (si aplica)
+     * Beneficios (lista)
+   - Comparación de planes (tabla)
+
+6. **PASO 3: PERSONALIZACIÓN**
+   - Configuración del contrato:
+     * **Fecha de inicio**:
+       - Hoy (default)
+       - Fecha futura
+       - Retroactivo (con nota)
+     * **Duración/Vigencia**:
+       - Mensual (recurrente)
+       - Trimestral
+       - Semestral
+       - Anual
+       - Perpetuo (hasta cancelar)
+       - Personalizado (X meses)
+     * **Créditos** (si es pack):
+       - Número de clases
+       - Caducidad (días)
+       - Rollover (¿se pasan al siguiente mes?)
+     * **Restricciones** (opcional):
+       - Horarios permitidos:
+         * Todo el día
+         * Solo AM (antes de 12pm)
+         * Solo PM (después de 12pm)
+       - Días de la semana:
+         * Todos
+         * Solo entre semana (L-V)
+         * Solo fin de semana (S-D)
+         * Días específicos (checkboxes)
+       - Clases permitidas:
+         * Todas
+         * Solo ciertos tipos
+     * **Freeze/Pausas** (política):
+       - Permitir pausar (toggle)
+       - Número de pausas por año
+       - Duración máxima de pausa (días)
+     * **Beneficios adicionales**:
+       - Invitado gratis (X por mes)
+       - Descuento en productos (%)
+       - Acceso a área VIP
+       - Sesión PT incluida
+       - etc.
+
+7. **PASO 4: PRECIO Y PAGO**
+   - Configuración financiera:
+     * **Precio base**:
+       - Mostrar precio estándar
+       - Permitir ajustar:
+         * Descuento (% o $)
+         * Razón (promo, referido, etc.)
+         * Precio final
+     * **Frecuencia de pago** (si recurrente):
+       - Mensual
+       - Trimestral
+       - Anual (con descuento)
+       - Pago único adelantado
+     * **Método de pago**:
+       - 💳 Tarjeta de crédito/débito
+       - 💵 Efectivo
+       - 📱 Transferencia
+       - Auto-cargo (guardar tarjeta)
+     * **Configuración de renovación**:
+       - Auto-renovación (toggle)
+       - Notificar antes de renovar
+       - Días de anticipación
+     * **Costos de inscripción** (si aplica):
+       - Fee de registro (una vez)
+       - Costo de tarjeta/brazalete
+     * **Cálculo de totales**:
+       - Precio del plan
+       - Descuentos aplicados
+       - Costos adicionales
+       - Impuestos
+       - **Total a pagar hoy**
+       - **Total recurrente** (si aplica)
+
+8. **PASO 5: TÉRMINOS Y CONDICIONES**
+   - Contrato legal:
+     * Texto de términos y condiciones:
+       - Políticas de cancelación
+       - Política de reembolso
+       - Reglas del box
+       - Responsabilidades
+       - Renuncia de responsabilidad (waiver)
+     * Checkbox obligatorio:
+       - "He leído y acepto los términos"
+     * Firma digital:
+       - Canvas para firmar con dedo/mouse
+       - O subir imagen de firma
+       - Nombre completo (tipografía)
+     * Checkbox adicional:
+       - Autorización de fotografías
+       - Newsletter (marketing)
+       - Compartir datos con seguros (si aplica)
+   - Preview del contrato completo
+   - Descargar contrato (PDF)
+
+9. **PASO 6: REVISIÓN Y CONFIRMACIÓN**
+   - Resumen completo del contrato:
+     * **Cliente**:
+       - Nombre
+       - Email
+       - Teléfono
+     * **Membresía**:
+       - Tipo
+       - Duración
+       - Fecha de inicio
+       - Fecha de vencimiento
+       - Créditos
+       - Restricciones
+     * **Precio**:
+       - Precio total
+       - Precio recurrente
+       - Método de pago
+     * **Términos**:
+       - Aceptados ✅
+       - Firmado ✅
+   - Editar cualquier paso (botones a pasos)
+   - **Botón final**: Procesar y crear membresía
+
+10. **PROCESAMIENTO DE PAGO**
+    - Si pago inmediato:
+      * Integración con TPV:
+        - Stripe
+        - PayPal
+        - Terminal física
+        - Manual
+      * Pantalla de procesando...
+      * Confirmación de pago exitoso ✅
+      * O manejo de error ❌
+    - Si auto-cargo configurado:
+      * Validar tarjeta
+      * Programar cobros futuros
+      * Confirmación
+
+11. **CONFIRMACIÓN Y ENTREGA**
+    - Al completar exitosamente:
+      * Pantalla de éxito 🎉:
+        - "¡Membresía creada exitosamente!"
+        - # de membresía
+        - Fecha de inicio
+      * Acciones inmediatas:
+        - Generar pase virtual con QR
+        - Enviar email de bienvenida:
+          * Detalles de membresía
+          * Pase adjunto (PDF)
+          * Instrucciones de uso
+          * Link a app (si existe)
+        - Enviar SMS de confirmación
+        - Imprimir contrato firmado
+      * Botones:
+        - Ver perfil del miembro
+        - Crear otra membresía
+        - Ir a listado de membresías
+
+12. **PLANTILLAS DE CONTRATO**
+    - Guardar configuración como plantilla:
+      * Nombre de plantilla
+      * Todos los ajustes guardados
+      * Reutilizable
+    - Biblioteca de plantillas:
+      * Plantillas predefinidas
+      * Plantillas custom
+      * Plantilla de "Promo de verano"
+      * Plantilla de "Estudiante"
+      * etc.
+    - Crear desde plantilla:
+      * Seleccionar plantilla
+      * Ajustar si es necesario
+      * Crear
+
+13. **UPGRADES Y CAMBIOS**
+    - Si el cliente ya tiene membresía:
+      * Mostrar membresía actual
+      * Opciones:
+        - Upgrade:
+          * De pack a unlimited
+          * Cálculo prorrateado
+          * Diferencia a pagar
+        - Downgrade:
+          * De unlimited a pack
+          * Crédito generado
+        - Cambio lateral:
+          * De mensual a anual
+          * Ajuste de precio
+      * Timeline de cambio:
+        - Inmediato
+        - Al vencimiento de actual
+        - Fecha específica
+
+14. **PROMOCIONES Y DESCUENTOS**
+    - Aplicar códigos promocionales:
+      * Input de código
+      * Validación:
+        - Código válido/inválido
+        - Vigente/expirado
+        - Aplicable a este plan
+      * Descuento automático
+    - Descuentos especiales:
+      * Referido (automático si viene de referencia)
+      * Corporativo (por empresa)
+      * Estudiante/Senior (requiere validación)
+      * First-time member
+      * Seasonal promo
+
+15. **DOCUMENTACIÓN GENERADA**
+    - Documentos automáticos:
+      * **Contrato firmado** (PDF):
+        - Términos completos
+        - Firma digital incluida
+        - Sello/marca de agua
+        - # de contrato
+      * **Recibo de pago** (PDF):
+        - Detalles de transacción
+        - Desglose de precio
+        - Método de pago
+      * **Pase de membresía** (PDF + PNG):
+        - QR code
+        - Info del miembro
+        - Vigencia
+      * **Email de bienvenida** (template):
+        - Personalizado
+        - Docs adjuntos
+        - Instrucciones
+    - Almacenamiento en perfil del miembro
+
+16. **DATOS MOCKEADOS**
+    - 5-8 plantillas de membresía predefinidas
+    - Precios variados ($50 - $300/mes)
+    - Términos y condiciones de ejemplo
+    - Códigos promocionales activos
+    - Algunos contratos ya creados (en listado)
+    - Clientes de ejemplo para buscar
+    - Configuraciones de pago simuladas
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente purple-pink-red para hero
+- Wizard con progress bar visual
+- Cards de planes con precios destacados
+- Badge "Más popular" en plan recomendado
+- Formulario multi-paso limpio
+- Canvas de firma digital
+- Preview del contrato lateral
+- Confirmación con confetti 🎉
+- Documentos PDF con branding
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiopro/pases-contratos/crear-contrato](src/features/planstudiopro/pases-contratos/crear-contrato).
+
+---
+
+## 📋 PROMPT 15: Listado de Pases
+
+Transforma completamente la página de Listado de Pases ([src/features/planstudiopro/pases-contratos/listado-pases/ListadoPasesPage.tsx](src/features/planstudiopro/pases-contratos/listado-pases/ListadoPasesPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema completo de gestión de membresías activas
+- Facilita el seguimiento y administración de contratos
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Listado**
+   - Gradiente `from-cyan-600 via-teal-600 to-green-600`
+   - Título "Membresías Activas"
+   - Descripción: "Gestiona todas las membresías de tus miembros"
+   - Icono de tarjetas/membresías
+
+2. **ESTADÍSTICAS GENERALES** (6 cards)
+   - Total Membresías Activas
+   - Nuevas Este Mes
+   - Por Vencer (30 días)
+   - MRR - Monthly Recurring Revenue ($)
+   - Tasa de Renovación (%)
+   - Valor Promedio por Membresía ($)
+   - Cards con glassmorphism
+
+3. **VISTA DE TABLA**
+   - Lista completa de membresías:
+     * Columnas:
+       - Miembro (avatar + nombre)
+       - Tipo de Membresía (badge)
+       - Fecha de Inicio
+       - Fecha de Vencimiento
+       - Créditos Restantes (si aplica)
+       - Estado:
+         * Activa (verde) ✅
+         * Por vencer (amarillo) ⚠️
+         * Vencida (rojo) ❌
+         * Pausada (azul) ⏸
+         * Cancelada (gris) 🚫
+       - Próximo Pago (fecha y monto)
+       - Acciones (dropdown):
+         * Ver detalles
+         * Editar
+         * Renovar
+         * Pausar/Reanudar
+         * Cancelar
+         * Ver historial
+         * Contactar miembro
+     * Filas con colores sutiles según estado
+     * Ordenar por cualquier columna
+     * Paginación (25-50-100 por página)
+   - Búsqueda rápida (nombre, email)
+   - Totales de página
+
+4. **FILTROS AVANZADOS**
+   - Panel de filtros lateral o superior:
+     * **Estado**:
+       - Activas
+       - Por vencer (<30 días)
+       - Vencidas
+       - Pausadas
+       - Canceladas
+       - Todos
+     * **Tipo de membresía**:
+       - Unlimited
+       - Pack (5, 10, 20 clases)
+       - Drop-in
+       - Estudiante
+       - Corporativa
+       - Etc.
+     * **Duración**:
+       - Mensual
+       - Trimestral
+       - Anual
+       - Perpetuo
+     * **Rango de fechas**:
+       - Inicio (desde-hasta)
+       - Vencimiento (desde-hasta)
+     * **Créditos**:
+       - Con créditos
+       - Sin créditos
+       - Rango (X-Y créditos)
+     * **Método de pago**:
+       - Auto-renovación activa
+       - Pago manual
+     * **Rango de precio**:
+       - $min - $max
+   - Filtros activos (pills con X)
+   - Clear all
+   - Guardar filtro favorito
+   - Exportar resultados filtrados
+
+5. **VISTA DE CARDS (Alternativa)**
+   - Toggle entre vista tabla/cards
+   - Grid de cards de membresías:
+     * Card por membresía:
+       - Header con gradiente (color según estado)
+       - Avatar grande del miembro
+       - Nombre
+       - Tipo de membresía (badge)
+       - Estado destacado
+       - Fecha de vencimiento grande
+       - Progress bar de créditos usados
+       - Acciones rápidas (iconos)
+     * Hover: lift y acciones adicionales
+   - Grid responsive (1-2-3-4 columnas)
+
+6. **DETALLE DE MEMBRESÍA**
+   - Modal o página amplia:
+     * **Información del Miembro**:
+       - Avatar y nombre
+       - Email y teléfono (botones de contacto)
+       - Link a perfil completo
+     * **Detalles de la Membresía**:
+       - Tipo y nombre
+       - # de membresía (único)
+       - Estado (badge grande)
+       - Fecha de inicio
+       - Fecha de vencimiento
+       - Duración (X meses)
+       - Días restantes (countdown)
+     * **Créditos** (si aplica):
+       - Total incluidos
+       - Usados
+       - Restantes
+       - Progress bar visual
+       - Caducidad de créditos
+     * **Restricciones**:
+       - Horarios permitidos
+       - Días de la semana
+       - Clases específicas
+       - Límite de check-ins (si hay)
+     * **Información Financiera**:
+       - Precio mensual/total
+       - Descuentos aplicados
+       - Próximo cargo (fecha y monto)
+       - Método de pago guardado
+       - Estado de auto-renovación
+     * **Historial de Uso**:
+       - Últimas asistencias (10)
+       - Fecha/hora y clase
+       - Promedio de asistencias/semana
+       - Gráfico de uso mensual
+     * **Historial de Pagos**:
+       - Lista de transacciones
+       - Fecha, monto, método
+       - Estado (exitoso/fallido)
+       - Descargar recibos
+     * **Timeline de Eventos**:
+       - Membresía creada
+       - Renovaciones
+       - Pausas/reanudaciones
+       - Modificaciones
+       - Pagos
+     * **Documentos**:
+       - Contrato firmado (PDF)
+       - Pase virtual (PDF)
+       - Recibos
+       - Descargar todos
+     * **Acciones Disponibles**:
+       - Renovar ahora
+       - Extender vigencia
+       - Agregar créditos
+       - Pausar/Freeze
+       - Reanudar
+       - Cambiar tipo (upgrade/downgrade)
+       - Cambiar método de pago
+       - Cancelar membresía
+       - Ver contrato original
+
+7. **RENOVACIÓN**
+   - Proceso de renovación rápida:
+     * Desde listado o detalle
+     * Mostrar membresía actual
+     * Opciones:
+       - Renovar igual (mismo tipo, precio)
+       - Cambiar tipo (upgrade/downgrade)
+       - Ajustar duración
+     * Cálculo de nuevo período:
+       - Inicio: después de vencimiento actual
+       - O extender desde hoy
+     * Precio:
+       - Mismo precio
+       - Aplicar nuevo precio (si cambió)
+       - Aplicar descuento de renovación
+     * Procesar pago
+     * Confirmación y actualización automática
+
+8. **PAUSAR/FREEZE MEMBRESÍA**
+   - Congelar membresía temporalmente:
+     * Razón de pausa:
+       - Vacaciones
+       - Lesión/enfermedad
+       - Viaje
+       - Otro
+     * Duración de pausa:
+       - Fecha de inicio
+       - Fecha de fin
+       - O número de días
+     * Validar contra política:
+       - Número de pausas permitidas por año
+       - Duración máxima
+       - Alertas si excede
+     * Confirmación:
+       - Nueva fecha de vencimiento (extendida)
+       - Próximo pago ajustado
+       - Estado cambia a "Pausada"
+     * Notificar al miembro
+   - Reanudar membresía:
+     * Antes de fecha programada (opcional)
+     * Ajustar fecha de vencimiento
+     * Reactivar inmediatamente
+
+9. **CANCELACIÓN**
+   - Proceso de cancelación:
+     * Advertencia destacada
+     * Razón de cancelación:
+       - Costo
+       - Reubicación
+       - Lesión/salud
+       - Insatisfacción
+       - Otro (especificar)
+     * Fecha efectiva:
+       - Inmediata
+       - Al vencimiento actual
+       - Fecha específica
+     * Opciones:
+       - Reembolso (si aplica):
+         * Días no usados
+         * Cálculo prorrateado
+         * Política de reembolso
+       - Créditos restantes:
+         * Usar antes de cancelar
+         * Congelar por X días
+         * Perder créditos
+     * Intentos de retención:
+       - Ofrecer pausa en lugar de cancelación
+       - Ofrecer descuento
+       - Encuesta de salida
+     * Confirmación final (doble check)
+     * Procesar cancelación
+     * Estado cambia a "Cancelada"
+     * Enviar email de confirmación
+
+10. **ALERTAS Y NOTIFICACIONES**
+    - Sistema de alertas automáticas:
+      * **Por vencer** (30, 15, 7 días antes):
+        - Lista de membresías
+        - Enviar recordatorio automático
+        - Acciones: renovar, extender
+      * **Vencidas**:
+        - No renovadas automáticamente
+        - Seguimiento de cobro
+        - Reactivar o cancelar
+      * **Pagos fallidos**:
+        - Auto-renovación rechazada
+        - Intentar de nuevo
+        - Actualizar método de pago
+        - Suspender acceso (opcional)
+      * **Créditos agotados**:
+        - Pack de clases terminado
+        - Ofrecer recarga
+        - Upgrade a unlimited
+      * **Pausas finalizando**:
+        - Reanudar automáticamente
+        - Confirmar con miembro
+    - Dashboard de alertas activas
+    - Acciones masivas (renovar todas)
+
+11. **ACCIONES MASIVAS**
+    - Selección múltiple (checkboxes)
+    - Operaciones en batch:
+      * Enviar recordatorio de renovación
+      * Aplicar descuento especial
+      * Extender vigencia (X días)
+      * Cambiar método de pago
+      * Exportar a CSV
+      * Imprimir listado
+      * Enviar comunicación masiva
+    - Confirmación antes de ejecutar
+
+12. **REPORTES DE MEMBRESÍAS**
+    - Analytics:
+      * **Distribución de tipos** (dona):
+        - Unlimited
+        - Packs
+        - etc.
+        - % de cada tipo
+      * **Nuevas membresías por mes** (barras):
+        - Tendencia de crecimiento
+        - Comparativa año anterior
+      * **Renovaciones** (gráfico):
+        - Tasa de renovación (%)
+        - Mejoras/empeoramientos
+      * **Churn rate**:
+        - % de cancelaciones
+        - Razones principales
+        - Tendencias
+      * **MRR - Monthly Recurring Revenue**:
+        - Evolución temporal (líneas)
+        - Proyección
+        - Desglose por tipo
+      * **Lifetime Value promedio**:
+        - Por tipo de membresía
+        - Por segmento de cliente
+    - Exportar reportes (PDF/Excel)
+
+13. **COMUNICACIÓN CON MIEMBROS**
+    - Desde membresía:
+      * Botón de contacto rápido
+      * Templates de mensajes:
+        - Recordatorio de renovación
+        - Pago fallido
+        - Bienvenida
+        - Cambio de política
+        - Oferta especial
+      * Email y/o SMS
+      * Historial de comunicaciones
+
+14. **BÚSQUEDA AVANZADA**
+    - Búsqueda inteligente:
+      * Por miembro (nombre, email, teléfono)
+      * Por # de membresía
+      * Por fecha de vencimiento
+      * Por monto de pago
+      * Por método de pago
+    - Resultados instantáneos
+    - Guardar búsquedas frecuentes
+
+15. **EXPORTACIÓN**
+    - Exportar datos:
+      * Formatos:
+        - Excel (detallado)
+        - CSV (datos crudos)
+        - PDF (listado imprimible)
+      * Contenido:
+        - Listado completo o filtrado
+        - Columnas personalizables
+        - Con/sin datos financieros
+      * Programar exportación:
+        - Semanal/Mensual
+        - Envío automático
+        - Backup de datos
+
+16. **DATOS MOCKEADOS**
+    - 50-100 membresías variadas
+    - Mix de tipos (unlimited, packs, etc.)
+    - Estados diversos:
+      * 70% activas
+      * 15% por vencer
+      * 10% vencidas
+      * 5% pausadas
+    - Fechas de inicio/vencimiento distribuidas
+    - Algunos con créditos, otros ilimitados
+    - Historial de pagos por membresía
+    - Historial de asistencias
+    - Algunos con pagos fallidos (alertas)
+    - Renovaciones próximas
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente cyan-teal-green para hero
+- Tabla con filas coloridas por estado
+- Badges de estado animados
+- Cards de membresía estilo tarjeta
+- Progress bar de créditos
+- Modal de detalle amplio con tabs
+- Timeline de eventos
+- Alertas visuales destacadas
+- Dashboard de analytics (Recharts)
+- Countdown para vencimientos
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiopro/pases-contratos/listado-pases](src/features/planstudiopro/pases-contratos/listado-pases).
+
+---
+
+## 📋 PROMPT 16: Renovaciones
+
+Transforma completamente la página de Renovaciones ([src/features/planstudiopro/pases-contratos/renovaciones/RenovacionesPage.tsx](src/features/planstudiopro/pases-contratos/renovaciones/RenovacionesPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema completo de gestión de renovaciones y seguimiento
+- Facilita la retención de miembros y automatización de renovaciones
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Renovaciones**
+   - Gradiente `from-orange-600 via-amber-600 to-yellow-600`
+   - Título "Centro de Renovaciones"
+   - Descripción: "Mantén a tus miembros activos y comprometidos"
+   - Icono de renovación/ciclo
+
+2. **ESTADÍSTICAS DE RENOVACIÓN** (6 cards)
+   - Pendientes de Renovación
+   - Renovadas Este Mes
+   - Tasa de Renovación (%)
+   - Revenue de Renovaciones ($)
+   - Auto-Renovaciones Activas
+   - Promedio Días Hasta Renovación
+   - Cards con glassmorphism
+
+3. **DASHBOARD DE PRIORIDADES**
+   - Vista de acción inmediata:
+     * **Urgente** (vencen en 7 días):
+       - Lista de membresías
+       - Countdown destacado
+       - Acciones rápidas
+     * **Próximamente** (vencen en 8-30 días):
+       - Lista preparatoria
+       - Programar contacto
+     * **Renovaciones Fallidas**:
+       - Auto-renovaciones rechazadas
+       - Reintento necesario
+       - Alta prioridad
+   - Color coding por urgencia (rojo, amarillo, verde)
+
+4. **LISTA DE MEMBRESÍAS POR RENOVAR**
+   - Tabla de membresías próximas a vencer:
+     * Columnas:
+       - Miembro (avatar + nombre)
+       - Tipo de Membresía
+       - Fecha de Vencimiento
+       - Días Restantes (countdown)
+       - Última Asistencia (hace X días)
+       - Auto-Renovación (toggle/badge)
+       - Probabilidad de Renovación:
+         * Alta (verde) 80-100%
+         * Media (amarillo) 50-79%
+         * Baja (rojo) <50%
+         * IA predictiva basada en:
+           - Frecuencia de asistencia
+           - Engagement
+           - Historial de renovaciones previas
+       - Estado de Contacto:
+         * No contactado
+         * Recordatorio enviado (fecha)
+         * Respondió
+         * Confirmó renovación
+       - Acciones:
+         * Renovar ahora
+         * Enviar recordatorio
+         * Llamar/Contactar
+         * Ver historial
+     * Ordenar por días restantes (default)
+     * Filtrar por probabilidad, estado, tipo
+   - Paginación
+
+5. **RENOVACIÓN RÁPIDA**
+   - Proceso acelerado:
+     * Click en "Renovar ahora"
+     * Modal de renovación:
+       - Resumen de membresía actual
+       - Opciones:
+         * Renovar igual (mismo tipo y precio)
+         * Cambiar tipo (upgrade/downgrade)
+         * Ajustar duración (1, 3, 6, 12 meses)
+       - Precio:
+         * Precio actual
+         * Descuento de renovación (si aplica)
+         * Precio final
+       - Método de pago:
+         * Usar método guardado
+         * Nuevo método
+       - Fecha de inicio:
+         * Inmediata (desde hoy)
+         * Al vencimiento (recomendado)
+       - Confirmar y procesar pago
+     * Si auto-renovación activa:
+       - Solo confirmar que se procesará automáticamente
+       - Verificar método de pago válido
+
+6. **CONFIGURACIÓN DE AUTO-RENOVACIÓN**
+   - Activar/Desactivar auto-renovación:
+     * Por membresía individual:
+       - Toggle on/off
+       - Configuración:
+         * Días antes de vencimiento para cobrar (default: 3)
+         * Notificar antes de cobrar (toggle)
+         * Días de anticipación para notificación
+         * Método de pago guardado
+         * Validar tarjeta actualizada
+       - Si falla:
+         * Reintentar X veces
+         * Días entre reintentos
+         * Notificar al miembro
+         * Suspender acceso si no se resuelve
+     * Configuración global (plantilla):
+       - Aplicar a todas las nuevas membresías
+       - Políticas por defecto
+
+7. **COMUNICACIÓN AUTOMATIZADA**
+   - Sistema de recordatorios:
+     * **Workflows predefinidos**:
+       - 30 días antes:
+         * Email de aviso temprano
+         * Opción de renovar con descuento
+       - 15 días antes:
+         * Recordatorio amigable
+         * Destacar beneficios
+       - 7 días antes:
+         * Urgencia moderada
+         * Call to action claro
+       - 3 días antes:
+         * Última oportunidad
+         * Oferta especial (si aplica)
+       - 1 día antes:
+         * Renovar hoy para no perder acceso
+       - Día de vencimiento:
+         * Alerta de vencimiento
+         * Renovar inmediatamente
+       - Post-vencimiento:
+         * Serie de seguimiento (día 1, 3, 7, 14)
+         * Win-back campaign
+     * **Templates editables**:
+       - Asunto personalizable
+       - Contenido customizable
+       - Variables dinámicas:
+         * {nombre}
+         * {tipo_membresia}
+         * {fecha_vencimiento}
+         * {precio}
+         * {descuento}
+       - Preview del email
+     * **Canales**:
+       - Email (prioritario)
+       - SMS (opcional)
+       - Push notification (app)
+       - WhatsApp (integración)
+     * **Programación**:
+       - Automática según configuración
+       - Manual (enviar ahora)
+       - Pausar workflows individuales
+   - Tracking de comunicaciones:
+     * Enviados
+     * Abiertos (open rate)
+     * Clicks
+     * Conversiones
+
+8. **OFERTAS Y PROMOCIONES DE RENOVACIÓN**
+   - Incentivos para renovar:
+     * **Descuento de renovación temprana**:
+       - X% off si renueva antes de Y días
+       - Aplicación automática
+     * **Meses gratis**:
+       - Renueva 12 meses, obtén 1 gratis
+       - Configurar promoción
+     * **Upgrade con descuento**:
+       - De pack a unlimited
+       - Precio especial para upgraders
+     * **Referral bonus**:
+       - Renueva y refiere, obtén descuento
+     * **Loyalty reward**:
+       - Descuento progresivo por años de membresía
+       - 1 año: 5% off
+       - 2 años: 10% off
+       - 3+ años: 15% off
+   - Configurar promociones:
+     * Nombre de la promo
+     * Vigencia (fechas)
+     * Condiciones
+     * Descuento (% o $)
+     * Aplicar automáticamente
+   - Tracking de uso de promos
+
+9. **ANÁLISIS PREDICTIVO (IA)**
+   - Score de renovación por miembro:
+     * Factores considerados:
+       - **Asistencia**:
+         * Frecuencia (veces/semana)
+         * Tendencia (↗↘)
+         * Última asistencia (recency)
+       - **Engagement**:
+         * Participación en eventos
+         * Interacción en comunidad
+         * Uso de servicios adicionales
+       - **Satisfacción**:
+         * Feedback score
+         * Reviews dejados
+         * Quejas registradas
+       - **Financiero**:
+         * Historial de pagos
+         * Pagos a tiempo vs tardíos
+         * Renovaciones previas
+       - **Estacionalidad**:
+         * Fecha de renovación (enero suele ser alta)
+     * **Score de 0-100**:
+       - 80-100: Muy probable renovación (verde)
+       - 50-79: Renovación moderada (amarillo)
+       - 0-49: En riesgo de no renovar (rojo)
+     * **Recomendaciones automáticas**:
+       - "Alta probabilidad, enviar recordatorio estándar"
+       - "Riesgo medio, ofrecer descuento"
+       - "Alto riesgo, contacto personal del manager"
+   - Identificar miembros en riesgo proactivamente
+
+10. **INTERVENCIONES PERSONALIZADAS**
+    - Para miembros en riesgo:
+      * **Outreach manual**:
+        - Asignar a staff member
+        - Llamada telefónica
+        - Reunión 1-on-1
+        - Investigar razones
+      * **Ofertas personalizadas**:
+        - Descuento custom
+        - Cambio de tipo de membresía
+        - Pausa en lugar de cancelación
+        - Congelar precio actual
+      * **Win-back campaigns**:
+        - Si no renovó:
+          * Serie de emails (día 1, 7, 14, 30)
+          * Oferta especial de reactivación
+          * "Te extrañamos, vuelve con X% off"
+      * **Feedback loop**:
+        - Encuesta de salida
+        - Entender por qué no renovó
+        - Mejorar para el futuro
+
+11. **RENOVACIONES FALLIDAS (Dunning)**
+    - Gestión de pagos rechazados:
+      * Lista de auto-renovaciones fallidas:
+        - Miembro
+        - Fecha de intento
+        - Razón del rechazo:
+          * Fondos insuficientes
+          * Tarjeta expirada
+          * Tarjeta reportada
+          * Error de procesamiento
+        - Reintentos realizados (#/X)
+        - Próximo reintento (fecha)
+        - Acciones:
+          * Reintentar ahora
+          * Notificar al miembro
+          * Actualizar método de pago
+          * Cancelar membresía
+      * **Proceso de reintentos**:
+        - Automático (según configuración)
+        - Intervalos: 3, 7, 14 días
+        - Máximo de reintentos
+      * **Comunicación**:
+        - Email/SMS automático de alerta
+        - Instrucciones para actualizar pago
+        - Link directo a actualización
+      * **Gracia period**:
+        - Días de gracia antes de suspender acceso
+        - Alertar en cada check-in
+        - Suspender después de X días
+
+12. **HISTORIAL DE RENOVACIONES**
+    - Por miembro:
+      * Timeline de renovaciones pasadas:
+        - Fecha de cada renovación
+        - Tipo de membresía (¿cambió?)
+        - Precio pagado
+        - Método usado
+        - Descuentos aplicados
+        - Tiempo de decisión (días antes de vencer)
+      * Estadísticas personales:
+        - Tiempo como miembro (total)
+        - # de renovaciones
+        - Tasa de renovación (%)
+        - Lifetime value ($)
+      * Patrón de comportamiento:
+        - Renueva temprano/tarde/justo a tiempo
+        - Sensible a ofertas
+        - Requiere recordatorios
+
+13. **REPORTES DE RENOVACIÓN**
+    - Analytics completo:
+      * **Tasa de Renovación** (KPI principal):
+        - % de membresías que renovaron
+        - Por tipo de membresía
+        - Por período (mensual, trimestral, anual)
+        - Tendencia temporal (líneas)
+        - Comparativa con benchmarks
+      * **Revenue de Renovaciones**:
+        - $ generado por renovaciones
+        - % del revenue total
+        - Proyección futura
+      * **Tiempo de Renovación**:
+        - Distribución (cuándo renuevan):
+          * Antes de vencer
+          * Día de vencimiento
+          * Después de vencer (reactivaciones)
+        - Gráfico de distribución
+      * **Efectividad de Comunicaciones**:
+        - Open rate de emails
+        - Click-through rate
+        - Conversiones por tipo de mensaje
+        - ROI de campañas
+      * **Efectividad de Promociones**:
+        - Uso de cada promo
+        - Conversiones
+        - Revenue incremental
+        - ROI
+      * **Razones de No-Renovación**:
+        - Distribución de razones
+        - Identificar problemas principales
+        - Plan de acción
+    - Exportar reportes (PDF/Excel)
+    - Dashboard ejecutivo
+
+14. **CALENDARIO DE RENOVACIONES**
+    - Vista de calendario:
+      * Cada día muestra:
+        - # de membresías que vencen
+        - Click: lista de miembros
+      * Heatmap de densidad:
+        - Verde: pocos vencimientos
+        - Rojo: muchos vencimientos
+      * Planificar staffing para días pico
+    - Exportar calendario (iCal)
+
+15. **CONFIGURACIÓN DE POLÍTICAS**
+    - Ajustes globales de renovación:
+      * **Auto-renovación**:
+        - Habilitada por defecto (toggle)
+        - Días antes de cobrar
+        - Número de reintentos
+        - Días entre reintentos
+        - Gracia period
+      * **Recordatorios**:
+        - Días para enviar (30, 15, 7, 3, 1)
+        - Canales (email/SMS/push)
+        - Habilitar/Deshabilitar workflow
+      * **Promociones**:
+        - Descuento de renovación temprana
+        - Vigencia de la oferta
+        - Aplicación automática
+      * **Proceso de no-renovación**:
+        - Días de gracia
+        - Suspender acceso automáticamente
+        - Workflow de win-back
+        - Duración de campaña
+
+16. **DATOS MOCKEADOS**
+    - 30-50 membresías próximas a vencer
+    - Distribuidas en distintos rangos:
+      * 5-10 urgentes (<7 días)
+      * 15-20 próximamente (8-30 días)
+      * 10-15 a largo plazo (>30 días)
+    - Mix de probabilidades (alta, media, baja)
+    - Algunos con auto-renovación activa
+    - Algunos sin método de pago guardado
+    - 3-5 renovaciones fallidas (dunning)
+    - Historial de renovaciones pasadas
+    - Comunicaciones enviadas con tracking
+    - Promociones activas
+    - Analytics con tendencias
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente orange-amber-yellow para hero
+- Dashboard de prioridades con color coding (rojo/amarillo/verde)
+- Countdown visual para días restantes
+- Score de probabilidad con gauge chart
+- Timeline de renovaciones pasadas
+- Tabla con badges de estado
+- Alertas de urgencia destacadas
+- Gráficos de analytics (Recharts)
+- Email templates con preview
+- Calendar heatmap
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/planstudiopro/pases-contratos/renovaciones](src/features/planstudiopro/pases-contratos/renovaciones).
+
+---
+
+# 📝 NOTAS GENERALES PARA TODOS LOS PROMPTS
+
+## ⚠️ IMPORTANTE:
+1. **SIEMPRE** revisar [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md) antes de empezar
+2. **NO CREAR NUEVOS ARCHIVOS** - Solo editar existentes
+3. Usar **TypeScript** correctamente
+4. Implementar **framer-motion** para animaciones
+5. Incluir **Lucide React** para iconos
+6. Datos **mockeados realistas**
+7. **Responsive** completo (mobile-first)
+8. **Código limpio** y bien comentado
+
+## Checklist de Estilización:
+- [ ] `rounded-3xl` para cards principales
+- [ ] `bg-white/80 backdrop-blur-xl` para glassmorphism
+- [ ] `border border-white/50` para definición
+- [ ] Gradientes de 3 colores en headers
+- [ ] Animaciones de entrada con framer-motion
+- [ ] `whileHover` para interactividad
+- [ ] `shadow-xl` y `hover:shadow-2xl`
+- [ ] Gráficos con Recharts (cuando aplique)
+- [ ] Progress bars con gradientes animados
+- [ ] Avatares y badges consistentes
+- [ ] Iconos de Lucide React
+- [ ] Responsive breakpoints (sm/md/lg/xl)
+
+---
+
+**Versión:** 1.0 (Parte 2)
+**Fecha:** Enero 2025
+**Sistema de Diseño:** Moderno con Glassmorphism
+**Área:** PlanStudioPro (Prompts 9-16)

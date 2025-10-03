@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { getExperiments, Experiment } from '../historialExperimentosApi';
+import { experimentosHistoricos, Experimento } from '../historialExperimentosApi';
 
 const LeccionesAprendidas: React.FC = () => {
-  const [experiments, setExperiments] = useState<Experiment[]>([]);
+  const [experiments, setExperiments] = useState<Experimento[]>([]);
 
   useEffect(() => {
-    const fetchExperiments = async () => {
-      const data = await getExperiments();
-      setExperiments(data);
-    };
-    fetchExperiments();
+    setExperiments(experimentosHistoricos);
   }, []);
 
   return (
@@ -18,9 +14,15 @@ const LeccionesAprendidas: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {experiments.map((exp) => (
           <div key={exp.id} className="bg-white p-4 rounded shadow">
-            <h3 className="font-bold text-lg">{exp.description}</h3>
-            <p className="mt-2"><strong>Aprendizajes:</strong> {exp.learnings}</p>
-            {/* Here we could add logic to identify and display patterns of success */}
+            <h3 className="font-bold text-lg">{exp.nombre}</h3>
+            <div className="mt-2">
+              <strong>Aprendizajes:</strong>
+              <ul className="list-disc list-inside mt-1">
+                {exp.aprendizajes.map((aprendizaje, idx) => (
+                  <li key={idx} className="text-sm">{aprendizaje}</li>
+                ))}
+              </ul>
+            </div>
           </div>
         ))}
       </div>

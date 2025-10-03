@@ -1,0 +1,36 @@
+﻿
+
+Ô£à **M├│dulo "Informes de Sensores" estilizado completamente**
+
+He aplicado los estilos de la gu├¡a GUIA_ESTILOS_UI.md a todos los archivos del m├│dulo:
+
+**InformesSensoresPage.tsx:**
+- Hero section con gradiente vibrante indigo-purple-pink
+- Cards de resumen con glassmorphism y badges de categor├¡as (GPS, IMU, HR, Power)
+- Selector de rango de fechas estilizado con efectos backdrop blur
+- Bot├│n de descarga/exportar con gradiente emerald-teal
+
+**DashboardPostSesion.tsx:**
+- Header con gradiente y patr├│n de puntos
+- Cards de m├®tricas clave con iconos y badges de estado
+- Gr├íficos comparativos en containers con backdrop blur
+- Progress bars animadas para zonas de intensidad
+- Tabla de picos con rows hover effect
+
+**Componentes estilizados:**
+- **HeatmapsMovimiento**: Gradiente orange-red-pink, visualizaci├│n de zonas con progress bars
+- **CurvasIntensidad**: Gradiente blue-indigo-purple, cards de picos y valles
+- **AnalisisAsimetrias**: Gradiente emerald-teal-cyan, progress bars y alertas de asimetr├¡as
+- **CorrelacionCargaInterna**: Gradiente purple-pink-red, cards con medidores de correlaci├│n
+- **ModeloFatiga**: Gradiente orange-amber-yellow, medidor de fatiga con progress bar
+- **BenchmarkingNormativo**: Gradiente cyan-blue-indigo, comparativas con percentiles
+- **ReportesCientificos**: Gradiente violet-purple-fuchsia, botones de exportar con gradientes
+- **IntegracionAnalisisVideo**: Gradiente pink-rose-red, clips interactivos con badges
+
+Todos los componentes incluyen:
+- Glassmorphism (bg-white/80 backdrop-blur-xl)
+- Animaciones de entrada con framer-motion
+- Progress bars animadas con gradientes
+- Badges y pills estilizados
+- Efectos hover y transiciones suaves
+- Decoraciones de fondo con blur
