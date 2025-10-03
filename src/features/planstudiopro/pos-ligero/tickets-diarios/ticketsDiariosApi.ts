@@ -1,57 +1,490 @@
 import { useState, useEffect } from 'react';
 
-export interface Ticket {
+// ==================== INTERFACES PRINCIPALES ====================
+
+export interface TicketItem {
   id: string;
-  hora: string;
-  producto: string;
+  nombre: string;
+  categoria: string;
   cantidad: number;
-  total: number;
-  estado: 'pagado' | 'pendiente' | 'cancelado';
+  precioUnitario: number;
+  descuento: number;
+  subtotal: number;
+  imagen?: string;
 }
 
-const mockTicketsHoy: Ticket[] = [
-  { id: '1', hora: '10:00', producto: 'Café Latte', cantidad: 2, total: 7.00, estado: 'pagado' },
-  { id: '2', hora: '10:15', producto: 'Croissant', cantidad: 1, total: 2.50, estado: 'pendiente' },
-  { id: '3', hora: '10:30', producto: 'Zumo Naranja', cantidad: 1, total: 3.00, estado: 'pagado' },
-  { id: '4', hora: '11:00', producto: 'Bocadillo Jamón', cantidad: 1, total: 4.50, estado: 'cancelado' },
+export interface Cliente {
+  id?: string;
+  nombre: string;
+  email?: string;
+  telefono?: string;
+  tipoMembresia?: string;
+}
+
+export interface MetodoPago {
+  tipo: 'efectivo' | 'tarjeta' | 'transferencia' | 'credito';
+  monto: number;
+  cambio?: number;
+  referencia?: string;
+}
+
+export interface EventoTimeline {
+  id: string;
+  tipo: 'creado' | 'pago_procesado' | 'enviado' | 'reembolsado';
+  descripcion: string;
+  timestamp: string;
+  usuario?: string;
+}
+
+export interface NotaTicket {
+  id: string;
+  texto: string;
+  tipo: 'interna' | 'descuento' | 'especial';
+  timestamp: string;
+  usuario: string;
+}
+
+export interface Ticket {
+  id: string;
+  numeroTicket: string;
+  hora: string;
+  fecha: string;
+  cliente: Cliente;
+  items: TicketItem[];
+  subtotal: number;
+  descuentos: number;
+  impuestos: number;
+  total: number;
+  metodoPago: MetodoPago;
+  cajero: string;
+  cajeroId: string;
+  estado: 'completada' | 'reembolsada' | 'parcialmente_reembolsada';
+  montoReembolsado?: number;
+  razonReembolso?: string;
+  timeline: EventoTimeline[];
+  notas: NotaTicket[];
+}
+
+export interface EstadisticasDia {
+  totalVendido: number;
+  numeroTickets: number;
+  ticketPromedio: number;
+  reembolsos: number;
+  comparativoAyer: {
+    totalVendido: number;
+    numeroTickets: number;
+    ticketPromedio: number;
+  };
+}
+
+export interface VentaPorHora {
+  hora: string;
+  numeroTickets: number;
+  totalVendido: number;
+  ticketPromedio: number;
+}
+
+export interface VentaPorMetodoPago {
+  metodo: string;
+  numeroTransacciones: number;
+  montoTotal: number;
+  porcentaje: number;
+  ticketPromedio: number;
+}
+
+export interface RendimientoCajero {
+  id: string;
+  nombre: string;
+  avatar: string;
+  ticketsProcesados: number;
+  totalVendido: number;
+  ticketPromedio: number;
+  reembolsos: number;
+}
+
+export interface ProductoVendido {
+  id: string;
+  nombre: string;
+  categoria: string;
+  imagen: string;
+  unidadesVendidas: number;
+  revenue: number;
+  porcentajeTotal: number;
+}
+
+// ==================== DATOS MOCK COMPLETOS ====================
+
+const cajeros = [
+  { id: 'CAJ001', nombre: 'María García', avatar: '👩' },
+  { id: 'CAJ002', nombre: 'Carlos López', avatar: '👨' },
+  { id: 'CAJ003', nombre: 'Ana Martínez', avatar: '👩‍🦰' },
+  { id: 'CAJ004', nombre: 'Pedro Sánchez', avatar: '👨‍🦱' },
 ];
 
-const mockTicketsAyer: Ticket[] = [
-  { id: '5', hora: '09:30', producto: 'Tostada Aguacate', cantidad: 1, total: 5.00, estado: 'pagado' },
-  { id: '6', hora: '12:00', producto: 'Ensalada César', cantidad: 1, total: 8.00, estado: 'pagado' },
+const productosDisponibles = [
+  { id: 'P001', nombre: 'Café Espresso', categoria: 'Bebidas', precio: 2.50, imagen: '☕' },
+  { id: 'P002', nombre: 'Café Latte', categoria: 'Bebidas', precio: 3.50, imagen: '☕' },
+  { id: 'P003', nombre: 'Cappuccino', categoria: 'Bebidas', precio: 3.80, imagen: '☕' },
+  { id: 'P004', nombre: 'Croissant', categoria: 'Panadería', precio: 2.50, imagen: '🥐' },
+  { id: 'P005', nombre: 'Muffin Chocolate', categoria: 'Panadería', precio: 3.20, imagen: '🧁' },
+  { id: 'P006', nombre: 'Tostada Aguacate', categoria: 'Desayunos', precio: 5.50, imagen: '🥑' },
+  { id: 'P007', nombre: 'Bocadillo Jamón', categoria: 'Bocadillos', precio: 4.50, imagen: '🥖' },
+  { id: 'P008', nombre: 'Ensalada César', categoria: 'Ensaladas', precio: 8.00, imagen: '🥗' },
+  { id: 'P009', nombre: 'Zumo Naranja', categoria: 'Bebidas', precio: 3.00, imagen: '🍊' },
+  { id: 'P010', nombre: 'Refresco', categoria: 'Bebidas', precio: 2.00, imagen: '🥤' },
+  { id: 'P011', nombre: 'Agua Mineral', categoria: 'Bebidas', precio: 1.50, imagen: '💧' },
+  { id: 'P012', nombre: 'Sandwich Vegetal', categoria: 'Bocadillos', precio: 5.00, imagen: '🥪' },
+  { id: 'P013', nombre: 'Brownie', categoria: 'Postres', precio: 2.80, imagen: '🍫' },
+  { id: 'P014', nombre: 'Tarta Zanahoria', categoria: 'Postres', precio: 4.20, imagen: '🍰' },
+  { id: 'P015', nombre: 'Galletas Avena', categoria: 'Snacks', precio: 2.00, imagen: '🍪' },
 ];
 
-const mockTicketsSemana: Ticket[] = [
-  ...mockTicketsHoy,
-  ...mockTicketsAyer,
-  { id: '7', hora: '14:00', producto: 'Pasta Carbonara', cantidad: 1, total: 10.00, estado: 'pagado' },
-  { id: '8', hora: '16:00', producto: 'Refresco', cantidad: 2, total: 4.00, estado: 'pendiente' },
+const clientes = [
+  { id: 'CLI001', nombre: 'Juan Pérez', email: 'juan@email.com', telefono: '666111222', tipoMembresia: 'Gold' },
+  { id: 'CLI002', nombre: 'Laura Ruiz', email: 'laura@email.com', telefono: '666222333', tipoMembresia: 'Silver' },
+  { id: 'CLI003', nombre: 'Miguel Torres', email: 'miguel@email.com', telefono: '666333444' },
+  { id: 'CLI004', nombre: 'Carmen Díaz', email: 'carmen@email.com', telefono: '666444555', tipoMembresia: 'Platinum' },
 ];
 
-export const useTicketsDiarios = (periodo: 'hoy' | 'ayer' | 'semana') => {
+// Generar tickets del día con distribución realista
+const generarTicketsMock = (): Ticket[] => {
+  const tickets: Ticket[] = [];
+  const hoy = new Date();
+  const horasOperacion = [
+    { inicio: 6, fin: 9, peso: 0.15 }, // Desayuno temprano
+    { inicio: 9, fin: 12, peso: 0.25 }, // Pico mañana
+    { inicio: 12, fin: 15, peso: 0.30 }, // Almuerzo (pico)
+    { inicio: 15, fin: 18, peso: 0.15 }, // Tarde
+    { inicio: 18, fin: 22, peso: 0.15 }, // Noche
+  ];
+
+  let ticketNum = 1001;
+
+  // Generar entre 40-50 tickets
+  const numTickets = 45;
+
+  for (let i = 0; i < numTickets; i++) {
+    // Seleccionar franja horaria según peso
+    const rand = Math.random();
+    let acumulado = 0;
+    let franja = horasOperacion[0];
+
+    for (const f of horasOperacion) {
+      acumulado += f.peso;
+      if (rand <= acumulado) {
+        franja = f;
+        break;
+      }
+    }
+
+    const hora = franja.inicio + Math.random() * (franja.fin - franja.inicio);
+    const minutos = Math.floor(Math.random() * 60);
+    const horaStr = `${Math.floor(hora).toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}`;
+
+    // Seleccionar cajero (más peso a María y Carlos)
+    const cajeroRand = Math.random();
+    let cajero = cajeros[0];
+    if (cajeroRand < 0.35) cajero = cajeros[0];
+    else if (cajeroRand < 0.65) cajero = cajeros[1];
+    else if (cajeroRand < 0.85) cajero = cajeros[2];
+    else cajero = cajeros[3];
+
+    // Cliente (70% tiene cliente registrado)
+    const tieneCliente = Math.random() < 0.7;
+    const cliente: Cliente = tieneCliente
+      ? clientes[Math.floor(Math.random() * clientes.length)]
+      : { nombre: 'Cliente Genérico' };
+
+    // Generar items (1-5 items por ticket)
+    const numItems = Math.floor(Math.random() * 5) + 1;
+    const items: TicketItem[] = [];
+
+    for (let j = 0; j < numItems; j++) {
+      const producto = productosDisponibles[Math.floor(Math.random() * productosDisponibles.length)];
+      const cantidad = Math.floor(Math.random() * 3) + 1;
+      const descuento = Math.random() < 0.2 ? Math.random() * 0.5 : 0; // 20% chance de descuento
+      const subtotal = producto.precio * cantidad * (1 - descuento);
+
+      items.push({
+        id: `ITEM${i}-${j}`,
+        nombre: producto.nombre,
+        categoria: producto.categoria,
+        cantidad,
+        precioUnitario: producto.precio,
+        descuento: descuento * 100,
+        subtotal,
+        imagen: producto.imagen,
+      });
+    }
+
+    const subtotal = items.reduce((sum, item) => sum + item.subtotal, 0);
+    const descuentos = items.reduce((sum, item) => sum + (item.precioUnitario * item.cantidad * item.descuento / 100), 0);
+    const impuestos = subtotal * 0.10; // 10% IVA
+    const total = subtotal + impuestos;
+
+    // Método de pago
+    const metodosDisponibles: MetodoPago['tipo'][] = ['efectivo', 'tarjeta', 'transferencia', 'credito'];
+    const tipoMetodo = metodosDisponibles[Math.floor(Math.random() * metodosDisponibles.length)];
+
+    let metodoPago: MetodoPago = { tipo: tipoMetodo, monto: total };
+    if (tipoMetodo === 'efectivo') {
+      const pagado = Math.ceil(total / 5) * 5; // Redondear a múltiplo de 5
+      metodoPago.cambio = pagado - total;
+      metodoPago.monto = pagado;
+    } else if (tipoMetodo === 'tarjeta') {
+      metodoPago.referencia = `REF${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
+    }
+
+    // Estado (95% completadas, 3% reembolsadas, 2% parcialmente reembolsadas)
+    let estado: Ticket['estado'] = 'completada';
+    let montoReembolsado: number | undefined;
+    let razonReembolso: string | undefined;
+
+    const estadoRand = Math.random();
+    if (estadoRand < 0.03) {
+      estado = 'reembolsada';
+      montoReembolsado = total;
+      razonReembolso = 'Producto incorrecto';
+    } else if (estadoRand < 0.05) {
+      estado = 'parcialmente_reembolsada';
+      montoReembolsado = total * 0.5;
+      razonReembolso = 'Devolución parcial';
+    }
+
+    // Timeline
+    const timestamp = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate(), Math.floor(hora), minutos);
+    const timeline: EventoTimeline[] = [
+      {
+        id: 'EV1',
+        tipo: 'creado',
+        descripcion: 'Ticket creado',
+        timestamp: timestamp.toISOString(),
+        usuario: cajero.nombre,
+      },
+      {
+        id: 'EV2',
+        tipo: 'pago_procesado',
+        descripcion: `Pago procesado (${tipoMetodo})`,
+        timestamp: new Date(timestamp.getTime() + 30000).toISOString(),
+        usuario: cajero.nombre,
+      },
+    ];
+
+    if (estado === 'reembolsada' || estado === 'parcialmente_reembolsada') {
+      timeline.push({
+        id: 'EV3',
+        tipo: 'reembolsado',
+        descripcion: estado === 'reembolsada' ? 'Reembolso total' : 'Reembolso parcial',
+        timestamp: new Date(timestamp.getTime() + 3600000).toISOString(),
+        usuario: cajero.nombre,
+      });
+    }
+
+    // Notas (algunas tienen notas)
+    const notas: NotaTicket[] = [];
+    if (Math.random() < 0.3) {
+      notas.push({
+        id: 'N1',
+        texto: 'Cliente habitual - aplicado descuento',
+        tipo: 'descuento',
+        timestamp: timestamp.toISOString(),
+        usuario: cajero.nombre,
+      });
+    }
+
+    tickets.push({
+      id: `T${i + 1}`,
+      numeroTicket: `#${ticketNum++}`,
+      hora: horaStr,
+      fecha: hoy.toISOString().split('T')[0],
+      cliente,
+      items,
+      subtotal,
+      descuentos,
+      impuestos,
+      total,
+      metodoPago,
+      cajero: cajero.nombre,
+      cajeroId: cajero.id,
+      estado,
+      montoReembolsado,
+      razonReembolso,
+      timeline,
+      notas,
+    });
+  }
+
+  // Ordenar por hora
+  return tickets.sort((a, b) => a.hora.localeCompare(b.hora));
+};
+
+const mockTickets = generarTicketsMock();
+
+// ==================== HOOK PRINCIPAL ====================
+
+export const useTicketsDiarios = () => {
   const [tickets, setTickets] = useState<Ticket[]>([]);
-  const [totalVentas, setTotalVentas] = useState<number>(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let currentTickets: Ticket[] = [];
-    switch (periodo) {
-      case 'hoy':
-        currentTickets = mockTicketsHoy;
-        break;
-      case 'ayer':
-        currentTickets = mockTicketsAyer;
-        break;
-      case 'semana':
-        currentTickets = mockTicketsSemana;
-        break;
-      default:
-        currentTickets = [];
-    }
-    setTickets(currentTickets);
-    setTotalVentas(currentTickets.reduce((sum, ticket) => sum + ticket.total, 0));
-  }, [periodo]);
+    // Simular carga
+    setTimeout(() => {
+      setTickets(mockTickets);
+      setLoading(false);
+    }, 500);
+  }, []);
 
-  return { tickets, totalVentas };
+  return { tickets, loading };
+};
+
+// ==================== FUNCIONES DE CÁLCULO ====================
+
+export const calcularEstadisticas = (tickets: Ticket[]): EstadisticasDia => {
+  const ticketsCompletados = tickets.filter(t => t.estado !== 'reembolsada');
+  const totalVendido = ticketsCompletados.reduce((sum, t) => sum + t.total, 0);
+  const numeroTickets = ticketsCompletados.length;
+  const ticketPromedio = numeroTickets > 0 ? totalVendido / numeroTickets : 0;
+  const reembolsos = tickets.reduce((sum, t) => sum + (t.montoReembolsado || 0), 0);
+
+  return {
+    totalVendido,
+    numeroTickets,
+    ticketPromedio,
+    reembolsos,
+    comparativoAyer: {
+      totalVendido: totalVendido * 0.92, // -8% vs ayer
+      numeroTickets: Math.floor(numeroTickets * 0.95),
+      ticketPromedio: ticketPromedio * 0.97,
+    },
+  };
+};
+
+export const calcularVentasPorHora = (tickets: Ticket[]): VentaPorHora[] => {
+  const ventasPorHora: { [key: string]: VentaPorHora } = {};
+
+  tickets.forEach(ticket => {
+    const hora = ticket.hora.split(':')[0] + ':00';
+
+    if (!ventasPorHora[hora]) {
+      ventasPorHora[hora] = {
+        hora,
+        numeroTickets: 0,
+        totalVendido: 0,
+        ticketPromedio: 0,
+      };
+    }
+
+    if (ticket.estado !== 'reembolsada') {
+      ventasPorHora[hora].numeroTickets++;
+      ventasPorHora[hora].totalVendido += ticket.total;
+    }
+  });
+
+  return Object.values(ventasPorHora).map(v => ({
+    ...v,
+    ticketPromedio: v.numeroTickets > 0 ? v.totalVendido / v.numeroTickets : 0,
+  })).sort((a, b) => a.hora.localeCompare(b.hora));
+};
+
+export const calcularVentasPorMetodoPago = (tickets: Ticket[]): VentaPorMetodoPago[] => {
+  const ventasPorMetodo: { [key: string]: VentaPorMetodoPago } = {};
+  const totalGeneral = tickets.reduce((sum, t) => t.estado !== 'reembolsada' ? sum + t.total : sum, 0);
+
+  tickets.forEach(ticket => {
+    if (ticket.estado === 'reembolsada') return;
+
+    const metodo = ticket.metodoPago.tipo;
+
+    if (!ventasPorMetodo[metodo]) {
+      ventasPorMetodo[metodo] = {
+        metodo,
+        numeroTransacciones: 0,
+        montoTotal: 0,
+        porcentaje: 0,
+        ticketPromedio: 0,
+      };
+    }
+
+    ventasPorMetodo[metodo].numeroTransacciones++;
+    ventasPorMetodo[metodo].montoTotal += ticket.total;
+  });
+
+  return Object.values(ventasPorMetodo).map(v => ({
+    ...v,
+    porcentaje: (v.montoTotal / totalGeneral) * 100,
+    ticketPromedio: v.numeroTransacciones > 0 ? v.montoTotal / v.numeroTransacciones : 0,
+  }));
+};
+
+export const calcularRendimientoCajeros = (tickets: Ticket[]): RendimientoCajero[] => {
+  const rendimiento: { [key: string]: RendimientoCajero } = {};
+
+  tickets.forEach(ticket => {
+    const cajeroId = ticket.cajeroId;
+
+    if (!rendimiento[cajeroId]) {
+      const cajero = cajeros.find(c => c.id === cajeroId) || cajeros[0];
+      rendimiento[cajeroId] = {
+        id: cajeroId,
+        nombre: ticket.cajero,
+        avatar: cajero.avatar,
+        ticketsProcesados: 0,
+        totalVendido: 0,
+        ticketPromedio: 0,
+        reembolsos: 0,
+      };
+    }
+
+    rendimiento[cajeroId].ticketsProcesados++;
+    if (ticket.estado !== 'reembolsada') {
+      rendimiento[cajeroId].totalVendido += ticket.total;
+    }
+    if (ticket.estado === 'reembolsada' || ticket.estado === 'parcialmente_reembolsada') {
+      rendimiento[cajeroId].reembolsos++;
+    }
+  });
+
+  return Object.values(rendimiento).map(r => ({
+    ...r,
+    ticketPromedio: r.ticketsProcesados > 0 ? r.totalVendido / r.ticketsProcesados : 0,
+  })).sort((a, b) => b.totalVendido - a.totalVendido);
+};
+
+export const calcularProductosMasVendidos = (tickets: Ticket[]): ProductoVendido[] => {
+  const productos: { [key: string]: ProductoVendido } = {};
+  const totalGeneral = tickets.reduce((sum, t) => {
+    if (t.estado === 'reembolsada') return sum;
+    return sum + t.items.reduce((s, i) => s + i.subtotal, 0);
+  }, 0);
+
+  tickets.forEach(ticket => {
+    if (ticket.estado === 'reembolsada') return;
+
+    ticket.items.forEach(item => {
+      if (!productos[item.nombre]) {
+        productos[item.nombre] = {
+          id: item.id,
+          nombre: item.nombre,
+          categoria: item.categoria,
+          imagen: item.imagen || '📦',
+          unidadesVendidas: 0,
+          revenue: 0,
+          porcentajeTotal: 0,
+        };
+      }
+
+      productos[item.nombre].unidadesVendidas += item.cantidad;
+      productos[item.nombre].revenue += item.subtotal;
+    });
+  });
+
+  return Object.values(productos)
+    .map(p => ({
+      ...p,
+      porcentajeTotal: (p.revenue / totalGeneral) * 100,
+    }))
+    .sort((a, b) => b.revenue - a.revenue)
+    .slice(0, 10);
 };
 
 // Nuevas interfaces y funciones para Contabilidad Inteligente
