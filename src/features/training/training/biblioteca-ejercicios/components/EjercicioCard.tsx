@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, Play, Star, X, Dumbbell, TrendingUp, Sparkles } from 'lucide-react';
+import { Heart, Play, Star, X, Dumbbell, TrendingUp, Sparkles, Edit } from 'lucide-react';
 import { Ejercicio } from '../bibliotecaEjerciciosApi';
 
 interface EjercicioCardProps {
   ejercicio: Ejercicio;
   index?: number;
+  onEdit?: (ejercicio: Ejercicio) => void;
 }
 
 const getCategoryColor = (category: string) => {
@@ -31,7 +32,7 @@ const getDifficultyColor = (difficulty: string) => {
   return colors[difficulty] || colors['intermedio'];
 };
 
-export const EjercicioCard: React.FC<EjercicioCardProps> = ({ ejercicio, index = 0 }) => {
+export const EjercicioCard: React.FC<EjercicioCardProps> = ({ ejercicio, index = 0, onEdit }) => {
   const [showModal, setShowModal] = useState(false);
   const [isFavorite, setIsFavorite] = useState(ejercicio.isFavorite);
   const categoryColors = getCategoryColor(ejercicio.category);
@@ -39,6 +40,13 @@ export const EjercicioCard: React.FC<EjercicioCardProps> = ({ ejercicio, index =
   const handleToggleFavorite = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsFavorite(!isFavorite);
+  };
+
+  const handleEdit = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onEdit) {
+      onEdit(ejercicio);
+    }
   };
 
   return (
@@ -202,12 +210,23 @@ export const EjercicioCard: React.FC<EjercicioCardProps> = ({ ejercicio, index =
                       </div>
                     </div>
                   </div>
-                  <button
-                    onClick={() => setShowModal(false)}
-                    className="p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors"
-                  >
-                    <X className="w-6 h-6 text-white" />
-                  </button>
+                  <div className="flex items-center gap-2">
+                    {onEdit && (
+                      <button
+                        onClick={handleEdit}
+                        className="p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors"
+                        title="Editar ejercicio"
+                      >
+                        <Edit className="w-5 h-5 text-white" />
+                      </button>
+                    )}
+                    <button
+                      onClick={() => setShowModal(false)}
+                      className="p-2 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors"
+                    >
+                      <X className="w-6 h-6 text-white" />
+                    </button>
+                  </div>
                 </div>
               </div>
 

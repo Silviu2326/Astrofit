@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
-import { addTarea, Tarea } from '../tareasApi';
+import { createTarea, Tarea } from '../tareasApi';
 
 interface TareaFormProps {
   onTareaCreated?: () => void;
@@ -13,13 +13,30 @@ const TareaForm: React.FC<TareaFormProps> = ({ onTareaCreated, onClose }) => {
   const [fechaVencimiento, setFechaVencimiento] = useState('');
   const [prioridad, setPrioridad] = useState<Tarea['prioridad']>('media');
   const [asignadoA, setAsignadoA] = useState('');
+  const [clienteId, setClienteId] = useState('');
   const [clienteRelacionado, setClienteRelacionado] = useState('');
   const [notasAdicionales, setNotasAdicionales] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const userStr = localStorage.getItem('currentUser');
+    if (userStr) {
+      try {
+        const user = JSON.parse(userStr);
+        setAsignadoA(user.name || '');
+      } catch (e) {
+        console.error('Error parsing user from localStorage:', e);
+      }
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!titulo || !fechaVencimiento || !asignadoA) {
-      alert('Por favor, completa los campos obligatorios: Título, Fecha de Vencimiento y Asignado a.');
+    setError(null);
+
+    if (!titulo || !descripcion || !fechaVencimiento || !asignadoA) {
+      setError('Por favor, completa los campos obligatorios: TÃ­tulo, DescripciÃ³n, Fecha de Vencimiento y Asignado a.');
       return;
     }
 
@@ -29,32 +46,47 @@ const TareaForm: React.FC<TareaFormProps> = ({ onTareaCreated, onClose }) => {
       fechaVencimiento,
       prioridad,
       asignadoA,
+      clienteId: clienteId || undefined,
       clienteRelacionado: clienteRelacionado || undefined,
       notasAdicionales: notasAdicionales || undefined,
     };
 
+    setIsSubmitting(true);
+
     try {
-      await addTarea(newTarea);
-      alert('Tarea creada exitosamente!');
-      // Clear form
+      await createTarea(newTarea);
+
+      // Reset form
       setTitulo('');
       setDescripcion('');
       setFechaVencimiento('');
       setPrioridad('media');
-      setAsignadoA('');
+      setClienteId('');
       setClienteRelacionado('');
       setNotasAdicionales('');
-      // Notificar al componente padre para actualizar la lista
+
+      // Reset asignadoA to current user
+      const userStr = localStorage.getItem('currentUser');
+      if (userStr) {
+        try {
+          const user = JSON.parse(userStr);
+          setAsignadoA(user.name || '');
+        } catch (e) {
+          setAsignadoA('');
+        }
+      }
+
       if (onTareaCreated) {
         onTareaCreated();
       }
-      // Cerrar el formulario
       if (onClose) {
         onClose();
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error al crear la tarea:', error);
-      alert('Hubo un error al crear la tarea.');
+      setError(error.response?.data?.error || error.message || 'Hubo un error al crear la tarea.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -66,14 +98,22 @@ const TareaForm: React.FC<TareaFormProps> = ({ onTareaCreated, onClose }) => {
           <button
             onClick={onClose}
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            type="button"
           >
             <X className="w-5 h-5 text-gray-500" />
           </button>
         )}
       </div>
+
+      {error && (
+        <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700">
+          {error}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="titulo" className="block text-sm font-medium text-gray-700">Título <span className="text-red-500">*</span></label>
+          <label htmlFor="titulo" className="block text-sm font-medium text-gray-700">TÃ­tulo <span className="text-red-500">*</span></label>
           <input
             type="text"
             id="titulo"
@@ -84,13 +124,14 @@ const TareaForm: React.FC<TareaFormProps> = ({ onTareaCreated, onClose }) => {
           />
         </div>
         <div>
-          <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700">Descripción</label>
+          <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700">DescripciÃ³n <span className="text-red-500">*</span></label>
           <textarea
             id="descripcion"
             value={descripcion}
             onChange={(e) => setDescripcion(e.target.value)}
             rows={3}
             className="mt-1 block w-full border border-gray-300 rounded-xl shadow-sm p-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+            required
           ></textarea>
         </div>
         <div>
@@ -151,15 +192,17 @@ const TareaForm: React.FC<TareaFormProps> = ({ onTareaCreated, onClose }) => {
         <div className="flex gap-3 pt-4">
           <button
             type="submit"
-            className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 px-6 rounded-xl font-semibold hover:shadow-lg transition-all duration-300"
+            disabled={isSubmitting}
+            className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 px-6 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Crear Tarea
+            {isSubmitting ? 'Creando...' : 'Crear Tarea'}
           </button>
           {onClose && (
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
+              disabled={isSubmitting}
+              className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Cancelar
             </button>

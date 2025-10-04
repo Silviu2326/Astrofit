@@ -33,7 +33,7 @@ export default function PlantillasEmailPage() {
         {/* Header */}
         <div className="mb-8">
           <Link
-            to="/agente-marketing"
+            to="/dashboard/agente-marketing"
             className="inline-flex items-center text-white/80 hover:text-white mb-4 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />

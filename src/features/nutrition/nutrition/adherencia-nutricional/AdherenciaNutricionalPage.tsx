@@ -100,11 +100,11 @@ const AdherenciaNutricionalPage: React.FC = () => {
 
           {/* Descripción */}
           <p className="text-xl md:text-2xl text-teal-100 max-w-3xl leading-relaxed">
-            Monitorea tu{' '}
+            Monitorea el{' '}
             <span className="font-bold text-white px-2 py-1 bg-white/20 rounded-lg backdrop-blur-sm">
               progreso diario
             </span>{' '}
-            y mantén la constancia en tu plan nutricional
+            de tus clientes y su constancia en el plan nutricional
           </p>
 
           {/* Métricas globales */}

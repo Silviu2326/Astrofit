@@ -3,12 +3,14 @@ import { motion } from 'framer-motion';
 import { RecetasGrid } from './components/RecetasGrid';
 import { RecetasFilters } from './components/RecetasFilters';
 import { RecetaViewer } from './components/RecetaViewer';
+import { NewRecetaModal } from './components/NewRecetaModal';
 import { Receta, fetchRecetas } from './recetasBibliotecaApi';
 import { BookOpen, Heart, FolderOpen, TrendingUp, Plus, SlidersHorizontal, Coffee, Sun, Moon, Cookie, ArrowUpDown } from 'lucide-react';
 
 const RecetasBibliotecaPage: React.FC = () => {
   const [selectedReceta, setSelectedReceta] = useState<Receta | null>(null);
   const [showFilters, setShowFilters] = useState(false);
+  const [showNewRecetaModal, setShowNewRecetaModal] = useState(false);
   const [allRecetas, setAllRecetas] = useState<Receta[]>([]);
   const [sortBy, setSortBy] = useState<'alphabetic' | 'popular' | 'time' | 'calories'>('popular');
   const [filters, setFilters] = useState<{
@@ -32,6 +34,15 @@ const RecetasBibliotecaPage: React.FC = () => {
   useEffect(() => {
     fetchRecetas().then(setAllRecetas);
   }, []);
+
+  const handleNewReceta = (newReceta: Omit<Receta, 'id'>) => {
+    const recetaWithId: Receta = {
+      ...newReceta,
+      id: Date.now().toString(), // Generar ID único
+    };
+    setAllRecetas(prev => [recetaWithId, ...prev]);
+    setShowNewRecetaModal(false);
+  };
 
   const filteredRecetas = allRecetas.filter((receta) => {
     const matchesSearch =
@@ -368,12 +379,19 @@ const RecetasBibliotecaPage: React.FC = () => {
         <RecetaViewer receta={selectedReceta} onClose={() => setSelectedReceta(null)} />
       )}
 
+      {/* Modal Nueva Receta */}
+      <NewRecetaModal
+        isOpen={showNewRecetaModal}
+        onClose={() => setShowNewRecetaModal(false)}
+        onSave={handleNewReceta}
+      />
+
       {/* Botón flotante Nueva Receta */}
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        className="fixed bottom-8 right-8 w-16 h-16 bg-gradient-to-br from-pink-600 to-rose-600 text-white rounded-full shadow-2xl flex items-center justify-center hover:shadow-pink-500/50 transition-all duration-300 z-40"
-        onClick={() => alert('Funcionalidad de agregar receta (no implementada)')}
+        className="fixed bottom-8 right-8 w-16 h-16 bg-gradient-to-br from-pink-600 to-rose-600 text-white rounded-full shadow-2xl flex items-center justify-center hover:shadow-pink-500/50 transition-all duration-300 z-50"
+        onClick={() => setShowNewRecetaModal(true)}
       >
         <Plus className="w-8 h-8" />
       </motion.button>

@@ -1,0 +1,7 @@
+  const location = useLocation();
+
+  // Extraer la ruta base sin parámetros (ej: "/dashboard/lead-detalle/123" -> "lead-detalle")
+  // Removemos el prefijo /dashboard/ y luego tomamos el primer segmento
+  const pathWithoutDashboard = location.pathname.replace(/^\/dashboard\/?/, '');
+  const fullPath = pathWithoutDashboard || 'inicio';
+  const activePage = fullPath.split('/')[0];

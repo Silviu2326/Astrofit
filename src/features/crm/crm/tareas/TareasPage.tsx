@@ -1,48 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckSquare, Clock, CheckCircle, AlertCircle, Plus, Filter } from 'lucide-react';
 import TareasList from './components/TareasList';
 import TareaForm from './components/TareaForm';
 import TareasFilters from './components/TareasFilters';
-import { Tarea, getTareas } from './tareasApi';
+import { Tarea, useTareas, TareasFilters as TareasFilterType } from './tareasApi';
 
 const TareasPage: React.FC = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [showForm, setShowForm] = useState(false);
-  const [tareas, setTareas] = useState<Tarea[]>([]);
-  const [filters, setFilters] = useState<{
-    estado?: Tarea['estado'];
-    fechaVencimiento?: string;
-    asignadoA?: string;
-    clienteRelacionado?: string;
-  }>({});
+  const [filters, setFilters] = useState<Partial<TareasFilterType>>({});
 
-  // Cargar tareas al montar el componente
-  useEffect(() => {
-    const fetchTareas = async () => {
-      const data = await getTareas();
-      setTareas(data);
-    };
-    fetchTareas();
-  }, []);
-
-  // Función para actualizar la lista de tareas
-  const refreshTareas = async () => {
-    const data = await getTareas();
-    setTareas(data);
-  };
+  // Usar el hook para obtener tareas
+  const { data: tareas, stats, isLoading, refetch } = useTareas(filters);
 
   // Función para manejar cambios en los filtros
-  const handleFilterChange = (newFilters: typeof filters) => {
+  const handleFilterChange = (newFilters: Partial<TareasFilterType>) => {
     setFilters(newFilters);
-  };
-
-  // Calcular estadísticas dinámicas
-  const stats = {
-    total: tareas.length,
-    pendientes: tareas.filter(t => t.estado === 'pendiente').length,
-    completadas: tareas.filter(t => t.estado === 'completada').length,
-    urgentes: tareas.filter(t => t.prioridad === 'alta' && t.estado !== 'completada').length,
   };
 
   return (
@@ -203,10 +177,11 @@ const TareasPage: React.FC = () => {
             )}
 
             {/* Tareas */}
-            <TareasList 
+            <TareasList
               filterStatus={filters.estado}
               filters={filters}
-              onTareaUpdate={refreshTareas}
+              onTareaUpdate={refetch}
+              isLoading={isLoading}
             />
           </div>
 
@@ -218,7 +193,7 @@ const TareasPage: React.FC = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <TareaForm onTareaCreated={refreshTareas} onClose={() => setShowForm(false)} />
+                <TareaForm onTareaCreated={refetch} onClose={() => setShowForm(false)} />
               </motion.div>
             )}
 

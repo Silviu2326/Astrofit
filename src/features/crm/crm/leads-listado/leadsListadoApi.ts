@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import leadService, { Lead as BackendLead, LeadsFilters as BackendFilters, LeadsStats } from '../../../../services/leadService';
 
+// Map backend lead to frontend format
 export interface Lead {
   id: string;
   name: string;
@@ -9,231 +11,252 @@ export interface Lead {
   contactDate: string;
   objective: string;
   status: 'Nuevo contacto' | 'Contactado' | 'Cita agendada' | 'Ganado' | 'Perdido';
+  prioridad?: 'baja' | 'media' | 'alta';
+  etiquetas?: string[];
+  presupuesto?: number;
+  notas?: string;
 }
 
-const mockLeads: Lead[] = [
-  {
-    id: '1',
-    name: 'Juan Pérez',
-    phone: '+34 611-222-333',
-    email: 'juan.perez@example.com',
-    origin: 'Web',
-    contactDate: '2025-09-20',
-    objective: 'Comprar software de gestión empresarial',
-    status: 'Nuevo contacto',
-  },
-  {
-    id: '2',
-    name: 'María García',
-    phone: '+34 644-555-666',
-    email: 'maria.garcia@example.com',
-    origin: 'Referido',
-    contactDate: '2025-09-18',
-    objective: 'Servicio de consultoría estratégica',
-    status: 'Contactado',
-  },
-  {
-    id: '3',
-    name: 'Carlos López',
-    phone: '+34 677-888-999',
-    email: 'carlos.lopez@example.com',
-    origin: 'Campaña Email',
-    contactDate: '2025-09-15',
-    objective: 'Renovar suscripción anual',
-    status: 'Cita agendada',
-  },
-  {
-    id: '4',
-    name: 'Ana Martínez',
-    phone: '+34 623-456-789',
-    email: 'ana.martinez@example.com',
-    origin: 'Web',
-    contactDate: '2025-09-22',
-    objective: 'Información sobre planes premium',
-    status: 'Nuevo contacto',
-  },
-  {
-    id: '5',
-    name: 'Pedro Sánchez',
-    phone: '+34 687-654-321',
-    email: 'pedro.sanchez@example.com',
-    origin: 'Referido',
-    contactDate: '2025-09-10',
-    objective: 'Implementación de sistema ERP',
-    status: 'Ganado',
-  },
-  {
-    id: '6',
-    name: 'Laura Fernández',
-    phone: '+34 655-111-222',
-    email: 'laura.fernandez@example.com',
-    origin: 'Campaña Email',
-    contactDate: '2025-09-05',
-    objective: 'Soporte técnico especializado',
-    status: 'Perdido',
-  },
-  {
-    id: '7',
-    name: 'Roberto Díaz',
-    phone: '+34 699-333-444',
-    email: 'roberto.diaz@techcorp.com',
-    origin: 'Redes Sociales',
-    contactDate: '2025-09-25',
-    objective: 'Integración con sistemas existentes',
-    status: 'Nuevo contacto',
-  },
-  {
-    id: '8',
-    name: 'Isabel Torres',
-    phone: '+34 612-777-888',
-    email: 'isabel.torres@innovatech.es',
-    origin: 'Web',
-    contactDate: '2025-09-24',
-    objective: 'Migración a la nube',
-    status: 'Contactado',
-  },
-  {
-    id: '9',
-    name: 'Miguel Romero',
-    phone: '+34 633-999-111',
-    email: 'miguel.romero@startup.io',
-    origin: 'Evento',
-    contactDate: '2025-09-23',
-    objective: 'Automatización de procesos',
-    status: 'Contactado',
-  },
-  {
-    id: '10',
-    name: 'Carmen Ruiz',
-    phone: '+34 688-222-555',
-    email: 'carmen.ruiz@pyme.com',
-    origin: 'Referido',
-    contactDate: '2025-09-21',
-    objective: 'Plan para pequeña empresa',
-    status: 'Cita agendada',
-  },
-  {
-    id: '11',
-    name: 'Francisco Moreno',
-    phone: '+34 645-666-777',
-    email: 'francisco.moreno@gmail.com',
-    origin: 'Campaña Email',
-    contactDate: '2025-09-19',
-    objective: 'CRM personalizado',
-    status: 'Cita agendada',
-  },
-  {
-    id: '12',
-    name: 'Lucía Navarro',
-    phone: '+34 621-444-333',
-    email: 'lucia.navarro@consultora.es',
-    origin: 'Web',
-    contactDate: '2025-09-17',
-    objective: 'Análisis de datos e informes',
-    status: 'Ganado',
-  },
-  {
-    id: '13',
-    name: 'Antonio Jiménez',
-    phone: '+34 654-888-222',
-    email: 'antonio.jimenez@empresa.com',
-    origin: 'Redes Sociales',
-    contactDate: '2025-09-16',
-    objective: 'Sistema de facturación',
-    status: 'Contactado',
-  },
-  {
-    id: '14',
-    name: 'Sofía Herrera',
-    phone: '+34 677-555-999',
-    email: 'sofia.herrera@digital.net',
-    origin: 'Evento',
-    contactDate: '2025-09-14',
-    objective: 'Marketing automation',
-    status: 'Nuevo contacto',
-  },
-  {
-    id: '15',
-    name: 'David Castillo',
-    phone: '+34 698-123-456',
-    email: 'david.castillo@ventures.com',
-    origin: 'Web',
-    contactDate: '2025-09-12',
-    objective: 'Escalabilidad empresarial',
-    status: 'Perdido',
-  },
-  {
-    id: '16',
-    name: 'Elena Ortega',
-    phone: '+34 632-789-654',
-    email: 'elena.ortega@solutions.es',
-    origin: 'Referido',
-    contactDate: '2025-09-11',
-    objective: 'Integración con Shopify',
-    status: 'Cita agendada',
-  },
-  {
-    id: '17',
-    name: 'Javier Ramos',
-    phone: '+34 619-321-987',
-    email: 'javier.ramos@agency.com',
-    origin: 'Campaña Email',
-    contactDate: '2025-09-09',
-    objective: 'Gestión de proyectos',
-    status: 'Perdido',
-  },
-  {
-    id: '18',
-    name: 'Patricia Vega',
-    phone: '+34 667-456-123',
-    email: 'patricia.vega@biztech.io',
-    origin: 'Redes Sociales',
-    contactDate: '2025-09-08',
-    objective: 'Portal de clientes',
-    status: 'Ganado',
-  },
-];
+export type SortBy = 'nombre' | 'estado' | 'prioridad' | 'createdAt' | 'fechaContacto';
+export type SortDir = 'asc' | 'desc';
 
-export const useLeads = () => {
-  const [leads, setLeads] = useState<Lead[]>([]);
+export interface LeadsFilters {
+  q?: string;
+  estado?: string;
+  prioridad?: string;
+  fuente?: string;
+  etiquetas?: string[];
+  sortBy?: SortBy;
+  sortDir?: SortDir;
+  page?: number;
+  pageSize?: number;
+}
+
+export interface LeadsResult {
+  data: Lead[];
+  total: number;
+  page: number;
+  pages: number;
+  stats: LeadsStats;
+}
+
+// Mapeo de estados entre backend y frontend
+const estadoBackendToFrontend: { [key: string]: Lead['status'] } = {
+  'nuevo': 'Nuevo contacto',
+  'contactado': 'Contactado',
+  'interesado': 'Cita agendada',
+  'convertido': 'Ganado',
+  'perdido': 'Perdido',
+  'no-interesado': 'Perdido'
+};
+
+const estadoFrontendToBackend: { [key: string]: BackendLead['estado'] } = {
+  'Nuevo contacto': 'nuevo',
+  'Contactado': 'contactado',
+  'Cita agendada': 'interesado',
+  'Ganado': 'convertido',
+  'Perdido': 'perdido'
+};
+
+const fuenteBackendToFrontend: { [key: string]: string } = {
+  'web': 'Web',
+  'redes-sociales': 'Redes Sociales',
+  'referido': 'Referido',
+  'evento': 'Evento',
+  'publicidad': 'Publicidad',
+  'otro': 'Otro'
+};
+
+// Transform backend lead to frontend format
+function transformLeadToFrontend(backendLead: BackendLead): Lead {
+  return {
+    id: backendLead.id || backendLead._id || '',
+    name: backendLead.nombre,
+    phone: backendLead.telefono || '',
+    email: backendLead.email,
+    origin: fuenteBackendToFrontend[backendLead.fuente] || backendLead.fuente,
+    contactDate: backendLead.fechaContacto ? new Date(backendLead.fechaContacto).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+    objective: backendLead.interes || backendLead.notas || 'Sin objetivo definido',
+    status: estadoBackendToFrontend[backendLead.estado] || 'Nuevo contacto',
+    prioridad: backendLead.prioridad,
+    etiquetas: backendLead.etiquetas,
+    presupuesto: backendLead.presupuesto,
+    notas: backendLead.notas
+  };
+}
+
+export const useLeads = (filters: LeadsFilters = {}) => {
+  const [result, setResult] = useState<LeadsResult | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
+  const [refetchTrigger, setRefetchTrigger] = useState(0);
 
   useEffect(() => {
-    const fetchLeads = () => {
-      return new Promise<Lead[]>((resolve) => {
-        setTimeout(() => {
-          resolve(mockLeads);
-        }, 500); // Simulate network delay
-      });
+    const fetchLeads = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        // Build backend filters
+        const backendFilters: BackendFilters = {
+          q: filters.q,
+          sortBy: filters.sortBy || 'createdAt',
+          sortDir: filters.sortDir || 'desc',
+          page: filters.page || 1,
+          pageSize: filters.pageSize || 100
+        };
+
+        // Map estado to backend format
+        if (filters.estado) {
+          const backendEstado = estadoFrontendToBackend[filters.estado];
+          if (backendEstado) {
+            backendFilters.estado = backendEstado;
+          }
+        }
+
+        if (filters.prioridad) {
+          backendFilters.prioridad = filters.prioridad as any;
+        }
+
+        if (filters.fuente) {
+          const fuenteMap: { [key: string]: BackendLead['fuente'] } = {
+            'Web': 'web',
+            'Redes Sociales': 'redes-sociales',
+            'Referido': 'referido',
+            'Evento': 'evento',
+            'Publicidad': 'publicidad',
+            'Otro': 'otro'
+          };
+          backendFilters.fuente = fuenteMap[filters.fuente] || filters.fuente as any;
+        }
+
+        if (filters.etiquetas) {
+          backendFilters.etiquetas = filters.etiquetas;
+        }
+
+        const response = await leadService.getLeads(backendFilters);
+
+        if (!response.success) {
+          throw new Error('Error al cargar leads');
+        }
+
+        // Transform leads to frontend format
+        const transformedLeads = response.data.map(transformLeadToFrontend);
+
+        setResult({
+          data: transformedLeads,
+          total: response.total,
+          page: response.page,
+          pages: response.pages,
+          stats: response.stats
+        });
+      } catch (e: any) {
+        console.error('Error fetching leads:', e);
+        setError(e);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    fetchLeads()
-      .then((data) => {
-        setLeads(data);
-      })
-      .catch((err) => {
-        setError(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+    fetchLeads();
+  }, [
+    filters.q,
+    filters.estado,
+    filters.prioridad,
+    filters.fuente,
+    filters.etiquetas?.join(','),
+    filters.sortBy,
+    filters.sortDir,
+    filters.page,
+    filters.pageSize,
+    refetchTrigger
+  ]);
 
-  return { leads, loading, error };
+  const refetch = () => {
+    setRefetchTrigger(prev => prev + 1);
+  };
+
+  return {
+    leads: result?.data || [],
+    total: result?.total || 0,
+    pages: result?.pages || 0,
+    stats: result?.stats,
+    loading,
+    error,
+    refetch
+  };
 };
 
 export const updateLeadStatus = async (leadId: string, newStatus: Lead['status']): Promise<Lead | undefined> => {
-  // Simulate API call to update lead status
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const leadToUpdate = mockLeads.find(lead => lead.id === leadId);
-      if (leadToUpdate) {
-        leadToUpdate.status = newStatus;
-        resolve(leadToUpdate);
-      } else {
-        resolve(undefined);
-      }
-    }, 200);
-  });
+  try {
+    const backendEstado = estadoFrontendToBackend[newStatus];
+    if (!backendEstado) {
+      throw new Error('Estado inválido');
+    }
+
+    const response = await leadService.updateLead(leadId, { estado: backendEstado });
+
+    if (response.success && response.data) {
+      return transformLeadToFrontend(response.data);
+    }
+
+    return undefined;
+  } catch (error) {
+    console.error('Error updating lead status:', error);
+    return undefined;
+  }
+};
+
+export const createLead = async (leadData: Partial<Lead>): Promise<Lead | undefined> => {
+  try {
+    // Transform to backend format
+    const backendData: Partial<BackendLead> = {
+      nombre: leadData.name || '',
+      email: leadData.email || '',
+      telefono: leadData.phone,
+      interes: leadData.objective,
+      notas: leadData.notas,
+      presupuesto: leadData.presupuesto,
+      etiquetas: leadData.etiquetas || [],
+      prioridad: leadData.prioridad || 'media',
+      fuente: 'web' // Default
+    };
+
+    if (leadData.status) {
+      backendData.estado = estadoFrontendToBackend[leadData.status] || 'nuevo';
+    }
+
+    if (leadData.origin) {
+      const fuenteMap: { [key: string]: BackendLead['fuente'] } = {
+        'Web': 'web',
+        'Redes Sociales': 'redes-sociales',
+        'Referido': 'referido',
+        'Evento': 'evento',
+        'Publicidad': 'publicidad',
+        'Otro': 'otro'
+      };
+      backendData.fuente = fuenteMap[leadData.origin] || 'web';
+    }
+
+    const response = await leadService.createLead(backendData);
+
+    if (response.success && response.data) {
+      return transformLeadToFrontend(response.data);
+    }
+
+    return undefined;
+  } catch (error) {
+    console.error('Error creating lead:', error);
+    throw error;
+  }
+};
+
+export const deleteLead = async (leadId: string): Promise<boolean> => {
+  try {
+    const response = await leadService.deleteLead(leadId);
+    return response.success;
+  } catch (error) {
+    console.error('Error deleting lead:', error);
+    return false;
+  }
 };

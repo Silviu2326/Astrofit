@@ -1,82 +1,45 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckSquare } from 'lucide-react';
-import { Tarea, getTareas, updateTarea } from '../tareasApi';
+import { Tarea, useTareas, completarTarea, TareasFilters } from '../tareasApi';
 import TareaCard from './TareaCard';
 
 interface TareasListProps {
   filterStatus?: Tarea['estado'];
-  filters?: {
-    estado?: Tarea['estado'];
-    fechaVencimiento?: string;
-    asignadoA?: string;
-    clienteRelacionado?: string;
-  };
+  filters?: Partial<TareasFilters>;
   onTareaUpdate?: () => void;
+  isLoading?: boolean;
 }
 
-const TareasList: React.FC<TareasListProps> = ({ filterStatus, filters, onTareaUpdate }) => {
-  const [tareas, setTareas] = useState<Tarea[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+const TareasList: React.FC<TareasListProps> = ({ filterStatus, filters, onTareaUpdate, isLoading: externalLoading }) => {
+  const { data: tareas, isLoading: internalLoading, refetch } = useTareas({
+    ...filters,
+    estado: filterStatus || filters?.estado
+  });
 
-  useEffect(() => {
-    const fetchTareas = async () => {
-      setLoading(true);
-      const data = await getTareas();
-      setTareas(data);
-      setLoading(false);
-    };
-    fetchTareas();
-  }, [onTareaUpdate]);
+  const loading = externalLoading || internalLoading;
 
   const handleToggleComplete = async (tarea: Tarea) => {
-    const newEstado: Tarea['estado'] = tarea.estado === 'completada' ? 'pendiente' : 'completada';
-    const updatedTarea = { ...tarea, estado: newEstado };
-    await updateTarea(updatedTarea);
-    setTareas((prevTareas) =>
-      prevTareas.map((t) => (t.id === updatedTarea.id ? updatedTarea : t))
-    );
-    // Notificar al componente padre para actualizar estadísticas
-    if (onTareaUpdate) {
-      onTareaUpdate();
+    try {
+      if (tarea.estado === 'completada') {
+        // Si está completada, cambiar a pendiente
+        await import('../tareasApi').then(m => m.updateTarea(tarea.id, { estado: 'pendiente' }));
+      } else {
+        // Si no está completada, marcar como completada
+        await completarTarea(tarea.id);
+      }
+
+      // Actualizar la lista
+      refetch();
+
+      // Notificar al componente padre para actualizar estadísticas
+      if (onTareaUpdate) {
+        onTareaUpdate();
+      }
+    } catch (error) {
+      console.error('Error al actualizar tarea:', error);
     }
   };
-
-  // Función para aplicar todos los filtros
-  const applyFilters = (tareas: Tarea[]) => {
-    return tareas.filter((tarea) => {
-      // Filtro por estado (prioridad al filterStatus si existe)
-      const estadoFilter = filterStatus || filters?.estado;
-      if (estadoFilter && tarea.estado !== estadoFilter) {
-        return false;
-      }
-
-      // Filtro por fecha de vencimiento
-      if (filters?.fechaVencimiento) {
-        const tareaDate = new Date(tarea.fechaVencimiento).toDateString();
-        const filterDate = new Date(filters.fechaVencimiento).toDateString();
-        if (tareaDate !== filterDate) {
-          return false;
-        }
-      }
-
-      // Filtro por asignado a
-      if (filters?.asignadoA && !tarea.asignadoA.toLowerCase().includes(filters.asignadoA.toLowerCase())) {
-        return false;
-      }
-
-      // Filtro por cliente relacionado
-      if (filters?.clienteRelacionado && tarea.clienteRelacionado) {
-        if (!tarea.clienteRelacionado.toLowerCase().includes(filters.clienteRelacionado.toLowerCase())) {
-          return false;
-        }
-      }
-
-      return true;
-    });
-  };
-
-  const filteredTareas = applyFilters(tareas);
 
   if (loading) {
     return (
@@ -94,7 +57,7 @@ const TareasList: React.FC<TareasListProps> = ({ filterStatus, filters, onTareaU
       transition={{ delay: 0.3 }}
       className="space-y-4"
     >
-      {filteredTareas.map((tarea, index) => (
+      {tareas.map((tarea, index) => (
         <motion.div
           key={tarea.id}
           initial={{ opacity: 0, x: -20 }}
@@ -105,16 +68,16 @@ const TareasList: React.FC<TareasListProps> = ({ filterStatus, filters, onTareaU
         </motion.div>
       ))}
 
-      {filteredTareas.length === 0 && (
+      {tareas.length === 0 && (
         <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-12 border border-white/50 text-center">
           <CheckSquare className="w-16 h-16 text-gray-300 mx-auto mb-4" />
           <h3 className="text-xl font-bold text-gray-800 mb-2">
-            {tareas.length === 0 ? 'No hay tareas' : 'No se encontraron tareas'}
+            No se encontraron tareas
           </h3>
           <p className="text-gray-600">
-            {tareas.length === 0 
-              ? 'Crea tu primera tarea para comenzar a organizar tu trabajo'
-              : 'No se encontraron tareas que coincidan con los filtros seleccionados'
+            {filters && Object.keys(filters).some(k => filters[k as keyof typeof filters])
+              ? 'No se encontraron tareas que coincidan con los filtros seleccionados'
+              : 'Crea tu primera tarea para comenzar a organizar tu trabajo'
             }
           </p>
         </div>

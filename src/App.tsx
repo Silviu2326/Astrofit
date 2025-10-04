@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { LandingPage } from './components/LandingPage';
+import { ProductoPage } from './components/ProductoPage';
+import { PreciosPage } from './components/PreciosPage';
 import { LoginPage } from './features/core/login/LoginPage';
 import { DashboardLayout } from './components/layout/DashboardLayout';
 
@@ -33,11 +37,19 @@ function App() {
     );
   }
 
-  if (!isAuthenticated) {
-    return <LoginPage onLogin={handleLogin} />;
-  }
-
-  return <DashboardLayout onLogout={handleLogout} />;
+  return (
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/producto" element={<ProductoPage />} />
+      <Route path="/precios" element={<PreciosPage />} />
+      <Route path="/login" element={
+        isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage onLogin={handleLogin} />
+      } />
+      <Route path="/dashboard/*" element={
+        isAuthenticated ? <DashboardLayout onLogout={handleLogout} /> : <Navigate to="/login" replace />
+      } />
+    </Routes>
+  );
 }
 
 export default App;

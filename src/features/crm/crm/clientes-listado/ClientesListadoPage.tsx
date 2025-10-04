@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Users, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import ClientesTable from './components/ClientesTable';
 import ClientesFilters from './components/ClientesFilters';
 import ClientesActions from './components/ClientesActions';
@@ -9,8 +10,10 @@ import ClientesStats from './components/ClientesStats';
 import { useClientes, SortBy, SortDir, ClientesFilters as Filtros } from './clientesListadoApi';
 import ClienteFormModal from './components/ClienteFormModal';
 import ClienteDetailsModal from './components/ClienteDetailsModal';
+import clienteService from '../../../../services/clienteService';
 
 const ClientesListadoPage: React.FC = () => {
+  const navigate = useNavigate();
   const [filters, setFilters] = useState<Partial<Filtros>>({});
   const [sortBy, setSortBy] = useState<SortBy>('ultimaActividad');
   const [sortDir, setSortDir] = useState<SortDir>('desc');
@@ -295,11 +298,7 @@ const ClientesListadoPage: React.FC = () => {
             onToggleSelect={onToggleSelect}
             onToggleSelectAll={onToggleSelectAll}
             onView={(id) => {
-              const cliente = data.find(c => c.id === id);
-              if (cliente) {
-                setSelectedCliente(cliente);
-                setShowDetailsModal(true);
-              }
+              navigate('/dashboard/cliente-detalle', { state: { clienteId: id } });
             }}
             onEdit={(id) => {
               const cliente = data.find(c => c.id === id);

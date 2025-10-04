@@ -6,9 +6,10 @@ import { EjercicioCard } from './EjercicioCard';
 
 interface EjerciciosGridProps {
   ejercicios: Ejercicio[];
+  onEdit?: (ejercicio: Ejercicio) => void;
 }
 
-export const EjerciciosGrid: React.FC<EjerciciosGridProps> = ({ ejercicios }) => {
+export const EjerciciosGrid: React.FC<EjerciciosGridProps> = ({ ejercicios, onEdit }) => {
   if (ejercicios.length === 0) {
     return (
       <motion.div
@@ -73,7 +74,7 @@ export const EjerciciosGrid: React.FC<EjerciciosGridProps> = ({ ejercicios }) =>
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {ejercicios.map((ejercicio, index) => (
-        <EjercicioCard key={ejercicio.id} ejercicio={ejercicio} index={index} />
+        <EjercicioCard key={ejercicio.id} ejercicio={ejercicio} index={index} onEdit={onEdit} />
       ))}
     </div>
   );

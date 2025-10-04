@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import * as facturaService from '@/services/facturaService';
 
 export interface Cobro {
   id: string;
@@ -26,8 +27,14 @@ export interface Factura {
   cliente: string;
   fecha: string;
   montoTotal: number;
-  estado: 'Pagada' | 'Pendiente' | 'Anulada';
+  estado: 'Pagada' | 'Pendiente' | 'Anulada' | 'Vencida';
   items: { descripcion: string; cantidad: number; precioUnitario: number; }[];
+  numeroFactura?: string;
+  clienteId?: string;
+  datosCliente?: {
+    nombre: string;
+    email: string;
+  };
 }
 
 // Mock Data
@@ -152,25 +159,51 @@ export const getSuscripciones = async (): Promise<Suscripcion[]> => {
 };
 
 export const getFacturas = async (): Promise<Factura[]> => {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(mockFacturas), 500);
-  });
+  try {
+    const response = await facturaService.getFacturas();
+
+    // Transformar las facturas del backend al formato esperado por el frontend
+    return response.data.map(f => ({
+      id: f._id || f.id || '',
+      cliente: f.datosCliente?.nombre || 'Cliente',
+      fecha: format(new Date(f.fecha), 'dd/MM/yyyy'),
+      montoTotal: f.montoTotal,
+      estado: f.estado,
+      items: f.items,
+      numeroFactura: f.numeroFactura,
+      clienteId: f.clienteId,
+      datosCliente: f.datosCliente
+    }));
+  } catch (error) {
+    console.error('Error al obtener facturas:', error);
+    // Fallback a mock data si falla la API
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(mockFacturas), 500);
+    });
+  }
 };
 
 export const getIngresosPorMes = async (): Promise<{ mes: string; ingresos: number }[]> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve([
-        { mes: 'Ene', ingresos: 3000 },
-        { mes: 'Feb', ingresos: 3200 },
-        { mes: 'Mar', ingresos: 3500 },
-        { mes: 'Abr', ingresos: 3800 },
-        { mes: 'May', ingresos: 4100 },
-        { mes: 'Jun', ingresos: 4500 },
-        { mes: 'Jul', ingresos: 4800 },
-        { mes: 'Ago', ingresos: 5000 },
-        { mes: 'Sep', ingresos: 5200 },
-      ]);
-    }, 500);
-  });
+  try {
+    const response = await facturaService.getIngresosPorMes();
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener ingresos por mes:', error);
+    // Fallback a mock data si falla la API
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve([
+          { mes: 'Ene', ingresos: 3000 },
+          { mes: 'Feb', ingresos: 3200 },
+          { mes: 'Mar', ingresos: 3500 },
+          { mes: 'Abr', ingresos: 3800 },
+          { mes: 'May', ingresos: 4100 },
+          { mes: 'Jun', ingresos: 4500 },
+          { mes: 'Jul', ingresos: 4800 },
+          { mes: 'Ago', ingresos: 5000 },
+          { mes: 'Sep', ingresos: 5200 },
+        ]);
+      }, 500);
+    });
+  }
 };

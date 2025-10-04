@@ -1,187 +1,189 @@
-
-import React, { useState, useEffect } from 'react';
-import { Nota, getClients, getTeamMembers } from '../notasApi';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { X, Tag, AlertCircle, Palette } from 'lucide-react';
+import { Nota, NotaCreateDTO } from '../notasApi';
 
 interface NotaFormProps {
-  nota?: Nota; // Optional: if provided, it's an edit form
-  onSubmit: (nota: Omit<Nota, 'id' | 'timestamp'> | Nota) => void;
+  nota?: Nota;
+  onSubmit: (nota: NotaCreateDTO & { _id?: string }) => void;
   onClose: () => void;
-  preselectedClientId?: string; // For quick note creation
-}
-
-interface Client {
-  id: string;
-  name: string;
-}
-
-interface TeamMember {
-  id: string;
-  name: string;
+  preselectedClientId?: string;
 }
 
 const NotaForm: React.FC<NotaFormProps> = ({ nota, onSubmit, onClose, preselectedClientId }) => {
-  const [title, setTitle] = useState(nota?.title || '');
-  const [content, setContent] = useState(nota?.content || '');
-  const [clientId, setClientId] = useState(nota?.clientId || preselectedClientId || '');
-  const [tags, setTags] = useState(nota?.tags.join(', ') || '');
-  const [assignedTo, setAssignedTo] = useState(nota?.assignedTo || '');
-  const [priority, setPriority] = useState<Nota['priority']>(nota?.priority || 'media');
-  const [isPrivate, setIsPrivate] = useState(nota?.isPrivate || false);
-  const [comments, setComments] = useState(nota?.comments || '');
-  const [clients, setClients] = useState<Client[]>([]);
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [titulo, setTitulo] = useState(nota?.titulo || '');
+  const [contenido, setContenido] = useState(nota?.contenido || '');
+  const [categoria, setCategoria] = useState<NotaCreateDTO['categoria']>(nota?.categoria || 'general');
+  const [etiquetas, setEtiquetas] = useState(nota?.etiquetas.join(', ') || '');
+  const [color, setColor] = useState(nota?.color || '#f59e0b');
 
-  useEffect(() => {
-    const fetchDropdownData = async () => {
-      const fetchedClients = await getClients();
-      const fetchedTeamMembers = await getTeamMembers();
-      setClients(fetchedClients);
-      setTeamMembers(fetchedTeamMembers);
-    };
-    fetchDropdownData();
-  }, []);
+  const colores = [
+    { name: 'Ámbar', value: '#f59e0b' },
+    { name: 'Azul', value: '#3b82f6' },
+    { name: 'Verde', value: '#10b981' },
+    { name: 'Rojo', value: '#ef4444' },
+    { name: 'Púrpura', value: '#8b5cf6' },
+    { name: 'Rosa', value: '#ec4899' },
+    { name: 'Gris', value: '#6b7280' },
+  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const newNota: Omit<Nota, 'id' | 'timestamp'> = {
-      title,
-      content,
-      clientId: clientId || undefined,
-      clientName: clients.find(c => c.id === clientId)?.name || undefined,
-      tags: tags.split(',').map(tag => tag.trim()).filter(tag => tag !== ''),
-      author: nota?.author || 'Current User', // Placeholder for current user
-      assignedTo: assignedTo || undefined,
-      priority,
-      isPrivate,
-      comments: comments || undefined,
+
+    const etiquetasArray = etiquetas
+      .split(',')
+      .map(tag => tag.trim())
+      .filter(tag => tag.length > 0);
+
+    const notaData: NotaCreateDTO & { _id?: string } = {
+      titulo,
+      contenido,
+      categoria,
+      etiquetas: etiquetasArray,
+      color,
     };
 
     if (nota) {
-      // Editing existing note
-      onSubmit({ ...newNota, id: nota.id, timestamp: nota.timestamp });
-    } else {
-      // Creating new note
-      onSubmit(newNota);
+      notaData._id = nota._id;
     }
-    onClose();
+
+    onSubmit(notaData);
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center z-50">
-      <div className="bg-white p-6 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800">{nota ? 'Editar Nota' : 'Crear Nueva Nota'}</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm overflow-y-auto h-full w-full flex justify-center items-center z-50 p-4">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden"
+      >
+        {/* Header */}
+        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-bold text-white">
+              {nota ? 'Editar Nota' : 'Nueva Nota'}
+            </h2>
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+            >
+              <X className="w-5 h-5 text-white" />
+            </button>
+          </div>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="p-6 space-y-6 overflow-y-auto max-h-[calc(90vh-100px)]">
+          {/* Título */}
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700">Título</label>
+            <label htmlFor="titulo" className="block text-sm font-medium text-gray-700 mb-2">
+              Título *
+            </label>
             <input
               type="text"
-              id="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500"
+              id="titulo"
+              value={titulo}
+              onChange={(e) => setTitulo(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              placeholder="Título de la nota"
               required
             />
           </div>
+
+          {/* Contenido */}
           <div>
-            <label htmlFor="content" className="block text-sm font-medium text-gray-700">Contenido</label>
+            <label htmlFor="contenido" className="block text-sm font-medium text-gray-700 mb-2">
+              Contenido *
+            </label>
             <textarea
-              id="content"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              rows={5}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500"
+              id="contenido"
+              value={contenido}
+              onChange={(e) => setContenido(e.target.value)}
+              rows={6}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              placeholder="Escribe el contenido de tu nota..."
               required
-            ></textarea>
+            />
           </div>
+
+          {/* Categoría */}
           <div>
-            <label htmlFor="clientId" className="block text-sm font-medium text-gray-700">Cliente/Lead Asociado (Opcional)</label>
+            <label htmlFor="categoria" className="block text-sm font-medium text-gray-700 mb-2">
+              <AlertCircle className="w-4 h-4 inline mr-2" />
+              Categoría
+            </label>
             <select
-              id="clientId"
-              value={clientId}
-              onChange={(e) => setClientId(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500"
+              id="categoria"
+              value={categoria}
+              onChange={(e) => setCategoria(e.target.value as NotaCreateDTO['categoria'])}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             >
-              <option value="">-- Seleccionar Cliente/Lead --</option>
-              {clients.map((client) => (
-                <option key={client.id} value={client.id}>{client.name}</option>
-              ))}
+              <option value="general">General</option>
+              <option value="seguimiento">Seguimiento</option>
+              <option value="observacion">Observación</option>
+              <option value="recordatorio">Recordatorio</option>
+              <option value="importante">Importante</option>
+              <option value="otro">Otro</option>
             </select>
           </div>
+
+          {/* Etiquetas */}
           <div>
-            <label htmlFor="tags" className="block text-sm font-medium text-gray-700">Etiquetas (separadas por comas)</label>
+            <label htmlFor="etiquetas" className="block text-sm font-medium text-gray-700 mb-2">
+              <Tag className="w-4 h-4 inline mr-2" />
+              Etiquetas (separadas por comas)
+            </label>
             <input
               type="text"
-              id="tags"
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="ej: seguimiento, importante, reunión"
+              id="etiquetas"
+              value={etiquetas}
+              onChange={(e) => setEtiquetas(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              placeholder="ej: seguimiento, importante, cliente"
             />
           </div>
+
+          {/* Color */}
           <div>
-            <label htmlFor="assignedTo" className="block text-sm font-medium text-gray-700">Asignar a miembro del equipo (Opcional)</label>
-            <select
-              id="assignedTo"
-              value={assignedTo}
-              onChange={(e) => setAssignedTo(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500"
-            >
-              <option value="">-- Seleccionar Miembro --</option>
-              {teamMembers.map((member) => (
-                <option key={member.id} value={member.name}>{member.name}</option>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              <Palette className="w-4 h-4 inline mr-2" />
+              Color
+            </label>
+            <div className="flex flex-wrap gap-3">
+              {colores.map((c) => (
+                <button
+                  key={c.value}
+                  type="button"
+                  onClick={() => setColor(c.value)}
+                  className={`w-10 h-10 rounded-lg border-2 transition-all ${
+                    color === c.value ? 'border-gray-800 scale-110' : 'border-transparent hover:scale-105'
+                  }`}
+                  style={{ backgroundColor: c.value }}
+                  title={c.name}
+                />
               ))}
-            </select>
+            </div>
           </div>
-          <div>
-            <label htmlFor="priority" className="block text-sm font-medium text-gray-700">Prioridad</label>
-            <select
-              id="priority"
-              value={priority}
-              onChange={(e) => setPriority(e.target.value as Nota['priority'])}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500"
-            >
-              <option value="alta">Alta</option>
-              <option value="media">Media</option>
-              <option value="baja">Baja</option>
-            </select>
-          </div>
-          <div className="flex items-center">
-            <input
-              id="isPrivate"
-              type="checkbox"
-              checked={isPrivate}
-              onChange={(e) => setIsPrivate(e.target.checked)}
-              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-            />
-            <label htmlFor="isPrivate" className="ml-2 block text-sm text-gray-900">Nota privada</label>
-          </div>
-          <div>
-            <label htmlFor="comments" className="block text-sm font-medium text-gray-700">Comentarios adicionales (Opcional)</label>
-            <textarea
-              id="comments"
-              value={comments}
-              onChange={(e) => setComments(e.target.value)}
-              rows={3}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500"
-            ></textarea>
-          </div>
-          <div className="flex justify-end gap-3 mt-6">
+
+          {/* Actions */}
+          <div className="flex gap-3 pt-4 border-t border-gray-200">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
             >
               Cancelar
             </button>
             <button
               type="submit"
-              className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="flex-1 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium"
             >
               {nota ? 'Guardar Cambios' : 'Crear Nota'}
             </button>
           </div>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import clienteService from '../../../../services/clienteService';
 
 export interface Cliente {
   id: string;
@@ -43,69 +44,6 @@ export interface ClientesResult {
   };
 }
 
-const nombres = [
-  'Juan Pérez',
-  'María García',
-  'Carlos Sánchez',
-  'Ana López',
-  'Pedro Martínez',
-  'Lucía Fernández',
-  'Diego Rodríguez',
-  'Sofía Torres',
-  'Miguel Romero',
-  'Elena Navarro',
-  'Andrés Castillo',
-  'Paula Ruiz',
-  'Javier Ortega',
-  'Laura Ramos',
-  'Hugo Morales',
-  'Valentina Vega',
-  'Daniela Castro',
-  'Santiago Silva',
-  'Gabriela Flores',
-  'Manuel Herrera',
-  'Isabella Soto',
-  'Emilio Vargas',
-  'Natalia Cruz',
-  'Ricardo León'
-];
-
-function randomChoice<T>(arr: T[]): T {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-
-function addDays(base: Date, days: number) {
-  const d = new Date(base);
-  d.setDate(d.getDate() + days);
-  return d;
-}
-
-function fmt(d: Date) {
-  return d.toISOString().slice(0, 10);
-}
-
-const mockClientes: Cliente[] = nombres.map((n, idx) => {
-  const activo = Math.random() > 0.25; // ~75% activos
-  const etiquetasBase = [
-    ...(Math.random() > 0.6 ? ['premium'] : []),
-    ...(Math.random() > 0.5 ? ['online'] : []),
-    ...(Math.random() > 0.7 ? ['rehabilitación'] : []),
-  ];
-  const alta = addDays(new Date('2023-01-01'), Math.floor(Math.random() * 600));
-  const ultima = addDays(new Date(), -Math.floor(Math.random() * 120));
-  return {
-    id: String(idx + 1),
-    foto: `https://i.pravatar.cc/100?img=${(idx % 70) + 1}`,
-    nombre: n,
-    email: `${n.toLowerCase().replace(/[^a-záéíóúñ\s]/gi, '').replace(/\s+/g, '.')}@ejemplo.com`,
-    telefono: `+34 6${Math.floor(10000000 + Math.random() * 89999999)}`,
-    estado: activo ? 'activo' : 'inactivo',
-    etiquetas: etiquetasBase.length ? etiquetasBase : [randomChoice(['nuevo', 'regular'])],
-    fechaAlta: fmt(alta),
-    ultimaActividad: fmt(ultima),
-  };
-});
-
 export type NewClienteInput = {
   nombre: string;
   email: string;
@@ -114,69 +52,18 @@ export type NewClienteInput = {
   etiquetas?: string[];
 };
 
-export function findClienteByEmailOrPhone(email?: string, telefono?: string): Cliente | undefined {
-  const e = (email || '').trim().toLowerCase();
-  const t = (telefono || '').replace(/\s+/g, '');
-  return mockClientes.find(c =>
-    (!!e && c.email.toLowerCase() === e) || (!!t && c.telefono.replace(/\s+/g, '') === t)
-  );
+// Helper to format dates from backend (Date or ISO string) to YYYY-MM-DD
+function formatDateToISO(date: string | Date): string {
+  const d = typeof date === 'string' ? new Date(date) : date;
+  return d.toISOString().slice(0, 10);
 }
 
-export function createOrGetCliente(input: NewClienteInput): { cliente: Cliente; existed: boolean } {
-  const today = fmt(new Date());
-  const existedCliente = findClienteByEmailOrPhone(input.email, input.telefono);
-  if (existedCliente) {
-    return { cliente: existedCliente, existed: true };
-  }
-  const nextId = String(mockClientes.length + 1);
-  const avatarIdx = (mockClientes.length % 70) + 1;
-  const nuevo: Cliente = {
-    id: nextId,
-    foto: `https://i.pravatar.cc/100?img=${avatarIdx}`,
-    nombre: input.nombre.trim(),
-    email: input.email.trim(),
-    telefono: input.telefono.trim(),
-    estado: input.estado || 'activo',
-    etiquetas: (input.etiquetas && input.etiquetas.length ? input.etiquetas : ['nuevo']).map(e => e.trim()).filter(Boolean),
-    fechaAlta: today,
-    ultimaActividad: today,
-  };
-  mockClientes.unshift(nuevo);
-  return { cliente: nuevo, existed: false };
-}
-
-export function updateCliente(id: string, input: NewClienteInput): Cliente {
-  const index = mockClientes.findIndex(c => c.id === id);
-  if (index === -1) {
-    throw new Error('Cliente no encontrado');
-  }
-  const current = mockClientes[index];
-  const updated: Cliente = {
-    ...current,
-    nombre: input.nombre?.trim() || current.nombre,
-    email: input.email?.trim() || current.email,
-    telefono: input.telefono?.trim() || current.telefono,
-    estado: (input.estado as Cliente['estado']) || current.estado,
-    etiquetas: (input.etiquetas && input.etiquetas.length
-      ? input.etiquetas.map(e => e.trim()).filter(Boolean)
-      : current.etiquetas),
-    ultimaActividad: fmt(new Date()),
-  };
-  mockClientes[index] = updated;
-  return updated;
-}
-
-function dateDiffInDays(a: string, b: string) {
-  const d1 = new Date(a).getTime();
-  const d2 = new Date(b).getTime();
-  const diff = Math.floor((d1 - d2) / (1000 * 60 * 60 * 24));
-  return diff;
-}
-
+// Hook to fetch clientes from backend
 export const useClientes = (inputFilters: Partial<ClientesFilters> = {}) => {
   const [result, setResult] = useState<ClientesResult | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  const [refetchTrigger, setRefetchTrigger] = useState(0);
 
   const defaults: Required<Pick<ClientesFilters, 'sortBy' | 'sortDir' | 'page' | 'pageSize'>> = {
     sortBy: 'ultimaActividad',
@@ -198,87 +85,67 @@ export const useClientes = (inputFilters: Partial<ClientesFilters> = {}) => {
       inputFilters.sortDir,
       inputFilters.page,
       inputFilters.pageSize,
+      refetchTrigger
     ]
   );
 
   useEffect(() => {
-    setIsLoading(true);
-    setError(null);
-    // Simula llamada API
-    const timer = setTimeout(() => {
+    const fetchClientes = async () => {
+      setIsLoading(true);
+      setError(null);
+
       try {
-        const todayISO = fmt(new Date());
-        let list = mockClientes.slice();
-
-        // Texto libre
-        if (filters.q && filters.q.trim()) {
-          const q = filters.q.trim().toLowerCase();
-          list = list.filter(c =>
-            c.nombre.toLowerCase().includes(q) ||
-            c.email.toLowerCase().includes(q) ||
-            c.telefono.toLowerCase().includes(q)
-          );
-        }
-        // Estado
-        if (filters.estado) {
-          list = list.filter(c => c.estado === filters.estado);
-        }
-        // Etiquetas (todas)
-        if (filters.etiquetas && filters.etiquetas.length) {
-          list = list.filter(c => filters.etiquetas!.every(t => c.etiquetas.includes(t)));
-        }
-        // Fecha alta rango
-        if (filters.fechaAltaDesde) {
-          list = list.filter(c => c.fechaAlta >= filters.fechaAltaDesde!);
-        }
-        if (filters.fechaAltaHasta) {
-          list = list.filter(c => c.fechaAlta <= filters.fechaAltaHasta!);
-        }
-        // Sin actividad en X días
-        if (typeof filters.sinActividadDias === 'number' && filters.sinActividadDias > 0) {
-          list = list.filter(c => dateDiffInDays(todayISO, c.ultimaActividad) >= filters.sinActividadDias!);
-        }
-
-        // Stats sobre el conjunto filtrado
-        const stats = {
-          total: list.length,
-          activos: list.filter(c => c.estado === 'activo').length,
-          inactivos: list.filter(c => c.estado === 'inactivo').length,
-          premium: list.filter(c => c.etiquetas.includes('premium')).length,
-          online: list.filter(c => c.etiquetas.includes('online')).length,
-        };
-
-        // Orden
-        const dir = filters.sortDir === 'asc' ? 1 : -1;
-        list.sort((a, b) => {
-          const key = filters.sortBy!;
-          const va = (a as any)[key] as string;
-          const vb = (b as any)[key] as string;
-          if (key === 'nombre' || key === 'estado') {
-            return va.localeCompare(vb) * dir;
-          }
-          // fechas ISO comparables
-          return (va < vb ? -1 : va > vb ? 1 : 0) * dir;
+        const response = await clienteService.getClientes({
+          q: filters.q,
+          estado: filters.estado as 'activo' | 'inactivo' | '',
+          etiquetas: filters.etiquetas,
+          fechaAltaDesde: filters.fechaAltaDesde,
+          fechaAltaHasta: filters.fechaAltaHasta,
+          sinActividadDias: filters.sinActividadDias,
+          sortBy: filters.sortBy,
+          sortDir: filters.sortDir,
+          page: filters.page,
+          pageSize: filters.pageSize
         });
 
-        // Paginación
-        const total = list.length;
-        const pageSize = filters.pageSize!;
-        const pages = Math.max(1, Math.ceil(total / pageSize));
-        const page = Math.min(Math.max(1, filters.page!), pages);
-        const start = (page - 1) * pageSize;
-        const data = list.slice(start, start + pageSize);
+        if (response.success) {
+          // Normalize data for frontend compatibility
+          const normalizedData: Cliente[] = response.data.map(cliente => ({
+            id: cliente.id || '',
+            foto: cliente.foto || `https://i.pravatar.cc/100?img=${Math.floor(Math.random() * 70) + 1}`,
+            nombre: cliente.nombre,
+            email: cliente.email,
+            telefono: cliente.telefono || '',
+            estado: cliente.estado,
+            etiquetas: cliente.etiquetas || [],
+            fechaAlta: formatDateToISO(cliente.fechaAlta),
+            ultimaActividad: formatDateToISO(cliente.ultimaActividad)
+          }));
 
-        setResult({ data, total, page, pageSize, pages, stats });
+          setResult({
+            data: normalizedData,
+            total: response.total,
+            page: response.page,
+            pageSize: response.pageSize,
+            pages: response.pages,
+            stats: response.stats
+          });
+        }
+
         setIsLoading(false);
       } catch (e: any) {
+        console.error('Error fetching clientes:', e);
         setError(e);
         setIsLoading(false);
       }
-    }, 400);
+    };
 
-    return () => clearTimeout(timer);
+    fetchClientes();
   }, [filters]);
+
+  const refetch = () => {
+    setRefetchTrigger(prev => prev + 1);
+  };
 
   return {
     data: result?.data || [],
@@ -288,7 +155,125 @@ export const useClientes = (inputFilters: Partial<ClientesFilters> = {}) => {
     pages: result?.pages || 1,
     stats: result?.stats || { total: 0, activos: 0, inactivos: 0, premium: 0, online: 0 },
     isLoading,
-    error
+    error,
+    refetch
   };
 };
 
+// Create or get cliente
+export async function createOrGetCliente(input: NewClienteInput): Promise<{ cliente: Cliente; existed: boolean }> {
+  try {
+    const response = await clienteService.createCliente({
+      nombre: input.nombre,
+      email: input.email,
+      telefono: input.telefono,
+      estado: input.estado || 'activo',
+      etiquetas: input.etiquetas || []
+    });
+
+    if (response.success) {
+      const cliente: Cliente = {
+        id: response.data.id || '',
+        foto: response.data.foto || `https://i.pravatar.cc/100?img=${Math.floor(Math.random() * 70) + 1}`,
+        nombre: response.data.nombre,
+        email: response.data.email,
+        telefono: response.data.telefono || '',
+        estado: response.data.estado,
+        etiquetas: response.data.etiquetas || [],
+        fechaAlta: formatDateToISO(response.data.fechaAlta),
+        ultimaActividad: formatDateToISO(response.data.ultimaActividad)
+      };
+
+      return { cliente, existed: false };
+    }
+
+    throw new Error('Error creating cliente');
+  } catch (error: any) {
+    // If error is "already exists", try to find the cliente
+    if (error.response?.data?.error?.includes('existe')) {
+      // Get all clientes and find by email
+      const response = await clienteService.getClientes({ q: input.email });
+      if (response.success && response.data.length > 0) {
+        const foundCliente = response.data[0];
+        const cliente: Cliente = {
+          id: foundCliente.id || '',
+          foto: foundCliente.foto || `https://i.pravatar.cc/100?img=${Math.floor(Math.random() * 70) + 1}`,
+          nombre: foundCliente.nombre,
+          email: foundCliente.email,
+          telefono: foundCliente.telefono || '',
+          estado: foundCliente.estado,
+          etiquetas: foundCliente.etiquetas || [],
+          fechaAlta: formatDateToISO(foundCliente.fechaAlta),
+          ultimaActividad: formatDateToISO(foundCliente.ultimaActividad)
+        };
+
+        return { cliente, existed: true };
+      }
+    }
+
+    throw error;
+  }
+}
+
+// Update cliente
+export async function updateCliente(id: string, input: NewClienteInput): Promise<Cliente> {
+  const response = await clienteService.updateCliente(id, {
+    nombre: input.nombre,
+    email: input.email,
+    telefono: input.telefono,
+    estado: input.estado,
+    etiquetas: input.etiquetas
+  });
+
+  if (response.success) {
+    return {
+      id: response.data.id || '',
+      foto: response.data.foto || `https://i.pravatar.cc/100?img=${Math.floor(Math.random() * 70) + 1}`,
+      nombre: response.data.nombre,
+      email: response.data.email,
+      telefono: response.data.telefono || '',
+      estado: response.data.estado,
+      etiquetas: response.data.etiquetas || [],
+      fechaAlta: formatDateToISO(response.data.fechaAlta),
+      ultimaActividad: formatDateToISO(response.data.ultimaActividad)
+    };
+  }
+
+  throw new Error('Error updating cliente');
+}
+
+// Find cliente by email or phone
+export async function findClienteByEmailOrPhone(email?: string, telefono?: string): Promise<Cliente | undefined> {
+  if (!email && !telefono) return undefined;
+
+  try {
+    const searchTerm = email || telefono || '';
+    const response = await clienteService.getClientes({ q: searchTerm });
+
+    if (response.success && response.data.length > 0) {
+      const foundCliente = response.data.find(c =>
+        (email && c.email.toLowerCase() === email.toLowerCase()) ||
+        (telefono && c.telefono?.replace(/\s+/g, '') === telefono.replace(/\s+/g, ''))
+      );
+
+      if (foundCliente) {
+        return {
+          id: foundCliente.id || '',
+          foto: foundCliente.foto || `https://i.pravatar.cc/100?img=${Math.floor(Math.random() * 70) + 1}`,
+          nombre: foundCliente.nombre,
+          email: foundCliente.email,
+          telefono: foundCliente.telefono || '',
+          estado: foundCliente.estado,
+          etiquetas: foundCliente.etiquetas || [],
+          fechaAlta: formatDateToISO(foundCliente.fechaAlta),
+          ultimaActividad: formatDateToISO(foundCliente.ultimaActividad)
+        };
+      }
+    }
+
+    return undefined;
+  } catch (error) {
+    console.error('Error finding cliente:', error);
+    return undefined;
+  }
+}

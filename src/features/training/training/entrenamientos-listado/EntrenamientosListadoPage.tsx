@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useFetchEntrenamientos } from './entrenamientosListadoApi';
 import {
   Activity,
   Calendar,
@@ -59,13 +60,27 @@ import {
 } from 'recharts';
 
 // Interfaces mejoradas
+interface EjercicioSesion {
+  ejercicioId?: {
+    nombre?: string;
+    _id?: string;
+  };
+  series?: number;
+  repeticiones?: string;
+  descanso?: number;
+  completado?: boolean;
+  orden?: number;
+  _id?: string;
+  id?: string;
+}
+
 interface SesionEntrenamiento {
   id: string;
   fecha: string;
   hora: string;
   duracion: number; // minutos
   estado: 'pendiente' | 'completado' | 'cancelado';
-  ejercicios: string[];
+  ejercicios: (string | EjercicioSesion)[];
   notasEntrenador?: string;
 }
 
@@ -75,7 +90,7 @@ interface Entrenamiento {
     nombre: string;
     avatar: string;
     email: string;
-  };
+  } | string;
   titulo: string;
   tipo: 'Fuerza' | 'Hipertrofia' | 'Resistencia' | 'Pérdida de Peso' | 'CrossFit' | 'Funcional' | 'Powerlifting' | 'Calistenia';
   objetivo: 'Ganar Masa' | 'Perder Grasa' | 'Mantener' | 'Rendimiento' | 'Salud General' | 'Rehabilitación';
@@ -96,7 +111,7 @@ interface Entrenamiento {
   requiereRevision: boolean;
   conSeguimiento: boolean;
   notasCliente?: string;
-  sesiones: SesionEntrenamiento[];
+  sesiones?: SesionEntrenamiento[];
   entrenador?: string;
 }
 
@@ -539,6 +554,7 @@ const mockEntrenamientos: Entrenamiento[] = [
 
 const EntrenamientosListadoPage: React.FC = () => {
   const [viewMode, setViewMode] = useState<'cards' | 'table' | 'calendar'>('cards');
+  const [showNewSessionModal, setShowNewSessionModal] = useState(false);
   const [activeTab, setActiveTab] = useState<'todos' | 'pendientes' | 'completados' | 'cancelados'>('todos');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedEntrenamiento, setSelectedEntrenamiento] = useState<Entrenamiento | null>(null);
@@ -554,14 +570,28 @@ const EntrenamientosListadoPage: React.FC = () => {
     fecha: '',
   });
 
+  // Fetch entrenamientos desde el backend
+  const { data: entrenamientos, loading, error, refetch } = useFetchEntrenamientos();
+
   // Estadísticas calculadas
   const stats = useMemo(() => {
+    if (!entrenamientos || entrenamientos.length === 0) {
+      return {
+        totalEntrenamientos: 0,
+        sesionesCompletadasEstaSemana: 0,
+        proximasSesiones: 0,
+        tasaCompletitud: 0,
+        sesionesHoy: 0,
+        sesionesCompletadasHoy: 0,
+      };
+    }
+
     const hoy = '2025-10-01';
     const manana = '2025-10-02';
 
     // Obtener todas las sesiones de todos los entrenamientos
-    const todasLasSesiones = mockEntrenamientos.flatMap(e =>
-      e.sesiones.map(s => ({ ...s, cliente: e.cliente.nombre, tipo: e.tipo }))
+    const todasLasSesiones = entrenamientos.flatMap(e =>
+      (e.sesiones || []).map(s => ({ ...s, cliente: e.cliente?.nombre || e.cliente, tipo: e.tipo }))
     );
 
     const sesionesHoy = todasLasSesiones.filter(s => s.fecha === hoy && s.estado === 'pendiente').length;
@@ -578,52 +608,60 @@ const EntrenamientosListadoPage: React.FC = () => {
       (s.fecha === hoy || s.fecha === manana) && s.estado === 'pendiente'
     ).length;
 
-    const tasaCompletitud = mockEntrenamientos.length > 0
-      ? Math.round((mockEntrenamientos.filter(e => e.progreso === 100).length / mockEntrenamientos.length) * 100)
+    const tasaCompletitud = entrenamientos.length > 0
+      ? Math.round((entrenamientos.filter(e => e.progreso === 100).length / entrenamientos.length) * 100)
       : 0;
 
     return {
-      totalEntrenamientos: mockEntrenamientos.length,
+      totalEntrenamientos: entrenamientos.length,
       sesionesCompletadasEstaSemana: sesionesEstaSemana,
       proximasSesiones,
       tasaCompletitud,
       sesionesHoy,
       sesionesCompletadasHoy,
     };
-  }, []);
+  }, [entrenamientos]);
 
   // Filtrado
   const filteredEntrenamientos = useMemo(() => {
-    let result = mockEntrenamientos;
+    if (!entrenamientos) return [];
+
+    let result = entrenamientos;
 
     // Filtro por tab (basado en sesiones)
     if (activeTab === 'pendientes') {
-      result = result.filter(e => e.sesiones.some(s => s.estado === 'pendiente' && new Date(s.fecha) >= new Date('2025-10-01')));
+      result = result.filter(e => (e.sesiones || []).some(s => s.estado === 'pendiente' && new Date(s.fecha) >= new Date('2025-10-01')));
     } else if (activeTab === 'completados') {
-      result = result.filter(e => e.sesiones.some(s => s.estado === 'completado'));
+      result = result.filter(e => (e.sesiones || []).some(s => s.estado === 'completado'));
     } else if (activeTab === 'cancelados') {
-      result = result.filter(e => e.sesiones.some(s => s.estado === 'cancelado'));
+      result = result.filter(e => (e.sesiones || []).some(s => s.estado === 'cancelado'));
     }
 
     // Búsqueda
     if (searchQuery) {
-      result = result.filter(e =>
-        e.cliente.nombre.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        e.titulo.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        e.tipo.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+      result = result.filter(e => {
+        const clienteNombre = e.cliente?.nombre || e.cliente || '';
+        const titulo = e.titulo || '';
+        const tipo = e.tipo || '';
+        return clienteNombre.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          titulo.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          tipo.toLowerCase().includes(searchQuery.toLowerCase());
+      });
     }
 
     // Filtros avanzados
     if (filters.cliente) {
-      result = result.filter(e => e.cliente.nombre.toLowerCase().includes(filters.cliente.toLowerCase()));
+      result = result.filter(e => {
+        const clienteNombre = e.cliente?.nombre || e.cliente || '';
+        return clienteNombre.toLowerCase().includes(filters.cliente.toLowerCase());
+      });
     }
     if (filters.entrenador) {
       result = result.filter(e => e.entrenador?.toLowerCase().includes(filters.entrenador.toLowerCase()));
     }
 
     return result;
-  }, [activeTab, searchQuery, filters]);
+  }, [entrenamientos, activeTab, searchQuery, filters]);
 
   // Datos para calendario
   const sesionesDelMes = useMemo(() => {
@@ -631,8 +669,10 @@ const EntrenamientosListadoPage: React.FC = () => {
     const month = selectedMonth.getMonth();
     const sesiones: Record<string, SesionEntrenamiento[]> = {};
 
-    mockEntrenamientos.forEach(entrenamiento => {
-      entrenamiento.sesiones.forEach(sesion => {
+    if (!entrenamientos) return sesiones;
+
+    entrenamientos.forEach(entrenamiento => {
+      (entrenamiento.sesiones || []).forEach(sesion => {
         const fecha = new Date(sesion.fecha);
         if (fecha.getFullYear() === year && fecha.getMonth() === month) {
           const key = sesion.fecha;
@@ -643,7 +683,7 @@ const EntrenamientosListadoPage: React.FC = () => {
     });
 
     return sesiones;
-  }, [selectedMonth]);
+  }, [selectedMonth, entrenamientos]);
 
   // Datos para gráficos
   const adherenciaData = [
@@ -653,17 +693,38 @@ const EntrenamientosListadoPage: React.FC = () => {
     { semana: 'S4', completadas: 15, programadas: 15 },
   ];
 
-  const tiposData = [
-    { name: 'Fuerza', value: mockEntrenamientos.filter(e => e.tipo === 'Fuerza').length },
-    { name: 'Hipertrofia', value: mockEntrenamientos.filter(e => e.tipo === 'Hipertrofia').length },
-    { name: 'Resistencia', value: mockEntrenamientos.filter(e => e.tipo === 'Resistencia').length },
-    { name: 'CrossFit', value: mockEntrenamientos.filter(e => e.tipo === 'CrossFit').length },
-    { name: 'Otros', value: mockEntrenamientos.filter(e => !['Fuerza', 'Hipertrofia', 'Resistencia', 'CrossFit'].includes(e.tipo)).length },
-  ];
+  const tiposData = useMemo(() => {
+    if (!entrenamientos) return [];
+    return [
+      { name: 'Fuerza', value: entrenamientos.filter(e => e.tipo === 'Fuerza').length },
+      { name: 'Hipertrofia', value: entrenamientos.filter(e => e.tipo === 'Hipertrofia').length },
+      { name: 'Resistencia', value: entrenamientos.filter(e => e.tipo === 'Resistencia').length },
+      { name: 'CrossFit', value: entrenamientos.filter(e => e.tipo === 'CrossFit').length },
+      { name: 'Otros', value: entrenamientos.filter(e => !['Fuerza', 'Hipertrofia', 'Resistencia', 'CrossFit'].includes(e.tipo)).length },
+    ];
+  }, [entrenamientos]);
 
   const COLORS = ['#f97316', '#ec4899', '#ef4444', '#f59e0b', '#fb923c'];
 
   // Helpers
+  const getClienteName = (entrenamiento: Entrenamiento) => {
+    return typeof entrenamiento.cliente === 'string'
+      ? entrenamiento.cliente
+      : entrenamiento.cliente?.nombre || 'Cliente';
+  };
+
+  const getClienteAvatar = (entrenamiento: Entrenamiento) => {
+    return typeof entrenamiento.cliente === 'object' && entrenamiento.cliente?.avatar
+      ? entrenamiento.cliente.avatar
+      : 'https://i.pravatar.cc/150?img=1';
+  };
+
+  const getClienteEmail = (entrenamiento: Entrenamiento) => {
+    return typeof entrenamiento.cliente === 'object' && entrenamiento.cliente?.email
+      ? entrenamiento.cliente.email
+      : '';
+  };
+
   const getBadgeColor = (tipo: string) => {
     const colors: Record<string, string> = {
       Fuerza: 'bg-orange-100 text-orange-800 border-orange-300',
@@ -717,6 +778,37 @@ const EntrenamientosListadoPage: React.FC = () => {
     setSelectedMonth(new Date(selectedMonth.getFullYear(), selectedMonth.getMonth() - 1, 1));
   };
 
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50/30 to-rose-50/30 p-6 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-orange-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Cargando entrenamientos...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50/30 to-rose-50/30 p-6 flex items-center justify-center">
+        <div className="text-center max-w-md">
+          <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">Error al cargar entrenamientos</h2>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button
+            onClick={refetch}
+            className="px-6 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition"
+          >
+            Reintentar
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50/30 to-rose-50/30 p-6">
       {/* HERO SECTION - Gradiente orange-pink-rose */}
@@ -757,7 +849,10 @@ const EntrenamientosListadoPage: React.FC = () => {
               </p>
             </div>
 
-            <button className="hidden md:flex items-center gap-2 px-6 py-3 bg-white/20 backdrop-blur-md rounded-2xl border border-white/20 text-white hover:bg-white/30 transition-all">
+            <button 
+              onClick={() => setShowNewSessionModal(true)}
+              className="hidden md:flex items-center gap-2 px-6 py-3 bg-white/20 backdrop-blur-md rounded-2xl border border-white/20 text-white hover:bg-white/30 transition-all"
+            >
               <Plus className="w-5 h-5" />
               <span className="font-semibold">Nueva Sesión</span>
             </button>
@@ -1012,10 +1107,6 @@ const EntrenamientosListadoPage: React.FC = () => {
 
           {/* Botones de acción */}
           <div className="flex gap-3">
-            <button className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-orange-500 to-pink-600 text-white rounded-xl font-semibold hover:shadow-xl transition-all">
-              <Plus className="w-5 h-5" />
-              Nueva Sesión
-            </button>
             <button className="p-3 bg-white/80 backdrop-blur-xl rounded-xl border border-white/50 hover:shadow-lg transition-all">
               <Download className="w-5 h-5 text-gray-700" />
             </button>
@@ -1279,12 +1370,12 @@ const EntrenamientosListadoPage: React.FC = () => {
                     {/* Cliente */}
                     <div className="flex items-center gap-3 mb-4">
                       <img
-                        src={entrenamiento.cliente.avatar}
-                        alt={entrenamiento.cliente.nombre}
+                        src={getClienteAvatar(entrenamiento)}
+                        alt={getClienteName(entrenamiento)}
                         className="w-14 h-14 rounded-2xl border-3 border-white shadow-lg"
                       />
                       <div>
-                        <h3 className="font-bold text-gray-900 text-lg">{entrenamiento.cliente.nombre}</h3>
+                        <h3 className="font-bold text-gray-900 text-lg">{getClienteName(entrenamiento)}</h3>
                         <p className="text-sm text-gray-600">{entrenamiento.titulo}</p>
                       </div>
                     </div>
@@ -1315,7 +1406,7 @@ const EntrenamientosListadoPage: React.FC = () => {
                         <div className="flex flex-wrap gap-1 mt-2">
                           {entrenamiento.proximaSesion.ejercicios.slice(0, 3).map((ejercicio, i) => (
                             <span key={i} className="text-xs bg-white px-2 py-1 rounded-lg text-gray-700 border border-orange-200">
-                              {ejercicio}
+                              {typeof ejercicio === 'string' ? ejercicio : (ejercicio.ejercicioId?.nombre || 'Ejercicio')}
                             </span>
                           ))}
                         </div>
@@ -1388,7 +1479,7 @@ const EntrenamientosListadoPage: React.FC = () => {
                 Próximas Sesiones Hoy
               </h3>
               <div className="space-y-3">
-                {mockEntrenamientos
+                {(entrenamientos || [])
                   .filter(e => e.proximaSesion && e.proximaSesion.fecha === '2025-10-01')
                   .slice(0, 5)
                   .map((e, i) => (
@@ -1404,9 +1495,9 @@ const EntrenamientosListadoPage: React.FC = () => {
                         <div className="absolute left-[23px] top-full w-0.5 h-3 bg-gradient-to-b from-orange-300 to-transparent"></div>
                       )}
 
-                      <img src={e.cliente.avatar} alt="" className="w-12 h-12 rounded-xl border-2 border-white shadow" />
+                      <img src={getClienteAvatar(e)} alt="" className="w-12 h-12 rounded-xl border-2 border-white shadow" />
                       <div className="flex-1 min-w-0">
-                        <p className="font-bold text-sm text-gray-900 truncate">{e.cliente.nombre}</p>
+                        <p className="font-bold text-sm text-gray-900 truncate">{getClienteName(e)}</p>
                         <p className="text-xs text-gray-600 truncate">{e.titulo}</p>
                         <div className="flex items-center gap-2 mt-1">
                           <Clock className="w-3 h-3 text-orange-600" />
@@ -1495,9 +1586,9 @@ const EntrenamientosListadoPage: React.FC = () => {
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center gap-3">
-                        <img src={e.cliente.avatar} alt="" className="w-10 h-10 rounded-xl border-2 border-orange-200" />
+                        <img src={getClienteAvatar(e)} alt="" className="w-10 h-10 rounded-xl border-2 border-orange-200" />
                         <div>
-                          <p className="font-bold text-gray-900">{e.cliente.nombre}</p>
+                          <p className="font-bold text-gray-900">{getClienteName(e)}</p>
                           <p className="text-sm text-gray-600">{e.titulo}</p>
                         </div>
                       </div>
@@ -1579,12 +1670,12 @@ const EntrenamientosListadoPage: React.FC = () => {
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-4">
                     <img
-                      src={selectedEntrenamiento.cliente.avatar}
+                      src={getClienteAvatar(selectedEntrenamiento)}
                       alt=""
                       className="w-20 h-20 rounded-2xl border-4 border-white/30"
                     />
                     <div>
-                      <h2 className="text-3xl font-bold">{selectedEntrenamiento.cliente.nombre}</h2>
+                      <h2 className="text-3xl font-bold">{getClienteName(selectedEntrenamiento)}</h2>
                       <p className="text-orange-100 text-lg">{selectedEntrenamiento.titulo}</p>
                     </div>
                   </div>
@@ -1655,7 +1746,18 @@ const EntrenamientosListadoPage: React.FC = () => {
                             <div className="w-8 h-8 bg-orange-500 text-white rounded-lg flex items-center justify-center font-bold">
                               {i + 1}
                             </div>
-                            <p className="font-medium text-gray-900">{ejercicio}</p>
+                            <div className="flex-1">
+                              <p className="font-medium text-gray-900">
+                                {typeof ejercicio === 'string' ? ejercicio : (ejercicio.ejercicioId?.nombre || 'Ejercicio')}
+                              </p>
+                              {typeof ejercicio === 'object' && (
+                                <p className="text-sm text-gray-600">
+                                  {ejercicio.series && `${ejercicio.series} series`}
+                                  {ejercicio.repeticiones && ` × ${ejercicio.repeticiones} reps`}
+                                  {ejercicio.descanso && ` • ${ejercicio.descanso}s descanso`}
+                                </p>
+                              )}
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -1745,6 +1847,215 @@ const EntrenamientosListadoPage: React.FC = () => {
             </motion.div>
           </motion.div>
         )}
+
+        {/* MODAL NUEVA SESIÓN */}
+        <AnimatePresence>
+          {showNewSessionModal && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-6"
+              onClick={() => setShowNewSessionModal(false)}
+            >
+              <motion.div
+                initial={{ scale: 0.9, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.9, y: 20 }}
+                onClick={(e) => e.stopPropagation()}
+                className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              >
+                {/* Header del modal */}
+                <div className="bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 text-white p-6 rounded-t-2xl">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h2 className="text-2xl font-bold">Nueva Sesión de Entrenamiento</h2>
+                      <p className="text-orange-100 text-sm mt-1">
+                        Programa una nueva sesión para un cliente
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => setShowNewSessionModal(false)}
+                      className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+                    >
+                      <X className="w-6 h-6" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Formulario */}
+                <div className="p-6 space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Cliente */}
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Cliente *
+                      </label>
+                      <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                        <option value="">Seleccionar cliente</option>
+                        <option value="cliente1">María González</option>
+                        <option value="cliente2">Carlos Rodríguez</option>
+                        <option value="cliente3">Ana Martínez</option>
+                        <option value="cliente4">Luis Fernández</option>
+                      </select>
+                    </div>
+
+                    {/* Tipo de entrenamiento */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Tipo de Entrenamiento *
+                      </label>
+                      <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                        <option value="">Seleccionar tipo</option>
+                        <option value="fuerza">Fuerza</option>
+                        <option value="hipertrofia">Hipertrofia</option>
+                        <option value="resistencia">Resistencia</option>
+                        <option value="perdida-peso">Pérdida de Peso</option>
+                        <option value="crossfit">CrossFit</option>
+                        <option value="funcional">Funcional</option>
+                        <option value="powerlifting">Powerlifting</option>
+                        <option value="calistenia">Calistenia</option>
+                      </select>
+                    </div>
+
+                    {/* Duración */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Duración (minutos) *
+                      </label>
+                      <input
+                        type="number"
+                        placeholder="Ej: 60"
+                        min="15"
+                        max="180"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                      />
+                    </div>
+
+                    {/* Fecha */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Fecha *
+                      </label>
+                      <input
+                        type="date"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                      />
+                    </div>
+
+                    {/* Hora */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Hora *
+                      </label>
+                      <input
+                        type="time"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                      />
+                    </div>
+
+                    {/* Ubicación */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Ubicación
+                      </label>
+                      <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                        <option value="">Seleccionar ubicación</option>
+                        <option value="gym">Gimnasio Principal</option>
+                        <option value="sala-funcional">Sala Funcional</option>
+                        <option value="zona-cardio">Zona Cardio</option>
+                        <option value="exterior">Exterior</option>
+                        <option value="online">Online</option>
+                      </select>
+                    </div>
+
+                    {/* Entrenador */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Entrenador
+                      </label>
+                      <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                        <option value="">Asignar entrenador</option>
+                        <option value="entrenador1">Dr. Ramirez PT</option>
+                        <option value="entrenador2">Lic. García</option>
+                        <option value="entrenador3">Coach Martínez</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Notas */}
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Notas (opcional)
+                    </label>
+                    <textarea
+                      placeholder="Añade notas específicas para esta sesión..."
+                      rows={3}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none"
+                    />
+                  </div>
+
+                  {/* Ejercicios sugeridos */}
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Ejercicios Sugeridos (opcional)
+                    </label>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          className="rounded border-gray-300 text-orange-600 focus:ring-orange-500"
+                        />
+                        <span className="text-sm text-gray-700">Sentadilla con barra</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          className="rounded border-gray-300 text-orange-600 focus:ring-orange-500"
+                        />
+                        <span className="text-sm text-gray-700">Press de banca</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          className="rounded border-gray-300 text-orange-600 focus:ring-orange-500"
+                        />
+                        <span className="text-sm text-gray-700">Peso muerto</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          className="rounded border-gray-300 text-orange-600 focus:ring-orange-500"
+                        />
+                        <span className="text-sm text-gray-700">Dominadas</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Botones de acción */}
+                  <div className="flex gap-3 pt-4 border-t border-gray-200">
+                    <button
+                      onClick={() => setShowNewSessionModal(false)}
+                      className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      onClick={() => {
+                        // Aquí iría la lógica para crear la sesión
+                        console.log('Crear nueva sesión');
+                        setShowNewSessionModal(false);
+                      }}
+                      className="flex-1 px-6 py-3 bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 text-white rounded-xl font-semibold hover:opacity-90 transition-opacity"
+                    >
+                      Crear Sesión
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </AnimatePresence>
     </div>
   );

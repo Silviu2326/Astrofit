@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, User, Mail, Phone, MapPin, Calendar, Crown, Activity } from 'lucide-react';
+import { ArrowLeft, User } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ClienteHeader from './components/ClienteHeader';
 import ClienteInfo from './components/ClienteInfo';
 import ClienteHistorial from './components/ClienteHistorial';
@@ -10,8 +11,16 @@ import ClienteTareas from './components/ClienteTareas';
 import { useClienteDetalle } from './clienteDetalleApi';
 
 const ClienteDetallePage: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const clienteId = location.state?.clienteId;
+
   const [activeTab, setActiveTab] = useState<'info' | 'historial' | 'archivos' | 'notas' | 'tareas'>('info');
-  const { data: cliente, isLoading, error } = useClienteDetalle('cliente-id-123');
+  const { data: cliente, isLoading, error } = useClienteDetalle(clienteId);
+
+  const handleBack = () => {
+    navigate('/dashboard/clientes-listado');
+  };
 
   if (isLoading) {
     return (
@@ -34,13 +43,19 @@ const ClienteDetallePage: React.FC = () => {
             </div>
             <h3 className="text-xl font-bold text-gray-800 mb-2">Error al cargar el cliente</h3>
             <p className="text-gray-600">{error.message}</p>
+            <button
+              onClick={handleBack}
+              className="mt-4 px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+            >
+              Volver a clientes
+            </button>
           </div>
         </motion.div>
       </div>
     );
   }
 
-  if (!cliente) {
+  if (!cliente || !clienteId) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 flex items-center justify-center">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 max-w-md border border-white/50">
@@ -50,6 +65,12 @@ const ClienteDetallePage: React.FC = () => {
             </div>
             <h3 className="text-xl font-bold text-gray-800 mb-2">Cliente no encontrado</h3>
             <p className="text-gray-600">No se pudo encontrar la información del cliente.</p>
+            <button
+              onClick={handleBack}
+              className="mt-4 px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+            >
+              Volver a clientes
+            </button>
           </div>
         </motion.div>
       </div>
@@ -94,7 +115,7 @@ const ClienteDetallePage: React.FC = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
-            onClick={() => window.history.back()}
+            onClick={handleBack}
             className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-white/10 backdrop-blur-md rounded-xl text-white hover:bg-white/20 transition-colors duration-300 border border-white/20"
           >
             <ArrowLeft className="w-5 h-5" />

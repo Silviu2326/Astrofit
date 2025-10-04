@@ -1,34 +1,130 @@
+import axios from 'axios';
 
-import { PlantillaDieta } from './PlantillasDietasPage'; // Assuming PlantillaDieta interface is exported from PlantillasDietasPage.tsx
+const API_URL = 'http://localhost:5000/api/plantillas-dietas';
 
-// Mock API calls
+const getAuthToken = () => {
+  const token = localStorage.getItem('token');
+  return token;
+};
+
+const apiClient = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+apiClient.interceptors.request.use((config) => {
+  const token = getAuthToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+export interface Meal {
+  name: string;
+  description: string;
+  calories: number;
+  macros: { protein: number; carbs: number; fat: number };
+  foods: string[];
+}
+
+export interface DayMenu {
+  breakfast: Meal;
+  lunch: Meal;
+  dinner: Meal;
+  snacks?: Meal[];
+}
+
+export interface PlantillaDieta {
+  _id?: string;
+  id?: string;
+  name: string;
+  description: string;
+  author: {
+    name: string;
+    avatar: string;
+  };
+  objective: 'perdida_peso' | 'ganancia_muscular' | 'mantenimiento' | 'definicion' | 'volumen_limpio' | 'rendimiento' | 'salud_general' | 'recomposicion';
+  dietType: 'mediterranea' | 'keto' | 'vegana' | 'vegetariana' | 'paleo' | 'flexible' | 'intermitente' | 'baja_carbos' | 'alta_proteina';
+  time_level: 'quick' | 'advanced' | 'no_cook';
+  culinary_experience: 'beginner' | 'intermediate' | 'expert';
+  calories: number;
+  macros: { protein: number; carbs: number; fat: number };
+  duration_weeks: number;
+  is_favorite: boolean;
+  is_public: boolean;
+  restrictions: string[];
+  allergens: string[];
+  rating: number;
+  uses: number;
+  reviews: number;
+  weekly_menu: DayMenu[];
+  estado?: 'activa' | 'borrador' | 'archivada';
+  trainerId?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export const plantillasDietasApi = {
-  getPlantillas: async (filters: any): Promise<PlantillaDieta[]> => {
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 500));
-    console.log('Fetching plantillas with filters:', filters);
-    // In a real app, you would filter data from a backend here
-    return []; // Return mock data or filtered data
+  getPlantillas: async (filters: any = {}) => {
+    const { data } = await apiClient.get('/', { params: { incluirPublicas: 'true', ...filters } });
+    if (data.data) {
+      data.data = data.data.map((p: any) => ({ ...p, id: p._id || p.id }));
+    }
+    return data;
   },
 
-  getPlantillaById: async (id: string): Promise<PlantillaDieta | null> => {
-    await new Promise(resolve => setTimeout(resolve, 300));
-    console.log('Fetching plantilla by ID:', id);
-    // Find and return a specific plantilla from mock data
-    return null; // Return mock data or null if not found
+  getPlantillaById: async (id: string) => {
+    const { data } = await apiClient.get(`/${id}`);
+    return { ...data.data, id: data.data._id || data.data.id };
   },
 
-  savePlantilla: async (plantilla: PlantillaDieta): Promise<PlantillaDieta> => {
-    await new Promise(resolve => setTimeout(resolve, 500));
-    console.log('Saving plantilla:', plantilla);
-    // Simulate saving to a backend
-    return plantilla; // Return the saved plantilla
+  createPlantilla: async (plantilla: Partial<PlantillaDieta>) => {
+    const { data } = await apiClient.post('/', plantilla);
+    return { ...data.data, id: data.data._id || data.data.id };
   },
 
-  toggleFavorite: async (id: string, isFavorite: boolean): Promise<boolean> => {
-    await new Promise(resolve => setTimeout(resolve, 200));
-    console.log(`Toggling favorite for ${id} to ${isFavorite}`);
-    // Simulate updating favorite status on backend
-    return isFavorite; // Return the new favorite status
+  updatePlantilla: async (id: string, plantilla: Partial<PlantillaDieta>) => {
+    const { data } = await apiClient.put(`/${id}`, plantilla);
+    return { ...data.data, id: data.data._id || data.data.id };
+  },
+
+  deletePlantilla: async (id: string) => {
+    await apiClient.delete(`/${id}`);
+  },
+
+  toggleFavorite: async (id: string) => {
+    const { data } = await apiClient.patch(`/${id}/toggle-favorita`);
+    return { ...data.data, id: data.data._id || data.data.id };
+  },
+
+  incrementUso: async (id: string) => {
+    const { data } = await apiClient.patch(`/${id}/increment-uso`);
+    return { ...data.data, id: data.data._id || data.data.id };
+  },
+
+  calificarPlantilla: async (id: string, puntos: number) => {
+    const { data } = await apiClient.post(`/${id}/calificar`, { puntos });
+    return { ...data.data, id: data.data._id || data.data.id };
+  },
+
+  duplicatePlantilla: async (id: string) => {
+    const { data } = await apiClient.post(`/${id}/duplicate`);
+    return { ...data.data, id: data.data._id || data.data.id };
+  },
+
+  getStats: async () => {
+    const { data } = await apiClient.get('/stats');
+    return data.data;
+  },
+
+  getPlantillasPublicas: async (filters: any = {}) => {
+    const { data } = await apiClient.get('/publicas', { params: filters });
+    if (data.data) {
+      data.data = data.data.map((p: any) => ({ ...p, id: p._id || p.id }));
+    }
+    return data;
   },
 };

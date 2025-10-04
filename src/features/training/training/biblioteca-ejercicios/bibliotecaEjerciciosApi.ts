@@ -1,4 +1,9 @@
+import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 export interface Ejercicio {
+  _id?: string;
   id: string;
   name: string;
   description: string;
@@ -18,6 +23,112 @@ export interface Ejercicio {
   isNew?: boolean;
   isTrending?: boolean;
 }
+
+// Backend API types
+interface BackendEjercicio {
+  _id: string;
+  nombre: string;
+  descripcion: string;
+  categoria: string;
+  grupoMuscular: string;
+  gruposSecundarios: string[];
+  nivel: string;
+  equipamiento: string[];
+  instrucciones: { orden: number; descripcion: string }[];
+  video: string;
+  imagenes: string[];
+  consejos: string;
+  precauciones: string;
+  variaciones: { nombre: string; descripcion: string }[];
+  musculosPrincipales: string[];
+  musculosSecundarios: string[];
+  etiquetas: string[];
+  estado: string;
+  tipo: string;
+  vecesUtilizado: number;
+  ultimoUso: Date | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Map backend exercise to frontend format
+const mapBackendToFrontend = (backend: BackendEjercicio): Ejercicio => {
+  // Map categories
+  const categoryMap: Record<string, Ejercicio['category']> = {
+    'fuerza': 'torso',
+    'cardio': 'cardio',
+    'flexibilidad': 'flexibilidad',
+    'equilibrio': 'funcional',
+    'funcional': 'funcional',
+    'deportivo': 'funcional'
+  };
+
+  // Map muscle groups to categories
+  const muscleGroupMap: Record<string, Ejercicio['category']> = {
+    'pecho': 'torso',
+    'espalda': 'espalda',
+    'hombros': 'torso',
+    'brazos': 'brazos',
+    'piernas': 'piernas',
+    'core': 'core',
+    'gluteos': 'piernas',
+    'pantorrillas': 'piernas',
+    'todo-cuerpo': 'funcional'
+  };
+
+  const category = muscleGroupMap[backend.grupoMuscular] || categoryMap[backend.categoria] || 'funcional';
+
+  // Map equipment
+  const materialMap: Record<string, Ejercicio['material']> = {
+    'Barra': 'barra',
+    'Mancuernas': 'mancuernas',
+    'Kettlebell': 'kettlebell',
+    'TRX': 'trx',
+    'Bandas': 'gomas',
+    'Máquina': 'maquina',
+    'Sin equipo': 'peso corporal'
+  };
+
+  const material = backend.equipamiento.length > 0
+    ? (materialMap[backend.equipamiento[0]] || 'peso corporal')
+    : 'peso corporal';
+
+  // Map difficulty
+  const difficultyMap: Record<string, Ejercicio['difficulty']> = {
+    'principiante': 'principiante',
+    'intermedio': 'intermedio',
+    'avanzado': 'avanzado'
+  };
+
+  return {
+    _id: backend._id,
+    id: backend._id,
+    name: backend.nombre,
+    description: backend.descripcion || '',
+    videoUrl: backend.video || '',
+    imageUrl: backend.imagenes?.[0] || undefined,
+    category,
+    material,
+    difficulty: difficultyMap[backend.nivel] || 'intermedio',
+    isFavorite: false, // Can be enhanced with user preferences
+    popularity: Math.min(100, backend.vecesUtilizado || 0),
+    usageFrequency: backend.vecesUtilizado || 0,
+    muscleGroups: [
+      ...backend.musculosPrincipales,
+      ...backend.musculosSecundarios
+    ],
+    instructions: backend.instrucciones
+      ?.sort((a, b) => a.orden - b.orden)
+      .map(i => i.descripcion) || [],
+    tips: backend.consejos ? [backend.consejos] : [],
+    variations: backend.variaciones?.map(v => v.nombre || v.descripcion) || [],
+    rating: 4.5, // Default rating, can be enhanced with reviews
+    isNew: backend.createdAt
+      ? new Date(backend.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+      : false,
+    isTrending: backend.vecesUtilizado > 50
+  };
+};
 
 const mockEjercicios: Ejercicio[] = [
   // PECHO - 12 ejercicios
@@ -733,11 +844,92 @@ const mockEjercicios: Ejercicio[] = [
   }
 ];
 
+// Fetch exercises from backend API
 export const fetchEjercicios = async (): Promise<Ejercicio[]> => {
-  // Simulate API call delay
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(mockEjercicios);
-    }, 500);
+  try {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      console.warn('No authentication token found, using mock data');
+      return mockEjercicios;
+    }
+
+    const response = await axios.get(`${API_URL}/ejercicios`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      params: {
+        pageSize: 100 // Get all exercises
+      }
+    });
+
+    if (response.data.success && response.data.data) {
+      const backendEjercicios = response.data.data as BackendEjercicio[];
+      return backendEjercicios.map(mapBackendToFrontend);
+    }
+
+    return mockEjercicios;
+  } catch (error) {
+    console.error('Error fetching ejercicios from backend:', error);
+    // Fallback to mock data on error
+    return mockEjercicios;
+  }
+};
+
+// Create new exercise
+export const createEjercicio = async (data: Partial<BackendEjercicio>): Promise<Ejercicio> => {
+  const token = localStorage.getItem('token');
+
+  const response = await axios.post(`${API_URL}/ejercicios`, data, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (response.data.success && response.data.data) {
+    return mapBackendToFrontend(response.data.data);
+  }
+
+  throw new Error('Failed to create exercise');
+};
+
+// Update exercise
+export const updateEjercicio = async (id: string, data: Partial<BackendEjercicio>): Promise<Ejercicio> => {
+  const token = localStorage.getItem('token');
+
+  const response = await axios.put(`${API_URL}/ejercicios/${id}`, data, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (response.data.success && response.data.data) {
+    return mapBackendToFrontend(response.data.data);
+  }
+
+  throw new Error('Failed to update exercise');
+};
+
+// Delete exercise
+export const deleteEjercicio = async (id: string): Promise<void> => {
+  const token = localStorage.getItem('token');
+
+  await axios.delete(`${API_URL}/ejercicios/${id}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+};
+
+// Increment exercise usage
+export const incrementEjercicioUso = async (id: string): Promise<void> => {
+  const token = localStorage.getItem('token');
+
+  await axios.patch(`${API_URL}/ejercicios/${id}/increment-uso`, {}, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
   });
 };

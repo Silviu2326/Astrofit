@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import clienteService from '../../../../services/clienteService';
 
 // Definiciones de tipos para el cliente
 export interface Cliente {
@@ -51,59 +52,71 @@ export interface Tarea {
   asignadoA: string;
 }
 
-// Datos mock para un cliente
-const mockCliente: Cliente = {
-  id: 'cliente-id-123',
-  nombre: 'Ana',
-  apellido: 'García',
-  fotoUrl: 'https://via.placeholder.com/150',
-  etiquetas: ['VIP', 'Nuevo', 'Entrenamiento Personal'],
-  contacto: {
-    email: 'ana.garcia@example.com',
-    telefono: '+34 600 123 456',
-    direccion: 'Calle Falsa 123, Madrid',
-  },
-  fechaAlta: '2023-01-15',
-  estado: 'Activo',
-  historial: [
-    { id: 'h1', tipo: 'entrenamiento', descripcion: 'Sesión de fuerza', fecha: '2024-09-20 10:00' },
-    { id: 'h2', tipo: 'reserva', descripcion: 'Clase de Yoga', fecha: '2024-09-18 18:30' },
-    { id: 'h3', tipo: 'pago', descripcion: 'Mensualidad Septiembre', fecha: '2024-09-01 09:00', detalles: { monto: 50, metodo: 'Tarjeta' } },
-    { id: 'h4', tipo: 'formulario', descripcion: 'Ficha de salud inicial', fecha: '2023-01-10 11:00' },
-  ],
-  archivos: [
-    { id: 'a1', nombre: 'Contrato_Ana_Garcia.pdf', url: '/files/contrato.pdf', fechaSubida: '2023-01-15', tipo: 'PDF' },
-    { id: 'a2', nombre: 'Consentimiento_RGPD.pdf', url: '/files/rgpd.pdf', fechaSubida: '2023-01-15', tipo: 'PDF' },
-    { id: 'a3', nombre: 'Informe_Progreso_Julio.docx', url: '/files/informe.docx', fechaSubida: '2024-08-01', tipo: 'DOCX' },
-  ],
-  notas: [
-    { id: 'n1', contenido: 'Cliente muy motivado con los objetivos de fuerza.', timestamp: '2024-09-20 11:30', autor: 'Entrenador A' },
-    { id: 'n2', contenido: 'Preguntar sobre disponibilidad para sesiones de tarde.', timestamp: '2024-09-15 14:00', autor: 'Recepcionista' },
-  ],
-  tareas: [
-    { id: 't1', descripcion: 'Enviar plan de entrenamiento personalizado', fechaVencimiento: '2024-09-28', estado: 'Pendiente', asignadoA: 'Entrenador A' },
-    { id: 't2', descripcion: 'Llamar para confirmar próxima reserva', fechaVencimiento: '2024-09-25', estado: 'Completada', asignadoA: 'Recepcionista' },
-  ],
-};
-
-// Hook para simular la obtención de datos del cliente
-export const useClienteDetalle = (clienteId: string) => {
+// Hook para obtener datos del cliente desde el backend
+export const useClienteDetalle = (clienteId: string | undefined) => {
   const [data, setData] = useState<Cliente | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    setIsLoading(true);
-    setError(null);
-    // Simular una llamada a API
-    setTimeout(() => {
-      if (clienteId === 'cliente-id-123') {
-        setData(mockCliente);
-      } else {
-        setError(new Error('Cliente no encontrado'));
-      }
+    if (!clienteId) {
       setIsLoading(false);
-    }, 500); // Simular retardo de red
+      setError(new Error('No se proporcionó ID de cliente'));
+      return;
+    }
+
+    const fetchCliente = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const response = await clienteService.getCliente(clienteId);
+
+        if (!response.success || !response.data) {
+          throw new Error('No se encontró el cliente');
+        }
+
+        const cliente = response.data;
+
+        // Transformar los datos del backend al formato que espera el frontend
+        const transformedCliente: Cliente = {
+          id: cliente.id || cliente._id || '',
+          nombre: cliente.nombre?.split(' ')[0] || cliente.nombre || '',
+          apellido: cliente.nombre?.split(' ').slice(1).join(' ') || '',
+          fotoUrl: cliente.foto || 'https://via.placeholder.com/150',
+          etiquetas: cliente.etiquetas || [],
+          contacto: {
+            email: cliente.email || '',
+            telefono: cliente.telefono || '',
+            direccion: '', // El modelo actual no tiene dirección
+          },
+          fechaAlta: cliente.fechaAlta || '',
+          estado: cliente.estado === 'activo' ? 'Activo' : 'Inactivo',
+          // Por ahora, datos mock para historial, archivos, notas y tareas
+          // TODO: Implementar endpoints para estos datos
+          historial: [
+            {
+              id: 'h1',
+              tipo: 'entrenamiento',
+              descripcion: 'Sin historial disponible',
+              fecha: new Date().toISOString()
+            },
+          ],
+          archivos: [],
+          notas: [],
+          tareas: [],
+        };
+
+        setData(transformedCliente);
+      } catch (err: any) {
+        console.error('Error al cargar cliente:', err);
+        setError(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCliente();
   }, [clienteId]);
 
   return { data, isLoading, error };
@@ -113,8 +126,21 @@ export const useClienteDetalle = (clienteId: string) => {
 export const updateClienteEtiquetas = async (clienteId: string, newEtiquetas: string[]): Promise<Cliente> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const updatedCliente = { ...mockCliente, etiquetas: newEtiquetas };
-      // En un caso real, aquí se haría una llamada PUT/PATCH a la API
+      // TODO: Implementar llamada real al backend
+      const updatedCliente: Cliente = {
+        id: clienteId,
+        nombre: '',
+        apellido: '',
+        fotoUrl: '',
+        etiquetas: newEtiquetas,
+        contacto: { email: '', telefono: '', direccion: '' },
+        fechaAlta: '',
+        estado: 'Activo',
+        historial: [],
+        archivos: [],
+        notas: [],
+        tareas: [],
+      };
       resolve(updatedCliente);
     }, 300);
   });

@@ -9,6 +9,7 @@ import CentroAyudaPage from '../../features/core/centro-ayuda/CentroAyudaPage';
 import ImportadorDatosPage from '../../features/core/importador-datos/ImportadorDatosPage';
 import IntegracionesEsencialesPage from '../../features/core/integraciones-esenciales/IntegracionesEsencialesPage';
 import ConfiguracionPage from '../../features/core/configuracion/ConfiguracionPage';
+import { PerfilPage } from '../../features/core/perfil/PerfilPage';
 import { BandejaEntradaPage } from '../../features/crm/crm/bandeja-entrada/BandejaEntradaPage';
 import ClientesListadoPage from '../../features/crm/crm/clientes-listado/ClientesListadoPage';
 import ClienteDetallePage from '../../features/crm/crm/cliente-detalle/ClienteDetallePage';
@@ -17,6 +18,7 @@ import LeadDetallePage from '../../features/crm/crm/lead-detalle/LeadDetallePage
 import NotasPage from '../../features/crm/crm/notas/NotasPage';
 import SegmentosPage from '../../features/crm/crm/segmentos/SegmentosPage';
 import TareasPage from '../../features/crm/crm/tareas/TareasPage';
+import CalendarioPage from '../../features/crm/crm/calendario/CalendarioPage';
 import AgenteEntrenadorPage from '../../features/agents/agente-entrenador/AgenteEntrenadorPage';
 import AgenteFinancieroPage from '../../features/agents/agente-financiero/AgenteFinancieroPage';
 import AgenteMarketingPage from '../../features/agents/agente-marketing/AgenteMarketingPage';
@@ -208,7 +210,12 @@ interface DashboardLayoutProps {
 export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onLogout }) => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true); // Siempre inicia colapsada
   const location = useLocation();
-  const activePage = (location.pathname || '/').replace(/^\//, '') || 'inicio';
+
+  // Extraer la ruta base sin parámetros (ej: "/dashboard/lead-detalle/123" -> "lead-detalle")
+  // Removemos el prefijo /dashboard/ y luego tomamos el primer segmento
+  const pathWithoutDashboard = location.pathname.replace(/^\/dashboard\/?/, '');
+  const fullPath = pathWithoutDashboard || 'inicio';
+  const activePage = fullPath.split('/')[0];
 
   const renderPage = () => {
     switch (activePage) {
@@ -216,6 +223,8 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onLogout }) =>
         return <InicioPage />;
       case 'configuracion':
         return <ConfiguracionPage />;
+      case 'perfil':
+        return <PerfilPage />;
       case 'panel-control':
         return <PanelControlPage />;
       case 'asistente-onboarding':
@@ -242,6 +251,8 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onLogout }) =>
         return <SegmentosPage />;
       case 'tareas':
         return <TareasPage />;
+      case 'calendario':
+        return <CalendarioPage />;
       case 'agente-entrenador':
         return <AgenteEntrenadorPage />;
       case 'agente-financiero':
@@ -622,7 +633,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onLogout }) =>
         
         <main className="p-6">
           <Routes>
-            <Route index element={<Navigate to="/inicio" replace />} />
+            <Route index element={<Navigate to="inicio" replace />} />
             {/* Fallback: usa el renderer existente segun id en URL */}
             <Route path="*" element={renderPage()} />
           </Routes>

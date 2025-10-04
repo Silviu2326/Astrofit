@@ -3,12 +3,13 @@ import { motion } from 'framer-motion';
 import {
   Dumbbell, TrendingUp, Heart, History, Sparkles,
   ArrowUpRight, Library, Target, Activity, Zap,
-  Grid3x3, List, LayoutGrid
+  Grid3x3, List, LayoutGrid, Plus, X
 } from 'lucide-react';
 import { fetchEjercicios, Ejercicio } from './bibliotecaEjerciciosApi';
 import { EjerciciosSearch } from './components/EjerciciosSearch';
 import { EjerciciosFilters } from './components/EjerciciosFilters';
 import { EjerciciosGrid } from './components/EjerciciosGrid';
+import { EjerciciosList } from './components/EjerciciosList';
 
 export const BibliotecaEjerciciosPage: React.FC = () => {
   const [ejercicios, setEjercicios] = useState<Ejercicio[]>([]);
@@ -20,6 +21,8 @@ export const BibliotecaEjerciciosPage: React.FC = () => {
     difficulty: ''
   });
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [editingEjercicio, setEditingEjercicio] = useState<Ejercicio | null>(null);
 
   useEffect(() => {
     const loadEjercicios = async () => {
@@ -134,14 +137,29 @@ export const BibliotecaEjerciciosPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Contador total */}
-            <div className="mt-6 inline-flex items-center gap-3 bg-white/10 backdrop-blur-md rounded-full px-6 py-3 border border-white/20">
-              <div className="p-2 bg-white/20 rounded-lg">
-                <Target className="w-5 h-5 text-white" />
+            {/* Contador total y botón crear */}
+            <div className="mt-6 flex items-center gap-4 flex-wrap">
+              <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md rounded-full px-6 py-3 border border-white/20">
+                <div className="p-2 bg-white/20 rounded-lg">
+                  <Target className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-white font-semibold">
+                  {stats.totalEjercicios} ejercicios disponibles
+                </span>
               </div>
-              <span className="text-white font-semibold">
-                {stats.totalEjercicios} ejercicios disponibles
-              </span>
+              
+              {/* Botón crear ejercicio */}
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setShowCreateModal(true)}
+                className="inline-flex items-center gap-3 bg-white/20 backdrop-blur-md rounded-full px-6 py-3 border border-white/30 hover:bg-white/30 transition-all duration-300 group"
+              >
+                <div className="p-2 bg-white/20 rounded-lg group-hover:bg-white/30 transition-colors">
+                  <Plus className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-white font-semibold">Crear Ejercicio</span>
+              </motion.button>
             </div>
           </div>
         </motion.div>
@@ -287,8 +305,18 @@ export const BibliotecaEjerciciosPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Grid de ejercicios */}
-            <EjerciciosGrid ejercicios={ejerciciosFiltrados} />
+            {/* Grid/Lista de ejercicios */}
+            {viewMode === 'grid' ? (
+              <EjerciciosGrid
+                ejercicios={ejerciciosFiltrados}
+                onEdit={(ejercicio) => {
+                  setEditingEjercicio(ejercicio);
+                  setShowCreateModal(true);
+                }}
+              />
+            ) : (
+              <EjerciciosList ejercicios={ejerciciosFiltrados} />
+            )}
           </div>
         </div>
 
@@ -333,6 +361,175 @@ export const BibliotecaEjerciciosPage: React.FC = () => {
                 </motion.button>
               ))}
             </div>
+          </motion.div>
+        )}
+
+        {/* MODAL CREAR EJERCICIO */}
+        {showCreateModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-6"
+            onClick={() => setShowCreateModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            >
+              {/* Header del modal */}
+              <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white p-6 rounded-t-2xl">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h2 className="text-2xl font-bold">
+                      {editingEjercicio ? 'Editar Ejercicio' : 'Crear Nuevo Ejercicio'}
+                    </h2>
+                    <p className="text-blue-100 text-sm mt-1">
+                      {editingEjercicio
+                        ? 'Modifica los detalles del ejercicio'
+                        : 'Añade un nuevo ejercicio a tu biblioteca'}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setShowCreateModal(false);
+                      setEditingEjercicio(null);
+                    }}
+                    className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+                  >
+                    <X className="w-6 h-6" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Formulario */}
+              <div className="p-6 space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Nombre del ejercicio */}
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Nombre del Ejercicio *
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Ej: Sentadilla con barra"
+                      defaultValue={editingEjercicio?.name || ''}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                  </div>
+
+                  {/* Descripción */}
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Descripción
+                    </label>
+                    <textarea
+                      placeholder="Describe el ejercicio, técnica y beneficios..."
+                      rows={3}
+                      defaultValue={editingEjercicio?.description || ''}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                    />
+                  </div>
+
+                  {/* Categoría */}
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Categoría *
+                    </label>
+                    <select
+                      defaultValue={editingEjercicio?.category || ''}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Seleccionar categoría</option>
+                      <option value="piernas">Piernas</option>
+                      <option value="torso">Torso</option>
+                      <option value="espalda">Espalda</option>
+                      <option value="core">Core</option>
+                      <option value="brazos">Brazos</option>
+                      <option value="cardio">Cardio</option>
+                      <option value="flexibilidad">Flexibilidad</option>
+                      <option value="funcional">Funcional</option>
+                    </select>
+                  </div>
+
+                  {/* Dificultad */}
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Dificultad *
+                    </label>
+                    <select
+                      defaultValue={editingEjercicio?.difficulty || ''}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Seleccionar dificultad</option>
+                      <option value="principiante">Principiante</option>
+                      <option value="intermedio">Intermedio</option>
+                      <option value="avanzado">Avanzado</option>
+                      <option value="experto">Experto</option>
+                    </select>
+                  </div>
+
+                  {/* Material */}
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Material
+                    </label>
+                    <select
+                      defaultValue={editingEjercicio?.material || ''}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="peso corporal">Sin material</option>
+                      <option value="mancuernas">Mancuernas</option>
+                      <option value="barra">Barra</option>
+                      <option value="maquina">Máquina</option>
+                      <option value="gomas">Bandas</option>
+                      <option value="trx">TRX</option>
+                      <option value="kettlebell">Kettlebell</option>
+                    </select>
+                  </div>
+
+                  {/* Músculos objetivo */}
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Músculos Objetivo
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Ej: Cuádriceps, Glúteos"
+                      defaultValue={editingEjercicio?.muscleGroups.join(', ') || ''}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                  </div>
+                </div>
+
+                {/* Botones de acción */}
+                <div className="flex gap-3 pt-4 border-t border-gray-200">
+                  <button
+                    onClick={() => {
+                      setShowCreateModal(false);
+                      setEditingEjercicio(null);
+                    }}
+                    className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={() => {
+                      // Aquí iría la lógica para crear/editar el ejercicio
+                      console.log(editingEjercicio ? 'Editar ejercicio' : 'Crear ejercicio');
+                      setShowCreateModal(false);
+                      setEditingEjercicio(null);
+                    }}
+                    className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white rounded-xl font-semibold hover:opacity-90 transition-opacity"
+                  >
+                    {editingEjercicio ? 'Guardar Cambios' : 'Crear Ejercicio'}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </div>

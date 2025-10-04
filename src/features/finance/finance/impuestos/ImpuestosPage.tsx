@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import {
@@ -23,6 +23,19 @@ import {
 import Modal from '../../../../components/ui/modal';
 import ConfirmationModal from '../../../../components/ui/confirmation-modal';
 import InputModal from '../../../../components/ui/input-modal';
+import {
+  useGetDeclaracionesTrimestralesQuery,
+  useGetRetencionesIRPFQuery,
+  useGetOtrosImpuestosQuery,
+  useGetTasasImpuestoQuery,
+  useCreateDeclaracionFromPeriodoMutation,
+  useCreateOtroImpuestoMutation,
+  useUpdateOtroImpuestoMutation,
+  useDeleteOtroImpuestoMutation,
+  usePresentarDeclaracionMutation,
+  usePagarDeclaracionMutation,
+  useRegistrarPagoOtroImpuestoMutation,
+} from './impuestosApi';
 
 // ============================================================================
 // TIPOS Y INTERFACES
@@ -80,125 +93,34 @@ interface OtroImpuesto {
 }
 
 // ============================================================================
-// DATOS MOCKEADOS
-// ============================================================================
-
-const OPERACIONES_IVA: OperacionIVA[] = [
-  // TRIMESTRE 1
-  { id: '1', fecha: '2025-01-05', tipo: 'ingreso', clienteProveedor: 'Cliente A SL', baseImponible: 5000, porcentajeIVA: 21, cuotaIVA: 1050, total: 6050, numeroFactura: 'F-2025-001' },
-  { id: '2', fecha: '2025-01-12', tipo: 'gasto', clienteProveedor: 'Proveedor Tech', baseImponible: 800, porcentajeIVA: 21, cuotaIVA: 168, total: 968, numeroFactura: 'P-001' },
-  { id: '3', fecha: '2025-01-20', tipo: 'ingreso', clienteProveedor: 'Corporación Beta', baseImponible: 8500, porcentajeIVA: 21, cuotaIVA: 1785, total: 10285, numeroFactura: 'F-2025-002' },
-  { id: '4', fecha: '2025-02-03', tipo: 'gasto', clienteProveedor: 'Suministros Office', baseImponible: 450, porcentajeIVA: 21, cuotaIVA: 94.5, total: 544.5, numeroFactura: 'P-002' },
-  { id: '5', fecha: '2025-02-15', tipo: 'ingreso', clienteProveedor: 'StartUp Gamma', baseImponible: 3200, porcentajeIVA: 21, cuotaIVA: 672, total: 3872, numeroFactura: 'F-2025-003' },
-  { id: '6', fecha: '2025-02-25', tipo: 'gasto', clienteProveedor: 'Asesoría Legal', baseImponible: 1200, porcentajeIVA: 21, cuotaIVA: 252, total: 1452, numeroFactura: 'P-003' },
-  { id: '7', fecha: '2025-03-10', tipo: 'ingreso', clienteProveedor: 'Industrias Delta', baseImponible: 12000, porcentajeIVA: 21, cuotaIVA: 2520, total: 14520, numeroFactura: 'F-2025-004' },
-  { id: '8', fecha: '2025-03-15', tipo: 'gasto', clienteProveedor: 'Alquiler Oficina', baseImponible: 1500, porcentajeIVA: 21, cuotaIVA: 315, total: 1815, numeroFactura: 'P-004' },
-  { id: '9', fecha: '2025-03-22', tipo: 'ingreso', clienteProveedor: 'Consultoría Epsilon', baseImponible: 4500, porcentajeIVA: 21, cuotaIVA: 945, total: 5445, numeroFactura: 'F-2025-005' },
-  { id: '10', fecha: '2025-03-28', tipo: 'gasto', clienteProveedor: 'Software SaaS', baseImponible: 600, porcentajeIVA: 21, cuotaIVA: 126, total: 726, numeroFactura: 'P-005' },
-
-  // TRIMESTRE 2
-  { id: '11', fecha: '2025-04-08', tipo: 'ingreso', clienteProveedor: 'Grupo Zeta', baseImponible: 9500, porcentajeIVA: 21, cuotaIVA: 1995, total: 11495, numeroFactura: 'F-2025-006' },
-  { id: '12', fecha: '2025-04-15', tipo: 'gasto', clienteProveedor: 'Marketing Digital', baseImponible: 2000, porcentajeIVA: 21, cuotaIVA: 420, total: 2420, numeroFactura: 'P-006' },
-  { id: '13', fecha: '2025-04-22', tipo: 'ingreso', clienteProveedor: 'Cliente A SL', baseImponible: 6200, porcentajeIVA: 21, cuotaIVA: 1302, total: 7502, numeroFactura: 'F-2025-007' },
-  { id: '14', fecha: '2025-05-05', tipo: 'gasto', clienteProveedor: 'Suministros Office', baseImponible: 380, porcentajeIVA: 21, cuotaIVA: 79.8, total: 459.8, numeroFactura: 'P-007' },
-  { id: '15', fecha: '2025-05-12', tipo: 'ingreso', clienteProveedor: 'Tech Solutions', baseImponible: 15000, porcentajeIVA: 21, cuotaIVA: 3150, total: 18150, numeroFactura: 'F-2025-008' },
-  { id: '16', fecha: '2025-05-20', tipo: 'gasto', clienteProveedor: 'Formación Equipo', baseImponible: 1800, porcentajeIVA: 21, cuotaIVA: 378, total: 2178, numeroFactura: 'P-008' },
-  { id: '17', fecha: '2025-06-03', tipo: 'ingreso', clienteProveedor: 'Corporación Beta', baseImponible: 7800, porcentajeIVA: 21, cuotaIVA: 1638, total: 9438, numeroFactura: 'F-2025-009' },
-  { id: '18', fecha: '2025-06-10', tipo: 'gasto', clienteProveedor: 'Alquiler Oficina', baseImponible: 1500, porcentajeIVA: 21, cuotaIVA: 315, total: 1815, numeroFactura: 'P-009' },
-  { id: '19', fecha: '2025-06-18', tipo: 'ingreso', clienteProveedor: 'StartUp Gamma', baseImponible: 5400, porcentajeIVA: 21, cuotaIVA: 1134, total: 6534, numeroFactura: 'F-2025-010' },
-  { id: '20', fecha: '2025-06-25', tipo: 'gasto', clienteProveedor: 'Software SaaS', baseImponible: 600, porcentajeIVA: 21, cuotaIVA: 126, total: 726, numeroFactura: 'P-010' },
-
-  // TRIMESTRE 3
-  { id: '21', fecha: '2025-07-05', tipo: 'ingreso', clienteProveedor: 'Industrias Delta', baseImponible: 11000, porcentajeIVA: 21, cuotaIVA: 2310, total: 13310, numeroFactura: 'F-2025-011' },
-  { id: '22', fecha: '2025-07-12', tipo: 'gasto', clienteProveedor: 'Proveedor Tech', baseImponible: 950, porcentajeIVA: 21, cuotaIVA: 199.5, total: 1149.5, numeroFactura: 'P-011' },
-  { id: '23', fecha: '2025-07-20', tipo: 'ingreso', clienteProveedor: 'Grupo Zeta', baseImponible: 8900, porcentajeIVA: 21, cuotaIVA: 1869, total: 10769, numeroFactura: 'F-2025-012' },
-  { id: '24', fecha: '2025-08-03', tipo: 'gasto', clienteProveedor: 'Marketing Digital', baseImponible: 1500, porcentajeIVA: 21, cuotaIVA: 315, total: 1815, numeroFactura: 'P-012' },
-  { id: '25', fecha: '2025-08-15', tipo: 'ingreso', clienteProveedor: 'Tech Solutions', baseImponible: 13500, porcentajeIVA: 21, cuotaIVA: 2835, total: 16335, numeroFactura: 'F-2025-013' },
-  { id: '26', fecha: '2025-08-22', tipo: 'gasto', clienteProveedor: 'Alquiler Oficina', baseImponible: 1500, porcentajeIVA: 21, cuotaIVA: 315, total: 1815, numeroFactura: 'P-013' },
-  { id: '27', fecha: '2025-09-05', tipo: 'ingreso', clienteProveedor: 'Cliente A SL', baseImponible: 7200, porcentajeIVA: 21, cuotaIVA: 1512, total: 8712, numeroFactura: 'F-2025-014' },
-  { id: '28', fecha: '2025-09-12', tipo: 'gasto', clienteProveedor: 'Suministros Office', baseImponible: 420, porcentajeIVA: 21, cuotaIVA: 88.2, total: 508.2, numeroFactura: 'P-014' },
-  { id: '29', fecha: '2025-09-20', tipo: 'ingreso', clienteProveedor: 'Consultoría Epsilon', baseImponible: 6800, porcentajeIVA: 21, cuotaIVA: 1428, total: 8228, numeroFactura: 'F-2025-015' },
-  { id: '30', fecha: '2025-09-28', tipo: 'gasto', clienteProveedor: 'Software SaaS', baseImponible: 600, porcentajeIVA: 21, cuotaIVA: 126, total: 726, numeroFactura: 'P-015' },
-
-  // TRIMESTRE 4 (futuro)
-  { id: '31', fecha: '2025-10-08', tipo: 'ingreso', clienteProveedor: 'Corporación Beta', baseImponible: 9200, porcentajeIVA: 21, cuotaIVA: 1932, total: 11132, numeroFactura: 'F-2025-016' },
-  { id: '32', fecha: '2025-10-15', tipo: 'gasto', clienteProveedor: 'Proveedor Tech', baseImponible: 1100, porcentajeIVA: 21, cuotaIVA: 231, total: 1331, numeroFactura: 'P-016' },
-  { id: '33', fecha: '2025-10-22', tipo: 'ingreso', clienteProveedor: 'StartUp Gamma', baseImponible: 4800, porcentajeIVA: 21, cuotaIVA: 1008, total: 5808, numeroFactura: 'F-2025-017' },
-  { id: '34', fecha: '2025-11-05', tipo: 'gasto', clienteProveedor: 'Marketing Digital', baseImponible: 2200, porcentajeIVA: 21, cuotaIVA: 462, total: 2662, numeroFactura: 'P-017' },
-  { id: '35', fecha: '2025-11-12', tipo: 'ingreso', clienteProveedor: 'Tech Solutions', baseImponible: 16500, porcentajeIVA: 21, cuotaIVA: 3465, total: 19965, numeroFactura: 'F-2025-018' },
-  { id: '36', fecha: '2025-11-20', tipo: 'gasto', clienteProveedor: 'Alquiler Oficina', baseImponible: 1500, porcentajeIVA: 21, cuotaIVA: 315, total: 1815, numeroFactura: 'P-018' },
-  { id: '37', fecha: '2025-12-03', tipo: 'ingreso', clienteProveedor: 'Industrias Delta', baseImponible: 10500, porcentajeIVA: 21, cuotaIVA: 2205, total: 12705, numeroFactura: 'F-2025-019' },
-  { id: '38', fecha: '2025-12-10', tipo: 'gasto', clienteProveedor: 'Formación Equipo', baseImponible: 1600, porcentajeIVA: 21, cuotaIVA: 336, total: 1936, numeroFactura: 'P-019' },
-  { id: '39', fecha: '2025-12-18', tipo: 'ingreso', clienteProveedor: 'Grupo Zeta', baseImponible: 8700, porcentajeIVA: 21, cuotaIVA: 1827, total: 10527, numeroFactura: 'F-2025-020' },
-  { id: '40', fecha: '2025-12-28', tipo: 'gasto', clienteProveedor: 'Software SaaS', baseImponible: 600, porcentajeIVA: 21, cuotaIVA: 126, total: 726, numeroFactura: 'P-020' },
-];
-
-const RETENCIONES_IRPF: RetencionIRPF[] = [
-  { id: '1', fecha: '2025-01-20', cliente: 'Corporación Beta', baseRetencion: 8500, porcentaje: 15, importeRetenido: 1275, facturaAsociada: 'F-2025-002' },
-  { id: '2', fecha: '2025-02-15', cliente: 'StartUp Gamma', baseRetencion: 3200, porcentaje: 15, importeRetenido: 480, facturaAsociada: 'F-2025-003' },
-  { id: '3', fecha: '2025-03-10', cliente: 'Industrias Delta', baseRetencion: 12000, porcentaje: 15, importeRetenido: 1800, facturaAsociada: 'F-2025-004' },
-  { id: '4', fecha: '2025-03-22', cliente: 'Consultoría Epsilon', baseRetencion: 4500, porcentaje: 15, importeRetenido: 675, facturaAsociada: 'F-2025-005' },
-  { id: '5', fecha: '2025-04-22', cliente: 'Cliente A SL', baseRetencion: 6200, porcentaje: 15, importeRetenido: 930, facturaAsociada: 'F-2025-007' },
-  { id: '6', fecha: '2025-05-12', cliente: 'Tech Solutions', baseRetencion: 15000, porcentaje: 15, importeRetenido: 2250, facturaAsociada: 'F-2025-008' },
-  { id: '7', fecha: '2025-06-03', cliente: 'Corporación Beta', baseRetencion: 7800, porcentaje: 15, importeRetenido: 1170, facturaAsociada: 'F-2025-009' },
-  { id: '8', fecha: '2025-06-18', cliente: 'StartUp Gamma', baseRetencion: 5400, porcentaje: 15, importeRetenido: 810, facturaAsociada: 'F-2025-010' },
-  { id: '9', fecha: '2025-07-05', cliente: 'Industrias Delta', baseRetencion: 11000, porcentaje: 15, importeRetenido: 1650, facturaAsociada: 'F-2025-011' },
-  { id: '10', fecha: '2025-07-20', cliente: 'Grupo Zeta', baseRetencion: 8900, porcentaje: 15, importeRetenido: 1335, facturaAsociada: 'F-2025-012' },
-  { id: '11', fecha: '2025-08-15', cliente: 'Tech Solutions', baseRetencion: 13500, porcentaje: 15, importeRetenido: 2025, facturaAsociada: 'F-2025-013' },
-  { id: '12', fecha: '2025-09-05', cliente: 'Cliente A SL', baseRetencion: 7200, porcentaje: 15, importeRetenido: 1080, facturaAsociada: 'F-2025-014' },
-  { id: '13', fecha: '2025-09-20', cliente: 'Consultoría Epsilon', baseRetencion: 6800, porcentaje: 15, importeRetenido: 1020, facturaAsociada: 'F-2025-015' },
-];
-
-const DECLARACIONES: Declaracion[] = [
-  { id: '1', tipo: 'IVA', modelo: '303', periodo: 'Q1 2025', fechaDeclaracion: '2025-04-20', resultado: 4516.5, estado: 'pagado', fechaLimite: '2025-04-20' },
-  { id: '2', tipo: 'IRPF', modelo: '130', periodo: 'Q1 2025', fechaDeclaracion: '2025-04-20', resultado: 1240, estado: 'pagado', fechaLimite: '2025-04-20' },
-  { id: '3', tipo: 'IVA', modelo: '303', periodo: 'Q2 2025', fechaDeclaracion: '2025-07-20', resultado: 6125.2, estado: 'pagado', fechaLimite: '2025-07-20' },
-  { id: '4', tipo: 'IRPF', modelo: '130', periodo: 'Q2 2025', fechaDeclaracion: '2025-07-20', resultado: 1580, estado: 'pagado', fechaLimite: '2025-07-20' },
-  { id: '5', tipo: 'IVA', modelo: '303', periodo: 'Q3 2025', fechaDeclaracion: '2025-10-20', resultado: 5456.3, estado: 'presentado', fechaLimite: '2025-10-20' },
-  { id: '6', tipo: 'IRPF', modelo: '130', periodo: 'Q3 2025', fechaDeclaracion: '2025-10-20', resultado: 1390, estado: 'presentado', fechaLimite: '2025-10-20' },
-  { id: '7', tipo: 'IVA', modelo: '303', periodo: 'Q4 2025', fechaDeclaracion: '', resultado: 0, estado: 'pendiente', fechaLimite: '2026-01-20' },
-];
-
-const OTROS_IMPUESTOS: OtroImpuesto[] = [
-  { id: '1', nombre: 'IAE (Impuesto Actividades Económicas)', importeAnual: 450, frecuencia: 'Anual', proximoVencimiento: '2026-09-15', estado: 'pendiente' },
-  { id: '2', nombre: 'Tasa de Basuras', importeAnual: 180, frecuencia: 'Anual', proximoVencimiento: '2026-06-30', estado: 'pendiente' },
-  { id: '3', nombre: 'Licencia Municipal', importeAnual: 320, frecuencia: 'Anual', proximoVencimiento: '2026-03-31', estado: 'pendiente' },
-];
-
-// ============================================================================
 // FUNCIONES DE CÁLCULO
 // ============================================================================
 
-const calcularResumenTrimestral = (trimestre: number): ResumenTrimestral => {
-  const operacionesTrimestre = OPERACIONES_IVA.filter(op => {
-    const mes = new Date(op.fecha).getMonth() + 1;
-    return Math.ceil(mes / 3) === trimestre;
-  });
+const calcularResumenTrimestral = (trimestre: number, declaraciones: any[]): ResumenTrimestral => {
+  // Get declaracion data for this quarter
+  const declaracion = declaraciones.find(d => d.periodo === `Q${trimestre} 2025` && d.tipo === 'IVA');
 
-  const ivaRepercutido = operacionesTrimestre
-    .filter(op => op.tipo === 'ingreso')
-    .reduce((sum, op) => sum + op.cuotaIVA, 0);
-
-  const ivaSoportado = operacionesTrimestre
-    .filter(op => op.tipo === 'gasto')
-    .reduce((sum, op) => sum + op.cuotaIVA, 0);
-
-  const resultado = ivaRepercutido - ivaSoportado;
-
-  let estado: 'pendiente' | 'declarado' | 'pagado' = 'pendiente';
-  const declaracion = DECLARACIONES.find(d => d.periodo === `Q${trimestre} 2025` && d.tipo === 'IVA');
   if (declaracion) {
-    estado = declaracion.estado === 'pagado' ? 'pagado' : 'declarado';
+    // Use data from API if available
+    return {
+      trimestre,
+      ivaRepercutido: declaracion.ivaRepercutido || 0,
+      ivaSoportado: declaracion.ivaSoportado || 0,
+      resultado: declaracion.resultado || 0,
+      estado: declaracion.estado === 'pagado' ? 'pagado' : declaracion.estado === 'presentado' ? 'declarado' : 'pendiente',
+      fechaLimite: declaracion.fechaLimite || `2025-${(trimestre * 3 + 1).toString().padStart(2, '0')}-20`,
+    };
   }
 
+  // Default values if no data available
   const fechaLimite = `2025-${(trimestre * 3 + 1).toString().padStart(2, '0')}-20`;
 
   return {
     trimestre,
-    ivaRepercutido,
-    ivaSoportado,
-    resultado,
-    estado,
+    ivaRepercutido: 0,
+    ivaSoportado: 0,
+    resultado: 0,
+    estado: 'pendiente',
     fechaLimite,
   };
 };
@@ -208,11 +130,71 @@ const calcularResumenTrimestral = (trimestre: number): ResumenTrimestral => {
 // ============================================================================
 
 const ImpuestosPage: React.FC = () => {
+  // Fetch real data from APIs
+  const { data: declaracionesData, isLoading: loadingDeclaraciones } = useGetDeclaracionesTrimestralesQuery();
+  const { data: retencionesData, isLoading: loadingRetenciones } = useGetRetencionesIRPFQuery();
+  const { data: otrosImpuestosData, isLoading: loadingOtros } = useGetOtrosImpuestosQuery();
+  const { data: tasasImpuestoData } = useGetTasasImpuestoQuery();
+
+  // Debug: Log API responses
+  console.log('🔍 API Data Debug:', {
+    declaracionesData,
+    retencionesData,
+    otrosImpuestosData,
+    tasasImpuestoData,
+    loadingDeclaraciones,
+    loadingRetenciones,
+    loadingOtros
+  });
+
+  // Normalize data to ensure arrays - extract from API response wrapper
+  const declaraciones = useMemo(() => {
+    const result = declaracionesData?.data && Array.isArray(declaracionesData.data)
+      ? declaracionesData.data
+      : [];
+    console.log('📊 Declaraciones normalized:', result);
+    return result;
+  }, [declaracionesData]);
+
+  const retenciones = useMemo(() => {
+    const result = retencionesData?.data && Array.isArray(retencionesData.data)
+      ? retencionesData.data
+      : [];
+    console.log('📊 Retenciones normalized:', result);
+    return result;
+  }, [retencionesData]);
+
+  const otrosImpuestos = useMemo(() => {
+    const result = otrosImpuestosData?.data && Array.isArray(otrosImpuestosData.data)
+      ? otrosImpuestosData.data
+      : [];
+    console.log('📊 Otros Impuestos normalized:', result);
+    return result;
+  }, [otrosImpuestosData]);
+
+  const tasasImpuesto = useMemo(() => {
+    const result = tasasImpuestoData?.data && Array.isArray(tasasImpuestoData.data)
+      ? tasasImpuestoData.data
+      : [];
+    console.log('📊 Tasas Impuesto normalized:', result);
+    return result;
+  }, [tasasImpuestoData]);
+
+  // Mutations
+  const [createDeclaracion] = useCreateDeclaracionFromPeriodoMutation();
+  const [presentarDeclaracion] = usePresentarDeclaracionMutation();
+  const [pagarDeclaracion] = usePagarDeclaracionMutation();
+
+  const [createOtroImpuesto] = useCreateOtroImpuestoMutation();
+  const [updateOtroImpuesto] = useUpdateOtroImpuestoMutation();
+  const [deleteOtroImpuesto] = useDeleteOtroImpuestoMutation();
+  const [registrarPagoOtro] = useRegistrarPagoOtroImpuestoMutation();
+
   const [ejercicioFiscal, setEjercicioFiscal] = useState('2025');
   const [trimestreSeleccionado, setTrimestreSeleccionado] = useState<number | null>(null);
   const [tabActiva, setTabActiva] = useState<'iva' | 'irpf' | 'otros' | 'declaraciones' | 'configuracion'>('iva');
   const [filtroOperaciones, setFiltroOperaciones] = useState<'todos' | 'ingresos' | 'gastos'>('todos');
-  
+
   // Estados para modales
   const [modalConfiguracion, setModalConfiguracion] = useState(false);
   const [modalNuevaDeclaracion, setModalNuevaDeclaracion] = useState(false);
@@ -221,12 +203,12 @@ const ImpuestosPage: React.FC = () => {
   const [modalDetallesDeclaracion, setModalDetallesDeclaracion] = useState(false);
   const [impuestoSeleccionado, setImpuestoSeleccionado] = useState<OtroImpuesto | null>(null);
   const [declaracionSeleccionada, setDeclaracionSeleccionada] = useState<Declaracion | null>(null);
-  
+
   // Estados para confirmaciones
   const [confirmacionEliminar, setConfirmacionEliminar] = useState(false);
   const [confirmacionGenerar, setConfirmacionGenerar] = useState(false);
   const [tipoGeneracion, setTipoGeneracion] = useState<string>('');
-  
+
   // Estados para formularios
   const [datosFiscales, setDatosFiscales] = useState({
     nif: 'B12345678',
@@ -235,58 +217,45 @@ const ImpuestosPage: React.FC = () => {
     epigrafeIAE: '831.9',
     regimenFiscal: 'Régimen General'
   });
-  
+
   const [configuracionIVA, setConfiguracionIVA] = useState({
     tipoIVA: '21',
     aplicarIVA21: true,
     recargoEquivalencia: false
   });
-  
-  
+
+
   // Estados para calculadoras
   const [calculadoraIVA, setCalculadoraIVA] = useState({
     baseImponible: '',
     porcentajeIVA: '21'
   });
-  
+
   const [calculadoraIRPF, setCalculadoraIRPF] = useState({
     baseRetencion: '',
     porcentajeRetencion: '15'
   });
 
-  // Cálculos principales
-  const totalIVARepercutido = OPERACIONES_IVA
-    .filter(op => op.tipo === 'ingreso')
-    .reduce((sum, op) => sum + op.cuotaIVA, 0);
+  // Cálculos principales usando datos de la API
+  const totalIVARepercutido = declaraciones
+    .filter(d => d.tipo === 'IVA')
+    .reduce((sum, d) => sum + (d.ivaRepercutido || 0), 0);
 
-  const totalIVASoportado = OPERACIONES_IVA
-    .filter(op => op.tipo === 'gasto')
-    .reduce((sum, op) => sum + op.cuotaIVA, 0);
+  const totalIVASoportado = declaraciones
+    .filter(d => d.tipo === 'IVA')
+    .reduce((sum, d) => sum + (d.ivaSoportado || 0), 0);
 
   const resultadoIVA = totalIVARepercutido - totalIVASoportado;
 
-  const totalIRPFRetenido = RETENCIONES_IRPF.reduce((sum, r) => sum + r.importeRetenido, 0);
+  const totalIRPFRetenido = retenciones.reduce((sum, r) => sum + r.importeRetenido, 0);
 
-  const resumenTrimestres = [1, 2, 3, 4].map(t => calcularResumenTrimestral(t));
+  const resumenTrimestres = [1, 2, 3, 4].map(t => calcularResumenTrimestral(t, declaraciones));
 
-  // Filtrar operaciones
-  const operacionesFiltradas = OPERACIONES_IVA.filter(op => {
-    // Filtro por tipo de operación
-    if (filtroOperaciones === 'ingresos') return op.tipo === 'ingreso';
-    if (filtroOperaciones === 'gastos') return op.tipo === 'gasto';
-    
-    // Filtro por trimestre si está seleccionado
-    if (trimestreSeleccionado) {
-      const mes = new Date(op.fecha).getMonth() + 1;
-      const trimestreOperacion = Math.ceil(mes / 3);
-      return trimestreOperacion === trimestreSeleccionado;
-    }
-    
-    return true;
-  });
+  // Filtrar operaciones (now using API data - operaciones will come from declaraciones)
+  const operacionesFiltradas: any[] = []; // Will be populated when operaciones endpoint is available
 
   // Filtrar resumen trimestral
-  const resumenTrimestresFiltrado = trimestreSeleccionado 
+  const resumenTrimestresFiltrado = trimestreSeleccionado
     ? resumenTrimestres.filter(t => t.trimestre === trimestreSeleccionado)
     : resumenTrimestres;
 
@@ -577,7 +546,7 @@ const ImpuestosPage: React.FC = () => {
             </div>
             <p className="text-sm font-medium text-gray-600 mb-1">IRPF Retenido</p>
             <p className="text-3xl font-bold text-purple-600">{totalIRPFRetenido.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}</p>
-            <p className="text-xs text-gray-500 mt-1">{RETENCIONES_IRPF.length} retenciones 15%</p>
+            <p className="text-xs text-gray-500 mt-1">{retenciones.length} retenciones</p>
           </motion.div>
         </div>
       </div>
@@ -684,7 +653,7 @@ const ImpuestosPage: React.FC = () => {
                   </h2>
                   {(trimestreSeleccionado || filtroOperaciones !== 'todos') && (
                     <p className="text-sm text-slate-600 mt-1">
-                      Mostrando {operacionesFiltradas.length} de {OPERACIONES_IVA.length} operaciones
+                      Mostrando operaciones filtradas
                       {trimestreSeleccionado && ` • Trimestre Q${trimestreSeleccionado}`}
                       {filtroOperaciones !== 'todos' && ` • ${filtroOperaciones === 'ingresos' ? 'Solo ingresos' : 'Solo gastos'}`}
                     </p>
@@ -896,7 +865,7 @@ const ImpuestosPage: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {RETENCIONES_IRPF.map((ret) => (
+                    {retenciones.map((ret) => (
                       <tr key={ret.id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
                         <td className="p-3 text-sm text-slate-600">{new Date(ret.fecha).toLocaleDateString('es-ES')}</td>
                         <td className="p-3 text-sm text-slate-800">{ret.cliente}</td>
@@ -934,12 +903,10 @@ const ImpuestosPage: React.FC = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 {[1, 2, 3, 4].map((q) => {
-                  const ingresosQ = OPERACIONES_IVA
-                    .filter(op => op.tipo === 'ingreso' && Math.ceil((new Date(op.fecha).getMonth() + 1) / 3) === q)
-                    .reduce((sum, op) => sum + op.baseImponible, 0);
-                  const gastosQ = OPERACIONES_IVA
-                    .filter(op => op.tipo === 'gasto' && Math.ceil((new Date(op.fecha).getMonth() + 1) / 3) === q)
-                    .reduce((sum, op) => sum + op.baseImponible, 0);
+                  // Get declaracion for this quarter if available
+                  const declaracion = declaraciones.find(d => d.periodo === `Q${q} 2025` && d.tipo === 'IRPF');
+                  const ingresosQ = declaracion?.ingresos || 0;
+                  const gastosQ = declaracion?.gastos || 0;
                   const rendimientoNeto = (ingresosQ - gastosQ) * 0.2; // 20% del rendimiento
 
                   return (
@@ -992,10 +959,10 @@ const ImpuestosPage: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {Array.from(new Set(RETENCIONES_IRPF.map(r => r.cliente))).map((cliente) => {
-                      const retenciones = RETENCIONES_IRPF.filter(r => r.cliente === cliente);
-                      const totalPercibido = retenciones.reduce((sum, r) => sum + r.baseRetencion, 0);
-                      const totalRetenido = retenciones.reduce((sum, r) => sum + r.importeRetenido, 0);
+                    {Array.from(new Set(retenciones.map(r => r.cliente))).map((cliente) => {
+                      const retencionesCliente = retenciones.filter(r => r.cliente === cliente);
+                      const totalPercibido = retencionesCliente.reduce((sum, r) => sum + r.baseRetencion, 0);
+                      const totalRetenido = retencionesCliente.reduce((sum, r) => sum + r.importeRetenido, 0);
 
                       return (
                         <tr key={cliente} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
@@ -1007,7 +974,7 @@ const ImpuestosPage: React.FC = () => {
                           <td className="p-3 text-sm text-right font-bold text-purple-600">
                             {totalRetenido.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
                           </td>
-                          <td className="p-3 text-sm text-center text-slate-600">{retenciones.length}</td>
+                          <td className="p-3 text-sm text-center text-slate-600">{retencionesCliente.length}</td>
                         </tr>
                       );
                     })}
@@ -1044,7 +1011,7 @@ const ImpuestosPage: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {OTROS_IMPUESTOS.map((impuesto) => (
+                {otrosImpuestos.map((impuesto) => (
                   <div key={impuesto.id} className="border-2 border-slate-200 rounded-lg p-5 hover:border-blue-400 transition-colors">
                     <div className="flex items-center justify-between mb-3">
                       <h3 className="font-bold text-slate-800">{impuesto.nombre}</h3>
@@ -1117,7 +1084,7 @@ const ImpuestosPage: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {DECLARACIONES.map((decl) => (
+                    {declaraciones.map((decl) => (
                       <tr key={decl.id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
                         <td className="p-3">
                           <span className={`inline-block px-2 py-1 rounded text-xs font-semibold ${
@@ -1748,19 +1715,9 @@ const ImpuestosPage: React.FC = () => {
                 <h3 className="text-lg font-semibold text-slate-800 mb-4">Desglose Trimestral</h3>
                 <div className="space-y-3">
                   {(() => {
-                    const trimestre = parseInt(declaracionSeleccionada.periodo.split(' ')[0].replace('Q', ''));
-                    const operacionesTrimestre = OPERACIONES_IVA.filter(op => {
-                      const mes = new Date(op.fecha).getMonth() + 1;
-                      return Math.ceil(mes / 3) === trimestre;
-                    });
-                    
-                    const ivaRepercutido = operacionesTrimestre
-                      .filter(op => op.tipo === 'ingreso')
-                      .reduce((sum, op) => sum + op.cuotaIVA, 0);
-                    
-                    const ivaSoportado = operacionesTrimestre
-                      .filter(op => op.tipo === 'gasto')
-                      .reduce((sum, op) => sum + op.cuotaIVA, 0);
+                    // Use data from the declaracion itself if available
+                    const ivaRepercutido = declaracionSeleccionada.ivaRepercutido || 0;
+                    const ivaSoportado = declaracionSeleccionada.ivaSoportado || 0;
 
                     return (
                       <>
@@ -1783,7 +1740,7 @@ const ImpuestosPage: React.FC = () => {
                           </span>
                         </div>
                         <div className="text-sm text-slate-500 mt-2">
-                          {operacionesTrimestre.length} operaciones registradas en este trimestre
+                          Datos del trimestre {declaracionSeleccionada.periodo}
                         </div>
                       </>
                     );

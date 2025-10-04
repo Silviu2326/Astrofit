@@ -51,12 +51,14 @@ const LeadCard: React.FC<LeadCardProps> = ({ lead, dragHandleProps }) => {
   const handleCall = () => alert(`Llamando a ${lead.name} (${lead.phone})`);
   const handleEmail = () => alert(`Enviando email a ${lead.name} (${lead.email})`);
   const handleSchedule = () => {
-    navigate('/pagina-reserva');
+    navigate('/dashboard/pagina-reserva');
   };
   const handleWhatsApp = () => alert(`Abriendo WhatsApp con ${lead.name}`);
   const handleEdit = () => alert(`Editando lead: ${lead.name}`);
   const handleDelete = () => alert(`Eliminando lead: ${lead.name}`);
-  const handleViewDetails = () => setIsExpanded(!isExpanded);
+  const handleViewDetails = () => {
+    navigate(`/lead-detalle/${lead.id}`);
+  };
 
   const getOriginIcon = (origin: string) => {
     switch (origin) {

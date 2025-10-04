@@ -10,7 +10,8 @@ import {
   LayoutGrid,
   LayoutList,
   Plus,
-  Activity
+  Activity,
+  X
 } from 'lucide-react';
 import { DietasTable } from './components/DietasTable';
 import { DietasFilters } from './components/DietasFilters';
@@ -23,6 +24,7 @@ const DietasListadoPage: React.FC = () => {
   const [allDietas, setAllDietas] = useState<Dieta[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('cards');
+  const [showNewDietModal, setShowNewDietModal] = useState(false);
   const [filters, setFilters] = useState({
     estado: '',
     search: '',
@@ -34,7 +36,23 @@ const DietasListadoPage: React.FC = () => {
   useEffect(() => {
     const fetchDietas = async () => {
       setLoading(true);
+
+      // Debug: Verificar usuario actual
+      const currentUserStr = localStorage.getItem('currentUser');
+      const token = localStorage.getItem('token');
+
+      try {
+        const currentUser = currentUserStr && currentUserStr !== 'undefined' ? JSON.parse(currentUserStr) : null;
+        console.log('🔍 Usuario actual:', currentUser);
+        console.log('🔑 Token presente:', !!token);
+      } catch (e) {
+        console.error('❌ Error al parsear usuario:', e);
+        console.log('📝 currentUser raw:', currentUserStr);
+      }
+
       const data = await getDietas(filters);
+      console.log('📊 Dietas recibidas del backend:', data.length, data);
+
       setDietas(data);
       if (!allDietas.length) {
         const allData = await getDietas({});
@@ -234,7 +252,7 @@ const DietasListadoPage: React.FC = () => {
         <DietasFilters onFilterChange={handleFilterChange} currentFilters={filters} />
 
         <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
-          <DietasActions />
+          <DietasActions onNewDietClick={() => setShowNewDietModal(true)} />
 
           {/* Toggle Vista */}
           <div className="flex items-center gap-2 bg-white/80 backdrop-blur-xl rounded-2xl p-2 shadow-lg border border-white/50">
@@ -281,8 +299,8 @@ const DietasListadoPage: React.FC = () => {
           <Apple className="w-16 h-16 text-gray-400 mx-auto mb-4" />
           <h3 className="text-2xl font-bold text-gray-900 mb-2">No se encontraron dietas</h3>
           <p className="text-gray-600 mb-6">Intenta ajustar los filtros o crea una nueva dieta</p>
-          <button
-            onClick={() => window.dispatchEvent(new CustomEvent('app:navigate', { detail: { page: 'dieta-nueva' } }))}
+          <button 
+            onClick={() => setShowNewDietModal(true)}
             className="px-6 py-3 bg-gradient-to-br from-lime-500 to-green-500 text-white rounded-2xl font-semibold hover:shadow-xl transition-all duration-300 flex items-center gap-2 mx-auto"
           >
             <Plus className="w-5 h-5" />
@@ -308,13 +326,250 @@ const DietasListadoPage: React.FC = () => {
 
       {/* Botón flotante Nueva Dieta */}
       <motion.button
-        onClick={() => window.dispatchEvent(new CustomEvent('app:navigate', { detail: { page: 'dieta-nueva' } }))}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
+        onClick={() => setShowNewDietModal(true)}
         className="fixed bottom-8 right-8 w-16 h-16 bg-gradient-to-br from-lime-500 to-green-600 rounded-full shadow-2xl flex items-center justify-center text-white hover:shadow-lime-500/50 transition-all duration-300 z-50"
       >
         <Plus className="w-8 h-8" />
       </motion.button>
+
+      {/* MODAL NUEVA DIETA */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-6"
+        onClick={() => setShowNewDietModal(false)}
+        style={{ display: showNewDietModal ? 'flex' : 'none' }}
+      >
+        <motion.div
+          initial={{ scale: 0.9, y: 20 }}
+          animate={{ scale: 1, y: 0 }}
+          exit={{ scale: 0.9, y: 20 }}
+          onClick={(e) => e.stopPropagation()}
+          className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+        >
+          {/* Header del modal */}
+          <div className="bg-gradient-to-r from-lime-600 via-green-600 to-emerald-600 text-white p-6 rounded-t-2xl">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-bold">Nueva Dieta</h2>
+                <p className="text-lime-100 text-sm mt-1">
+                  Asigna un plan nutricional a un cliente
+                </p>
+              </div>
+              <button
+                onClick={() => setShowNewDietModal(false)}
+                className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+          </div>
+
+          {/* Formulario */}
+          <div className="p-6 space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Cliente */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Cliente *
+                </label>
+                <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent">
+                  <option value="">Seleccionar cliente</option>
+                  <option value="cliente1">María González</option>
+                  <option value="cliente2">Carlos Rodríguez</option>
+                  <option value="cliente3">Ana Martínez</option>
+                  <option value="cliente4">Luis Fernández</option>
+                </select>
+              </div>
+
+              {/* Plantilla de dieta */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Plantilla de Dieta *
+                </label>
+                <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent">
+                  <option value="">Seleccionar plantilla</option>
+                  <option value="keto">Dieta Keto para Principiantes</option>
+                  <option value="volumen">Volumen Rápido y Efectivo</option>
+                  <option value="mantenimiento">Mantenimiento Sin Cocina</option>
+                  <option value="mediterranea">Mediterránea Saludable</option>
+                  <option value="vegana">Vegana Alta en Proteína</option>
+                  <option value="definicion">Definición Extrema</option>
+                  <option value="intermitente">Ayuno Intermitente 16/8</option>
+                  <option value="vegetariana">Vegetariana Equilibrada</option>
+                  <option value="paleo">Paleo Performance</option>
+                  <option value="volumen-limpio">Volumen Limpio Premium</option>
+                </select>
+              </div>
+
+              {/* Objetivo */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Objetivo *
+                </label>
+                <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent">
+                  <option value="">Seleccionar objetivo</option>
+                  <option value="perdida_peso">Pérdida de Peso</option>
+                  <option value="ganancia_muscular">Ganancia Muscular</option>
+                  <option value="mantenimiento">Mantenimiento</option>
+                  <option value="definicion">Definición</option>
+                  <option value="volumen_limpio">Volumen Limpio</option>
+                  <option value="rendimiento">Rendimiento</option>
+                  <option value="salud_general">Salud General</option>
+                  <option value="recomposicion">Recomposición</option>
+                </select>
+              </div>
+
+              {/* Duración */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Duración (semanas) *
+                </label>
+                <input
+                  type="number"
+                  placeholder="Ej: 8"
+                  min="1"
+                  max="52"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent"
+                />
+              </div>
+
+              {/* Fecha de inicio */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Fecha de Inicio *
+                </label>
+                <input
+                  type="date"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent"
+                />
+              </div>
+
+              {/* Nutricionista */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Nutricionista Asignado
+                </label>
+                <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent">
+                  <option value="">Asignar nutricionista</option>
+                  <option value="nutri1">Dra. María González</option>
+                  <option value="nutri2">Lic. Carlos Rodríguez</option>
+                  <option value="nutri3">Nutr. Ana Martínez</option>
+                </select>
+              </div>
+
+              {/* Calorías objetivo */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Calorías Objetivo
+                </label>
+                <input
+                  type="number"
+                  placeholder="Ej: 2000"
+                  min="800"
+                  max="5000"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent"
+                />
+              </div>
+
+              {/* Proteína objetivo */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Proteína Objetivo (g)
+                </label>
+                <input
+                  type="number"
+                  placeholder="Ej: 120"
+                  min="0"
+                  max="500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent"
+                />
+              </div>
+
+              {/* Carbohidratos objetivo */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Carbohidratos Objetivo (g)
+                </label>
+                <input
+                  type="number"
+                  placeholder="Ej: 200"
+                  min="0"
+                  max="1000"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent"
+                />
+              </div>
+
+              {/* Grasas objetivo */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Grasas Objetivo (g)
+                </label>
+                <input
+                  type="number"
+                  placeholder="Ej: 80"
+                  min="0"
+                  max="300"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent"
+                />
+              </div>
+            </div>
+
+            {/* Notas adicionales */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Notas Adicionales (opcional)
+              </label>
+              <textarea
+                placeholder="Añade observaciones específicas para esta dieta..."
+                rows={3}
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent resize-none"
+              />
+            </div>
+
+            {/* Restricciones alimentarias */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Restricciones Alimentarias (opcional)
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                {['Sin gluten', 'Sin lácteos', 'Sin azúcar', 'Baja en sodio', 'Sin frutos secos', 'Sin soja'].map((restriction) => (
+                  <label key={restriction} className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      className="rounded border-gray-300 text-lime-600 focus:ring-lime-500"
+                    />
+                    <span className="text-sm text-gray-700">{restriction}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Botones de acción */}
+            <div className="flex gap-3 pt-4 border-t border-gray-200">
+              <button
+                onClick={() => setShowNewDietModal(false)}
+                className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={() => {
+                  // Aquí iría la lógica para crear la dieta
+                  console.log('Crear nueva dieta');
+                  setShowNewDietModal(false);
+                }}
+                className="flex-1 px-6 py-3 bg-gradient-to-r from-lime-600 via-green-600 to-emerald-600 text-white rounded-xl font-semibold hover:opacity-90 transition-opacity"
+              >
+                Crear Dieta
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };

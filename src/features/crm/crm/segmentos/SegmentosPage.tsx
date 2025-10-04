@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Users, Target, TrendingUp, Plus, Sparkles } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Users, Target, TrendingUp, Plus, Sparkles, UserPlus } from 'lucide-react';
 import toast from 'react-hot-toast';
 import SegmentosList from './components/SegmentosList';
 import SegmentoBuilder from './components/SegmentoBuilder';
 import SegmentoPreview from './components/SegmentoPreview';
 import SegmentoActions from './components/SegmentoActions';
+import ClienteSelector from './components/ClienteSelector';
+import {
+  fetchSegmentos,
+  createSegmento,
+  updateSegmento,
+  deleteSegmento,
+  Segmento,
+  agregarClientesMultiples
+} from './segmentosApi';
 
 export interface Segment {
   id: string;
@@ -14,64 +23,90 @@ export interface Segment {
   memberCount: number;
   lastUpdated: string;
   rules: any[];
+  manualClientIds?: string[];
+  segmentType: 'automatic' | 'manual' | 'hybrid';
 }
 
-const mockSegments: Segment[] = [
-  {
-    id: '1',
-    name: 'Clientes online sin reservas (30 días)',
-    description: 'Clientes que han interactuado online pero no han hecho reservas en los últimos 30 días.',
-    memberCount: 120,
-    lastUpdated: '2025-09-26',
-    rules: [],
-  },
-  {
-    id: '2',
-    name: 'Interesados en fuerza (PAR-Q incompleto)',
-    description: 'Personas interesadas en entrenamiento de fuerza que no han completado el cuestionario PAR-Q.',
-    memberCount: 45,
-    lastUpdated: '2025-09-25',
-    rules: [],
-  },
-  {
-    id: '3',
-    name: 'Clientes Premium (Cumpleaños este mes)',
-    description: 'Clientes con membresía premium que cumplen años en el mes actual.',
-    memberCount: 30,
-    lastUpdated: '2025-09-27',
-    rules: [],
-  },
-];
+// Función para convertir Segmento del backend a Segment del frontend
+const mapSegmentoToSegment = (segmento: Segmento): Segment => ({
+  id: segmento._id,
+  name: segmento.nombre,
+  description: segmento.descripcion,
+  memberCount: segmento.stats.totalMiembros,
+  lastUpdated: new Date(segmento.updatedAt).toISOString().slice(0, 10),
+  rules: segmento.reglas || [],
+  manualClientIds: segmento.clientes || [],
+  segmentType: segmento.tipo as 'automatic' | 'manual' | 'hybrid',
+});
+
+// Función para convertir Segment del frontend a datos del backend
+const mapSegmentToSegmentoDTO = (segment: Segment) => ({
+  nombre: segment.name,
+  descripcion: segment.description,
+  tipo: segment.segmentType,
+  reglas: segment.rules,
+  clientes: segment.manualClientIds || [],
+});
 
 const SegmentosPage: React.FC = () => {
   const [selectedSegment, setSelectedSegment] = useState<Segment | null>(null);
   const [segmentPreviewCount, setSegmentPreviewCount] = useState<number>(0);
-  const [segments, setSegments] = useState<Segment[]>(mockSegments);
+  const [segments, setSegments] = useState<Segment[]>([]);
+  const [showClientSelector, setShowClientSelector] = useState(false);
+  const [currentSegmentType, setCurrentSegmentType] = useState<'automatic' | 'manual' | 'hybrid'>('automatic');
+  const [loading, setLoading] = useState(true);
 
-  const handleSaveSegment = (segment: Segment) => {
-    console.log('Saving segment:', segment);
-    
-    if (segment.id && segments.find(s => s.id === segment.id)) {
-      // Actualizar segmento existente
-      setSegments(prev => prev.map(s => s.id === segment.id ? segment : s));
-      toast.success(`✅ Segmento "${segment.name}" actualizado correctamente`);
-    } else {
-      // Crear nuevo segmento
-      const newSegment = { ...segment, id: String(Date.now()) };
-      setSegments(prev => [...prev, newSegment]);
-      toast.success(`🎉 Segmento "${segment.name}" creado correctamente`);
+  // Cargar segmentos al montar el componente
+  useEffect(() => {
+    loadSegmentos();
+  }, []);
+
+  const loadSegmentos = async () => {
+    try {
+      setLoading(true);
+      const data = await fetchSegmentos();
+      const mappedSegments = data.map(mapSegmentoToSegment);
+      setSegments(mappedSegments);
+    } catch (error) {
+      console.error('Error al cargar segmentos:', error);
+      toast.error('Error al cargar los segmentos');
+    } finally {
+      setLoading(false);
     }
-    
-    setSelectedSegment(null);
+  };
+
+  const handleSaveSegment = async (segment: Segment) => {
+    try {
+      const segmentoDTO = mapSegmentToSegmentoDTO(segment);
+
+      if (segment.id && !segment.id.startsWith('temp-') && segments.find(s => s.id === segment.id)) {
+        // Actualizar segmento existente
+        const updated = await updateSegmento(segment.id, segmentoDTO);
+        const updatedSegment = mapSegmentoToSegment(updated);
+        setSegments(prev => prev.map(s => s.id === segment.id ? updatedSegment : s));
+        toast.success(`✅ Segmento "${segment.name}" actualizado correctamente`);
+      } else {
+        // Crear nuevo segmento
+        const created = await createSegmento(segmentoDTO);
+        const newSegment = mapSegmentoToSegment(created);
+        setSegments(prev => [...prev, newSegment]);
+        toast.success(`🎉 Segmento "${segment.name}" creado correctamente`);
+      }
+
+      setSelectedSegment(null);
+    } catch (error) {
+      console.error('Error al guardar segmento:', error);
+      toast.error('Error al guardar el segmento');
+    }
   };
 
   const handleRunPreview = (rules: any[]) => {
     // Simular cálculo de miembros basado en reglas
     if (rules.length === 0) {
-      setSegmentPreviewCount(0);
+      setSegmentPreviewCount(selectedSegment?.manualClientIds?.length || 0);
       return;
     }
-    
+
     // Lógica más realista basada en el tipo de reglas
     let baseCount = 0;
     rules.forEach(rule => {
@@ -92,27 +127,68 @@ const SegmentosPage: React.FC = () => {
           baseCount += 20;
       }
     });
-    
+
     // Aplicar variación aleatoria
     const variation = Math.floor(baseCount * 0.3);
-    const count = Math.max(0, baseCount + Math.floor(Math.random() * variation * 2) - variation);
-    setSegmentPreviewCount(count);
+    const automaticCount = Math.max(0, baseCount + Math.floor(Math.random() * variation * 2) - variation);
+
+    // Sumar clientes manuales
+    const manualCount = selectedSegment?.manualClientIds?.length || 0;
+    setSegmentPreviewCount(automaticCount + manualCount);
   };
 
-  const handleDeleteSegment = (segmentId: string) => {
-    const segment = segments.find(s => s.id === segmentId);
-    setSegments(prev => prev.filter(s => s.id !== segmentId));
-    if (selectedSegment?.id === segmentId) {
-      setSelectedSegment(null);
-    }
-    if (segment) {
-      toast.success(`🗑️ Segmento "${segment.name}" eliminado correctamente`);
+  const handleDeleteSegment = async (segmentId: string) => {
+    try {
+      const segment = segments.find(s => s.id === segmentId);
+
+      await deleteSegmento(segmentId);
+
+      setSegments(prev => prev.filter(s => s.id !== segmentId));
+      if (selectedSegment?.id === segmentId) {
+        setSelectedSegment(null);
+      }
+      if (segment) {
+        toast.success(`🗑️ Segmento "${segment.name}" eliminado correctamente`);
+      }
+    } catch (error) {
+      console.error('Error al eliminar segmento:', error);
+      toast.error('Error al eliminar el segmento');
     }
   };
 
   const handleNewSegment = () => {
     setSelectedSegment(null);
     setSegmentPreviewCount(0);
+    setCurrentSegmentType('automatic');
+  };
+
+  const handleClientesChange = (clientIds: string[]) => {
+    if (selectedSegment) {
+      const updatedSegment = {
+        ...selectedSegment,
+        manualClientIds: clientIds,
+        memberCount: clientIds.length + (selectedSegment.rules.length > 0 ? segmentPreviewCount : 0),
+        segmentType: (selectedSegment.rules.length > 0 ? 'hybrid' : 'manual') as 'automatic' | 'manual' | 'hybrid'
+      };
+      setSelectedSegment(updatedSegment);
+      setSegments(prev => prev.map(s => s.id === selectedSegment.id ? updatedSegment : s));
+      toast.success(`✅ ${clientIds.length} clientes agregados al segmento`);
+    } else {
+      // Crear nuevo segmento manual temporal
+      const tempSegment: Segment = {
+        id: 'temp-' + Date.now(),
+        name: 'Nuevo Segmento Manual',
+        description: 'Segmento creado manualmente',
+        memberCount: clientIds.length,
+        lastUpdated: new Date().toISOString().slice(0, 10),
+        rules: [],
+        manualClientIds: clientIds,
+        segmentType: 'manual'
+      };
+      setSelectedSegment(tempSegment);
+      setCurrentSegmentType('manual');
+      toast.success(`✅ ${clientIds.length} clientes seleccionados. Completa los datos del segmento.`);
+    }
   };
 
   const totalMembers = segments.reduce((sum, seg) => sum + seg.memberCount, 0);
@@ -155,21 +231,32 @@ const SegmentosPage: React.FC = () => {
                   Segmentos de <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-yellow-400">Clientes</span>
                 </h1>
                 <p className="text-lg md:text-xl text-blue-100 mt-2 max-w-2xl">
-                  Crea audiencias específicas con <span className="font-semibold text-white px-2 py-0.5 bg-white/20 rounded-lg backdrop-blur-sm">reglas dinámicas</span>
+                  Crea audiencias específicas con <span className="font-semibold text-white px-2 py-0.5 bg-white/20 rounded-lg backdrop-blur-sm">reglas dinámicas o selección manual</span>
                 </p>
               </div>
             </div>
 
-            {/* Action Button */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleNewSegment}
-              className="flex items-center gap-2 px-6 py-2.5 bg-white text-indigo-600 font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300"
-            >
-              <Plus className="w-5 h-5" />
-              <span>Nuevo Segmento</span>
-            </motion.button>
+            {/* Action Buttons */}
+            <div className="flex gap-3">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setShowClientSelector(true)}
+                className="flex items-center gap-2 px-6 py-2.5 bg-white/10 backdrop-blur-md border border-white/30 text-white font-bold rounded-xl shadow-xl hover:bg-white/20 transition-all duration-300"
+              >
+                <UserPlus className="w-5 h-5" />
+                <span>Seleccionar Clientes</span>
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleNewSegment}
+                className="flex items-center gap-2 px-6 py-2.5 bg-white text-indigo-600 font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300"
+              >
+                <Plus className="w-5 h-5" />
+                <span>Nuevo Segmento</span>
+              </motion.button>
+            </div>
           </div>
         </div>
       </motion.div>
@@ -233,6 +320,7 @@ const SegmentosPage: React.FC = () => {
               segments={segments}
               onSelectSegment={(segment) => {
                 setSelectedSegment(segment);
+                setCurrentSegmentType(segment.segmentType);
               }}
               selectedSegmentId={selectedSegment?.id || null}
             />
@@ -246,13 +334,32 @@ const SegmentosPage: React.FC = () => {
               transition={{ delay: 0.3 }}
               className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-white/50"
             >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 bg-indigo-50 rounded-lg">
-                  <Sparkles className="w-6 h-6 text-indigo-600" />
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-indigo-50 rounded-lg">
+                    <Sparkles className="w-6 h-6 text-indigo-600" />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-gray-800">
+                      {selectedSegment ? `Editar: ${selectedSegment.name}` : 'Crear Nuevo Segmento'}
+                    </h2>
+                    {selectedSegment?.manualClientIds && selectedSegment.manualClientIds.length > 0 && (
+                      <p className="text-sm text-gray-600 mt-1">
+                        {selectedSegment.manualClientIds.length} cliente(s) seleccionado(s) manualmente
+                      </p>
+                    )}
+                  </div>
                 </div>
-                <h2 className="text-2xl font-bold text-gray-800">
-                  {selectedSegment ? `Editar: ${selectedSegment.name}` : 'Crear Nuevo Segmento'}
-                </h2>
+
+                {selectedSegment && (
+                  <button
+                    onClick={() => setShowClientSelector(true)}
+                    className="flex items-center gap-2 px-4 py-2 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100 transition-colors font-medium"
+                  >
+                    <UserPlus className="w-4 h-4" />
+                    <span>Añadir Clientes</span>
+                  </button>
+                )}
               </div>
 
               <SegmentoBuilder
@@ -268,6 +375,17 @@ const SegmentosPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Cliente Selector Modal */}
+      <AnimatePresence>
+        {showClientSelector && (
+          <ClienteSelector
+            selectedClientIds={selectedSegment?.manualClientIds || []}
+            onClientesChange={handleClientesChange}
+            onClose={() => setShowClientSelector(false)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { StickyNote, Plus, Filter, Grid3x3, List, TrendingUp, AlertCircle, Clock, CheckCircle2 } from 'lucide-react';
-import { Nota, getNotas, createNota, updateNota, deleteNota } from './notasApi';
+import { StickyNote, Plus, Filter, Grid3x3, List, TrendingUp, AlertCircle, Clock, CheckCircle2, Pin, Archive } from 'lucide-react';
+import toast from 'react-hot-toast';
+import { Nota, getNotas, createNota, updateNota, deleteNota, toggleFijar, toggleArchivar, NotaCreateDTO } from './notasApi';
 import NotasList from './components/NotasList';
 import NotaForm from './components/NotaForm';
 import NotasFilters, { NotasFilter } from './components/NotasFilters';
@@ -15,6 +16,7 @@ const NotasPage: React.FC = () => {
   const [editingNota, setEditingNota] = useState<Nota | undefined>(undefined);
   const [preselectedClientId, setPreselectedClientId] = useState<string | undefined>(undefined);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [showArchivadas, setShowArchivadas] = useState(false);
   const [filters, setFilters] = useState<NotasFilter>({
     searchText: '',
     clientId: '',
@@ -27,33 +29,37 @@ const NotasPage: React.FC = () => {
 
   useEffect(() => {
     fetchNotas();
-  }, []);
+  }, [showArchivadas]);
 
   const fetchNotas = async () => {
     try {
       setLoading(true);
-      const data = await getNotas();
+      const data = await getNotas({ archivada: showArchivadas });
       setNotas(data);
     } catch (err) {
       setError('Error al cargar las notas.');
       console.error(err);
+      toast.error('Error al cargar las notas');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleCreateOrUpdateNota = async (notaData: Omit<Nota, 'id' | 'timestamp'> | Nota) => {
+  const handleCreateOrUpdateNota = async (notaData: NotaCreateDTO & { _id?: string }) => {
     try {
-      if ('id' in notaData) {
-        await updateNota(notaData as Nota);
+      if (notaData._id) {
+        await updateNota(notaData._id, notaData);
+        toast.success('Nota actualizada correctamente');
       } else {
         await createNota(notaData);
+        toast.success('Nota creada correctamente');
       }
       fetchNotas();
       handleCloseFormModal();
     } catch (err) {
       setError('Error al guardar la nota.');
       console.error(err);
+      toast.error('Error al guardar la nota');
     }
   };
 
@@ -61,11 +67,35 @@ const NotasPage: React.FC = () => {
     if (window.confirm('¿Estás seguro de que quieres eliminar esta nota?')) {
       try {
         await deleteNota(id);
+        toast.success('Nota eliminada correctamente');
         fetchNotas();
       } catch (err) {
         setError('Error al eliminar la nota.');
         console.error(err);
+        toast.error('Error al eliminar la nota');
       }
+    }
+  };
+
+  const handleToggleFijar = async (id: string) => {
+    try {
+      await toggleFijar(id);
+      fetchNotas();
+      toast.success('Nota actualizada');
+    } catch (err) {
+      console.error(err);
+      toast.error('Error al actualizar la nota');
+    }
+  };
+
+  const handleToggleArchivar = async (id: string) => {
+    try {
+      await toggleArchivar(id);
+      fetchNotas();
+      toast.success('Nota actualizada');
+    } catch (err) {
+      console.error(err);
+      toast.error('Error al actualizar la nota');
     }
   };
 
@@ -97,66 +127,41 @@ const NotasPage: React.FC = () => {
       const searchLower = filters.searchText.toLowerCase();
       filtered = filtered.filter(
         (nota) =>
-          nota.title.toLowerCase().includes(searchLower) ||
-          nota.content.toLowerCase().includes(searchLower)
+          nota.titulo.toLowerCase().includes(searchLower) ||
+          nota.contenido.toLowerCase().includes(searchLower)
       );
     }
 
     if (filters.clientId) {
-      filtered = filtered.filter((nota) => nota.clientId === filters.clientId);
+      filtered = filtered.filter((nota) => nota.cliente === filters.clientId);
     }
 
     if (filters.tag) {
       const tagLower = filters.tag.toLowerCase();
       filtered = filtered.filter((nota) =>
-        nota.tags.some((tag) => tag.toLowerCase().includes(tagLower))
+        nota.etiquetas.some((tag) => tag.toLowerCase().includes(tagLower))
       );
-    }
-
-    if (filters.author) {
-      filtered = filtered.filter((nota) => nota.author === filters.author);
-    }
-
-    if (filters.assignedTo) {
-      filtered = filtered.filter((nota) => nota.assignedTo === filters.assignedTo);
-    }
-
-    if (filters.priority !== 'all') {
-      filtered = filtered.filter((nota) => nota.priority === filters.priority);
-    }
-
-    if (filters.dateRange !== 'all') {
-      const now = new Date();
-      filtered = filtered.filter((nota) => {
-        const noteDate = new Date(nota.timestamp);
-        switch (filters.dateRange) {
-          case 'today':
-            return (
-              noteDate.getDate() === now.getDate() &&
-              noteDate.getMonth() === now.getMonth() &&
-              noteDate.getFullYear() === now.getFullYear()
-            );
-          case 'last7days':
-            const sevenDaysAgo = new Date(now.setDate(now.getDate() - 7));
-            return noteDate >= sevenDaysAgo;
-          case 'last30days':
-            const thirtyDaysAgo = new Date(now.setDate(now.getDate() - 30));
-            return noteDate >= thirtyDaysAgo;
-          default:
-            return true;
-        }
-      });
     }
 
     return filtered;
   }, [notas, filters]);
 
   const stats = useMemo(() => {
+    const fijadas = notas.filter(n => n.fijada).length;
+    const archivadas = notas.filter(n => n.archivada).length;
+    const porCategoria = {
+      importante: notas.filter(n => n.categoria === 'importante').length,
+      seguimiento: notas.filter(n => n.categoria === 'seguimiento').length,
+      recordatorio: notas.filter(n => n.categoria === 'recordatorio').length,
+    };
+
     return {
       total: notas.length,
-      high: notas.filter(n => n.priority === 'high').length,
-      medium: notas.filter(n => n.priority === 'medium').length,
-      low: notas.filter(n => n.priority === 'low').length,
+      fijadas,
+      archivadas,
+      importante: porCategoria.importante,
+      seguimiento: porCategoria.seguimiento,
+      recordatorio: porCategoria.recordatorio,
     };
   }, [notas]);
 
@@ -260,6 +265,16 @@ const NotasPage: React.FC = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => setShowArchivadas(!showArchivadas)}
+                className="flex items-center gap-2 px-4 py-2.5 bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold rounded-xl hover:bg-white/20 transition-all duration-300"
+              >
+                <Archive className="w-4 h-4" />
+                <span>{showArchivadas ? 'Activas' : 'Archivadas'}</span>
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => handleOpenCreateNota()}
                 className="flex items-center gap-2 px-6 py-2.5 bg-white text-indigo-600 font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300"
               >
@@ -300,8 +315,8 @@ const NotasPage: React.FC = () => {
                 <AlertCircle className="w-6 h-6 text-red-600" />
               </div>
             </div>
-            <p className="text-sm font-medium text-gray-600 mt-3">Alta Prioridad</p>
-            <p className="text-3xl font-bold text-red-600">{stats.high}</p>
+            <p className="text-sm font-medium text-gray-600 mt-3">Importante</p>
+            <p className="text-3xl font-bold text-red-600">{stats.importante}</p>
           </motion.div>
 
           <motion.div
@@ -311,12 +326,12 @@ const NotasPage: React.FC = () => {
             className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow"
           >
             <div className="flex items-center justify-between">
-              <div className="p-2.5 bg-yellow-50 rounded-lg">
-                <Clock className="w-6 h-6 text-yellow-600" />
+              <div className="p-2.5 bg-blue-50 rounded-lg">
+                <Pin className="w-6 h-6 text-blue-600" />
               </div>
             </div>
-            <p className="text-sm font-medium text-gray-600 mt-3">Media Prioridad</p>
-            <p className="text-3xl font-bold text-yellow-600">{stats.medium}</p>
+            <p className="text-sm font-medium text-gray-600 mt-3">Fijadas</p>
+            <p className="text-3xl font-bold text-blue-600">{stats.fijadas}</p>
           </motion.div>
 
           <motion.div
@@ -326,12 +341,12 @@ const NotasPage: React.FC = () => {
             className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow"
           >
             <div className="flex items-center justify-between">
-              <div className="p-2.5 bg-green-50 rounded-lg">
-                <CheckCircle2 className="w-6 h-6 text-green-600" />
+              <div className="p-2.5 bg-purple-50 rounded-lg">
+                <Clock className="w-6 h-6 text-purple-600" />
               </div>
             </div>
-            <p className="text-sm font-medium text-gray-600 mt-3">Baja Prioridad</p>
-            <p className="text-3xl font-bold text-green-600">{stats.low}</p>
+            <p className="text-sm font-medium text-gray-600 mt-3">Recordatorios</p>
+            <p className="text-3xl font-bold text-purple-600">{stats.recordatorio}</p>
           </motion.div>
         </div>
       </div>
@@ -356,6 +371,8 @@ const NotasPage: React.FC = () => {
           notas={filteredNotas}
           onEdit={handleEditNota}
           onDelete={handleDeleteNota}
+          onToggleFijar={handleToggleFijar}
+          onToggleArchivar={handleToggleArchivar}
           viewMode={viewMode}
         />
       </div>

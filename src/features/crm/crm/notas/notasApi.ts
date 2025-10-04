@@ -1,118 +1,147 @@
-
-import { useState, useEffect } from 'react';
+import api from '../../../../services/api';
 
 export interface Nota {
-  id: string;
-  title: string;
-  content: string;
-  clientId?: string; // Optional: associated client/lead ID
-  clientName?: string; // Optional: associated client/lead name for display
-  tags: string[];
-  author: string;
-  timestamp: string; // ISO date string
-  assignedTo?: string; // Member of the team
-  priority: 'alta' | 'media' | 'baja';
-  isPrivate: boolean;
-  comments?: string; // Additional comments/details
+  _id: string;
+  titulo: string;
+  contenido: string;
+  trainer: string;
+  cliente?: string;
+  lead?: string;
+  tarea?: string;
+  evento?: string;
+  categoria: 'general' | 'seguimiento' | 'observacion' | 'recordatorio' | 'importante' | 'otro';
+  etiquetas: string[];
+  color: string;
+  fijada: boolean;
+  archivada: boolean;
+  recordatorio?: {
+    activo: boolean;
+    fecha?: string;
+  };
+  adjuntos?: Array<{
+    nombre: string;
+    url: string;
+    tipo: string;
+    tamaño: number;
+  }>;
+  createdAt: string;
+  updatedAt: string;
 }
 
-// Mock data for clients/leads and team members
-const mockClients = [
-  { id: 'client-1', name: 'Cliente A' },
-  { id: 'client-2', name: 'Lead B' },
-  { id: 'client-3', name: 'Cliente C' },
-];
-
-const mockTeamMembers = [
-  { id: 'member-1', name: 'Alice' },
-  { id: 'member-2', name: 'Bob' },
-  { id: 'member-3', name: 'Charlie' },
-];
-
-let mockNotas: Nota[] = [
-  {
-    id: '1',
-    title: 'Seguimiento inicial Cliente A',
-    content: 'Primera llamada con Cliente A. Interesado en el plan premium. Enviar propuesta antes del viernes.',
-    clientId: 'client-1',
-    clientName: 'Cliente A',
-    tags: ['seguimiento', 'propuesta'],
-    author: 'Alice',
-    timestamp: '2025-09-25T10:00:00Z',
-    assignedTo: 'member-2',
-    priority: 'alta',
-    isPrivate: false,
-    comments: 'Recordar mencionar la nueva característica X.'
-  },
-  {
-    id: '2',
-    title: 'Detalles reunión Lead B',
-    content: 'Reunión con Lead B. Necesita una solución personalizada para gestión de inventario. Programar demo.',
-    clientId: 'client-2',
-    clientName: 'Lead B',
-    tags: ['demo', 'personalizado'],
-    author: 'Bob',
-    timestamp: '2025-09-26T14:30:00Z',
-    assignedTo: 'member-1',
-    priority: 'media',
-    isPrivate: false,
-  },
-  {
-    id: '3',
-    title: 'Idea para nueva funcionalidad',
-    content: 'Considerar integrar un módulo de reportes avanzados para el CRM. Hablar con el equipo de desarrollo.',
-    tags: ['idea', 'desarrollo'],
-    author: 'Charlie',
-    timestamp: '2025-09-26T09:00:00Z',
-    priority: 'baja',
-    isPrivate: true,
-  },
-  {
-    id: '4',
-    title: 'Nota privada sobre Cliente A',
-    content: 'Cliente A mencionó problemas con el proveedor actual. No compartir esta información directamente.',
-    clientId: 'client-1',
-    clientName: 'Cliente A',
-    tags: ['privado', 'información'],
-    author: 'Alice',
-    timestamp: '2025-09-27T11:15:00Z',
-    priority: 'alta',
-    isPrivate: true,
-  },
-];
-
-// Simulate API calls
-const simulateApiCall = <T>(data: T): Promise<T> => {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(data), 300); // Simulate network delay
-  });
-};
-
-export const getNotas = (): Promise<Nota[]> => {
-  return simulateApiCall(mockNotas);
-};
-
-export const createNota = (newNota: Omit<Nota, 'id' | 'timestamp'>): Promise<Nota> => {
-  const notaWithId: Nota = {
-    ...newNota,
-    id: String(mockNotas.length + 1),
-    timestamp: new Date().toISOString(),
+export interface NotaCreateDTO {
+  titulo: string;
+  contenido: string;
+  cliente?: string;
+  lead?: string;
+  tarea?: string;
+  evento?: string;
+  categoria?: 'general' | 'seguimiento' | 'observacion' | 'recordatorio' | 'importante' | 'otro';
+  etiquetas?: string[];
+  color?: string;
+  recordatorio?: {
+    activo: boolean;
+    fecha?: string;
   };
-  mockNotas.push(notaWithId);
-  return simulateApiCall(notaWithId);
+}
+
+export interface NotaUpdateDTO {
+  titulo?: string;
+  contenido?: string;
+  cliente?: string;
+  lead?: string;
+  tarea?: string;
+  evento?: string;
+  categoria?: 'general' | 'seguimiento' | 'observacion' | 'recordatorio' | 'importante' | 'otro';
+  etiquetas?: string[];
+  color?: string;
+  recordatorio?: {
+    activo: boolean;
+    fecha?: string;
+  };
+}
+
+// Obtener todas las notas con filtros
+export const getNotas = async (filters?: {
+  cliente?: string;
+  lead?: string;
+  tarea?: string;
+  evento?: string;
+  categoria?: string;
+  etiqueta?: string;
+  fijada?: boolean;
+  archivada?: boolean;
+  search?: string;
+}): Promise<Nota[]> => {
+  const params = new URLSearchParams();
+  if (filters?.cliente) params.append('cliente', filters.cliente);
+  if (filters?.lead) params.append('lead', filters.lead);
+  if (filters?.tarea) params.append('tarea', filters.tarea);
+  if (filters?.evento) params.append('evento', filters.evento);
+  if (filters?.categoria) params.append('categoria', filters.categoria);
+  if (filters?.etiqueta) params.append('etiqueta', filters.etiqueta);
+  if (filters?.fijada !== undefined) params.append('fijada', String(filters.fijada));
+  if (filters?.archivada !== undefined) params.append('archivada', String(filters.archivada));
+  if (filters?.search) params.append('search', filters.search);
+
+  const response = await api.get(`/notas?${params.toString()}`);
+  return response.data.data;
 };
 
-export const updateNota = (updatedNota: Nota): Promise<Nota> => {
-  mockNotas = mockNotas.map((nota) =>
-    nota.id === updatedNota.id ? { ...updatedNota, timestamp: new Date().toISOString() } : nota
-  );
-  return simulateApiCall(updatedNota);
+// Obtener una nota por ID
+export const getNota = async (id: string): Promise<Nota> => {
+  const response = await api.get(`/notas/${id}`);
+  return response.data.data;
 };
 
-export const deleteNota = (id: string): Promise<void> => {
-  mockNotas = mockNotas.filter((nota) => nota.id !== id);
-  return simulateApiCall(undefined);
+// Crear nueva nota
+export const createNota = async (data: NotaCreateDTO): Promise<Nota> => {
+  const response = await api.post('/notas', data);
+  return response.data.data;
 };
 
-export const getClients = () => simulateApiCall(mockClients);
-export const getTeamMembers = () => simulateApiCall(mockTeamMembers);
+// Actualizar nota
+export const updateNota = async (id: string, data: NotaUpdateDTO): Promise<Nota> => {
+  const response = await api.put(`/notas/${id}`, data);
+  return response.data.data;
+};
+
+// Eliminar nota
+export const deleteNota = async (id: string): Promise<void> => {
+  await api.delete(`/notas/${id}`);
+};
+
+// Fijar/desfijar nota
+export const toggleFijar = async (id: string): Promise<Nota> => {
+  const response = await api.patch(`/notas/${id}/fijar`);
+  return response.data.data;
+};
+
+// Archivar/desarchivar nota
+export const toggleArchivar = async (id: string): Promise<Nota> => {
+  const response = await api.patch(`/notas/${id}/archivar`);
+  return response.data.data;
+};
+
+// Obtener notas fijadas
+export const getNotasFijadas = async (): Promise<Nota[]> => {
+  const response = await api.get('/notas/fijadas');
+  return response.data.data;
+};
+
+// Obtener notas archivadas
+export const getNotasArchivadas = async (): Promise<Nota[]> => {
+  const response = await api.get('/notas/archivadas');
+  return response.data.data;
+};
+
+// Agregar etiqueta
+export const agregarEtiqueta = async (id: string, etiqueta: string): Promise<Nota> => {
+  const response = await api.post(`/notas/${id}/etiquetas`, { etiqueta });
+  return response.data.data;
+};
+
+// Eliminar etiqueta
+export const eliminarEtiqueta = async (id: string, etiqueta: string): Promise<Nota> => {
+  const response = await api.delete(`/notas/${id}/etiquetas/${etiqueta}`);
+  return response.data.data;
+};

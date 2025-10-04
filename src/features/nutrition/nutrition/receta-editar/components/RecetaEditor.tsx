@@ -6,14 +6,17 @@ import {
 
 interface RecetaEditorProps {
   receta: any;
+  onRecetaUpdate?: (updatedData: any) => void;
 }
 
-const RecetaEditor: React.FC<RecetaEditorProps> = ({ receta }) => {
-  const [editedReceta, setEditedReceta] = useState(receta);
+const RecetaEditor: React.FC<RecetaEditorProps> = ({ receta, onRecetaUpdate }) => {
+  const [editedReceta, setEditedReceta] = useState(receta || {});
   const [focusedField, setFocusedField] = useState<string | null>(null);
 
   const handleChange = (field: string, value: any) => {
-    setEditedReceta({ ...editedReceta, [field]: value });
+    const updated = { ...editedReceta, [field]: value };
+    setEditedReceta(updated);
+    onRecetaUpdate?.(updated);
   };
 
   return (
@@ -48,7 +51,7 @@ const RecetaEditor: React.FC<RecetaEditorProps> = ({ receta }) => {
             </label>
             <input
               type="text"
-              value={editedReceta.nombre}
+              value={editedReceta.nombre || ''}
               onChange={(e) => handleChange('nombre', e.target.value)}
               onFocus={() => setFocusedField('nombre')}
               onBlur={() => setFocusedField(null)}
@@ -68,7 +71,7 @@ const RecetaEditor: React.FC<RecetaEditorProps> = ({ receta }) => {
               Descripción
             </label>
             <textarea
-              value={editedReceta.descripcion}
+              value={editedReceta.descripcion || ''}
               onChange={(e) => handleChange('descripcion', e.target.value)}
               onFocus={() => setFocusedField('descripcion')}
               onBlur={() => setFocusedField(null)}
@@ -91,7 +94,7 @@ const RecetaEditor: React.FC<RecetaEditorProps> = ({ receta }) => {
                 Categoría
               </label>
               <select
-                value={editedReceta.categoria}
+                value={editedReceta.categoria || ''}
                 onChange={(e) => handleChange('categoria', e.target.value)}
                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-gray-300 focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-100 transition-all duration-300 outline-none bg-white/80 backdrop-blur-sm"
               >
@@ -111,7 +114,7 @@ const RecetaEditor: React.FC<RecetaEditorProps> = ({ receta }) => {
                 Dificultad
               </label>
               <select
-                value={editedReceta.dificultad}
+                value={editedReceta.dificultad || ''}
                 onChange={(e) => handleChange('dificultad', e.target.value)}
                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-gray-300 focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-100 transition-all duration-300 outline-none bg-white/80 backdrop-blur-sm"
               >
@@ -129,7 +132,7 @@ const RecetaEditor: React.FC<RecetaEditorProps> = ({ receta }) => {
               </label>
               <input
                 type="number"
-                value={editedReceta.tiempoPreparacion}
+                value={editedReceta.tiempoPreparacion || 0}
                 onChange={(e) => handleChange('tiempoPreparacion', parseInt(e.target.value))}
                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-gray-300 focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-100 transition-all duration-300 outline-none bg-white/80 backdrop-blur-sm"
                 min="0"
@@ -144,7 +147,7 @@ const RecetaEditor: React.FC<RecetaEditorProps> = ({ receta }) => {
               </label>
               <input
                 type="number"
-                value={editedReceta.tiempoCoccion}
+                value={editedReceta.tiempoCoccion || 0}
                 onChange={(e) => handleChange('tiempoCoccion', parseInt(e.target.value))}
                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-gray-300 focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-100 transition-all duration-300 outline-none bg-white/80 backdrop-blur-sm"
                 min="0"
@@ -159,7 +162,7 @@ const RecetaEditor: React.FC<RecetaEditorProps> = ({ receta }) => {
               </label>
               <input
                 type="number"
-                value={editedReceta.porciones}
+                value={editedReceta.porciones || 1}
                 onChange={(e) => handleChange('porciones', parseInt(e.target.value))}
                 className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-gray-300 focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-100 transition-all duration-300 outline-none bg-white/80 backdrop-blur-sm"
                 min="1"
@@ -175,7 +178,7 @@ const RecetaEditor: React.FC<RecetaEditorProps> = ({ receta }) => {
             </label>
             <input
               type="text"
-              value={editedReceta.fotoUrl}
+              value={editedReceta.fotoUrl || ''}
               onChange={(e) => handleChange('fotoUrl', e.target.value)}
               className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-gray-300 focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-100 transition-all duration-300 outline-none bg-white/80 backdrop-blur-sm"
               placeholder="https://..."
@@ -201,7 +204,7 @@ const RecetaEditor: React.FC<RecetaEditorProps> = ({ receta }) => {
               Notas Personales
             </label>
             <textarea
-              value={editedReceta.notasPersonales}
+              value={editedReceta.notasPersonales || ''}
               onChange={(e) => handleChange('notasPersonales', e.target.value)}
               rows={2}
               className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-gray-300 focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-100 transition-all duration-300 outline-none bg-white/80 backdrop-blur-sm resize-none"

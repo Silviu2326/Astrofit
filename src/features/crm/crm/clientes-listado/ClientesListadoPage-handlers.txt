@@ -1,0 +1,69 @@
+// Nuevas funciones con integración al backend - Reemplazar en ClientesListadoPage.tsx
+
+// Línea 21: Agregar refetch al destructuring
+const { data = [], total = 0, pages = 1, stats = { total: 0, activos: 0, inactivos: 0, premium: 0, online: 0 }, isLoading, error, refetch } = useClientes({
+
+// Línea 77-109: Reemplazar handleExport
+const handleExport = () => {
+  if (data.length === 0) {
+    alert('No hay datos para exportar');
+    return;
+  }
+
+  try {
+    clienteService.exportToCSV(data);
+  } catch (error: any) {
+    alert(error.message || 'Error al exportar');
+  }
+};
+
+// Línea 145-157: Reemplazar handleAddTags
+const handleAddTags = async () => {
+  if (selected.size === 0) {
+    alert('Seleccione al menos un cliente');
+    return;
+  }
+
+  const tags = prompt(`Ingrese las etiquetas para ${selected.size} clientes (separadas por coma):`);
+  if (tags && tags.trim()) {
+    const tagList = tags.split(',').map(t => t.trim()).filter(Boolean);
+    try {
+      const result = await clienteService.bulkAddTags(Array.from(selected), tagList);
+      alert(result.message);
+      setSelected(new Set());
+      refetch();
+    } catch (error: any) {
+      alert(error.response?.data?.error || 'Error al añadir etiquetas');
+    }
+  }
+};
+
+// Línea 179-191: Reemplazar handleDeleteSelected
+const handleDeleteSelected = async () => {
+  if (selected.size === 0) {
+    alert('Seleccione al menos un cliente');
+    return;
+  }
+
+  const confirmDelete = confirm(`¿Está seguro de que desea eliminar ${selected.size} cliente(s)? Esta acción no se puede deshacer.`);
+  if (confirmDelete) {
+    try {
+      const result = await clienteService.bulkDeleteClientes(Array.from(selected));
+      alert(result.message);
+      setSelected(new Set());
+      refetch();
+    } catch (error: any) {
+      alert(error.response?.data?.error || 'Error al eliminar clientes');
+    }
+  }
+};
+
+// Líneas 317-324: Actualizar onCreated y onUpdated
+onCreated={() => {
+  refetch();
+  setPage(1);
+}}
+cliente={editingCliente}
+onUpdated={() => {
+  refetch();
+}}

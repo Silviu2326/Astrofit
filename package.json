@@ -8,7 +8,15 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit -p tsconfig.app.json"
+    "typecheck": "tsc --noEmit -p tsconfig.app.json",
+    "seed:segmentos": "node src/utils/seedSegmentos.js",
+    "seed:ejercicios": "node backend/src/utils/seedEjercicios.js",
+    "seed:plantillas": "node backend/src/utils/seedPlantillasEntrenamiento.js",
+    "seed:entrenamientos": "node backend/src/utils/seedEntrenamientos.js",
+    "seed:dietas": "node backend/src/utils/seedPlantillasDietas.js",
+    "seed:impuestos": "node backend/src/scripts/seed-impuestos.js",
+    "seed:impuestos:advanced": "node backend/src/scripts/seed-impuestos-advanced.js",
+    "seed:impuestos:complete": "node backend/src/scripts/seed-impuestos-complete.js"
   },
   "dependencies": {
     "@hello-pangea/dnd": "^16.6.0",

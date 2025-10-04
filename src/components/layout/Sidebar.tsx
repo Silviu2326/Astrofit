@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Home, BarChart3, Inbox, Menu, Dumbbell, Activity, DollarSign, Megaphone, Settings, HelpCircle, Download, Zap, Users, UserCheck, TrendingUp, FileText, Target, CheckSquare, Library, Edit3, File, List, Plus, Calculator, Apple, ChefHat, Utensils, BookOpen, PieChart, Heart, Share, CreditCard, Receipt, RefreshCw, Banknote, FileDown, Package, Tag, Percent, UserPlus, Star, MessageSquare, Monitor, ChevronDown, ChevronRight, Globe, Calendar, ShoppingCart, ThumbsUp, CheckCircle, BarChart, Trophy, Video, Clock, MessageCircle, FileEdit, Map, Milestone, AlertTriangle, Palette, Smartphone, Wifi, Workflow, Bot, Gift, Search, FileVideo, Download as DownloadIcon, MessagesSquare, UserCircle, Award, Mail, Send, BarChart2, CreditCard as CardIcon, Shield, Bell, History, FlaskConical, Store, Box, QrCode, ClipboardList, CalendarCheck, RotateCcw, Receipt as ReceiptIcon, Ticket, Lock, Building2, PackageSearch, MonitorSmartphone, Building, ClipboardCheck, Stethoscope, GitCompare, UserSquare2, CalendarRange, ShieldCheck, LineChart, Swords, Flag, UserSearch, Radar } from 'lucide-react';
 import type { User, PlanType } from '../../features/core/login/mockUsers';
+import { getCurrentUser as getSafeCurrentUser } from '../../utils/localStorage';
 
 interface SidebarProps {
   activePage: string;
@@ -106,6 +107,7 @@ const menuModules = [
       { id: 'notas', label: 'Notas', icon: FileText },
       { id: 'segmentos', label: 'Segmentos', icon: Target },
       { id: 'tareas', label: 'Tareas', icon: CheckSquare },
+      { id: 'calendario', label: 'Calendario', icon: Calendar },
     ]
   },
   {
@@ -624,14 +626,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   // Load current user from localStorage
   useEffect(() => {
-    const userStr = localStorage.getItem('currentUser');
-    if (userStr) {
-      try {
-        const user = JSON.parse(userStr) as User;
-        setCurrentUser(user);
-      } catch (error) {
-        console.error('Error parsing user from localStorage:', error);
-      }
+    const user = getSafeCurrentUser() as User | null;
+    if (user) {
+      setCurrentUser(user);
     }
   }, []);
 
@@ -772,7 +769,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         return (
                           <div key={item.id} className="relative">
                             <button
-                              onClick={() => navigate(`/${item.id}`)}
+                              onClick={() => navigate(`/dashboard/${item.id}`)}
                               className={`w-full flex items-center px-4 py-2.5 text-left rounded-lg transition-all duration-300 group ${
                                 isActive
                                   ? 'bg-gradient-to-r from-blue-500/30 to-purple-500/30 border border-blue-400/40 shadow-lg backdrop-blur-sm transform scale-[1.02]'

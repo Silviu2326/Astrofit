@@ -558,7 +558,7 @@ const CentroAyudaPage: React.FC = () => {
               whileHover={{ scale: 1.05, y: -4 }}
               whileTap={{ scale: 0.95 }}
               className="bg-white/90 backdrop-blur-xl rounded-2xl p-6 text-left hover:bg-white transition-all duration-300 shadow-xl hover:shadow-2xl group"
-              onClick={() => navigate('/mensajeria')}
+              onClick={() => navigate('/dashboard/mensajeria')}
             >
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform duration-300">
                 <MessageCircle className="w-6 h-6" />
@@ -576,7 +576,7 @@ const CentroAyudaPage: React.FC = () => {
               whileHover={{ scale: 1.05, y: -4 }}
               whileTap={{ scale: 0.95 }}
               className="bg-white/90 backdrop-blur-xl rounded-2xl p-6 text-left hover:bg-white transition-all duration-300 shadow-xl hover:shadow-2xl group"
-              onClick={() => navigate('/calendario-publico')}
+              onClick={() => navigate('/dashboard/calendario-publico')}
             >
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform duration-300">
                 <Phone className="w-6 h-6" />

@@ -39,6 +39,7 @@ const PlantillasEntrenosPage: React.FC = () => {
   const [showPreview, setShowPreview] = useState(false);
   const [activeTab, setActiveTab] = useState<TabType>('todas');
   const [showFilters, setShowFilters] = useState(false);
+  const [showNewTemplateModal, setShowNewTemplateModal] = useState(false);
 
   // Filters state
   const [filters, setFilters] = useState({
@@ -305,6 +306,7 @@ const PlantillasEntrenosPage: React.FC = () => {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          onClick={() => setShowNewTemplateModal(true)}
           className="fixed bottom-8 right-8 z-40 flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 text-white rounded-full shadow-2xl hover:shadow-purple-500/50 font-bold text-lg"
         >
           <Plus size={24} />
@@ -332,6 +334,211 @@ const PlantillasEntrenosPage: React.FC = () => {
               onClose={handleClosePreview}
               onUseAsBase={handleUseAsBase}
             />
+          )}
+        </AnimatePresence>
+
+        {/* MODAL NUEVA PLANTILLA */}
+        <AnimatePresence>
+          {showNewTemplateModal && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-6"
+              onClick={() => setShowNewTemplateModal(false)}
+            >
+              <motion.div
+                initial={{ scale: 0.9, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.9, y: 20 }}
+                onClick={(e) => e.stopPropagation()}
+                className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              >
+                {/* Header del modal */}
+                <div className="bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 text-white p-6 rounded-t-2xl">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h2 className="text-2xl font-bold">Nueva Plantilla de Entrenamiento</h2>
+                      <p className="text-purple-100 text-sm mt-1">
+                        Crea una nueva plantilla personalizada
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => setShowNewTemplateModal(false)}
+                      className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+                    >
+                      <X className="w-6 h-6" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Formulario */}
+                <div className="p-6 space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Nombre de la plantilla */}
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Nombre de la Plantilla *
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Ej: Entrenamiento de Fuerza para Principiantes"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      />
+                    </div>
+
+                    {/* Descripción */}
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Descripción
+                      </label>
+                      <textarea
+                        placeholder="Describe el objetivo y características de esta plantilla..."
+                        rows={3}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                      />
+                    </div>
+
+                    {/* Objetivo */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Objetivo *
+                      </label>
+                      <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <option value="">Seleccionar objetivo</option>
+                        <option value="perdida-peso">Pérdida de Peso</option>
+                        <option value="ganancia-musculo">Ganancia de Músculo</option>
+                        <option value="fuerza">Fuerza</option>
+                        <option value="resistencia">Resistencia</option>
+                        <option value="flexibilidad">Flexibilidad</option>
+                        <option value="rehabilitacion">Rehabilitación</option>
+                        <option value="mantenimiento">Mantenimiento</option>
+                      </select>
+                    </div>
+
+                    {/* Nivel */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Nivel *
+                      </label>
+                      <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <option value="">Seleccionar nivel</option>
+                        <option value="principiante">Principiante</option>
+                        <option value="intermedio">Intermedio</option>
+                        <option value="avanzado">Avanzado</option>
+                        <option value="experto">Experto</option>
+                      </select>
+                    </div>
+
+                    {/* Modalidad */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Modalidad *
+                      </label>
+                      <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <option value="">Seleccionar modalidad</option>
+                        <option value="gym">Gimnasio</option>
+                        <option value="casa">En Casa</option>
+                        <option value="exterior">Exterior</option>
+                        <option value="funcional">Funcional</option>
+                        <option value="crossfit">CrossFit</option>
+                        <option value="yoga">Yoga</option>
+                        <option value="pilates">Pilates</option>
+                      </select>
+                    </div>
+
+                    {/* Duración estimada */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Duración Estimada (semanas)
+                      </label>
+                      <input
+                        type="number"
+                        placeholder="Ej: 8"
+                        min="1"
+                        max="52"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      />
+                    </div>
+
+                    {/* Días por semana */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Días por Semana
+                      </label>
+                      <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <option value="">Seleccionar frecuencia</option>
+                        <option value="1">1 día</option>
+                        <option value="2">2 días</option>
+                        <option value="3">3 días</option>
+                        <option value="4">4 días</option>
+                        <option value="5">5 días</option>
+                        <option value="6">6 días</option>
+                        <option value="7">7 días</option>
+                      </select>
+                    </div>
+
+                    {/* Duración por sesión */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Duración por Sesión (minutos)
+                      </label>
+                      <input
+                        type="number"
+                        placeholder="Ej: 60"
+                        min="15"
+                        max="180"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      />
+                    </div>
+
+                    {/* Visibilidad */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Visibilidad
+                      </label>
+                      <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <option value="privada">Privada (solo tú)</option>
+                        <option value="publica">Pública (todos los usuarios)</option>
+                        <option value="equipo">Solo mi equipo</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Tags */}
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Etiquetas (opcional)
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Ej: fuerza, principiantes, gimnasio (separadas por comas)"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    />
+                  </div>
+
+                  {/* Botones de acción */}
+                  <div className="flex gap-3 pt-4 border-t border-gray-200">
+                    <button
+                      onClick={() => setShowNewTemplateModal(false)}
+                      className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      onClick={() => {
+                        // Aquí iría la lógica para crear la plantilla
+                        console.log('Crear nueva plantilla');
+                        setShowNewTemplateModal(false);
+                      }}
+                      className="flex-1 px-6 py-3 bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 text-white rounded-xl font-semibold hover:opacity-90 transition-opacity"
+                    >
+                      Crear Plantilla
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>

@@ -1,24 +1,17 @@
 {
   "permissions": {
     "allow": [
-      "Bash(dir)",
-      "Bash(dir:*)",
-      "Bash(findstr:*)",
-      "Read(//c/Users/usuario/Documents/src/**)",
-      "Bash(tree:*)",
-      "Bash(npm install:*)",
-      "Bash(xcopy:*)",
-      "Bash(robocopy:*)",
       "Bash(grep:*)",
-      "Read(//c/c/**)",
-      "Bash(powershell:*)",
-      "Bash(move \"src\\features\\comunidad\" \"src\\features\\plancreatorpro\\comunidad\\comunidad\")",
-      "Bash(move \"src\\features\\membresias\" \"src\\features\\plancreatorpro\\membresias\\membresias\")",
-      "Bash(move:*)",
-      "Bash(move \"src\\features\\biblioteca-contenidos\" \"src\\features\\plancreatorpro\\biblioteca-contenidos\\biblioteca-contenidos\")",
-      "Bash(move \"src\\features\\email-broadcast\" \"src\\features\\plancreatorpro\\email-broadcast\\email-broadcast\")",
-      "Bash(find:*)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run seed:dietas:*)",
+      "Bash(node:*)",
+      "Bash(npm run seed:recetas:*)",
+      "Bash(curl:*)",
+      "Bash(npm run seed:facturas:*)",
+      "Bash(npm run seed:gastos:*)",
+      "Bash(npm run seed:presupuestos:*)",
+      "Bash(npm run seed:impuestos:*)",
+      "Bash(npm run seed:impuestos:advanced:*)",
+      "Bash(npm run seed:impuestos:complete:*)"
     ],
     "deny": [],
     "ask": []

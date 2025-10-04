@@ -1,58 +1,124 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, User } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import LeadHeader from './components/LeadHeader';
 import LeadQualification from './components/LeadQualification';
 import LeadTimeline from './components/LeadTimeline';
 import LeadConversion from './components/LeadConversion';
 import { Lead } from './leadDetalleApi';
+import leadService from '../../../../services/leadService';
 
 const LeadDetallePage: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Extraer el leadId de la URL - formato: /lead-detalle/leadId
+  const pathParts = location.pathname.split('/');
+  const leadId = pathParts[pathParts.length - 1] !== 'lead-detalle' ? pathParts[pathParts.length - 1] : null;
+
   const [activeTab, setActiveTab] = useState<'info' | 'timeline' | 'conversion'>('info');
+  const [lead, setLead] = useState<Lead | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
-  // Mock data for a lead
-  const [lead, setLead] = useState<Lead>({
-    id: 'lead-123',
-    name: 'Juan Pérez',
-    email: 'juan.perez@example.com',
-    phone: '+34 600 123 456',
-    status: 'Calificado',
-    company: 'Empresa XYZ',
-    objective: 'Aumentar ventas en un 20%',
-    availability: 'Mañanas',
-    budget: '5000-10000 EUR',
-    urgency: 'Alta',
-    interactions: [
-      { id: 'int-001', type: 'Llamada', date: '2025-09-20', notes: 'Primera toma de contacto. Interesado en solución A.' },
-      { id: 'int-002', type: 'Email', date: '2025-09-22', notes: 'Envío de propuesta inicial.' },
-      { id: 'int-003', type: 'Nota', date: '2025-09-25', notes: 'El cliente ha respondido positivamente a la propuesta.' },
-    ],
-    nextActions: [
-      { id: 'act-001', description: 'Llamar para seguimiento de propuesta', date: '2025-09-28' },
-      { id: 'act-002', description: 'Enviar caso de estudio relevante', date: '2025-09-29' },
-    ],
-  });
+  useEffect(() => {
+    if (!leadId) {
+      setIsLoading(false);
+      setError(new Error('No se proporcionó ID de lead'));
+      return;
+    }
 
-  const [isLoading] = useState(false);
-  const [error] = useState<Error | null>(null);
+    const fetchLead = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const response = await leadService.getLead(leadId);
+
+        if (!response.success || !response.data) {
+          throw new Error('No se encontró el lead');
+        }
+
+        const backendLead = response.data;
+
+        // Transform backend lead to match component interface
+        const transformedLead: Lead = {
+          id: backendLead.id || backendLead._id || '',
+          name: backendLead.nombre,
+          email: backendLead.email,
+          phone: backendLead.telefono || '',
+          status: mapEstadoToStatus(backendLead.estado),
+          company: '', // Not in backend model yet
+          objective: backendLead.interes || backendLead.notas || '',
+          availability: '', // Not in backend model yet
+          budget: backendLead.presupuesto ? `${backendLead.presupuesto} EUR/mes` : '',
+          urgency: backendLead.prioridad === 'alta' ? 'Alta' : backendLead.prioridad === 'media' ? 'Media' : 'Baja',
+          interactions: [
+            {
+              id: 'int-001',
+              type: 'Nota',
+              date: backendLead.fechaContacto ? new Date(backendLead.fechaContacto).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+              notes: backendLead.notas || 'Sin notas'
+            }
+          ],
+          nextActions: backendLead.proximoSeguimiento ? [
+            {
+              id: 'act-001',
+              description: 'Seguimiento programado',
+              date: new Date(backendLead.proximoSeguimiento).toISOString().split('T')[0]
+            }
+          ] : []
+        };
+
+        setLead(transformedLead);
+      } catch (err: any) {
+        console.error('Error al cargar lead:', err);
+        setError(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchLead();
+  }, [leadId]);
+
+  const mapEstadoToStatus = (estado: string): string => {
+    const mapping: { [key: string]: string } = {
+      'nuevo': 'Nuevo',
+      'contactado': 'Contactado',
+      'interesado': 'Calificado',
+      'convertido': 'Ganado',
+      'perdido': 'Perdido',
+      'no-interesado': 'Perdido'
+    };
+    return mapping[estado] || 'Nuevo';
+  };
+
+  const handleBack = () => {
+    navigate('/dashboard/leads-listado');
+  };
 
   const handleConvertLead = () => {
     alert('Lead convertido a cliente!');
+    // TODO: Implementar conversión real al backend
   };
 
   const handleAddInteraction = (newInteraction: any) => {
+    if (!lead) return;
     const interaction = {
       id: `int-${Date.now()}`,
       ...newInteraction,
     };
-    setLead(prev => ({
+    setLead(prev => prev ? ({
       ...prev,
       interactions: [...prev.interactions, interaction],
-    }));
+    }) : null);
   };
 
   const handleEditLeadInfo = (updatedLead: Lead) => {
     setLead(updatedLead);
+    // TODO: Guardar cambios en el backend
   };
 
   if (isLoading) {
@@ -76,13 +142,19 @@ const LeadDetallePage: React.FC = () => {
             </div>
             <h3 className="text-xl font-bold text-gray-800 mb-2">Error al cargar el lead</h3>
             <p className="text-gray-600">{error.message}</p>
+            <button
+              onClick={handleBack}
+              className="mt-4 px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+            >
+              Volver a leads
+            </button>
           </div>
         </motion.div>
       </div>
     );
   }
 
-  if (!lead) {
+  if (!lead || !leadId) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 flex items-center justify-center">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 max-w-md border border-white/50">
@@ -92,6 +164,12 @@ const LeadDetallePage: React.FC = () => {
             </div>
             <h3 className="text-xl font-bold text-gray-800 mb-2">Lead no encontrado</h3>
             <p className="text-gray-600">No se pudo encontrar la información del lead.</p>
+            <button
+              onClick={handleBack}
+              className="mt-4 px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+            >
+              Volver a leads
+            </button>
           </div>
         </motion.div>
       </div>
@@ -134,7 +212,7 @@ const LeadDetallePage: React.FC = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
-            onClick={() => window.history.back()}
+            onClick={handleBack}
             className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-white/10 backdrop-blur-md rounded-xl text-white hover:bg-white/20 transition-colors duration-300 border border-white/20"
           >
             <ArrowLeft className="w-5 h-5" />

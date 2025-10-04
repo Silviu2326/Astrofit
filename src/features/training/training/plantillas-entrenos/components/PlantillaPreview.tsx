@@ -205,8 +205,8 @@ const PlantillaPreview: React.FC<PlantillaPreviewProps> = ({ template, onClose, 
                           {dayIndex + 1}
                         </div>
                         <div className="text-left">
-                          <h4 className="text-lg font-bold text-gray-900">{day.day}</h4>
-                          <p className="text-sm text-gray-600">{day.exercises.length} ejercicios</p>
+                          <h4 className="text-lg font-bold text-gray-900">{day.nombre || day.day || `Día ${dayIndex + 1}`}</h4>
+                          <p className="text-sm text-gray-600">{(day.ejercicios || day.exercises || []).length} ejercicios</p>
                         </div>
                       </div>
                       {expandedDays.includes(dayIndex.toString()) ? (
@@ -227,9 +227,9 @@ const PlantillaPreview: React.FC<PlantillaPreviewProps> = ({ template, onClose, 
                           className="overflow-hidden"
                         >
                           <div className="p-5 space-y-3">
-                            {day.exercises.map((exercise: Exercise, exIndex: number) => (
+                            {(day.ejercicios || day.exercises || []).map((exercise: any, exIndex: number) => (
                               <div
-                                key={exercise.id}
+                                key={exercise.ejercicioId || exercise.id || exIndex}
                                 className="flex items-center justify-between bg-gradient-to-r from-gray-50 to-white p-4 rounded-xl border border-gray-200"
                               >
                                 <div className="flex items-center gap-4 flex-1">
@@ -237,24 +237,24 @@ const PlantillaPreview: React.FC<PlantillaPreviewProps> = ({ template, onClose, 
                                     {exIndex + 1}
                                   </div>
                                   <div className="flex-1">
-                                    <p className="font-bold text-gray-900">{exercise.name}</p>
-                                    {exercise.notes && (
-                                      <p className="text-xs text-gray-500 italic mt-1">{exercise.notes}</p>
+                                    <p className="font-bold text-gray-900">{exercise.ejercicioId?.nombre || exercise.name || 'Ejercicio'}</p>
+                                    {(exercise.notas || exercise.notes) && (
+                                      <p className="text-xs text-gray-500 italic mt-1">{exercise.notas || exercise.notes}</p>
                                     )}
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-6 text-sm">
                                   <div className="text-center">
                                     <p className="text-xs text-gray-500 font-semibold uppercase">Series</p>
-                                    <p className="text-lg font-bold text-purple-600">{exercise.sets}</p>
+                                    <p className="text-lg font-bold text-purple-600">{exercise.series || exercise.sets || 0}</p>
                                   </div>
                                   <div className="text-center">
                                     <p className="text-xs text-gray-500 font-semibold uppercase">Reps</p>
-                                    <p className="text-lg font-bold text-pink-600">{exercise.reps}</p>
+                                    <p className="text-lg font-bold text-pink-600">{exercise.repeticiones || exercise.reps || 0}</p>
                                   </div>
                                   <div className="text-center">
                                     <p className="text-xs text-gray-500 font-semibold uppercase">Descanso</p>
-                                    <p className="text-lg font-bold text-blue-600">{exercise.rest}</p>
+                                    <p className="text-lg font-bold text-blue-600">{exercise.descanso ? `${exercise.descanso}s` : (exercise.rest || '0s')}</p>
                                   </div>
                                 </div>
                               </div>

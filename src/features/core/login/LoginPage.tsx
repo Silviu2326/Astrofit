@@ -14,7 +14,7 @@ import {
   Shield,
   UserCircle
 } from 'lucide-react';
-import { validateCredentials } from './mockUsers';
+import authService from '../../../services/authService';
 
 interface LoginPageProps {
   onLogin: () => void;
@@ -32,10 +32,18 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   const [recoveryEmail, setRecoveryEmail] = useState('');
   const [recoverySuccess, setRecoverySuccess] = useState(false);
 
+  // Clear any old auth data when login page loads
+  React.useEffect(() => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('isAuthenticated');
+  }, []);
+
   const handleQuickLogin = (userEmail: string, userPassword: string) => {
     setEmail(userEmail);
     setPassword(userPassword);
     setEmailValid(true);
+    setError(''); // Clear any previous errors
   };
 
   const validateEmail = (email: string) => {
@@ -46,6 +54,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value);
+    setError(''); // Clear error when user types
     if (value.length > 0) {
       setEmailValid(validateEmail(value));
     } else {
@@ -53,36 +62,78 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     }
   };
 
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+    setError(''); // Clear error when user types
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
+    // CRITICAL: Prevent default form submission to avoid page reload
     e.preventDefault();
+    e.stopPropagation();
+
+    // Clear previous errors and start loading
     setError('');
     setIsLoading(true);
 
-    // Simulate login process
-    setTimeout(() => {
-      // Validate credentials against mock users
-      const user = validateCredentials(email, password);
+    try {
+      // Login using backend API
+      const response = await authService.loginTrainer({
+        email,
+        password
+      });
 
-      if (user) {
+      if (response.success && response.data) {
+        // Store user data
+        localStorage.setItem('currentUser', JSON.stringify(response.data.user));
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('isAuthenticated', 'true');
+
+        // Stop loading before calling onLogin
         setIsLoading(false);
-        // Store user info in localStorage for later use
-        localStorage.setItem('currentUser', JSON.stringify(user));
+
+        // Call parent callback to change auth state
         onLogin();
       } else {
-        setError('Credenciales incorrectas. Por favor, verifica tu email y contraseña.');
+        // Handle unexpected response format
+        setError('Error inesperado al iniciar sesión. Por favor, intenta de nuevo.');
         setIsLoading(false);
       }
-    }, 1000);
+    } catch (err: any) {
+      console.error('Login error:', err);
+
+      // Extract error message from different possible formats
+      let errorMessage = 'Error al iniciar sesión. Por favor, intenta de nuevo.';
+
+      if (err.response?.data?.error) {
+        errorMessage = err.response.data.error;
+      } else if (err.response?.data?.errors && Array.isArray(err.response.data.errors) && err.response.data.errors.length > 0) {
+        errorMessage = err.response.data.errors[0].message || err.response.data.errors[0].msg;
+      } else if (err.response?.data?.message) {
+        errorMessage = err.response.data.message;
+      } else if (err.message) {
+        errorMessage = err.message;
+      }
+
+      // Set error message and stop loading
+      setError(errorMessage);
+      setIsLoading(false);
+    }
+
+    // Return false to ensure no form submission
+    return false;
   };
 
   const handleRecovery = (e: React.FormEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     setRecoverySuccess(true);
     setTimeout(() => {
       setShowRecovery(false);
       setRecoverySuccess(false);
       setRecoveryEmail('');
     }, 2000);
+    return false;
   };
 
   const features = [
@@ -122,7 +173,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
             <div className="bg-white/20 backdrop-blur-md rounded-2xl p-3">
               <Sparkles className="w-8 h-8 text-yellow-300" />
             </div>
-            <span className="text-2xl font-bold text-white">FitnessPro</span>
+            <span className="text-2xl font-bold text-white">Astrofit</span>
           </div>
 
           {/* Hero title */}
@@ -201,7 +252,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
           <div className="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl p-2">
             <Sparkles className="w-6 h-6 text-white" />
           </div>
-          <span className="text-xl font-bold text-gray-900">FitnessPro</span>
+          <span className="text-xl font-bold text-gray-900">Astrofit</span>
         </div>
 
         {/* Decorative blur orb */}
@@ -231,10 +282,19 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
               className="mb-6 p-4 bg-red-50 border-2 border-red-200 rounded-2xl flex items-start gap-3"
             >
               <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-              <div>
+              <div className="flex-1">
                 <p className="text-sm font-semibold text-red-800">Error de autenticación</p>
                 <p className="text-sm text-red-600">{error}</p>
               </div>
+              <button
+                onClick={() => setError('')}
+                className="text-red-400 hover:text-red-600 transition-colors"
+                type="button"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
             </motion.div>
           )}
 
@@ -266,6 +326,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                         emailValid === true ? 'border-green-300 focus:border-green-500 focus:ring-4 focus:ring-green-100' :
                         'border-gray-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100'}`}
                     placeholder="tu@email.com"
+                    disabled={isLoading}
                   />
                   {emailValid === true && (
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 text-green-500">
@@ -291,14 +352,16 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                     autoComplete="current-password"
                     required
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={handlePasswordChange}
                     className="w-full pl-12 pr-12 py-3.5 rounded-2xl border-2 border-gray-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 transition-all duration-300 outline-none bg-white/80 backdrop-blur-sm"
                     placeholder="••••••••"
+                    disabled={isLoading}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                    disabled={isLoading}
                   >
                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                   </button>
@@ -315,6 +378,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
                     className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded cursor-pointer"
+                    disabled={isLoading}
                   />
                   <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700 cursor-pointer">
                     Recordarme
@@ -325,6 +389,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                   type="button"
                   onClick={() => setShowRecovery(true)}
                   className="text-sm font-semibold text-indigo-600 hover:text-indigo-500 transition-colors"
+                  disabled={isLoading}
                 >
                   ¿Olvidaste tu contraseña?
                 </button>
@@ -370,6 +435,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
               <button
                 type="button"
                 className="flex items-center justify-center gap-2 px-4 py-2.5 border-2 border-gray-200 rounded-2xl bg-white hover:bg-gray-50 transition-colors duration-300 font-medium text-gray-700"
+                disabled={isLoading}
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -382,6 +448,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
               <button
                 type="button"
                 className="flex items-center justify-center gap-2 px-4 py-2.5 border-2 border-gray-200 rounded-2xl bg-white hover:bg-gray-50 transition-colors duration-300 font-medium text-gray-700"
+                disabled={isLoading}
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"/>
@@ -417,6 +484,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 type="button"
                 onClick={() => handleQuickLogin('core@trainerpro.com', 'core123')}
                 className="flex justify-between items-center bg-white/60 hover:bg-white/90 rounded-lg px-3 py-2 transition-all duration-200 hover:shadow-md cursor-pointer group"
+                disabled={isLoading}
               >
                 <span className="font-semibold text-gray-700 group-hover:text-blue-700 transition-colors">Core:</span>
                 <span className="text-blue-700">core@trainerpro.com / core123</span>
@@ -425,6 +493,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 type="button"
                 onClick={() => handleQuickLogin('solopro@trainerpro.com', 'solopro123')}
                 className="flex justify-between items-center bg-white/60 hover:bg-white/90 rounded-lg px-3 py-2 transition-all duration-200 hover:shadow-md cursor-pointer group"
+                disabled={isLoading}
               >
                 <span className="font-semibold text-gray-700 group-hover:text-blue-700 transition-colors">Solo Pro:</span>
                 <span className="text-blue-700">solopro@trainerpro.com / solopro123</span>
@@ -433,6 +502,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 type="button"
                 onClick={() => handleQuickLogin('solomax@trainerpro.com', 'solomax123')}
                 className="flex justify-between items-center bg-white/60 hover:bg-white/90 rounded-lg px-3 py-2 transition-all duration-200 hover:shadow-md cursor-pointer group"
+                disabled={isLoading}
               >
                 <span className="font-semibold text-gray-700 group-hover:text-blue-700 transition-colors">Solo Max:</span>
                 <span className="text-blue-700">solomax@trainerpro.com / solomax123</span>
@@ -441,6 +511,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 type="button"
                 onClick={() => handleQuickLogin('creatorpro@trainerpro.com', 'creatorpro123')}
                 className="flex justify-between items-center bg-white/60 hover:bg-white/90 rounded-lg px-3 py-2 transition-all duration-200 hover:shadow-md cursor-pointer group"
+                disabled={isLoading}
               >
                 <span className="font-semibold text-gray-700 group-hover:text-blue-700 transition-colors">Creator Pro:</span>
                 <span className="text-blue-700">creatorpro@trainerpro.com / creatorpro123</span>
@@ -449,6 +520,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 type="button"
                 onClick={() => handleQuickLogin('creatormax@trainerpro.com', 'creatormax123')}
                 className="flex justify-between items-center bg-white/60 hover:bg-white/90 rounded-lg px-3 py-2 transition-all duration-200 hover:shadow-md cursor-pointer group"
+                disabled={isLoading}
               >
                 <span className="font-semibold text-gray-700 group-hover:text-blue-700 transition-colors">Creator Max:</span>
                 <span className="text-blue-700">creatormax@trainerpro.com / creatormax123</span>
@@ -457,6 +529,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 type="button"
                 onClick={() => handleQuickLogin('studiopro@trainerpro.com', 'studiopro123')}
                 className="flex justify-between items-center bg-white/60 hover:bg-white/90 rounded-lg px-3 py-2 transition-all duration-200 hover:shadow-md cursor-pointer group"
+                disabled={isLoading}
               >
                 <span className="font-semibold text-gray-700 group-hover:text-blue-700 transition-colors">Studio Pro:</span>
                 <span className="text-blue-700">studiopro@trainerpro.com / studiopro123</span>
@@ -465,6 +538,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 type="button"
                 onClick={() => handleQuickLogin('studiomax@trainerpro.com', 'studiomax123')}
                 className="flex justify-between items-center bg-white/60 hover:bg-white/90 rounded-lg px-3 py-2 transition-all duration-200 hover:shadow-md cursor-pointer group"
+                disabled={isLoading}
               >
                 <span className="font-semibold text-gray-700 group-hover:text-blue-700 transition-colors">Studio Max:</span>
                 <span className="text-blue-700">studiomax@trainerpro.com / studiomax123</span>
@@ -473,6 +547,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 type="button"
                 onClick={() => handleQuickLogin('teamspro@trainerpro.com', 'teamspro123')}
                 className="flex justify-between items-center bg-white/60 hover:bg-white/90 rounded-lg px-3 py-2 transition-all duration-200 hover:shadow-md cursor-pointer group"
+                disabled={isLoading}
               >
                 <span className="font-semibold text-gray-700 group-hover:text-blue-700 transition-colors">Teams Pro:</span>
                 <span className="text-blue-700">teamspro@trainerpro.com / teamspro123</span>
@@ -481,6 +556,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 type="button"
                 onClick={() => handleQuickLogin('teamselite@trainerpro.com', 'teamselite123')}
                 className="flex justify-between items-center bg-white/60 hover:bg-white/90 rounded-lg px-3 py-2 transition-all duration-200 hover:shadow-md cursor-pointer group"
+                disabled={isLoading}
               >
                 <span className="font-semibold text-gray-700 group-hover:text-blue-700 transition-colors">Teams Elite:</span>
                 <span className="text-blue-700">teamselite@trainerpro.com / teamselite123</span>

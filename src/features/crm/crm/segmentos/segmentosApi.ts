@@ -1,78 +1,129 @@
-import { Segment } from './SegmentosPage'; // Reusing the interface from SegmentosPage for consistency
+import api from '../../../../services/api';
 
-// Mock API functions for demonstration purposes
+// Tipos basados en el backend
+export interface Segmento {
+  _id: string;
+  nombre: string;
+  descripcion: string;
+  trainer: string;
+  tipo: 'automatico' | 'manual' | 'hibrido';
+  reglas?: {
+    campo: string;
+    operador: string;
+    valor: any;
+  }[];
+  clientes?: string[];
+  stats: {
+    totalMiembros: number;
+    activos: number;
+    inactivos: number;
+  };
+  activo: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
 
-export const fetchSegments = async (): Promise<Segment[]> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const mockSegments: Segment[] = [
-        {
-          id: '1',
-          name: 'Clientes online sin reservas (30 días)',
-          description: 'Clientes que han interactuado online pero no han hecho reservas en los últimos 30 días.',
-          memberCount: 120,
-          lastUpdated: '2025-09-26',
-          rules: [],
-        },
-        {
-          id: '2',
-          name: 'Interesados en fuerza (PAR-Q incompleto)',
-          description: 'Personas interesadas en entrenamiento de fuerza que no han completado el cuestionario PAR-Q.',
-          memberCount: 45,
-          lastUpdated: '2025-09-25',
-          rules: [],
-        },
-        {
-          id: '3',
-          name: 'Clientes Premium (Cumpleaños este mes)',
-          description: 'Clientes con membresía premium que cumplen años en el mes actual.',
-          memberCount: 30,
-          lastUpdated: '2025-09-27',
-          rules: [],
-        },
-      ];
-      resolve(mockSegments);
-    }, 500);
-  });
+export interface SegmentoCreateDTO {
+  nombre: string;
+  descripcion: string;
+  tipo: 'automatico' | 'manual' | 'hibrido';
+  reglas?: any[];
+  clientes?: string[];
+}
+
+export interface SegmentoUpdateDTO {
+  nombre?: string;
+  descripcion?: string;
+  reglas?: any[];
+  activo?: boolean;
+}
+
+// Obtener todos los segmentos
+export const fetchSegmentos = async (filters?: {
+  tipo?: string;
+  activo?: boolean;
+  search?: string;
+}): Promise<Segmento[]> => {
+  const params = new URLSearchParams();
+  if (filters?.tipo) params.append('tipo', filters.tipo);
+  if (filters?.activo !== undefined) params.append('activo', String(filters.activo));
+  if (filters?.search) params.append('search', filters.search);
+
+  const response = await api.get(`/segmentos?${params.toString()}`);
+  return response.data.data;
 };
 
-export const createSegment = async (segment: Omit<Segment, 'id' | 'memberCount' | 'lastUpdated'>): Promise<Segment> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const newSegment: Segment = {
-        id: String(Math.random()).slice(2, 11),
-        memberCount: Math.floor(Math.random() * 100),
-        lastUpdated: new Date().toISOString().slice(0, 10),
-        ...segment,
-      };
-      resolve(newSegment);
-    }, 500);
-  });
+// Obtener un segmento por ID
+export const fetchSegmento = async (id: string): Promise<Segmento> => {
+  const response = await api.get(`/segmentos/${id}`);
+  return response.data.data;
 };
 
-export const updateSegment = async (segment: Segment): Promise<Segment> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      // In a real app, this would update the segment in the backend
-      resolve(segment);
-    }, 500);
-  });
+// Crear un nuevo segmento
+export const createSegmento = async (data: SegmentoCreateDTO): Promise<Segmento> => {
+  const response = await api.post('/segmentos', data);
+  return response.data.data;
 };
 
-export const deleteSegment = async (segmentId: string): Promise<void> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log(`Segment ${segmentId} deleted.`);
-      resolve();
-    }, 500);
-  });
+// Actualizar un segmento
+export const updateSegmento = async (id: string, data: SegmentoUpdateDTO): Promise<Segmento> => {
+  const response = await api.put(`/segmentos/${id}`, data);
+  return response.data.data;
 };
 
-export const getSegmentPreviewCount = async (rules: any[]): Promise<number> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const count = Math.floor(Math.random() * 200) + 10; // Random count for demonstration
-      resolve(count);
-    }, 300);
-  });
+// Eliminar un segmento (soft delete)
+export const deleteSegmento = async (id: string): Promise<void> => {
+  await api.delete(`/segmentos/${id}`);
+};
+
+// Agregar un cliente a un segmento
+export const agregarCliente = async (segmentoId: string, clienteId: string): Promise<Segmento> => {
+  const response = await api.post(`/segmentos/${segmentoId}/clientes/${clienteId}`, {});
+  return response.data.data;
+};
+
+// Eliminar un cliente de un segmento
+export const eliminarCliente = async (segmentoId: string, clienteId: string): Promise<Segmento> => {
+  const response = await api.delete(`/segmentos/${segmentoId}/clientes/${clienteId}`);
+  return response.data.data;
+};
+
+// Agregar múltiples clientes a un segmento
+export const agregarClientesMultiples = async (
+  segmentoId: string,
+  clienteIds: string[]
+): Promise<Segmento> => {
+  const response = await api.post(`/segmentos/${segmentoId}/clientes/bulk`, { clienteIds });
+  return response.data.data;
+};
+
+// Obtener miembros de un segmento
+export const getMiembros = async (segmentoId: string): Promise<any[]> => {
+  const response = await api.get(`/segmentos/${segmentoId}/miembros`);
+  return response.data.data;
+};
+
+// Recalcular estadísticas de un segmento
+export const recalcularStats = async (segmentoId: string): Promise<Segmento> => {
+  const response = await api.post(`/segmentos/${segmentoId}/recalcular`, {});
+  return response.data.data;
+};
+
+// Obtener estadísticas generales
+export const getStats = async (): Promise<any> => {
+  const response = await api.get('/segmentos/stats/overview');
+  return response.data.data;
+};
+
+// Activar/desactivar un segmento
+export const toggleActive = async (segmentoId: string): Promise<Segmento> => {
+  const response = await api.patch(`/segmentos/${segmentoId}/toggle-active`, {});
+  return response.data.data;
+};
+
+// Función helper para obtener preview de conteo (para segmentos automáticos)
+export const getSegmentPreviewCount = async (reglas: any[]): Promise<number> => {
+  // Esta funcionalidad podría implementarse en el backend
+  // Por ahora retornamos un estimado basado en getMiembros
+  return 0;
 };

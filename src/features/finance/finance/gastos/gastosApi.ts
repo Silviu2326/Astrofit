@@ -1,6 +1,195 @@
+import api from '../../../../services/api';
 
-import { Expense } from '../../types'; // Assuming a types file exists at this path
+// Types
+export interface Gasto {
+  _id?: string;
+  id?: string;
+  trainer?: string;
+  fecha: string;
+  concepto: string;
+  descripcion?: string;
+  categoria: string;
+  subcategoria?: string;
+  proveedor: string;
+  monto: number;
+  metodoPago: string;
+  estado: 'Pagado' | 'Pendiente' | 'Aprobado' | 'Rechazado';
+  referencia?: string;
+  notas?: string;
+  esRecurrente: boolean;
+  frecuencia?: 'Semanal' | 'Mensual' | 'Trimestral' | 'Anual' | null;
+  proximaRecurrencia?: string | null;
+  tieneFactura: boolean;
+  facturaUrl?: string | null;
+  archivoAdjunto?: string | null;
+  etiquetas?: string[];
+  isActive?: boolean;
+  periodo?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
 
+export interface GastosResponse {
+  success: boolean;
+  count: number;
+  total: number;
+  totalPages: number;
+  currentPage: number;
+  data: Gasto[];
+}
+
+export interface GastoResponse {
+  success: boolean;
+  data: Gasto;
+}
+
+export interface GastosStats {
+  porCategoria: Array<{
+    _id: string;
+    total: number;
+    count: number;
+  }>;
+  porProveedor: Array<{
+    _id: string;
+    total: number;
+    count: number;
+  }>;
+  porEstado: Array<{
+    _id: string;
+    total: number;
+    count: number;
+  }>;
+  totalGeneral: {
+    total: number;
+    count: number;
+  };
+  gastosRecurrentes: number;
+}
+
+export interface GastosStatsResponse {
+  success: boolean;
+  data: GastosStats;
+}
+
+export interface GastosPeriodoResponse {
+  success: boolean;
+  periodo: string;
+  count: number;
+  total: number;
+  data: Gasto[];
+}
+
+export interface BulkUpdateResponse {
+  success: boolean;
+  message: string;
+  data: {
+    matchedCount: number;
+    modifiedCount: number;
+  };
+}
+
+export interface GastosFilters {
+  page?: number;
+  limit?: number;
+  categoria?: string;
+  estado?: string;
+  proveedor?: string;
+  fechaInicio?: string;
+  fechaFin?: string;
+  esRecurrente?: boolean;
+  search?: string;
+}
+
+// API Functions
+export const gastosApi = {
+  /**
+   * Get all gastos with filters and pagination
+   */
+  getGastos: async (filters?: GastosFilters): Promise<GastosResponse> => {
+    const params = new URLSearchParams();
+
+    if (filters) {
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== '') {
+          params.append(key, String(value));
+        }
+      });
+    }
+
+    const response = await api.get(`/gastos?${params.toString()}`);
+    return response.data;
+  },
+
+  /**
+   * Get a single gasto by ID
+   */
+  getGasto: async (id: string): Promise<GastoResponse> => {
+    const response = await api.get(`/gastos/${id}`);
+    return response.data;
+  },
+
+  /**
+   * Create a new gasto
+   */
+  createGasto: async (gastoData: Partial<Gasto>): Promise<GastoResponse> => {
+    const response = await api.post('/gastos', gastoData);
+    return response.data;
+  },
+
+  /**
+   * Update a gasto
+   */
+  updateGasto: async (id: string, gastoData: Partial<Gasto>): Promise<GastoResponse> => {
+    const response = await api.put(`/gastos/${id}`, gastoData);
+    return response.data;
+  },
+
+  /**
+   * Delete a gasto (soft delete)
+   */
+  deleteGasto: async (id: string): Promise<{ success: boolean; message: string }> => {
+    const response = await api.delete(`/gastos/${id}`);
+    return response.data;
+  },
+
+  /**
+   * Get gastos statistics
+   */
+  getGastosStats: async (fechaInicio?: string, fechaFin?: string): Promise<GastosStatsResponse> => {
+    const params = new URLSearchParams();
+    if (fechaInicio) params.append('fechaInicio', fechaInicio);
+    if (fechaFin) params.append('fechaFin', fechaFin);
+
+    const response = await api.get(`/gastos/stats/summary?${params.toString()}`);
+    return response.data;
+  },
+
+  /**
+   * Get gastos by periodo (YYYY-MM)
+   */
+  getGastosByPeriodo: async (periodo: string): Promise<GastosPeriodoResponse> => {
+    const response = await api.get(`/gastos/periodo/${periodo}`);
+    return response.data;
+  },
+
+  /**
+   * Bulk update gastos estado
+   */
+  bulkUpdateEstado: async (ids: string[], estado: string): Promise<BulkUpdateResponse> => {
+    const response = await api.put('/gastos/bulk/estado', { ids, estado });
+    return response.data;
+  },
+
+  /**
+   * Bulk delete gastos
+   */
+  bulkDeleteGastos: async (ids: string[]): Promise<BulkUpdateResponse> => {
+    const response = await api.delete('/gastos/bulk/delete', { data: { ids } });
+    return response.data;
+  },
+};
+
+// Legacy compatibility exports
 export interface FixedExpense {
   id: string;
   name: string;
@@ -32,19 +221,7 @@ export interface MonthlyBudget {
   currentSpent: number;
 }
 
-// Mock Data
-const mockFixedExpenses: FixedExpense[] = [
-  { id: 'fe1', name: 'Alquiler de Sala', amount: 500, dueDate: '2025-10-01', category: 'Alquiler' },
-  { id: 'fe2', name: 'Seguro de Responsabilidad', amount: 100, dueDate: '2025-10-15', category: 'Seguros' },
-  { id: 'fe3', name: 'Licencia Software CRM', amount: 50, dueDate: '2025-10-20', category: 'Software' },
-];
-
-const mockVariableExpenses: VariableExpense[] = [
-  { id: 've1', name: 'Balones de Fútbol', amount: 120, date: '2025-09-20', category: 'Material Deportivo' },
-  { id: 've2', name: 'Campaña Instagram', amount: 80, date: '2025-09-22', category: 'Publicidad' },
-  { id: 've3', name: 'Gasolina Viaje Cliente', amount: 40, date: '2025-09-25', category: 'Desplazamientos' },
-];
-
+// Fallback mock data (for components that still use the old API)
 const mockCategories: ExpenseCategory[] = [
   { id: 'cat1', name: 'Alquiler', type: 'fixed' },
   { id: 'cat2', name: 'Seguros', type: 'fixed' },
@@ -63,19 +240,41 @@ const mockMonthlyBudgets: MonthlyBudget[] = [
   { id: 'mb3', category: 'Material Deportivo', limit: 150, currentSpent: 120 },
 ];
 
-// Mock API calls
-export const gastosApi = {
+// Legacy mock API calls (deprecated - use gastosApi instead)
+export const legacyGastosApi = {
   getFixedExpenses: async (): Promise<FixedExpense[]> => {
-    return new Promise((resolve) => setTimeout(() => resolve(mockFixedExpenses), 500));
+    // Convert gastos to fixed expenses
+    const response = await gastosApi.getGastos({ esRecurrente: true });
+    return response.data.map(gasto => ({
+      id: gasto._id || gasto.id || '',
+      name: gasto.concepto,
+      amount: gasto.monto,
+      dueDate: gasto.fecha,
+      category: gasto.categoria,
+      receiptUrl: gasto.facturaUrl || undefined
+    }));
   },
+
   getVariableExpenses: async (): Promise<VariableExpense[]> => {
-    return new Promise((resolve) => setTimeout(() => resolve(mockVariableExpenses), 500));
+    // Convert gastos to variable expenses
+    const response = await gastosApi.getGastos({ esRecurrente: false });
+    return response.data.map(gasto => ({
+      id: gasto._id || gasto.id || '',
+      name: gasto.concepto,
+      amount: gasto.monto,
+      date: gasto.fecha,
+      category: gasto.categoria,
+      receiptUrl: gasto.facturaUrl || undefined
+    }));
   },
+
   getCategories: async (): Promise<ExpenseCategory[]> => {
-    return new Promise((resolve) => setTimeout(() => resolve(mockCategories), 500));
+    return new Promise((resolve) => setTimeout(() => resolve(mockCategories), 100));
   },
+
   getMonthlyBudgets: async (): Promise<MonthlyBudget[]> => {
-    return new Promise((resolve) => setTimeout(() => resolve(mockMonthlyBudgets), 500));
+    return new Promise((resolve) => setTimeout(() => resolve(mockMonthlyBudgets), 100));
   },
-  // Add more API functions as needed for adding, updating, deleting expenses/budgets
 };
+
+export default gastosApi;

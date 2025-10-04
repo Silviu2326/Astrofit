@@ -1,5 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
+import { Eye } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Lead } from '../leadsListadoApi';
 
 interface LeadsListProps {
@@ -11,6 +13,7 @@ type SortKey = 'name' | 'email' | 'phone' | 'origin' | 'status' | 'contactDate';
 const PAGE_SIZE = 10;
 
 const LeadsList: React.FC<LeadsListProps> = ({ leads }) => {
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [sortKey, setSortKey] = useState<SortKey>('contactDate');
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
@@ -62,6 +65,7 @@ const LeadsList: React.FC<LeadsListProps> = ({ leads }) => {
               <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider cursor-pointer" onClick={() => setSort('origin')}>Origen</th>
               <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider cursor-pointer" onClick={() => setSort('status')}>Estado</th>
               <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider cursor-pointer" onClick={() => setSort('contactDate')}>Fecha contacto</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Acciones</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-100">
@@ -77,11 +81,20 @@ const LeadsList: React.FC<LeadsListProps> = ({ leads }) => {
                   <span className="px-2 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700">{lead.status}</span>
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-600">{new Date(lead.contactDate).toLocaleDateString()}</td>
+                <td className="px-4 py-3 text-sm">
+                  <button
+                    onClick={() => navigate(`/lead-detalle/${lead.id}`)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg transition-colors"
+                  >
+                    <Eye className="w-3.5 h-3.5" />
+                    Ver
+                  </button>
+                </td>
               </motion.tr>
             ))}
             {pageItems.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-4 py-10 text-center text-gray-500 text-sm">No hay resultados para los filtros aplicados.</td>
+                <td colSpan={7} className="px-4 py-10 text-center text-gray-500 text-sm">No hay resultados para los filtros aplicados.</td>
               </tr>
             )}
           </tbody>
@@ -116,5 +129,3 @@ const LeadsList: React.FC<LeadsListProps> = ({ leads }) => {
 };
 
 export default LeadsList;
-
-
