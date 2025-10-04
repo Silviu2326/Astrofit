@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getTransformationStories, TransformationStory } from '../opinionesResenasApi';
+import { fetchTransformationStories, TransformationStory } from '../opinionesResenasApi';
 
 const HistoriasTransformacion: React.FC = () => {
   const [stories, setStories] = useState<TransformationStory[]>([]);
@@ -8,7 +8,7 @@ const HistoriasTransformacion: React.FC = () => {
   useEffect(() => {
     const fetchStories = async () => {
       setLoading(true);
-      const fetchedStories = await getTransformationStories();
+      const fetchedStories = await fetchTransformationStories();
       setStories(fetchedStories.filter(story => story.approved)); // Only show approved stories
       setLoading(false);
     };
@@ -37,8 +37,8 @@ const HistoriasTransformacion: React.FC = () => {
                   <img src={story.afterImageUrl} alt="Después" className="w-24 h-24 object-cover rounded-full mx-auto border-2 border-blue-500" />
                 </div>
               </div>
-              <p className="text-gray-700 italic">"{story.story}"</p>
-              <p className="text-sm text-gray-500 mt-2">Fecha: {story.date}</p>
+              <p className="text-gray-700 italic">"{story.testimonial}"</p>
+              <p className="text-sm text-gray-500 mt-2">Tiempo: {story.timeFrame}</p>
             </div>
           ))}
         </div>

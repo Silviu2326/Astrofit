@@ -1,3 +1,4 @@
+import { PlaceholderImages } from '../../../../../utils/placeholderImages';
 export interface VideoRecording {
   id: string;
   title: string;
@@ -15,9 +16,9 @@ export const fetchVideoRecordings = async (): Promise<VideoRecording[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve([
-        { id: '1', title: 'Sesión 1', thumbnail: 'https://via.placeholder.com/150', date: '2023-01-15', type: 'Consulta', duration: '30:00', size: '50MB', url: 'https://www.w3schools.com/html/mov_bbb.mp4' },
-        { id: '2', title: 'Sesión 2', thumbnail: 'https://via.placeholder.com/150', date: '2023-02-20', type: 'Terapia', duration: '45:00', size: '75MB', url: 'https://www.w3schools.com/html/mov_bbb.mp4' },
-        { id: '3', title: 'Sesión 3', thumbnail: 'https://via.placeholder.com/150', date: '2023-03-10', type: 'Seguimiento', duration: '20:00', size: '30MB', url: 'https://www.w3schools.com/html/mov_bbb.mp4' },
+        { id: '1', title: 'Sesión 1', thumbnail: PlaceholderImages.generic(150, 150), date: '2023-01-15', type: 'Consulta', duration: '30:00', size: '50MB', url: 'https://www.w3schools.com/html/mov_bbb.mp4' },
+        { id: '2', title: 'Sesión 2', thumbnail: PlaceholderImages.generic(150, 150), date: '2023-02-20', type: 'Terapia', duration: '45:00', size: '75MB', url: 'https://www.w3schools.com/html/mov_bbb.mp4' },
+        { id: '3', title: 'Sesión 3', thumbnail: PlaceholderImages.generic(150, 150), date: '2023-03-10', type: 'Seguimiento', duration: '20:00', size: '30MB', url: 'https://www.w3schools.com/html/mov_bbb.mp4' },
       ]);
     }, 500);
   });

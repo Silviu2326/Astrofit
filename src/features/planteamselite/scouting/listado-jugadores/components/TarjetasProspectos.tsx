@@ -1,5 +1,6 @@
 import React from 'react';
 import { Prospecto } from '../listadoJugadoresApi';
+import { PlaceholderImages } from '../../../../../utils/placeholderImages';
 
 interface TarjetasProspectosProps {
   prospecto?: Prospecto; // Hacerlo opcional para el placeholder inicial
@@ -14,7 +15,7 @@ const TarjetasProspectos: React.FC<TarjetasProspectosProps> = ({ prospecto }) =>
     posicion: 'Posición',
     clubActual: 'Club Ejemplo',
     nacionalidad: 'Nacionalidad',
-    fotoUrl: 'https://via.placeholder.com/150',
+    fotoUrl: PlaceholderImages.avatar(150),
     nivel: 'Medio',
     potencial: 'Alto',
     estado: 'en evaluación',

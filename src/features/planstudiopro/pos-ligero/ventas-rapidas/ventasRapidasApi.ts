@@ -1,53 +1,60 @@
-import { Producto } from '../../types'; // Assuming types.ts is in src/
+// Define Producto interface locally since types file doesn't exist
+interface Producto {
+  id: string;
+  nombre: string;
+  precio: number;
+  imagen: string;
+}
+import { PlaceholderImages } from '../../../../utils/placeholderImages';
 
 export const productosCatalogo: Producto[] = [
   {
     id: '1',
     nombre: 'Agua Mineral',
     precio: 1.50,
-    imagen: 'https://via.placeholder.com/100x100?text=Agua',
+    imagen: PlaceholderImages.product(100),
   },
   {
     id: '2',
     nombre: 'Batido de Proteínas',
     precio: 4.00,
-    imagen: 'https://via.placeholder.com/100x100?text=Batido',
+    imagen: PlaceholderImages.product(100),
   },
   {
     id: '3',
     nombre: 'Camiseta Deportiva',
     precio: 25.00,
-    imagen: 'https://via.placeholder.com/100x100?text=Camiseta',
+    imagen: PlaceholderImages.product(100),
   },
   {
     id: '4',
     nombre: 'Suplemento Multivitamínico',
     precio: 18.75,
-    imagen: 'https://via.placeholder.com/100x100?text=Suplemento',
+    imagen: PlaceholderImages.product(100),
   },
   {
     id: '5',
     nombre: 'Barrita Energética',
     precio: 2.20,
-    imagen: 'https://via.placeholder.com/100x100?text=Barrita',
+    imagen: PlaceholderImages.product(100),
   },
   {
     id: '6',
     nombre: 'Guantes de Entrenamiento',
     precio: 15.00,
-    imagen: 'https://via.placeholder.com/100x100?text=Guantes',
+    imagen: PlaceholderImages.product(100),
   },
   {
     id: '7',
     nombre: 'Bebida Isotónica',
     precio: 2.75,
-    imagen: 'https://via.placeholder.com/100x100?text=Isotonica',
+    imagen: PlaceholderImages.product(100),
   },
   {
     id: '8',
     nombre: 'Mochila Deportiva',
     precio: 35.00,
-    imagen: 'https://via.placeholder.com/100x100?text=Mochila',
+    imagen: PlaceholderImages.product(100),
   },
 ];
 

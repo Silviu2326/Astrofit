@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { PlaceholderImages } from '../../../../../utils/placeholderImages';
 
 export interface Articulo {
   id: string;
@@ -14,7 +14,7 @@ const articulos: Articulo[] = [
   {
     id: '1',
     titulo: '10 Tips Fitness para Empezar el Año',
-    imagen: 'https://via.placeholder.com/400x200?text=Fitness+Tips',
+    imagen: PlaceholderImages.generic(400, 200, 'Fitness Tips'),
     extracto: 'Descubre cómo mantenerte en forma con estos sencillos consejos.',
     contenido: 'Contenido completo del artículo sobre tips fitness...',
     categoria: 'tips fitness',
@@ -23,7 +23,7 @@ const articulos: Articulo[] = [
   {
     id: '2',
     titulo: 'Nutrición Balanceada: Clave para una Vida Saludable',
-    imagen: 'https://via.placeholder.com/400x200?text=Nutricion+Saludable',
+    imagen: PlaceholderImages.generic(400, 200, 'Nutricion Saludable'),
     extracto: 'Aprende a comer de forma inteligente y mejora tu bienestar.',
     contenido: 'Contenido completo del artículo sobre nutrición balanceada...',
     categoria: 'nutrición',
@@ -32,7 +32,7 @@ const articulos: Articulo[] = [
   {
     id: '3',
     titulo: 'Nuevas Instalaciones en Nuestro Gimnasio',
-    imagen: 'https://via.placeholder.com/400x200?text=Nuevas+Instalaciones',
+    imagen: PlaceholderImages.generic(400, 200, 'Nuevas Instalaciones'),
     extracto: 'Estamos emocionados de anunciar nuestras nuevas y mejoradas instalaciones.',
     contenido: 'Contenido completo del artículo sobre las nuevas instalaciones...',
     categoria: 'noticias personales',

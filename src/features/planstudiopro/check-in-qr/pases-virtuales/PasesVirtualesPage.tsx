@@ -18,7 +18,7 @@ import TradingSimulator from './components/TradingSimulator';
 import ColeccionablesDigitales from './components/ColeccionablesDigitales';
 import RealidadAumentadaBeneficios from './components/RealidadAumentadaBeneficios';
 import SocialTrading from './components/SocialTrading';
-import { getBonos, Bono } from './pasesVirtualesApi';
+import { fetchBonos, Bono } from './pasesVirtualesApi';
 
 const PasesVirtualesPage: React.FC = () => {
   const [bonos, setBonos] = useState<Bono[]>([]);
@@ -26,9 +26,9 @@ const PasesVirtualesPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchBonos = async () => {
+    const loadBonos = async () => {
       try {
-        const data = await getBonos();
+        const data = await fetchBonos();
         setBonos(data);
       } catch (err) {
         setError('Error al cargar los bonos.');
@@ -37,7 +37,7 @@ const PasesVirtualesPage: React.FC = () => {
         setLoading(false);
       }
     };
-    fetchBonos();
+    loadBonos();
   }, []);
 
   if (loading) {

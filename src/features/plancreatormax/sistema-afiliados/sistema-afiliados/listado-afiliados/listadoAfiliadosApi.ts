@@ -1,5 +1,6 @@
 
 import { Affiliate } from './types';
+import { PlaceholderImages } from '../../../../../utils/placeholderImages';
 
 // Simulaci??n de datos de afiliados
 const mockAffiliates: Affiliate[] = [
@@ -11,7 +12,7 @@ const mockAffiliates: Affiliate[] = [
     pendingCommission: 150,
     status: 'active',
     performance: 'high',
-    photo: 'https://via.placeholder.com/40',
+    photo: PlaceholderImages.generic(40, 40),
   },
   {
     id: '2',
@@ -21,7 +22,7 @@ const mockAffiliates: Affiliate[] = [
     pendingCommission: 80,
     status: 'active',
     performance: 'medium',
-    photo: 'https://via.placeholder.com/40',
+    photo: PlaceholderImages.generic(40, 40),
   },
   {
     id: '3',
@@ -31,7 +32,7 @@ const mockAffiliates: Affiliate[] = [
     pendingCommission: 30,
     status: 'suspended',
     performance: 'low',
-    photo: 'https://via.placeholder.com/40',
+    photo: PlaceholderImages.generic(40, 40),
   },
 ];
 

@@ -4,6 +4,7 @@ import ArchivoUpload from './components/ArchivoUpload';
 import ArchivosFilters from './components/ArchivosFilters';
 import ArchivoViewer from './components/ArchivoViewer';
 import { FileItem } from './archivosApi';
+import { PlaceholderImages } from '../../utils/placeholderImages';
 
 const ArchivosPage: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<FileItem | null>(null);
@@ -21,7 +22,7 @@ const ArchivosPage: React.FC = () => {
       associatedClient: 'Cliente A',
       tags: ['contratos'],
       version: 1,
-      thumbnail: 'https://via.placeholder.com/150/FF0000/FFFFFF?text=PDF',
+      thumbnail: PlaceholderImages.pdf(),
       url: 'https://www.africau.edu/images/default/sample.pdf'
     },
     {
@@ -33,8 +34,8 @@ const ArchivosPage: React.FC = () => {
       associatedClient: 'Cliente B',
       tags: ['médicos', 'fotos'],
       version: 2,
-      thumbnail: 'https://via.placeholder.com/150/00FF00/FFFFFF?text=JPG',
-      url: 'https://via.placeholder.com/800'
+      thumbnail: PlaceholderImages.jpg(),
+      url: PlaceholderImages.generic(800, 600, 'Image')
     },
     {
       id: '3',
@@ -45,7 +46,7 @@ const ArchivosPage: React.FC = () => {
       associatedClient: 'Cliente C',
       tags: ['programas'],
       version: 1,
-      thumbnail: 'https://via.placeholder.com/150/0000FF/FFFFFF?text=PDF',
+      thumbnail: PlaceholderImages.pdf(),
       url: 'https://www.africau.edu/images/default/sample.pdf'
     },
     {
@@ -57,8 +58,8 @@ const ArchivosPage: React.FC = () => {
       associatedClient: 'Cliente A',
       tags: ['fotos'],
       version: 1,
-      thumbnail: 'https://via.placeholder.com/150/FFFF00/000000?text=PNG',
-      url: 'https://via.placeholder.com/1500'
+      thumbnail: PlaceholderImages.png(),
+      url: PlaceholderImages.generic(1500, 1000, 'Image')
     },
   ];
 

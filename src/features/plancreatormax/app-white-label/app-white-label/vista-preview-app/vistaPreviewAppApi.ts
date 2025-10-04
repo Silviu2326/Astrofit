@@ -1,3 +1,4 @@
+import { PlaceholderImages } from '../../../../../utils/placeholderImages';
 export const fetchAppConfig = async (appId: string) => {
   // Simulate API call
   return new Promise((resolve) => {
@@ -6,7 +7,7 @@ export const fetchAppConfig = async (appId: string) => {
         appName: 'Mi App Personalizada',
         primaryColor: '#4F46E5',
         secondaryColor: '#A5B4FC',
-        icon: 'https://via.placeholder.com/48',
+        icon: PlaceholderImages.generic(48, 48),
         screens: {
           home: { name: 'Inicio', content: 'Bienvenido a tu app personalizada!' },
           about: { name: 'Acerca de', content: 'Esta es una app de ejemplo.' },

@@ -1,22 +1,49 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
+import { Loader2, CheckCircle, AlertCircle, ArrowLeft, ArrowRight } from 'lucide-react';
 import PasoConfiguracion from './PasoConfiguracion';
 import PasoContenido from './PasoContenido';
 import PasoPublicacion from './PasoPublicacion';
 import PreviewCurso from './PreviewCurso';
 
-interface WizardCursoProps {}
+interface WizardCursoProps {
+  isEditMode?: boolean;
+  cursoData?: any;
+  isLoading?: boolean;
+  onShowConfirmModal?: (cursoData: any) => void;
+  isPublishing?: boolean;
+}
 
-const WizardCurso: React.FC<WizardCursoProps> = () => {
+const WizardCurso: React.FC<WizardCursoProps> = ({ 
+  isEditMode = false, 
+  cursoData: initialData, 
+  isLoading: externalLoading = false,
+  onShowConfirmModal,
+  isPublishing = false
+}) => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const [cursoData, setCursoData] = useState({
     titulo: '',
     descripcion: '',
     portada: null as File | null,
     modulos: [],
     precio: 0,
+    esPublico: true,
     // ... otros campos del curso
   });
+
+  // Load initial data when in edit mode
+  useEffect(() => {
+    if (isEditMode && initialData) {
+      setCursoData(prevData => ({
+        ...prevData,
+        ...initialData,
+      }));
+    }
+  }, [isEditMode, initialData]);
 
   const steps = [
     { name: 'Configuración', component: PasoConfiguracion },
@@ -28,16 +55,18 @@ const WizardCurso: React.FC<WizardCursoProps> = () => {
   const handleNext = (data: any) => {
     setCursoData((prev) => ({ ...prev, ...data }));
     setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
+    toast.success(`Paso ${currentStep + 1} completado correctamente`);
   };
 
   const handleBack = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 0));
+    toast.success('Volviendo al paso anterior');
   };
 
   const handleSubmit = async () => {
-    // Aquí se manejaría la lógica final de publicación del curso
-    console.log('Curso finalizado y listo para publicar:', cursoData);
-    alert('Curso creado y listo para publicar!');
+    if (onShowConfirmModal) {
+      onShowConfirmModal(cursoData);
+    }
   };
 
   const CurrentStepComponent = steps[currentStep].component;
@@ -78,30 +107,51 @@ const WizardCurso: React.FC<WizardCursoProps> = () => {
       {/* Navegación del wizard (botones) */}
       <div className="flex justify-between mt-8">
         {currentStep > 0 && (
-          <button
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={handleBack}
-            className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+            disabled={isLoading}
+            className="flex items-center gap-2 px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
+            <ArrowLeft className="w-4 h-4" />
             Anterior
-          </button>
+          </motion.button>
         )}
         {currentStep < steps.length - 1 && (
-          <button
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => { /* La lógica de next se maneja dentro de cada paso */ }}
-            className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            disabled={isLoading}
+            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
             form={`step-form-${currentStep}`}
             type="submit"
           >
             Siguiente
-          </button>
+            <ArrowRight className="w-4 h-4" />
+          </motion.button>
         )}
         {currentStep === steps.length - 1 && (
-          <button
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={handleSubmit}
-            className="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+            disabled={isPublishing}
+            className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
           >
-            Publicar Curso
-          </button>
+            {isPublishing ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Publicando...
+              </>
+            ) : (
+              <>
+                <CheckCircle className="w-4 h-4" />
+                Publicar Curso
+              </>
+            )}
+          </motion.button>
         )}
       </div>
     </div>

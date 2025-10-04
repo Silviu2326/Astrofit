@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { PlaceholderImages } from '../../../../utils/placeholderImages';
 
 // Definiciones de tipos para el cliente
 export interface Cliente {
@@ -56,7 +57,7 @@ const mockCliente: Cliente = {
   id: 'cliente-id-123',
   nombre: 'Ana',
   apellido: 'García',
-  fotoUrl: 'https://via.placeholder.com/150',
+  fotoUrl: PlaceholderImages.avatar(150),
   etiquetas: ['VIP', 'Nuevo', 'Entrenamiento Personal'],
   contacto: {
     email: 'ana.garcia@example.com',

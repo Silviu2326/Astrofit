@@ -109,6 +109,8 @@ import ListadoEmailsPage from '../../features/plancreatorpro/email-broadcast/ema
 import CrearEmailPage from '../../features/plancreatorpro/email-broadcast/email-broadcast/crear-email/CrearEmailPage';
 import PlantillasEmailPage from '../../features/plancreatorpro/email-broadcast/email-broadcast/plantillas-email/PlantillasEmailPage';
 import ReportesEnvioPage from '../../features/plancreatorpro/email-broadcast/email-broadcast/reportes-envio/ReportesEnvioPage';
+import HistorialCompletoPage from '../../features/plancreatorpro/email-broadcast/email-broadcast/historial-completo/HistorialCompletoPage';
+import CampaignDetailPage from '../../features/plancreatorpro/email-broadcast/email-broadcast/campaign-detail/CampaignDetailPage';
 import ListadoMembresiasPage from '../../features/plancreatorpro/membresias/membresias/listado-membresias/ListadoMembresiasPage';
 import PaginaMembresiaPage from '../../features/plancreatorpro/membresias/membresias/pagina-membresia/PaginaMembresiaPage';
 import BeneficiosMembresiPage from '../../features/plancreatorpro/membresias/membresias/beneficios-membresia/BeneficiosMembresiPage';
@@ -423,6 +425,10 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onLogout }) =>
         return <PlantillasEmailPage />;
       case 'reportes-envio':
         return <ReportesEnvioPage />;
+      case 'historial-completo':
+        return <HistorialCompletoPage />;
+      case 'campaign-detail':
+        return <CampaignDetailPage />;
       case 'listado-membresias':
         return <ListadoMembresiasPage />;
       case 'pagina-membresia':
@@ -623,6 +629,12 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onLogout }) =>
         <main className="p-6">
           <Routes>
             <Route index element={<Navigate to="/inicio" replace />} />
+            {/* Rutas específicas para cursos con parámetros */}
+            <Route path="curso-detalle/:id" element={<CursoDetallePage />} />
+            <Route path="crear-curso/:id?" element={<CrearCursoPage />} />
+            {/* Rutas específicas para email broadcast con parámetros */}
+            <Route path="email-broadcast/campaign-detail/:id" element={<CampaignDetailPage />} />
+            <Route path="email-broadcast/historial-completo" element={<HistorialCompletoPage />} />
             {/* Fallback: usa el renderer existente segun id en URL */}
             <Route path="*" element={renderPage()} />
           </Routes>

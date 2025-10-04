@@ -1,11 +1,15 @@
+import { PlaceholderImages } from '../../../../utils/placeholderImages';
+
 export interface Review {
   id: string;
   clientName: string;
   rating: number;
   comment: string;
   date: string;
+  service: string;
+  verified: boolean;
+  helpful: number;
   status: 'pending' | 'approved' | 'rejected';
-  type: 'private' | 'public';
 }
 
 export interface TransformationStory {
@@ -13,9 +17,17 @@ export interface TransformationStory {
   clientName: string;
   beforeImageUrl: string;
   afterImageUrl: string;
-  story: string;
-  date: string;
+  weightLoss?: number;
+  timeFrame: string;
+  testimonial: string;
   approved: boolean;
+}
+
+export interface ReviewStats {
+  totalReviews: number;
+  averageRating: number;
+  ratingDistribution: { [key: number]: number };
+  recentReviews: Review[];
 }
 
 // Mock data for reviews
@@ -24,37 +36,56 @@ const mockReviews: Review[] = [
     id: '1',
     clientName: 'Ana García',
     rating: 5,
-    comment: 'Excelente programa de entrenamiento, he visto resultados increíbles en poco tiempo. ¡Muy recomendado!',
-    date: '2023-09-15',
+    comment: 'Excelente servicio, muy profesional y resultados increíbles.',
+    date: '2024-01-15',
+    service: 'Entrenamiento Personal',
+    verified: true,
+    helpful: 12,
     status: 'approved',
-    type: 'public',
   },
   {
     id: '2',
-    clientName: 'Carlos Ruiz',
+    clientName: 'Carlos López',
     rating: 4,
-    comment: 'El entrenador es muy profesional y atento. Me gustaría que hubiera más variedad en los ejercicios.',
-    date: '2023-09-20',
-    status: 'pending',
-    type: 'private',
+    comment: 'Buen gimnasio, instalaciones modernas y personal atento.',
+    date: '2024-01-10',
+    service: 'Membresía',
+    verified: true,
+    helpful: 8,
+    status: 'approved',
   },
   {
     id: '3',
-    clientName: 'María López',
+    clientName: 'María Rodríguez',
     rating: 5,
-    comment: 'La planificación nutricional fue clave para mi transformación. ¡Gracias por todo el apoyo!',
-    date: '2023-09-22',
+    comment: 'El mejor gimnasio de la ciudad, lo recomiendo 100%.',
+    date: '2024-01-08',
+    service: 'Clases Grupales',
+    verified: true,
+    helpful: 15,
     status: 'approved',
-    type: 'public',
   },
   {
     id: '4',
-    clientName: 'Pedro Martínez',
+    clientName: 'Pedro Martín',
     rating: 3,
-    comment: 'Buen inicio, pero tuve dificultades para seguir la rutina. Necesito más motivación.',
-    date: '2023-09-25',
-    status: 'pending',
-    type: 'private',
+    comment: 'Está bien, pero podría mejorar en algunos aspectos.',
+    date: '2024-01-05',
+    service: 'Entrenamiento Personal',
+    verified: false,
+    helpful: 3,
+    status: 'approved',
+  },
+  {
+    id: '5',
+    clientName: 'Laura Fernández',
+    rating: 5,
+    comment: 'Transformación increíble, gracias al equipo por su apoyo.',
+    date: '2024-01-03',
+    service: 'Programa de Pérdida de Peso',
+    verified: true,
+    helpful: 20,
+    status: 'approved',
   },
 ];
 
@@ -63,42 +94,97 @@ const mockTransformationStories: TransformationStory[] = [
   {
     id: 'ts1',
     clientName: 'Laura Fernández',
-    beforeImageUrl: 'https://via.placeholder.com/150/FF0000/FFFFFF?text=Antes',
-    afterImageUrl: 'https://via.placeholder.com/150/00FF00/FFFFFF?text=Después',
-    story: 'Mi historia de transformación comenzó hace 6 meses. Con la guía del entrenador, logré perder 15kg y mejorar mi energía. ¡Me siento genial!',
-    date: '2023-08-01',
+    beforeImageUrl: PlaceholderImages.generic(150, 150, 'Antes'),
+    afterImageUrl: PlaceholderImages.generic(150, 150, 'Después'),
+    weightLoss: 15,
+    timeFrame: '6 meses',
+    testimonial: 'Perdí 15 kg y gané mucha confianza. El programa fue perfecto para mí.',
     approved: true,
   },
   {
     id: 'ts2',
-    clientName: 'Javier Pérez',
-    beforeImageUrl: 'https://via.placeholder.com/150/FFFF00/000000?text=Antes',
-    afterImageUrl: 'https://via.placeholder.com/150/0000FF/FFFFFF?text=Después',
-    story: 'Siempre quise aumentar mi masa muscular y con el plan personalizado lo conseguí. ¡Un cambio asombroso!',
-    date: '2023-08-10',
+    clientName: 'Miguel Torres',
+    beforeImageUrl: PlaceholderImages.generic(150, 150, 'Antes'),
+    afterImageUrl: PlaceholderImages.generic(150, 150, 'Después'),
+    weightLoss: 8,
+    timeFrame: '4 meses',
+    testimonial: 'Increíble transformación, me siento más fuerte y saludable.',
     approved: true,
   },
 ];
 
-export const getReviews = async (type?: 'private' | 'public', status?: 'pending' | 'approved' | 'rejected'): Promise<Review[]> => {
+// API functions
+export const fetchReviews = async (filters?: {
+  rating?: number;
+  service?: string;
+  status?: string;
+}): Promise<Review[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      let filteredReviews = mockReviews;
-      if (type) {
-        filteredReviews = filteredReviews.filter(review => review.type === type);
+      let filteredReviews = [...mockReviews];
+      
+      if (filters?.rating) {
+        filteredReviews = filteredReviews.filter(r => r.rating === filters.rating);
       }
-      if (status) {
-        filteredReviews = filteredReviews.filter(review => review.status === status);
+      
+      if (filters?.service) {
+        filteredReviews = filteredReviews.filter(r => r.service === filters.service);
       }
+      
+      if (filters?.status) {
+        filteredReviews = filteredReviews.filter(r => r.status === filters.status);
+      }
+      
       resolve(filteredReviews);
     }, 500);
   });
 };
 
-export const getTransformationStories = async (): Promise<TransformationStory[]> => {
+export const fetchReviewStats = async (): Promise<ReviewStats> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(mockTransformationStories);
+      const totalReviews = mockReviews.length;
+      const averageRating = mockReviews.reduce((sum, r) => sum + r.rating, 0) / totalReviews;
+      
+      const ratingDistribution = mockReviews.reduce((dist, r) => {
+        dist[r.rating] = (dist[r.rating] || 0) + 1;
+        return dist;
+      }, {} as { [key: number]: number });
+      
+      const recentReviews = mockReviews
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .slice(0, 5);
+      
+      resolve({
+        totalReviews,
+        averageRating: Math.round(averageRating * 10) / 10,
+        ratingDistribution,
+        recentReviews,
+      });
+    }, 500);
+  });
+};
+
+export const fetchTransformationStories = async (): Promise<TransformationStory[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(mockTransformationStories.filter(story => story.approved));
+    }, 500);
+  });
+};
+
+export const createReview = async (review: Omit<Review, 'id' | 'date' | 'helpful' | 'status'>): Promise<Review> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const newReview: Review = {
+        ...review,
+        id: Date.now().toString(),
+        date: new Date().toISOString().split('T')[0],
+        helpful: 0,
+        status: 'pending',
+      };
+      mockReviews.push(newReview);
+      resolve(newReview);
     }, 500);
   });
 };
@@ -106,33 +192,73 @@ export const getTransformationStories = async (): Promise<TransformationStory[]>
 export const updateReviewStatus = async (id: string, status: 'approved' | 'rejected'): Promise<Review> => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const reviewIndex = mockReviews.findIndex(review => review.id === id);
-      if (reviewIndex > -1) {
-        mockReviews[reviewIndex].status = status;
-        resolve(mockReviews[reviewIndex]);
+      const review = mockReviews.find(r => r.id === id);
+      if (review) {
+        review.status = status;
+        resolve(review);
       } else {
         reject(new Error('Review not found'));
       }
-    }, 300);
-  });
-};
-
-export const requestReview = async (clientId: string): Promise<boolean> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log(`Solicitud de reseña enviada al cliente ${clientId}`);
-      resolve(true);
     }, 500);
   });
 };
 
-export const exportTestimonials = async (): Promise<any> => {
+export const markReviewHelpful = async (id: string): Promise<Review> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const review = mockReviews.find(r => r.id === id);
+      if (review) {
+        review.helpful += 1;
+        resolve(review);
+      } else {
+        reject(new Error('Review not found'));
+      }
+    }, 500);
+  });
+};
+
+export const createTransformationStory = async (story: Omit<TransformationStory, 'id' | 'approved'>): Promise<TransformationStory> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      console.log('Exportando testimonios...');
-      const data = JSON.stringify({ reviews: mockReviews.filter(r => r.type === 'public' && r.status === 'approved'), stories: mockTransformationStories.filter(s => s.approved) }, null, 2);
-      console.log(data);
-      resolve({ message: 'Testimonios exportados con éxito', data });
+      const newStory: TransformationStory = {
+        ...story,
+        id: `ts${Date.now()}`,
+        approved: false,
+      };
+      mockTransformationStories.push(newStory);
+      resolve(newStory);
+    }, 500);
+  });
+};
+
+export const approveTransformationStory = async (id: string): Promise<TransformationStory> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const story = mockTransformationStories.find(s => s.id === id);
+      if (story) {
+        story.approved = true;
+        resolve(story);
+      } else {
+        reject(new Error('Transformation story not found'));
+      }
+    }, 500);
+  });
+};
+
+export const exportReviews = async (format: 'json' | 'csv'): Promise<{ message: string; data: any }> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const data = {
+        reviews: mockReviews.filter(r => r.status === 'approved'),
+        stories: mockTransformationStories.filter(s => s.approved)
+      };
+      
+      if (format === 'json') {
+        resolve({ message: 'Testimonios exportados con éxito', data });
+      } else {
+        // In a real app, this would generate CSV
+        resolve({ message: 'CSV generado con éxito', data });
+      }
     }, 500);
   });
 };

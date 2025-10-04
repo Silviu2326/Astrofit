@@ -1,3 +1,4 @@
+import { PlaceholderImages } from '../../../../utils/placeholderImages';
 export interface Prospecto {
   id: string;
   nombre: string;
@@ -91,7 +92,7 @@ export const fetchProspectos = async (filters?: any): Promise<Prospecto[]> => {
           posicion: 'Delantero',
           clubActual: 'Cantera FC',
           nacionalidad: 'Española',
-          fotoUrl: 'https://via.placeholder.com/150',
+          fotoUrl: PlaceholderImages.avatar(150),
           nivel: 'Medio',
           potencial: 'Estrella',
           estado: 'seguimiento activo',
@@ -104,7 +105,7 @@ export const fetchProspectos = async (filters?: any): Promise<Prospecto[]> => {
           posicion: 'Centrocampista',
           clubActual: 'Atlético Juvenil',
           nacionalidad: 'Mexicana',
-          fotoUrl: 'https://via.placeholder.com/150',
+          fotoUrl: PlaceholderImages.avatar(150),
           nivel: 'Alto',
           potencial: 'Alto',
           estado: 'en evaluación',
@@ -117,7 +118,7 @@ export const fetchProspectos = async (filters?: any): Promise<Prospecto[]> => {
           posicion: 'Defensa',
           clubActual: 'Jóvenes Promesas',
           nacionalidad: 'Argentina',
-          fotoUrl: 'https://via.placeholder.com/150',
+          fotoUrl: PlaceholderImages.avatar(150),
           nivel: 'Bajo',
           potencial: 'Medio',
           estado: 'descartado',

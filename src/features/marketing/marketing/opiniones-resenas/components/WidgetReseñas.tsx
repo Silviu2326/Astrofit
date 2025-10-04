@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getReviews, Review } from '../opinionesResenasApi';
+import { fetchReviews, Review } from '../opinionesResenasApi';
 
 const WidgetResenas: React.FC = () => {
   const [publicReviews, setPublicReviews] = useState<Review[]>([]);
@@ -8,7 +8,7 @@ const WidgetResenas: React.FC = () => {
   useEffect(() => {
     const fetchPublicReviews = async () => {
       setLoading(true);
-      const reviews = await getReviews('public', 'approved');
+      const reviews = await fetchReviews({ status: 'approved' });
       setPublicReviews(reviews);
       setLoading(false);
     };

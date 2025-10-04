@@ -1,3 +1,4 @@
+import { PlaceholderImages } from '../../../../../utils/placeholderImages';
 
 // src/features/micrositio/landing-servicios/landingServiciosApi.ts
 
@@ -54,21 +55,21 @@ export const mockTestimonios: Testimonio[] = [
   {
     id: 't1',
     name: 'Ana G.',
-    photoUrl: 'https://via.placeholder.com/100',
+    photoUrl: PlaceholderImages.generic(100, 100),
     stars: 5,
     comment: '"Juan me ayudó a alcanzar mis metas de fitness en tiempo récord. ¡Totalmente recomendado!"',
   },
   {
     id: 't2',
     name: 'Carlos M.',
-    photoUrl: 'https://via.placeholder.com/100',
+    photoUrl: PlaceholderImages.generic(100, 100),
     stars: 4,
     comment: '"Las sesiones online son muy cómodas y efectivas. He notado un gran cambio en mi energía."',
   },
   {
     id: 't3',
     name: 'Sofía L.',
-    photoUrl: 'https://via.placeholder.com/100',
+    photoUrl: PlaceholderImages.generic(100, 100),
     stars: 5,
     comment: '"El plan nutricional fue clave. Aprendí a comer mejor sin sentir que estaba a dieta."',
   },

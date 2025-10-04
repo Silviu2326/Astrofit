@@ -1,5 +1,6 @@
 
 // src/features/email-broadcast/plantillas-email/plantillasEmailApi.ts
+import { PlaceholderImages } from '../../../../../utils/placeholderImages';
 
 export interface EmailTemplate {
   id: string;
@@ -16,7 +17,7 @@ const mockTemplates: EmailTemplate[] = [
     id: '1',
     name: 'Plantilla de Bienvenida',
     category: 'Bienvenida',
-    thumbnail: 'https://via.placeholder.com/150/0000FF/FFFFFF?text=Bienvenida',
+    thumbnail: PlaceholderImages.emailTemplate('#0000FF', 'Bienvenida'),
     content: '<h1>Bienvenido a nuestro servicio!</h1><p>Gracias por unirte.</p>',
     isFavorite: false,
   },
@@ -24,7 +25,7 @@ const mockTemplates: EmailTemplate[] = [
     id: '2',
     name: 'Recordatorio de Evento',
     category: 'Recordatorio',
-    thumbnail: 'https://via.placeholder.com/150/FF0000/FFFFFF?text=Recordatorio',
+    thumbnail: PlaceholderImages.emailTemplate('#FF0000', 'Recordatorio'),
     content: '<h1>No olvides nuestro próximo evento!</h1><p>Te esperamos.</p>',
     isFavorite: true,
   },
@@ -32,7 +33,7 @@ const mockTemplates: EmailTemplate[] = [
     id: '3',
     name: 'Anuncio de Nuevo Producto',
     category: 'Anuncio',
-    thumbnail: 'https://via.placeholder.com/150/00FF00/FFFFFF?text=Anuncio',
+    thumbnail: PlaceholderImages.emailTemplate('#00FF00', 'Anuncio'),
     content: '<h1>Descubre nuestro nuevo producto!</h1><p>Te encantará.</p>',
     isFavorite: false,
   },

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getReviews, Review } from '../opinionesResenasApi';
+import { fetchReviews, Review } from '../opinionesResenasApi';
 
 const ResenasPrivadas: React.FC = () => {
   const [privateReviews, setPrivateReviews] = useState<Review[]>([]);
@@ -8,7 +8,7 @@ const ResenasPrivadas: React.FC = () => {
   useEffect(() => {
     const fetchPrivateReviews = async () => {
       setLoading(true);
-      const reviews = await getReviews('private');
+      const reviews = await fetchReviews({ status: 'approved' });
       setPrivateReviews(reviews);
       setLoading(false);
     };

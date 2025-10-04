@@ -1,3 +1,5 @@
+import { PlaceholderImages } from '../../../../utils/placeholderImages';
+
 export interface Coach {
   id: string;
   name: string;
@@ -11,42 +13,42 @@ const mockCoaches: Coach[] = [
     id: '1',
     name: 'Juan Pérez',
     specialty: 'Fuerza',
-    photo: 'https://via.placeholder.com/150/FF0000/FFFFFF?text=JP',
+    photo: PlaceholderImages.coach('JP'),
     status: 'disponible',
   },
   {
     id: '2',
     name: 'María García',
     specialty: 'Cardio',
-    photo: 'https://via.placeholder.com/150/0000FF/FFFFFF?text=MG',
+    photo: PlaceholderImages.coach('MG'),
     status: 'ocupado',
   },
   {
     id: '3',
     name: 'Carlos Ruíz',
     specialty: 'Yoga',
-    photo: 'https://via.placeholder.com/150/008000/FFFFFF?text=CR',
+    photo: PlaceholderImages.coach('CR'),
     status: 'libre',
   },
   {
     id: '4',
     name: 'Ana López',
     specialty: 'Pilates',
-    photo: 'https://via.placeholder.com/150/FFFF00/000000?text=AL',
+    photo: PlaceholderImages.coach('AL'),
     status: 'disponible',
   },
   {
     id: '5',
     name: 'Pedro Martínez',
     specialty: 'Nutrición',
-    photo: 'https://via.placeholder.com/150/FFA500/FFFFFF?text=PM',
+    photo: PlaceholderImages.coach('PM'),
     status: 'ocupado',
   },
   {
     id: '6',
     name: 'Laura Sánchez',
     specialty: 'Funcional',
-    photo: 'https://via.placeholder.com/150/800080/FFFFFF?text=LS',
+    photo: PlaceholderImages.coach('LS'),
     status: 'disponible',
   },
 ];

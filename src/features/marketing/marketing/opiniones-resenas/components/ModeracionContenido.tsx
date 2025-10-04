@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getReviews, updateReviewStatus, Review } from '../opinionesResenasApi';
+import { fetchReviews, updateReviewStatus, Review } from '../opinionesResenasApi';
 
 const ModeracionContenido: React.FC = () => {
   const [pendingReviews, setPendingReviews] = useState<Review[]>([]);
@@ -8,7 +8,7 @@ const ModeracionContenido: React.FC = () => {
   useEffect(() => {
     const fetchPendingReviews = async () => {
       setLoading(true);
-      const reviews = await getReviews(undefined, 'pending');
+      const reviews = await fetchReviews({ status: 'pending' });
       setPendingReviews(reviews);
       setLoading(false);
     };
@@ -39,7 +39,7 @@ const ModeracionContenido: React.FC = () => {
             <li key={review.id} className="bg-yellow-50 p-4 rounded-md shadow-sm border border-yellow-200">
               <p className="font-medium text-gray-800">{review.clientName} - <span className="text-yellow-500">{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}</span></p>
               <p className="text-gray-700 mt-1">"{review.comment}"</p>
-              <p className="text-sm text-gray-500 mt-2">Tipo: {review.type === 'private' ? 'Privada' : 'Pública'}</p>
+              <p className="text-sm text-gray-500 mt-2">Servicio: {review.service}</p>
               <div className="mt-3 space-x-2">
                 <button
                   onClick={() => handleModerate(review.id, 'approved')}

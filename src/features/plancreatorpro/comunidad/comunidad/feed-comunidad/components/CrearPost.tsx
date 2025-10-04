@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { feedComunidadApi } from '../../feed-comunidad/feedComunidadApi';
 import { Post, User } from '../../feed-comunidad/types';
 
@@ -8,24 +9,41 @@ const CrearPost: React.FC = () => {
   const [mediaType, setMediaType] = useState<'image' | 'video' | '' >('');
   const [postType, setPostType] = useState<'text' | 'image' | 'video' | 'poll'>('text');
   const [pollOptions, setPollOptions] = useState<string[]>(['', '']);
-  const currentUser: User = { id: 'user1', name: 'Entrenador Juan', avatar: 'https://via.placeholder.com/150/FF5733/FFFFFF?text=EJ' }; // Simulaci??n de usuario actual
+  const currentUser: User = { id: 'user1', name: 'Entrenador Juan', avatar: '🏋️‍♂️' }; // Simulaci??n de usuario actual
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
+      
+      // Check file size (max 10MB)
+      if (file.size > 10 * 1024 * 1024) {
+        toast.error('El archivo es demasiado grande. Máximo 10MB permitido.');
+        return;
+      }
+      
       setMediaFile(file);
       if (file.type.startsWith('image')) {
         setMediaType('image');
         setPostType('image');
+        toast.success('Imagen seleccionada');
       } else if (file.type.startsWith('video')) {
         setMediaType('video');
         setPostType('video');
+        toast.success('Video seleccionado');
+      } else {
+        toast.error('Tipo de archivo no soportado');
+        return;
       }
     }
   };
 
   const handleAddPollOption = () => {
-    setPollOptions([...pollOptions, '']);
+    if (pollOptions.length < 6) {
+      setPollOptions([...pollOptions, '']);
+      toast.success('Opción agregada');
+    } else {
+      toast.error('Máximo 6 opciones permitidas');
+    }
   };
 
   const handlePollOptionChange = (index: number, value: string) => {
@@ -38,7 +56,7 @@ const CrearPost: React.FC = () => {
     e.preventDefault();
 
     if (!content.trim() && !mediaFile && postType !== 'poll') {
-      alert('El post no puede estar vac??o.');
+      toast.error('El post no puede estar vacío.');
       return;
     }
 
@@ -47,12 +65,12 @@ const CrearPost: React.FC = () => {
     if (postType === 'poll') {
       const validOptions = pollOptions.filter(option => option.trim() !== '');
       if (validOptions.length < 2) {
-        alert('Una encuesta debe tener al menos dos opciones v??lidas.');
+        toast.error('Una encuesta debe tener al menos dos opciones válidas.');
         return;
       }
       newPost = {
         author: currentUser,
-        content: content.trim() || 'Encuesta r??pida',
+        content: content.trim() || 'Encuesta rápida',
         media: [],
         type: 'poll',
         pollOptions: validOptions.map((option, index) => ({ id: `opt-${index}`, text: option, votes: 0 })),
@@ -66,6 +84,8 @@ const CrearPost: React.FC = () => {
       };
     }
 
+    const loadingToast = toast.loading('Publicando post...');
+
     try {
       await feedComunidadApi.createPost(newPost);
       setContent('');
@@ -73,11 +93,16 @@ const CrearPost: React.FC = () => {
       setMediaType('');
       setPostType('text');
       setPollOptions(['', '']);
-      // Optionally, trigger a re-fetch of posts in TimelinePosts
-      window.location.reload(); // Simple reload for demonstration
+      
+      toast.dismiss(loadingToast);
+      toast.success('¡Post publicado exitosamente!');
+      
+      // Trigger a re-fetch of posts by dispatching a custom event
+      window.dispatchEvent(new CustomEvent('postCreated'));
     } catch (error) {
       console.error('Error creating post:', error);
-      alert('Hubo un error al crear el post.');
+      toast.dismiss(loadingToast);
+      toast.error('Hubo un error al crear el post. Inténtalo de nuevo.');
     }
   };
 

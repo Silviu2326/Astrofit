@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ConfirmationModal from '../../../../../../components/ui/confirmation-modal';
 
 interface Curso {
   id: string;
@@ -14,9 +15,24 @@ interface Curso {
 
 interface TarjetaCursoProps {
   curso: Curso;
+  onVerCurso: (cursoId: string) => void;
+  onEditarCurso: (cursoId: string) => void;
+  onEliminarCurso: (cursoId: string) => void;
 }
 
-const TarjetaCurso: React.FC<TarjetaCursoProps> = ({ curso }) => {
+const TarjetaCurso: React.FC<TarjetaCursoProps> = ({ 
+  curso, 
+  onVerCurso, 
+  onEditarCurso, 
+  onEliminarCurso 
+}) => {
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const handleDeleteConfirm = () => {
+    onEliminarCurso(curso.id);
+    setShowDeleteModal(false);
+  };
+
   const getEstadoClasses = (estado: Curso['estado']) => {
     switch (estado) {
       case 'activo':
@@ -45,11 +61,38 @@ const TarjetaCurso: React.FC<TarjetaCursoProps> = ({ curso }) => {
         <p className="text-gray-700 mb-2">Duración: {curso.duracion}</p>
         <p className="text-gray-700 mb-4">Inscritos actuales: {curso.inscritosActuales}</p>
         <div className="flex justify-end space-x-2">
-          <button className="bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600">Ver</button>
-          <button className="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm hover:bg-yellow-600">Editar</button>
-          <button className="bg-red-500 text-white px-3 py-1 rounded-md text-sm hover:bg-red-600">Eliminar</button>
+          <button 
+            onClick={() => onVerCurso(curso.id)}
+            className="bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600 transition-colors"
+          >
+            Ver
+          </button>
+          <button 
+            onClick={() => onEditarCurso(curso.id)}
+            className="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm hover:bg-yellow-600 transition-colors"
+          >
+            Editar
+          </button>
+          <button 
+            onClick={() => setShowDeleteModal(true)}
+            className="bg-red-500 text-white px-3 py-1 rounded-md text-sm hover:bg-red-600 transition-colors"
+          >
+            Eliminar
+          </button>
         </div>
       </div>
+
+      {/* Modal de confirmación para eliminar */}
+      <ConfirmationModal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onConfirm={handleDeleteConfirm}
+        title="Eliminar Curso"
+        message={`¿Estás seguro de que quieres eliminar el curso "${curso.titulo}"? Esta acción no se puede deshacer.`}
+        confirmText="Eliminar"
+        cancelText="Cancelar"
+        type="danger"
+      />
     </div>
   );
 };

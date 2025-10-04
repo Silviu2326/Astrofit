@@ -1,7 +1,23 @@
 
-import React from 'react';
+import React, { useState } from 'react';
+import toast from 'react-hot-toast';
+import Modal from '../../../../../../components/ui/modal';
 
 const PrecioSuscripcion: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleChoosePlan = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleConfirmSubscription = () => {
+    setIsModalOpen(false);
+    toast.success('¡Suscripción iniciada! Redirigiendo al pago...', {
+      duration: 3000,
+    });
+    // Aquí se podría agregar la lógica para procesar el pago
+  };
+
   return (
     <section className="py-16 bg-gray-100 text-center">
       <div className="container mx-auto px-4">
@@ -30,11 +46,58 @@ const PrecioSuscripcion: React.FC = () => {
               Soporte prioritario
             </li>
           </ul>
-          <button className="bg-purple-600 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-purple-700 transition duration-300 w-full">
+          <button 
+            onClick={handleChoosePlan}
+            className="bg-purple-600 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-purple-700 transition duration-300 w-full"
+          >
             Elegir Plan Anual
           </button>
         </div>
       </div>
+
+      {/* Modal de confirmación */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Confirmar Suscripción"
+        size="md"
+      >
+        <div className="space-y-4">
+          <div className="text-center">
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">Membresía Anual</h3>
+            <p className="text-3xl font-bold text-purple-600 mb-4">$299/año</p>
+            <p className="text-gray-600 mb-6">
+              ¿Estás listo para desbloquear todo el contenido premium y unirte a nuestra comunidad?
+            </p>
+          </div>
+          
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <h4 className="font-semibold text-gray-800 mb-2">Incluye:</h4>
+            <ul className="text-sm text-gray-600 space-y-1">
+              <li>• Acceso ilimitado a todos los cursos</li>
+              <li>• Entrenamientos exclusivos</li>
+              <li>• Soporte prioritario</li>
+              <li>• Comunidad privada</li>
+              <li>• Recursos descargables</li>
+            </ul>
+          </div>
+
+          <div className="flex gap-3 pt-4">
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={handleConfirmSubscription}
+              className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+            >
+              Confirmar Pago
+            </button>
+          </div>
+        </div>
+      </Modal>
     </section>
   );
 };

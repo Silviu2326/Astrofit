@@ -1,6 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { Player } from '../gestionPlantillasConvocatoriaApi';
+import { PlaceholderImages } from '../../../../../utils/placeholderImages';
 
 interface TableroTacticoProps {
   // Puedes pasar props como la lista de jugadores, el deporte seleccionado, etc.
@@ -13,8 +14,8 @@ const TableroTactico: React.FC<TableroTacticoProps> = () => {
     accept: 'player',
     drop: (item: { id: string; name: string; photoUrl: string; role: string }, monitor) => {
       const delta = monitor.getDifferenceFromInitialOffset() as { x: number; y: number };
-      const left = Math.round(item.position?.x || 0 + delta.x);
-      const top = Math.round(item.position?.y || 0 + delta.y);
+      const left = Math.round(0 + delta.x);
+      const top = Math.round(0 + delta.y);
 
       setPlayersOnField((prevPlayers) => {
         const existingPlayer = prevPlayers.find((p) => p.id === item.id);
@@ -34,7 +35,7 @@ const TableroTactico: React.FC<TableroTacticoProps> = () => {
       ref={drop}
       className="relative w-full h-96 bg-green-700 border-4 border-white rounded-lg overflow-hidden"
       style={{
-        backgroundImage: 'url("https://via.placeholder.com/800x400/008000/FFFFFF?text=Cancha+Deportiva")', // Placeholder de cancha
+        backgroundImage: `url(${PlaceholderImages.generic(800, 400, 'Cancha Deportiva')})`, // Placeholder de cancha
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}

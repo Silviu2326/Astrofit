@@ -4,8 +4,8 @@ import TarjetaGrupo from './TarjetaGrupo';
 const ListadoGrupos: React.FC = () => {
   // TODO: Fetch list of groups from API
   const grupos = [
-    { id: '1', nombre: 'Reto 30 días', miembrosActivos: 120, imagenPortada: 'https://via.placeholder.com/300x200' },
-    { id: '2', nombre: 'Fuerza Avanzada', miembrosActivos: 85, imagenPortada: 'https://via.placeholder.com/300x200' },
+    { id: '1', nombre: 'Reto 30 días', miembrosActivos: 120, imagenPortada: '🏃‍♂️' },
+    { id: '2', nombre: 'Fuerza Avanzada', miembrosActivos: 85, imagenPortada: '💪' },
     // Add more dummy data or fetch from API
   ];
 

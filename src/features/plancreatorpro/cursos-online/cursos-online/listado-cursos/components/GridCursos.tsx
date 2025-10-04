@@ -15,13 +15,27 @@ interface Curso {
 
 interface GridCursosProps {
   cursos: Curso[];
+  onVerCurso: (cursoId: string) => void;
+  onEditarCurso: (cursoId: string) => void;
+  onEliminarCurso: (cursoId: string) => void;
 }
 
-const GridCursos: React.FC<GridCursosProps> = ({ cursos }) => {
+const GridCursos: React.FC<GridCursosProps> = ({ 
+  cursos, 
+  onVerCurso, 
+  onEditarCurso, 
+  onEliminarCurso 
+}) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {cursos.map((curso) => (
-        <TarjetaCurso key={curso.id} curso={curso} />
+        <TarjetaCurso 
+          key={curso.id} 
+          curso={curso}
+          onVerCurso={onVerCurso}
+          onEditarCurso={onEditarCurso}
+          onEliminarCurso={onEliminarCurso}
+        />
       ))}
     </div>
   );

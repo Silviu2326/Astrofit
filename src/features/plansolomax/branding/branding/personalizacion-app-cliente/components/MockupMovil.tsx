@@ -1,4 +1,5 @@
 import React from 'react';
+import { PlaceholderImages } from '../../../../../../utils/placeholderImages';
 
 const MockupMovil: React.FC = () => {
   // This component would display a realistic mobile mockup
@@ -10,7 +11,7 @@ const MockupMovil: React.FC = () => {
         {/* Screen */}
         <div className="absolute inset-0 m-2 bg-white rounded-2xl flex items-center justify-center">
           <div className="text-center">
-            <img src="https://via.placeholder.com/100/3B82F6/FFFFFF?text=Logo" alt="App Logo" className="mx-auto mb-4" />
+            <img src={PlaceholderImages.logo(100)} alt="App Logo" className="mx-auto mb-4" />
             <h3 className="text-xl font-bold text-blue-600">Mi App Personalizada</h3>
             <p className="text-gray-600">¡Bienvenido a nuestra app!</p>
             <div className="mt-4 text-sm text-gray-500">

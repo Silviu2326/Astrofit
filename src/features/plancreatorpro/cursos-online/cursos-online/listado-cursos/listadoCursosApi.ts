@@ -16,7 +16,7 @@ export const fetchCursos = async (): Promise<Curso[]> => {
           precio: 49.99,
           duracion: '10 horas',
           inscritosActuales: 85,
-          portadaUrl: 'https://via.placeholder.com/150/FF0000/FFFFFF?text=React',
+          portadaUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjRkY2MzQ3Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iI0ZGRkZGRiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPlJlYWN0PC90ZXh0Pjwvc3ZnPg==',
           categoria: 'Desarrollo Web',
         },
         {
@@ -27,7 +27,7 @@ export const fetchCursos = async (): Promise<Curso[]> => {
           precio: 29.99,
           duracion: '6 horas',
           inscritosActuales: 50,
-          portadaUrl: 'https://via.placeholder.com/150/00FF00/FFFFFF?text=Tailwind',
+          portadaUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMTA5NjYzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iI0ZGRkZGRiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPlRhaWx3aW5kPC90ZXh0Pjwvc3ZnPg==',
           categoria: 'Diseño UI/UX',
         },
         // ... more dummy data

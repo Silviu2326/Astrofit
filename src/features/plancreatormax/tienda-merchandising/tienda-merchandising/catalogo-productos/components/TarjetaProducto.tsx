@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Producto } from '../catalogoProductosApi';
+import { PlaceholderImages } from '../../../../../../utils/placeholderImages';
 
 interface TarjetaProductoProps {
   producto: Producto;
@@ -22,7 +23,7 @@ const TarjetaProducto: React.FC<TarjetaProductoProps> = ({ producto }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-      <img src={producto.imagenes[0] || 'https://via.placeholder.com/300'} alt={producto.nombre} className="w-full h-48 object-cover" />
+      <img src={producto.imagenes[0] || PlaceholderImages.generic(300, 300)} alt={producto.nombre} className="w-full h-48 object-cover" />
       <div className="p-4">
         <h3 className="text-lg font-semibold mb-2">{producto.nombre}</h3>
         <p className="text-gray-600 text-sm mb-2 line-clamp-2">{producto.descripcion}</p>

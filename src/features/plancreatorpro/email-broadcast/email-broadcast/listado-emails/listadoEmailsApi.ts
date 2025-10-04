@@ -1,7 +1,7 @@
 // src/features/email-broadcast/listado-emails/listadoEmailsApi.ts
 // Aquí se definirán las funciones para interactuar con la API para obtener y gestionar las campañas de email.
 
-import axios from 'axios';
+// import axios from 'axios'; // Will be used when connecting to real API
 
 interface Campaign {
   id: string;
@@ -56,11 +56,29 @@ export const fetchCampaigns = async (): Promise<Campaign[]> => {
 
 // Otras funciones como duplicar, archivar, etc.
 export const duplicateCampaign = async (id: string): Promise<void> => {
-  console.log(`Duplicando campaña con ID: ${id}`);
-  // Lógica para duplicar en la API
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      try {
+        console.log(`Duplicando campaña con ID: ${id}`);
+        // Simular éxito en la duplicación
+        resolve();
+      } catch (error) {
+        reject(new Error('Error al duplicar la campaña'));
+      }
+    }, 1000);
+  });
 };
 
 export const archiveCampaign = async (id: string): Promise<void> => {
-  console.log(`Archivando campaña con ID: ${id}`);
-  // Lógica para archivar en la API
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      try {
+        console.log(`Archivando campaña con ID: ${id}`);
+        // Simular éxito en el archivado
+        resolve();
+      } catch (error) {
+        reject(new Error('Error al archivar la campaña'));
+      }
+    }, 1500);
+  });
 };

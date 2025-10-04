@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { LoginPage } from './features/core/login/LoginPage';
 import { DashboardLayout } from './components/layout/DashboardLayout';
+import { ToastProvider } from './components/ui/toast';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -37,7 +38,12 @@ function App() {
     return <LoginPage onLogin={handleLogin} />;
   }
 
-  return <DashboardLayout onLogout={handleLogout} />;
+  return (
+    <>
+      <DashboardLayout onLogout={handleLogout} />
+      <ToastProvider />
+    </>
+  );
 }
 
 export default App;

@@ -3,6 +3,7 @@ import { GaleriaTestimonios } from './components/GaleriaTestimonios';
 import { FiltrosTestimonios } from './components/FiltrosTestimonios';
 import { CarruselPrincipal } from './components/CarruselPrincipal';
 import { Testimonio } from './testimoniosClientesApi';
+import { PlaceholderImages } from '../../../../../utils/placeholderImages';
 
 const mockTestimonios: Testimonio[] = [
   {
@@ -11,7 +12,7 @@ const mockTestimonios: Testimonio[] = [
     comment: '¡Excelente servicio! Mi negocio ha crecido exponencialmente gracias a ellos.',
     rating: 5,
     serviceType: 'Marketing Digital',
-    photo: 'https://via.placeholder.com/150/FF5733/FFFFFF?text=Ana',
+    photo: PlaceholderImages.client('AG'),
     highlighted: true,
   },
   {
@@ -20,52 +21,47 @@ const mockTestimonios: Testimonio[] = [
     comment: 'Profesionales y muy atentos. Recomiendo sus servicios al 100%.',
     rating: 4,
     serviceType: 'Desarrollo Web',
-    photo: 'https://via.placeholder.com/150/33FF57/FFFFFF?text=Carlos',
-    highlighted: false,
+    photo: PlaceholderImages.client('CR'),
   },
   {
     id: '3',
-    author: 'Marta P.',
-    comment: 'Me encantó el diseño de mi nueva web. Superaron mis expectativas.',
+    author: 'Marta L.',
+    comment: 'Increíble experiencia. El equipo es muy profesional y los resultados son excelentes.',
     rating: 5,
-    serviceType: 'Diseño Gráfico',
-    photo: 'https://via.placeholder.com/150/3357FF/FFFFFF?text=Marta',
-    highlighted: true,
+    serviceType: 'Consultoría',
+    photo: PlaceholderImages.client('ML'),
   },
   {
     id: '4',
-    author: 'Javier S.',
-    comment: 'Muy buen soporte técnico y resultados visibles en poco tiempo.',
+    author: 'Javier M.',
+    comment: 'Servicio de primera calidad. Muy recomendable para cualquier empresa.',
     rating: 4,
     serviceType: 'Marketing Digital',
-    photo: 'https://via.placeholder.com/150/FFFF33/000000?text=Javier',
-    highlighted: false,
+    photo: PlaceholderImages.client('JM'),
   },
   {
     id: '5',
-    author: 'Laura M.',
-    comment: 'Una experiencia fantástica, el equipo es muy creativo y eficiente.',
+    author: 'Laura S.',
+    comment: 'Excelente atención al cliente y resultados que superaron nuestras expectativas.',
     rating: 5,
     serviceType: 'Desarrollo Web',
-    photo: 'https://via.placeholder.com/150/FF33FF/FFFFFF?text=Laura',
-    highlighted: false,
+    photo: PlaceholderImages.client('LS'),
   },
 ];
 
 const TestimoniosClientesPage: React.FC = () => {
-  const [filteredTestimonios, setFilteredTestimonios] = useState<Testimonio[]>(mockTestimonios);
-  const [filters, setFilters] = useState<{ serviceType: string; rating: number | null }>({
+  const [filters, setFilters] = useState({
     serviceType: 'Todos',
-    rating: null,
+    rating: null as number | null,
   });
+  const [filteredTestimonios, setFilteredTestimonios] = useState<Testimonio[]>(mockTestimonios);
 
-  const handleFilterChange = (newFilters: { serviceType?: string; rating?: number | null }) => {
-    const updatedFilters = { ...filters, ...newFilters };
+  const handleFilterChange = (updatedFilters: any) => {
     setFilters(updatedFilters);
-
-    let tempTestimonios = mockTestimonios;
-
-    if (updatedFilters.serviceType && updatedFilters.serviceType !== 'Todos') {
+    
+    let tempTestimonios = [...mockTestimonios];
+    
+    if (updatedFilters.serviceType !== 'Todos') {
       tempTestimonios = tempTestimonios.filter(t => t.serviceType === updatedFilters.serviceType);
     }
 

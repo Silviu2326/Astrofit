@@ -4,13 +4,13 @@ import { Post, User, Comment, Media, PollOption } from './types';
 let posts: Post[] = [
   {
     id: '1',
-    author: { id: 'user1', name: 'Entrenador Juan', avatar: 'https://via.placeholder.com/150/FF5733/FFFFFF?text=EJ' },
+    author: { id: 'user1', name: 'Entrenador Juan', avatar: '🏋️‍♂️' },
     content: '??Emocionado de compartir mi nueva rutina de entrenamiento de fuerza! ?? #fitness #entrenamiento',
     media: [],
     type: 'text',
     likes: ['user2', 'user3'],
     comments: [
-      { id: 'c1', author: { id: 'user2', name: 'Cliente Ana', avatar: 'https://via.placeholder.com/150/33FF57/FFFFFF?text=CA' }, content: '??Me encanta! La probar?? ma??ana.', timestamp: new Date() },
+      { id: 'c1', author: { id: 'user2', name: 'Cliente Ana', avatar: '🥗' }, content: '??Me encanta! La probar?? ma??ana.', timestamp: new Date() },
     ],
     shares: 0,
     timestamp: new Date('2025-09-26T10:00:00Z'),
@@ -18,9 +18,9 @@ let posts: Post[] = [
   },
   {
     id: '2',
-    author: { id: 'user2', name: 'Cliente Ana', avatar: 'https://via.placeholder.com/150/33FF57/FFFFFF?text=CA' },
+    author: { id: 'user2', name: 'Cliente Ana', avatar: '🥗' },
     content: 'Mi progreso de hoy. ??No hay excusas! #motivacion',
-    media: [{ type: 'image', url: 'https://via.placeholder.com/600/3366FF/FFFFFF?text=Progreso' }],
+    media: [{ type: 'image', url: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzM2NkZGIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7wn5KIPC90ZXh0Pjwvc3ZnPg==' }],
     type: 'image',
     likes: ['user1'],
     comments: [],
@@ -30,7 +30,7 @@ let posts: Post[] = [
   },
   {
     id: '3',
-    author: { id: 'user1', name: 'Entrenador Juan', avatar: 'https://via.placeholder.com/150/FF5733/FFFFFF?text=EJ' },
+    author: { id: 'user1', name: 'Entrenador Juan', avatar: '🏋️‍♂️' },
     content: '??Qu?? tipo de entrenamiento prefieres?',
     media: [],
     type: 'poll',
@@ -47,7 +47,7 @@ let posts: Post[] = [
   },
   {
     id: '4',
-    author: { id: 'user3', name: 'Cliente Pedro', avatar: 'https://via.placeholder.com/150/FF33FF/FFFFFF?text=CP' },
+    author: { id: 'user3', name: 'Cliente Pedro', avatar: '💪' },
     content: 'Un video r??pido de mi sesi??n de yoga matutina.',
     media: [{ type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4' }], // Ejemplo de video
     type: 'video',
