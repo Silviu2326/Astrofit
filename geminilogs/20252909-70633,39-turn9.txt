@@ -1,0 +1,34 @@
+﻿TIMEOUT: Prompt excediÃ³ 5 minutos de ejecuciÃ³n
+Prompt original:
+
+Crea tipos TypeScript y interfaces para todo el mÃ³dulo de crear-flujo en un archivo types.ts que incluya:
+
+1. **Tipos de nodos**:
+   - NodeType (trigger, action, condition, delay)
+   - TriggerNode, ActionNode, ConditionNode, DelayNode
+   - NodeData con propiedades especÃ­ficas
+   - NodePosition, NodeStyle
+
+2. **Tipos de conexiones**:
+   - ConnectionType (success, error, conditional, delay)
+   - EdgeData con configuraciones
+   - ConnectionRule para validaciones
+
+3. **Estado del flujo**:
+   - FlowState (draft, active, paused, error)
+   - FlowConfig con metadatos
+   - FlowVersion para historial
+
+4. **Configuraciones**:
+   - EmailConfig, SMSConfig, WebhookConfig
+   - ConditionConfig, DelayConfig
+   - ValidationResult, TestResult
+
+5. **Props de componentes**:
+   - Interfaces para todos los props de componentes
+   - Event handlers tipados
+   - Callback types
+
+AsegÃºrate de que todos los tipos sean estrictos y bien documentados con JSDoc.
+
+

@@ -1,0 +1,242 @@
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Campañas - Organizador de Iniciativas de Promoción siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/campanas/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/campanas/CampanasPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/campanas/campanasApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/campanas/components/CrearCampana.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/campanas/components/SeguimientoResultados.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/campanas/components/HistorialCampanas.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/campanas/components/MetricasCampana.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/campanas/components/CalendarioCampanas.tsx
+
+
+ESPECIFICACIONES:
+- Lanzar campañas con nombre, fecha y objetivo (ej.: "Campaña verano: consigue 2 meses por 1")
+- Seguimiento del resultado: cuántos leads llegaron y cuántos se convirtieron en clientes
+- Historial para aprender qué funcionó y repetirlo en futuras campañas
+- Métricas de conversión: leads generados, conversión a clientes, ROI
+- Calendario de campañas: planificación temporal y eventos
+- Estados de campaña: planificada, activa, finalizada, pausada
+- Presupuesto y costos por campaña para análisis de rentabilidad
+- Templates de campañas exitosas para reutilizar
+- Segmentación de audiencia objetivo por campaña
+- Dashboard de performance en tiempo real
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Fuentes de Lead - Análisis de Origen de Clientes siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/fuentes-lead/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/fuentes-lead/FuentesLeadPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/fuentes-lead/fuentesLeadApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/fuentes-lead/components/ClasificarLeads.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/fuentes-lead/components/EtiquetasCanales.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/fuentes-lead/components/AnalisisInversion.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/fuentes-lead/components/DashboardFuentes.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/fuentes-lead/components/TendenciasCanales.tsx
+
+
+ESPECIFICACIONES:
+- Clasificar leads según origen: Instagram, Google, web propia, recomendación, Facebook, etc.
+- Sistema de etiquetas para organizar mejor cada canal de adquisición
+- Análisis de inversión: identificar qué canales traen más clientes por euro invertido
+- Dashboard de fuentes: gráficos de distribución y performance por canal
+- Tendencias de canales: evolución temporal de efectividad por fuente
+- Costo por lead y costo por cliente adquirido por canal
+- Comparativa de calidad de leads entre diferentes fuentes
+- Alertas de canales poco efectivos o con bajo rendimiento
+- Recomendaciones automáticas de dónde invertir energía y presupuesto
+- Tracking de UTMs y códigos de seguimiento
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Referidos - Sistema de Recomendaciones siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/referidos/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/referidos/ReferidosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/referidos/referidosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/referidos/components/CodigosReferido.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/referidos/components/DescuentosBeneficios.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/referidos/components/ControlNuevosClientes.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/referidos/components/ProgramaRecompensas.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/referidos/components/EstadisticasReferidos.tsx
+
+
+ESPECIFICACIONES:
+- Crear códigos de referido únicos para que clientes inviten amigos
+- Sistema de descuentos y beneficios: tanto para quien refiere como para quien llega
+- Control de nuevos clientes: tracking de cuántos vinieron por recomendaciones
+- Programa de recompensas escalable: más referidos = mayores beneficios
+- Estadísticas de referidos: clientes más activos en recomendaciones
+- El boca a boca profesionalizado: convertir clientes en vendedores
+- Notificaciones automáticas cuando se usa un código de referido
+- Niveles de recompensa por cantidad de referidos exitosos
+- Templates de mensajes para promover el programa de referidos
+- Dashboard de performance del programa con métricas clave
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Encuestas NPS - Sistema de Satisfacción siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/encuestas-nps/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/encuestas-nps/EncuestasNpsPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/encuestas-nps/encuestasNpsApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/encuestas-nps/components/EncuestasRapidas.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/encuestas-nps/components/CalculadoraNPS.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/encuestas-nps/components/ComentariosUtiles.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/encuestas-nps/components/TendenciasSatisfaccion.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/encuestas-nps/components/AccionesMejora.tsx
+
+
+ESPECIFICACIONES:
+- Enviar encuestas rápidas para medir satisfacción del cliente
+- Calculadora NPS: qué porcentaje de clientes te recomendaría (0-10 scale)
+- Recoger comentarios útiles para mejorar el servicio
+- Tendencias de satisfacción: evolución del NPS a lo largo del tiempo
+- Acciones de mejora: sugerencias basadas en feedback recibido
+- Categorización automática de feedback: promotores, pasivos, detractores
+- Alertas de clientes insatisfechos para acción inmediata
+- Templates de encuestas personalizables por tipo de servicio
+- Análisis de sentimientos en comentarios de texto libre
+- Benchmarking con estándares de la industria fitness
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Opiniones y Reseñas - Gestión de Testimonios siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/opiniones-resenas/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/opiniones-resenas/OpinionesResenasPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/opiniones-resenas/opinionesResenasApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/opiniones-resenas/components/ResenasPrivadas.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/opiniones-resenas/components/TestimoniosPublicos.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/opiniones-resenas/components/HistoriasTransformacion.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/opiniones-resenas/components/ModeracionContenido.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/opiniones-resenas/components/WidgetReseñas.tsx
+
+
+ESPECIFICACIONES:
+- Recoger reseñas privadas para feedback interno del entrenador
+- Gestión de testimonios públicos para perfil público o web
+- Historias de transformación: casos de éxito con antes/después
+- Moderación de contenido: aprobar/rechazar reseñas antes de publicar
+- Widget de reseñas: mostrar testimonios en web o redes sociales
+- Aumentar credibilidad con historias reales y verificadas
+- Sistema de rating por estrellas y comentarios detallados
+- Solicitud automática de reseñas a clientes satisfechos
+- Galería de transformaciones con permisos de uso
+- Exportación de testimonios para uso en marketing
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Plantillas de Comunicación - Mensajería Automatizada siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/plantillas-comunicacion/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-comunicacion/PlantillasComunicacionPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-comunicacion/plantillasComunicacionApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-comunicacion/components/EmailsBienvenida.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-comunicacion/components/RecordatoriosSesion.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-comunicacion/components/MensajesMotivacion.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-comunicacion/components/SMSBasicos.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-comunicacion/components/PersonalizacionReutilizacion.tsx
+
+
+ESPECIFICACIONES:
+- Emails de bienvenida personalizables para nuevos clientes
+- Recordatorios de sesión automáticos con detalles del entrenamiento
+- Mensajes de motivación para diferentes momentos del journey del cliente
+- SMS básicos para contacto rápido y urgente
+- Sistema de personalización y reutilización en campañas
+- Templates por tipo de cliente: principiante, avanzado, rehabilitación
+- Variables dinámicas: nombre, próxima cita, objetivos personales
+- Programación de envíos automáticos basados en eventos
+- A/B testing de diferentes versiones de mensajes
+- Biblioteca de mensajes exitosos para inspiración
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Widget de Captación - Automatización Web siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/widget-captacion/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/widget-captacion/WidgetCaptacionPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/widget-captacion/widgetCaptacionApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/widget-captacion/components/GeneradorWidget.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/widget-captacion/components/FormularioReserva.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/widget-captacion/components/IntegracionCRM.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/widget-captacion/components/PersonalizacionDiseno.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/widget-captacion/components/AnaliticsWidget.tsx
+
+
+ESPECIFICACIONES:
+- Generador de widget: botón o iframe para insertar en web o redes sociales
+- Formulario de reserva: solicitar cita o información directamente
+- Integración automática con CRM: leads aparecen sin intervención manual
+- Personalización de diseño: colores, textos, campos del formulario
+- Analytics del widget: conversiones, clics, rendimiento por página
+- Múltiples tipos de widget: reserva, info, descarga de guía fitness
+- Código embed fácil de copiar y pegar en cualquier sitio web
+- Responsive design para móvil y desktop
+- Formularios inteligentes con validación en tiempo real
+- Webhooks para notificaciones instantáneas de nuevos leads
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks

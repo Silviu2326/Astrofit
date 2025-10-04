@@ -1,0 +1,13 @@
+﻿Entendido. Estoy listo para ayudarte con tu proyecto.
+
+**Contexto registrado:**
+- Directorio del proyecto: `C:\Users\usuario\Documents\project-bolt-sb1-qekdxfwt\project`
+- Debo usar **solo rutas relativas** desde el directorio del proyecto
+- **NO crear nuevos archivos** - solo editar existentes
+- Seguir `GUIA_ESTILOS_UI.md` para estilos
+- TypeScript + Framer Motion + Lucide React
+- Glassmorphism con `rounded-3xl`, `backdrop-blur-xl`
+- Datos mockeados realistas
+- Responsive mobile-first
+
+┬┐Qu├® necesitas que haga?

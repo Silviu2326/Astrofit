@@ -1,0 +1,560 @@
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 1: Crear módulo Micrositio Reservas - Landing de Servicios
+
+Crea la carpeta src/features/micrositio/ y ESCRIBE estos archivos:
+
+1. src/features/micrositio/landing-servicios/LandingServiciosPage.tsx
+2. src/features/micrositio/landing-servicios/landingServiciosApi.ts
+3. src/features/micrositio/landing-servicios/components/HeroSection.tsx
+4. src/features/micrositio/landing-servicios/components/ServiciosGrid.tsx
+5. src/features/micrositio/landing-servicios/components/TestimoniosCarousel.tsx
+6. src/features/micrositio/landing-servicios/components/CTAReservar.tsx
+
+ESPECIFICACIONES:
+- Hero principal con foto del entrenador, nombre y especialidad
+- Grid de servicios (entrenos online, sesiones 1:1, packs)
+- Carrusel de testimonios con fotos, nombres y estrellas
+- CTA principal "Reservar ahora" prominente
+- Diseño moderno tipo landing page
+- Colores personalizables para marca personal
+- Responsive design optimizado para conversión
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Componentes funcionales con hooks
+- Datos mock realistas del sector fitness
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 2: Crear módulo Calendario Público
+
+Crea estos archivos en src/features/micrositio/:
+
+1. src/features/micrositio/calendario-publico/CalendarioPublicoPage.tsx
+2. src/features/micrositio/calendario-publico/calendarioPublicoApi.ts
+3. src/features/micrositio/calendario-publico/components/CalendarioVisual.tsx
+4. src/features/micrositio/calendario-publico/components/FranjasDisponibles.tsx
+5. src/features/micrositio/calendario-publico/components/BotonReservar.tsx
+
+ESPECIFICACIONES:
+- Vista de calendario limpia tipo Google Calendar
+- Solo muestra huecos disponibles del entrenador
+- Franjas libres vs ocupadas claramente diferenciadas
+- Botones "Reservar sesión" en cada franja libre
+- Navegación por semanas/meses
+- Indicadores visuales de disponibilidad
+- Integración con sistema de reservas
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Manejo de fechas con date-fns
+- Estados de disponibilidad dinámicos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 3: Crear módulo Página de Reserva
+
+Crea estos archivos en src/features/micrositio/:
+
+1. src/features/micrositio/pagina-reserva/PaginaReservaPage.tsx
+2. src/features/micrositio/pagina-reserva/paginaReservaApi.ts
+3. src/features/micrositio/pagina-reserva/components/FormularioReserva.tsx
+4. src/features/micrositio/pagina-reserva/components/SeleccionServicio.tsx
+5. src/features/micrositio/pagina-reserva/components/SeleccionHorario.tsx
+6. src/features/micrositio/pagina-reserva/components/DatosCliente.tsx
+7. src/features/micrositio/pagina-reserva/components/PagoStripe.tsx
+8. src/features/micrositio/pagina-reserva/components/ConfirmacionCita.tsx
+
+ESPECIFICACIONES:
+- Formulario paso a paso con barra de progreso
+- Selección de servicio (dropdown con precios)
+- Selección de hora disponible
+- Datos básicos del cliente (nombre, email, teléfono)
+- Integración de pago con Stripe embebido
+- Confirmación visual de la cita reservada
+- Validación de formularios en tiempo real
+- Email de confirmación automático
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Validación de formularios
+- Integración Stripe (simulada)
+- Stepper component para pasos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 4: Crear módulo Testimonios Clientes
+
+Crea estos archivos en src/features/micrositio/:
+
+1. src/features/micrositio/testimonios-clientes/TestimoniosClientesPage.tsx
+2. src/features/micrositio/testimonios-clientes/testimoniosClientesApi.ts
+3. src/features/micrositio/testimonios-clientes/components/GaleriaTestimonios.tsx
+4. src/features/micrositio/testimonios-clientes/components/TarjetaTestimonio.tsx
+5. src/features/micrositio/testimonios-clientes/components/FiltrosTestimonios.tsx
+6. src/features/micrositio/testimonios-clientes/components/CarruselPrincipal.tsx
+
+ESPECIFICACIONES:
+- Galería de reseñas con fotos, nombres y ratings
+- Tarjetas estilo testimonial con diseño atractivo
+- Carrusel horizontal deslizable
+- Filtros por tipo de servicio o rating
+- Efecto hover en tarjetas
+- Sistema de estrellas visual
+- Comentarios destacados con diferentes tamaños
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Componente carrusel responsive
+- Sistema de ratings con estrellas
+- Animaciones suaves
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 5: Crear módulo Blog Noticias (opcional)
+
+Crea estos archivos en src/features/micrositio/:
+
+1. src/features/micrositio/blog-noticias/BlogNoticiasPage.tsx
+2. src/features/micrositio/blog-noticias/blogNoticiasApi.ts
+3. src/features/micrositio/blog-noticias/components/FeedArticulos.tsx
+4. src/features/micrositio/blog-noticias/components/TarjetaArticulo.tsx
+5. src/features/micrositio/blog-noticias/components/CategoriasFiltro.tsx
+6. src/features/micrositio/blog-noticias/components/ArticuloCompleto.tsx
+
+ESPECIFICACIONES:
+- Feed minimalista tipo blog
+- Artículos con títulos, imágenes y extractos
+- Categorías (tips fitness, nutrición, noticias personales)
+- Vista completa del artículo
+- Búsqueda y filtros por categoría
+- Fecha de publicación
+- Botón "Leer más"
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Router para artículos individuales
+- Sistema de categorías
+- Componente de búsqueda
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 6: Crear módulo Hábitos Avanzados - Listado Hábitos
+
+Crea la carpeta src/features/habitos-avanzados/ y ESCRIBE estos archivos:
+
+1. src/features/habitos-avanzados/listado-habitos/ListadoHabitosPage.tsx
+2. src/features/habitos-avanzados/listado-habitos/listadoHabitosApi.ts
+3. src/features/habitos-avanzados/listado-habitos/components/TablaHabitos.tsx
+4. src/features/habitos-avanzados/listado-habitos/components/BarraProgreso.tsx
+5. src/features/habitos-avanzados/listado-habitos/components/EstadoHabito.tsx
+6. src/features/habitos-avanzados/listado-habitos/components/FiltrosCliente.tsx
+
+ESPECIFICACIONES:
+- Tabla/lista con hábitos por cliente
+- Nivel de cumplimiento (% semanal) con barras de progreso
+- Estados: activo/inactivo con indicadores visuales
+- Tablero estilo Kanban o lista organizada
+- Colores: verde (alto cumplimiento), amarillo (medio), rojo (bajo)
+- Filtros por cliente o tipo de hábito
+- Vista resumen por cliente
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Componentes de tabla responsive
+- Sistema de progreso visual
+- Estados dinámicos con colores
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 7: Crear módulo Crear Hábito
+
+Crea estos archivos en src/features/habitos-avanzados/:
+
+1. src/features/habitos-avanzados/crear-habito/CrearHabitoPage.tsx
+2. src/features/habitos-avanzados/crear-habito/crearHabitoApi.ts
+3. src/features/habitos-avanzados/crear-habito/components/FormularioHabito.tsx
+4. src/features/habitos-avanzados/crear-habito/components/SelectorFrecuencia.tsx
+5. src/features/habitos-avanzados/crear-habito/components/ConfiguracionRecordatorios.tsx
+6. src/features/habitos-avanzados/crear-habito/components/VistaPrevia.tsx
+
+ESPECIFICACIONES:
+- Formulario para definir hábito personalizado
+- Ejemplos: "Beber 2L agua", "Caminar 8k pasos"
+- Selector de frecuencia (diario, 3x/semana, etc.)
+- Configuración de recordatorios (hora, días)
+- Vista previa de cómo lo verá el cliente
+- Plantillas de hábitos predefinidos
+- Validación de formularios
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Formularios con validación
+- Componente de vista previa
+- Selector de días/horas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 8: Crear módulo Estadísticas Hábitos
+
+Crea estos archivos en src/features/habitos-avanzados/:
+
+1. src/features/habitos-avanzados/estadisticas-habitos/EstadisticasHabitosPage.tsx
+2. src/features/habitos-avanzados/estadisticas-habitos/estadisticasHabitosApi.ts
+3. src/features/habitos-avanzados/estadisticas-habitos/components/DashboardAnalytics.tsx
+4. src/features/habitos-avanzados/estadisticas-habitos/components/GraficoAdherencia.tsx
+5. src/features/habitos-avanzados/estadisticas-habitos/components/RankingHabitos.tsx
+6. src/features/habitos-avanzados/estadisticas-habitos/components/MetricasCliente.tsx
+
+ESPECIFICACIONES:
+- Dashboard con gráficos de adherencia por cliente
+- Gráfico circular: % cumplido vs no cumplido
+- Ranking de hábitos más cumplidos del grupo
+- Métricas individuales por cliente
+- Gráficos de barras y donuts
+- Tablas de resumen simples
+- Comparativas temporales
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Biblioteca de gráficos (Chart.js o recharts)
+- Componentes de métricas
+- Datos mock realistas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 9: Crear módulo Retos Hábitos
+
+Crea estos archivos en src/features/habitos-avanzados/:
+
+1. src/features/habitos-avanzados/retos-habitos/RetosHabitosPage.tsx
+2. src/features/habitos-avanzados/retos-habitos/retosHabitosApi.ts
+3. src/features/habitos-avanzados/retos-habitos/components/CreadorRetos.tsx
+4. src/features/habitos-avanzados/retos-habitos/components/ListadoParticipantes.tsx
+5. src/features/habitos-avanzados/retos-habitos/components/TablaClasificacion.tsx
+6. src/features/habitos-avanzados/retos-habitos/components/InsigniasLogros.tsx
+
+ESPECIFICACIONES:
+- Creación de retos gamificados
+- Ejemplo: "30 días seguidos con 10k pasos"
+- Listado de participantes inscritos
+- Tabla de clasificación en tiempo real
+- Sistema de insignias y medallas digitales
+- Tarjetas visuales con logros desbloqueados
+- Progreso visual del reto
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sistema de gamificación
+- Componentes de logros
+- Animaciones para medallas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 10: Crear módulo Tele-Sesiones - Videollamada Sala
+
+Crea la carpeta src/features/tele-sesiones/ y ESCRIBE estos archivos:
+
+1. src/features/tele-sesiones/videollamada-sala/VideollamadaSalaPage.tsx
+2. src/features/tele-sesiones/videollamada-sala/videollamadaSalaApi.ts
+3. src/features/tele-sesiones/videollamada-sala/components/PanelVideo.tsx
+4. src/features/tele-sesiones/videollamada-sala/components/ListaAsistentes.tsx
+5. src/features/tele-sesiones/videollamada-sala/components/ChatLateral.tsx
+6. src/features/tele-sesiones/videollamada-sala/components/ControlesVideo.tsx
+
+ESPECIFICACIONES:
+- Interfaz tipo Zoom embebida en la plataforma
+- Panel principal de video con el entrenador
+- Lista de asistentes conectados
+- Chat lateral en tiempo real
+- Controles de audio/video/pantalla compartida
+- Branding personalizado (logo en lugar de Zoom)
+- Botón de grabación
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Simulación de videollamada
+- Componente de chat en tiempo real
+- Controles de media
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 11: Crear módulo Grabaciones Sesiones
+
+Crea estos archivos en src/features/tele-sesiones/:
+
+1. src/features/tele-sesiones/grabaciones-sesiones/GrabacionesSesionesPage.tsx
+2. src/features/tele-sesiones/grabaciones-sesiones/grabacionesSesionesApi.ts
+3. src/features/tele-sesiones/grabaciones-sesiones/components/VideotecaGrid.tsx
+4. src/features/tele-sesiones/grabaciones-sesiones/components/TarjetaVideo.tsx
+5. src/features/tele-sesiones/grabaciones-sesiones/components/ReproductorVideo.tsx
+6. src/features/tele-sesiones/grabaciones-sesiones/components/PermisosAcceso.tsx
+
+ESPECIFICACIONES:
+- Galería tipo videoteca con thumbnails
+- Tarjetas de video con fecha y miniatura
+- Reproductor de video integrado
+- Botones de reproducir/descargar
+- Sistema de permisos de acceso por cliente
+- Filtros por fecha y tipo de sesión
+- Duración y tamaño del archivo
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Reproductor de video HTML5
+- Sistema de permisos
+- Grid responsive para videos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 12: Crear módulo Chat Sesión
+
+Crea estos archivos en src/features/tele-sesiones/:
+
+1. src/features/tele-sesiones/chat-sesion/ChatSesionPage.tsx
+2. src/features/tele-sesiones/chat-sesion/chatSesionApi.ts
+3. src/features/tele-sesiones/chat-sesion/components/VentanaChat.tsx
+4. src/features/tele-sesiones/chat-sesion/components/BurbujasMensaje.tsx
+5. src/features/tele-sesiones/chat-sesion/components/InputMensaje.tsx
+6. src/features/tele-sesiones/chat-sesion/components/EmojisSelector.tsx
+
+ESPECIFICACIONES:
+- Chat en tiempo real durante sesiones
+- Burbujas de mensaje tipo WhatsApp/Slack
+- Input con emojis y adjuntos
+- Compartir links y notas rápidas
+- Historial de mensajes
+- Indicadores de mensaje leído
+- Notificaciones de nuevos mensajes
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Simulación de chat en tiempo real
+- Componente de emojis
+- Scroll automático de mensajes
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 13: Crear módulo Notas Sesión
+
+Crea estos archivos en src/features/tele-sesiones/:
+
+1. src/features/tele-sesiones/notas-sesion/NotasSesionPage.tsx
+2. src/features/tele-sesiones/notas-sesion/notasSesionApi.ts
+3. src/features/tele-sesiones/notas-sesion/components/EditorNotas.tsx
+4. src/features/tele-sesiones/notas-sesion/components/PlantillasRapidas.tsx
+5. src/features/tele-sesiones/notas-sesion/components/HistorialNotas.tsx
+
+ESPECIFICACIONES:
+- Editor de notas tipo post-it integrado
+- Plantillas rápidas para observaciones comunes
+- Ejemplo: "Ana mejoró en técnica de sentadilla"
+- Notas visibles solo para el entrenador
+- Historial de notas por cliente
+- Búsqueda en notas anteriores
+- Categorización por tipo de observación
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Editor de texto enriquecido simple
+- Sistema de plantillas
+- Búsqueda y filtros
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 14: Crear módulo Cupones Avanzados - Listado Cupones
+
+Crea la carpeta src/features/cupones-avanzados/ y ESCRIBE estos archivos:
+
+1. src/features/cupones-avanzados/listado-cupones/ListadoCuponesPage.tsx
+2. src/features/cupones-avanzados/listado-cupones/listadoCuponesApi.ts
+3. src/features/cupones-avanzados/listado-cupones/components/TablaCupones.tsx
+4. src/features/cupones-avanzados/listado-cupones/components/EtiquetasEstado.tsx
+5. src/features/cupones-avanzados/listado-cupones/components/FiltrosCupones.tsx
+
+ESPECIFICACIONES:
+- Tabla de cupones con código, tipo (% o €), fechas
+- Número de usos actuales vs límite
+- Etiquetas de color por estado: activo, caducado, agotado
+- Filtros por estado y tipo de descuento
+- Acciones rápidas: activar/desactivar
+- Estadísticas de uso por cupón
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Tabla responsive con filtros
+- Sistema de etiquetas de estado
+- Componente de fechas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 15: Crear módulo Crear Cupón
+
+Crea estos archivos en src/features/cupones-avanzados/:
+
+1. src/features/cupones-avanzados/crear-cupon/CrearCuponPage.tsx
+2. src/features/cupones-avanzados/crear-cupon/crearCuponApi.ts
+3. src/features/cupones-avanzados/crear-cupon/components/FormularioCupon.tsx
+4. src/features/cupones-avanzados/crear-cupon/components/VistaPreviaCupon.tsx
+5. src/features/cupones-avanzados/crear-cupon/components/ConfiguracionAvanzada.tsx
+
+ESPECIFICACIONES:
+- Formulario con nombre, tipo, valor, fechas
+- Selector de tipo: porcentaje o cantidad fija
+- Número de usos permitidos
+- Clientes válidos (todos o específicos)
+- Vista previa del cupón como tarjeta
+- Configuración avanzada: mínimo de compra, productos aplicables
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Generador de códigos automático
+- Vista previa en tiempo real
+- Validación de formularios
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 16: Crear módulo Reportes Uso
+
+Crea estos archivos en src/features/cupones-avanzados/:
+
+1. src/features/cupones-avanzados/reportes-uso/ReportesUsoPage.tsx
+2. src/features/cupones-avanzados/reportes-uso/reportesUsoApi.ts
+3. src/features/cupones-avanzados/reportes-uso/components/DashboardCupones.tsx
+4. src/features/cupones-avanzados/reportes-uso/components/GraficoUsos.tsx
+5. src/features/cupones-avanzados/reportes-uso/components/MetricasIngresos.tsx
+
+ESPECIFICACIONES:
+- Dashboard con estadísticas de promociones
+- Gráficos de barras: usos por cupón
+- Métricas de ingresos generados
+- Clientes nuevos captados por cupón
+- ROI de cada promoción
+- Comparativas temporales
+- Exportación de reportes
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Gráficos con Chart.js
+- Métricas financieras
+- Componentes de estadísticas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 17: Crear módulo Recorrido Cliente - Customer Journey
+
+Crea la carpeta src/features/recorrido-cliente/ y ESCRIBE estos archivos:
+
+1. src/features/recorrido-cliente/customer-journey/CustomerJourneyPage.tsx
+2. src/features/recorrido-cliente/customer-journey/customerJourneyApi.ts
+3. src/features/recorrido-cliente/customer-journey/components/EmbudoVisual.tsx
+4. src/features/recorrido-cliente/customer-journey/components/TarjetasClientes.tsx
+5. src/features/recorrido-cliente/customer-journey/components/BarrasConversion.tsx
+6. src/features/recorrido-cliente/customer-journey/components/AlertasEstancados.tsx
+
+ESPECIFICACIONES:
+- Embudo visual con etapas: Lead → Cliente nuevo → Activo → Fiel
+- Clientes como tarjetas movibles entre etapas
+- Tablero Kanban con colores por etapa
+- Barras de conversión entre etapas
+- Alertas de clientes estancados
+- Métricas de tiempo en cada etapa
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Drag & drop functionality
+- Componente Kanban
+- Sistema de alertas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 18: Crear módulo Hitos Clientes
+
+Crea estos archivos en src/features/recorrido-cliente/:
+
+1. src/features/recorrido-cliente/hitos-clientes/HitosClientesPage.tsx
+2. src/features/recorrido-cliente/hitos-clientes/hitosClientesApi.ts
+3. src/features/recorrido-cliente/hitos-clientes/components/TimelineHitos.tsx
+4. src/features/recorrido-cliente/hitos-clientes/components/CalendarioEventos.tsx
+5. src/features/recorrido-cliente/hitos-clientes/components/TarjetaHito.tsx
+
+ESPECIFICACIONES:
+- Timeline tipo red social de momentos importantes
+- Cumpleaños, aniversarios de contrato
+- Número de sesiones completadas
+- Iconos y colores festivos
+- Recordatorios automáticos
+- Mensajes de felicitación predefinidos
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Componente timeline
+- Calendario de eventos
+- Sistema de recordatorios
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 19: Crear módulo Alertas Retención
+
+Crea estos archivos en src/features/recorrido-cliente/:
+
+1. src/features/recorrido-cliente/alertas-retencion/AlertasRetencionPage.tsx
+2. src/features/recorrido-cliente/alertas-retencion/alertasRetencionApi.ts
+3. src/features/recorrido-cliente/alertas-retencion/components/RadarClientes.tsx
+4. src/features/recorrido-cliente/alertas-retencion/components/TarjetasRiesgo.tsx
+5. src/features/recorrido-cliente/alertas-retencion/components/AccionesRapidas.tsx
+6. src/features/recorrido-cliente/alertas-retencion/components/SugerenciasRetencion.tsx
+
+ESPECIFICACIONES:
+- Lista de clientes con baja asistencia o adherencia
+- Tarjetas con colores: rojo (alto riesgo), amarillo (medio), verde (estable)
+- Alertas automáticas por más de 2 semanas sin progreso
+- Sugerencias de acción: "enviar mensaje motivacional"
+- Botones de acción rápida
+- Predictor de churn
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sistema de alertas por colores
+- Componentes de acción rápida
+- Algoritmo de detección de riesgo
+
+RESULTADO ESPERADO:
+Un sistema completo Plan Solo Pro con 19 módulos especializados, cada uno con funcionalidades específicas para entrenadores personales, diseño moderno y UX optimizada para el sector fitness. Todos los componentes deben seguir el patrón establecido en src/features/ con TypeScript, React y TailwindCSS.

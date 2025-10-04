@@ -1,0 +1,18 @@
+﻿
+
+Ô£à Vista de detalle de curso creada con:
+
+**Caracter├¡sticas implementadas:**
+- Gradiente `from-blue-600 via-cyan-600 to-teal-600`
+- **Barra de progreso** con porcentaje y lecciones completadas
+- **M├│dulos expandibles** con 4 m├│dulos de ejemplo
+- **Sistema de lecciones** con ├¡conos (video, lectura, quiz)
+- **Estados**: completada (Ô£ô), en progreso (Ôùï), bloqueada (­ƒöÆ)
+- **Materiales descargables** en sidebar (PDFs, ZIPs)
+- **Certificado de completaci├│n** (disponible al 100%)
+- **Estad├¡sticas** del estudiante (tiempo, racha, actividad)
+- **Informaci├│n del curso** (instructor, rating, estudiantes)
+- Botones de reproducci├│n para lecciones activas
+- Navegaci├│n de vuelta a lista de cursos
+
+El componente est├í listo en `src/pages/CourseDetail.tsx`

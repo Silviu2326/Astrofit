@@ -1,0 +1,39 @@
+﻿
+
+Ô£à **M├│dulo de Historial de Experimentos creado**
+
+**Caracter├¡sticas implementadas:**
+
+­ƒôè **Estad├¡sticas generales:**
+- Total de experimentos
+- Promedio de mejora
+- ROI promedio
+- Total de insights
+
+­ƒö¼ **Tipos de experimentos:**
+- A/B Testing
+- Tests multivariantes
+- Tests de contenido
+- Tests de timing
+
+­ƒôê **Resultados detallados:**
+- Comparaci├│n de variantes
+- M├®tricas: impresiones, clicks, CTR, conversi├│n, revenue
+- Ganador destacado con badge
+- Nivel de confianza estad├¡stica
+
+­ƒÆí **Insights y aprendizajes:**
+- Lista de aprendizajes clave
+- Recomendaciones autom├íticas
+- An├ílisis de resultados
+
+­ƒÄ¿ **Gradiente amber-yellow-lime** en header y elementos ganadores
+
+­ƒöì **Filtros:**
+- Por estado (completados, fallidos)
+- Por tipo de test
+- B├║squeda de texto
+
+­ƒôÑ **Exportaci├│n** de resultados individuales
+
+**Ubicaci├│n:** `src/features/agente-marketing/components/experiments/HistorialExperimentos.tsx`

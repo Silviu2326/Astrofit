@@ -1,0 +1,21 @@
+﻿
+
+Biblioteca de Ejercicios transformada completamente con:
+
+Ô£à **60 ejercicios mockeados** (Pecho, Espalda, Piernas, Hombros, Brazos, Core, Cardio)
+Ô£à **Header impactante** con gradiente azul-morado y botones de acci├│n
+Ô£à **4 cards de estad├¡sticas** animadas con iconos
+Ô£à **Barra de b├║squeda** potente con filtros expandibles
+Ô£à **Filtros r├ípidos** (chips) para acceso directo
+Ô£à **Vista cards grandes** con im├ígenes, videos, badges de grupo muscular, favoritos, dificultad en estrellas
+Ô£à **3 modos de vista** (Cards grandes, cards peque├▒os, lista)
+Ô£à **Sistema de ordenamiento** (A-Z, m├ís usados, recientes, dificultad)
+Ô£à **Modal de detalle** con informaci├│n completa del ejercicio
+Ô£à **Modal de nuevo ejercicio** (placeholder para formulario con tabs)
+Ô£à **Animaciones con framer-motion** en entrada de cards y hover effects
+Ô£à **60 ejercicios realistas** con instrucciones, tips, errores comunes, variaciones, equipamiento
+Ô£à **Algunos con im├ígenes de Unsplash**, videos de YouTube
+Ô£à **Dise├▒o responsive** y profesional tipo Pinterest
+Ô£à **Empty state** cuando no hay resultados
+
+La p├ígina est├í lista en `src/features/training/training/biblioteca-ejercicios/BibliotecaEjerciciosPage.tsx`

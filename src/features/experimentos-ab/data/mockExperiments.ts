@@ -1,0 +1,295 @@
+import { ABExperiment, ABVariant } from '../types';
+
+const createVariant = (
+  id: string,
+  name: string,
+  type: 'control' | 'variant',
+  traffic: number,
+  impressions: number,
+  conversions: number
+): ABVariant => {
+  const clicks = Math.floor(impressions * 0.15);
+  const revenue = conversions * 29.99;
+  const conversionRate = (conversions / impressions) * 100;
+  const ctr = (clicks / impressions) * 100;
+
+  return {
+    id,
+    name,
+    type,
+    description: type === 'control' ? 'Versión original' : 'Nueva versión',
+    trafficPercentage: traffic,
+    config: {
+      title: type === 'control' ? 'Título Original' : 'Nuevo Título',
+      subtitle: 'Subtitle de prueba',
+      buttonText: type === 'control' ? 'Comprar Ahora' : '¡Obtener Oferta!',
+      buttonColor: type === 'control' ? '#3B82F6' : '#EF4444',
+      layout: 'single',
+      backgroundColor: '#FFFFFF',
+      textColor: '#1F2937',
+    },
+    metrics: {
+      impressions,
+      clicks,
+      conversions,
+      revenue,
+      engagementTime: Math.floor(Math.random() * 300) + 60,
+    },
+    stats: {
+      conversionRate,
+      ctr,
+      averageRevenue: conversions > 0 ? revenue / conversions : 0,
+      confidenceLevel: Math.random() * 100,
+      isWinner: false,
+    },
+  };
+};
+
+export const mockExperiments: ABExperiment[] = [
+  {
+    id: 'exp-1',
+    name: 'Landing Page - Nuevo CTA',
+    description: 'Test de diferentes versiones del call-to-action en la landing page principal',
+    status: 'running',
+    createdAt: '2025-09-15T10:00:00Z',
+    startedAt: '2025-09-16T00:00:00Z',
+    targetAudience: {
+      segment: 'Nuevos visitantes',
+      percentage: 100,
+      filters: {
+        newUsers: true,
+        device: ['desktop', 'mobile'],
+      },
+    },
+    duration: {
+      startDate: '2025-09-16',
+      endDate: '2025-10-16',
+      minSampleSize: 1000,
+      currentSampleSize: 2847,
+    },
+    variants: [
+      createVariant('var-1-a', 'Control', 'control', 50, 1423, 142),
+      createVariant('var-1-b', 'Variante A', 'variant', 50, 1424, 171),
+    ],
+    metrics: [
+      {
+        id: 'metric-1',
+        name: 'Conversión a Compra',
+        type: 'conversion',
+        description: 'Usuarios que completan la compra',
+        goal: 10,
+        current: 11.2,
+        unit: '%',
+        isPrimary: true,
+      },
+      {
+        id: 'metric-2',
+        name: 'Click-Through Rate',
+        type: 'ctr',
+        description: 'Porcentaje de clics en el CTA',
+        goal: 15,
+        current: 15.8,
+        unit: '%',
+        isPrimary: false,
+      },
+    ],
+    tags: ['landing-page', 'cta', 'conversion'],
+    category: 'Optimización de Conversión',
+    priority: 'high',
+  },
+  {
+    id: 'exp-2',
+    name: 'Email Marketing - Subject Line',
+    description: 'Comparación de diferentes asuntos para emails promocionales',
+    status: 'completed',
+    createdAt: '2025-08-01T10:00:00Z',
+    startedAt: '2025-08-05T00:00:00Z',
+    endedAt: '2025-09-05T23:59:59Z',
+    targetAudience: {
+      segment: 'Lista de suscriptores activos',
+      percentage: 100,
+      filters: {},
+    },
+    duration: {
+      startDate: '2025-08-05',
+      endDate: '2025-09-05',
+      minSampleSize: 5000,
+      currentSampleSize: 8453,
+    },
+    variants: [
+      createVariant('var-2-a', 'Control', 'control', 33, 2817, 169),
+      createVariant('var-2-b', 'Variante A', 'variant', 33, 2818, 227),
+      createVariant('var-2-c', 'Variante B', 'variant', 34, 2818, 198),
+    ],
+    metrics: [
+      {
+        id: 'metric-3',
+        name: 'Tasa de Apertura',
+        type: 'engagement',
+        description: 'Emails abiertos',
+        goal: 25,
+        current: 28.5,
+        unit: '%',
+        isPrimary: true,
+      },
+      {
+        id: 'metric-4',
+        name: 'Click Rate',
+        type: 'ctr',
+        description: 'Clics en enlaces del email',
+        goal: 5,
+        current: 8.1,
+        unit: '%',
+        isPrimary: true,
+      },
+    ],
+    winner: {
+      variantId: 'var-2-b',
+      confidence: 95.4,
+      uplift: 34.3,
+      declaredAt: '2025-09-05T18:30:00Z',
+    },
+    tags: ['email', 'subject-line', 'engagement'],
+    category: 'Email Marketing',
+    priority: 'medium',
+  },
+  {
+    id: 'exp-3',
+    name: 'Pricing Page - Layout',
+    description: 'Test de diferentes diseños para la página de precios',
+    status: 'running',
+    createdAt: '2025-09-20T14:00:00Z',
+    startedAt: '2025-09-22T00:00:00Z',
+    targetAudience: {
+      segment: 'Todos los usuarios',
+      percentage: 80,
+      filters: {
+        device: ['desktop'],
+      },
+    },
+    duration: {
+      startDate: '2025-09-22',
+      endDate: '2025-10-22',
+      minSampleSize: 2000,
+      currentSampleSize: 1245,
+    },
+    variants: [
+      createVariant('var-3-a', 'Control', 'control', 50, 623, 62),
+      createVariant('var-3-b', 'Variante A', 'variant', 50, 622, 75),
+    ],
+    metrics: [
+      {
+        id: 'metric-5',
+        name: 'Sign-up Rate',
+        type: 'conversion',
+        description: 'Usuarios que se registran',
+        goal: 12,
+        current: 11.1,
+        unit: '%',
+        isPrimary: true,
+      },
+      {
+        id: 'metric-6',
+        name: 'Revenue per User',
+        type: 'revenue',
+        description: 'Ingreso promedio por usuario',
+        goal: 50,
+        current: 48.2,
+        unit: '$',
+        isPrimary: true,
+      },
+    ],
+    tags: ['pricing', 'layout', 'conversion'],
+    category: 'Optimización de Precios',
+    priority: 'high',
+  },
+  {
+    id: 'exp-4',
+    name: 'Onboarding Flow - Steps',
+    description: 'Comparación entre onboarding de 3 vs 5 pasos',
+    status: 'draft',
+    createdAt: '2025-09-28T09:00:00Z',
+    targetAudience: {
+      segment: 'Nuevos usuarios registrados',
+      percentage: 100,
+      filters: {
+        newUsers: true,
+      },
+    },
+    duration: {
+      startDate: '2025-10-01',
+      endDate: '2025-11-01',
+      minSampleSize: 1500,
+      currentSampleSize: 0,
+    },
+    variants: [
+      createVariant('var-4-a', 'Control - 5 pasos', 'control', 50, 0, 0),
+      createVariant('var-4-b', 'Variante - 3 pasos', 'variant', 50, 0, 0),
+    ],
+    metrics: [
+      {
+        id: 'metric-7',
+        name: 'Completion Rate',
+        type: 'conversion',
+        description: 'Usuarios que completan el onboarding',
+        goal: 70,
+        current: 0,
+        unit: '%',
+        isPrimary: true,
+      },
+      {
+        id: 'metric-8',
+        name: 'Time to Complete',
+        type: 'engagement',
+        description: 'Tiempo promedio para completar',
+        goal: 180,
+        current: 0,
+        unit: 'seg',
+        isPrimary: false,
+      },
+    ],
+    tags: ['onboarding', 'ux', 'activation'],
+    category: 'User Experience',
+    priority: 'medium',
+  },
+  {
+    id: 'exp-5',
+    name: 'Banner Homepage - Color',
+    description: 'Test de diferentes colores para el banner principal',
+    status: 'paused',
+    createdAt: '2025-09-10T11:00:00Z',
+    startedAt: '2025-09-12T00:00:00Z',
+    targetAudience: {
+      segment: 'Desktop users',
+      percentage: 50,
+      filters: {
+        device: ['desktop'],
+      },
+    },
+    duration: {
+      startDate: '2025-09-12',
+      endDate: '2025-10-12',
+      minSampleSize: 3000,
+      currentSampleSize: 892,
+    },
+    variants: [
+      createVariant('var-5-a', 'Control - Azul', 'control', 50, 446, 40),
+      createVariant('var-5-b', 'Variante - Rojo', 'variant', 50, 446, 45),
+    ],
+    metrics: [
+      {
+        id: 'metric-9',
+        name: 'Click Rate',
+        type: 'ctr',
+        description: 'Clics en el banner',
+        goal: 8,
+        current: 9.5,
+        unit: '%',
+        isPrimary: true,
+      },
+    ],
+    tags: ['banner', 'design', 'homepage'],
+    category: 'Design',
+    priority: 'low',
+  },
+];

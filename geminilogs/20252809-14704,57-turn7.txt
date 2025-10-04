@@ -1,0 +1,5 @@
+﻿I have created the basic structure for the `Interfaz Cliente - Kiosko Auto Check-in` module, including the following files:
+
+- `src/features/interfaz-cliente/InterfazClientePage.tsx`
+- `src/features/interfaz-cliente/interfazClienteApi.ts`
+- `src/features/interfaz-cliente/components/PantallaKiosko.tsx`

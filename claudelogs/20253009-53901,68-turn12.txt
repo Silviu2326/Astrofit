@@ -1,0 +1,46 @@
+﻿
+
+Transformaci├│n completa del CrearFlujoPage.tsx con:
+
+Ô£à **Constructor visual node-based** usando React Flow
+Ô£à **Header contextual** con nombre editable, descripci├│n, estado y botones de acci├│n
+Ô£à **Panel izquierdo (20%)** con paleta de nodos organizada en 4 categor├¡as colapsables:
+   - Disparadores (10 tipos) - Verde
+   - Condiciones (9 tipos) - Amarillo
+   - Acciones (10 tipos) - Azul
+   - Utilidades (5 tipos) - Gris
+
+Ô£à **Canvas central (60%)** con React Flow:
+   - Grid de fondo con puntos
+   - Drag & drop funcional desde paleta
+   - Nodos custom por categor├¡a con iconos
+   - Conexiones animadas con flechas
+   - Controls y MiniMap
+   - Snap to grid
+
+Ô£à **Panel derecho (20%)** con configuraci├│n din├ímica:
+   - Formularios espec├¡ficos por tipo de nodo
+   - Enviar Email: asunto, cuerpo, remitente, tracking
+   - Condiciones: campo, operador, valor
+   - Triggers: configuraci├│n espec├¡fica (d├¡as inactividad, hora programada)
+   - Delay: tiempo y unidad
+
+Ô£à **Validaci├│n en tiempo real**:
+   - Estado del flujo (Vac├¡o/Incompleto/Con Errores/V├ílido)
+   - Nodos sin configurar marcados con borde rojo
+   - Lista de errores en header
+
+Ô£à **Modales**:
+   - Plantillas de flujo (5 predefinidas)
+   - Probar flujo con simulaci├│n
+   - Panel de variables disponibles
+
+Ô£à **Funcionalidades**:
+   - Exportar flujo a JSON
+   - Guardar borrador
+   - Guardar y activar con validaci├│n
+   - Variables personalizables copiables
+   - Eliminaci├│n de nodos
+   - TypeScript completo
+
+El sistema es completamente funcional con drag-and-drop, validaci├│n, configuraci├│n din├ímica y flujo visual profesional.

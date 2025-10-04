@@ -1,0 +1,5 @@
+﻿I have created the basic structure for the "Alertas de Inventario" module and written the specified files:
+
+- `src/features/alertas-inventario/AlertasInventarioPage.tsx`
+- `src/features/alertas-inventario/alertasInventarioApi.ts`
+- `src/features/alertas-inventario/components/PanelAlertas.tsx`

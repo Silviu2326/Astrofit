@@ -1,0 +1,1 @@
+﻿I have successfully created the new component files and updated `AlertasFatigaPage.tsx` and `alertasFatigaApi.ts` as requested.

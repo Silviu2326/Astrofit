@@ -1,0 +1,628 @@
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Tarjetas de Socios - Control de Accesos siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/tarjetas-socios/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/tarjetas-socios/TarjetasSociosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/tarjetas-socios/tarjetasSociosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/tarjetas-socios/components/TablaCredenciales.tsx
+
+ESPECIFICACIONES:
+- Página principal con tabla básica de credenciales de acceso
+- API con funciones CRUD para gestión de tarjetas
+- Tabla simple con foto de cliente, número de tarjeta y estado
+- Estados básicos: activo, bloqueado, inactivo
+- Funcionalidad de búsqueda por nombre o número de tarjeta
+- Datos mock realistas con diferentes tipos de credenciales
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Estructura base para expansión posterior
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/tarjetas-socios/ añadiendo estos archivos:
+
+4. components/GestorEstados.tsx - Gestor visual estados con colores
+5. components/AsignadorTarjetas.tsx - Asignador automático códigos QR únicos
+6. components/HistorialCambios.tsx - Historial detallado cambios timestamps
+7. components/BotonesAccionRapida.tsx - Botones activar, bloquear, reemplazar
+8. components/TarjetasTemporales.tsx - Sistema tarjetas invitados configurable
+9. components/ValidadorCodigos.tsx - Validación códigos únicos duplicados
+10. components/PanelAlertas.tsx - Alertas tarjetas próximas vencer
+11. components/ExportadorReportes.tsx - Exportación reportes accesos
+
+ACTUALIZA TAMBIÉN:
+- TarjetasSociosPage.tsx - Integrar funcionalidades avanzadas
+- tarjetasSociosApi.ts - Endpoints gestión avanzada tarjetas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Gestión de Tornos - Control Físico de Accesos siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/gestion-tornos/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/gestion-tornos/GestionTornosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/gestion-tornos/gestionTornosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/gestion-tornos/components/PanelTornos.tsx
+
+ESPECIFICACIONES:
+- Página principal con panel de control básico de tornos
+- API para gestión de estados de hardware simulado
+- Panel simple con switches ON/OFF para cada torno
+- Estados básicos: activo, inactivo, mantenimiento
+- Lista de tornos con nombres identificativos
+- Funcionalidad básica de activación/desactivación
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Simulación básica de estados de hardware
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/gestion-tornos/ añadiendo estos archivos:
+
+4. components/ConfiguradorHorarios.tsx - Configuración horarios día semana
+5. components/MonitorTiempoReal.tsx - Monitor tiempo real con estados
+6. components/AlertasSeguridad.tsx - Alertas fallos y accesos no autorizados
+7. components/ControlRemoto.tsx - Control apertura/cierre puertas confirmación
+8. components/RegistroEventos.tsx - Registro eventos seguridad timestamp
+9. components/AccesosEspeciales.tsx - Configuración mantenimiento/personal/emergencias
+10. components/DashboardEstadisticas.tsx - Dashboard estadísticas uso punto acceso
+11. components/WebSocketSimulator.tsx - WebSocket simulation updates tiempo real
+
+ACTUALIZA TAMBIÉN:
+- GestionTornosPage.tsx - Integrar funcionalidades avanzadas
+- gestionTornosApi.ts - Endpoints control avanzado tornos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Reportes de Accesos - Analytics de Entrada siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/reportes-accesos/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/reportes-accesos/ReportesAccesosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/reportes-accesos/reportesAccesosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/reportes-accesos/components/HistorialEntradas.tsx
+
+ESPECIFICACIONES:
+- Página principal con listado básico de entradas al gimnasio
+- API con datos de accesos históricos simulados
+- Tabla simple: cliente, hora, sede, puerta utilizada
+- Filtro básico por fecha (hoy, ayer, última semana)
+- Búsqueda simple por nombre de cliente
+- Paginación básica para grandes volúmenes
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Datos mock con patrones realistas de asistencia
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/reportes-accesos/ añadiendo estos archivos:
+
+4. components/GraficoPicos.tsx - Gráfico picos asistencia horarios
+5. components/FiltrosAvanzados.tsx - Filtros cliente, fecha, sede, tipo acceso
+6. components/DetectorPatrones.tsx - Detección patrones optimización horarios
+7. components/AlertasAccesosSospechosos.tsx - Alertas accesos fuera horario
+8. components/ExportadorReportes.tsx - Exportación reportes análisis seguridad
+9. components/ComparativasSedes.tsx - Comparativas sedes análisis flujo
+10. components/MetricasPermanencia.tsx - Métricas tiempo promedio permanencia
+11. components/DashboardKPIs.tsx - Dashboard KPIs utilización zona
+
+ACTUALIZA TAMBIÉN:
+- ReportesAccesosPage.tsx - Integrar analytics avanzados
+- reportesAccesosApi.ts - Endpoints analytics y exportación
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Interfaz Cliente - Kiosko Auto Check-in siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/interfaz-cliente/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/interfaz-cliente/InterfazClientePage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/interfaz-cliente/interfazClienteApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/interfaz-cliente/components/PantallaKiosko.tsx
+
+ESPECIFICACIONES:
+- Página principal tipo kiosko con diseño limpio y botones grandes
+- API básica para validación de check-ins
+- Pantalla simple con opción de introducir número de socio
+- Logotipo del gimnasio prominente
+- Feedback básico de éxito/error en check-in
+- Diseño optimizado para pantallas táctiles
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Diseño responsive para diferentes tamaños de tablet
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/interfaz-cliente/ añadiendo estos archivos:
+
+4. components/EscanerQR.tsx - Escáner QR simulación cámara
+5. components/BienvenidaPersonalizada.tsx - Bienvenida nombre y mensaje motivacional
+6. components/ProtectorPantalla.tsx - Protector pantalla promociones inactivo
+7. components/FeedbackVisualSonoro.tsx - Feedback inmediato resultado check-in
+8. components/ModoAccesibilidad.tsx - Modo accesibilidad discapacidades
+9. components/SistemaAyuda.tsx - Sistema ayuda video instructivo
+10. components/DetectorMembresia.tsx - Detección automática tipo membresía
+11. components/RegistroEntrada.tsx - Registro hora exacta entrada
+
+ACTUALIZA TAMBIÉN:
+- InterfazClientePage.tsx - Integrar funcionalidades kiosko avanzadas
+- interfazClienteApi.ts - Endpoints check-in avanzado
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Historial Kiosko - Registro de Autoservicio siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/historial-kiosko/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/historial-kiosko/HistorialKioskoPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/historial-kiosko/historialKioskoApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/historial-kiosko/components/TablaAccesos.tsx
+
+ESPECIFICACIONES:
+- Página principal con listado básico de accesos por kiosko
+- API con datos de autoservicio simulados
+- Tabla simple con timestamp, cliente y resultado
+- Estados básicos: válido, no válido, error
+- Filtro simple por fecha y estado
+- Información básica del cliente en cada registro
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Mock data con diferentes tipos de resultados
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/historial-kiosko/ añadiendo estos archivos:
+
+4. components/IconosEstado.tsx - Iconos intuitivos ✔️ válido, ❌ no válido, ⚠️ incidencia
+5. components/DetectorIncidencias.tsx - Detección automática abono caducado, cliente bloqueado
+6. components/EstadisticasUso.tsx - Estadísticas éxito vs fallos autoservicio
+7. components/AlertasPersonal.tsx - Alertas recepción problemas recurrentes
+8. components/ReportesUtilizacion.tsx - Reportes utilización kiosko horarios
+9. components/SeguimientoResolucion.tsx - Seguimiento resolución incidencias
+10. components/DashboardEficiencia.tsx - Dashboard métricas eficiencia kiosko
+11. components/NotificacionesPush.tsx - Notificaciones push alertas críticas
+
+ACTUALIZA TAMBIÉN:
+- HistorialKioskoPage.tsx - Integrar analytics autoservicio
+- historialKioskoApi.ts - Endpoints estadísticas y alertas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Listado de Sedes - Gestión Multi-Centro siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/listado-sedes/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/listado-sedes/ListadoSedesPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/listado-sedes/listadoSedesApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/listado-sedes/components/TarjetasSedes.tsx
+
+ESPECIFICACIONES:
+- Página principal con listado básico de sedes
+- API con datos de ubicaciones simulados
+- Tarjetas simples con nombre, dirección y responsable
+- Estados básicos: abierto, cerrado, mantenimiento
+- Información básica de contacto por sede
+- Lista simple sin funcionalidades avanzadas
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Mock data con diferentes sedes y estados
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/listado-sedes/ añadiendo estos archivos:
+
+4. components/MapaUbicaciones.tsx - Mapa integrado ubicación exacta sede
+5. components/IndicadoresEstado.tsx - Indicadores aforo y ocupación tiempo real
+6. components/MetricasConsolidadas.tsx - Dashboard métricas consolidadas ubicaciones
+7. components/BotonesGestionRapida.tsx - Botones editar, desactivar, ver detalles
+8. components/FiltrosAvanzados.tsx - Filtros estado operativo, zona, tamaño
+9. components/EnlacesGestion.tsx - Enlaces directos sistemas específicos sede
+10. components/SistemaAlertas.tsx - Alertas mantenimiento, capacidad, incidencias
+11. components/VistaSatelital.tsx - Mapa satelital y street view integrada
+
+ACTUALIZA TAMBIÉN:
+- ListadoSedesPage.tsx - Integrar gestión avanzada multi-centro
+- listadoSedesApi.ts - Endpoints métricas y gestión sedes
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Comparativa de Sedes - Analytics Multi-Centro siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/comparativa-sedes/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/comparativa-sedes/ComparativaSedesPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/comparativa-sedes/comparativaSedesApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/comparativa-sedes/components/DashboardComparativo.tsx
+
+ESPECIFICACIONES:
+- Página principal con dashboard básico de comparación
+- API con métricas simuladas por sede
+- Dashboard simple con métricas clave: ingresos, clientes activos
+- Comparación básica entre 2-3 sedes principales
+- Indicadores simples de rendimiento
+- Vista tabular de datos básicos
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Mock data con métricas básicas por sede
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/comparativa-sedes/ añadiendo estos archivos:
+
+4. components/GraficosBarras.tsx - Gráficos barras diferencias sedes
+5. components/RankingSedes.tsx - Ranking automático rendimiento rentabilidad
+6. components/ProyeccionesCrecimiento.tsx - Proyecciones crecimiento datos históricos
+7. components/MetricasEficiencia.tsx - Métricas ingresos m², clientes por entrenador
+8. components/AnalisisTendencias.tsx - Análisis crecimiento mensual estacionalidad
+9. components/AlertasBajoRendimiento.tsx - Alertas sedes acción correctiva
+10. components/ComparativasCategorias.tsx - Comparativas tamaño ubicación antigüedad
+11. components/AnalisisCorrelacion.tsx - Correlación variables negocio
+
+ACTUALIZA TAMBIÉN:
+- ComparativaSedesPage.tsx - Integrar analytics avanzados
+- comparativaSedesApi.ts - Endpoints analytics y reportes ejecutivos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Transferencias de Clientes - Movilidad Inter-Sedes siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/transferencias-clientes/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/transferencias-clientes/TransferenciasClientesPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/transferencias-clientes/transferenciasClientesApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/transferencias-clientes/components/GestorTraslados.tsx
+
+ESPECIFICACIONES:
+- Página principal con formulario básico de transferencias
+- API para gestión de traslados entre sedes
+- Gestor simple: seleccionar cliente, sede origen y destino
+- Validación básica de membresía compatible
+- Lista simple de transferencias pendientes
+- Confirmación básica de traslados
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Mock data con transferencias simuladas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/transferencias-clientes/ añadiendo estos archivos:
+
+4. components/HistorialMovimientos.tsx - Historial completo cambios cliente motivos
+5. components/ValidadorCapacidad.tsx - Validador automático capacidad sede destino
+6. components/WorkflowAprobacion.tsx - Proceso automatizado solicitud aprobación activación
+7. components/NotificacionesSedes.tsx - Notificaciones ambas sedes transferencias pendientes
+8. components/EstadisticasMovilidad.tsx - Estadísticas sedes solicitadas motivos frecuentes
+9. components/SistemaNivelesAprobacion.tsx - Sistema aprobación diferentes niveles autorización
+10. components/DashboardTransferencias.tsx - Dashboard métricas flujo entre sedes
+11. components/AlertasAtencionEspecial.tsx - Alertas transferencias atención especial
+
+ACTUALIZA TAMBIÉN:
+- TransferenciasClientesPage.tsx - Integrar workflow avanzado
+- transferenciasClientesApi.ts - Endpoints aprobaciones y notificaciones
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Catálogo de Stock - Inventario Avanzado siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/catalogo-stock/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/catalogo-stock/CatalogoStockPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/catalogo-stock/catalogoStockApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/catalogo-stock/components/TablaInventario.tsx
+
+ESPECIFICACIONES:
+- Página principal con tabla básica de inventario
+- API para gestión de productos y stock
+- Tabla simple: producto, categoría, stock actual
+- Categorías básicas: equipamiento, consumibles, merchandising
+- Búsqueda simple por nombre de producto
+- Indicadores básicos de stock bajo
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Mock data con variedad de productos típicos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/catalogo-stock/ añadiendo estos archivos:
+
+4. components/AlertasStock.tsx - Alertas automáticas stock bajo mínimo
+5. components/BuscadorProductos.tsx - Buscador avanzado nombre categoría proveedor código barras
+6. components/HistorialMovimientos.tsx - Historial completo movimientos entradas salidas ajustes
+7. components/ConfiguracionStock.tsx - Configuración stock mínimo máximo producto
+8. components/CodigosUbicacion.tsx - Códigos ubicación almacén localización
+9. components/CategorizacionAvanzada.tsx - Sistema categorización subcategorías
+10. components/ReportesRotacion.tsx - Reportes rotación inventario productos vendidos
+11. components/IntegracionCodigosBarras.tsx - Integración códigos barras gestión
+
+ACTUALIZA TAMBIÉN:
+- CatalogoStockPage.tsx - Integrar gestión avanzada inventario
+- catalogoStockApi.ts - Endpoints alertas y reportes inventario
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Control de Pedidos - Gestión de Compras siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/control-pedidos/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/control-pedidos/ControlPedidosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/control-pedidos/controlPedidosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/control-pedidos/components/ListadoOrdenes.tsx
+
+ESPECIFICACIONES:
+- Página principal con listado básico de órdenes de compra
+- API para gestión de pedidos a proveedores
+- Lista simple con estados: pendiente, enviado, recibido
+- Información básica: proveedor, fecha, total
+- Formulario simple para crear nuevos pedidos
+- Confirmación básica de recepción
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Mock data con diferentes estados de pedidos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/control-pedidos/ añadiendo estos archivos:
+
+4. components/LineaTiempo.tsx - Línea tiempo visual progreso pedido fechas estimadas
+5. components/ConfirmadorRecepcion.tsx - Confirmador recepción verificación cantidades calidad
+6. components/AnalisisProveedores.tsx - Análisis tiempos entrega reliability proveedor
+7. components/IntegracionProveedores.tsx - Integración proveedores tracking automático envíos
+8. components/AlertasPedidosRetrasados.tsx - Alertas pedidos retrasados discrepancias entrega
+9. components/GeneradorOrdenesAutomatico.tsx - Generación automática órdenes stock mínimo
+10. components/ValidacionCalidad.tsx - Sistema validación calidad recepción mercancía
+11. components/DashboardCompras.tsx - Dashboard análisis compras gestión proveedores
+
+ACTUALIZA TAMBIÉN:
+- ControlPedidosPage.tsx - Integrar gestión avanzada compras
+- controlPedidosApi.ts - Endpoints tracking y análisis proveedores
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Alertas de Inventario - Sistema de Notificaciones siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/alertas-inventario/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/alertas-inventario/AlertasInventarioPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/alertas-inventario/alertasInventarioApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/alertas-inventario/components/PanelAlertas.tsx
+
+ESPECIFICACIONES:
+- Página principal con panel básico de alertas
+- API para gestión de notificaciones de inventario
+- Panel simple con alertas de stock bajo
+- Notificaciones básicas: amarillo (aviso), rojo (crítico)
+- Lista simple de productos que requieren atención
+- Confirmación básica de lectura de alertas
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Sistema básico de notificaciones simuladas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/alertas-inventario/ añadiendo estos archivos:
+
+4. components/ConfiguradorUmbrales.tsx - Configurador umbrales personalizables tipo producto
+5. components/HistorialNotificaciones.tsx - Historial completo notificaciones acciones tomadas
+6. components/PriorizadorAlertas.tsx - Priorización inteligente alertas impacto operaciones
+7. components/NotificacionesAutomaticas.tsx - Notificaciones stock bajo caducidad dañados
+8. components/SistemaConfirmacion.tsx - Sistema confirmación lectura resolución alertas
+9. components/NotificacionesPushEmail.tsx - Notificaciones push email alertas críticas
+10. components/DashboardResumen.tsx - Dashboard resumen métricas incidencias categoría
+11. components/EscalamientoAutomatico.tsx - Sistema escalamiento automático alertas
+
+ACTUALIZA TAMBIÉN:
+- AlertasInventarioPage.tsx - Integrar sistema avanzado notificaciones
+- alertasInventarioApi.ts - Endpoints notificaciones y escalamiento
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Convenios Corporativos - CRM Empresarial siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/convenios-corporativos/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/convenios-corporativos/ConveniosCorporativosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/convenios-corporativos/conveniosCorporativosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/convenios-corporativos/components/TarjetasEmpresas.tsx
+
+ESPECIFICACIONES:
+- Página principal con listado básico de empresas clientes
+- API para gestión de convenios corporativos
+- Tarjetas simples con logo, nombre de empresa y sector
+- Información básica: número de empleados, contacto principal
+- Estados básicos: activo, inactivo, en negociación
+- Lista simple sin funcionalidades avanzadas
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Mock data con empresas de diferentes sectores
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/convenios-corporativos/ añadiendo estos archivos:
+
+4. components/GestorContratos.tsx - Gestor completo contratos B2B fechas renovación términos
+5. components/MetricasB2B.tsx - Métricas rendimiento empleados activos vs totales uso
+6. components/SeguimientoBienestar.tsx - Seguimiento objetivos bienestar corporativo convenio
+7. components/DescuentosCorporativos.tsx - Sistema descuentos configurables empresa
+8. components/ReportesEjecutivos.tsx - Reportes ejecutivos personalizados empresas clientes
+9. components/AlertasRenovaciones.tsx - Alertas renovaciones próximas oportunidades expansión
+10. components/DashboardPenetracion.tsx - Dashboard análisis penetración empresa
+11. components/FacturacionAutomatica.tsx - Sistema facturación automática basada uso
+
+ACTUALIZA TAMBIÉN:
+- ConveniosCorporativosPage.tsx - Integrar CRM empresarial avanzado
+- conveniosCorporativosApi.ts - Endpoints contratos B2B y métricas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Empleados Socios - Gestión de Beneficiarios siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/empleados-socios/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/empleados-socios/EmpleadosSociosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/empleados-socios/empleadosSociosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/empleados-socios/components/TablaBeneficiarios.tsx
+
+ESPECIFICACIONES:
+- Página principal con tabla básica de empleados beneficiarios
+- API para gestión de empleados corporativos
+- Tabla simple: nombre, empresa, departamento, estado
+- Estados básicos: activo, baja, suspendido
+- Búsqueda simple por nombre o empresa
+- Filtro básico por empresa de origen
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Mock data con empleados de diferentes empresas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/empleados-socios/ añadiendo estos archivos:
+
+4. components/FiltrosEmpresa.tsx - Filtros avanzados empresa estado departamento fecha alta
+5. components/GestorEstadosB2B.tsx - Gestión masiva altas bajas lotes empleados
+6. components/AnalisisUtilizacion.tsx - Tracking detallado utilización beneficios empleado
+7. components/ValidacionRRHH.tsx - Sistema validación empleados activos RRHH empresarial
+8. components/ReportesUsoAgregados.tsx - Reportes uso agregados empresa facturación
+9. components/DashboardAdopcion.tsx - Dashboard análisis adopción empresa
+10. components/AlertasInactivos.tsx - Alertas empleados inactivos campañas reactivación
+11. components/IntegracionRRHH.tsx - Integración sistemas RRHH sincronización automática
+
+ACTUALIZA TAMBIÉN:
+- EmpleadosSociosPage.tsx - Integrar gestión avanzada beneficiarios
+- empleadosSociosApi.ts - Endpoints RRHH y reportes utilización
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura básica para el módulo Facturación Empresas - Gestión de Cobros B2B siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/facturacion-empresas/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/facturacion-empresas/FacturacionEmpresasPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/facturacion-empresas/facturacionEmpresasApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/facturacion-empresas/components/TablaFacturas.tsx
+
+ESPECIFICACIONES:
+- Página principal con tabla básica de facturas empresariales
+- API para gestión de facturación B2B
+- Tabla simple: empresa, período, total, estado
+- Estados básicos: pagada, pendiente, vencida
+- Información básica de facturas recurrentes
+- Filtro simple por estado y empresa
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Componentes funcionales con hooks
+- Mock data con ciclos de facturación B2B
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Mejora el módulo project-bolt-sb1-qekdxfwt/project/src/features/facturacion-empresas/ añadiendo estos archivos:
+
+4. components/SumarioEconomico.tsx - Sumario económico detallado totales mensuales anuales empresa
+5. components/GeneradorFacturas.tsx - Generador automático facturas basado uso real empleados
+6. components/ReportesEjecutivos.tsx - Reportes ejecutivos personalizados presentación directivos
+7. components/HistorialPagos.tsx - Historial completo pagos fechas métodos pago
+8. components/RecordatoriosAutomaticos.tsx - Sistema recordatorios automáticos facturas vencidas
+9. components/IntegracionContable.tsx - Integración sistemas contables registro automatizado
+10. components/DashboardCobranza.tsx - Dashboard análisis cobranza morosidad empresa
+11. components/ProyeccionesIngresos.tsx - Proyecciones ingresos basadas contratos vigentes
+
+ACTUALIZA TAMBIÉN:
+- FacturacionEmpresasPage.tsx - Integrar gestión avanzada cobros B2B
+- facturacionEmpresasApi.ts - Endpoints facturación automática y reportes
+

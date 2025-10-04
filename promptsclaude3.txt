@@ -1,0 +1,2860 @@
+Transforma completamente la página de Personalización de Dominio (src/features/plansolomax/branding/branding/personalizacion-dominio/PersonalizacionDominioPage.tsx) en un configurador completo de dominio personalizado.
+
+IMPORTANTE: Herramienta para configurar dominio propio y branding personalizado de la plataforma del cliente.
+
+Requisitos de diseño:
+
+1. HEADER PROFESIONAL:
+   - Título "Personalización de Dominio" con gradiente azul-morado
+   - Subtítulo: "Configura tu dominio personalizado y dale tu marca a la plataforma"
+   - Icono Globe con animación
+   - Botones: "Guardar Configuración", "Ver Preview", "Ayuda"
+
+2. ESTADO ACTUAL (Card destacada):
+   - Estado del dominio (badge):
+     * No configurado (gris)
+     * Pendiente verificación (amarillo)
+     * Activo (verde)
+     * Error (rojo)
+   - Dominio actual:
+     * Subdominio gratuito: "mifitness.plataforma.com"
+     * Dominio personalizado: "app.mifitness.com" (si está configurado)
+   - Última actualización
+   - SSL activo (badge verde con candado)
+
+3. WIZARD DE CONFIGURACIÓN (Pasos):
+
+   PASO 1: Seleccionar Tipo de Dominio
+   - Opciones (cards clickeables):
+
+     A) Subdominio Gratuito (Recomendado)
+     - "tuempresa.plataforma.com"
+     - Configuración automática
+     - SSL incluido
+     - Input para elegir subdominio
+     - Verificación en tiempo real de disponibilidad
+     - Badge "Gratis" y "Fácil"
+
+     B) Dominio Personalizado (Premium)
+     - "app.tuempresa.com"
+     - Requiere configuración DNS
+     - SSL incluido
+     - Badge "Profesional"
+     - Input para dominio completo
+     - Validación de formato
+
+   PASO 2: Configuración DNS (solo si dominio personalizado)
+   - Instrucciones paso a paso:
+     * Título: "Configura estos registros en tu proveedor DNS"
+     * Tabla de registros DNS necesarios:
+       - Tipo: CNAME
+       - Host: app (o @)
+       - Valor: proxy.plataforma.com
+       - TTL: 3600
+     * Botón "Copiar" para cada valor
+     * Proveedores comunes con links:
+       - GoDaddy (con guía)
+       - Namecheap (con guía)
+       - Cloudflare (con guía)
+       - Google Domains (con guía)
+       - Otros
+   - Video tutorial embebido (simulado)
+   - FAQ colapsable con dudas comunes
+
+   PASO 3: Verificación
+   - Botón "Verificar Dominio"
+   - Proceso de verificación:
+     * Spinner "Verificando..."
+     * Check de validación:
+       - ✓ Dominio apunta correctamente
+       - ✓ SSL generado
+       - ✓ Propagación DNS completa
+     * O errores específicos:
+       - ✗ Dominio no apunta al servidor
+       - ✗ Registro DNS no encontrado
+       - Sugerencias de solución
+   - Tiempo estimado de propagación: 24-48 horas
+   - Opción "Verificar más tarde"
+
+   PASO 4: Confirmación
+   - Resumen de configuración
+   - Preview del dominio funcionando
+   - Botón "Activar Dominio"
+   - Mensaje de éxito
+
+4. GUÍA PASO A PASO VISUAL:
+   - Sección "¿Cómo configurar mi dominio?"
+   - Timeline visual con pasos:
+     1. Elige tu dominio
+     2. Configura DNS en tu proveedor
+     3. Espera propagación (24-48h)
+     4. Verifica y activa
+   - Iconos y colores por cada paso
+   - Indicador de paso actual
+
+5. ESTADO DE VERIFICACIÓN (Card en tiempo real):
+   - Si está pendiente:
+     * Spinner animado
+     * "Verificando tu dominio..."
+     * Progreso de checks:
+       - DNS lookup (completado/pendiente)
+       - SSL generation (completado/pendiente)
+       - Propagation (completado/pendiente)
+     * Tiempo transcurrido
+     * Botón "Verificar Ahora"
+   - Si está activo:
+     * Badge verde "Dominio Activo"
+     * Link al dominio funcionando
+     * Fecha de activación
+     * Fecha de renovación SSL
+     * Botón "Ver Configuración"
+
+6. CONFIGURACIÓN AVANZADA (Colapsable):
+   - Redirecciones:
+     * Redirigir www a non-www (toggle)
+     * Redirigir http a https (toggle - siempre activo)
+   - Custom SSL (para usuarios avanzados):
+     * Upload de certificado propio
+     * Upload de private key
+   - Subdirectorios:
+     * Configurar rutas personalizadas (simulado)
+
+7. TROUBLESHOOTING (Sección de ayuda):
+   - Errores comunes y soluciones:
+     * "Mi dominio no funciona después de 48h"
+       - Solución: Verificar configuración DNS
+       - Botón "Verificar DNS"
+     * "Error SSL"
+       - Solución: Regenerar certificado
+       - Botón "Regenerar SSL"
+     * "Error 404"
+       - Solución: Verificar propagación
+     * "Dominio ya en uso"
+       - Solución: Contactar soporte
+   - Link a documentación completa
+   - Botón "Contactar Soporte"
+
+8. PROVEEDORES DE DOMINIOS (Sección informativa):
+   - Si el usuario no tiene dominio:
+     * Card "¿No tienes un dominio?"
+     * Links a registradores recomendados:
+       - Namecheap
+       - GoDaddy
+       - Google Domains
+       - Cloudflare
+     * Precios aproximados
+     * Ventajas de cada uno
+
+9. HISTORIAL DE CAMBIOS:
+   - Timeline de cambios de dominio:
+     * Fecha: 15/01/2024 - Dominio "app.fitness.com" activado
+     * Fecha: 10/01/2024 - Configuración DNS iniciada
+     * Fecha: 08/01/2024 - Subdominio "fitness.plataforma.com" activado
+   - Estado de cada cambio
+   - Usuario que realizó el cambio
+
+10. PREVIEW EN VIVO:
+    - Botón "Ver Preview del Dominio"
+    - Modal con iframe mostrando:
+      * URL del dominio en la barra
+      * Vista previa de la landing page
+      * Navegación funcional (simulada)
+    - Botón "Abrir en nueva pestaña"
+
+11. CONFIGURACIÓN DE BRANDING (Integrada):
+    - Relacionado con dominio:
+      * Favicon del dominio (upload)
+      * Título de la página (meta title)
+      * Descripción (meta description)
+      * Preview de cómo se ve en Google
+    - Link a "Personalización de Estilos"
+
+12. NOTIFICACIONES Y ALERTAS:
+    - Configurar alertas:
+      * Email cuando dominio esté activo
+      * Email X días antes de renovación SSL
+      * Email si hay problemas de propagación
+    - Checkboxes para activar/desactivar
+
+13. MIGRACION DE DOMINIO:
+    - Si ya hay un dominio activo:
+      * Botón "Cambiar Dominio"
+      * Warning: "Esto afectará a todos tus clientes"
+      * Confirmación requerida
+      * Opción de redirección automática del dominio antiguo
+
+14. STATUS DASHBOARD (Mini panel):
+    - Indicadores de salud:
+      * DNS Status: ✓ OK
+      * SSL Status: ✓ Valid (expires in 87 days)
+      * Uptime: 99.9%
+      * Response Time: 245ms
+    - Gráfico de uptime últimos 30 días
+
+15. DATOS MOCKEADOS:
+    - Escenario 1: Sin dominio configurado (wizard inicial)
+    - Escenario 2: Dominio en proceso de verificación
+    - Escenario 3: Dominio activo y funcionando
+    - Registros DNS de ejemplo
+    - Historial de cambios simulado
+
+16. DISEÑO:
+    - Paleta azul-morado profesional
+    - Wizard limpio paso a paso
+    - Cards informativos con iconos
+    - Badges de estado coloridos
+    - Iconos de Lucide React
+    - Animaciones suaves con framer-motion
+    - Código CSS copiable con botón
+    - Timeline visual
+    - Loading states durante verificación
+    - Success/Error states claros
+    - Responsive completo
+
+IMPORTANTE:
+- NO crear nuevos archivos
+- SOLO editar PersonalizacionDominioPage.tsx
+- Wizard intuitivo y fácil de seguir
+- Instrucciones claras para usuarios no técnicos
+- Validación de DNS simulada
+- TypeScript correcto
+- Código limpio
+
+Objetivo: Configurador completo de dominio personalizado con wizard paso a paso, guías visuales, verificación automática y troubleshooting para que cualquier usuario pueda configurar su dominio sin conocimientos técnicos.
+
+---
+
+Transforma completamente la página de Personalización de Estilos (src/features/plansolomax/branding/branding/personalizacion-estilos/PersonalizacionEstilosPage.tsx) en un editor visual completo de marca y estilos.
+
+IMPORTANTE: Editor visual para personalizar colores, tipografías, logo y estilos de la plataforma del cliente.
+
+Requisitos de diseño:
+
+1. HEADER CREATIVO:
+   - Título "Personalización de Marca y Estilos" con gradiente
+   - Subtítulo: "Personaliza la apariencia de tu plataforma"
+   - Icono Palette con animación
+   - Botones: "Guardar Cambios", "Restablecer", "Preview", "Publicar"
+
+2. LAYOUT DE 2 COLUMNAS:
+   - Columna izquierda (40%): Editor de estilos
+   - Columna derecha (60%): Preview en tiempo real
+
+3. TABS DEL EDITOR:
+
+   TAB 1: Colores de Marca
+
+   Colores Principales:
+   - Color Primario (Brand Color):
+     * Color picker visual
+     * Input HEX (#3B82F6)
+     * Presets de colores populares
+     * Sugerencia: "Usado en botones y elementos principales"
+
+   - Color Secundario:
+     * Color picker
+     * Input HEX
+     * Sugerencia: "Usado en acentos y hover states"
+
+   - Color de Acento:
+     * Color picker
+     * Sugerencia: "Usado en CTAs y highlights"
+
+   Colores de UI:
+   - Color de fondo (Background)
+   - Color de superficie (Cards)
+   - Color de texto primario
+   - Color de texto secundario
+   - Color de bordes
+   - Color de éxito (Success)
+   - Color de error (Error)
+   - Color de advertencia (Warning)
+   - Color de información (Info)
+
+   Paletas Predefinidas:
+   - Botón "Cargar Paleta"
+   - Paletas disponibles:
+     * Azul Profesional
+     * Verde Energético
+     * Naranja Vibrante
+     * Morado Moderno
+     * Gris Minimalista
+     * Rosa Femenino
+     * Rojo Intenso
+   - Vista previa de cada paleta
+   - Un click para aplicar
+
+   TAB 2: Tipografía
+
+   Fuente Principal (Headings):
+   - Selector de fuentes:
+     * Google Fonts populares:
+       - Inter, Roboto, Poppins, Montserrat, Open Sans
+       - Playfair Display, Lora (serif)
+       - Y más...
+     * Vista previa en tiempo real
+     * Búsqueda de fuentes
+   - Peso de fuente (300, 400, 500, 600, 700, 800)
+   - Tamaño base (px slider: 14-20px)
+
+   Fuente Secundaria (Body):
+   - Selector de fuentes
+   - Peso y tamaño
+
+   Escala Tipográfica:
+   - Preview de h1, h2, h3, h4, h5, h6, p, small
+   - Ajuste de line-height (slider)
+   - Ajuste de letter-spacing
+
+   Pares de Fuentes Sugeridos:
+   - Cards con combinaciones populares:
+     * Inter + Inter
+     * Playfair Display + Lato
+     * Montserrat + Open Sans
+     * Poppins + Roboto
+   - Un click para aplicar
+
+   TAB 3: Logo y Marca
+
+   Logo Principal:
+   - Uploader de logo (drag & drop)
+   - Formatos: PNG, SVG, JPG
+   - Tamaño recomendado: 200x60px
+   - Vista previa del logo
+   - Opciones:
+     * Logo para fondo claro
+     * Logo para fondo oscuro
+     * Solo isotipo (versión reducida)
+
+   Favicon:
+   - Uploader de favicon
+   - Formato: ICO, PNG
+   - Tamaño: 32x32px o 64x64px
+   - Vista previa
+
+   Marca de Agua:
+   - Toggle para activar
+   - Uploader de imagen
+   - Opacidad (slider: 0-100%)
+   - Posición (esquinas)
+
+   App Icon (para PWA):
+   - Uploader de icono de app
+   - Tamaños: 192x192, 512x512
+   - Vista previa en móvil
+
+   TAB 4: Botones y Componentes
+
+   Estilo de Botones:
+   - Border radius (slider: 0-50px)
+     * 0px = Cuadrado
+     * 4-8px = Levemente redondeado
+     * 12-16px = Redondeado
+     * 50px = Pills
+   - Padding (Small, Medium, Large)
+   - Sombra (None, Small, Medium, Large)
+   - Preview de botones:
+     * Primary button
+     * Secondary button
+     * Outline button
+     * Ghost button
+     * Disabled button
+
+   Estilo de Cards:
+   - Border radius (slider)
+   - Sombra (niveles)
+   - Borde (toggle y color)
+   - Background (color o gradiente)
+
+   Estilo de Inputs:
+   - Border radius
+   - Border style (solid, none, bottom-only)
+   - Focus color
+   - Preview de inputs
+
+   TAB 5: Layout y Espaciado
+
+   Contenedor Máximo:
+   - Ancho máximo de contenido (slider: 1200-1600px)
+   - Padding lateral (16-32px)
+
+   Espaciado Global:
+   - Escala de espaciado (slider: 0.8x - 1.5x)
+   - Afecta margins y paddings
+
+   Sidebar:
+   - Ancho del sidebar (240-300px)
+   - Modo (Siempre visible, Colapsable, Overlay)
+
+   Header:
+   - Altura del header (60-80px)
+   - Sticky (toggle)
+   - Sombra (toggle)
+
+   TAB 6: Efectos y Animaciones
+
+   Transiciones:
+   - Velocidad de transición (Fast, Normal, Slow)
+   - Tipo de easing (Linear, Ease, Bounce, etc.)
+
+   Hover Effects:
+   - Elevación en hover (None, Subtle, Prominent)
+   - Color change en hover (toggle)
+
+   Loading States:
+   - Estilo de spinner (Circle, Dots, Bars)
+   - Color del loader
+
+   Animaciones de Entrada:
+   - Fade in (toggle)
+   - Slide in (toggle)
+   - Velocidad
+
+4. PREVIEW EN TIEMPO REAL:
+   - Panel derecho con preview actualizado en vivo
+   - Muestra:
+     * Header con logo
+     * Sidebar con navegación
+     * Cards de contenido
+     * Botones en diferentes estados
+     * Forms con inputs
+     * Tablas
+     * Modales (toggle para ver)
+   - Toggle entre vistas:
+     * Desktop
+     * Tablet
+     * Mobile
+   - Toggle Dark Mode preview
+
+5. PLANTILLAS PREDEFINIDAS:
+   - Sección "Temas Prediseñados"
+   - Cards de plantillas:
+     * Tema Profesional (Azul corporativo)
+     * Tema Energético (Verde vibrante)
+     * Tema Oscuro (Dark mode)
+     * Tema Minimalista (Gris limpio)
+     * Tema Femenino (Rosa suave)
+     * Tema Deportivo (Naranja intenso)
+   - Para cada tema:
+     * Miniatura del tema
+     * Nombre y descripción
+     * Botón "Aplicar Tema"
+   - Un click aplica todos los estilos
+
+6. EXPORTAR/IMPORTAR TEMA:
+   - Botón "Exportar Tema"
+   - Descarga JSON con toda la configuración
+   - Botón "Importar Tema"
+   - Upload de JSON para cargar configuración
+   - Útil para backups o compartir entre equipos
+
+7. CÓDIGO CSS PERSONALIZADO (Avanzado):
+   - Tab "CSS Personalizado"
+   - Editor de código (Monaco o similar)
+   - Syntax highlighting
+   - Inyectar CSS custom
+   - Preview en tiempo real
+   - Advertencia: "Para usuarios avanzados"
+
+8. HISTORIAL DE CAMBIOS:
+   - Lista de versiones guardadas:
+     * Timestamp
+     * Descripción del cambio
+     * Usuario que lo hizo
+     * Botón "Restaurar"
+   - Comparar versiones (side by side)
+
+9. MODO OSCURO (Dark Mode):
+   - Toggle "Habilitar Modo Oscuro"
+   - Configuración de colores específicos para dark mode:
+     * Background oscuro
+     * Superficie oscura
+     * Texto en dark mode
+   - Preview de dark mode
+   - Alternar entre light/dark en preview
+
+10. PUBLICAR CAMBIOS:
+    - Botón principal "Publicar Cambios"
+    - Modal de confirmación:
+      * "¿Estás seguro? Los cambios afectarán a todos los usuarios"
+      * Resumen de cambios realizados
+      * Botón "Sí, Publicar"
+      * Botón "Cancelar"
+    - Animación de éxito al publicar
+    - Notificación: "Cambios publicados correctamente"
+
+11. GENERADOR DE PALETA IA:
+    - Botón "Generar Paleta con IA"
+    - Input: "Describe tu marca" (ej: "moderno, enérgico, fitness")
+    - IA genera paleta de colores sugerida
+    - Botón "Aplicar" o "Regenerar"
+
+12. ACCESIBILIDAD:
+    - Verificador de contraste:
+      * Al seleccionar colores, mostrar ratio de contraste
+      * Advertencia si no cumple WCAG AA
+      * Sugerencia de color alternativo
+    - Nivel de contraste (AAA, AA)
+    - Preview de cómo se ve para daltonismo (simulador)
+
+13. GUARDAR COMO BORRADOR:
+    - Auto-guardado cada 30 seg
+    - Indicador "Guardado" o "Guardando..."
+    - No afecta a usuarios hasta publicar
+
+14. RESET A DEFAULT:
+    - Botón "Restablecer a Estilo Original"
+    - Modal de confirmación
+    - Vuelve a estilos por defecto de la plataforma
+
+15. DATOS MOCKEADOS:
+    - Configuración actual simulada
+    - Historial de 3-5 cambios anteriores
+    - Plantillas predefinidas con estilos completos
+    - Logo de ejemplo
+
+16. DISEÑO:
+    - Editor intuitivo tipo Webflow/Figma
+    - Color pickers visuales
+    - Sliders con valores en tiempo real
+    - Preview sincronizado instantáneamente
+    - Tabs organizados
+    - Iconos de Lucide React
+    - Animaciones con framer-motion
+    - Tooltips explicativos
+    - Responsive completo
+    - Loading states
+
+IMPORTANTE:
+- NO crear nuevos archivos
+- SOLO editar PersonalizacionEstilosPage.tsx
+- Preview en tiempo real funcional
+- Color pickers interactivos
+- Aplicar estilos dinámicamente en preview
+- TypeScript correcto
+- Código limpio y modular
+
+Objetivo: Editor visual completo de marca y estilos con preview en tiempo real, plantillas predefinidas, accesibilidad y herramientas profesionales para personalizar completamente la apariencia de la plataforma.
+
+---
+
+Transforma completamente la página de Personalización de App Cliente (src/features/plansolomax/branding/branding/personalizacion-app-cliente/PersonalizacionAppClientePage.tsx) en un configurador de la app móvil del cliente.
+
+IMPORTANTE: Herramienta para personalizar la experiencia de la app móvil que usan los clientes finales.
+
+Requisitos de diseño:
+
+1. HEADER MOBILE-FOCUSED:
+   - Título "Personalización de App Cliente" con gradiente
+   - Subtítulo: "Personaliza la experiencia móvil de tus clientes"
+   - Icono Smartphone con animación
+   - Botones: "Guardar Cambios", "Vista Previa", "Publicar App"
+
+2. LAYOUT CON MOCKUP:
+   - Columna izquierda (40%): Editor de configuración
+   - Columna derecha (60%): Mockup de teléfono en 3D con preview
+
+3. TABS DE CONFIGURACIÓN:
+
+   TAB 1: Información de la App
+
+   - Nombre de la App:
+     * Input de texto
+     * Máximo 30 caracteres
+     * Preview en tiempo real en mockup
+
+   - Descripción Corta:
+     * Textarea (160 caracteres)
+     * Para stores (App Store, Google Play)
+
+   - Descripción Larga:
+     * Textarea (4000 caracteres)
+     * Para stores
+
+   - Categoría:
+     * Dropdown: Health & Fitness, Lifestyle, Sports
+
+   - Idiomas Soportados:
+     * Multi-select: Español, Inglés, Francés, etc.
+
+   - Versión Actual:
+     * Display: v1.2.3 (read-only)
+
+   TAB 2: Icono de la App (App Icon)
+
+   - Uploader de Icono:
+     * Drag & drop
+     * Formato: PNG (sin transparencia para iOS)
+     * Tamaño recomendado: 1024x1024px
+     * Vista previa del icono
+
+   - Generador Automático:
+     * Upload una imagen grande
+     * Genera todos los tamaños necesarios:
+       - iOS: 1024x1024, 180x180, 120x120, etc.
+       - Android: 512x512, 192x192, 144x144, etc.
+     * Download como ZIP
+
+   - Plantillas de Iconos:
+     * Galería de templates
+     * Customizar con colores de marca
+     * Añadir texto/iniciales
+
+   - Preview en Contexto:
+     * Simular cómo se ve en home screen iOS
+     * Simular en home screen Android
+     * Con diferentes fondos de pantalla
+
+   TAB 3: Splash Screen (Pantalla de Carga)
+
+   - Diseño del Splash:
+     * Opción 1: Logo centrado + background color
+       - Upload logo
+       - Selector de color de fondo
+     * Opción 2: Imagen full-screen
+       - Upload imagen (1242x2688px)
+     * Opción 3: Logo + slogan
+       - Logo + texto personalizado
+
+   - Duración del Splash:
+     * Slider: 1-5 segundos
+
+   - Animación:
+     * Dropdown: Fade in, Slide up, Zoom, Ninguna
+
+   - Preview Animado:
+     * Botón "Ver Animación"
+     * Modal con splash animado
+
+   TAB 4: Colores y Tema
+
+   - Tema de la App:
+     * Heredar de plataforma web (toggle)
+     * O configurar independiente
+
+   - Color Primario:
+     * Color picker
+     * Usado en headers, botones, accents
+
+   - Color de Fondo:
+     * Color picker
+
+   - Color de Tarjetas:
+     * Color picker
+
+   - Estilo de Navegación:
+     * Bottom Tab Bar (default)
+     * Side Drawer
+     * Ambos
+
+   - Modo Oscuro:
+     * Toggle para soportar dark mode
+     * Configurar colores para dark mode
+     * Preview de dark mode en mockup
+
+   TAB 5: Navegación y Secciones
+
+   - Configurar Bottom Tabs:
+     * Lista de tabs ordenables (drag & drop):
+       - Inicio (Home)
+       - Entrenamientos (Workouts)
+       - Nutrición (Nutrition)
+       - Progreso (Progress)
+       - Perfil (Profile)
+     * Activar/desactivar tabs
+     * Cambiar iconos de tabs
+     * Cambiar labels
+
+   - Pantalla de Inicio (Home):
+     * Ordenar widgets (drag & drop):
+       - Próximo entrenamiento
+       - Progreso semanal
+       - Mensajes del entrenador
+       - Estadísticas rápidas
+       - Logros recientes
+     * Activar/desactivar widgets
+
+   - Sidebar Menu:
+     * Items del menú (ordenables):
+       - Mi Plan
+       - Configuración
+       - Soporte
+       - Cerrar Sesión
+     * Añadir items custom
+
+   TAB 6: Notificaciones Push
+
+   - Icono de Notificaciones:
+     * Upload icono pequeño (192x192)
+     * Color de acento para notificaciones
+
+   - Tipos de Notificaciones:
+     * Checkboxes para activar/desactivar:
+       - Recordatorio de entrenamiento
+       - Mensajes del entrenador
+       - Logros desbloqueados
+       - Recordatorio de nutrición
+       - Actualizaciones del plan
+
+   - Horario de Notificaciones:
+     * No enviar entre X y Y hora
+     * Time pickers
+
+   - Personalización de Mensajes:
+     * Templates de notificaciones editables
+     * Variables dinámicas: {nombre}, {entrenamiento}, etc.
+
+   - Test de Notificación:
+     * Botón "Enviar Notificación de Prueba"
+     * Input de email/teléfono
+
+   TAB 7: Onboarding de Nuevos Usuarios
+
+   - Pantallas de Bienvenida:
+     * Número de pantallas (slider: 0-5)
+     * Para cada pantalla:
+       - Upload imagen/ilustración
+       - Título
+       - Descripción
+       - Orden (drag & drop)
+     * Skip button (toggle)
+
+   - Tutorial Interactivo:
+     * Toggle para activar
+     * Tooltips en primera vez
+
+   - Preview del Onboarding:
+     * Botón "Ver Onboarding"
+     * Modal con carrusel de pantallas
+
+   TAB 8: Características y Módulos
+
+   - Activar/Desactivar Módulos:
+     * Lista de features con toggles:
+       - ✓ Entrenamientos
+       - ✓ Nutrición
+       - ✓ Progreso y Métricas
+       - ✓ Chat con Entrenador
+       - ✓ Calendario
+       - ✓ Comunidad/Social
+       - ✓ Integración Wearables
+       - ✓ Video Calls
+       - ✓ Pagos in-app
+
+   - Funcionalidades Avanzadas:
+     * Modo Offline (toggle)
+     * Sincronización automática (toggle)
+     * Biometría (Face ID / Touch ID) (toggle)
+
+4. MOCKUP INTERACTIVO (Panel derecho):
+   - Dispositivo 3D rotable
+   - Selector de dispositivo:
+     * iPhone 15 Pro
+     * iPhone SE
+     * Samsung Galaxy S23
+     * Pixel 7
+   - Preview en tiempo real de:
+     * App icon en home screen
+     * Splash screen animado
+     * Navegación bottom tabs
+     * Pantalla de inicio personalizada
+     * Colores aplicados
+   - Toggle Dark Mode en preview
+   - Botón "Ver Pantalla Completa"
+
+5. SIMULADOR DE EXPERIENCIA:
+   - Botón "Abrir Simulador"
+   - Modal fullscreen con simulador interactivo:
+     * Navegar por la app completa
+     * Probar interacciones
+     * Ver transiciones
+     * Probar dark mode
+   - Botón "Cerrar Simulador"
+
+6. PLANTILLAS DE APP:
+   - Sección "Plantillas Prediseñadas"
+   - Cards de plantillas:
+     * Plantilla Minimalista
+     * Plantilla Energética
+     * Plantilla Profesional
+     * Plantilla Dark
+   - Para cada plantilla:
+     * Screenshot del diseño
+     * Descripción
+     * Botón "Aplicar Plantilla"
+   - Aplica todos los ajustes de una vez
+
+7. GENERACIÓN Y PUBLICACIÓN:
+   - Botón principal "Publicar App"
+   - Modal de publicación:
+     * Opción 1: Actualizar app existente
+       - Version bump (1.2.3 → 1.2.4)
+       - Changelog (textarea)
+       - Botón "Publicar Actualización"
+     * Opción 2: Nueva app (primera vez)
+       - Checklist de requisitos:
+         ✓ Icono configurado
+         ✓ Splash screen configurado
+         ✓ Colores definidos
+         ✓ Nombre de app definido
+       - Botón "Generar App"
+
+   - Proceso de Build (simulado):
+     * "Generando build de iOS..."
+     * "Generando build de Android..."
+     * Progress bar
+     * "¡Listo! Tu app está lista para publicar"
+
+   - Links de Publicación:
+     * Botón "Subir a App Store"
+     * Botón "Subir a Google Play"
+     * Guías de publicación (PDF)
+
+8. ANALYTICS DE LA APP (Mini dashboard):
+   - Estadísticas de uso:
+     * Descargas totales
+     * Usuarios activos
+     * Rating promedio (estrellas)
+     * Versión más usada
+   - Gráfico de descargas últimos 30 días
+   - Reviews recientes (simuladas)
+
+9. CONFIGURACIÓN TÉCNICA (Avanzado):
+   - Bundle ID (iOS): com.tuempresa.app
+   - Package Name (Android): com.tuempresa.app
+   - API Keys (colapsable):
+     * Google Maps API
+     * Firebase Config
+     * Analytics
+   - Deep Links:
+     * URL Scheme: tuapp://
+     * Universal Links
+
+10. PREVIEW EN DISPOSITIVO REAL:
+    - QR Code Generator:
+      * "Escanea para ver preview en tu móvil"
+      * Genera QR
+      * Abre web view con estilos aplicados
+    - Link directo para compartir
+
+11. VERSIONES Y ROLLBACK:
+    - Historial de versiones publicadas:
+      * v1.2.3 - 15/01/2024 (Actual)
+      * v1.2.2 - 10/01/2024
+      * v1.2.1 - 05/01/2024
+    - Botón "Rollback" a versión anterior
+    - Changelog de cada versión
+
+12. COMPLIANCE Y LEGAL:
+    - Términos y Condiciones (link para editar)
+    - Política de Privacidad (link para editar)
+    - Permisos de la App:
+      * Lista de permisos necesarios:
+        - Cámara (para fotos de progreso)
+        - Galería (para subir fotos)
+        - Notificaciones
+        - HealthKit / Google Fit
+      * Explicación de cada permiso
+
+13. SOPORTE Y RECURSOS:
+    - Documentación técnica
+    - Video tutoriales
+    - Guía de publicación en stores
+    - Contactar soporte
+
+14. DATOS MOCKEADOS:
+    - Configuración de app actual
+    - Screenshots de ejemplo
+    - Iconos de placeholder
+    - Splash screen de ejemplo
+    - Analytics simulados (500 descargas, 4.5 estrellas)
+    - Reviews simuladas positivas
+
+15. DISEÑO:
+    - Mockup 3D de teléfono realista
+    - Preview en tiempo real fluido
+    - Color pickers visuales
+    - Drag & drop para ordenar
+    - Iconos de Lucide React
+    - Animaciones con framer-motion
+    - Simulador interactivo
+    - Responsive completo
+    - Loading states durante "builds"
+
+IMPORTANTE:
+- NO crear nuevos archivos
+- SOLO editar PersonalizacionAppClientePage.tsx
+- Mockup 3D interactivo (usar librerías como react-device-frameset)
+- Preview en tiempo real
+- Simulación de build y publicación
+- TypeScript correcto
+- Código limpio
+
+Objetivo: Configurador completo de app móvil personalizada con mockup 3D interactivo, preview en tiempo real, simulador de experiencia y herramientas para generar y publicar la app en stores.
+
+---
+
+Transforma completamente la página de Sugerencias de Productos (src/features/plansolomax/upsells/upsells/sugerencias-productos/SugerenciasProductosPage.tsx) en un gestor inteligente de upsells y cross-sells.
+
+IMPORTANTE: Herramienta para crear y gestionar ofertas de upsell/cross-sell automatizadas basadas en comportamiento del cliente.
+
+Requisitos de diseño:
+
+1. HEADER CON ENFOQUE EN VENTAS:
+   - Título "Sugerencias Inteligentes de Productos" con gradiente verde-dorado
+   - Subtítulo: "Aumenta tus ingresos con ofertas personalizadas"
+   - Icono TrendingUp con animación
+   - Botones: "Crear Nueva Oferta", "Ver Estadísticas", "Configuración"
+
+2. KPIs DESTACADOS (5 cards):
+   - Ingresos por Upsells Este Mes (€)
+     * Comparativa con mes anterior
+     * Mini gráfico de tendencia
+   - Tasa de Conversión Global (%)
+     * % de ofertas aceptadas
+     * Color coding (verde si >15%)
+   - AOV Incrementado (Average Order Value)
+     * Valor promedio aumentado por upsell
+   - Ofertas Activas (#)
+     * Número de ofertas en ejecución
+   - Total Generado (€)
+     * Ingresos acumulados históricos
+
+3. TABS PRINCIPALES:
+   - Ofertas Activas
+   - Borradores
+   - Finalizadas
+   - Plantillas
+
+4. LISTA DE OFERTAS (Vista de Cards):
+   - Cada oferta con card visual:
+     * Estado (badge: Activa/Borrador/Finalizada/Pausada)
+     * Nombre de la oferta
+     * Tipo de oferta (badge con color):
+       - Upsell (vender producto superior)
+       - Cross-sell (producto complementario)
+       - Downsell (producto alternativo más económico)
+       - Bundle (paquete de productos)
+     * Trigger (cuándo se muestra):
+       - Al momento de compra
+       - Post-compra (email)
+       - En perfil de cliente
+       - Pop-up programado
+     * Producto Principal → Producto Sugerido
+     * Descuento aplicado (si tiene)
+     * Estadísticas:
+       - Vistas: 1,234
+       - Conversiones: 187 (15.2%)
+       - Ingresos generados: €2,340
+     * Gráfico mini de rendimiento
+     * Toggle Activar/Pausar
+     * Botones: Editar, Duplicar, Ver Analytics, Eliminar
+     * Hover effect
+
+5. MODAL DE CREAR/EDITAR OFERTA:
+
+   PASO 1: Información Básica
+   - Nombre de la oferta (internal)
+   - Tipo de oferta:
+     * Radio buttons: Upsell, Cross-sell, Downsell, Bundle
+   - Descripción (opcional)
+
+   PASO 2: Configurar Productos
+
+   Si Upsell:
+   - Producto Base (dropdown):
+     * Membresía Básica
+   - Producto a Sugerir (dropdown):
+     * Membresía Premium (+€20/mes)
+   - Mensaje de oferta:
+     * "¡Mejora a Premium y obtén X beneficios!"
+   - Beneficios adicionales (lista editable):
+     * Sesiones ilimitadas
+     * Nutrición personalizada
+     * Acceso a comunidad VIP
+
+   Si Cross-sell:
+   - Producto Base:
+     * Membresía Básica
+   - Producto Complementario:
+     * Plan de Nutrición (+€15/mes)
+   - Mensaje:
+     * "Añade nutrición personalizada a tu plan"
+
+   Si Bundle:
+   - Productos incluidos (multi-select):
+     * Membresía Premium
+     * Plan de Nutrición
+     * Sesiones 1-on-1
+   - Precio del bundle: €80/mes
+   - Ahorro vs comprar por separado: €15/mes (16%)
+   - Mensaje: "Pack Completo - Ahorra 16%"
+
+   PASO 3: Descuento y Pricing
+   - Tipo de descuento:
+     * Sin descuento
+     * Porcentaje (%)
+     * Cantidad fija (€)
+   - Valor del descuento:
+     * Slider o input
+   - Precio final mostrado
+   - Duración del descuento:
+     * Solo primer mes
+     * Primeros X meses
+     * Permanente
+   - Urgencia (opcional):
+     * "¡Oferta limitada! Solo hoy"
+     * Countdown timer (toggle)
+
+   PASO 4: Trigger y Segmentación
+
+   ¿Cuándo mostrar la oferta?
+   - Momento:
+     * En el checkout (antes de pagar)
+     * Post-compra inmediato (página de gracias)
+     * Email post-compra (X días después)
+     * En perfil de cliente (banner)
+     * Pop-up en dashboard (tras X sesiones)
+
+   ¿A quién mostrar?
+   - Segmentos (multi-select):
+     * Todos los clientes
+     * Solo nuevos clientes
+     * Clientes con membresía básica
+     * Clientes activos >3 meses
+     * Clientes con alta adherencia
+     * Clientes de alto valor (LTV >€500)
+     * Custom (reglas avanzadas)
+
+   Reglas Avanzadas (si custom):
+   - Constructor de reglas:
+     * Si [campo] [operador] [valor]
+     * Ej: Si "tipo_membresia" = "básica" Y "meses_activo" > 3
+     * Añadir múltiples condiciones con AND/OR
+
+   Límites:
+   - Mostrar máximo X veces por cliente
+   - Frecuencia: Una vez cada X días
+   - Fecha de inicio/fin de la campaña
+
+   PASO 5: Diseño de la Oferta
+
+   - Plantilla visual (selector):
+     * Card pequeña
+     * Card grande con imagen
+     * Banner horizontal
+     * Pop-up modal
+     * Inline en checkout
+
+   - Personalización:
+     * Título (input)
+     * Descripción (textarea)
+     * CTA Button Text (ej: "Mejorar Ahora", "Añadir al Plan")
+     * Imagen/Icono (uploader)
+     * Colores (heredar de marca o custom)
+
+   - Preview Visual:
+     * Vista previa en tiempo real
+     * Toggle desktop/mobile
+     * Simular cómo se verá
+
+   PASO 6: Revisión y Activación
+   - Resumen de la oferta:
+     * Tipo, productos, descuento
+     * Trigger y segmentación
+     * Preview visual
+   - Test A/B (toggle):
+     * Crear variante B con diferente mensaje/diseño
+     * Split de tráfico 50/50
+   - Guardar como borrador o Activar directamente
+
+6. PLANTILLAS DE OFERTAS:
+   - Sección "Plantillas Predefinidas"
+   - Cards con ofertas comunes:
+     * "Upgrade a Premium"
+     * "Añade Nutrición Personalizada"
+     * "Pack Completo: Entreno + Nutrición"
+     * "Sesiones 1-on-1 Adicionales"
+     * "Descuento por Renovación Anual"
+     * "Recompensa por Referido"
+   - Botón "Usar Plantilla"
+   - Pre-rellena el formulario
+
+7. ANALYTICS DE OFERTAS:
+   - Seleccionar oferta específica
+   - Dashboard de la oferta:
+     * Impresiones (vistas)
+     * Clicks en CTA
+     * Conversiones
+     * Tasa de conversión (%)
+     * Ingresos generados (€)
+     * Ingresos por conversión (€)
+   - Gráfico de rendimiento en el tiempo
+   - Funnel visual:
+     * Vistas → Clicks → Conversiones
+     * % en cada paso
+   - Mejores segmentos (qué segmento convierte mejor)
+   - Test A/B results (si aplica):
+     * Variante A vs Variante B
+     * Ganador destacado
+
+8. COMPARATIVA DE OFERTAS:
+   - Tabla comparativa:
+     * Oferta | Tipo | Conversión | Ingresos | ROI
+   - Ordenar por rendimiento
+   - Identificar top performers
+   - Identificar ofertas de bajo rendimiento para optimizar
+
+9. RECOMENDACIONES IA:
+   - Panel "Sugerencias Inteligentes"
+   - IA analiza comportamiento y sugiere:
+     * "15 clientes con Básica listos para Premium"
+     * "Oportunidad: Clientes activos sin nutrición (23)"
+     * "Crear bundle para segmento de alto valor"
+   - Botón "Crear Oferta" desde recomendación
+
+10. CONFIGURACIÓN DE UPSELLS GLOBALES:
+    - Modal de configuración:
+      * Habilitar upsells en checkout (toggle)
+      * Habilitar cross-sells en perfil (toggle)
+      * Frecuencia máxima por cliente (X veces/mes)
+      * Excluir clientes que ya rechazaron (toggle)
+      * Modo de prueba (no mostrar a clientes reales)
+
+11. EMAILS DE OFERTAS:
+    - Integración con email:
+      * Plantillas de email con oferta
+      * Variables dinámicas: {nombre}, {oferta}, {descuento}
+      * Preview del email
+      * Programar envío
+      * Tracking de apertura y clicks
+
+12. EJEMPLOS VISUALES EN EL CHECKOUT:
+    - Sección "Simular Experiencia"
+    - Mockup de checkout con oferta visible
+    - Usuario puede ver cómo lo verían los clientes
+
+13. REGLAS DE NEGOCIO:
+    - No mostrar upsells si cliente ya tiene el producto
+    - No mostrar mismo upsell dos veces en X días
+    - Priorizar ofertas (si múltiples aplican, mostrar la de mayor valor)
+
+14. DATOS MOCKEADOS:
+    - 8-12 ofertas existentes:
+      * "Upgrade a Premium" (activa, 18% conversión, €3,400 generados)
+      * "Añade Nutrición" (activa, 12% conversión, €1,800)
+      * "Bundle Completo" (activa, 22% conversión, €4,200)
+      * "Sesiones Extra" (pausada, 8% conversión)
+      * "Renovación Anual con Descuento" (borrador)
+      * Y más...
+    - Estadísticas realistas
+    - Gráficos con datos de 3 meses
+
+15. DISEÑO:
+    - Paleta verde-dorado (dinero, crecimiento)
+    - Cards de ofertas con estadísticas
+    - Badges coloridos por tipo y estado
+    - Iconos de Lucide React
+    - Gráficos con Recharts
+    - Animaciones con framer-motion
+    - Preview visual de ofertas
+    - Funnel visualization
+    - Responsive completo
+    - Loading states
+
+IMPORTANTE:
+- NO crear nuevos archivos
+- SOLO editar SugerenciasProductosPage.tsx
+- Constructor de ofertas intuitivo
+- Preview visual de cómo se ven las ofertas
+- Datos mockeados realistas
+- TypeScript correcto
+- Código limpio
+
+Objetivo: Gestor completo de upsells y cross-sells con creación intuitiva de ofertas, segmentación avanzada, analytics detallados y recomendaciones IA para maximizar ingresos adicionales.
+
+---
+
+Transforma completamente la página de Configuración de Upsells (src/features/plansolomax/upsells/upsells/configuracion-upsells/ConfiguracionUpsellsPage.tsx) en un motor de reglas avanzado para automatización de upsells.
+
+IMPORTANTE: Sistema avanzado de reglas y lógica condicional para automatizar ofertas de upsell basadas en comportamiento y datos del cliente.
+
+Requisitos de diseño:
+
+1. HEADER TÉCNICO:
+   - Título "Motor de Reglas de Upsells" con gradiente verde-azul
+   - Subtítulo: "Automatiza ofertas inteligentes basadas en comportamiento"
+   - Icono Settings con animación de engranaje
+   - Botones: "Nueva Regla", "Test de Reglas", "Ver Logs"
+
+2. ESTADÍSTICAS RÁPIDAS (4 cards):
+   - Total Reglas Activas (con icono Zap)
+   - Triggers Ejecutados Hoy (con icono Activity)
+   - Tasa de Éxito Promedio (% con icono Target)
+   - Ofertas Automatizadas Generadas (con icono TrendingUp)
+
+3. LISTA DE REGLAS (Tabla o Cards):
+   - Cada regla con:
+     * Estado (toggle activo/inactivo)
+     * Nombre de la regla
+     * Descripción corta
+     * Trigger (ícono + texto):
+       - "Cuando cliente cumple 3 meses"
+       - "Cuando adherencia >80%"
+       - "Cuando cliente completa 20 sesiones"
+       - etc.
+     * Condiciones aplicadas (#)
+     * Acción resultante (qué oferta se muestra)
+     * Estadísticas:
+       - Veces ejecutada
+       - Conversiones
+       - Tasa de éxito (%)
+     * Última ejecución
+     * Botones: Editar, Duplicar, Test, Eliminar
+     * Prioridad (drag & drop para reordenar)
+
+4. CONSTRUCTOR DE REGLAS (Modal o página):
+
+   PASO 1: Nombrar y Describir
+   - Nombre de la regla (input)
+   - Descripción (textarea)
+   - Prioridad (dropdown: Alta, Media, Baja)
+
+   PASO 2: Definir Trigger (¿Cuándo se evalúa?)
+
+   Triggers Basados en Eventos:
+   - Radio buttons:
+     * Cliente se registra
+     * Cliente hace una compra
+     * Cliente completa N sesiones
+     * Cliente alcanza X días activo
+     * Cliente cumple aniversario (meses)
+     * Cliente actualiza su perfil
+     * Cliente entra al dashboard
+     * Fecha específica alcanzada
+     * Pago próximo a vencer
+     * Programa de entrenamiento finalizado
+
+   Triggers Basados en Tiempo:
+   - Programado:
+     * Cada día a las X:00
+     * Cada semana (día de la semana)
+     * Cada mes (día del mes)
+     * Fechas específicas
+
+   PASO 3: Condiciones (¿A quién aplica?)
+
+   Constructor Visual de Condiciones:
+   - Interfaz tipo "If This Then That"
+   - Añadir condiciones con botón "+"
+   - Para cada condición:
+     * Campo (dropdown):
+       - Tipo de membresía
+       - Meses activo
+       - Adherencia (%)
+       - Sesiones completadas
+       - LTV actual (€)
+       - Productos contratados
+       - Última actividad (días)
+       - Edad del cliente
+       - Objetivo fitness
+       - Etiquetas del cliente
+       - Y más...
+
+     * Operador (dropdown según tipo de campo):
+       - Numéricos: =, ≠, >, <, ≥, ≤, entre
+       - Texto: es, no es, contiene, empieza con
+       - Lista: está en, no está en
+       - Booleano: es verdadero, es falso
+
+     * Valor (input dinámico según campo)
+
+   - Lógica AND/OR entre condiciones:
+     * Dropdown: "Y todas se cumplen" o "O cualquiera se cumple"
+
+   - Grupos de condiciones:
+     * Agrupar condiciones complejas
+     * Paréntesis lógicos: (A AND B) OR C
+
+   Ejemplo Visual:
+   ```
+   SI:
+     Tipo de membresía = "Básica"
+     Y
+     Meses activo > 2
+     Y
+     Adherencia > 75%
+   ENTONCES:
+     Mostrar oferta "Upgrade a Premium"
+   ```
+
+   PASO 4: Acción (¿Qué hacer?)
+
+   Acciones Disponibles:
+   - Mostrar oferta de upsell (dropdown de ofertas existentes)
+   - Enviar email con oferta
+   - Crear notificación en dashboard
+   - Asignar etiqueta al cliente
+   - Crear tarea para el entrenador
+   - Webhook a sistema externo
+   - Múltiples acciones (checkbox para combinar)
+
+   Configuración de la Acción:
+   - Si es "Mostrar oferta":
+     * Dónde: Checkout, Dashboard, Pop-up, Email
+     * Cuándo: Inmediato, Delay de X días/horas
+     * Frecuencia: Una vez, Repetir cada X días
+
+   - Personalización del mensaje:
+     * Variables dinámicas: {nombre}, {meses_activo}, {oferta}, etc.
+     * Editor de texto para mensaje
+     * Preview del mensaje con datos de ejemplo
+
+   PASO 5: Límites y Exclusiones
+
+   - Límite de ejecuciones:
+     * Por cliente: Máximo X veces
+     * Global: Máximo Y veces por día
+
+   - Cooldown:
+     * No ejecutar de nuevo hasta X días después
+
+   - Exclusiones:
+     * No aplicar si cliente ya tiene el producto
+     * No aplicar si ya rechazó oferta similar
+     * No aplicar si tiene etiqueta "VIP"
+     * Custom exclusions
+
+   PASO 6: Revisión y Activación
+   - Resumen visual de la regla:
+     * Trigger → Condiciones → Acción
+     * Flowchart visual
+   - Estimación de impacto:
+     * Clientes que cumplen condiciones: ~45
+     * Ejecuciones estimadas/mes: ~60
+   - Test de la regla (ver siguiente sección)
+   - Guardar como borrador o Activar
+
+5. TEST DE REGLAS:
+   - Dentro del constructor, botón "Probar Regla"
+   - Modal de test:
+     * Seleccionar cliente de prueba (dropdown)
+     * O simular cliente ficticio (inputs):
+       - Tipo membresía
+       - Meses activo
+       - Adherencia
+       - Sesiones completadas
+       - Etc.
+     * Botón "Ejecutar Test"
+     * Resultado:
+       - ✓ Regla se ejecutaría (verde)
+       - ✗ Regla NO se ejecutaría (rojo)
+       - Razón: "Cumple todas las condiciones" o "No cumple: adherencia < 75%"
+       - Preview de acción que se tomaría
+   - Log del test (paso a paso de evaluación)
+
+6. PLANTILLAS DE REGLAS COMUNES:
+   - Sección "Plantillas de Reglas"
+   - Cards predefinidos:
+     * "Upgrade tras 3 meses activo"
+     * "Cross-sell nutrición a clientes comprometidos"
+     * "Oferta de aniversario"
+     * "Reactivar clientes inactivos"
+     * "Bundle para clientes de alto valor"
+     * "Descuento por renovación anual"
+   - Botón "Usar Plantilla"
+   - Pre-carga regla completa editable
+
+7. FLUJO VISUAL DE VENTAS:
+   - Vista alternativa: Flowchart
+   - Visualizar todas las reglas como flujo:
+     * Nodos de trigger
+     * Nodos de condiciones
+     * Nodos de acciones
+     * Conexiones entre nodos
+   - Drag & drop para reorganizar
+   - Zoom in/out
+   - Similar al constructor de automatizaciones
+
+8. PRIORIDAD Y ORDEN:
+   - Si múltiples reglas aplican al mismo cliente:
+     * Lista ordenable (drag & drop)
+     * Número de prioridad (1, 2, 3...)
+     * La primera que aplique se ejecuta (o todas, configurable)
+   - Configuración global:
+     * Ejecutar solo primera regla (radio)
+     * Ejecutar todas las reglas aplicables (radio)
+
+9. LOGS Y DEBUGGING:
+   - Tab "Logs de Ejecución"
+   - Tabla de logs:
+     * Timestamp
+     * Regla ejecutada
+     * Cliente afectado
+     * Trigger que la activó
+     * Condiciones evaluadas (✓ o ✗)
+     * Acción tomada
+     * Resultado (éxito/fallo)
+     * Botón "Ver Detalles"
+   - Filtros: Por regla, por cliente, por fecha, por resultado
+   - Búsqueda
+
+10. ANÁLISIS POR REGLA:
+    - Seleccionar regla específica
+    - Dashboard de la regla:
+      * Total ejecuciones
+      * Conversiones generadas
+      * Tasa de conversión (%)
+      * Ingresos atribuidos (€)
+      * Gráfico de ejecuciones en el tiempo
+      * Top clientes impactados
+    - Optimizaciones sugeridas (IA):
+      * "Considera reducir adherencia mínima a 70%"
+      * "Esta regla tiene baja conversión, revisa el mensaje"
+
+11. CONFLICTOS Y VALIDACIONES:
+    - Al guardar regla, sistema valida:
+      * No hay conflictos con otras reglas
+      * Condiciones son lógicamente válidas
+      * Acción es aplicable
+    - Advertencias:
+      * "Esta regla nunca se ejecutará porque condiciones son imposibles"
+      * "Conflicto con regla #5 (similar trigger y condiciones)"
+      * Sugerencias de corrección
+
+12. VERSIONADO DE REGLAS:
+    - Historial de cambios en cada regla
+    - Ver versiones anteriores
+    - Restaurar versión
+    - Comparar versiones (diff)
+
+13. IMPORTAR/EXPORTAR REGLAS:
+    - Exportar reglas como JSON
+    - Importar reglas desde JSON
+    - Útil para copiar entre entornos
+    - Compartir con equipo
+
+14. CONFIGURACIÓN GLOBAL DEL MOTOR:
+    - Modal de configuración:
+      * Habilitar motor de reglas (toggle master)
+      * Modo de evaluación:
+        - Tiempo real (al momento del evento)
+        - Batch (cada X horas)
+      * Logging level (Info, Debug, Error)
+      * Notificaciones de nuevas oportunidades
+      * Límite global de ofertas por cliente/día
+
+15. SIMULADOR DE ESCENARIOS:
+    - Herramienta "What-If"
+    - Simular cambio en regla:
+      * "¿Qué pasaría si bajo adherencia mínima a 70%?"
+      * Sistema estima impacto:
+        - +X clientes cumplirían
+        - +Y ejecuciones/mes
+        - +€Z ingresos estimados
+    - Comparar escenarios lado a lado
+
+16. MARKETPLACE DE REGLAS (Simulado):
+    - Sección "Reglas de la Comunidad"
+    - Reglas populares compartidas por otros entrenadores
+    - Rating y reviews
+    - Instalar con un click
+    - Editar después de instalar
+
+17. DATOS MOCKEADOS:
+    - 10-15 reglas existentes:
+      * "Upgrade Premium tras 3 meses" (activa, 45 ejecuciones, 15% conversión)
+      * "Cross-sell Nutrición" (activa, 32 ejecuciones, 22% conversión)
+      * "Bundle Alto Valor" (activa, 12 ejecuciones, 40% conversión)
+      * "Aniversario 6 meses" (activa, 8 ejecuciones, 25% conversión)
+      * "Reactivar Inactivos" (pausada, 18 ejecuciones, 10% conversión)
+      * Y más...
+    - Logs de ejecuciones realistas
+    - Clientes de prueba con datos variados
+
+18. DISEÑO:
+    - Paleta verde-azul tech
+    - Constructor visual tipo flowchart
+    - Condiciones tipo "query builder"
+    - Iconos de Lucide React
+    - Animaciones con framer-motion
+    - Gráficos con Recharts
+    - Badges de estado coloridos
+    - Drag & drop para prioridades
+    - Syntax highlighting para reglas complejas
+    - Responsive completo
+    - Loading states
+
+IMPORTANTE:
+- NO crear nuevos archivos
+- SOLO editar ConfiguracionUpsellsPage.tsx
+- Constructor de reglas intuitivo tipo "if-then"
+- Validación de lógica de condiciones
+- Test de reglas funcional
+- Datos mockeados extensos
+- TypeScript correcto
+- Código limpio y modular
+
+Objetivo: Motor avanzado de reglas para automatizar upsells con constructor visual intuitivo, lógica condicional flexible, testing de reglas, logs detallados y optimización basada en datos.
+
+---
+
+Transforma completamente la página de Reporte de Conversiones (src/features/plansolomax/upsells/upsells/conversion-report/ConversionReportPage.tsx) en un dashboard completo de análisis de conversiones de upsells.
+
+IMPORTANTE: Dashboard analítico para medir el rendimiento de todas las estrategias de upsell y optimizar conversiones.
+
+Requisitos de diseño:
+
+1. HEADER ANALÍTICO:
+   - Título "Análisis de Conversiones de Upsells" con gradiente verde-dorado
+   - Subtítulo: "Mide y optimiza el rendimiento de tus ofertas"
+   - Icono BarChart3 con animación
+   - Selector de período (Este mes, Últimos 3/6/12 meses, Personalizado)
+   - Botones: "Exportar Reporte", "Configurar Objetivos", "Enviar Reporte"
+
+2. KPIs PRINCIPALES (6 cards grandes):
+   - Tasa de Conversión Global (%)
+     * Valor destacado grande
+     * Comparativa con período anterior (% y flecha)
+     * Mini gráfico de tendencia
+     * Color: Verde si mejora, rojo si empeora
+
+   - Ingresos por Upsells (€)
+     * Total del período
+     * Comparativa mes anterior
+     * % del total de ingresos
+
+   - AOV con Upsell (€)
+     * Average Order Value con upsells
+     * vs AOV sin upsells
+     * Incremento (%)
+
+   - Ofertas Presentadas (#)
+     * Total de veces mostradas ofertas
+     * Tendencia
+
+   - Conversiones Totales (#)
+     * Número de upsells aceptados
+     * Comparativa
+
+   - ROI de Upsells
+     * Return on Investment
+     * Calculado vs esfuerzo de implementación
+
+3. GRÁFICO PRINCIPAL DE CONVERSIONES:
+   - Line chart de últimos 6-12 meses
+   - Líneas:
+     * Tasa de conversión (%)
+     * Ingresos por upsells (€)
+     * Número de ofertas presentadas
+   - Eje Y dual
+   - Leyenda interactiva
+   - Tooltips detallados
+   - Anotaciones de eventos (lanzamiento de nuevas ofertas)
+   - Animación de entrada
+
+4. FUNNEL DE CONVERSIÓN:
+   - Funnel visual (embudo):
+     * Clientes elegibles (100%)
+     * Oferta presentada (85%)
+     * Oferta vista (70%)
+     * Click en CTA (35%)
+     * Conversión (18%)
+   - Valores absolutos y %
+   - Identificar el paso con mayor drop-off
+   - Colores por etapa
+   - Sugerencias de optimización en cada paso
+
+5. ANÁLISIS POR TIPO DE OFERTA:
+   - Tabla comparativa:
+     * Tipo de Oferta | Vistas | Conversiones | Tasa (%) | Ingresos (€) | AOV
+   - Tipos:
+     * Upsell (producto superior)
+     * Cross-sell (producto complementario)
+     * Downsell (alternativa económica)
+     * Bundle (paquete)
+   - Sorting por cualquier columna
+   - Gráfico de barras de conversión por tipo
+
+6. TOP OFERTAS POR RENDIMIENTO:
+   - Ranking de ofertas individuales
+   - Top 10 por:
+
+     A) Ingresos Generados:
+     - Tabla:
+       * Posición (#1, #2, etc.)
+       * Nombre de oferta
+       * Ingresos totales (€)
+       * Conversiones (#)
+       * Badge "Top Performer"
+
+     B) Tasa de Conversión:
+     - Tabla similar
+     - Ofertas con mejor %
+     - Badge "Alta Conversión"
+
+     C) Número de Conversiones:
+     - Tabla similar
+     - Más vendidas
+     - Badge "Best Seller"
+
+7. PEORES OFERTAS (Para Optimizar):
+   - Sección "Oportunidades de Mejora"
+   - Lista de ofertas con bajo rendimiento:
+     * Nombre
+     * Tasa de conversión (baja)
+     * Razón probable (IA-sugerida):
+       - "Precio muy alto"
+       - "Mensaje poco claro"
+       - "Mal timing"
+       - "Segmentación incorrecta"
+     * Sugerencias de mejora
+     * Botón "Optimizar Oferta"
+
+8. ANÁLISIS POR SEGMENTO DE CLIENTES:
+   - Tabs para ver conversión por:
+     * Tipo de Membresía (Básica, Premium, Elite)
+     * Canal de Adquisición (Orgánico, Publicidad, Referido)
+     * Nivel de Actividad (Alta, Media, Baja adherencia)
+     * LTV (Alto valor, Medio, Bajo)
+     * Tiempo como Cliente (Nuevos, <3 meses, 3-6 meses, >6 meses)
+
+   - Para cada segmento:
+     * Tasa de conversión
+     * Ingresos generados
+     * Número de clientes
+     * Gráfico comparativo
+     * Insights: "Segmento Premium convierte 2x mejor"
+
+9. ANÁLISIS POR PUNTO DE CONTACTO:
+   - Dónde se muestran las ofertas:
+     * En Checkout
+     * Post-compra (página de gracias)
+     * Email post-compra
+     * Dashboard del cliente (banner)
+     * Pop-up en app
+
+   - Para cada canal:
+     * Ofertas presentadas
+     * Tasa de conversión
+     * Ingresos
+     * Gráfico de barras comparativo
+
+   - Identificar canal más efectivo
+
+10. ANÁLISIS TEMPORAL:
+    - Conversión por día de la semana:
+      * Bar chart: L, M, X, J, V, S, D
+      * Identificar mejores días
+
+    - Conversión por hora del día:
+      * Line chart: 00-23h
+      * Mejores horas para mostrar ofertas
+
+    - Estacionalidad:
+      * Comparar meses del año
+      * Identificar patrones
+
+11. TEST A/B RESULTS:
+    - Sección "Resultados de Tests A/B"
+    - Lista de tests realizados:
+      * Nombre del test
+      * Variante A vs Variante B
+      * Métrica comparada (conversión, ingresos, etc.)
+      * Ganador destacado (badge verde)
+      * Diferencia (% de mejora)
+      * Significancia estadística (p-value)
+      * Gráfico comparativo
+    - Botón "Aplicar Ganador a Producción"
+
+12. COHORTES DE CONVERSIÓN:
+    - Tabla de cohortes por mes de registro del cliente
+    - Ver conversión de upsells por cohorte
+    - Heat map visual
+    - Identificar cohortes que mejor convierten
+    - Insights: "Clientes de Q1 2024 convierten 25% mejor"
+
+13. DISTRIBUCIÓN DE CONVERSIONES (PIE/DONUT CHARTS):
+    - Por Producto:
+      * Membresía Premium (40%)
+      * Plan Nutrición (25%)
+      * Sesiones 1-on-1 (20%)
+      * Bundle Completo (15%)
+
+    - Por Descuento Aplicado:
+      * Sin descuento (30%)
+      * 10% descuento (25%)
+      * 20% descuento (35%)
+      * 30%+ descuento (10%)
+
+    - Análisis: ¿Vale la pena el descuento?
+
+14. VALOR INCREMENTAL:
+    - Card destacada "Valor Generado por Upsells"
+    - Comparativa:
+      * Ingresos con upsells: €45,000
+      * Ingresos sin upsells (estimado): €32,000
+      * Valor incremental: +€13,000 (+40.6%)
+    - Gráfico de áreas apiladas mostrando incremento
+
+15. PREDICCIÓN Y PROYECCIÓN:
+    - Gráfico de proyección:
+      * Histórico de conversiones (sólido)
+      * Proyección próximos 3-6 meses (punteado)
+      * Basado en tendencia actual
+      * Escenarios: Pesimista / Realista / Optimista
+    - "Si mantienes tasa actual, generarás €X en próximos 6 meses"
+
+16. OBJETIVOS VS REAL:
+    - Card de tracking de objetivos:
+      * Objetivo de conversión: 20%
+      * Real: 18.5%
+      * Progress bar visual
+      * % de logro: 92.5%
+    - Objetivos configurables:
+      * Tasa de conversión objetivo
+      * Ingresos objetivo
+      * Número de conversiones objetivo
+    - Alertas si no se está en track
+
+17. RECOMENDACIONES IA:
+    - Panel "Insights y Recomendaciones"
+    - IA analiza datos y sugiere:
+      * "Aumenta precio de oferta X, tiene alta conversión"
+      * "Prueba mostrar oferta Y en checkout, no solo email"
+      * "Segmento Premium tiene potencial, crea más ofertas"
+      * "Martes y miércoles son mejores días, enfoca allí"
+      * "Ofrece Z con 15% descuento mejora conversión 12%"
+    - Botones de acción rápida para implementar
+
+18. COMPARATIVA COMPETITIVA (Benchmarks):
+    - Sección "Comparación con Industria"
+    - Benchmarks del sector fitness:
+      * Tasa de conversión promedio: 15-20%
+      * Tu tasa: 18.5% (badge: "Por encima del promedio")
+      * AOV incremento promedio: 25-35%
+      * Tu incremento: 32% (badge: "En promedio")
+    - Indicadores de rendimiento
+
+19. EXPORTACIÓN Y REPORTES:
+    - Botón "Exportar Reporte"
+    - Formatos: PDF (presentación), Excel (datos), CSV
+    - Reporte incluye:
+      * Resumen ejecutivo con KPIs
+      * Gráficos principales
+      * Top/Bottom performers
+      * Recomendaciones
+      * Tendencias
+    - Plantilla profesional con branding
+    - Programar envío automático mensual por email
+
+20. ALERTAS Y NOTIFICACIONES:
+    - Configurar alertas:
+      * Si conversión cae por debajo de X%
+      * Si oferta específica no convierte en X días
+      * Si ingresos de upsells < objetivo
+      * Logros: "¡Récord de conversiones este mes!"
+    - Notificaciones in-app y por email
+
+21. DATOS MOCKEADOS:
+    - Histórico de 6-12 meses de datos
+    - Tasa de conversión: 15-22% variando por mes
+    - Ingresos mensuales por upsells: €2,000-€6,000
+    - 15-20 ofertas diferentes con rendimiento variable
+    - Tests A/B realizados (2-3 con ganador claro)
+    - Segmentos con tasas diferentes
+    - Cohortes con patrones
+    - Todos los datos coherentes entre sí
+
+22. DISEÑO:
+    - Paleta verde-dorado profesional
+    - Dashboard tipo analytics
+    - Gráficos diversos con Recharts
+    - Tablas de datos limpias
+    - Cards con gradientes sutiles
+    - Iconos de Lucide React
+    - Animaciones con framer-motion
+    - Color coding intuitivo (verde=bueno, rojo=malo, amarillo=alerta)
+    - Tooltips informativos
+    - Filtros persistentes
+    - Responsive completo
+    - Loading states
+
+IMPORTANTE:
+- NO crear nuevos archivos
+- SOLO editar ConversionReportPage.tsx
+- Datos mockeados realistas y coherentes
+- Gráficos variados y visuales
+- Insights accionables
+- TypeScript correcto
+- Código bien estructurado
+
+Objetivo: Dashboard completo de análisis de conversiones de upsells con múltiples vistas, funnel de conversión, segmentación avanzada, comparativas, proyecciones y recomendaciones IA para optimizar estrategias de monetización.
+
+---
+
+Transforma completamente la página de Dispositivos Conectados (src/features/plansolomax/wearables/wearables/dispositivos-conectados/DispositivosConectadosPage.tsx) en un centro de gestión de integraciones con wearables.
+
+IMPORTANTE: Hub para conectar y gestionar dispositivos wearables de clientes (Apple Watch, Fitbit, Garmin, etc.) y sincronizar datos de salud.
+
+Requisitos de diseño:
+
+1. HEADER TECH:
+   - Título "Dispositivos Wearables Conectados" con gradiente azul-verde
+   - Subtítulo: "Conecta wearables y sincroniza datos de salud de tus clientes"
+   - Icono Watch con animación
+   - Botones: "Conectar Nuevo Dispositivo", "Sincronizar Todo", "Configuración"
+
+2. ESTADÍSTICAS DESTACADAS (5 cards):
+   - Clientes con Wearables (#)
+     * Total y % del total de clientes
+     * Comparativa mes anterior
+
+   - Dispositivos Conectados (#)
+     * Total de dispositivos activos
+     * Icono de dispositivo popular
+
+   - Datos Sincronizados Hoy
+     * Sesiones, pasos, calorías, sueño
+     * Auto-refresh
+
+   - Tasa de Sincronización (%)
+     * % de sincronizaciones exitosas
+     * Color: verde >95%, amarillo 90-95%, rojo <90%
+
+   - Última Sincronización
+     * Hace X minutos
+     * Botón "Sincronizar Ahora"
+
+3. PLATAFORMAS DISPONIBLES (Cards de integración):
+   - Grid de plataformas soportadas:
+
+     A) Apple Health (iOS)
+     - Logo de Apple
+     - Estado: Integración Activa (badge verde)
+     - Clientes conectados: 45
+     - Datos disponibles:
+       * Pasos, calorías, frecuencia cardíaca
+       * Sueño, distancia, escaleras
+       * Entrenamientos, VO2 max
+     - Botón "Configurar"
+
+     B) Google Fit (Android)
+     - Logo de Google Fit
+     - Estado: Integración Activa
+     - Clientes conectados: 32
+     - Datos disponibles: Similar
+     - Botón "Configurar"
+
+     C) Fitbit
+     - Logo de Fitbit
+     - Estado: Integración Activa
+     - Clientes: 18
+     - Datos: Pasos, sueño, HR, etc.
+     - Botón "Configurar"
+
+     D) Garmin
+     - Logo de Garmin
+     - Estado: Activa
+     - Clientes: 12
+     - Datos: Deportes, HR, VO2, etc.
+
+     E) Whoop
+     - Logo de Whoop
+     - Estado: Disponible (no configurada)
+     - Botón "Conectar"
+
+     F) Polar
+     - Logo de Polar
+     - Estado: Disponible
+
+     G) Samsung Health
+     - Logo de Samsung
+     - Estado: Beta
+
+   - Para cada plataforma:
+     * Logo oficial
+     * Badge de estado
+     * Descripción corta
+     * Número de clientes
+     * Botón de acción
+
+4. LISTA DE CLIENTES CON WEARABLES:
+   - Tabla o cards de clientes:
+     * Avatar y nombre del cliente
+     * Dispositivo(s) conectado(s):
+       - Icono del dispositivo (Apple Watch, Fitbit, etc.)
+       - Modelo (ej: "Apple Watch Series 9")
+     * Estado de sincronización:
+       - Sincronizado hace X min (verde)
+       - Error de sincronización (rojo)
+       - Nunca sincronizado (gris)
+     * Última métrica recibida:
+       - 12,543 pasos hoy
+       - 7.2h sueño anoche
+     * Batería del dispositivo (si disponible):
+       - 85% (icono de batería)
+     * Fecha de conexión inicial
+     * Botón "Ver Datos"
+     * Botón "Forzar Sincronización"
+     * Botón "Desconectar"
+   - Filtros:
+     * Por plataforma
+     * Por estado de sincronización
+     * Por cliente
+   - Búsqueda por nombre
+
+5. MODAL DE CONECTAR NUEVO DISPOSITIVO:
+   - Para un cliente específico:
+     * Selector de cliente (dropdown con búsqueda)
+
+   - Selector de plataforma:
+     * Cards de plataformas disponibles
+     * Click en la que el cliente usa
+
+   - Proceso de autenticación:
+     * Genera QR code
+     * Cliente escanea con su app
+     * O link directo para abrir en móvil
+     * OAuth flow simulado
+
+   - Instrucciones paso a paso:
+     1. Cliente abre app de [Plataforma]
+     2. Permite acceso a datos de salud
+     3. Acepta permisos
+     4. ¡Listo! Datos sincronizando
+
+   - Video tutorial corto (embebido)
+
+   - Confirmación:
+     * "✓ Dispositivo conectado exitosamente"
+     * Preview de datos recibidos
+     * Botón "Ver Dashboard del Cliente"
+
+6. MODAL DE VER DATOS DE CLIENTE:
+   - Al click en "Ver Datos" de un cliente:
+     * Header: Nombre del cliente + dispositivo
+     * Tabs de categorías de datos:
+
+       A) Actividad:
+       - Pasos hoy: 8,543 (gráfico circular de objetivo)
+       - Calorías quemadas: 2,340 kcal
+       - Distancia: 6.2 km
+       - Minutos activos: 87 min
+       - Gráfico de pasos últimos 7 días
+
+       B) Frecuencia Cardíaca:
+       - HR actual: 72 bpm
+       - HR en reposo: 58 bpm
+       - HR máxima hoy: 165 bpm
+       - Zonas cardíacas (gráfico)
+       - Gráfico de línea de HR del día
+
+       C) Sueño:
+       - Horas dormidas anoche: 7.2h
+       - Calidad de sueño: 85% (buena)
+       - Fases del sueño (gráfico):
+         * Ligero: 3.5h
+         * Profundo: 2.1h
+         * REM: 1.6h
+       - Gráfico de sueño últimos 7 días
+
+       D) Entrenamientos:
+       - Lista de workouts registrados:
+         * Correr - 5.2km - 35min - 387 kcal
+         * Pesas - 45min - 224 kcal
+       - Por cada workout:
+         * Tipo, duración, calorías, distancia
+         * Mapa de ruta (si GPS)
+         * HR promedio y máxima
+
+       E) Otras Métricas:
+       - VO2 max: 48 ml/kg/min
+       - HRV (Variabilidad): 52 ms
+       - SpO2: 98%
+       - Estrés: Bajo (si disponible)
+       - Recuperación: 85% (Whoop)
+
+     * Selector de rango de fechas
+     * Botón "Exportar Datos"
+     * Botón "Sincronizar Ahora"
+
+7. CONFIGURACIÓN POR PLATAFORMA:
+   - Al click en "Configurar" de una plataforma:
+     * Modal de configuración:
+
+       - API Keys (si necesario):
+         * Client ID (input)
+         * Client Secret (input)
+         * Redirect URL (read-only)
+
+       - Permisos solicitados (checkboxes):
+         * Actividad y ejercicio
+         * Frecuencia cardíaca
+         * Sueño
+         * Nutrición
+         * Ubicación
+         * Peso corporal
+
+       - Frecuencia de sincronización:
+         * Cada 15 min (recomendado)
+         * Cada hora
+         * Cada 6 horas
+         * Manual
+
+       - Notificaciones:
+         * Notificar cuando nuevo dispositivo se conecta
+         * Notificar si falla sincronización
+         * Notificar hitos (ej: cliente alcanza 10k pasos)
+
+       - Botón "Guardar Configuración"
+       - Botón "Test de Conexión"
+
+8. SINCRONIZACIÓN MANUAL:
+   - Botón global "Sincronizar Todo"
+   - Proceso de sincronización:
+     * Modal con progress
+     * Lista de clientes:
+       - Cliente 1: Sincronizando... → ✓ Completado
+       - Cliente 2: Sincronizando... → ✗ Error
+       - etc.
+     * Resumen:
+       - X dispositivos sincronizados
+       - Y errores
+       - Z datos nuevos recibidos
+
+   - Sincronización automática en background:
+     * Configurar intervalo
+     * Logs de sincronizaciones automáticas
+
+9. LOGS DE SINCRONIZACIÓN:
+   - Tab "Logs"
+   - Tabla de logs:
+     * Timestamp
+     * Cliente
+     * Dispositivo/Plataforma
+     * Estado (Éxito/Error)
+     * Datos sincronizados:
+       - 234 pasos
+       - 1 sesión de sueño
+       - 2 entrenamientos
+     * Duración (ms)
+     * Botón "Ver Detalles"
+   - Filtros: Por estado, por cliente, por plataforma
+   - Búsqueda
+
+10. ERRORES Y TROUBLESHOOTING:
+    - Panel de errores activos:
+      * Lista de dispositivos con problemas:
+        - Cliente X - Apple Watch - "Token expirado"
+        - Cliente Y - Fitbit - "Sin conexión a internet"
+      * Razón del error
+      * Sugerencia de solución:
+        - "Cliente debe re-autenticar"
+        - "Verificar conexión del dispositivo"
+      * Botón "Reintentar"
+      * Botón "Notificar al Cliente"
+
+    - Errores comunes y soluciones (FAQ):
+      * "Token expirado" → Re-autenticar
+      * "Datos duplicados" → Revisar configuración
+      * "Límite de API alcanzado" → Esperar o upgrade plan
+
+11. ANALYTICS DE WEARABLES:
+    - Gráfico de adopción:
+      * Line chart de clientes con wearables en el tiempo
+      * Crecimiento mes a mes
+
+    - Distribución de dispositivos (pie chart):
+      * Apple Watch: 40%
+      * Fitbit: 25%
+      * Garmin: 15%
+      * Google Fit: 12%
+      * Otros: 8%
+
+    - Métricas promedio de todos los clientes:
+      * Pasos promedio/día: 9,234
+      * Sueño promedio: 7.1h
+      * Entrenamientos/semana: 4.2
+      * Calorías promedio: 2,145 kcal
+
+12. INTEGRACIÓN CON ENTRENAMIENTOS:
+    - Sección "Datos en Entrenamientos"
+    - Cómo se usan los datos de wearables:
+      * Auto-completar entrenamientos registrados en wearable
+      * Ajustar intensidad según HR
+      * Sugerir días de descanso según recuperación
+      * Alertas si cliente se está sobre-entrenando
+    - Toggle para activar/desactivar integraciones
+
+13. WEBHOOKS (Avanzado):
+    - Configurar webhooks para recibir datos en tiempo real
+    - Input de URL de webhook
+    - Eventos a escuchar:
+      * Nuevo entrenamiento completado
+      * Nuevo día de actividad
+      * Hito alcanzado (10k pasos, etc.)
+    - Test de webhook
+    - Logs de webhooks enviados
+
+14. PERMISOS Y PRIVACIDAD:
+    - Sección de privacidad:
+      * Datos encriptados en tránsito y reposo
+      * Cumplimiento GDPR/HIPAA
+      * Cliente puede revocar acceso en cualquier momento
+      * Política de retención de datos (X días)
+
+    - Gestión de consentimientos:
+      * Lista de clientes con consentimiento activo
+      * Renovar consentimientos si es necesario
+
+15. GUÍAS Y RECURSOS:
+    - Documentación por plataforma
+    - Video tutoriales para clientes:
+      * "Cómo conectar tu Apple Watch"
+      * "Cómo conectar Fitbit"
+      * etc.
+    - Link para compartir con clientes
+    - FAQs
+
+16. DATOS MOCKEADOS:
+    - 50-80 clientes con wearables conectados
+    - Distribución realista de dispositivos
+    - Datos de sincronización recientes
+    - Algunos con errores (5-10%)
+    - Métricas variadas pero coherentes:
+      * Pasos: 3,000-20,000/día
+      * Sueño: 5-9h/noche
+      * HR: 50-180 bpm
+      * Entrenamientos: 0-7 por semana
+    - Logs de sincronizaciones últimos 7 días
+    - Analytics con tendencias positivas
+
+17. DISEÑO:
+    - Paleta azul-verde tech/salud
+    - Cards de plataformas con logos oficiales
+    - Iconos de dispositivos reconocibles
+    - Badges de estado coloridos
+    - Gráficos de salud/fitness con Recharts
+    - Animaciones de sincronización
+    - Progress bars para objetivos
+    - Iconos de Lucide React
+    - Animaciones con framer-motion
+    - Responsive completo
+    - Loading states durante sincronización
+
+IMPORTANTE:
+- NO crear nuevos archivos
+- SOLO editar DispositivosConectadosPage.tsx
+- Simulación realista de conexión OAuth
+- Datos de wearables mockeados coherentemente
+- Logos oficiales de plataformas (usar URLs públicas)
+- TypeScript correcto
+- Código limpio
+
+Objetivo: Centro completo de gestión de wearables con integraciones múltiples, sincronización automática, visualización de datos de salud, troubleshooting y analytics para aprovechar datos de dispositivos de los clientes.
+
+---
+
+Transforma completamente la página de Panel de Datos Wearables (src/features/plansolomax/wearables/wearables/panel-datos-wearables/PanelDatosWearablesPage.tsx) en un dashboard analítico de métricas de salud y rendimiento.
+
+IMPORTANTE: Dashboard agregado para visualizar y analizar datos de salud de todos los clientes con wearables.
+
+Requisitos de diseño:
+
+1. HEADER ANALÍTICO:
+   - Título "Panel de Datos de Wearables" con gradiente azul-verde
+   - Subtítulo: "Analiza métricas de salud y rendimiento de tus clientes"
+   - Icono Activity con animación de pulso
+   - Selector de vista: Todos los Clientes / Cliente Individual
+   - Selector de período (Hoy, Últimos 7 días, Últimos 30 días, Personalizado)
+   - Botones: "Exportar Datos", "Generar Reporte", "Configurar Alertas"
+
+2. KPIs AGREGADOS (6 cards grandes):
+   - Pasos Totales Hoy
+     * Suma de todos los clientes
+     * Promedio por cliente
+     * Comparativa con ayer
+     * Mini gráfico de tendencia
+
+   - Calorías Totales Quemadas
+     * Suma total
+     * Promedio por cliente
+     * Comparativa
+
+   - Horas de Sueño Promedio
+     * Promedio de todos los clientes
+     * Calidad promedio (%)
+     * Comparativa
+
+   - Entrenamientos Completados Hoy
+     * Total registrados en wearables
+     * Promedio de duración
+     * Top actividad
+
+   - Frecuencia Cardíaca Promedio
+     * HR en reposo promedio
+     * HR máxima promedio
+     * Zonas cardíacas
+
+   - Tasa de Actividad (%)
+     * % de clientes que alcanzaron objetivo
+     * Tendencia semanal
+
+3. GRÁFICO DE ACTIVIDAD AGREGADA:
+   - Line chart de últimos 30 días
+   - Líneas múltiples:
+     * Pasos promedio/día
+     * Calorías promedio/día
+     * Entrenamientos/día
+   - Leyenda interactiva
+   - Tooltips detallados
+   - Animación de entrada
+
+4. SELECTOR DE CLIENTE INDIVIDUAL:
+   - Dropdown con búsqueda
+   - Al seleccionar cliente:
+     * Dashboard cambia a vista individual
+     * Muestra métricas específicas del cliente
+     * Comparar con promedios globales
+
+5. DASHBOARD INDIVIDUAL DE CLIENTE:
+
+   A) RESUMEN DIARIO:
+   - Card grande con métricas de hoy:
+     * Avatar y nombre del cliente
+     * Pasos: 8,543 / 10,000 (progress circular)
+     * Calorías: 2,340 kcal
+     * Minutos activos: 87 / 120 min
+     * Entrenamientos: 1 completado
+     * Sueño anoche: 7.2h (calidad 85%)
+
+   B) GRÁFICO DE PASOS:
+   - Bar chart de últimos 7 días
+   - Línea de objetivo (10,000 pasos)
+   - Colores: Verde si cumple, rojo si no
+   - Promedio de la semana
+   - Comparar con semana anterior
+
+   C) GRÁFICO DE SUEÑO:
+   - Bar chart apilado de últimos 7 días
+   - Fases de sueño por color:
+     * Ligero (azul claro)
+     * Profundo (azul oscuro)
+     * REM (morado)
+   - Total de horas por noche
+   - Línea de objetivo (7-9h)
+   - Calidad del sueño (%)
+
+   D) FRECUENCIA CARDÍACA:
+   - Line chart del día actual
+   - HR por hora
+   - Zonas cardíacas destacadas:
+     * Zona 1: Recuperación (gris)
+     * Zona 2: Aeróbica (verde)
+     * Zona 3: Anaeróbica (amarillo)
+     * Zona 4: Máxima (rojo)
+   - HR en reposo y máxima del día
+   - Gráfico de distribución de zonas (pie chart)
+
+   E) ENTRENAMIENTOS:
+   - Lista de entrenamientos de los últimos 7 días:
+     * Fecha y hora
+     * Tipo de actividad (con icono)
+     * Duración
+     * Calorías quemadas
+     * Distancia (si aplica)
+     * HR promedio y máxima
+     * Mapa de ruta (si GPS)
+     * Botón "Ver Detalles"
+   - Gráfico de duración por tipo de entrenamiento
+
+   F) CALORÍAS Y ACTIVIDAD:
+   - Gráfico de calorías:
+     * Line chart últimos 30 días
+     * Calorías activas vs totales
+     * Tendencia
+   - Minutos activos por día (bar chart)
+   - Escaleras subidas (si disponible)
+   - Distancia recorrida
+
+   G) MÉTRICAS AVANZADAS (si disponibles):
+   - VO2 max:
+     * Valor actual: 48 ml/kg/min
+     * Gráfico de tendencia
+     * Comparativa con edad y género
+   - HRV (Variabilidad):
+     * Valor actual: 52 ms
+     * Gráfico últimos 7 días
+     * Indicador de recuperación
+   - SpO2 (Saturación de oxígeno):
+     * Promedio nocturno: 98%
+     * Mínimo y máximo
+   - Estrés (si Garmin/Whoop):
+     * Nivel de estrés (0-100)
+     * Gráfico del día
+   - Recuperación (si Whoop):
+     * Score de recuperación: 85%
+     * Verde/Amarillo/Rojo
+     * Recomendación de intensidad
+
+6. COMPARATIVAS ENTRE CLIENTES:
+   - Sección "Rankings"
+   - Leaderboards:
+
+     A) Top Pasos Esta Semana:
+     - Lista de top 10 clientes:
+       * Posición (#1, #2, etc. con medallas para top 3)
+       * Avatar y nombre
+       * Pasos totales
+       * Promedio diario
+       * Badge si superó 100k pasos
+
+     B) Top Entrenamientos:
+     - Más entrenamientos completados
+     - Más minutos activos
+     - Más calorías quemadas
+
+     C) Mejor Sueño:
+     - Más horas de sueño promedio
+     - Mejor calidad de sueño
+     - Más consistente
+
+   - Gamificación para motivar clientes
+
+7. ALERTAS AUTOMÁTICAS:
+   - Panel de alertas basadas en datos:
+     * Cliente X no ha alcanzado 5k pasos en 3 días
+     * Cliente Y tiene sueño <6h últimos 5 días
+     * Cliente Z tiene HR en reposo elevada
+     * Cliente W no ha entrenado en 7 días
+   - Prioridad por importancia (alta, media, baja)
+   - Botones de acción:
+     * Enviar mensaje de motivación
+     * Programar check-in
+     * Ajustar plan de entrenamiento
+     * Marcar como revisada
+
+8. ANÁLISIS DE TENDENCIAS:
+   - Gráficos de tendencias agregadas:
+
+     A) Pasos por Día de la Semana:
+     - Bar chart: L, M, X, J, V, S, D
+     - Identificar días más/menos activos
+     - Promedio global
+
+     B) Adherencia a Objetivos:
+     - % de clientes que cumplen objetivos por día
+     - Line chart de últimos 30 días
+     - Identificar patrones
+
+     C) Calidad de Sueño:
+     - Distribución de clientes por calidad (pie chart):
+       * Excelente (>85%)
+       * Buena (70-85%)
+       * Regular (50-70%)
+       * Pobre (<50%)
+
+     D) Distribución de Actividades:
+     - Tipos de entrenamientos más comunes (bar chart):
+       * Correr, Ciclismo, Pesas, Natación, etc.
+
+9. CORRELACIONES Y INSIGHTS:
+   - Panel "Insights Inteligentes"
+   - IA analiza patrones y muestra:
+     * "Clientes con >10k pasos tienen 25% mejor adherencia"
+     * "Sueño <6h correlaciona con menos entrenamientos"
+     * "Lunes es el día con más actividad"
+     * "Clientes de 25-35 años más activos"
+     * "HR en reposo bajando indica mejora fitness"
+   - Gráficos de correlación (scatter plots)
+
+10. METAS Y OBJETIVOS:
+    - Configurar objetivos por cliente:
+      * Pasos diarios (ajustable por cliente)
+      * Minutos activos
+      * Horas de sueño
+      * Entrenamientos por semana
+    - Tracking de cumplimiento
+    - Notificaciones cuando cliente alcanza meta
+    - Gamificación: Badges y logros
+
+11. COMPARATIVA TEMPORAL:
+    - Selector de dos períodos para comparar:
+      * Esta semana vs semana pasada
+      * Este mes vs mes pasado
+    - Métricas lado a lado:
+      * Pasos, calorías, sueño, entrenamientos
+      * % de cambio (mejora o deterioro)
+      * Gráficos comparativos
+    - Identificar clientes con más mejora
+
+12. SEGMENTACIÓN DE CLIENTES:
+    - Segmentar clientes por actividad:
+      * Muy activos (>12k pasos/día)
+      * Activos (8-12k pasos)
+      * Moderados (5-8k pasos)
+      * Sedentarios (<5k pasos)
+    - Para cada segmento:
+      * Número de clientes
+      * Métricas promedio
+      * Estrategias sugeridas
+    - Gráficos de distribución
+
+13. EXPORTACIÓN Y REPORTES:
+    - Botón "Generar Reporte"
+    - Tipos de reporte:
+      * Reporte individual de cliente (PDF)
+        - Resumen de métricas
+        - Gráficos principales
+        - Tendencias
+        - Recomendaciones
+      * Reporte agregado de todos los clientes (PDF/Excel)
+        - KPIs globales
+        - Rankings
+        - Insights
+        - Comparativas
+    - Programar envío automático semanal/mensual
+
+14. INTEGRACIÓN CON PLANES:
+    - Cómo los datos influyen en entrenamientos:
+      * Sugerir día de descanso si recuperación baja
+      * Ajustar intensidad según HR
+      * Alertar sobre-entrenamiento (muchas sesiones + poco sueño)
+      * Recomendar cardio si pasos bajos
+    - Toggle para habilitar ajustes automáticos
+
+15. WEBHOOKS Y AUTOMATIZACIONES:
+    - Configurar webhooks cuando:
+      * Cliente alcanza hito (10k pasos, 100 entrenamientos, etc.)
+      * Métrica fuera de rango (HR alta, sueño bajo)
+      * Nuevo PR (Personal Record)
+    - Integraciones con automatizaciones existentes
+
+16. PRIVACIDAD Y CONSENTIMIENTOS:
+    - Indicador de consentimiento por cliente
+    - Opción de anonimizar datos en reportes
+    - Cumplimiento de regulaciones
+
+17. DATOS MOCKEADOS:
+    - 50-80 clientes con datos de wearables
+    - Últimos 30 días de métricas para cada uno:
+      * Pasos: 3,000-20,000/día (distribución realista)
+      * Sueño: 5-9h/noche
+      * Entrenamientos: 0-7/semana variado
+      * HR: 50-80 en reposo, 120-180 máxima
+      * Calorías: 1,800-3,500/día
+      * VO2 max, HRV, SpO2 para algunos clientes
+    - Rankings con top performers
+    - Alertas generadas (5-10)
+    - Insights generados por IA (8-12)
+    - Todos los datos coherentes temporalmente
+
+18. DISEÑO:
+    - Paleta azul-verde salud/fitness
+    - Dashboard tipo analytics deportivo
+    - Gráficos diversos con Recharts
+    - Progress circles animados
+    - Badges de logros
+    - Iconos de actividad de Lucide React
+    - Animaciones con framer-motion
+    - Heat maps para patrones
+    - Leaderboards con medallas
+    - Color coding intuitivo (verde=bueno, rojo=alerta)
+    - Tooltips informativos
+    - Responsive completo
+    - Loading states
+
+IMPORTANTE:
+- NO crear nuevos archivos
+- SOLO editar PanelDatosWearablesPage.tsx
+- Datos mockeados realistas y coherentes
+- Gráficos variados de salud/fitness
+- Insights accionables
+- TypeScript correcto
+- Código bien estructurado
+
+Objetivo: Dashboard analítico completo de datos de wearables con vista agregada y individual, rankings, alertas automáticas, insights IA y herramientas para optimizar salud y rendimiento de clientes basado en datos reales de dispositivos.
+
+---
+
+Transforma completamente la página de Reportes de Rendimiento (src/features/plansolomax/wearables/wearables/reportes-rendimiento/ReportesRendimientoPage.tsx) en un generador profesional de reportes de rendimiento basados en datos de wearables.
+
+IMPORTANTE: Herramienta para generar reportes visuales profesionales combinando datos de wearables con análisis de rendimiento para compartir con clientes.
+
+Requisitos de diseño:
+
+1. HEADER PROFESIONAL:
+   - Título "Generador de Reportes de Rendimiento" con gradiente azul-púrpura
+   - Subtítulo: "Crea reportes visuales profesionales para tus clientes"
+   - Icono FileText con animación
+   - Botones: "Nuevo Reporte", "Plantillas", "Historial"
+
+2. WIZARD DE CREACIÓN (Pasos):
+
+   PASO 1: Seleccionar Cliente y Período
+   - Selector de cliente (dropdown con búsqueda)
+     * Avatar, nombre, dispositivo conectado
+   - Selector de período:
+     * Última semana
+     * Últimas 2 semanas
+     * Último mes
+     * Últimos 3 meses
+     * Personalizado (date range picker)
+   - Vista previa de datos disponibles:
+     * Días con datos completos
+     * Métricas disponibles (checks)
+     * Warning si faltan datos importantes
+
+   PASO 2: Seleccionar Plantilla
+   - Cards de plantillas predefinidas:
+
+     A) Reporte Semanal Básico:
+     - Resumen de actividad
+     - Pasos, calorías, sueño
+     - Entrenamientos completados
+     - 2 páginas
+
+     B) Reporte Mensual Completo:
+     - Análisis detallado de 4 semanas
+     - Tendencias y comparativas
+     - Objetivos vs real
+     - Recomendaciones
+     - 4-6 páginas
+
+     C) Reporte de Rendimiento Atlético:
+     - Enfocado en entrenamientos
+     - HR zones, VO2 max, recuperación
+     - PRs y mejoras
+     - 3-4 páginas
+
+     D) Reporte de Salud y Bienestar:
+     - Enfoque en sueño, estrés, recuperación
+     - Balance vida-entrenamiento
+     - 3 páginas
+
+     E) Reporte de Progreso (Comparativo):
+     - Comparar dos períodos
+     - Mejoras y áreas de oportunidad
+     - 3-4 páginas
+
+     F) Plantilla Vacía (Personalizar):
+     - Crear desde cero
+     - Seleccionar secciones
+
+   - Para cada plantilla:
+     * Preview visual (miniatura)
+     * Descripción
+     * Páginas incluidas
+     * Botón "Seleccionar"
+
+   PASO 3: Personalizar Contenido
+   - Lista de secciones incluidas (drag & drop para reordenar):
+
+     Secciones Disponibles:
+     * ☑ Portada con foto del cliente
+     * ☑ Resumen Ejecutivo (KPIs destacados)
+     * ☑ Análisis de Actividad (Pasos, calorías, distancia)
+     * ☑ Análisis de Entrenamientos (Frecuencia, duración, tipo)
+     * ☑ Análisis de Sueño (Horas, calidad, patrones)
+     * ☑ Análisis de Frecuencia Cardíaca (Zonas, reposo, máxima)
+     * ☑ Métricas Avanzadas (VO2 max, HRV, recuperación)
+     * ☑ Comparativa con Período Anterior
+     * ☑ Comparativa con Objetivos
+     * ☑ Rankings y Logros
+     * ☑ Gráficos de Tendencias
+     * ☑ Insights y Análisis IA
+     * ☑ Recomendaciones Personalizadas
+     * ☑ Objetivos para Próximo Período
+
+   - Toggle para incluir/excluir cada sección
+   - Preview en miniatura de cada sección
+   - Botón "Agregar Sección Personalizada"
+
+   PASO 4: Configurar Diseño
+   - Estilo del reporte:
+     * Profesional (azul corporativo)
+     * Deportivo (naranja/rojo energético)
+     * Minimalista (blanco y negro)
+     * Elegante (púrpura/dorado)
+   - Logo del entrenador (upload o seleccionar)
+   - Colores de marca (color pickers)
+   - Tipografía (selector de fuentes)
+   - Incluir fotos del cliente (checkbox)
+   - Incluir marca de agua (checkbox)
+
+   PASO 5: Añadir Contenido Personalizado
+   - Mensaje del Entrenador (rich text editor):
+     * Saludo personalizado
+     * Feedback sobre el período
+     * Motivación
+   - Notas específicas por sección (opcional)
+   - Recomendaciones manuales (lista editable)
+   - Objetivos personalizados para siguiente período
+
+   PASO 6: Preview y Generación
+   - Preview completo del reporte:
+     * Scroll por todas las páginas
+     * Ver cómo quedará
+     * Zoom in/out
+   - Botón "Editar" para volver a cualquier paso
+   - Botón "Generar Reporte"
+   - Opciones de generación:
+     * Formato: PDF (recomendado), Word, PowerPoint
+     * Calidad: Alta, Media, Baja (tamaño del archivo)
+     * Incluir datos raw (Excel adicional)
+
+3. GENERACIÓN DEL REPORTE:
+   - Modal de progreso:
+     * "Generando reporte..."
+     * Progress bar
+     * "Recopilando datos... ✓"
+     * "Generando gráficos... ✓"
+     * "Aplicando diseño... ✓"
+     * "Creando PDF... ✓"
+   - Éxito:
+     * "✓ Reporte generado exitosamente"
+     * Preview del PDF
+     * Botones:
+       - Descargar
+       - Enviar por Email
+       - Compartir Link
+       - Generar Otro
+
+4. ESTRUCTURA TÍPICA DEL REPORTE (PDF):
+
+   PÁGINA 1: Portada
+   - Logo del entrenador
+   - Foto del cliente (opcional)
+   - Título: "Reporte de Rendimiento"
+   - Nombre del cliente
+   - Período del reporte
+   - Fecha de generación
+   - Diseño elegante con colores de marca
+
+   PÁGINA 2: Resumen Ejecutivo
+   - Card de bienvenida con mensaje del entrenador
+   - KPIs destacados en cards grandes:
+     * Pasos totales (con objetivo)
+     * Calorías quemadas
+     * Horas de sueño promedio
+     * Entrenamientos completados
+     * Logro destacado del período
+   - Mini gráficos de tendencia por KPI
+
+   PÁGINA 3: Análisis de Actividad
+   - Gráfico de barras de pasos por día
+   - Gráfico de calorías por día
+   - Distancia total recorrida
+   - Minutos activos
+   - Comparativa con período anterior (%)
+   - Insights:
+     * Mejor día de actividad
+     * Día más sedentario
+     * Promedio vs objetivo
+
+   PÁGINA 4: Análisis de Entrenamientos
+   - Lista de todos los entrenamientos:
+     * Fecha, tipo, duración, calorías
+   - Gráfico de distribución por tipo de actividad
+   - Duración promedio por sesión
+   - Frecuencia (entrenamientos/semana)
+   - Intensidad promedio (HR zones)
+   - Comparativa con mes anterior
+
+   PÁGINA 5: Análisis de Sueño
+   - Gráfico de barras de horas por noche
+   - Calidad de sueño promedio (%)
+   - Distribución de fases (pie chart)
+   - Mejor y peor noche
+   - Patrones identificados:
+     * Hora promedio de dormir
+     * Hora promedio de despertar
+     * Consistencia (score)
+   - Recomendaciones de sueño
+
+   PÁGINA 6: Frecuencia Cardíaca y Zonas
+   - HR en reposo: Evolución (line chart)
+   - HR máxima del período
+   - Distribución de tiempo por zona (bar chart)
+   - Gráfico de ejemplo de sesión con HR
+   - Análisis: "Pasaste 45% del tiempo en zona aeróbica"
+
+   PÁGINA 7: Métricas Avanzadas (si disponibles)
+   - VO2 max: Valor actual y tendencia
+   - HRV: Promedio y evolución
+   - Recuperación: Score promedio
+   - SpO2: Promedio nocturno
+   - Comparar con estándares de edad/género
+
+   PÁGINA 8: Comparativa y Progreso
+   - Tabla comparativa:
+     * Métrica | Período Anterior | Este Período | Cambio (%)
+   - Gráficos side-by-side
+   - Mejoras destacadas (verde)
+   - Áreas de oportunidad (amarillo/rojo)
+
+   PÁGINA 9: Logros y Rankings
+   - Logros desbloqueados:
+     * "100,000 pasos en el mes" (badge)
+     * "20 entrenamientos completados" (badge)
+     * "7 días consecutivos de objetivo" (badge)
+   - Posición en rankings (si aplica):
+     * Top 5 en pasos
+     * Top 10 en entrenamientos
+   - PRs (Personal Records) nuevos
+
+   PÁGINA 10: Insights y Análisis IA
+   - Bullet points con insights:
+     * "Tus mejores días son Martes y Jueves"
+     * "El sueño mejoró 15% este mes"
+     * "La consistencia en entrenamientos aumentó"
+     * "La recuperación es óptima, puedes aumentar intensidad"
+   - Gráficos de soporte
+
+   PÁGINA 11: Recomendaciones
+   - Recomendaciones personalizadas del entrenador:
+     * Para actividad
+     * Para sueño
+     * Para entrenamientos
+     * Para recuperación
+   - Objetivos sugeridos para próximo período
+   - Plan de acción
+
+   PÁGINA 12: Objetivos para Siguiente Período
+   - Lista de objetivos específicos:
+     * Alcanzar 12,000 pasos diarios
+     * Completar 18 entrenamientos
+     * Dormir 7.5h promedio
+     * Mejorar VO2 max en 2 puntos
+   - Mensaje motivacional de cierre
+   - Contacto del entrenador
+
+5. PLANTILLAS GUARDADAS:
+   - Tab "Mis Plantillas"
+   - Lista de plantillas creadas por el usuario
+   - Para cada plantilla:
+     * Nombre
+     * Descripción
+     * Última vez usada
+     * Veces usada (#)
+     * Botones: Usar, Editar, Duplicar, Eliminar
+   - Crear nueva desde cero o desde existente
+
+6. HISTORIAL DE REPORTES:
+   - Tab "Historial"
+   - Lista de reportes generados:
+     * Fecha de generación
+     * Cliente
+     * Período del reporte
+     * Plantilla usada
+     * Formato (PDF, Word)
+     * Estado (Enviado, Descargado, Pendiente)
+     * Botones: Ver, Descargar, Reenviar, Eliminar
+   - Filtros: Por cliente, por fecha, por plantilla
+   - Búsqueda
+
+7. ENVÍO POR EMAIL:
+   - Botón "Enviar por Email" desde reporte generado
+   - Modal de envío:
+     * Para: Email del cliente (pre-rellenado)
+     * CC: Opcional
+     * Asunto: Personalizable con variables
+     * Mensaje: Rich text editor
+       - Plantilla predefinida
+       - Variables: {nombre}, {periodo}, etc.
+     * Adjuntar reporte (checkbox - checked)
+     * Programar envío (opcional):
+       - Enviar ahora (default)
+       - Programar fecha y hora
+     * Botón "Enviar"
+   - Confirmación de envío
+   - Tracking: Abierto, Descargado (simulado)
+
+8. COMPARTIR LINK:
+   - Generar link público del reporte
+   - Link temporal (expira en X días)
+   - Password-protected (opcional)
+   - Copiar link al portapapeles
+   - QR code para escanear
+   - Útil para compartir en redes o WhatsApp
+
+9. PROGRAMACIÓN DE REPORTES AUTOMÁTICOS:
+   - Sección "Reportes Automáticos"
+   - Crear reporte recurrente:
+     * Cliente(s): Individual o grupos
+     * Plantilla a usar
+     * Frecuencia:
+       - Semanal (qué día)
+       - Mensual (qué día del mes)
+       - Personalizado
+     * Envío automático por email (checkbox)
+     * Activar/Desactivar
+   - Lista de reportes programados
+   - Editar o eliminar programaciones
+
+10. ANALYTICS DE REPORTES:
+    - Dashboard de uso:
+      * Total reportes generados
+      * Reportes por mes (gráfico)
+      * Clientes con más reportes
+      * Plantillas más usadas
+      * Tasa de apertura de emails (si se envían)
+      * Downloads totales
+
+11. BIBLIOTECA DE RECURSOS:
+    - Sección "Recursos"
+    - Íconos y gráficos predefinidos
+    - Plantillas de texto
+    - Frases motivacionales
+    - Tips de fitness
+    - Drag & drop para añadir a reporte
+
+12. PERSONALIZACIÓN AVANZADA:
+    - Editor de plantillas:
+      * Drag & drop de elementos
+      * Añadir gráficos custom
+      * Añadir imágenes
+      * Añadir tablas
+      * Diseñador visual tipo Canva (simplificado)
+
+13. EXPORTAR DATOS RAW:
+    - Opción de incluir Excel con datos raw
+    - Tablas de todas las métricas
+    - Para clientes que quieren analizar ellos mismos
+
+14. INTEGRACIÓN CON OBJETIVOS:
+    - Reportes incluyen tracking de objetivos establecidos
+    - Gráficos de progreso hacia objetivos
+    - Alertas si no se cumplen
+
+15. DATOS MOCKEADOS:
+    - 5-10 plantillas predefinidas
+    - Historial de 20-30 reportes generados
+    - Clientes variados
+    - Diferentes períodos
+    - Algunos con estado "Enviado" y tracking
+    - Reportes programados (2-3 activos)
+
+16. DISEÑO:
+    - Wizard limpio paso a paso
+    - Preview del reporte en tiempo real
+    - Paleta azul-púrpura profesional
+    - Editor tipo WYSIWYG
+    - Drag & drop de secciones
+    - Iconos de Lucide React
+    - Animaciones con framer-motion
+    - PDF viewer embebido
+    - Responsive completo
+    - Loading states durante generación
+
+IMPORTANTE:
+- NO crear nuevos archivos
+- SOLO editar ReportesRendimientoPage.tsx
+- Simulación de generación de PDF (puede ser vista previa HTML)
+- Plantillas visuales atractivas
+- Datos mockeados coherentes
+- TypeScript correcto
+- Código limpio
+
+Objetivo: Generador profesional de reportes de rendimiento con wizard intuitivo, plantillas customizables, envío automático y análisis visual completo para entregar valor agregado a los clientes basado en datos de wearables.

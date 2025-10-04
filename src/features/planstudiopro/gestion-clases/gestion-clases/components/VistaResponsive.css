@@ -1,0 +1,50 @@
+/* VistaResponsive.css */
+.vista-responsive-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.vista-responsive-header {
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #fff;
+}
+
+.vista-responsive-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .vista-responsive-container {
+    font-size: 0.875rem;
+  }
+
+  .vista-responsive-header {
+    padding: 0.75rem;
+  }
+
+  .vista-responsive-content {
+    padding: 0.75rem;
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 769px) {
+  .vista-responsive-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+/* Large desktop styles */
+@media (min-width: 1024px) {
+  .vista-responsive-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -1,0 +1,32 @@
+﻿TIMEOUT: Prompt excediÃ³ 5 minutos de ejecuciÃ³n
+Prompt original:
+
+Mejora y completa el componente NodosDisparadores.tsx para que sea un panel lateral completo con:
+
+1. **CategorÃ­as de disparadores organizadas**:
+   - ðŸ“§ Email (nuevo email, respuesta, apertura)
+   - ðŸ‘¤ Cliente (nuevo registro, actualizaciÃ³n perfil, inactividad)
+   - ðŸ“… Tiempo (fecha especÃ­fica, recurrente, despuÃ©s de X dÃ­as)
+   - ðŸ›’ Transacciones (nueva compra, pago fallido, reembolso)
+   - ðŸ“± Comportamiento (visita pÃ¡gina, descarga, click)
+   - ðŸŽ¯ Eventos personalizados
+
+2. **Cada disparador debe mostrar**:
+   - Icono distintivo
+   - Nombre descriptivo
+   - Breve descripciÃ³n
+   - Arrastrable al canvas
+
+3. **DiseÃ±o visual atractivo**:
+   - Cards con hover effects
+   - Colores categorizados
+   - BÃºsqueda/filtro
+   - Iconos de Lucide React
+   - Animaciones smooth
+
+4. **Funcionalidad drag & drop**:
+   - Indicador visual al arrastrar
+   - Preview del nodo
+   - Feedback visual
+
+

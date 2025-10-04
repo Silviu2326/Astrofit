@@ -1,0 +1,301 @@
+Necesito que instales la librería ReactFlow que es requerida para el módulo de crear-flujo de automatizaciones. Ejecuta el siguiente comando:
+
+npm install reactflow
+
+Y verifica que se haya instalado correctamente revisando el package.json
+
+---
+
+Analiza el módulo src/features/plansolomax/automatizaciones/automatizaciones/crear-flujo/ y identifica qué componentes necesitan ser completados y mejorados.
+
+El módulo debe ser un constructor visual avanzado para crear flujos de automatización con:
+- Drag & drop de nodos
+- Conectores visuales
+- Panel de propiedades
+- Nodos disparadores (triggers)
+- Nodos de acciones
+- Interfaz moderna y profesional
+
+Revisa todos los archivos existentes y haz un diagnóstico de qué está implementado y qué falta.
+
+---
+
+Completa y mejora el componente ConstructorVisual.tsx para que sea un constructor visual completo con las siguientes características:
+
+1. **Funcionalidad de Drag & Drop avanzada**:
+   - Soporte para arrastrar nodos desde el panel lateral
+   - Snap to grid opcional
+   - Selección múltiple de nodos
+   - Deshacer/Rehacer acciones
+
+2. **Tipos de nodos personalizados**:
+   - Nodo disparador (trigger) con icono específico
+   - Nodo acción con diferentes tipos (email, sms, webhook, etc.)
+   - Nodo condición (if/else)
+   - Nodo delay/espera
+
+3. **Interfaz visual moderna**:
+   - Estilos profesionales con gradientes y sombras
+   - Animaciones suaves
+   - Colores distintivos por tipo de nodo
+   - Iconos de Lucide React
+
+4. **Funcionalidades avanzadas**:
+   - Validación de conexiones
+   - Auto-layout inteligente
+   - Zoom y pan
+   - Minimap
+   - Toolbar con herramientas
+
+Usa ReactFlow como base pero personaliza completamente la apariencia y funcionalidad.
+
+---
+
+Mejora y completa el componente NodosDisparadores.tsx para que sea un panel lateral completo con:
+
+1. **Categorías de disparadores organizadas**:
+   - 📧 Email (nuevo email, respuesta, apertura)
+   - 👤 Cliente (nuevo registro, actualización perfil, inactividad)
+   - 📅 Tiempo (fecha específica, recurrente, después de X días)
+   - 🛒 Transacciones (nueva compra, pago fallido, reembolso)
+   - 📱 Comportamiento (visita página, descarga, click)
+   - 🎯 Eventos personalizados
+
+2. **Cada disparador debe mostrar**:
+   - Icono distintivo
+   - Nombre descriptivo
+   - Breve descripción
+   - Arrastrable al canvas
+
+3. **Diseño visual atractivo**:
+   - Cards con hover effects
+   - Colores categorizados
+   - Búsqueda/filtro
+   - Iconos de Lucide React
+   - Animaciones smooth
+
+4. **Funcionalidad drag & drop**:
+   - Indicador visual al arrastrar
+   - Preview del nodo
+   - Feedback visual
+
+---
+
+Mejora y completa el componente NodosAcciones.tsx para que sea un panel lateral completo con:
+
+1. **Categorías de acciones organizadas**:
+   - 📧 Comunicación (email, sms, push notification, WhatsApp)
+   - 👤 CRM (actualizar contacto, añadir tag, cambiar estado)
+   - 🏷️ Marketing (añadir a lista, campaign, lead scoring)
+   - ⏰ Temporización (esperar X tiempo, programar tarea)
+   - 🔗 Integraciones (webhook, API call, Zapier)
+   - 📊 Analytics (track event, update metrics)
+   - ✅ Tareas (crear tarea, asignar usuario, recordatorio)
+
+2. **Cada acción debe mostrar**:
+   - Icono distintivo y colorido
+   - Nombre descriptivo
+   - Descripción de la función
+   - Badges con etiquetas (premium, básico, etc.)
+
+3. **Diseño visual profesional**:
+   - Grid layout responsive
+   - Hover effects elegantes
+   - Colores diferenciados por categoría
+   - Animaciones de microinteracciones
+   - Iconos de Lucide React
+
+4. **Funcionalidad avanzada**:
+   - Búsqueda en tiempo real
+   - Filtros por categoría
+   - Favoritos/más usados
+   - Drag & drop fluido
+
+---
+
+Completa y mejora el componente PanelPropiedades.tsx para que sea un panel de configuración completo con:
+
+1. **Información del nodo seleccionado**:
+   - Tipo de nodo (disparador/acción/condición)
+   - Nombre editable
+   - Descripción
+   - Estado (activo/inactivo)
+
+2. **Configuración específica por tipo**:
+   - **Email**: plantilla, remitente, asunto, adjuntos
+   - **SMS**: mensaje, número origen
+   - **Webhook**: URL, método HTTP, headers, payload
+   - **Condición**: operadores, valores, lógica
+   - **Delay**: tiempo, unidad (minutos/horas/días)
+
+3. **Validación y testing**:
+   - Validación en tiempo real
+   - Botón "Test" para probar configuración
+   - Indicadores de estado
+   - Mensajes de error/éxito
+
+4. **Diseño UX excelente**:
+   - Formularios intuitivos
+   - Campos condicionales
+   - Tooltips informativos
+   - Botones de acción prominentes
+   - Tabs para organizar configuraciones complejas
+
+---
+
+Crea y mejora el componente ConectorFlujo.tsx para que maneje las conexiones entre nodos con:
+
+1. **Tipos de conectores**:
+   - Conexión directa (éxito)
+   - Conexión condicional (if/else)
+   - Conexión de error
+   - Conexión temporal (delay)
+
+2. **Validación de conexiones**:
+   - Reglas de negocio (qué se puede conectar con qué)
+   - Prevenir loops infinitos
+   - Máximo de conexiones por nodo
+   - Validación de flujo lógico
+
+3. **Interfaz visual**:
+   - Colores diferentes por tipo de conexión
+   - Animaciones de flujo de datos
+   - Labels en las conexiones
+   - Handles de conexión personalizados
+
+4. **Funcionalidades**:
+   - Click para editar condiciones
+   - Eliminar conexiones
+   - Reordenar prioridades
+   - Copy/paste de configuraciones
+
+---
+
+Mejora el componente principal CrearFlujoPage.tsx para que tenga:
+
+1. **Header completo con**:
+   - Título del flujo (editable)
+   - Botones: Guardar, Probar, Publicar, Configuración
+   - Breadcrumbs de navegación
+   - Estado del flujo (borrador/activo/pausado)
+
+2. **Layout responsive mejorado**:
+   - Sidebar colapsable para nodos
+   - Panel de propiedades redimensionable
+   - Canvas que se adapta al contenido
+   - Modales para configuraciones avanzadas
+
+3. **Funcionalidades adicionales**:
+   - Auto-save cada X segundos
+   - Historial de versiones
+   - Templates predefinidos
+   - Exportar/importar flujos
+
+4. **Estados y gestión**:
+   - Context API para estado global del flujo
+   - Persistencia local/remota
+   - Manejo de errores
+   - Loading states
+
+5. **Diseño visual premium**:
+   - Gradientes modernos
+   - Sombras y profundidad
+   - Animaciones fluidas
+   - Tema oscuro/claro opcional
+
+---
+
+Crea tipos TypeScript y interfaces para todo el módulo de crear-flujo en un archivo types.ts que incluya:
+
+1. **Tipos de nodos**:
+   - NodeType (trigger, action, condition, delay)
+   - TriggerNode, ActionNode, ConditionNode, DelayNode
+   - NodeData con propiedades específicas
+   - NodePosition, NodeStyle
+
+2. **Tipos de conexiones**:
+   - ConnectionType (success, error, conditional, delay)
+   - EdgeData con configuraciones
+   - ConnectionRule para validaciones
+
+3. **Estado del flujo**:
+   - FlowState (draft, active, paused, error)
+   - FlowConfig con metadatos
+   - FlowVersion para historial
+
+4. **Configuraciones**:
+   - EmailConfig, SMSConfig, WebhookConfig
+   - ConditionConfig, DelayConfig
+   - ValidationResult, TestResult
+
+5. **Props de componentes**:
+   - Interfaces para todos los props de componentes
+   - Event handlers tipados
+   - Callback types
+
+Asegúrate de que todos los tipos sean estrictos y bien documentados con JSDoc.
+
+---
+
+Crea un sistema de validación completo para el módulo crear-flujo que incluya:
+
+1. **Validador de flujo** (flujoValidator.ts):
+   - Validar que el flujo tenga al menos un disparador
+   - Verificar que no haya nodos huérfanos
+   - Detectar loops infinitos
+   - Validar configuraciones de nodos
+   - Verificar conectividad del flujo
+
+2. **Validador de nodos** (nodoValidator.ts):
+   - Validación específica por tipo de nodo
+   - Campos requeridos
+   - Formatos de datos (email, URL, etc.)
+   - Rangos de valores válidos
+
+3. **Sistema de testing** (testRunner.ts):
+   - Simular ejecución de flujos
+   - Test de nodos individuales
+   - Reportes de resultados
+   - Logs de ejecución
+
+4. **Mensajes de error/éxito**:
+   - Mensajes informativos para usuarios
+   - Diferentes niveles (info, warning, error)
+   - Sugerencias de corrección
+   - Localización en español
+
+---
+
+Agrega funcionalidades avanzadas al módulo crear-flujo:
+
+1. **Sistema de templates** (templates.ts):
+   - Templates predefinidos (bienvenida, abandono de carrito, reactivación)
+   - Categorías de templates
+   - Preview de templates
+   - Instalación con un click
+
+2. **Auto-layout inteligente** (autoLayout.ts):
+   - Algoritmo para organizar nodos automáticamente
+   - Detección de patrones comunes
+   - Optimización de conexiones
+   - Distribución equitativa
+
+3. **Export/Import** (importExport.ts):
+   - Exportar flujos a JSON
+   - Importar desde archivos
+   - Compartir flujos entre usuarios
+   - Backup automático
+
+4. **Analytics y métricas** (analytics.ts):
+   - Tracking de uso de nodos
+   - Estadísticas de rendimiento
+   - Identificar cuellos de botella
+   - Sugerencias de optimización
+
+5. **Colaboración** (collaboration.ts):
+   - Comentarios en nodos
+   - Historial de cambios
+   - Versioning del flujo
+   - Permisos de edición
+
+Implementa cada funcionalidad con su respectiva interfaz de usuario integrada.

@@ -1,0 +1,23 @@
+﻿
+
+Transformaci├│n completada. La p├ígina de Nuevo Entrenamiento ahora es un constructor profesional tipo wizard con:
+
+**Ô£à Implementado:**
+
+- **6 Pasos del Wizard**: Cliente/Objetivo, Estructura, Ejercicios, Series/Reps, Progresi├│n, Revisi├│n
+- **Barra de progreso visual** con indicadores de paso completado
+- **Validaciones por paso** que bloquean avance si falta informaci├│n
+- **Paso 1**: Selector de clientes con b├║squeda, objetivos clickeables (7 opciones), tipos de entrenamiento, nivel, fechas
+- **Paso 2**: Selector visual de d├¡as (L-D), configuraci├│n de sesiones con nombre/enfoque/duraci├│n
+- **Paso 3**: Biblioteca de ejercicios lateral con drag & drop, filtros por grupo muscular, validaci├│n de m├¡nimo 3 ejercicios
+- **Paso 4**: Tabla editable con series/reps/descanso/peso/RPE/notas, plantillas de rep schemes (Fuerza, Hipertrofia, etc.)
+- **Paso 5**: M├®todos de progresi├│n (Lineal, Ondulante, Bloques, etc.), gr├ífico visual de periodizaci├│n con deloads
+- **Paso 6**: Resumen completo con estad├¡sticas, acordeones expandibles, opciones finales (plantilla, notificaci├│n, calendario)
+- **Panel lateral**: Resumen en tiempo real, tips contextuales por paso, calculadora de volumen/sesiones
+- **Autoguardado**: Simulado cada 30 segundos con indicador
+- **Navegaci├│n**: Anterior/Siguiente con validaci├│n, bot├│n "Crear Entrenamiento" en paso final
+- **Animaciones**: Transiciones con framer-motion entre pasos
+- **Datos mock**: 8 clientes, 15 ejercicios, tipos/objetivos completos
+- **Dise├▒o**: Gradientes azul-morado, dark mode, responsive, iconos Lucide React
+
+El wizard gu├¡a intuitivamente la creaci├│n de planes de entrenamiento personalizados paso a paso con validaciones robustas y feedback visual constante.

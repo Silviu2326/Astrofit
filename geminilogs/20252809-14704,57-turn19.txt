@@ -1,0 +1,5 @@
+﻿He creado la estructura b├ísica para el m├│dulo Control de Pedidos - Gesti├│n de Compras, incluyendo los siguientes archivos:
+
+1.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/control-pedidos/ControlPedidosPage.tsx`
+2.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/control-pedidos/controlPedidosApi.ts`
+3.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/control-pedidos/components/ListadoOrdenes.tsx`

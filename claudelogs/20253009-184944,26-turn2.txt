@@ -1,0 +1,22 @@
+﻿
+
+P├ígina transformada completamente en un gestor inteligente de upsells y cross-sells con:
+
+Ô£à **5 KPIs destacados** con mini gr├íficos de tendencia
+Ô£à **Recomendaciones IA** con oportunidades de venta
+Ô£à **Tabs** (Activas: 6, Borradores: 1, Finalizadas: 0, Plantillas: 6)
+Ô£à **8 ofertas mockeadas** con estad├¡sticas realistas
+Ô£à **Cards visuales** con badges, m├®tricas, gr├íficos y acciones
+Ô£à **Modal de Analytics** con KPIs, charts, funnel y segmentos
+Ô£à **Modal de Configuraci├│n global** con toggles
+Ô£à **Modal de Crear Oferta** con 6 pasos:
+- Paso 1: Informaci├│n b├ísica (nombre, tipo, descripci├│n)
+- Paso 2: Productos (base, sugerido, mensaje, beneficios)
+- Paso 3: Descuento y pricing (tipo, valor, duraci├│n, urgencia)
+- Paso 4: Trigger y segmentaci├│n (cu├índo, a qui├®n, l├¡mites)
+- Paso 5: Dise├▒o (plantilla visual, preview en tiempo real)
+- Paso 6: Revisi├│n (resumen, test A/B)
+Ô£à **6 plantillas predefinidas**
+Ô£à **Paleta verde-dorado** enfocada en ingresos
+Ô£à **Animaciones** con framer-motion
+Ô£à **Responsive** completo

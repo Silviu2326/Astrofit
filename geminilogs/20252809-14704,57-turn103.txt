@@ -1,0 +1,7 @@
+﻿He creado la estructura b├ísica para el m├│dulo "Pruebas F├¡sicas - Laboratorio de Tests" y los archivos solicitados:
+
+1.  `C:\Users\usuario\Documents\project-bolt-sb1-qekdxfwt\project\src\features\pruebas-fisicas\PruebasFisicasPage.tsx`
+2.  `C:\Users\usuario\Documents\project-bolt-sb1-qekdxfwt\project\src\features\pruebas-fisicas\pruebasFisicasApi.ts`
+3.  `C:\Users\usuario\Documents\project-bolt-sb1-qekdxfwt\project\src\features\pruebas-fisicas\components\TablaPruebas.tsx`
+
+Estos archivos incluyen la l├│gica para la p├ígina principal con la tabla de pruebas, la API con datos de tests simulados, la tabla b├ísica con los detalles de las pruebas, un formulario simple para programar nuevas pruebas y la lista de atletas convocados por prueba.

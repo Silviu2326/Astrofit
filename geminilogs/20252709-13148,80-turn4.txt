@@ -1,0 +1,12 @@
+﻿(node:18604) MaxListenersExceededWarning: Possible EventTarget memory leak detected. 11 abort listeners added to [AbortSignal]. Use events.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+He creado la estructura completa para el m??dulo Agente de Progreso - El Analista y he escrito todos los archivos especificados:
+
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/agente-progreso/AgenteProgresoPage.tsx`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/agente-progreso/agenteProgresoApi.ts`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/agente-progreso/types.ts`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/agente-progreso/components/DashboardMetricas.tsx`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/agente-progreso/components/GraficosEvolucion.tsx`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/agente-progreso/components/AlertasRiesgo.tsx`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/agente-progreso/components/InformeAutomatico.tsx`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/agente-progreso/components/ModuloInsights.tsx`

@@ -1,0 +1,5 @@
+﻿The basic structure for the "Editor de Mesociclo - Bloques de Entrenamiento" module has been created, including the following files:
+
+1.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/editar-mesociclo/EditarMesocicloPage.tsx`
+2.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/editar-mesociclo/editarMesocicloApi.ts`
+3.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/editar-mesociclo/components/EditorModular.tsx`

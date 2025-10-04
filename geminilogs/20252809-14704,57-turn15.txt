@@ -1,0 +1,3 @@
+﻿I'm encountering an issue creating directories on your Windows system using the available shell commands. `mkdir`, `md`, `python -c "os.makedirs(...)"`, and `New-Item` commands are all failing with syntax or recognition errors.
+
+Could you please provide the correct shell command to create a directory on your system that would work when executed via `bash -c <command>`? Once I can create the directories, I can proceed with writing the files.

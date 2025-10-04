@@ -1,0 +1,20 @@
+﻿
+
+Dashboard completo de LTV de Clientes implementado con:
+
+Ô£à **Header impactante** con gradiente oro-azul y animaci├│n
+Ô£à **4 KPIs principales** con mini gr├íficos y comparativas
+Ô£à **Segmentaci├│n por valor** (Alto/Medio/Bajo) con cards visuales
+Ô£à **Ranking completo** de 100 clientes con medallas top 3
+Ô£à **Distribuci├│n de LTV** en histograma
+Ô£à **LTV acumulado** por cohortes
+Ô£à **Scatter CAC vs LTV** con segmentaci├│n por color
+Ô£à **Calculadora de LTV** interactiva
+Ô£à **An├ílisis por segmento** (membres├¡a, canal, ubicaci├│n, edad, objetivo)
+Ô£à **Simulador de impacto** de churn/engagement
+Ô£à **Tabla con sorting** y paginaci├│n
+Ô£à **Modal de perfil** detallado con transacciones, m├®tricas y predicciones
+Ô£à **Alertas y recomendaciones** visuales
+Ô£à **100 clientes mockeados** con datos realistas
+Ô£à **Animaciones** con framer-motion
+Ô£à **Paleta premium** oro-azul-morado

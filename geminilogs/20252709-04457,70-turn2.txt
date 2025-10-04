@@ -1,0 +1,1 @@
+﻿Okay, I will create the specified directory structure and files for the CRM module. First, I'll start by listing the current project structure to understand the context.The `ls` command is not available. I'll use `dir /s` to inspect the project structure instead.

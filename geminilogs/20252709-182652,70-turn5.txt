@@ -1,0 +1,13 @@
+﻿(node:37156) MaxListenersExceededWarning: Possible EventTarget memory leak detected. 11 abort listeners added to [AbortSignal]. Use events.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+I have successfully created all the specified files and directories for the "Entrenamiento - Nuevo Entrenamiento" module:
+
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/nuevo-entrenamiento/NuevoEntrenamientoPage.tsx`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/nuevo-entrenamiento/nuevoEntrenamientoApi.ts`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/nuevo-entrenamiento/components/EntrenamientoWizard.tsx`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/nuevo-entrenamiento/components/ClienteSelector.tsx`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/nuevo-entrenamiento/components/BloquesBuilder.tsx`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/nuevo-entrenamiento/components/EjerciciosSelector.tsx`
+- `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/nuevo-entrenamiento/components/EntrenamientoPreview.tsx`
+
+Each `.tsx` file contains a basic functional React component structure with relevant comments and placeholder content, and `nuevoEntrenamientoApi.ts` includes mock data as requested.

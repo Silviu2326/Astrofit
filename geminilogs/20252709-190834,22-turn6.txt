@@ -1,0 +1,1 @@
+﻿I have successfully created and updated the campaign management components as requested. The files `LienzoCampana.tsx`, `EditorPlantillas.tsx`, and `ABTestingManager.tsx` have been created in the `src/features/agente-marketing/components/campaign/` directory, each with comments outlining the specified functionalities.

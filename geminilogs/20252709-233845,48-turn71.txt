@@ -1,0 +1,1 @@
+﻿I have created all the specified files for the "Reportes Uso" module within `src/features/cupones-avanzados/reportes-uso/` and its `components` subdirectory. Each file contains a basic structure with placeholder content based on the provided specifications and technical requirements.

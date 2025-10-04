@@ -1,0 +1,36 @@
+﻿TIMEOUT: Prompt excediÃ³ 5 minutos de ejecuciÃ³n
+Prompt original:
+
+Mejora el componente principal CrearFlujoPage.tsx para que tenga:
+
+1. **Header completo con**:
+   - TÃ­tulo del flujo (editable)
+   - Botones: Guardar, Probar, Publicar, ConfiguraciÃ³n
+   - Breadcrumbs de navegaciÃ³n
+   - Estado del flujo (borrador/activo/pausado)
+
+2. **Layout responsive mejorado**:
+   - Sidebar colapsable para nodos
+   - Panel de propiedades redimensionable
+   - Canvas que se adapta al contenido
+   - Modales para configuraciones avanzadas
+
+3. **Funcionalidades adicionales**:
+   - Auto-save cada X segundos
+   - Historial de versiones
+   - Templates predefinidos
+   - Exportar/importar flujos
+
+4. **Estados y gestiÃ³n**:
+   - Context API para estado global del flujo
+   - Persistencia local/remota
+   - Manejo de errores
+   - Loading states
+
+5. **DiseÃ±o visual premium**:
+   - Gradientes modernos
+   - Sombras y profundidad
+   - Animaciones fluidas
+   - Tema oscuro/claro opcional
+
+

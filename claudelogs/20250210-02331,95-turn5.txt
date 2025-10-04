@@ -1,0 +1,211 @@
+﻿TIMEOUT: Prompt excediÃ³ 20 minutos de ejecuciÃ³n
+Prompt original:
+## ðŸ“‹ PROMPT 5: Mensajes Personalizados
+
+Transforma completamente la pÃ¡gina de Mensajes Personalizados ([src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/mensajes-personalizados/MensajesPersonalizadosPage.tsx](src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/mensajes-personalizados/MensajesPersonalizadosPage.tsx)) aplicando el sistema de diseÃ±o moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guÃ­a de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un sistema de mensajerÃ­a personalizada masiva
+- Facilita el envÃ­o de mensajes contextuales y relevantes
+
+### Requisitos de DiseÃ±o:
+
+1. **HERO SECTION - Mensajes Personalizados**
+   - Gradiente `from-pink-600 via-rose-600 to-red-600`
+   - TÃ­tulo "Mensajes Personalizados a Escala"
+   - DescripciÃ³n: "ComunicaciÃ³n relevante para cada cliente"
+   - Icono de mensaje/corazÃ³n
+
+2. **ESTADÃSTICAS RÃPIDAS** (4 cards)
+   - Mensajes Enviados Este Mes
+   - Tasa de Apertura (%)
+   - Respuestas Recibidas
+   - Engagement Score
+   - Cards con glassmorphism
+
+3. **COMPOSITOR DE MENSAJE**
+   - Editor principal:
+     * Canal (tabs):
+       - Email
+       - SMS
+       - WhatsApp
+       - Push Notification
+       - In-app Message
+     * Asunto (si email)
+     * Mensaje principal (editor rico)
+     * Variables dinÃ¡micas (menÃº desplegable):
+       - {{nombre}}
+       - {{apellido}}
+       - {{objetivo}}
+       - {{dias_activo}}
+       - {{proxima_sesion}}
+       - {{progreso_objetivo}}
+       - Custom variables
+     * Preview en tiempo real con datos reales
+
+4. **PERSONALIZACIÃ“N AVANZADA**
+   - Bloques condicionales:
+     * Mostrar pÃ¡rrafo solo si:
+       - Cliente es premium
+       - Tiene >X dÃ­as de racha
+       - No ha completado onboarding
+     * Syntax: `{{#if condicion}}texto{{/if}}`
+   - Variantes por segmento:
+     * Mensaje diferente para hombres/mujeres
+     * Por edad (18-25, 26-40, 40+)
+     * Por objetivo (pÃ©rdida peso, ganancia muscular)
+   - Preview de variantes
+
+5. **TEMPLATES DE MENSAJES**
+   - Biblioteca de templates:
+     * **Motivacionales**:
+       - "Â¡Sigue asÃ­, {{nombre}}!"
+       - "{{dias_activo}} dÃ­as de racha ðŸ”¥"
+     * **Recordatorios**:
+       - "SesiÃ³n maÃ±ana a las {{hora_sesion}}"
+       - "No olvides registrar tu progreso"
+     * **Celebraciones**:
+       - "Â¡Feliz cumpleaÃ±os {{nombre}}! ðŸŽ‚"
+       - "Objetivo cumplido: {{objetivo}}"
+     * **Educativos**:
+       - Tips de nutriciÃ³n
+       - TÃ©cnicas de entrenamiento
+     * **Promocionales**:
+       - Oferta especial
+       - Nuevo servicio disponible
+   - CategorizaciÃ³n y bÃºsqueda
+   - Usar template o editar
+
+6. **SEGMENTACIÃ“N DE AUDIENCIA**
+   - Query builder visual:
+     * Filtros combinables (AND/OR):
+       - Plan (Free/Premium/VIP)
+       - UbicaciÃ³n
+       - Edad, gÃ©nero
+       - DÃ­as desde registro
+       - Ãšltima actividad
+       - Progreso en objetivo (%)
+       - Tags asignados
+       - Comportamiento:
+         * AbriÃ³ email anterior
+         * CompletÃ³ entrenamiento hoy
+         * No ha registrado peso en 7 dÃ­as
+   - Preview de audiencia:
+     * TamaÃ±o del segmento (# usuarios)
+     * Clientes de ejemplo (primeros 5)
+   - Guardar segmento para reutilizar
+
+7. **PROGRAMACIÃ“N DE ENVÃO**
+   - Opciones de timing:
+     * **Enviar ahora**
+     * **Programar fecha/hora**
+     * **Smart timing** (IA elige mejor momento por usuario)
+     * **Recurrente**:
+       - Diario
+       - Semanal (elegir dÃ­as)
+       - Mensual
+   - Zona horaria:
+     * UTC fija
+     * Zona horaria del usuario (personalizado)
+   - Rate limiting (no mÃ¡s de X mensajes/dÃ­a por usuario)
+
+8. **A/B TESTING**
+   - Crear test multivariante:
+     * Variante A: Asunto y mensaje
+     * Variante B: Asunto y mensaje alternativo
+     * (hasta variante D)
+   - DistribuciÃ³n de trÃ¡fico (sliders)
+   - MÃ©trica de Ã©xito:
+     * Tasa de apertura
+     * Tasa de click
+     * Respuestas
+     * Conversiones
+   - DuraciÃ³n del test
+   - Auto-select ganador
+
+9. **ANÃLISIS DE RENDIMIENTO**
+   - MÃ©tricas por mensaje:
+     * Enviados
+     * Entregados (%)
+     * Aperturas (%)
+     * Clicks (%)
+     * Respuestas
+     * Conversiones
+     * Bounces/Errores
+   - GrÃ¡fico temporal de mÃ©tricas
+   - Heatmap de clicks (si email con links)
+   - Device breakdown (mÃ³vil/desktop)
+
+10. **RESPUESTAS AUTOMÃTICAS**
+    - Configurar auto-replies:
+      * Si cliente responde "X"
+      * Enviar mensaje Y
+      * O ejecutar acciÃ³n Z
+    - Keywords detectados:
+      * "Cancelar" â†’ Proceso de retenciÃ³n
+      * "Ayuda" â†’ Contactar soporte
+      * "SÃ­" â†’ Confirmar cita
+    - Inteligencia con NLP (detectar intenciÃ³n)
+
+11. **COMPLIANCE Y REGULACIONES**
+    - Footer automÃ¡tico:
+      * Link de unsubscribe
+      * DirecciÃ³n fÃ­sica (requerido por ley)
+      * PolÃ­tica de privacidad
+    - GestiÃ³n de opt-outs:
+      * Usuarios que se dieron de baja
+      * Blacklist automÃ¡tica
+    - ValidaciÃ³n de contenido:
+      * Detectar palabras spam
+      * Score de spamicity
+      * Sugerencias de mejora
+
+12. **HISTORIAL DE MENSAJES**
+    - Lista de mensajes enviados:
+      * TÃ­tulo/asunto
+      * Canal
+      * Fecha de envÃ­o
+      * Segmento
+      * MÃ©tricas resumidas
+      * Estado (Enviado/Programado/Draft/Cancelado)
+    - Filtros y bÃºsqueda
+    - Acciones: Ver, Duplicar, Editar, Eliminar
+
+13. **CALENDARIO DE MENSAJES**
+    - Vista de calendario:
+      * Mensajes programados por dÃ­a
+      * Color por canal
+      * Recurrentes marcados
+    - Click en dÃ­a: ver detalle
+    - Evitar saturaciÃ³n (alerta si >3 mensajes/dÃ­a)
+
+14. **LIBRERÃA DE MEDIA**
+    - Banco de imÃ¡genes:
+      * Upload de imÃ¡genes
+      * GalerÃ­a organizada
+      * Tags y categorÃ­as
+      * OptimizaciÃ³n automÃ¡tica
+    - Uso en emails/push
+
+15. **DATOS MOCKEADOS**
+    - 50+ mensajes en historial
+    - 10-15 templates por categorÃ­a
+    - Segmentos de usuarios guardados
+    - Calendario con mensajes programados
+    - MÃ©tricas de rendimiento simuladas
+    - Tests A/B en progreso
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente pink-rose-red para hero
+- Editor de mensaje tipo email client
+- Query builder visual con pills
+- Preview de mensaje en tiempo real
+- GrÃ¡ficos de mÃ©tricas (Recharts)
+- Calendario con eventos coloridos
+- Badges de estado del mensaje
+- Heatmap de clicks en email
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/mensajes-personalizados](src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/mensajes-personalizados).
+
+---

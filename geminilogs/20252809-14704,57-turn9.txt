@@ -1,0 +1,5 @@
+﻿The basic structure for the Historial Kiosko - Registro de Autoservicio module has been created. The following files have been written:
+
+1.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/historial-kiosko/HistorialKioskoPage.tsx`
+2.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/historial-kiosko/historialKioskoApi.ts`
+3.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/historial-kiosko/components/TablaAccesos.tsx`

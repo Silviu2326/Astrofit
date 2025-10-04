@@ -1,0 +1,5 @@
+﻿I have created the basic structure for the "Empleados Socios - Gesti├│n de Beneficiarios" module, including the following files:
+
+*   `src/features/empleados-socios/EmpleadosSociosPage.tsx`
+*   `src/features/empleados-socios/empleadosSociosApi.ts`
+*   `src/features/empleados-socios/components/TablaBeneficiarios.tsx`
