@@ -1,0 +1,5 @@
+﻿I have successfully created the basic structure for the "Resultados de Eventos - Gesti├│n de Marcadores" module, including the following files:
+
+- `src/features/resultados-eventos/ResultadosEventosPage.tsx`
+- `src/features/resultados-eventos/resultadosEventosApi.ts`
+- `src/features/resultados-eventos/components/ScoreboardDigital.tsx`

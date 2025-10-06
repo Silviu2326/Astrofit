@@ -1,0 +1,27 @@
+﻿
+
+He transformado completamente la p├ígina de Calculadoras de Fuerza en un centro integral de herramientas de entrenamiento con:
+
+**Ô£à Implementado:**
+
+1. **Header con gradiente** - T├¡tulo "Calculadoras de Entrenamiento" con icono Calculator
+2. **8 Calculadoras funcionales** en grid de 3 columnas con cards clickeables con hover effects
+3. **Historial lateral** sticky con ├║ltimos 10 c├ílculos guardados
+4. **Todas las calculadoras en modales** con dise├▒o profesional:
+   - **1RM**: 6 f├│rmulas (Brzycki, Epley, Lander, Lombardi, O'Conner, Wathan), tabla de porcentajes
+   - **Porcentajes**: Slider din├ímico, conversi├│n a RPE y reps esperadas
+   - **Volumen**: Agregar/eliminar ejercicios, c├ílculo de tonelaje total
+   - **Calor├¡as**: MET values, comparativa con otras actividades
+   - **RPE/RIR**: Tabla completa de conversi├│n con % 1RM
+   - **Progresi├│n**: Planificador lineal/ondulante de 1-52 semanas
+   - **Conversor**: Peso, altura y distancia con equivalencias comunes
+   - **Wilks**: Score con clasificaci├│n (Principiante ÔåÆ Elite Mundial)
+
+5. **Caracter├¡sticas:**
+   - Guardado de resultados en historial
+   - Colores ├║nicos por calculadora (rojo, azul, verde, naranja, morado, emerald, gris, dorado)
+   - Animaciones hover en cards
+   - Dise├▒o responsive completo
+   - F├│rmulas matem├íticas correctas
+   - TypeScript con tipos definidos
+   - Sin archivos adicionales creados

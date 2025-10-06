@@ -1,0 +1,10 @@
+﻿He creado la estructura completa para el m├│dulo CRM - Archivos, incluyendo todos los archivos y carpetas especificados:
+
+*   `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/archivos/ArchivosPage.tsx`
+*   `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/archivos/archivosApi.ts`
+*   `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/archivos/components/ArchivosGrid.tsx`
+*   `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/archivos/components/ArchivoUpload.tsx`
+*   `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/archivos/components/ArchivoViewer.tsx`
+*   `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/archivos/components/ArchivosFilters.tsx`
+
+Los archivos contienen el c├│digo inicial con datos mock, siguiendo los requisitos t├®cnicos de TypeScript, React y TailwindCSS.

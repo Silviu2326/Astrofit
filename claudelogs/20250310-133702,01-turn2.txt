@@ -1,0 +1,191 @@
+﻿TIMEOUT: Prompt excediÃ³ 20 minutos de ejecuciÃ³n
+Prompt original:
+## ðŸ“‹ PROMPT 2: Historial de Experimentos
+
+Transforma completamente la pÃ¡gina de Historial de Experimentos ([src/features/plancreatormax/tests-ab/tests-ab/historial-experimentos/HistorialExperimentosPage.tsx](src/features/plancreatormax/tests-ab/tests-ab/historial-experimentos/HistorialExperimentosPage.tsx)) aplicando el sistema de diseÃ±o moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guÃ­a de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un archivo completo de experimentos pasados
+- Facilita el aprendizaje de tests previos
+
+### Requisitos de DiseÃ±o:
+
+1. **HERO SECTION - Historial**
+   - Gradiente `from-amber-600 via-yellow-600 to-lime-600`
+   - TÃ­tulo "Historial de Experimentos"
+   - DescripciÃ³n: "Aprende de tus tests anteriores"
+   - Icono de archivo/historial
+
+2. **ESTADÃSTICAS GENERALES** (4 cards)
+   - Total de Experimentos Realizados
+   - Tasa de Ã‰xito (% con mejora)
+   - Mejora Acumulada de ConversiÃ³n (%)
+   - Ingresos Incrementales Totales ($)
+   - Cards con glassmorphism
+
+3. **LÃNEA DE TIEMPO DE EXPERIMENTOS**
+   - Timeline cronolÃ³gica:
+     * Card por experimento finalizado:
+       - Fecha de inicio y fin
+       - Nombre del test
+       - Tipo de experimento (badge)
+       - Elemento testeado
+       - NÃºmero de variantes probadas
+       - Resultado (ganador identificado o no concluyente)
+       - Mejora lograda (+X% conversiÃ³n)
+       - Estado de implementaciÃ³n:
+         * Implementado (verde)
+         * Pendiente implementaciÃ³n (amarillo)
+         * Descartado (gris)
+     * LÃ­nea conectora vertical entre cards
+     * Click en card: expandir detalles
+   - Ordenar por: Fecha, Impacto, Tipo
+   - Filtros: AÃ±o, Tipo de test, Con/sin mejora
+
+4. **VISTA DETALLADA DE EXPERIMENTO**
+   - Modal o pÃ¡gina expandida:
+     * **InformaciÃ³n del test**:
+       - Nombre y descripciÃ³n
+       - HipÃ³tesis original
+       - Fechas (inicio, fin, duraciÃ³n)
+       - Objetivo del test
+     * **Variantes probadas**:
+       - Visual de cada variante (screenshot o descripciÃ³n)
+       - MÃ©tricas finales por variante
+       - Tabla comparativa
+     * **Resultados estadÃ­sticos**:
+       - Ganador declarado (destacado)
+       - Significancia estadÃ­stica alcanzada
+       - P-value, intervalo de confianza
+       - Mejora sobre control
+     * **Aprendizajes clave**:
+       - Â¿QuÃ© funcionÃ³?
+       - Â¿QuÃ© no funcionÃ³?
+       - Insights obtenidos
+       - PrÃ³ximos pasos recomendados
+     * **ImplementaciÃ³n**:
+       - Fecha de roll-out
+       - Porcentaje implementado
+       - Impacto post-implementaciÃ³n
+
+5. **ANÃLISIS DE TENDENCIAS**
+   - Dashboard analÃ­tico:
+     * GrÃ¡fico de mejora de conversiÃ³n en el tiempo (lÃ­neas)
+     * Tipos de test mÃ¡s exitosos (barras)
+     * Elementos mÃ¡s optimizados (dona):
+       - Headlines
+       - CTAs
+       - Precios
+       - ImÃ¡genes
+       - Copy
+     * Tasa de Ã©xito por tipo de test (%)
+   - Comparativa temporal (mes a mes, quarter)
+
+6. **APRENDIZAJES Y PATRONES**
+   - Biblioteca de insights:
+     * **Headlines ganadoras**:
+       - Lista de headlines que funcionaron
+       - PatrÃ³n comÃºn (urgencia, beneficio, pregunta)
+       - Ejemplos concretos
+     * **CTAs efectivos**:
+       - Textos de botones que convierten
+       - Colores preferidos
+       - PosiciÃ³n Ã³ptima
+     * **Precios Ã³ptimos**:
+       - Rangos de precio testeados
+       - Punto dulce identificado
+       - Elasticidad de precio
+     * **Segmentos respondientes**:
+       - QuÃ© segmentos responden mejor a quÃ© variantes
+       - PersonalizaciÃ³n por audiencia
+   - Exportar insights (PDF)
+
+7. **COMPARATIVA DE EXPERIMENTOS**
+   - Herramienta de comparaciÃ³n:
+     * Seleccionar 2-3 experimentos
+     * Lado a lado:
+       - ConfiguraciÃ³n
+       - Resultados
+       - Aprendizajes
+     * Identificar patrones comunes
+     * Recomendaciones basadas en comparaciÃ³n
+
+8. **EXPERIMENTOS FALLIDOS (LEARNINGS)**
+   - SecciÃ³n especial para tests sin mejora:
+     * Â¿Por quÃ© fallÃ³?
+     * HipÃ³tesis incorrecta
+     * Muestra insuficiente
+     * ImplementaciÃ³n defectuosa
+   - Aprender del fracaso
+   - Evitar repetir errores
+   - Pivots sugeridos
+
+9. **EXPORTACIÃ“N Y REPORTES**
+   - Generar reportes:
+     * Reporte mensual de tests
+     * Reporte anual de optimizaciÃ³n
+     * PresentaciÃ³n ejecutiva (PowerPoint template)
+     * Datos crudos (CSV/Excel)
+   - Personalizar contenido del reporte
+   - Compartir con equipo
+
+10. **BÃšSQUEDA Y FILTROS AVANZADOS**
+    - BÃºsqueda inteligente:
+      * Por nombre de experimento
+      * Por elemento testeado (headline, CTA, etc.)
+      * Por resultado (exitoso/fallido)
+      * Por rango de mejora (>10%, >20%, etc.)
+      * Por fecha (Ãºltima semana, mes, aÃ±o)
+    - Filtros combinables (AND/OR)
+    - Guardar bÃºsquedas frecuentes
+
+11. **CALENDARIO DE TESTS PASADOS**
+    - Vista de calendario histÃ³rico:
+      * Tests por mes/aÃ±o
+      * Densidad de experimentaciÃ³n (heatmap)
+      * PerÃ­odos de alta/baja actividad
+      * Estacionalidad de resultados
+    - Identificar mejores momentos para testear
+
+12. **REPLICAR EXPERIMENTO**
+    - AcciÃ³n rÃ¡pida:
+      * Desde experimento pasado
+      * BotÃ³n "Replicar test"
+      * Precarga configuraciÃ³n
+      * Ajustar y lanzar nuevamente
+    - Ãštil para:
+      * Re-testear en nueva audiencia
+      * Validar resultados
+      * Testear variaciÃ³n de ganador previo
+
+13. **IMPACTO ACUMULADO**
+    - MÃ©trica de valor agregado:
+      * Suma de todas las mejoras
+      * Conversiones adicionales totales
+      * Revenue incremental acumulado
+      * ROI de programa de optimizaciÃ³n
+    - GrÃ¡fico de crecimiento acumulado
+    - ProyecciÃ³n de impacto futuro
+
+14. **DATOS MOCKEADOS**
+    - 30-50 experimentos histÃ³ricos
+    - Variedad de tipos y resultados
+    - Algunos exitosos, otros fallidos
+    - Timeline de 6-12 meses
+    - MÃ©tricas realistas de conversiÃ³n
+    - Screenshots/mockups de variantes
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente amber-yellow-lime para hero
+- Timeline vertical con lÃ­nea conectora
+- Cards expandibles con hover
+- Badges de resultado (ganador/perdedor/no concluyente)
+- GrÃ¡ficos de tendencias (Recharts)
+- Comparador visual lado a lado
+- Biblioteca de insights con iconos
+- Heatmap de calendario
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/plancreatormax/tests-ab/tests-ab/historial-experimentos](src/features/plancreatormax/tests-ab/tests-ab/historial-experimentos).
+
+---

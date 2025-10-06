@@ -1,0 +1,5 @@
+﻿I have created the basic structure for the "Datos en Tiempo Real - Monitorizaci├│n Live" module, including the following files:
+
+- `src/features/datos-tiempo-real/DatosTiempoRealPage.tsx`
+- `src/features/datos-tiempo-real/datosTiempoRealApi.ts`
+- `src/features/datos-tiempo-real/components/TableroLive.tsx`

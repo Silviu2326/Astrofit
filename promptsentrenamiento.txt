@@ -1,0 +1,236 @@
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Entrenamiento - Biblioteca de Ejercicios siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/biblioteca-ejercicios/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/biblioteca-ejercicios/BibliotecaEjerciciosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/biblioteca-ejercicios/bibliotecaEjerciciosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/biblioteca-ejercicios/components/EjerciciosGrid.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/biblioteca-ejercicios/components/EjercicioCard.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/biblioteca-ejercicios/components/EjerciciosFilters.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/biblioteca-ejercicios/components/EjerciciosSearch.tsx
+
+
+ESPECIFICACIONES:
+- Colección organizada de ejercicios con nombre, descripción y vídeo
+- Búsqueda por categoría (piernas, torso, core), tipo de material (mancuernas, gomas, barra), nivel de dificultad
+- Grid de ejercicios con vista de tarjetas y vista de lista
+- Filtros múltiples combinables
+- Vista previa de ejercicios con modal de vídeo
+- Sistema de favoritos para ejercicios más usados
+- Opción para añadir ejercicios propios desde esta vista
+- Categorización automática por grupos musculares
+- Indicadores de popularidad y frecuencia de uso
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Entrenamiento - Editor de Ejercicio siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/editor-ejercicio/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/editor-ejercicio/EditorEjercicioPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/editor-ejercicio/editorEjercicioApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/editor-ejercicio/components/EjercicioForm.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/editor-ejercicio/components/MediaUpload.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/editor-ejercicio/components/InstruccionesEditor.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/editor-ejercicio/components/DetallesTecnicos.tsx
+
+
+ESPECIFICACIONES:
+- Formulario para crear y editar ejercicios personalizados
+- Upload de vídeo o imagen con vista previa
+- Editor de instrucciones con formato rich text
+- Campos para indicaciones técnicas y errores comunes a evitar
+- Configuración de detalles: tempo, rango de repeticiones, material necesario
+- Categorización por grupo muscular, tipo de movimiento, dificultad
+- Sistema de etiquetas personalizables
+- Vista previa del ejercicio antes de guardar
+- Validación de campos obligatorios
+- Opción de duplicar ejercicio existente para crear variaciones
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Entrenamiento - Plantillas de Entrenos siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/plantillas-entrenos/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-entrenos/PlantillasEntrenosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-entrenos/plantillasEntrenosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-entrenos/components/PlantillasGrid.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-entrenos/components/PlantillaCard.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-entrenos/components/PlantillasFilters.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-entrenos/components/PlantillaPreview.tsx
+
+
+ESPECIFICACIONES:
+- Catálogo de plantillas organizadas por objetivo (hipertrofia, pérdida de grasa, preparación física)
+- Filtros por nivel: principiante, intermedio, avanzado
+- Categorización por modalidad: gimnasio, entrenamiento en casa, outdoor
+- Vista previa completa de cada plantilla con ejercicios incluidos
+- Opción de usar plantilla como base para nuevo entrenamiento
+- Sistema de favoritas para acceso rápido
+- Indicadores de duración, frecuencia semanal, material necesario
+- Rating y comentarios de uso
+- Plantillas predefinidas del sistema y plantillas personales guardadas
+- Búsqueda por nombre y descripción de plantilla
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Entrenamiento - Entrenamientos Listado siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/entrenamientos-listado/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/entrenamientos-listado/EntrenamientosListadoPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/entrenamientos-listado/entrenamientosListadoApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/entrenamientos-listado/components/EntrenamientosTable.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/entrenamientos-listado/components/EntrenamientosFilters.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/entrenamientos-listado/components/EntrenamientosActions.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/entrenamientos-listado/components/EntrenamientoCard.tsx
+
+
+ESPECIFICACIONES:
+- Tabla completa de entrenamientos con columnas: Cliente, Programa, Estado, Fecha Inicio, Duración, Progreso, Acciones
+- Filtros por estado: activo, borrador, finalizado, pausado
+- Filtros por cliente, fecha de creación, tipo de entrenamiento
+- Vista de tarjetas como alternativa a la tabla
+- Búsqueda por nombre de cliente o programa
+- Indicadores visuales de progreso y estado
+- Acciones rápidas: editar, duplicar, pausar/reanudar, finalizar
+- Estadísticas generales: total entrenamientos activos, finalizados este mes
+- Ordenación por columnas
+- Paginación para manejar grandes volúmenes de datos
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Entrenamiento - Nuevo Entrenamiento siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/nuevo-entrenamiento/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/nuevo-entrenamiento/NuevoEntrenamientoPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/nuevo-entrenamiento/nuevoEntrenamientoApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/nuevo-entrenamiento/components/EntrenamientoWizard.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/nuevo-entrenamiento/components/ClienteSelector.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/nuevo-entrenamiento/components/BloquesBuilder.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/nuevo-entrenamiento/components/EjerciciosSelector.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/nuevo-entrenamiento/components/EntrenamientoPreview.tsx
+
+
+ESPECIFICACIONES:
+- Asistente paso a paso: selección de cliente, objetivo, duración, frecuencia
+- Constructor de bloques de trabajo (fuerza, cardio, movilidad, calentamiento)
+- Drag & drop de ejercicios desde la biblioteca al entrenamiento
+- Configuración detallada por ejercicio: series, repeticiones, peso, tiempo de descanso
+- Notas específicas por ejercicio o bloque
+- Vista previa completa antes de guardar
+- Opción de usar plantilla como punto de partida
+- Calendario de sesiones y progresión semanal
+- Validación de estructura completa del entrenamiento
+- Guardado como borrador para continuar después
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Entrenamiento - Editar Entrenamiento siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/editar-entrenamiento/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/editar-entrenamiento/EditarEntrenamientoPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/editar-entrenamiento/editarEntrenamientoApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/editar-entrenamiento/components/EntrenamientoEditor.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/editar-entrenamiento/components/ProgresionManager.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/editar-entrenamiento/components/VersionHistory.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/editar-entrenamiento/components/ClienteFeedback.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/editar-entrenamiento/components/SemanaBuilder.tsx
+
+
+ESPECIFICACIONES:
+- Editor completo de entrenamientos existentes con vista por semanas
+- Modificación de cargas, progresiones y ejercicios en tiempo real
+- Añadir/eliminar nuevas semanas al programa
+- Sustitución de ejercicios manteniendo estructura del bloque
+- Registro de observaciones sobre respuesta del cliente
+- Sistema de versiones para mantener historial de cambios
+- Comparación entre versiones anteriores
+- Notas de seguimiento con timestamp
+- Ajustes automáticos de carga basados en feedback
+- Vista previa de cambios antes de aplicar
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Entrenamiento - Calculadoras de Fuerza siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/calculadoras-fuerza/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/calculadoras-fuerza/CalculadorasFuerzaPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/calculadoras-fuerza/calculadorasFuerzaApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/calculadoras-fuerza/components/RMCalculator.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/calculadoras-fuerza/components/PorcentajesCalculator.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/calculadoras-fuerza/components/ProgresionCalculator.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/calculadoras-fuerza/components/VolumenCalculator.tsx
+
+
+ESPECIFICACIONES:
+- Calculadora de 1RM estimado a partir de repeticiones submáximas
+- Tabla de porcentajes recomendados para fuerza, hipertrofia y resistencia
+- Calculadora de progresiones semanales automáticas
+- Herramientas de cálculo de volumen de entrenamiento
+- Estimación de cargas por rangos de repeticiones
+- Comparación entre diferentes fórmulas de cálculo (Epley, Brzycki, etc.)
+- Historial de cálculos realizados por cliente
+- Gráficos de evolución de fuerza máxima
+- Recomendaciones automáticas de periodización
+- Export de datos para seguimiento externo
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks

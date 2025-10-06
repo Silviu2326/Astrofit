@@ -1,0 +1,509 @@
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 1: Crear módulo Automatizaciones - Listado Automatizaciones
+
+Crea la carpeta src/features/automatizaciones/ y ESCRIBE estos archivos:
+
+1. src/features/automatizaciones/listado-automatizaciones/ListadoAutomatizacionesPage.tsx
+2. src/features/automatizaciones/listado-automatizaciones/listadoAutomatizacionesApi.ts
+3. src/features/automatizaciones/listado-automatizaciones/components/TablaFlujos.tsx
+4. src/features/automatizaciones/listado-automatizaciones/components/KanbanAutomatizaciones.tsx
+5. src/features/automatizaciones/listado-automatizaciones/components/EstadoFlujo.tsx
+6. src/features/automatizaciones/listado-automatizaciones/components/ContadorEjecuciones.tsx
+
+ESPECIFICACIONES:
+- Central de flujos automáticos activos
+- Vista tabla/kanban con estados: activo/pausado
+- Tipos: email, notificación, tarea
+- Contador de ejecuciones por flujo
+- Ejemplos: bienvenida nuevo cliente, recordatorio pago, encuesta post-sesión
+- Filtros por tipo y estado
+- Acciones rápidas: activar/pausar/editar
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Componente tabla y kanban intercambiables
+- Sistema de estados con indicadores visuales
+- Contadores dinámicos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 2: Crear módulo Crear Flujo
+
+Crea estos archivos en src/features/automatizaciones/:
+
+1. src/features/automatizaciones/crear-flujo/CrearFlujoPage.tsx
+2. src/features/automatizaciones/crear-flujo/crearFlujoApi.ts
+3. src/features/automatizaciones/crear-flujo/components/ConstructorVisual.tsx
+4. src/features/automatizaciones/crear-flujo/components/NodosDisparadores.tsx
+5. src/features/automatizaciones/crear-flujo/components/NodosAcciones.tsx
+6. src/features/automatizaciones/crear-flujo/components/ConectorFlujo.tsx
+7. src/features/automatizaciones/crear-flujo/components/PanelPropiedades.tsx
+
+ESPECIFICACIONES:
+- Constructor visual drag & drop tipo flowchart
+- Nodos de disparadores: nuevo cliente, fecha específica, evento
+- Nodos de acciones: enviar email, crear tarea, notificación
+- Conexiones visuales entre nodos
+- Panel de propiedades para configurar cada nodo
+- Vista previa del flujo completo
+- Validación de flujo antes de guardar
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Biblioteca de diagramas (react-flow o similar)
+- Drag & drop functionality
+- Sistema de validación de flujos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 3: Crear módulo Historial Flujos
+
+Crea estos archivos en src/features/automatizaciones/:
+
+1. src/features/automatizaciones/historial-flujos/HistorialFlujosPage.tsx
+2. src/features/automatizaciones/historial-flujos/historialFlujosApi.ts
+3. src/features/automatizaciones/historial-flujos/components/ListadoEjecuciones.tsx
+4. src/features/automatizaciones/historial-flujos/components/DetalleEjecucion.tsx
+5. src/features/automatizaciones/historial-flujos/components/FiltrosFechas.tsx
+6. src/features/automatizaciones/historial-flujos/components/IconosEstado.tsx
+
+ESPECIFICACIONES:
+- Registro de todas las ejecuciones de flujos
+- Lista con fecha/hora de ejecución
+- Resultado: éxito/error con detalles
+- Cliente afectado por la automatización
+- Filtros por fecha, flujo y estado
+- Iconos de estado claramente diferenciados
+- Vista detalle de cada ejecución
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Componente de tabla con paginación
+- Sistema de filtros avanzados
+- Modal de detalles
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 4: Crear módulo Librería Plantillas
+
+Crea estos archivos en src/features/automatizaciones/:
+
+1. src/features/automatizaciones/libreria-plantillas/LibreriaPlantillasPage.tsx
+2. src/features/automatizaciones/libreria-plantillas/libreriaPlantillasApi.ts
+3. src/features/automatizaciones/libreria-plantillas/components/GaleriaPlantillas.tsx
+4. src/features/automatizaciones/libreria-plantillas/components/TarjetaPlantilla.tsx
+5. src/features/automatizaciones/libreria-plantillas/components/VistaPrevia.tsx
+6. src/features/automatizaciones/libreria-plantillas/components/CategoriasFiltro.tsx
+
+ESPECIFICACIONES:
+- Colección de automatizaciones prediseñadas
+- Plantillas: "Bienvenida", "Recuperación inactivos", "Cumpleaños"
+- Galería de tarjetas con título y descripción
+- Vista previa del flujo de cada plantilla
+- Botón "Usar plantilla" para importar
+- Categorías por tipo de automatización
+- Búsqueda por nombre o función
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Grid responsive de tarjetas
+- Modal de vista previa
+- Sistema de importación de plantillas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 5: Crear módulo Integración Wearables - Dispositivos Conectados
+
+Crea la carpeta src/features/wearables/ y ESCRIBE estos archivos:
+
+1. src/features/wearables/dispositivos-conectados/DispositivosConectadosPage.tsx
+2. src/features/wearables/dispositivos-conectados/dispositivosConectadosApi.ts
+3. src/features/wearables/dispositivos-conectados/components/PanelConexion.tsx
+4. src/features/wearables/dispositivos-conectados/components/TarjetaDispositivo.tsx
+5. src/features/wearables/dispositivos-conectados/components/EstadoSincronizacion.tsx
+6. src/features/wearables/dispositivos-conectados/components/ListaClientes.tsx
+
+ESPECIFICACIONES:
+- Panel de conexión con wearables
+- Dispositivos: Fitbit, Garmin, Apple Watch, Samsung Health
+- Estado de conexión por cliente
+- Tarjetas con logo del dispositivo
+- Botones conectar/desconectar
+- Última sincronización mostrada
+- Lista de clientes con dispositivos conectados
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Iconos de marcas de wearables
+- Estados de conexión dinámicos
+- Sistema de sincronización simulado
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 6: Crear módulo Panel Datos Wearables
+
+Crea estos archivos en src/features/wearables/:
+
+1. src/features/wearables/panel-datos-wearables/PanelDatosWearablesPage.tsx
+2. src/features/wearables/panel-datos-wearables/panelDatosWearablesApi.ts
+3. src/features/wearables/panel-datos-wearables/components/DashboardMetricas.tsx
+4. src/features/wearables/panel-datos-wearables/components/GraficosPasos.tsx
+5. src/features/wearables/panel-datos-wearables/components/GraficosSueno.tsx
+6. src/features/wearables/panel-datos-wearables/components/GraficosFrecuencia.tsx
+7. src/features/wearables/panel-datos-wearables/components/ResumenSemanal.tsx
+
+ESPECIFICACIONES:
+- Dashboard con métricas importadas automáticamente
+- Pasos diarios con gráfico de líneas
+- Calidad de sueño por noche
+- Frecuencia cardíaca en reposo y ejercicio
+- Calorías quemadas por día
+- Entrenamientos registrados automáticamente
+- Resúmenes semanales comparativos
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Gráficos con Chart.js o recharts
+- Dashboard responsive
+- Datos mock realistas de wearables
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 7: Crear módulo Reportes Rendimiento
+
+Crea estos archivos en src/features/wearables/:
+
+1. src/features/wearables/reportes-rendimiento/ReportesRendimientoPage.tsx
+2. src/features/wearables/reportes-rendimiento/reportesRendimientoApi.ts
+3. src/features/wearables/reportes-rendimiento/components/GeneradorReportes.tsx
+4. src/features/wearables/reportes-rendimiento/components/PlantillaReporte.tsx
+5. src/features/wearables/reportes-rendimiento/components/ConclusionesIA.tsx
+6. src/features/wearables/reportes-rendimiento/components/ExportadorPDF.tsx
+
+ESPECIFICACIONES:
+- Generador de informes automáticos
+- Análisis de datos de wearables
+- Conclusiones generadas por IA
+- Ejemplo: "El sueño de Marta bajó 15% esta semana"
+- Documento visual para compartir con cliente
+- Secciones: sueño, actividad, frecuencia cardíaca
+- Exportación a PDF
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Generador de PDF (jsPDF o react-pdf)
+- Motor de análisis de tendencias
+- Plantillas de reportes
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 8: Crear módulo Upsells Checkout - Sugerencias Productos
+
+Crea la carpeta src/features/upsells/ y ESCRIBE estos archivos:
+
+1. src/features/upsells/sugerencias-productos/SugerenciasProductosPage.tsx
+2. src/features/upsells/sugerencias-productos/sugerenciasProductosApi.ts
+3. src/features/upsells/sugerencias-productos/components/GestorOfertas.tsx
+4. src/features/upsells/sugerencias-productos/components/EditorUpsell.tsx
+5. src/features/upsells/sugerencias-productos/components/VistaPreviewCheckout.tsx
+
+ESPECIFICACIONES:
+- Gestor de ofertas adicionales en checkout
+- Crear upsells tipo "¿Añadir 3 sesiones extra?"
+- Editor con campos: título, precio, descripción
+- Vista previa de cómo se verá en checkout
+- Activar/desactivar ofertas
+- Plantillas de upsells predefinidas
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Editor de formularios
+- Vista previa en tiempo real
+- Sistema de activación de ofertas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 9: Crear módulo Configuración Upsells
+
+Crea estos archivos en src/features/upsells/:
+
+1. src/features/upsells/configuracion-upsells/ConfiguracionUpsellsPage.tsx
+2. src/features/upsells/configuracion-upsells/configuracionUpsellsApi.ts
+3. src/features/upsells/configuracion-upsells/components/EditorReglas.tsx
+4. src/features/upsells/configuracion-upsells/components/CondicionesLogicas.tsx
+5. src/features/upsells/configuracion-upsells/components/Flujoventa.tsx
+
+ESPECIFICACIONES:
+- Control del embudo de venta
+- Reglas condicionales tipo if/then
+- Ejemplo: "Si compra plan mensual → sugerir anual"
+- Editor de condiciones lógicas
+- Múltiples reglas por upsell
+- Vista del flujo de venta completo
+- Prioridades entre reglas
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sistema de reglas condicionales
+- Editor de lógica visual
+- Validador de reglas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 10: Crear módulo Conversion Report
+
+Crea estos archivos en src/features/upsells/:
+
+1. src/features/upsells/conversion-report/ConversionReportPage.tsx
+2. src/features/upsells/conversion-report/conversionReportApi.ts
+3. src/features/upsells/conversion-report/components/DashboardConversiones.tsx
+4. src/features/upsells/conversion-report/components/GraficoTasas.tsx
+5. src/features/upsells/conversion-report/components/MetricasIngresos.tsx
+6. src/features/upsells/conversion-report/components/ComparativaUpsells.tsx
+
+ESPECIFICACIONES:
+- Análisis de efectividad de upsells
+- Cuántos se ofrecieron vs cuántos aceptaron
+- Tasa de conversión destacada en %
+- Ingresos extra generados
+- Gráficos de barras por upsell
+- Comparativa entre diferentes ofertas
+- ROI de cada estrategia de upsell
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Dashboard con métricas destacadas
+- Gráficos de conversión
+- Cálculos de ROI automáticos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 11: Crear módulo Branding Avanzado - Personalización Dominio
+
+Crea la carpeta src/features/branding/ y ESCRIBE estos archivos:
+
+1. src/features/branding/personalizacion-dominio/PersonalizacionDominioPage.tsx
+2. src/features/branding/personalizacion-dominio/personalizacionDominioApi.ts
+3. src/features/branding/personalizacion-dominio/components/ConfiguradorDominio.tsx
+4. src/features/branding/personalizacion-dominio/components/EstadoDominio.tsx
+5. src/features/branding/personalizacion-dominio/components/GuiaPasoAPaso.tsx
+
+ESPECIFICACIONES:
+- Configuración de dominio propio
+- Ejemplo: entrenaconana.com
+- Estados: activo, pending, error
+- Guía paso a paso para configuración DNS
+- Verificador automático de dominio
+- Ayuda técnica integrada
+- Preview del micrositio con dominio custom
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Validador de dominios
+- Estados dinámicos de verificación
+- Guía interactiva paso a paso
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 12: Crear módulo Personalización Estilos
+
+Crea estos archivos en src/features/branding/:
+
+1. src/features/branding/personalizacion-estilos/PersonalizacionEstilosPage.tsx
+2. src/features/branding/personalizacion-estilos/personalizacionEstilosApi.ts
+3. src/features/branding/personalizacion-estilos/components/EditorVisual.tsx
+4. src/features/branding/personalizacion-estilos/components/SelectorColores.tsx
+5. src/features/branding/personalizacion-estilos/components/SelectorTipografias.tsx
+6. src/features/branding/personalizacion-estilos/components/UploaderLogo.tsx
+7. src/features/branding/personalizacion-estilos/components/PreviewTiempoReal.tsx
+
+ESPECIFICACIONES:
+- Editor visual de diseño personalizado
+- Selector de colores con paletas predefinidas
+- Catálogo de tipografías web
+- Uploader de logo con crop automático
+- Preview en tiempo real del micrositio
+- Plantillas de estilo prediseñadas
+- Export/import de configuraciones de marca
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Color picker component
+- File upload con preview
+- Live preview del diseño
+- Sistema de temas dinámico
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 13: Crear módulo Personalización App Cliente
+
+Crea estos archivos en src/features/branding/:
+
+1. src/features/branding/personalizacion-app-cliente/PersonalizacionAppClientePage.tsx
+2. src/features/branding/personalizacion-app-cliente/personalizacionAppClienteApi.ts
+3. src/features/branding/personalizacion-app-cliente/components/ConfiguradorApp.tsx
+4. src/features/branding/personalizacion-app-cliente/components/MockupMovil.tsx
+5. src/features/branding/personalizacion-app-cliente/components/EditorSplash.tsx
+6. src/features/branding/personalizacion-app-cliente/components/EditorIcono.tsx
+
+ESPECIFICACIONES:
+- Personalización de la app móvil del cliente
+- Logo, splash screen, icono de app
+- Frases personalizadas de bienvenida
+- Vista previa en mockups de móvil realistas
+- Configuración de colores de la app
+- Mensajes push personalizados
+- Preview iOS y Android
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Mockups de dispositivos móviles
+- Editor de imágenes básico
+- Preview responsive para móviles
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 14: Crear módulo Analíticas Avanzadas - Cohortes Clientes
+
+Crea la carpeta src/features/analytics-avanzadas/ y ESCRIBE estos archivos:
+
+1. src/features/analytics-avanzadas/cohortes-clientes/CohortesClientesPage.tsx
+2. src/features/analytics-avanzadas/cohortes-clientes/cohortesClientesApi.ts
+3. src/features/analytics-avanzadas/cohortes-clientes/components/TablaCohortes.tsx
+4. src/features/analytics-avanzadas/cohortes-clientes/components/GraficoRetencion.tsx
+5. src/features/analytics-avanzadas/cohortes-clientes/components/ComparativaCohortes.tsx
+
+ESPECIFICACIONES:
+- Segmentación por grupos de inicio
+- Cohortes por mes de inicio: "Enero 2025", "Febrero 2025"
+- Tabla de retención por cohorte
+- Curvas de retención comparativas
+- Líneas de colores por cohorte
+- Análisis de supervivencia de clientes
+- Métricas de retención por períodos
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Gráficos de líneas comparativos
+- Algoritmo de análisis de cohortes
+- Tabla de datos de retención
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 15: Crear módulo LTV Clientes
+
+Crea estos archivos en src/features/analytics-avanzadas/:
+
+1. src/features/analytics-avanzadas/ltv-clientes/LtvClientesPage.tsx
+2. src/features/analytics-avanzadas/ltv-clientes/ltvClientesApi.ts
+3. src/features/analytics-avanzadas/ltv-clientes/components/CalculadoraLTV.tsx
+4. src/features/analytics-avanzadas/ltv-clientes/components/TarjetasClientes.tsx
+5. src/features/analytics-avanzadas/ltv-clientes/components/GraficoAcumulado.tsx
+6. src/features/analytics-avanzadas/ltv-clientes/components/RankingValor.tsx
+
+ESPECIFICACIONES:
+- Cálculo del Lifetime Value por cliente
+- Ingresos totales generados por cliente
+- Duración promedio del ciclo de vida
+- Tarjetas individuales con LTV calculado
+- Gráfico acumulado de ingresos
+- Ranking de clientes más valiosos
+- Predicción de LTV futuro
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Algoritmos de cálculo de LTV
+- Gráficos acumulativos
+- Sistema de ranking automático
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 16: Crear módulo Retención Clientes
+
+Crea estos archivos en src/features/analytics-avanzadas/:
+
+1. src/features/analytics-avanzadas/retencion-clientes/RetencionClientesPage.tsx
+2. src/features/analytics-avanzadas/retencion-clientes/retencionClientesApi.ts
+3. src/features/analytics-avanzadas/retencion-clientes/components/DashboardRetencion.tsx
+4. src/features/analytics-avanzadas/retencion-clientes/components/GraficoTendencia.tsx
+5. src/features/analytics-avanzadas/retencion-clientes/components/AlertasPerdida.tsx
+6. src/features/analytics-avanzadas/retencion-clientes/components/KPIsDestacados.tsx
+
+ESPECIFICACIONES:
+- Vista general de fidelización
+- % de clientes activos mes a mes
+- Gráfico de tendencia de retención
+- Alertas automáticas de pérdida de clientes
+- KPIs destacados en grande
+- Predictor de churn
+- Comparativas con benchmarks del sector
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Gráficos de líneas de tendencia
+- Sistema de alertas automáticas
+- KPIs con métricas destacadas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 17: Crear módulo Analítica Ingresos
+
+Crea estos archivos en src/features/analytics-avanzadas/:
+
+1. src/features/analytics-avanzadas/analitica-ingresos/AnaliticaIngresosPage.tsx
+2. src/features/analytics-avanzadas/analitica-ingresos/analiticaIngresosApi.ts
+3. src/features/analytics-avanzadas/analitica-ingresos/components/DashboardFinanciero.tsx
+4. src/features/analytics-avanzadas/analitica-ingresos/components/GraficoDistribucion.tsx
+5. src/features/analytics-avanzadas/analitica-ingresos/components/ComparativaMensual.tsx
+6. src/features/analytics-avanzadas/analitica-ingresos/components/DesglosePorProducto.tsx
+
+ESPECIFICACIONES:
+- Resumen financiero avanzado
+- Desglose de ingresos por producto/servicio
+- Gráfico circular de distribución
+- Comparación mensual histórica
+- Tendencias de crecimiento
+- Análisis de rentabilidad por servicio
+- Proyecciones de ingresos
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Dashboard financiero completo
+- Gráficos circulares y de barras
+- Cálculos de trends y proyecciones
+
+RESULTADO ESPERADO:
+Un sistema completo Plan Solo Max con 17 módulos especializados de nivel enterprise, incluyendo automatizaciones avanzadas, integración con wearables, upsells inteligentes, branding personalizado y analíticas profundas. Todos los componentes deben seguir el patrón establecido en src/features/ con TypeScript, React y TailwindCSS, proporcionando un nivel profesional máximo para entrenadores que buscan escalar su negocio.

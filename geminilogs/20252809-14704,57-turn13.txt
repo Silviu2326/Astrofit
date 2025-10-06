@@ -1,0 +1,5 @@
+﻿The basic structure for the "Comparativa de Sedes - Analytics Multi-Centro" module has been created, including the following files:
+
+- `src/features/comparativa-sedes/ComparativaSedesPage.tsx`
+- `src/features/comparativa-sedes/comparativaSedesApi.ts`
+- `src/features/comparativa-sedes/components/DashboardComparativo.tsx`

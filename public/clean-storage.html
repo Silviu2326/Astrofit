@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Clean LocalStorage</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    .container {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    h1 {
+      color: #667eea;
+      margin-top: 0;
+    }
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 10px 5px;
+      transition: transform 0.2s;
+    }
+    button:hover {
+      transform: translateY(-2px);
+    }
+    button:active {
+      transform: translateY(0);
+    }
+    .success {
+      background: #10b981;
+      padding: 12px;
+      border-radius: 8px;
+      color: white;
+      margin: 10px 0;
+      display: none;
+    }
+    .info {
+      background: #f3f4f6;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+    .key {
+      font-family: monospace;
+      background: #e5e7eb;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧹 Limpiar LocalStorage</h1>
+
+    <div class="info">
+      <p><strong>Esta herramienta limpia datos corruptos del localStorage.</strong></p>
+      <p>Problemas que soluciona:</p>
+      <ul>
+        <li>Valores <span class="key">"undefined"</span> almacenados como strings</li>
+        <li>JSON inválido en <span class="key">currentUser</span></li>
+        <li>Tokens expirados</li>
+      </ul>
+    </div>
+
+    <h3>Estado actual:</h3>
+    <div id="status" class="info"></div>
+
+    <button onclick="cleanStorage()">🧹 Limpiar Storage</button>
+    <button onclick="clearAll()">🗑️ Borrar Todo</button>
+    <button onclick="location.reload()">🔄 Refrescar</button>
+
+    <div id="success" class="success">
+      ✅ LocalStorage limpiado correctamente
+    </div>
+  </div>
+
+  <script>
+    function showStatus() {
+      const status = document.getElementById('status');
+      const keys = ['token', 'currentUser', 'isAuthenticated'];
+      let html = '<ul>';
+
+      keys.forEach(key => {
+        const value = localStorage.getItem(key);
+        const isValid = value && value !== 'undefined' && value !== 'null';
+        const icon = isValid ? '✅' : '❌';
+        html += `<li>${icon} <span class="key">${key}</span>: ${value ? (value.length > 50 ? value.substring(0, 50) + '...' : value) : '<em>vacío</em>'}</li>`;
+      });
+
+      html += '</ul>';
+      status.innerHTML = html;
+    }
+
+    function cleanStorage() {
+      let cleaned = 0;
+
+      // Clean currentUser if it's invalid
+      const currentUser = localStorage.getItem('currentUser');
+      if (currentUser === 'undefined' || currentUser === 'null' || !currentUser) {
+        localStorage.removeItem('currentUser');
+        cleaned++;
+      } else {
+        try {
+          JSON.parse(currentUser);
+        } catch (e) {
+          console.error('Invalid JSON in currentUser, removing:', e);
+          localStorage.removeItem('currentUser');
+          cleaned++;
+        }
+      }
+
+      // Clean token if it's invalid
+      const token = localStorage.getItem('token');
+      if (token === 'undefined' || token === 'null' || !token) {
+        localStorage.removeItem('token');
+        cleaned++;
+      }
+
+      // Clean isAuthenticated if token is missing
+      if (!localStorage.getItem('token')) {
+        localStorage.removeItem('isAuthenticated');
+        cleaned++;
+      }
+
+      // Show success
+      document.getElementById('success').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('success').style.display = 'none';
+      }, 3000);
+
+      showStatus();
+      console.log(`Cleaned ${cleaned} invalid entries`);
+    }
+
+    function clearAll() {
+      if (confirm('¿Estás seguro de que quieres borrar TODOS los datos del localStorage?')) {
+        localStorage.clear();
+        document.getElementById('success').innerHTML = '✅ Todo el localStorage ha sido borrado';
+        document.getElementById('success').style.display = 'block';
+        showStatus();
+      }
+    }
+
+    // Show initial status
+    showStatus();
+  </script>
+</body>
+</html>

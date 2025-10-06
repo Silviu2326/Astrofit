@@ -1,0 +1,4 @@
+﻿The basic structure for the "Campeonatos - Eventos a Gran Escala" module has been created, including the following files:
+- `src/features/campeonatos/CampeonatosPage.tsx`
+- `src/features/campeonatos/campeonatosApi.ts`
+- `src/features/campeonatos/components/AgendaOficial.tsx`

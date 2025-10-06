@@ -1,0 +1,1 @@
+﻿I have updated the `src/features/agente-entrenador/AgenteEntrenadorPage.tsx` file with the modern fitness design as requested.

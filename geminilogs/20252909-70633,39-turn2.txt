@@ -1,0 +1,16 @@
+﻿TIMEOUT: Prompt excediÃ³ 5 minutos de ejecuciÃ³n
+Prompt original:
+
+Analiza el mÃ³dulo src/features/plansolomax/automatizaciones/automatizaciones/crear-flujo/ y identifica quÃ© componentes necesitan ser completados y mejorados.
+
+El mÃ³dulo debe ser un constructor visual avanzado para crear flujos de automatizaciÃ³n con:
+- Drag & drop de nodos
+- Conectores visuales
+- Panel de propiedades
+- Nodos disparadores (triggers)
+- Nodos de acciones
+- Interfaz moderna y profesional
+
+Revisa todos los archivos existentes y haz un diagnÃ³stico de quÃ© estÃ¡ implementado y quÃ© falta.
+
+

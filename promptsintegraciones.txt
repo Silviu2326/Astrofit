@@ -1,0 +1,137 @@
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Integraciones Esenciales - Centro de Conexiones siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/integraciones-esenciales/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/integraciones-esenciales/IntegracionesEsencialesPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/integraciones-esenciales/integracionesEsencialesApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/integraciones-esenciales/components/GoogleCalendarSync.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/integraciones-esenciales/components/ZoomVideoCall.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/integraciones-esenciales/components/StripePayments.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/integraciones-esenciales/components/ConfiguracionConexiones.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/integraciones-esenciales/components/EstadoIntegraciones.tsx
+
+
+ESPECIFICACIONES:
+- Conectar Fitoffice con herramientas esenciales del entrenador
+- Google Calendar: sincronización automática de reservas y entrenamientos
+- Zoom: generar enlaces de videollamadas para sesiones online automáticamente
+- Stripe: procesamiento seguro y automático de cobros sin fricciones
+- Configuración de conexiones con un par de clics por integración
+- Estado de integraciones: verificar que todo esté conectado correctamente
+- Ya no necesitas saltar de app en app para coordinarlo todo
+- Webhook automáticos para sincronización en tiempo real
+- Autenticación OAuth segura para cada servicio externo
+- Logs de sincronización para debugging y resolución de problemas
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Asistente de Onboarding - Configuración Inicial siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/asistente-onboarding/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/asistente-onboarding/AsistenteOnboardingPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/asistente-onboarding/asistenteOnboardingApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/asistente-onboarding/components/PasoAPaso.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/asistente-onboarding/components/ConfiguracionBasica.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/asistente-onboarding/components/PrimerCliente.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/asistente-onboarding/components/VerificacionCompleta.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/asistente-onboarding/components/TutorialInteractivo.tsx
+
+
+ESPECIFICACIONES:
+- Primer contacto fácil con Fitoffice, incluso si no eres "techie"
+- Tutorial paso a paso visual para configurar lo básico del sistema
+- Configuración básica: logo, horarios, servicios principales
+- Creación del primer cliente como ejemplo práctico
+- Verificación completa: al terminar, cuenta lista para trabajar en minutos
+- Tutorial interactivo como entrenador personal para tu software
+- Progreso visual con barra de completitud y pasos restantes
+- Tips contextuales en cada paso para optimizar la configuración
+- Saltear pasos opcionales para usuarios con experiencia
+- Celebración de finalización con acceso directo a funciones principales
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Importador de Datos - Migración de Información siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/importador-datos/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/importador-datos/ImportadorDatosPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/importador-datos/importadorDatosApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/importador-datos/components/SubidaCSV.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/importador-datos/components/PlantillasGoogleSheets.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/importador-datos/components/ConversionCRM.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/importador-datos/components/ValidacionDatos.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/importador-datos/components/HistorialImportaciones.tsx
+
+
+ESPECIFICACIONES:
+- Migrar clientes, entrenamientos y reservas desde hojas de cálculo existentes
+- Subida de archivos CSV con mapeo automático de columnas
+- Plantillas de Google Sheets predefinidas para facilitar la importación
+- Conversión automática a clientes reales dentro del CRM
+- Validación de datos antes de importar para evitar errores
+- Historial de importaciones realizadas con posibilidad de rollback
+- No empezar de cero: migrar negocio completo en una tarde
+- Preview de datos antes de confirmar la importación
+- Manejo de duplicados con opciones de fusión o descarte
+- Soporte para múltiples formatos: Excel, CSV, Google Sheets
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Centro de Ayuda - Soporte y Documentación siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/centro-ayuda/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/centro-ayuda/CentroAyudaPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/centro-ayuda/centroAyudaApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/centro-ayuda/components/ArticulosClaros.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/centro-ayuda/components/PreguntasFrecuentes.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/centro-ayuda/components/GuiasRapidas.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/centro-ayuda/components/ContactoSoporte.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/centro-ayuda/components/BuscadorAyuda.tsx
+
+
+ESPECIFICACIONES:
+- Espacio siempre disponible para resolver dudas al instante
+- Artículos claros con capturas y ejemplos paso a paso
+- Preguntas frecuentes organizadas por categorías para resolución rápida
+- Guías rápidas para nuevas funciones y actualizaciones
+- Contacto con soporte personalizado cuando necesites ayuda humana
+- Buscador inteligente para encontrar soluciones específicas
+- Videos tutoriales embebidos para explicaciones visuales
+- Feedback de utilidad en cada artículo para mejora continua
+- Actualizaciones automáticas cuando se lanzan nuevas funcionalidades
+- Chatbot inicial para filtrar consultas básicas antes del soporte humano
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks

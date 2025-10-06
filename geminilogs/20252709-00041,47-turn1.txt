@@ -1,0 +1,32 @@
+﻿TIMEOUT: Prompt excedi├│ 10 minutos de ejecuci├│n
+Prompt original:
+
+IMPORTANTE: Debes crear fÃ­sicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el mÃ³dulo CRM - Leads Listado siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/leads-listado/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/leads-listado/LeadsListadoPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/leads-listado/leadsListadoApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/leads-listado/components/LeadsKanban.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/leads-listado/components/LeadCard.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/leads-listado/components/LeadsStats.tsx
+
+
+ESPECIFICACIONES:
+- Tablero kanban con columnas: "Nuevo contacto", "Contactado", "Cita agendada", "Ganado", "Perdido"
+- Tarjetas de leads arrastrables entre columnas
+- EstadÃ­sticas del embudo: total leads, tasa conversiÃ³n, tiempo promedio
+- Filtros por origen, fecha, cualificaciÃ³n
+- Vista de lista como alternativa al kanban
+- Acciones rÃ¡pidas: llamar, enviar email, agendar cita
+- Cada tarjeta debe mostrar: nombre, telÃ©fono, email, origen, fecha contacto, objetivo
+
+REQUISITOS TÃ‰CNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrÃ³n de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+

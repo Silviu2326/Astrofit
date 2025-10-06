@@ -1,0 +1,7 @@
+﻿All specified files and folders for the "Configuraci├│n Upsells" module have been created with initial content:
+
+- `src/features/upsells/configuracion-upsells/ConfiguracionUpsellsPage.tsx`
+- `src/features/upsells/configuracion-upsells/configuracionUpsellsApi.ts`
+- `src/features/upsells/configuracion-upsells/components/EditorReglas.tsx`
+- `src/features/upsells/configuracion-upsells/components/CondicionesLogicas.tsx`
+- `src/features/upsells/configuracion-upsells/components/Flujoventa.tsx`

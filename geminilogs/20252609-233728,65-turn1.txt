@@ -1,0 +1,3 @@
+﻿Okay, I will create the complete structure for the "CRM - Clientes Listado" module.call:write_file{content:It seems the path you provided is outside of the project's root directory `C:\Users\usuario\Documents`. All file operations must occur within this directory.
+
+Could you please provide the correct relative path for the feature within `C:\Users\usuario\Documents`? For example, should I create it in `C:\Users\usuario\Documents\project-bolt-sb1-qekdxfwt\project\src\features\clientes-listado`?

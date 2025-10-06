@@ -1,0 +1,29 @@
+﻿
+
+M├│dulo "Historial de Rendimiento" estilizado completamente seg├║n GUIA_ESTILOS_UI.md:
+
+## Ô£à Cambios realizados:
+
+### **HistorialRendimientoPage.tsx**
+- Hero section con gradiente indigo-purple-pink
+- Patrones de fondo animados (blur orbs + grid)
+- Selector de timeframe con badges rounded-full
+- Animaciones de entrada escalonadas con Framer Motion
+
+### **GraficosProgresion.tsx**
+- Container glassmorphism (bg-white/80 backdrop-blur-xl)
+- Header con gradiente blue-indigo-purple
+- Dots pattern de fondo
+- Badges informativos con rounded-2xl
+- Estados de loading estilizados
+
+### **Todos los componentes (8)**
+- Cards con glassmorphism y shadow-xl
+- Efectos hover: scale + lift (y: -8)
+- Shimmer effect en hover
+- Iconos con gradientes ├║nicos por componente
+- Badges rounded-full con temas de color
+- Barras de progreso animadas
+- Decoraciones blur de fondo
+
+Cada componente tiene su propia identidad de color mientras mantiene consistencia en el dise├▒o.

@@ -1,0 +1,9 @@
+﻿Entiendo que est├ís compartiendo contexto sobre la estructura del proyecto y rutas, pero no has especificado una tarea concreta que deba realizar.
+
+┬┐Qu├® necesitas que haga? Por ejemplo:
+- ┬┐Crear componentes espec├¡ficos?
+- ┬┐Aplicar estilos a alguna funcionalidad?
+- ┬┐Revisar archivos existentes?
+- ┬┐Implementar una feature espec├¡fica?
+
+Por favor, ind├¡came qu├® tarea espec├¡fica necesitas que complete.

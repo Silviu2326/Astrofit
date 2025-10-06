@@ -1,0 +1,16 @@
+﻿
+
+P├ígina transformada en configurador completo de app m├│vil con:
+
+Ô£à **8 tabs de configuraci├│n**: Informaci├│n, Icono, Splash Screen, Colores, Navegaci├│n, Notificaciones, Onboarding, M├│dulos
+Ô£à **Mockup interactivo 3D** con m├║ltiples dispositivos (iPhone 15 Pro, SE, Galaxy S23, Pixel 7)
+Ô£à **Preview en tiempo real** que refleja todos los cambios
+Ô£à **Toggle Dark/Light mode** en el preview
+Ô£à **Plantillas predise├▒adas** (Minimalista, Energ├®tica, Profesional, Dark)
+Ô£à **Simulador fullscreen** para probar la app
+Ô£à **Modal de publicaci├│n** con proceso de build simulado y progreso
+Ô£à **Analytics dashboard** con m├®tricas (descargas, usuarios, rating, versi├│n)
+Ô£à **QR code** para preview en dispositivo real
+Ô£à **Configuraci├│n completa**: iconos, splash, colores, navegaci├│n, notificaciones, onboarding, m├│dulos
+
+Todas las configuraciones son editables en tiempo real y se reflejan inmediatamente en el mockup del dispositivo.

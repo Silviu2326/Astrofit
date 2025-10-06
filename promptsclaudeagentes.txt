@@ -1,0 +1,1322 @@
+# 🤖 PROMPTS DE ESTILIZACIÓN - FEATURES AGENTS (AGENTES IA)
+
+---
+
+## 📋 PROMPT 1: Agente de Bienestar
+
+Transforma completamente la página del Agente de Bienestar ([src/features/agents/agente-bienestar/AgenteBienestarPage.tsx](src/features/agents/agente-bienestar/AgenteBienestarPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un agente conversacional enfocado en bienestar integral
+- Facilita el seguimiento de hábitos saludables y motivación
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Agente Bienestar**
+   - Gradiente `from-teal-600 via-cyan-600 to-blue-600`
+   - Título "Agente de Bienestar"
+   - Descripción: "Tu asistente personal para un estilo de vida saludable"
+   - Icono/Avatar del agente animado
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Nivel de Bienestar (0-100)
+   - Días Activos Consecutivos
+   - Objetivos Cumplidos Esta Semana
+   - Racha de Hábitos
+   - Cards con glassmorphism y progress circular
+
+3. **INTERFAZ DE CHAT CON IA**
+   - Chat conversacional estilo moderno:
+     * Burbujas de mensaje diferenciadas (usuario vs agente)
+     * Avatar del agente con animación de "escribiendo..."
+     * Timestamps
+     * Markdown rendering en mensajes
+     * Sugerencias rápidas (quick replies)
+   - Input de texto con:
+     * Textarea expandible
+     * Botón enviar con gradiente
+     * Indicador de caracteres
+     * Soporte para emojis
+   - Historial de conversación scrolleable
+
+4. **PANEL MOTIVACIONAL** ([PanelMotivacional.tsx](src/features/agents/agente-bienestar/components/PanelMotivacional.tsx))
+   - Frases motivacionales diarias:
+     * Card destacado con quote del día
+     * Autor de la frase
+     * Compartir en redes
+   - Galería de logros:
+     * Badges de achievements
+     * Progreso hacia próximo logro
+     * Animación al desbloquear
+   - Nivel de energía del día (gauge animado)
+
+5. **SEMÁFORO DE ADHERENCIA** ([SemaforoAdherencia.tsx](src/features/agents/agente-bienestar/components/SemaforoAdherencia.tsx))
+   - Sistema visual de estado:
+     * Verde: Excelente adherencia (>85%)
+     * Amarillo: Adherencia moderada (60-85%)
+     * Rojo: Necesita atención (<60%)
+   - Métricas por área:
+     * Nutrición (progress bar)
+     * Ejercicio (progress bar)
+     * Sueño (progress bar)
+     * Hidratación (progress bar)
+     * Estrés (progress bar invertido)
+   - Alertas y recomendaciones según estado
+
+6. **TABLERO DE HÁBITOS** ([TableroHabitos.tsx](src/features/agents/agente-bienestar/components/TableroHabitos.tsx))
+   - Hábitos diarios trackeados:
+     * Checkboxes estilizados con animación
+     * Hábitos personalizables
+     * Horario sugerido por hábito
+     * Racha de días completados
+   - Calendario heatmap:
+     * Vista mensual de cumplimiento
+     * Colores según adherencia
+     * Click en día muestra detalles
+   - Botón "Agregar nuevo hábito"
+
+7. **RETOS GAMIFICADOS** ([RetosGamificados.tsx](src/features/agents/agente-bienestar/components/RetosGamificados.tsx))
+   - Cards de retos activos:
+     * Nombre y descripción del reto
+     * Progreso visual (progress bar)
+     * Tiempo restante (countdown)
+     * Recompensa (puntos/badge)
+   - Tipos de retos:
+     * Diarios (24h)
+     * Semanales (7 días)
+     * Mensuales (30 días)
+   - Botón "Explorar más retos"
+   - Historial de retos completados
+
+8. **TENDENCIAS DE ESTILO DE VIDA** ([TendenciasEstiloVida.tsx](src/features/agents/agente-bienestar/components/TendenciasEstiloVida.tsx))
+   - Gráficos de evolución:
+     * Nivel de bienestar (línea temporal)
+     * Adherencia por categoría (área apilada)
+     * Comparativa semanal/mensual
+   - Insights generados por IA:
+     * Patrones detectados
+     * Correlaciones (ej: dormir bien → mejor energía)
+     * Recomendaciones personalizadas
+
+9. **SUGERENCIAS CONTEXTUALES**
+   - El agente sugiere según la hora:
+     * Mañana: "¿Desayunaste saludable?"
+     * Mediodía: "Hora de hidratarte"
+     * Tarde: "¿Qué tal un break activo?"
+     * Noche: "Prepárate para un buen descanso"
+   - Botones de acción rápida contextuales
+
+10. **DATOS MOCKEADOS**
+    - Historial de conversación (10-15 mensajes)
+    - Nivel de bienestar: 75-85
+    - 5-7 hábitos diarios
+    - 3-5 retos activos
+    - Heatmap de 30 días
+    - Tendencias de últimas 4 semanas
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente teal-cyan-blue para hero
+- Burbujas de chat con glassmorphism
+- Avatar del agente con animación pulse
+- Progress bars con gradientes animados
+- Semáforo visual (verde/amarillo/rojo)
+- Heatmap calendar colorido
+- Badges de logros brillantes
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/agents/agente-bienestar](src/features/agents/agente-bienestar).
+
+---
+
+## 📋 PROMPT 2: Agente Científico
+
+Transforma completamente la página del Agente Científico ([src/features/agents/agente-cientifico/AgenteCientificoPage.tsx](src/features/agents/agente-cientifico/AgenteCientificoPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un agente especializado en análisis científico y basado en evidencia
+- Facilita la investigación y explicación de conceptos fitness/salud
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Agente Científico**
+   - Gradiente `from-purple-600 via-indigo-600 to-blue-600`
+   - Título "Agente Científico"
+   - Descripción: "Análisis basado en evidencia y estudios peer-reviewed"
+   - Icono de microscopio/cerebro animado
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Estudios Consultados
+   - Análisis Realizados
+   - Referencias Citadas
+   - Nivel de Confianza Promedio (%)
+   - Cards con glassmorphism
+
+3. **INTERFAZ DE INVESTIGACIÓN**
+   - Chat científico con:
+     * Mensajes con referencias [1], [2], etc.
+     * Nivel de evidencia (badge: Alta/Media/Baja)
+     * Visualización de estudios citados
+     * Explicaciones técnicas expandibles
+   - Input especializado:
+     * Placeholder: "Pregunta sobre fisiología, nutrición, ejercicio..."
+     * Modo búsqueda avanzada
+     * Filtros de evidencia
+
+4. **PANEL DE REFERENCIAS**
+   - Lista de estudios citados:
+     * Título del paper
+     * Autores y año
+     * Journal/Publicación
+     * DOI/Link
+     * Nivel de evidencia
+   - Botón "Ver estudio completo"
+   - Exportar referencias (formato APA/Vancouver)
+
+5. **ANÁLISIS TÉCNICO**
+   - Gráficos científicos:
+     * Curvas de adaptación
+     * Gráficos de dosis-respuesta
+     * Diagramas de sistemas fisiológicos
+     * Forest plots (meta-análisis)
+   - Tablas de datos comparativos
+   - Calculadoras científicas integradas
+
+6. **EXPLICADOR DE CONCEPTOS**
+   - Modo "Explícame como si tuviera 5 años"
+   - Modo "Técnico completo"
+   - Diagramas interactivos:
+     * Anatomía muscular
+     * Vías metabólicas
+     * Cascadas hormonales
+   - Glosario de términos (tooltips)
+
+7. **VALIDADOR DE MITOS**
+   - Sección de mitos vs realidad:
+     * Claim popular
+     * Veredicto del agente (Verdadero/Falso/Parcial)
+     * Explicación científica
+     * Referencias de soporte
+   - Cards con formato pregunta/respuesta
+
+8. **COMPARADOR DE PROTOCOLOS**
+   - Comparativa científica entre métodos:
+     * HIIT vs LISS
+     * Keto vs Low-fat
+     * Etc.
+   - Tabla comparativa con:
+     * Eficacia (evidence-based)
+     * Adherencia
+     * Riesgos
+     * Recomendaciones
+
+9. **BIBLIOTECA DE ESTUDIOS**
+   - Base de datos curada:
+     * Filtros por tema, año, evidencia
+     * Tarjetas de estudios destacados
+     * Búsqueda semántica
+   - Guardados para referencia
+
+10. **DATOS MOCKEADOS**
+    - 50+ estudios simulados
+    - Conversaciones con referencias
+    - Análisis técnicos con gráficos
+    - 10-15 mitos populares
+    - Comparativas de protocolos
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente purple-indigo-blue para hero
+- Chat con referencias numeradas
+- Badges de nivel de evidencia
+- Gráficos científicos con Recharts
+- Cards de estudios estilo paper
+- Tablas comparativas estilizadas
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/agents/agente-cientifico](src/features/agents/agente-cientifico).
+
+---
+
+## 📋 PROMPT 3: Agente de Comunicación
+
+Transforma completamente la página del Agente de Comunicación ([src/features/agents/agente-comunicacion/AgenteComunicacionPage.tsx](src/features/agents/agente-comunicacion/AgenteComunicacionPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un agente especializado en redacción y comunicación con clientes
+- Facilita la generación de contenido personalizado
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Agente Comunicación**
+   - Gradiente `from-pink-600 via-rose-600 to-orange-600`
+   - Título "Agente de Comunicación"
+   - Descripción: "Genera mensajes personalizados para tus clientes"
+   - Icono de mensaje/megáfono animado
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Mensajes Generados
+   - Tasa de Apertura Promedio
+   - Templates Creados
+   - Clientes Contactados
+   - Cards con glassmorphism
+
+3. **GENERADOR DE MENSAJES**
+   - Formulario de contexto:
+     * Tipo de mensaje (dropdown):
+       - Bienvenida
+       - Seguimiento
+       - Motivación
+       - Recordatorio
+       - Felicitación
+       - Recuperación
+     * Cliente objetivo (select o input)
+     * Objetivo del mensaje
+     * Tono (Formal/Casual/Motivador/Empático)
+   - Botón "Generar mensaje"
+   - Preview del mensaje generado
+
+4. **EDITOR DE MENSAJES**
+   - Textarea con el mensaje generado
+   - Toolbar de edición:
+     * Negrita, cursiva
+     * Variables dinámicas ({{nombre}}, {{objetivo}})
+     * Emojis
+     * Longitud del mensaje
+   - Vista previa por canal:
+     * Email
+     * SMS
+     * WhatsApp
+     * Push notification
+
+5. **BIBLIOTECA DE TEMPLATES**
+   - Grid de templates guardados:
+     * Cards con preview
+     * Tipo y ocasión (badges)
+     * Tasa de apertura histórica
+     * Última vez usado
+   - Botón "Usar template"
+   - Botón "Editar template"
+   - Búsqueda y filtros
+
+6. **RECOMENDADOR DE TIMING**
+   - Mejor momento para enviar:
+     * Análisis de patrones del cliente
+     * Hora sugerida (visual)
+     * Día de la semana óptimo
+   - Programador de envío:
+     * Date/time picker estilizado
+     * Zona horaria
+     * Envío automático
+
+7. **ANALIZADOR DE TONO**
+   - Medidor de tono del mensaje:
+     * Profesionalismo (gauge)
+     * Empatía (gauge)
+     * Motivación (gauge)
+     * Claridad (gauge)
+   - Sugerencias de mejora
+   - Reescribir con otro tono
+
+8. **PERSONALIZADOR MASIVO**
+   - Envío a múltiples clientes:
+     * Lista de destinatarios
+     * Personalización automática por cliente
+     * Variables por cliente (nombre, objetivo, progreso)
+   - Preview individual antes de enviar
+   - Confirmación de envío masivo
+
+9. **HISTORIAL DE COMUNICACIONES**
+   - Timeline de mensajes enviados:
+     * Cliente
+     * Tipo de mensaje
+     * Fecha/hora
+     * Estado (Enviado/Leído/Respondido)
+     * Tasa de apertura
+   - Filtros y búsqueda
+   - Exportar historial
+
+10. **ANÁLISIS DE EFECTIVIDAD**
+    - Métricas de mensajes:
+      * Tasa de apertura por tipo
+      * Tasa de respuesta
+      * Engagement por tono
+      * Mejores horarios
+    - Gráficos de rendimiento
+    - Insights y recomendaciones
+
+11. **DATOS MOCKEADOS**
+    - 30-50 templates variados
+    - Historial de 50+ mensajes
+    - Métricas de efectividad
+    - Clientes simulados para personalización
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente pink-rose-orange para hero
+- Editor con toolbar estilizado
+- Cards de templates con preview
+- Gauges de análisis de tono
+- Timeline de comunicaciones
+- Vista previa por canal (móvil, desktop)
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/agents/agente-comunicacion](src/features/agents/agente-comunicacion).
+
+---
+
+## 📋 PROMPT 4: Agente Copiloto
+
+Transforma completamente la página del Agente Copiloto ([src/features/agents/agente-copiloto/AgenteCopilotoPage.tsx](src/features/agents/agente-copiloto/AgenteCopilotoPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un agente asistente general para todas las tareas del entrenador
+- Facilita la automatización y sugerencias contextuales
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Agente Copiloto**
+   - Gradiente `from-violet-600 via-purple-600 to-indigo-600`
+   - Título "Agente Copiloto"
+   - Descripción: "Tu asistente inteligente para gestionar tu negocio"
+   - Icono de robot/asistente animado
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Tareas Automatizadas Hoy
+   - Tiempo Ahorrado (horas)
+   - Sugerencias Aplicadas
+   - Eficiencia Operativa (%)
+   - Cards con glassmorphism
+
+3. **DASHBOARD DE SUGERENCIAS**
+   - Cards de sugerencias inteligentes:
+     * Tipo (icono y badge colorido):
+       - Nutrición (verde)
+       - Entrenamiento (azul)
+       - Clientes (rosa)
+       - Finanzas (amarillo)
+       - Marketing (naranja)
+     * Título de la sugerencia
+     * Descripción breve
+     * Prioridad (Alta/Media/Baja)
+     * Acciones: Aplicar/Ignorar/Ver más
+   - Ordenar por prioridad/fecha/tipo
+
+4. **AUTOMATIZACIONES ACTIVAS**
+   - Lista de flujos automatizados:
+     * Nombre de la automatización
+     * Trigger (evento que la activa)
+     * Acciones ejecutadas
+     * Estado (Activa/Pausada)
+     * Estadísticas (veces ejecutada)
+   - Botón "Nueva automatización"
+   - Toggle activar/desactivar
+
+5. **ASISTENTE CONVERSACIONAL**
+   - Chat multimodal:
+     * Responde preguntas generales
+     * Ejecuta acciones en el sistema
+     * Busca información
+     * Genera reportes
+   - Input de comando:
+     * "Crea una rutina para Juan"
+     * "Muéstrame ingresos del mes"
+     * "Programa mensaje de seguimiento"
+   - Confirmaciones antes de ejecutar acciones
+
+6. **AGENDA INTELIGENTE**
+   - Vista del día con sugerencias:
+     * Horario del día
+     * Citas programadas
+     * Tareas pendientes (generadas por IA)
+     * Bloques de tiempo sugeridos
+   - Optimizador de calendario:
+     * Detecta huecos
+     * Sugiere reorganización
+     * Bloques de enfoque
+
+7. **INSIGHTS DE NEGOCIO**
+   - Panel de insights generados:
+     * "3 clientes sin contactar en 7 días"
+     * "Tus ventas aumentaron 15% este mes"
+     * "María podría necesitar nueva rutina"
+     * "Mejor día para publicar contenido: Martes"
+   - Click en insight muestra detalles
+   - Acciones rápidas por insight
+
+8. **GENERADOR DE REPORTES**
+   - Crear reportes automáticos:
+     * Seleccionar métricas
+     * Rango de fechas
+     * Cliente específico o general
+     * Formato (PDF/Excel/Dashboard)
+   - Reportes programados (semanal/mensual)
+   - Galería de reportes recientes
+
+9. **CENTRO DE NOTIFICACIONES**
+   - Notificaciones inteligentes:
+     * Cliente cumplió objetivo (celebrar)
+     * Pago pendiente (recordar)
+     * Sesión cancelada (reprogramar)
+     * Oportunidad de upsell
+   - Filtros por tipo y prioridad
+   - Acciones directas desde notificación
+
+10. **MODO DELEGACIÓN**
+    - Delegar tareas al copiloto:
+      * "Haz seguimiento a clientes inactivos"
+      * "Optimiza las rutinas de esta semana"
+      * "Analiza el rendimiento del mes"
+    - Estado de tareas delegadas
+    - Resultados y confirmación
+
+11. **CONFIGURACIÓN DE IA**
+    - Personalizar comportamiento:
+      * Nivel de proactividad (slider)
+      * Tipos de sugerencias activas
+      * Frecuencia de notificaciones
+      * Tono de comunicación
+    - Entrenar al copiloto con preferencias
+
+12. **DATOS MOCKEADOS**
+    - 10-15 sugerencias variadas
+    - 5-7 automatizaciones activas
+    - Historial de chat
+    - Agenda con eventos
+    - 8-12 insights generados
+    - Notificaciones variadas
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente violet-purple-indigo para hero
+- Cards de sugerencias con iconos grandes
+- Badges de prioridad coloridos
+- Timeline de automatizaciones
+- Chat con comandos destacados
+- Insights con llamados a la acción
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/agents/agente-copiloto](src/features/agents/agente-copiloto).
+
+---
+
+## 📋 PROMPT 5: Agente Entrenador
+
+Transforma completamente la página del Agente Entrenador ([src/features/agents/agente-entrenador/AgenteEntrenadorPage.tsx](src/features/agents/agente-entrenador/AgenteEntrenadorPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un agente especializado en programación de entrenamientos
+- Facilita la creación y optimización de rutinas
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Agente Entrenador**
+   - Gradiente `from-orange-600 via-red-600 to-pink-600`
+   - Título "Agente Entrenador"
+   - Descripción: "IA especializada en programación de entrenamientos"
+   - Icono de pesa/músculo animado
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Rutinas Generadas
+   - Ejercicios en Base de Datos
+   - Clientes Entrenando
+   - Tasa de Adherencia Promedio (%)
+   - Cards con glassmorphism
+
+3. **CONSTRUCTOR VISUAL** ([ConstructorVisual.tsx](src/features/agents/agente-entrenador/components/ConstructorVisual.tsx) / [builder/ConstructorVisual.tsx](src/features/agents/agente-entrenador/components/builder/ConstructorVisual.tsx))
+   - Interfaz de construcción de rutinas:
+     * Drag & drop de ejercicios
+     * Timeline semanal (L-M-X-J-V-S-D)
+     * Bloques de entrenamiento por día
+     * Vista previa en tiempo real
+   - Panel lateral de ejercicios:
+     * Búsqueda y filtros
+     * Categorías (Fuerza, Cardio, Movilidad)
+     * Grupo muscular
+     * Nivel de dificultad
+
+4. **BLOQUES DE ENTRENAMIENTO** ([BloquesEntrenamiento.tsx](src/features/agents/agente-entrenador/components/builder/BloquesEntrenamiento.tsx))
+   - Componentes modulares:
+     * Calentamiento (5-10 min)
+     * Bloque principal (30-45 min)
+     * Trabajo auxiliar (10-15 min)
+     * Enfriamiento/Estiramiento (5-10 min)
+   - Drag & drop para reordenar bloques
+   - Configuración por bloque:
+     * Duración
+     * Intensidad
+     * Ejercicios incluidos
+
+5. **SUPERSERIES MANAGER** ([SuperseriesManager.tsx](src/features/agents/agente-entrenador/components/builder/SuperseriesManager.tsx))
+   - Crear superseries/circuitos:
+     * Agrupar 2-4 ejercicios
+     * Configurar orden
+     * Sets y descansos
+     * Intensidad (RPE/RIR)
+   - Visualización de superseries:
+     * Flechas conectoras
+     * Colores por grupo
+     * Animación de flujo
+
+6. **BANCO DE VARIANTES** ([BancoVariantes.tsx](src/features/agents/agente-entrenador/components/BancoVariantes.tsx))
+   - Sugerencias de variantes por ejercicio:
+     * Click en ejercicio muestra variantes
+     * Filtros: Equipo disponible, Nivel, Músculo target
+     * Preview de cada variante (GIF/imagen)
+     * Sustituir con un click
+   - Base de datos de 500+ ejercicios
+
+7. **DASHBOARD ENTRENAMIENTO** ([DashboardEntrenamiento.tsx](src/features/agents/agente-entrenador/components/dashboard/DashboardEntrenamiento.tsx))
+   - Vista general de entrenamientos:
+     * Rutinas activas (cards)
+     * Distribución de volumen semanal (gráfico)
+     * Grupos musculares trabajados (radar chart)
+     * Periodización visualizada
+
+8. **ANÁLISIS DE RENDIMIENTO** ([AnalisisRendimiento.tsx](src/features/agents/agente-entrenador/components/analytics/AnalisisRendimiento.tsx))
+   - Métricas de entrenamiento:
+     * Volumen total (sets x reps x peso)
+     * Frecuencia por grupo muscular
+     * Progresión de carga (gráfico temporal)
+     * Densidad de entrenamiento
+   - Comparativas semana a semana
+
+9. **INDICADORES DE EQUILIBRIO** ([IndicadoresEquilibrio.tsx](src/features/agents/agente-entrenador/components/analytics/IndicadoresEquilibrio.tsx))
+   - Balance de entrenamiento:
+     * Push vs Pull (gauge)
+     * Tren superior vs Inferior (gauge)
+     * Fuerza vs Cardio vs Movilidad (pie chart)
+     * Alertas de desbalance
+   - Sugerencias de corrección
+
+10. **PREDICCIONES IA** ([PrediccionesIA.tsx](src/features/agents/agente-entrenador/components/analytics/PrediccionesIA.tsx))
+    - Proyecciones inteligentes:
+      * Fuerza estimada en 4-8 semanas
+      * Riesgo de sobreentrenamiento (%)
+      * Momento óptimo de deload
+      * Potencial de progreso por ejercicio
+    - Gráficos de proyección
+    - Confianza del modelo (%)
+
+11. **VALIDADOR DE RUTINAS** ([ValidadorRutinas.tsx](src/features/agents/agente-entrenador/components/analytics/ValidadorRutinas.tsx))
+    - Validación automática de rutina:
+      * Volumen adecuado (✓/✗)
+      * Balance muscular (✓/✗)
+      * Periodización correcta (✓/✗)
+      * Recuperación suficiente (✓/✗)
+    - Score de calidad (0-100)
+    - Sugerencias de mejora específicas
+
+12. **GENERADOR AUTOMÁTICO**
+    - Crear rutina con IA:
+      * Inputs:
+        - Objetivo (Fuerza, Hipertrofia, Pérdida grasa)
+        - Días disponibles (3-6 días)
+        - Duración por sesión
+        - Nivel de experiencia
+        - Equipo disponible
+      * Output: Rutina completa generada
+    - Editar después de generar
+
+13. **DATOS MOCKEADOS**
+    - 500+ ejercicios en base de datos
+    - 10-15 rutinas de ejemplo
+    - Análisis de rendimiento simulado
+    - Predicciones de progreso
+    - Validaciones de rutinas
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente orange-red-pink para hero
+- Constructor drag & drop visual
+- Cards de ejercicios con imágenes
+- Gauges de balance muscular
+- Timeline semanal interactiva
+- Gráficos de análisis con Recharts
+- Badges de validación (check/warning)
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/agents/agente-entrenador](src/features/agents/agente-entrenador).
+
+---
+
+## 📋 PROMPT 6: Agente Financiero
+
+Transforma completamente la página del Agente Financiero ([src/features/agents/agente-financiero/AgenteFinancieroPage.tsx](src/features/agents/agente-financiero/AgenteFinancieroPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un agente especializado en análisis financiero y predicciones
+- Facilita la toma de decisiones económicas
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Agente Financiero**
+   - Gradiente `from-green-600 via-emerald-600 to-teal-600`
+   - Título "Agente Financiero"
+   - Descripción: "Análisis inteligente de tu negocio fitness"
+   - Icono de gráfico/dinero animado
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Ingresos del Mes
+   - Margen de Ganancia (%)
+   - Proyección Trimestre
+   - Salud Financiera (score)
+   - Cards con glassmorphism y números grandes
+
+3. **DASHBOARD FINANCIERO**
+   - Gráfico de ingresos vs gastos:
+     * Líneas temporales comparativas
+     * Área sombreada de ganancia
+     * Marcadores de eventos importantes
+   - Filtros: Semanal/Mensual/Trimestral/Anual
+   - Exportar datos
+
+4. **PROYECCIONES DE IA**
+   - Predicciones de ingresos:
+     * Próximos 30/60/90 días
+     * Rango de confianza (mín/max)
+     * Tendencia (creciente/estable/decreciente)
+   - Gráfico de proyección:
+     * Línea de tendencia
+     * Zona de confianza sombreada
+     * Escenarios (optimista/realista/pesimista)
+
+5. **ANÁLISIS DE RENTABILIDAD**
+   - Rentabilidad por servicio:
+     * Entrenamiento personal (bar)
+     * Planes nutricionales (bar)
+     * Membresías (bar)
+     * Clases grupales (bar)
+   - Margen de ganancia por servicio (%)
+   - Recomendaciones de pricing
+
+6. **DETECTOR DE OPORTUNIDADES**
+   - Cards de insights financieros:
+     * "Puedes aumentar precio de membresías 10%"
+     * "3 clientes candidatos para upgrade"
+     * "Mes ideal para promoción de captación"
+     * "Reduce 15% de gastos en categoría X"
+   - Impacto estimado ($)
+   - Botones de acción
+
+7. **GESTOR DE GASTOS**
+   - Categorización automática:
+     * Marketing
+     * Equipamiento
+     * Software/Herramientas
+     * Alquiler/Servicios
+     * Otros
+   - Gráfico de distribución (dona)
+   - Comparativa con meses anteriores
+   - Alertas de gastos inusuales
+
+8. **ANÁLISIS DE CLIENTES**
+   - Valor de vida del cliente (LTV):
+     * LTV promedio
+     * LTV por segmento
+     * Gráfico de distribución
+   - Churn rate:
+     * Tasa de abandono (%)
+     * Predicción de riesgo por cliente
+     * Acciones preventivas sugeridas
+
+9. **ESCENARIOS FINANCIEROS**
+   - Simulador de escenarios:
+     * "¿Qué pasa si contrato otro entrenador?"
+     * "¿Y si subo precios 15%?"
+     * "¿Cuánto necesito facturar para X ganancia?"
+   - Inputs ajustables (sliders)
+   - Resultados en tiempo real
+   - Gráficos comparativos
+
+10. **RECOMENDADOR DE PRECIOS**
+    - Análisis de pricing:
+      * Precio actual vs mercado
+      * Elasticidad de demanda
+      * Punto óptimo de precio
+    - Sugerencias de ajuste:
+      * Por servicio
+      * Por segmento de cliente
+      * Por temporada
+    - Impacto proyectado
+
+11. **ALERTAS Y NOTIFICACIONES**
+    - Notificaciones financieras:
+      * "Ingreso del día 20% bajo lo esperado"
+      * "Mes récord: +35% vs mes pasado"
+      * "Gasto en marketing superó presupuesto"
+    - Panel de alertas con acciones
+
+12. **REPORTES AUTOMÁTICOS**
+    - Generar reportes:
+      * Estado de resultados
+      * Flujo de caja
+      * Balance general simplificado
+    - Formatos: PDF/Excel
+    - Programación automática
+
+13. **DATOS MOCKEADOS**
+    - Histórico de 12 meses de ingresos/gastos
+    - Proyecciones de 3 meses
+    - 20+ clientes con LTV calculado
+    - Oportunidades detectadas
+    - Escenarios simulados
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente green-emerald-teal para hero
+- Números grandes con animación de conteo
+- Gráficos financieros profesionales (Recharts)
+- Cards de oportunidades con $ destacado
+- Zona de confianza sombreada en proyecciones
+- Alertas con colores (verde: bueno, rojo: atención)
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/agents/agente-financiero](src/features/agents/agente-financiero).
+
+---
+
+## 📋 PROMPT 7: Agente de Marketing
+
+Transforma completamente la página del Agente de Marketing ([src/features/agents/agente-marketing/AgenteMarketingPage.tsx](src/features/agents/agente-marketing/AgenteMarketingPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un agente especializado en estrategias de marketing
+- Facilita la generación de contenido y análisis de campañas
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Agente Marketing**
+   - Gradiente `from-yellow-600 via-orange-600 to-red-600`
+   - Título "Agente de Marketing"
+   - Descripción: "Estrategias inteligentes para hacer crecer tu negocio"
+   - Icono de megáfono/cohete animado
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Leads Este Mes
+   - Tasa de Conversión (%)
+   - ROI de Campañas
+   - Engagement en Redes
+   - Cards con glassmorphism
+
+3. **GENERADOR DE CONTENIDO**
+   - Crear contenido con IA:
+     * Tipo de contenido:
+       - Post para redes sociales
+       - Email marketing
+       - Blog post
+       - Story/Reel
+       - Anuncio publicitario
+     * Tema/Keyword
+     * Tono (Motivador/Educativo/Promocional)
+     * Longitud
+   - Output generado:
+     * Texto principal
+     * Hashtags sugeridos
+     * Call-to-action
+     * Preview visual por plataforma
+   - Botón "Regenerar" / "Editar" / "Programar"
+
+4. **CALENDARIO DE CONTENIDO**
+   - Vista de calendario mensual:
+     * Posts programados por día
+     * Tipo de contenido (iconos)
+     * Estado (Draft/Programado/Publicado)
+     * Click para editar
+   - Vista semanal detallada
+   - Balance de tipos de contenido (gráfico)
+
+5. **ANALIZADOR DE RENDIMIENTO**
+   - Métricas por post/campaña:
+     * Alcance
+     * Engagement (likes, comments, shares)
+     * Clicks
+     * Conversiones
+   - Gráficos de evolución temporal
+   - Comparativa entre posts
+   - Insights: "Posts con fotos tienen 3x más engagement"
+
+6. **GENERADOR DE CAMPAÑAS**
+   - Wizard de creación de campaña:
+     * Objetivo (Awareness/Leads/Ventas)
+     * Audiencia target
+     * Presupuesto
+     * Duración
+     * Canales (Facebook/Instagram/Google)
+   - Creativos generados por IA:
+     * Textos de anuncios (variantes A/B)
+     * Imágenes sugeridas
+     * Headlines
+   - Predicción de resultados
+
+7. **OPTIMIZADOR DE ANUNCIOS**
+   - Análisis de anuncios actuales:
+     * Performance por anuncio
+     * CTR, CPC, CPA
+     * Recomendaciones de mejora:
+       - "Cambiar headline por..."
+       - "Ajustar audiencia a..."
+       - "Incrementar presupuesto en..."
+   - Simulador de cambios
+
+8. **ESTRATEGIAS PERSONALIZADAS**
+   - Planes de marketing generados:
+     * Plan de 30 días
+     * Acciones específicas por semana
+     * Contenidos a crear
+     * Canales a activar
+   - Templates de estrategia:
+     * Lanzamiento de servicio
+     * Captación de leads
+     * Retención de clientes
+     * Temporada alta
+
+9. **COMPETENCIA INSIGHTS**
+   - Análisis de competencia:
+     * Contenido que funciona (temas trending)
+     * Estrategias detectadas
+     * Gaps de mercado (oportunidades)
+   - Benchmarking:
+     * Tu performance vs promedio
+     * Áreas de mejora
+
+10. **GENERADOR DE HASHTAGS**
+    - Sugerencias de hashtags:
+      * Por tema/contenido
+      * Balance: populares + nicho
+      * Tendencias actuales
+    - Grupos de hashtags guardados
+    - Performance histórico por hashtag
+
+11. **ASISTENTE DE COPYWRITING**
+    - Mejorar textos existentes:
+      * Input: texto actual
+      * Output: versiones mejoradas
+      * Análisis de persuasión
+      * Score de claridad
+    - Fórmulas de copywriting:
+      * AIDA
+      * PAS (Problem-Agitate-Solve)
+      * FAB (Features-Advantages-Benefits)
+
+12. **REPORTES DE MARKETING**
+    - Reportes automáticos:
+      * Performance mensual
+      * ROI por canal
+      * Crecimiento de audiencia
+      * Mejores contenidos
+    - Gráficos visuales
+    - Exportar PDF
+
+13. **DATOS MOCKEADOS**
+    - 30+ posts de ejemplo
+    - Calendario con contenido programado
+    - Métricas de rendimiento simuladas
+    - 5-7 campañas activas
+    - Estrategias de marketing generadas
+    - Análisis de competencia
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente yellow-orange-red para hero
+- Editor de contenido con preview
+- Calendario visual colorido
+- Gráficos de engagement con picos
+- Cards de insights con iconos llamativos
+- Preview por plataforma social
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/agents/agente-marketing](src/features/agents/agente-marketing).
+
+---
+
+## 📋 PROMPT 8: Agente Nutricionista
+
+Transforma completamente la página del Agente Nutricionista ([src/features/agents/agente-nutricionista/AgenteNutricionistaPage.tsx](src/features/agents/agente-nutricionista/AgenteNutricionistaPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un agente especializado en planificación nutricional
+- Facilita la creación de dietas y análisis nutricional
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Agente Nutricionista**
+   - Gradiente `from-lime-600 via-green-600 to-emerald-600`
+   - Título "Agente Nutricionista"
+   - Descripción: "IA especializada en nutrición y planificación de dietas"
+   - Icono de manzana/plato animado
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Dietas Activas
+   - Recetas en Base de Datos
+   - Adherencia Promedio (%)
+   - Clientes con Objetivos Cumplidos
+   - Cards con glassmorphism
+
+3. **GENERADOR DE DIETAS**
+   - Crear plan nutricional con IA:
+     * Inputs:
+       - Objetivo (Pérdida grasa/Ganancia muscular/Mantenimiento)
+       - Calorías objetivo (TDEE calculado)
+       - Distribución de macros (custom o preset)
+       - Comidas al día (3-6)
+       - Restricciones (vegano, celíaco, etc.)
+       - Preferencias (alimentos que le gustan/no gustan)
+     * Botón "Generar plan semanal"
+   - Output: Dieta completa de 7 días
+
+4. **VISTA DE PLAN SEMANAL**
+   - Calendario nutricional:
+     * Grid de 7 días x 4-6 comidas
+     * Cards por comida con:
+       - Nombre del plato
+       - Foto/icono
+       - Calorías
+       - Macros (P/C/G)
+     * Click en comida: detalles completos
+   - Resumen diario por día:
+     * Total calorías
+     * Distribución de macros (dona)
+   - Cumplimiento de objetivo visual (progress bars)
+
+5. **BIBLIOTECA DE RECETAS**
+   - Buscador inteligente:
+     * Por ingredientes
+     * Por macros objetivo
+     * Por tiempo de preparación
+     * Por tipo de comida
+   - Grid de recetas:
+     * Imagen apetitosa
+     * Nombre
+     * Tiempo prep
+     * Dificultad
+     * Macros destacados
+   - Botón "Agregar a dieta"
+
+6. **SUSTITUCIONES INTELIGENTES**
+   - Sugerir alternativas:
+     * Click en alimento muestra sustitutos
+     * Mantener macros similares
+     * Considerar restricciones
+     * Filtros: Disponibilidad, Precio, Sabor similar
+   - Preview de cambio en macros totales
+
+7. **ANALIZADOR NUTRICIONAL**
+   - Análisis de dieta actual:
+     * Balance de macros (gauges)
+     * Micronutrientes clave (vitaminas, minerales)
+     * Fibra, agua
+     * Distribución de comidas (gráfico)
+   - Alertas:
+     * "Baja ingesta de proteína en desayuno"
+     * "Exceso de grasas saturadas"
+     * "Déficit de fibra"
+   - Sugerencias de corrección
+
+8. **CALCULADORA DE MACROS**
+   - Calcular requerimientos:
+     * Inputs: peso, altura, edad, sexo, actividad
+     * Fórmulas: Harris-Benedict, Mifflin-St Jeor
+     * TDEE calculado
+   - Ajustar para objetivo:
+     * Déficit (pérdida): -300 a -500 kcal
+     * Superávit (ganancia): +300 a +500 kcal
+   - Distribución de macros:
+     * Presets (balanceada, alta proteína, keto, etc.)
+     * Custom con sliders
+   - Resultados en gramos por macro
+
+9. **TIMING DE NUTRIENTES**
+   - Distribución estratégica:
+     * Carbos alrededor del entrenamiento
+     * Proteína distribuida equitativamente
+     * Timing de suplementación
+   - Vista timeline del día:
+     * Horarios de comidas
+     * Ventanas anabólicas
+     * Ayuno intermitente (si aplica)
+
+10. **LISTA DE COMPRAS**
+    - Generar automáticamente desde dieta:
+      * Agrupar por categoría (proteínas, verduras, etc.)
+      * Cantidades exactas
+      * Checkbox para marcar comprado
+    - Exportar lista (PDF/compartir)
+    - Estimación de costo total
+
+11. **PROGRESO NUTRICIONAL**
+    - Tracking de adherencia:
+      * Heatmap calendar (días cumplidos)
+      * Peso corporal (gráfico temporal)
+      * Fotos de progreso (antes/después)
+      * Mediciones corporales
+    - Ajustes automáticos sugeridos:
+      * "Calorías muy bajas, aumentar 100 kcal"
+      * "Progreso estancado, reestructurar macros"
+
+12. **RECOMENDACIONES PERSONALIZADAS**
+    - Insights basados en datos:
+      * Mejores/peores días de adherencia
+      * Patrones de alimentación
+      * Correlación entre nutrición y rendimiento
+    - Ajustes proactivos del agente
+
+13. **DATOS MOCKEADOS**
+    - 100+ recetas en biblioteca
+    - 10-15 planes nutricionales de ejemplo
+    - Tracking de 30 días de adherencia
+    - Cálculos de TDEE y macros
+    - Lista de compras generada
+    - Progreso de peso simulado
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente lime-green-emerald para hero
+- Cards de comidas con fotos apetitosas
+- Calendario nutricional grid
+- Gráficos de macros (donas y barras)
+- Gauges de balance nutricional
+- Heatmap de adherencia
+- Lista de compras checklist estilizada
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/agents/agente-nutricionista](src/features/agents/agente-nutricionista).
+
+---
+
+## 📋 PROMPT 9: Agente de Progreso
+
+Transforma completamente la página del Agente de Progreso ([src/features/agents/agente-progreso/AgenteProgresoPage.tsx](src/features/agents/agente-progreso/AgenteProgresoPage.tsx)) aplicando el sistema de diseño moderno.
+
+**IMPORTANTE**:
+- Revisa y sigue ESTRICTAMENTE la guía de estilos en [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md)
+- Crea un agente especializado en análisis de progreso y predicciones
+- Facilita el seguimiento y visualización de resultados
+
+### Requisitos de Diseño:
+
+1. **HERO SECTION - Agente Progreso**
+   - Gradiente `from-blue-600 via-indigo-600 to-purple-600`
+   - Título "Agente de Progreso"
+   - Descripción: "Análisis inteligente de resultados y proyecciones"
+   - Icono de gráfico ascendente/medalla animado
+
+2. **ESTADÍSTICAS RÁPIDAS** (4 cards)
+   - Clientes con Progreso Positivo
+   - Objetivos Cumplidos Este Mes
+   - Promedio de Adherencia (%)
+   - Mejora Promedio (%)
+   - Cards con glassmorphism
+
+3. **SELECTOR DE CLIENTE**
+   - Dropdown o búsqueda de cliente
+   - Vista resumen del cliente seleccionado:
+     * Avatar y nombre
+     * Objetivo principal
+     * Tiempo en programa
+     * Última actualización
+
+4. **DASHBOARD DE MÉTRICAS**
+   - Panel de métricas clave:
+     * Peso corporal (gráfico temporal)
+     * Composición corporal (% grasa, músculo)
+     * Medidas antropométricas (cintura, brazos, etc.)
+     * Fuerza (récords personales)
+     * Rendimiento cardiovascular
+   - Seleccionar qué métricas mostrar
+   - Rango de fechas ajustable
+
+5. **GRÁFICOS DE EVOLUCIÓN**
+   - Line charts de progreso:
+     * Múltiples líneas (peso, grasa, músculo)
+     * Marcadores de eventos (inicio dieta, cambio rutina)
+     * Zona de objetivo (sombreada)
+     * Tendencia proyectada (punteada)
+   - Zoom y navegación temporal
+   - Anotaciones en puntos clave
+
+6. **ANÁLISIS DE TENDENCIAS**
+   - Detección automática de patrones:
+     * "Pérdida constante de 0.5kg/semana"
+     * "Estancamiento desde hace 2 semanas"
+     * "Aceleración en progreso de fuerza"
+   - Indicadores de tendencia:
+     * Velocidad de progreso (arrow up/down)
+     * Consistencia (score)
+     * Desviación de objetivo (%)
+
+7. **PREDICCIONES DE IA**
+   - Proyecciones futuras:
+     * "A este ritmo, alcanzará objetivo en 6 semanas"
+     * Gráfico de proyección con rango de confianza
+     * Escenarios: optimista/realista/pesimista
+   - Factores que afectan proyección:
+     * Adherencia actual
+     * Velocidad de progreso histórica
+     * Tiempo restante
+
+8. **COMPARATIVAS VISUALES**
+   - Fotos de progreso:
+     * Grid de fotos (antes/durante/actual)
+     * Slider de comparación (arrastrar línea)
+     * Fechas y métricas en fotos
+     * Opción de agregar nuevas fotos
+   - Animación de transición (morphing)
+
+9. **ANÁLISIS DE ADHERENCIA**
+   - Correlación entre adherencia y resultados:
+     * Gráfico de dispersión
+     * "Mayor adherencia = Mayor progreso"
+     * Semanas con baja adherencia marcadas
+   - Heatmap de cumplimiento:
+     * Entrenamiento (días completados)
+     * Nutrición (días con dieta)
+     * Hábitos (check diario)
+
+10. **ALERTAS Y RECOMENDACIONES**
+    - Notificaciones inteligentes:
+      * "Cliente estancado, considerar ajustes"
+      * "Excelente progreso, celebrar con cliente"
+      * "Riesgo de abandono: sin actividad en 5 días"
+    - Acciones sugeridas:
+      * Ajustar calorías
+      * Cambiar rutina
+      * Sesión de motivación
+      * Deload week
+
+11. **GENERADOR DE REPORTES**
+    - Crear reporte de progreso:
+      * Rango de fechas
+      * Métricas a incluir
+      * Gráficos seleccionados
+      * Fotos de progreso
+      * Análisis narrativo (generado por IA)
+    - Formato profesional (PDF)
+    - Compartir con cliente
+
+12. **COMPARATIVA GRUPAL**
+    - Benchmarking:
+      * Progreso del cliente vs promedio
+      * Distribución de resultados (curva)
+      * Percentil del cliente
+    - Insights:
+      * "Este cliente está en el top 20%"
+      * "Progreso por encima del promedio"
+
+13. **CELEBRACIÓN DE LOGROS**
+    - Milestones alcanzados:
+      * Cards de logros desbloqueados
+      * Animaciones de celebración
+      * Compartir en redes (con permiso)
+    - Badges y achievements:
+      * Primera semana completa
+      * 5kg perdidos
+      * Récord personal
+      * 100 días consecutivos
+
+14. **DATOS MOCKEADOS**
+    - 20-30 clientes con datos de progreso
+    - Histórico de 3-6 meses por cliente
+    - Fotos de progreso simuladas
+    - Métricas variadas (peso, medidas, fuerza)
+    - Proyecciones calculadas
+    - Alertas y recomendaciones generadas
+
+**ESTILOS CLAVE A USAR**:
+- Gradiente blue-indigo-purple para hero
+- Gráficos de evolución temporales (Recharts)
+- Zona de objetivo sombreada
+- Tendencias con flechas (↗↘)
+- Comparador de fotos con slider
+- Heatmap de adherencia colorido
+- Cards de logros con animación
+- Progress bars de objetivos
+
+**ARCHIVOS A EDITAR** - Solo editar archivos existentes en [src/features/agents/agente-progreso](src/features/agents/agente-progreso).
+
+---
+
+# 📝 NOTAS GENERALES PARA TODOS LOS PROMPTS DE AGENTES
+
+## ⚠️ IMPORTANTE:
+1. **SIEMPRE** revisar [GUIA_ESTILOS_UI.md](GUIA_ESTILOS_UI.md) antes de empezar
+2. **NO CREAR NUEVOS ARCHIVOS** - Solo editar existentes
+3. Usar **TypeScript** correctamente
+4. Implementar **framer-motion** para animaciones
+5. Incluir **Lucide React** para iconos
+6. Datos **mockeados realistas**
+7. **Responsive** completo (mobile-first)
+8. **Código limpio** y bien comentado
+
+## Características Comunes a Todos los Agentes:
+
+### 1. Interfaz de Chat (cuando aplique)
+- Burbujas de mensaje diferenciadas
+- Avatar del agente con animación
+- Indicador de "escribiendo..." (3 puntos animados)
+- Timestamps en mensajes
+- Markdown rendering
+- Quick replies (botones de respuesta rápida)
+- Scroll automático a último mensaje
+
+### 2. Personalidad del Agente
+- Cada agente tiene su tono y estilo:
+  * Bienestar: Empático, motivador
+  * Científico: Preciso, técnico
+  * Comunicación: Persuasivo, claro
+  * Copiloto: Eficiente, proactivo
+  * Entrenador: Experto, motivador
+  * Financiero: Analítico, estratégico
+  * Marketing: Creativo, orientado a resultados
+  * Nutricionista: Educativo, práctico
+  * Progreso: Objetivo, celebrador
+
+### 3. Elementos Visuales Distintivos
+- Avatar único por agente (icono temático)
+- Gradiente único por agente (identificación visual)
+- Animaciones de loading específicas
+- Micro-interacciones relevantes al contexto
+
+## Checklist de Estilización para Agentes:
+- [ ] `rounded-3xl` para cards principales
+- [ ] `bg-white/80 backdrop-blur-xl` para glassmorphism
+- [ ] `border border-white/50` para definición
+- [ ] Gradientes de 3 colores en headers (únicos por agente)
+- [ ] Avatar del agente con animación (pulse o glow)
+- [ ] Chat/Interfaz conversacional (cuando aplique)
+- [ ] Animaciones de entrada con framer-motion
+- [ ] `whileHover` para interactividad
+- [ ] `shadow-xl` y `hover:shadow-2xl`
+- [ ] Progress bars con gradientes animados
+- [ ] Gráficos con Recharts (cuando aplique)
+- [ ] Tooltips explicativos en conceptos complejos
+
+## Paleta de Colores por Agente:
+- **Teal/Cyan/Blue**: Agente Bienestar (calma, salud)
+- **Purple/Indigo/Blue**: Agente Científico (inteligencia, precisión)
+- **Pink/Rose/Orange**: Agente Comunicación (creatividad, expresión)
+- **Violet/Purple/Indigo**: Agente Copiloto (versatilidad, asistencia)
+- **Orange/Red/Pink**: Agente Entrenador (energía, fuerza)
+- **Green/Emerald/Teal**: Agente Financiero (crecimiento, prosperidad)
+- **Yellow/Orange/Red**: Agente Marketing (atención, impacto)
+- **Lime/Green/Emerald**: Agente Nutricionista (natural, fresco)
+- **Blue/Indigo/Purple**: Agente Progreso (evolución, logros)
+
+## Funcionalidades de IA a Implementar (UI):
+1. **Input con sugerencias**: Autocomplete/quick replies
+2. **Loading states**: Skeleton screens, spinners temáticos
+3. **Animación de "pensando"**: 3 puntos, waves, etc.
+4. **Feedback visual**: Confirmaciones, errores, éxitos
+5. **Contexto visual**: Mostrar qué está analizando el agente
+6. **Confidence indicators**: Mostrar nivel de confianza (%)
+7. **Explicaciones expandibles**: Tooltips, collapsibles
+8. **Historial accesible**: Ver conversaciones/análisis previos
+
+## Interactividad Requerida:
+- Click en elementos muestra más detalles
+- Hover revela acciones rápidas
+- Drag & drop donde sea relevante (constructor, calendario)
+- Filtros y búsquedas responsivas
+- Modales/Drawers para vistas detalladas
+- Toast notifications para feedback
+- Confirmaciones antes de acciones destructivas
+
+---
+
+**Versión:** 1.0
+**Fecha:** Enero 2025
+**Sistema de Diseño:** Moderno con Glassmorphism
+**Área:** Agents Features (IA Assistants)
+**Total de Agentes:** 9

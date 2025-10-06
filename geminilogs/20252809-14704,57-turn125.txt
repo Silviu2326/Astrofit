@@ -1,0 +1,5 @@
+﻿He creado la estructura b├ísica para el m├│dulo "Comparador de Atletas - An├ílisis Cara a Cara" y los archivos especificados:
+
+1.  `project-bolt-sb1-qekdxfwt/project/src/features/comparador-atletas/ComparadorAtletasPage.tsx`
+2.  `project-bolt-sb1-qekdxfwt/project/src/features/comparador-atletas/comparadorAtletasApi.ts`
+3.  `project-bolt-sb1-qekdxfwt/project/src/features/comparador-atletas/components/ComparacionDirecta.tsx`

@@ -1,0 +1,13 @@
+﻿(node:11852) MaxListenersExceededWarning: Possible EventTarget memory leak detected. 11 abort listeners added to [AbortSignal]. Use events.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+I have successfully created the complete structure for the "Nutrici├│n - Receta Nueva" module and written all the specified files:
+
+1.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/receta-nueva/RecetaNuevaPage.tsx`
+2.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/receta-nueva/recetaNuevaApi.ts`
+3.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/receta-nueva/components/RecetaForm.tsx`
+4.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/receta-nueva/components/IngredientesEditor.tsx`
+5.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/receta-nueva/components/PasosEditor.tsx`
+6.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/receta-nueva/components/NutricionCalculator.tsx`
+7.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/receta-nueva/components/FotoUpload.tsx`
+
+These files include the specified functionalities, use TypeScript, React with hooks, and basic TailwindCSS for styling, along with mock data.

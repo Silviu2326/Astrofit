@@ -1,0 +1,34 @@
+﻿
+
+Ô£à **Agente "Crear Curso Online" completado**
+
+**Caracter├¡sticas implementadas:**
+
+1. **Gradiente indigo-purple-pink** aplicado en toda la interfaz
+2. **Constructor paso a paso** con 4 fases:
+   - Informaci├│n B├ísica
+   - Estructura del Curso
+   - Precio y Acceso
+   - Revisi├│n Final
+
+3. **Sistema de m├│dulos y lecciones** con:
+   - Agregar/eliminar m├│dulos
+   - Expandir/colapsar m├│dulos
+   - Agregar/eliminar lecciones por m├│dulo
+   - Reordenar con drag handle (visual)
+   - Tipos de lecci├│n: video, texto, quiz
+   - Duraci├│n por lecci├│n
+
+4. **Configuraci├│n de precio y acceso:**
+   - 3 tipos: Gratuito, Pago ├║nico, Suscripci├│n
+   - Configuraci├│n de precio
+   - Duraci├│n del acceso
+   - Certificado de finalizaci├│n
+
+5. **Extras:**
+   - Indicador de progreso visual
+   - Estad├¡sticas en tiempo real (m├│dulos, lecciones, duraci├│n)
+   - Vista previa y publicaci├│n
+   - Validaciones de campos
+
+**Ruta:** `src/features/agente-crear-curso/components/CrearCursoAgent.tsx`

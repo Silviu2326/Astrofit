@@ -1,0 +1,21 @@
+﻿
+
+P├ígina de Automatizaciones completamente transformada en un centro de gesti├│n de flujos automatizados con:
+
+Ô£à **Header impactante** con gradiente morado-azul y animaci├│n del icono Zap
+Ô£à **5 estad├¡sticas destacadas** (Flujos Activos, Ejecuciones Hoy, Tasa de ├ëxito, Clientes Impactados, Tiempo Ahorrado)
+Ô£à **Tabs principales** (Todos, Activos, Pausados, Borradores, Archivados)
+Ô£à **3 vistas**: Grid (cards), Kanban (columnas por estado), Tabla (detallada)
+Ô£à **Filtros avanzados** por tipo, trigger, b├║squeda
+Ô£à **Plantillas populares** con ratings y contador de usos
+Ô£à **Alertas del sistema** desplegables
+Ô£à **An├ílisis y estad├¡sticas** con 4 gr├íficos (Recharts): ejecuciones en el tiempo, distribuci├│n por tipo, top 5 flujos, tasas de ├®xito
+Ô£à **Cards de flujos** con badges de estado/tipo, estad├¡sticas, ├║ltima ejecuci├│n, acciones (play/pause, ver, editar, duplicar, eliminar)
+Ô£à **Modal de detalles** con informaci├│n completa del flujo, gr├ífico de ejecuciones, ├║ltimas 5 ejecuciones, m├®tricas de impacto
+Ô£à **20 flujos mockeados** con datos realistas y variedad de estados
+Ô£à **6 plantillas** predefinidas
+Ô£à **Animaciones** con framer-motion
+Ô£à **Estados funcionales** (activar/pausar, duplicar, eliminar)
+Ô£à **Empty state** cuando no hay resultados
+Ô£à **Dise├▒o moderno** con gradientes, sombras, hover effects
+Ô£à **Responsive** y profesional

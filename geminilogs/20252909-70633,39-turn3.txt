@@ -1,0 +1,33 @@
+﻿TIMEOUT: Prompt excediÃ³ 5 minutos de ejecuciÃ³n
+Prompt original:
+
+Completa y mejora el componente ConstructorVisual.tsx para que sea un constructor visual completo con las siguientes caracterÃ­sticas:
+
+1. **Funcionalidad de Drag & Drop avanzada**:
+   - Soporte para arrastrar nodos desde el panel lateral
+   - Snap to grid opcional
+   - SelecciÃ³n mÃºltiple de nodos
+   - Deshacer/Rehacer acciones
+
+2. **Tipos de nodos personalizados**:
+   - Nodo disparador (trigger) con icono especÃ­fico
+   - Nodo acciÃ³n con diferentes tipos (email, sms, webhook, etc.)
+   - Nodo condiciÃ³n (if/else)
+   - Nodo delay/espera
+
+3. **Interfaz visual moderna**:
+   - Estilos profesionales con gradientes y sombras
+   - Animaciones suaves
+   - Colores distintivos por tipo de nodo
+   - Iconos de Lucide React
+
+4. **Funcionalidades avanzadas**:
+   - ValidaciÃ³n de conexiones
+   - Auto-layout inteligente
+   - Zoom y pan
+   - Minimap
+   - Toolbar con herramientas
+
+Usa ReactFlow como base pero personaliza completamente la apariencia y funcionalidad.
+
+

@@ -1,0 +1,76 @@
+﻿
+
+Ô£à He completado la estilizaci├│n del m├│dulo "Cuestionario Diario" siguiendo la gu├¡a de estilos GUIA_ESTILOS_UI.md. Los cambios incluyen:
+
+## Archivos editados:
+
+1. **CuestionarioDiarioPage.tsx**:
+   - Hero section con gradiente `from-emerald-500 via-teal-500 to-cyan-500`
+   - Efectos de fondo animados con blur orbs
+   - Grid pattern decorativo
+   - Layout con glassmorphism y animaciones con framer-motion
+   - Badges con iconos y efectos hover
+
+2. **FormularioWellness.tsx**:
+   - Inputs de rating con `rounded-2xl` y gradientes emerald/teal
+   - Focus rings y efectos hover con `scale-110`
+   - Progress bar del cuestionario con animaci├│n
+   - Bot├│n submit con gradiente y efectos hover
+   - Mensajes de ├®xito/error estilizados con badges
+
+3. **MonitorEmocional.tsx**:
+   - Card con glassmorphism (`bg-white/80 backdrop-blur-xl`)
+   - Header con icono en gradiente
+   - Progress bars para m├®tricas de estr├®s y motivaci├│n
+   - Badge de estado con animaci├│n pulse
+
+4. **AlertasWellness.tsx**:
+   - Sistema de alertas con cards diferenciadas por estado
+   - Iconos din├ímicos seg├║n tipo de alerta
+   - Gradientes naranja/rojo para advertencias
+   - Badge de sistema activo
+
+5. **SistemaGamificacion.tsx**:
+   - Grid de logros con efectos hover
+   - Progress bar de puntos con gradiente purple/pink
+   - Badge de nivel con gradiente dorado
+   - Animaciones en hover (`scale-105`)
+
+6. **RecomendacionesPersonalizadas.tsx**:
+   - Lista de recomendaciones con iconos
+   - Cards con hover effects
+   - Gradientes personalizados por tipo
+   - Badge informativo
+
+7. **IntegracionWearables.tsx**:
+   - Estado de dispositivos conectados
+   - M├®tricas en tiempo real con iconos
+   - Indicadores de sincronizaci├│n con pulse
+   - Badge de estado sincronizado
+
+8. **CuestionariosAdaptativos.tsx**:
+   - Timeline vertical con estados
+   - Iconos CheckCircle para completadas
+   - Gradientes seg├║n estado
+   - Panel informativo con border
+
+9. **AnalisisCorrelaciones.tsx**:
+   - Cards de correlaciones con badges
+   - Barras visuales de correlaci├│n
+   - Iconos de tendencia (up/down)
+   - Panel de insights autom├íticos
+
+10. **IntervencionesAutomaticas.tsx**:
+    - Sistema de prioridades (alta/media)
+    - Panel de contacto de emergencia
+    - Botones de acci├│n con gradientes
+    - Badge de protecci├│n activa
+
+Todos los componentes ahora utilizan:
+- Ô£à Glassmorphism con `backdrop-blur-xl`
+- Ô£à Border radius `rounded-2xl` y `rounded-3xl`
+- Ô£à Gradientes de 3 colores
+- Ô£à Sombras y efectos hover
+- Ô£à Animaciones suaves
+- Ô£à Badges con `rounded-full`
+- Ô£à Iconos de lucide-react

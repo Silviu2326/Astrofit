@@ -1,0 +1,19 @@
+﻿He completado las siguientes mejoras en el m├│dulo `project-bolt-sb1-qekdxfwt/project/src/features/historial-rendimiento/`:
+
+1.  **Archivos de componentes creados:**
+    *   `src/features/historial-rendimiento/components/ModeloPredictivo.tsx`
+    *   `src/features/historial-rendimiento/components/AnalisisCorrelaciones.tsx`
+    *   `src/features/historial-rendimiento/components/BenchmarkingElite.tsx`
+    *   `src/features/historial-rendimiento/components/VentanasDesarrollo.tsx`
+    *   `src/features/historial-rendimiento/components/ImpactoLesiones.tsx`
+    *   `src/features/historial-rendimiento/components/AlertasDesviacion.tsx`
+    *   `src/features/historial-rendimiento/components/OptimizacionCargas.tsx`
+    *   `src/features/historial-rendimiento/components/ReportesEvolucion.tsx`
+
+2.  **`HistorialRendimientoPage.tsx` actualizado:**
+    *   Se han importado y a├▒adido los nuevos componentes a la estructura JSX de la p├ígina, organiz├índolos en un dise├▒o de cuadr├¡cula.
+
+3.  **`historialRendimientoApi.ts` actualizado:**
+    *   Se han a├▒adido nuevas interfaces para `ModeloPredictivoData`, `AnalisisCorrelacionesData`, `BenchmarkingEliteData`, `VentanasDesarrolloData`, `ImpactoLesionesData`, `AlertasDesviacionData`, `OptimizacionCargasData` y `ReportesEvolucionData`.
+    *   Se han incluido datos simulados (`mock data`) para estas nuevas interfaces.
+    *   Se han creado funciones (`fetchModeloPredictivo`, `fetchAnalisisCorrelaciones`, etc.) para simular la obtenci├│n de estos datos.

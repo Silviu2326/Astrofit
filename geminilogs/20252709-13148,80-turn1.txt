@@ -1,0 +1,11 @@
+﻿(node:28504) MaxListenersExceededWarning: Possible EventTarget memory leak detected. 11 abort listeners added to [AbortSignal]. Use events.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+He creado la estructura completa para el m├│dulo Agente Nutricionista - El Chef de la Salud y he escrito todos los archivos especificados:
+
+1.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/agente-nutricionista/AgenteNutricionistaPage.tsx`
+2.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/agente-nutricionista/agenteNutricionistaApi.ts`
+3.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/agente-nutricionista/components/CalendarioSemanal.tsx`
+4.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/agente-nutricionista/components/SustitucionesInteligentes.tsx`
+5.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/agente-nutricionista/components/AlertasNutricionales.tsx`
+6.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/agente-nutricionista/components/RecetasRapidas.tsx`
+7.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/agente-nutricionista/components/ExportadorVisual.tsx`

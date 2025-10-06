@@ -1,0 +1,8 @@
+﻿I have created all the specified files and directories for the "Crear Email" module:
+
+- `src/features/email-broadcast/crear-email/CrearEmailPage.tsx`
+- `src/features/email-broadcast/crear-email/crearEmailApi.ts`
+- `src/features/email-broadcast/crear-email/components/EditorEmail.tsx`
+- `src/features/email-broadcast/crear-email/components/BloquesArrastrables.tsx`
+- `src/features/email-broadcast/crear-email/components/SegmentacionDestinatarios.tsx`
+- `src/features/email-broadcast/crear-email/components/PreviewNewsletter.tsx`

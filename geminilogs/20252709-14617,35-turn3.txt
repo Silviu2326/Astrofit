@@ -1,0 +1,1 @@
+﻿I have successfully created the complete structure for the "Cupones - Sistema de Descuentos" module, including all specified files and directories, with mock data and adhering to the technical requirements.

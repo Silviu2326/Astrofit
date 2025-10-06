@@ -1,0 +1,74 @@
+﻿System.Management.Automation.RemoteException
+System.Management.Automation.RemoteException
+#
+# Fatal error in , line 0
+# Out of memory: HashMap::Initialize
+#
+#
+#
+#FailureMessage Object: 00000083F73FC5A0
+----- Native stack trace -----
+System.Management.Automation.RemoteException
+ 1: 00007FF60BEC663B node::SetCppgcReference+18123
+ 2: 00007FF60BDBC64F node::TriggerNodeReport+72847
+ 3: 00007FF60CCBD172 V8_Fatal+162
+ 4: 00007FF60C888053 v8::SharedValueConveyor::SharedValueConveyor+555763
+ 5: 00007FF60C887AA6 v8::SharedValueConveyor::SharedValueConveyor+554310
+ 6: 00007FF60C887D71 v8::SharedValueConveyor::SharedValueConveyor+555025
+ 7: 00007FF60C887BE7 v8::SharedValueConveyor::SharedValueConveyor+554631
+ 8: 00007FF60C44A071 v8::base::Thread::StartSynchronously+9105
+ 9: 00007FF60C488431 v8::base::Thread::StartSynchronously+264017
+10: 00007FF60C488CB2 v8::base::Thread::StartSynchronously+266194
+11: 00007FF60C47DDBA v8::base::Thread::StartSynchronously+221402
+12: 00007FF60C47490E v8::base::Thread::StartSynchronously+183342
+13: 00007FF60C474F52 v8::base::Thread::StartSynchronously+184946
+14: 00007FF60C473C3D v8::base::Thread::StartSynchronously+180061
+15: 00007FF60C480041 v8::base::Thread::StartSynchronously+230241
+16: 00007FF60C480550 v8::base::Thread::StartSynchronously+231536
+17: 00007FF60C474CF0 v8::base::Thread::StartSynchronously+184336
+18: 00007FF60C4887D8 v8::base::Thread::StartSynchronously+264952
+19: 00007FF60C488CB2 v8::base::Thread::StartSynchronously+266194
+20: 00007FF60C46F2DF v8::base::Thread::StartSynchronously+161279
+21: 00007FF60C4838BF v8::base::Thread::StartSynchronously+244703
+22: 00007FF60C469022 v8::base::Thread::StartSynchronously+136002
+23: 00007FF60C805B9B v8::SharedValueConveyor::SharedValueConveyor+22075
+24: 00007FF60C8055AA v8::SharedValueConveyor::SharedValueConveyor+20554
+25: 00007FF60C80A3A3 v8::SharedValueConveyor::SharedValueConveyor+40515
+26: 00007FF60C809F5A v8::SharedValueConveyor::SharedValueConveyor+39418
+27: 00007FF60C8940FD v8::ScriptCompiler::CompileUnboundInternal+1069
+28: 00007FF60C893686 v8::ScriptCompiler::CompileModule+278
+29: 00007FF60BE80363 v8::base::CPU::has_idiva+13219
+30: 00007FF60C865F6E v8::SharedValueConveyor::SharedValueConveyor+416270
+31: 00007FF60C865817 v8::SharedValueConveyor::SharedValueConveyor+414391
+32: 00007FF60C865E44 v8::SharedValueConveyor::SharedValueConveyor+415972
+33: 00007FF60C865CA0 v8::SharedValueConveyor::SharedValueConveyor+415552
+34: 00007FF60C9612AE v8::PropertyDescriptor::writable+677742
+35: 00007FF60C8D0023 v8::PropertyDescriptor::writable+83171
+36: 00007FF60CA1D6B6 v8::PropertyDescriptor::writable+1448822
+37: 00007FF60C8D2950 v8::PropertyDescriptor::writable+93712
+38: 00007FF60C8D2950 v8::PropertyDescriptor::writable+93712
+39: 00007FF60C8D2950 v8::PropertyDescriptor::writable+93712
+40: 00007FF60C90ADB7 v8::PropertyDescriptor::writable+324215
+41: 00007FF60C9C3365 v8::PropertyDescriptor::writable+1079333
+42: 00007FF60C8FA9F5 v8::PropertyDescriptor::writable+257717
+43: 00007FF60C8D0C0B v8::PropertyDescriptor::writable+86219
+44: 00007FF60C77AE9F v8::PrimitiveArray::Length+3951
+45: 00007FF60C77AFBB v8::PrimitiveArray::Length+4235
+46: 00007FF60C77BDAA v8::PrimitiveArray::Length+7802
+47: 00007FF60C752F72 v8::base::CPU::has_sse41+1410
+48: 00007FF60C752CBC v8::base::CPU::has_sse41+716
+49: 00007FF60BEFD3B2 node::CallbackScope::~CallbackScope+418
+50: 00007FF60BEFD27E node::CallbackScope::~CallbackScope+110
+51: 00007FF60BE18B81 v8::base::CPU::has_fpu+42769
+52: 00007FF60BE2F995 v8::base::CPU::num_virtual_address_bits+54005
+53: 00007FF60BF2FE1A uv_timer_stop+1290
+54: 00007FF60BF2C09B uv_update_time+491
+55: 00007FF60BF2BC14 uv_run+900
+56: 00007FF60BEFCB15 node::SpinEventLoop+405
+57: 00007FF60BDE4982 ENGINE_get_load_privkey_function+154514
+58: 00007FF60BE7CD6D node::Start+4909
+59: 00007FF60BE7BA70 node::Start+48
+60: 00007FF60BC3D96C AES_cbc_encrypt+151452
+61: 00007FF60D0BF1BC inflateValidate+17308
+62: 00007FFD51917374 BaseThreadInitThunk+20
+63: 00007FFD5391CC91 RtlUserThreadStart+33

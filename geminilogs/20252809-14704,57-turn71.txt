@@ -1,0 +1,1 @@
+﻿I have successfully created the basic structure for the "Informes de Sensores - An├ílisis Post-Sesi├│n" module, including the `InformesSensoresPage.tsx`, `informesSensoresApi.ts`, and `components/DashboardPostSesion.tsx` files, with placeholder content adhering to the specified requirements.

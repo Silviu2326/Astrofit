@@ -1,0 +1,659 @@
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 1: Crear módulo Comunidad - Feed Comunidad
+
+Crea la carpeta src/features/comunidad/ y ESCRIBE estos archivos:
+
+1. src/features/comunidad/feed-comunidad/FeedComunidadPage.tsx
+2. src/features/comunidad/feed-comunidad/feedComunidadApi.ts
+3. src/features/comunidad/feed-comunidad/components/TimelinePosts.tsx
+4. src/features/comunidad/feed-comunidad/components/PostCard.tsx
+5. src/features/comunidad/feed-comunidad/components/CrearPost.tsx
+6. src/features/comunidad/feed-comunidad/components/InteraccionesSociales.tsx
+7. src/features/comunidad/feed-comunidad/components/PostsFijados.tsx
+
+ESPECIFICACIONES:
+- Red social privada para entrenadores y clientes
+- Timeline estilo Facebook/Instagram limpio
+- Posts de texto, imagen y video
+- Sistema de likes, comentarios y shares
+- Encuestas rápidas integradas
+- Fotos de perfil redondas
+- Sección destacada para posts fijados
+- Filtros por tipo de contenido
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Componente timeline infinito
+- Sistema de interacciones sociales
+- Upload de media files
+- Real-time updates simulados
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 2: Crear módulo Grupos Comunidad
+
+Crea estos archivos en src/features/comunidad/:
+
+1. src/features/comunidad/grupos-comunidad/GruposComunidadPage.tsx
+2. src/features/comunidad/grupos-comunidad/gruposComunidadApi.ts
+3. src/features/comunidad/grupos-comunidad/components/ListadoGrupos.tsx
+4. src/features/comunidad/grupos-comunidad/components/TarjetaGrupo.tsx
+5. src/features/comunidad/grupos-comunidad/components/CrearGrupo.tsx
+6. src/features/comunidad/grupos-comunidad/components/FeedGrupo.tsx
+7. src/features/comunidad/grupos-comunidad/components/GestionMiembros.tsx
+
+ESPECIFICACIONES:
+- Subcomunidades temáticas especializadas
+- Ejemplos: "Reto 30 días", "Fuerza Avanzada"
+- Tarjetas con imagen de portada
+- Contador de miembros activos
+- Feed independiente por grupo
+- Sistema de moderadores
+- Solicitudes de entrada
+- Posts exclusivos del grupo
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Grid de tarjetas responsive
+- Feed independiente por grupo
+- Sistema de permisos por rol
+- Upload de imágenes de portada
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 3: Crear módulo Moderación Comunidad
+
+Crea estos archivos en src/features/comunidad/:
+
+1. src/features/comunidad/moderacion-comunidad/ModeracionComunidadPage.tsx
+2. src/features/comunidad/moderacion-comunidad/moderacionComunidadApi.ts
+3. src/features/comunidad/moderacion-comunidad/components/PanelModerador.tsx
+4. src/features/comunidad/moderacion-comunidad/components/ListaReportes.tsx
+5. src/features/comunidad/moderacion-comunidad/components/PostsMarcados.tsx
+6. src/features/comunidad/moderacion-comunidad/components/SolicitudesEntrada.tsx
+7. src/features/comunidad/moderacion-comunidad/components/AccionesRapidas.tsx
+
+ESPECIFICACIONES:
+- Panel de control administrativo del entrenador
+- Lista de reportes de usuarios
+- Posts marcados como inapropiados
+- Solicitudes de entrada pendientes
+- Herramientas para bloquear usuarios
+- Borrado de contenido problemático
+- Banderas rojas para alertas
+- Botones de acción rápida
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sistema de reportes y flags
+- Acciones de moderación
+- Estados de contenido
+- Confirmaciones de acciones críticas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 4: Crear módulo Ranking Actividad
+
+Crea estos archivos en src/features/comunidad/:
+
+1. src/features/comunidad/ranking-actividad/RankingActividadPage.tsx
+2. src/features/comunidad/ranking-actividad/rankingActividadApi.ts
+3. src/features/comunidad/ranking-actividad/components/Leaderboard.tsx
+4. src/features/comunidad/ranking-actividad/components/TarjetaUsuario.tsx
+5. src/features/comunidad/ranking-actividad/components/SistemaMedallas.tsx
+6. src/features/comunidad/ranking-actividad/components/PuntosActividad.tsx
+
+ESPECIFICACIONES:
+- Gamificación social de la comunidad
+- Tabla de usuarios más activos
+- Ranking por publicaciones y comentarios
+- Sistema de logros y medallas digitales
+- Leaderboard estilo gamerscore
+- Fotos de perfil con puntos
+- Categorías de actividad diferenciadas
+- Recompensas por participación
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Algoritmo de puntuación
+- Sistema de badges/medallas
+- Tabla de clasificación dinámica
+- Animaciones de logros
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 5: Crear módulo Membresías - Listado Membresías
+
+Crea la carpeta src/features/membresias/ y ESCRIBE estos archivos:
+
+1. src/features/membresias/listado-membresias/ListadoMembresiasPage.tsx
+2. src/features/membresias/listado-membresias/listadoMembresiasApi.ts
+3. src/features/membresias/listado-membresias/components/TarjetasMembresia.tsx
+4. src/features/membresias/listado-membresias/components/EstadisticasMembresia.tsx
+5. src/features/membresias/listado-membresias/components/CrearMembresia.tsx
+
+ESPECIFICACIONES:
+- Panel de todas las membresías activas
+- Niveles: Bronce, Plata, Oro, Premium
+- Tarjetas tipo pricing con información
+- Número de miembros activos por nivel
+- Ingresos generados por membresía
+- Estado activo/pausado
+- Botones de edición rápida
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Cards de pricing responsive
+- Métricas financieras
+- Estados de membresías
+- CRUD de niveles
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 6: Crear módulo Página Membresía
+
+Crea estos archivos en src/features/membresias/:
+
+1. src/features/membresias/pagina-membresia/PaginaMembresiaPa ge.tsx
+2. src/features/membresias/pagina-membresia/paginaMembresiapApi.ts
+3. src/features/membresias/pagina-membresia/components/LandingMembresia.tsx
+4. src/features/membresias/pagina-membresia/components/ListaBeneficios.tsx
+5. src/features/membresias/pagina-membresia/components/PrecioSuscripcion.tsx
+6. src/features/membresias/pagina-membresia/components/BotonUnirse.tsx
+
+ESPECIFICACIONES:
+- Página pública de cada suscripción
+- Landing estilo página de venta
+- Lista detallada de beneficios
+- Precio destacado y periodicidad
+- Qué incluye: cursos, entrenamientos exclusivos
+- Testimonios de miembros
+- Botón "Unirse" prominente
+- FAQ sobre la membresía
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Landing page optimizada para conversión
+- Secciones de beneficios
+- CTA buttons efectivos
+- Responsive design
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 7: Crear módulo Beneficios Membresía
+
+Crea estos archivos en src/features/membresias/:
+
+1. src/features/membresias/beneficios-membresia/BeneficiosMembresiPage.tsx
+2. src/features/membresias/beneficios-membresia/beneficiosMembresiApi.ts
+3. src/features/membresias/beneficios-membresia/components/EditorBeneficios.tsx
+4. src/features/membresias/beneficios-membresia/components/ListaEditable.tsx
+5. src/features/membresias/beneficios-membresia/components/VistaPreviaMembresia.tsx
+6. src/features/membresias/beneficios-membresia/components/SwitchBeneficios.tsx
+
+ESPECIFICACIONES:
+- Editor de perks por nivel de membresía
+- Beneficios: "1 directo semanal", "Recetas exclusivas"
+- Lista editable con switches ON/OFF
+- Vista previa en tiempo real
+- Plantillas de beneficios comunes
+- Categorización por tipo
+- Comparativa entre niveles
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Editor de listas dinámico
+- Toggle switches
+- Vista previa live
+- Sistema de plantillas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 8: Crear módulo Pagos Membresía
+
+Crea estos archivos en src/features/membresias/:
+
+1. src/features/membresias/pagos-membresia/PagosMembresiPage.tsx
+2. src/features/membresias/pagos-membresia/pagosMembresiApi.ts
+3. src/features/membresias/pagos-membresia/components/DashboardPagos.tsx
+4. src/features/membresias/pagos-membresia/components/GraficoIngresos.tsx
+5. src/features/membresias/pagos-membresia/components/TablaPagosRecurrentes.tsx
+6. src/features/membresias/pagos-membresia/components/MetricasCancelacion.tsx
+
+ESPECIFICACIONES:
+- Seguimiento económico de membresías
+- Listado de pagos recurrentes activos
+- Dashboard con gráfico de ingresos mensuales
+- Tasa de cancelación por nivel
+- MRR (Monthly Recurring Revenue)
+- Análisis de churn rate
+- Proyecciones de ingresos
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Dashboard financiero
+- Gráficos de ingresos recurrentes
+- Métricas de suscripciones
+- Análisis de retención
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 9: Crear módulo Cursos Online - Listado Cursos
+
+Crea la carpeta src/features/cursos-online/ y ESCRIBE estos archivos:
+
+1. src/features/cursos-online/listado-cursos/ListadoCursosPage.tsx
+2. src/features/cursos-online/listado-cursos/listadoCursosApi.ts
+3. src/features/cursos-online/listado-cursos/components/GridCursos.tsx
+4. src/features/cursos-online/listado-cursos/components/TarjetaCurso.tsx
+5. src/features/cursos-online/listado-cursos/components/FiltrosCursos.tsx
+6. src/features/cursos-online/listado-cursos/components/EstadisticasCursos.tsx
+
+ESPECIFICACIONES:
+- Vista general de todos los cursos
+- Tarjetas con miniatura de portada
+- Título, número de alumnos, estado
+- Estados: borrador, activo, pausado
+- Precio y duración del curso
+- Contador de inscritos actual
+- Filtros por estado y categoría
+- Botones de gestión rápida
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Grid responsive de cursos
+- Estados visuales diferenciados
+- Sistema de filtros
+- Métricas por curso
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 10: Crear módulo Curso Detalle
+
+Crea estos archivos en src/features/cursos-online/:
+
+1. src/features/cursos-online/curso-detalle/CursoDetallePage.tsx
+2. src/features/cursos-online/curso-detalle/cursoDetalleApi.ts
+3. src/features/cursos-online/curso-detalle/components/PortadaCurso.tsx
+4. src/features/cursos-online/curso-detalle/components/IndiceTemario.tsx
+5. src/features/cursos-online/curso-detalle/components/ListaAlumnos.tsx
+6. src/features/cursos-online/curso-detalle/components/ProgresoMedio.tsx
+7. src/features/cursos-online/curso-detalle/components/PestanasInfo.tsx
+
+ESPECIFICACIONES:
+- Ficha completa de un curso específico
+- Diseño tipo Udemy con portada destacada
+- Descripción completa del curso
+- Índice lateral de módulos y lecciones
+- Lista de alumnos inscritos
+- Progreso medio de finalización
+- Pestañas: Info, Temario, Alumnos, Estadísticas
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Layout tipo plataforma educativa
+- Navegación por pestañas
+- Sidebar con temario
+- Métricas de progreso
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 11: Crear módulo Crear Curso
+
+Crea estos archivos en src/features/cursos-online/:
+
+1. src/features/cursos-online/crear-curso/CrearCursoPage.tsx
+2. src/features/cursos-online/crear-curso/crearCursoApi.ts
+3. src/features/cursos-online/crear-curso/components/WizardCurso.tsx
+4. src/features/cursos-online/crear-curso/components/PasoConfiguracion.tsx
+5. src/features/cursos-online/crear-curso/components/PasoContenido.tsx
+6. src/features/cursos-online/crear-curso/components/PasoPublicacion.tsx
+7. src/features/cursos-online/crear-curso/components/PreviewCurso.tsx
+
+ESPECIFICACIONES:
+- Asistente para crear cursos paso a paso
+- Wizard con barra de progreso visual
+- Paso 1: Título, descripción, portada
+- Paso 2: Estructura de módulos
+- Paso 3: Precio y configuración
+- Vista previa final antes de publicar
+- Validación de campos obligatorios
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Wizard component con steps
+- Upload de archivos (portada)
+- Validación de formularios
+- Preview en tiempo real
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 12: Crear módulo Gestión Lecciones
+
+Crea estos archivos en src/features/cursos-online/:
+
+1. src/features/cursos-online/gestion-lecciones/GestionLeccionesPage.tsx
+2. src/features/cursos-online/gestion-lecciones/gestionLeccionesApi.ts
+3. src/features/cursos-online/gestion-lecciones/components/EditorModular.tsx
+4. src/features/cursos-online/gestion-lecciones/components/BloquesContenido.tsx
+5. src/features/cursos-online/gestion-lecciones/components/SubirVideos.tsx
+6. src/features/cursos-online/gestion-lecciones/components/EditorTexto.tsx
+7. src/features/cursos-online/gestion-lecciones/components/GestorArchivos.tsx
+
+ESPECIFICACIONES:
+- Editor de contenido del curso
+- Bloques arrastrables: video, texto, PDF, quiz
+- Subida de videos con preview
+- Editor de texto enriquecido
+- Gestión de archivos descargables
+- Orden de lecciones drag & drop
+- Preview de la lección final
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Editor modular drag & drop
+- Upload de videos y PDFs
+- Rich text editor
+- File management system
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 13: Crear módulo Quizzes Evaluaciones
+
+Crea estos archivos en src/features/cursos-online/:
+
+1. src/features/cursos-online/quizzes-evaluaciones/QuizzesEvaluacionesPage.tsx
+2. src/features/cursos-online/quizzes-evaluaciones/quizzesEvaluacionesApi.ts
+3. src/features/cursos-online/quizzes-evaluaciones/components/CreadorQuiz.tsx
+4. src/features/cursos-online/quizzes-evaluaciones/components/PreguntasMultiples.tsx
+5. src/features/cursos-online/quizzes-evaluaciones/components/SistemaCalificacion.tsx
+6. src/features/cursos-online/quizzes-evaluaciones/components/ResultadosInstantaneos.tsx
+7. src/features/cursos-online/quizzes-evaluaciones/components/TablaNotas.tsx
+
+ESPECIFICACIONES:
+- Sistema de evaluación del aprendizaje
+- Creación de tests con preguntas múltiples
+- Feedback inmediato tras responder
+- Sistema de puntuación automático
+- Tabla de calificaciones por alumno
+- Estadísticas de respuestas
+- Intentos múltiples configurables
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sistema de quizzes interactivo
+- Algoritmo de calificación
+- Resultados en tiempo real
+- Dashboard de notas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 14: Crear módulo Biblioteca Contenidos - Videos
+
+Crea la carpeta src/features/biblioteca-contenidos/ y ESCRIBE estos archivos:
+
+1. src/features/biblioteca-contenidos/contenidos-video/ContenidosVideoPage.tsx
+2. src/features/biblioteca-contenidos/contenidos-video/contenidosVideoApi.ts
+3. src/features/biblioteca-contenidos/contenidos-video/components/VideotecaPrivada.tsx
+4. src/features/biblioteca-contenidos/contenidos-video/components/GaleriaVideos.tsx
+5. src/features/biblioteca-contenidos/contenidos-video/components/ReproductorIntegrado.tsx
+6. src/features/biblioteca-contenidos/contenidos-video/components/EtiquetasVideo.tsx
+
+ESPECIFICACIONES:
+- Videoteca privada para miembros
+- Videos de entrenamientos y teoría
+- Clasificación por tema y dificultad
+- Galería con thumbnails atractivos
+- Reproductor integrado
+- Buscador por etiquetas
+- Sistema de favoritos
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Video player component
+- Sistema de tags y filtros
+- Grid responsive de videos
+- Upload y gestión de videos
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 15: Crear módulo Contenidos Artículos
+
+Crea estos archivos en src/features/biblioteca-contenidos/:
+
+1. src/features/biblioteca-contenidos/contenidos-articulos/ContenidosArticulosPage.tsx
+2. src/features/biblioteca-contenidos/contenidos-articulos/contenidosArticulosApi.ts
+3. src/features/biblioteca-contenidos/contenidos-articulos/components/BlogInterno.tsx
+4. src/features/biblioteca-contenidos/contenidos-articulos/components/ListadoArticulos.tsx
+5. src/features/biblioteca-contenidos/contenidos-articulos/components/EditorArticulos.tsx
+6. src/features/biblioteca-contenidos/contenidos-articulos/components/LectorArticulo.tsx
+
+ESPECIFICACIONES:
+- Blog interno para miembros exclusivo
+- Artículos con imágenes destacadas
+- Documentos descargables adjuntos
+- Editor de texto enriquecido
+- Categorías y etiquetas
+- Comentarios de miembros
+- Sistema de búsqueda
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Rich text editor
+- Sistema de categorías
+- Gestión de archivos adjuntos
+- Layout tipo blog
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 16: Crear módulo Contenidos Descargables
+
+Crea estos archivos en src/features/biblioteca-contenidos/:
+
+1. src/features/biblioteca-contenidos/contenidos-descargables/ContenidosDescargablesPage.tsx
+2. src/features/biblioteca-contenidos/contenidos-descargables/contenidosDescargablesApi.ts
+3. src/features/biblioteca-contenidos/contenidos-descargables/components/BibliotecaArchivos.tsx
+4. src/features/biblioteca-contenidos/contenidos-descargables/components/GestorPDFs.tsx
+5. src/features/biblioteca-contenidos/contenidos-descargables/components/PlantillasDescargables.tsx
+
+ESPECIFICACIONES:
+- Material complementario descargable
+- PDFs, plantillas, hojas de cálculo
+- Iconos por tipo de archivo
+- Botón de descarga directo
+- Contador de descargas
+- Categorización por tipo
+- Preview de documentos
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- File download system
+- Preview de documentos
+- Iconos por tipo de archivo
+- Contador de estadísticas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 17: Crear módulo Buscador Contenidos
+
+Crea estos archivos en src/features/biblioteca-contenidos/:
+
+1. src/features/biblioteca-contenidos/buscador-contenidos/BuscadorContenidosPage.tsx
+2. src/features/biblioteca-contenidos/buscador-contenidos/buscadorContenidosApi.ts
+3. src/features/biblioteca-contenidos/buscador-contenidos/components/BuscadorCentralizado.tsx
+4. src/features/biblioteca-contenidos/buscador-contenidos/components/FiltrosAvanzados.tsx
+5. src/features/biblioteca-contenidos/buscador-contenidos/components/ResultadosOrganizados.tsx
+
+ESPECIFICACIONES:
+- Búsqueda centralizada de todo el contenido
+- Campo de búsqueda estilo Google
+- Filtros: tipo de recurso, duración, tema
+- Resultados organizados por categorías
+- Autocompletado de búsqueda
+- Historial de búsquedas
+- Sugerencias relacionadas
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Search engine interno
+- Sistema de filtros avanzados
+- Autocompletado
+- Resultados categorizados
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 18: Crear módulo Email Broadcast - Listado Emails
+
+Crea la carpeta src/features/email-broadcast/ y ESCRIBE estos archivos:
+
+1. src/features/email-broadcast/listado-emails/ListadoEmailsPage.tsx
+2. src/features/email-broadcast/listado-emails/listadoEmailsApi.ts
+3. src/features/email-broadcast/listado-emails/components/HistorialCampanas.tsx
+4. src/features/email-broadcast/listado-emails/components/TablaCampanas.tsx
+5. src/features/email-broadcast/listado-emails/components/MetricasRapidas.tsx
+
+ESPECIFICACIONES:
+- Historial de campañas de email enviadas
+- Tabla tipo CRM con datos clave
+- Asunto, fecha, número de destinatarios
+- Tasa de apertura y clics
+- Etiquetas verdes/rojas según rendimiento
+- Filtros por fecha y estado
+- Acciones rápidas: duplicar, archivar
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Tabla con métricas de email marketing
+- Estados visuales por rendimiento
+- Sistema de filtros
+- Métricas destacadas
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 19: Crear módulo Crear Email
+
+Crea estos archivos en src/features/email-broadcast/:
+
+1. src/features/email-broadcast/crear-email/CrearEmailPage.tsx
+2. src/features/email-broadcast/crear-email/crearEmailApi.ts
+3. src/features/email-broadcast/crear-email/components/EditorEmail.tsx
+4. src/features/email-broadcast/crear-email/components/BloquesArrastrables.tsx
+5. src/features/email-broadcast/crear-email/components/SegmentacionDestinatarios.tsx
+6. src/features/email-broadcast/crear-email/components/PreviewNewsletter.tsx
+
+ESPECIFICACIONES:
+- Editor de correos masivos profesional
+- Bloques arrastrables: texto, imagen, botón
+- Segmentación de destinatarios
+- Preview tipo newsletter
+- Live preview en tiempo real
+- Pruebas A/B de asunto
+- Programación de envío
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Email editor drag & drop
+- Sistema de segmentación
+- Preview responsive
+- Validación de emails
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 20: Crear módulo Plantillas Email
+
+Crea estos archivos en src/features/email-broadcast/:
+
+1. src/features/email-broadcast/plantillas-email/PlantillasEmailPage.tsx
+2. src/features/email-broadcast/plantillas-email/plantillasEmailApi.ts
+3. src/features/email-broadcast/plantillas-email/components/GaleriaPlantillas.tsx
+4. src/features/email-broadcast/plantillas-email/components/ThumbnailEmail.tsx
+5. src/features/email-broadcast/plantillas-email/components/EditorPlantillas.tsx
+
+ESPECIFICACIONES:
+- Banco de emails reutilizables
+- Plantillas: bienvenida, recordatorio, anuncio
+- Galería con thumbnails de diseño
+- Vista previa de cada plantilla
+- Editor para personalizar plantillas
+- Categorías por propósito
+- Sistema de favoritos
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Galería de templates
+- Preview de diseños
+- Sistema de plantillas
+- Editor personalizable
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+PASO 21: Crear módulo Reportes Envío
+
+Crea estos archivos en src/features/email-broadcast/:
+
+1. src/features/email-broadcast/reportes-envio/ReportesEnvioPage.tsx
+2. src/features/email-broadcast/reportes-envio/reportesEnvioApi.ts
+3. src/features/email-broadcast/reportes-envio/components/DashboardMetricas.tsx
+4. src/features/email-broadcast/reportes-envio/components/EmbudoConversion.tsx
+5. src/features/email-broadcast/reportes-envio/components/AnalisisIngresos.tsx
+6. src/features/email-broadcast/reportes-envio/components/ComparativaCampanas.tsx
+
+ESPECIFICACIONES:
+- Métricas de impacto detalladas
+- Dashboard con gráficos de embudo
+- Tasa de apertura, clics, bajas
+- Ingresos generados por campaña
+- Análisis de ROI por email
+- Comparativa entre campañas
+- Exportación de reportes
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Dashboard de email marketing
+- Gráficos de conversión (embudo)
+- Métricas financieras
+- Comparativas temporales
+
+RESULTADO ESPERADO:
+Un sistema completo Plan Creator Pro con 21 módulos especializados para monetización de contenido, construcción de comunidad, educación online y email marketing. Incluye red social privada, sistema de membresías, plataforma de cursos, biblioteca de contenidos y herramientas de email broadcast. Todos los componentes siguen el patrón establecido en src/features/ con TypeScript, React y TailwindCSS, proporcionando una solución integral para creators fitness que buscan monetizar su expertise.

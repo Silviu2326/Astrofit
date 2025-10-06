@@ -1,0 +1,25 @@
+﻿
+
+P├ígina de Cohortes de Clientes completamente transformada en un potente panel de an├ílisis con:
+
+Ô£à **Header profesional** con gradiente, animaci├│n y botones de acci├│n
+Ô£à **Filtros de configuraci├│n** (per├¡odo, agrupaci├│n, m├®trica, segmentaci├│n)
+Ô£à **6 tarjetas de estad├¡sticas** comparativas con tendencias
+Ô£à **Panel de insights autom├íticos** con 4 tipos de alertas inteligentes
+Ô£à **Matriz de retenci├│n heat map** con:
+   - Colores seg├║n rendimiento (verde>amarillo>rojo)
+   - 12 cohortes ├ù 13 per├¡odos
+   - Tooltips detallados al hover
+   - Leyenda de colores
+Ô£à **Gr├ífico de l├¡neas m├║ltiples** con 8 cohortes superpuestas
+Ô£à **Gr├ífico de pie** de distribuci├│n de clientes activos
+Ô£à **An├ílisis de supervivencia** (├írea chart) con m├®tricas clave
+Ô£à **Tabla detallada sorteable** con 10 columnas de datos
+Ô£à **Modal de detalles** por cohorte con:
+   - 6 KPIs principales
+   - Gr├ífico de evoluci├│n (bar chart dual-axis)
+   - Lista de clientes con avatares y estados
+   - Botones de acci├│n
+Ô£à **18 cohortes mockeadas** con datos realistas y coherentes
+Ô£à **Animaciones** con framer-motion
+Ô£à **Responsive** y profesional

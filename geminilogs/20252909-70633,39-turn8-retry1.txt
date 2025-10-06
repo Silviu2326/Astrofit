@@ -1,0 +1,2 @@
+﻿[API Error: got status: INTERNAL. {"error":{"code":500,"message":"An internal error has occurred. Please retry or report in https://developers.generativeai.google/guide/troubleshooting","status":"INTERNAL"}}]
+Okay, I need to find `CrearFlujoPage.tsx`. I'll use `glob`.Two files, same name. I'll ask which to modify.

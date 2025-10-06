@@ -1,0 +1,26 @@
+﻿Okay, I will create and enhance the `ConectorFlujo.tsx` component. Here's my plan:
+
+1.  **Structure:** Create the necessary directory structure inside the project.
+2.  **Component:** Create the initial `ConectorFlujo.tsx` file.
+3.  **Implementation:** Gradually add the features you requested, starting with connector types, then validation, visual enhancements, and finally, interactive functionalities.
+
+I'll start by creating the directory structure.My apologies, I used an incorrect path format. I will now create the `src/components` directory using the correct relative path.I'm still having trouble with the directory command. I'll bypass that by creating `src/components/ConectorFlujo.tsx` directly with a basic component structure.Okay, file's created. Now to add features. I'll use `react-flow-renderer`, so I'll install it first.Sorry, wrong path. Retrying.`run_shell_command` is failing due to a persistent directory path issue. I'll proceed without it for now, assuming `react-flow-renderer` is installed, and focus on coding the `ConectorFlujo.tsx` component. I'm now updating it with the basic flow chart structure, connector types, and validation.Okay, time for visual upgrades. I'll implement unique colors and custom labels for each connector type, then code the logic to manage them.Okay, I'll add click-to-edit, connection deletion, and custom handles. I'll also include a button for adding new nodes with those handles.I have implemented the core features for the `ConectorFlujo.tsx` component.
+
+**Summary of Implementation:**
+
+*   **Component Created:** `ConectorFlujo.tsx` is located in `src/components/`.
+*   **Connector Types & Visuals:** The component supports `Direct`, `Conditional`, and `Error` connections, each with a unique color and animation.
+*   **Connection Validation:** Basic validation prevents loops and limits the number of outgoing connections per node.
+*   **Interactive UI:**
+    *   Connections have editable labels (click to edit).
+    *   A custom node with multiple handles allows for different connection logic (e.g., if/else branches).
+*   **Functionalities:**
+    *   Connections can be deleted with the delete key.
+    *   A button is included to dynamically add new nodes to the canvas.
+
+To integrate this component, you will need to:
+
+1.  **Install the dependency:** Run `npm install react-flow-renderer` in your project's root directory.
+2.  **Integrate the component:** Import and render the `ConectorFlujo` component in your application.
+
+This provides a solid foundation. You can extend it by adding more complex validation, a more advanced UI for editing conditions, and copy/paste functionality.

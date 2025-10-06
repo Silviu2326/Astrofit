@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(npm run seed:dietas:*)",
+      "Bash(node:*)",
+      "Bash(npm run seed:recetas:*)",
+      "Bash(curl:*)",
+      "Bash(npm run seed:facturas:*)",
+      "Bash(npm run seed:gastos:*)",
+      "Bash(npm run seed:presupuestos:*)",
+      "Bash(npm run seed:impuestos:*)",
+      "Bash(npm run seed:impuestos:advanced:*)",
+      "Bash(npm run seed:impuestos:complete:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

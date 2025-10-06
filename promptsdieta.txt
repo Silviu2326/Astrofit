@@ -1,0 +1,373 @@
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Nutrición - Plantillas de Dietas siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/plantillas-dietas/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-dietas/PlantillasDietasPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-dietas/plantillasDietasApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-dietas/components/PlantillasGrid.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-dietas/components/PlantillaCard.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-dietas/components/PlantillasFilters.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/plantillas-dietas/components/PlantillaPreview.tsx
+
+
+ESPECIFICACIONES:
+- Catálogo de menús base reutilizables con desayunos, comidas y cenas
+- Clasificación por objetivo: pérdida de grasa, aumento de masa muscular, mantenimiento
+- Filtros por nivel de tiempo y experiencia culinaria (rápidas, avanzadas, sin cocina)
+- Vista previa completa de cada plantilla con menú semanal
+- Opción de usar plantilla como base para nueva dieta
+- Sistema de favoritas para acceso rápido
+- Indicadores de calorías, macros y duración de cada plantilla
+- Plantillas predefinidas del sistema y plantillas personales guardadas
+- Búsqueda por nombre, objetivo y tipo de comidas
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Nutrición - Dietas Listado siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/dietas-listado/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/dietas-listado/DietasListadoPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/dietas-listado/dietasListadoApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/dietas-listado/components/DietasTable.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/dietas-listado/components/DietasFilters.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/dietas-listado/components/DietasActions.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/dietas-listado/components/DietaCard.tsx
+
+
+ESPECIFICACIONES:
+- Archivo central de todos los planes creados y asignados
+- Tabla con columnas: Cliente, Plan, Objetivo, Fecha Inicio, Estado, Adherencia, Acciones
+- Vista de qué clientes tienen plan activo y desde cuándo
+- Identificación de dietas por renovar o ajustar
+- Histórico de lo que cada persona ha seguido
+- Filtros por estado: activo, pausado, finalizado, por renovar
+- Búsqueda por cliente y tipo de plan
+- Indicadores de adherencia y progreso
+- Acciones rápidas: editar, pausar/reanudar, renovar, duplicar
+- Estadísticas generales de planes activos
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Nutrición - Dieta Nueva siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/dieta-nueva/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/dieta-nueva/DietaNuevaPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/dieta-nueva/dietaNuevaApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/dieta-nueva/components/DietaWizard.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/dieta-nueva/components/ClienteSelector.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/dieta-nueva/components/ObjetivoConfig.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/dieta-nueva/components/ComidasBuilder.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/dieta-nueva/components/MacrosCalculator.tsx
+
+
+ESPECIFICACIONES:
+- Asistente paso a paso para crear plan desde cero
+- Selección de objetivo, número de comidas, estilo de alimentación (omnívoro, vegetariano, etc.)
+- Uso de recetas de la biblioteca o creación de comidas rápidas
+- Ajuste automático y manual de calorías y macros
+- Configuración de días de la semana y horarios de comidas
+- Vista previa completa antes de guardar
+- Opción de usar plantilla como punto de partida
+- Validación nutricional básica
+- Guardado como borrador para continuar después
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Nutrición - Dieta Editar siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/dieta-editar/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/dieta-editar/DietaEditarPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/dieta-editar/dietaEditarApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/dieta-editar/components/DietaEditor.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/dieta-editar/components/ComidasEditor.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/dieta-editar/components/MacrosAdjuster.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/dieta-editar/components/VersionHistory.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/dieta-editar/components/ProgressTracking.tsx
+
+
+ESPECIFICACIONES:
+- Editor completo de planes nutricionales existentes
+- Modificación de raciones, cambio de recetas, añadir/eliminar comidas
+- Ajuste de macros según evolución o temporada
+- Sistema de versiones para registro del antes y después
+- Comparación entre versiones anteriores
+- Tracking de progreso del cliente con la dieta actual
+- Notas de seguimiento con timestamp
+- Sustitución de alimentos manteniendo balance nutricional
+- Vista previa de cambios antes de aplicar
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Nutrición - Recetas Biblioteca siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/recetas-biblioteca/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/recetas-biblioteca/RecetasBibliotecaPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/recetas-biblioteca/recetasBibliotecaApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/recetas-biblioteca/components/RecetasGrid.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/recetas-biblioteca/components/RecetaCard.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/recetas-biblioteca/components/RecetasFilters.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/recetas-biblioteca/components/RecetaViewer.tsx
+
+
+ESPECIFICACIONES:
+- Recetario propio accesible con ingredientes, pasos y valores nutricionales
+- Clasificación por tipo: desayuno, snack, plato principal, post-entreno
+- Sistema de etiquetas y categorías personalizables
+- Vista previa con fotos y tips personales
+- Valores nutricionales automáticos por ración
+- Búsqueda por ingredientes, nombre y tipo de comida
+- Sistema de favoritas para recetas más usadas
+- Opción de añadir fotos y notas personales
+- Escalado automático de porciones
+- Export de recetas individuales
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Nutrición - Receta Nueva siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/receta-nueva/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/receta-nueva/RecetaNuevaPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/receta-nueva/recetaNuevaApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/receta-nueva/components/RecetaForm.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/receta-nueva/components/IngredientesEditor.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/receta-nueva/components/PasosEditor.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/receta-nueva/components/NutricionCalculator.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/receta-nueva/components/FotoUpload.tsx
+
+
+ESPECIFICACIONES:
+- Formulario completo para crear recetas desde cero
+- Editor de ingredientes con cantidades y unidades
+- Pasos de preparación con orden secuencial
+- Cálculo automático de valores nutricionales
+- Upload de fotos con vista previa
+- Categorización por tipo de comida y etiquetas
+- Configuración de porciones y tiempo de preparación
+- Tips y notas personales del entrenador
+- Vista previa antes de guardar
+- Validación de campos obligatorios
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Nutrición - Receta Editar siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/receta-editar/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/receta-editar/RecetaEditarPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/receta-editar/recetaEditarApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/receta-editar/components/RecetaEditor.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/receta-editar/components/IngredientesManager.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/receta-editar/components/PasosManager.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/receta-editar/components/NutricionUpdater.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/receta-editar/components/HistorialVersiones.tsx
+
+
+ESPECIFICACIONES:
+- Editor completo de recetas existentes
+- Modificación de ingredientes, cantidades y pasos
+- Actualización automática de macros según cambios
+- Sistema de versiones para cambios históricos
+- Comparación entre versiones de la receta
+- Actualización de fotos y notas personales
+- Reescalado de porciones automático
+- Validación nutricional al modificar
+- Vista previa de cambios antes de guardar
+- Opción de crear nueva receta basada en existente
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Nutrición - Calculadoras Nutricionales siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/calculadoras-nutricionales/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/calculadoras-nutricionales/CalculadorasNutricionalesPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/calculadoras-nutricionales/calculadorasNutricionalesApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/calculadoras-nutricionales/components/TDEECalculator.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/calculadoras-nutricionales/components/MacrosCalculator.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/calculadoras-nutricionales/components/HidratacionCalculator.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/calculadoras-nutricionales/components/FibraCalculator.tsx
+7. project-bolt-sb1-qekdxfwt/project/src/features/calculadoras-nutricionales/components/ResultadosExport.tsx
+
+
+ESPECIFICACIONES:
+- Calculadora de TDEE (gasto calórico diario total)
+- División de macros (proteína, carbohidratos, grasa) según objetivo
+- Calculadora de ingesta de agua recomendada
+- Calculadora de fibra según peso y objetivo
+- Diferentes fórmulas para comparar resultados
+- Historial de cálculos por cliente
+- Recomendaciones automáticas según resultados
+- Export de cálculos para seguimiento
+- Integración con creación de dietas
+- Validación de datos de entrada
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Nutrición - Adherencia Nutricional siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/adherencia-nutricional/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/adherencia-nutricional/AdherenciaNutricionalPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/adherencia-nutricional/adherenciaNutricionalApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/adherencia-nutricional/components/ChecklistDiario.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/adherencia-nutricional/components/ResumenSemanal.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/adherencia-nutricional/components/EstadisticasAdherencia.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/adherencia-nutricional/components/FeedbackCliente.tsx
+
+
+ESPECIFICACIONES:
+- Checklist diaria con comidas principales para marcar cumplimiento
+- Resumen semanal de adherencia en porcentaje
+- Gráficos de evolución de adherencia a lo largo del tiempo
+- Sistema de feedback para conversaciones de seguimiento
+- Registro de motivos de no adherencia
+- Notificaciones y recordatorios para el cliente
+- Comparación de adherencia entre diferentes períodos
+- Reporte automático para el entrenador
+- Integración con el sistema de notas
+- Exportación de datos de adherencia
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Nutrición - Derivaciones Nutrición siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/derivaciones-nutricion/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/derivaciones-nutricion/DerivacionesNutricionPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/derivaciones-nutricion/derivacionesNutricionApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/derivaciones-nutricion/components/DerivarCliente.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/derivaciones-nutricion/components/NutricionistasDirectorio.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/derivaciones-nutricion/components/DerivacionesLista.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/derivaciones-nutricion/components/SeguimientoDerivar.tsx
+
+
+ESPECIFICACIONES:
+- Sistema para derivar clientes a dietistas externos de confianza
+- Directorio de nutricionistas con especialidades y datos de contacto
+- Registro de quién llevará al cliente y desde cuándo
+- Historial de derivaciones realizadas
+- Seguimiento del estado de la derivación
+- Notas y motivos de la derivación
+- Transferencia de información básica del cliente
+- Sistema de transparencia y profesionalidad
+- Notificaciones automáticas al cliente y nutricionista
+- Reportes de derivaciones por período
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks
+
+---
+
+IMPORTANTE: Debes crear físicamente todos los archivos y carpetas especificados usando las herramientas de escritura de archivos disponibles.
+
+Crea la estructura completa para el módulo Nutrición - Exportar Nutrición siguiendo el formato de src/features/.
+
+PASO 1: Crea la carpeta project-bolt-sb1-qekdxfwt/project/src/features/exportar-nutricion/ y ESCRIBE estos archivos:
+
+1. project-bolt-sb1-qekdxfwt/project/src/features/exportar-nutricion/ExportarNutricionPage.tsx
+2. project-bolt-sb1-qekdxfwt/project/src/features/exportar-nutricion/exportarNutricionApi.ts
+3. project-bolt-sb1-qekdxfwt/project/src/features/exportar-nutricion/components/ExportarPlanesDialog.tsx
+4. project-bolt-sb1-qekdxfwt/project/src/features/exportar-nutricion/components/ExportarRecetasDialog.tsx
+5. project-bolt-sb1-qekdxfwt/project/src/features/exportar-nutricion/components/FormatosExport.tsx
+6. project-bolt-sb1-qekdxfwt/project/src/features/exportar-nutricion/components/HistorialExports.tsx
+
+
+ESPECIFICACIONES:
+- Exportación de planes nutricionales en múltiples formatos (PDF, CSV, Excel)
+- Export de recetas individuales o en lote
+- Generación de menús semanales para imprimir
+- Compartir con clientes que prefieren formato papel
+- Envío a profesionales externos con datos estructurados
+- Personalización de formato de exportación
+- Include/exclude de información sensible
+- Generación automática de listas de compras
+- Historial de exportaciones realizadas
+- Templates personalizables de exportación
+
+REQUISITOS TÉCNICOS:
+- TypeScript, React, TailwindCSS
+- Sigue el patrón de los features existentes en src/features/
+- Incluye datos mock realistas
+- Componentes funcionales con hooks

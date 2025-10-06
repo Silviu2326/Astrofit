@@ -1,0 +1,25 @@
+/* VistaDiaria.css */
+.vista-diaria {
+  width: 100%;
+}
+
+.vista-diaria-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.vista-diaria-events {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.vista-diaria-event {
+  transition: all 0.2s ease;
+}
+
+.vista-diaria-event:hover {
+  transform: translateY(-2px);
+}

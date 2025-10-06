@@ -1,0 +1,5 @@
+﻿I have created the following files:
+
+*   `C:/Users/usuario/Documents/src/features/agente-marketing/components/analytics/SimuladorImpacto.tsx`
+*   `C:/Users/usuario/Documents/src/features/agente-marketing/components/analytics/AnalisisSentimientos.tsx`
+*   `C:/Users/usuario/Documents/src/features/agente-marketing/components/analytics/ReportesROI.tsx`

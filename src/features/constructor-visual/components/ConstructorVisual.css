@@ -1,0 +1,117 @@
+
+.dndflow {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+.reactflow-wrapper {
+  flex-grow: 1;
+  height: 100%;
+}
+
+.sidebar {
+  width: 250px;
+  padding: 15px;
+  border-left: 1px solid #eee;
+  background: #fcfcfc;
+}
+
+.sidebar .description {
+  margin-bottom: 20px;
+  font-size: 12px;
+  color: #777;
+}
+
+.sidebar .nodes {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar .node {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: grab;
+  background: white;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.sidebar .node:hover {
+  background: #f0f0f0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar .node span {
+  margin-left: 10px;
+}
+
+.toolbar {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 4;
+  display: flex;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.toolbar button {
+  padding: 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.toolbar button:hover {
+  background: #f0f0f0;
+}
+
+.react-flow__node-trigger,
+.react-flow__node-action,
+.react-flow__node-condition,
+.react-flow__node-delay {
+  padding: 15px;
+  border-radius: 8px;
+  width: 180px;
+  border: 1px solid transparent;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.react-flow__node-trigger {
+  background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+  color: white;
+}
+
+.react-flow__node-action {
+  background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+  color: #333;
+}
+
+.react-flow__node-condition {
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  color: #333;
+}
+
+.react-flow__node-delay {
+  background: linear-gradient(135deg, #d4a4eb 0%, #a7a7a7 100%);
+  color: white;
+}
+
+.react-flow__node .icon {
+  margin-bottom: 10px;
+}
+
+.react-flow__handle {
+  width: 8px !important;
+  height: 8px !important;
+  background-color: #555 !important;
+}

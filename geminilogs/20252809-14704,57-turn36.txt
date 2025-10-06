@@ -1,0 +1,9 @@
+﻿(node:46584) MaxListenersExceededWarning: Possible EventTarget memory leak detected. 11 abort listeners added to [AbortSignal]. Use events.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+I have created the folder `project-bolt-sb1-qekdxfwt/project/src/features/escaner-entrada/` and written the following files:
+
+1.  `src/features/escaner-entrada/EscanerEntradaPage.tsx`
+2.  `src/features/escaner-entrada/escanerEntradaApi.ts`
+3.  `src/features/escaner-entrada/components/LectorQR.tsx`
+4.  `src/features/escaner-entrada/components/FeedbackAcceso.tsx`
+5.  `src/features/escaner-entrada/components/InfoCliente.tsx`

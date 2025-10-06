@@ -1,0 +1,1 @@
+﻿The module "Configuraci├│n Tienda" has been created with the specified files and directory structure.

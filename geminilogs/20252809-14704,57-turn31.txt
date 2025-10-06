@@ -1,0 +1,7 @@
+﻿I have created the `gestion-coach` feature with the following files:
+
+1.  `src/features/gestion-coach/GestionCoachPage.tsx`
+2.  `src/features/gestion-coach/gestionCoachApi.ts`
+3.  `src/features/gestion-coach/components/PanelEntrenadores.tsx`
+4.  `src/features/gestion-coach/components/CalendarioDisponibilidad.tsx`
+5.  `src/features/gestion-coach/components/AsignacionClases.tsx`

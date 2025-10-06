@@ -1,0 +1,36 @@
+﻿
+
+He transformado completamente la p├ígina del Panel de Datos de Wearables en un dashboard anal├¡tico avanzado con:
+
+**Vista Agregada (Todos los Clientes):**
+- 6 KPI cards con gradientes, iconos animados y comparativas vs ayer
+- Gr├ífico de l├¡neas m├║ltiples de actividad agregada (pasos, calor├¡as, entrenamientos)
+- Rankings interactivos con tabs (Top Pasos, Entrenamientos, Sue├▒o) con medallas para top 3
+- Panel de alertas autom├íticas por prioridad con botones de acci├│n
+- 8 insights inteligentes generados por IA con color coding por impacto
+- An├ílisis de tendencias con 4 gr├íficos (pasos por d├¡a de semana, adherencia, tipos de entrenamientos, calidad de sue├▒o)
+
+**Vista Individual (Cliente Espec├¡fico):**
+- Header hero con avatar, nombre y 4 progress circles animados (pasos, minutos activos, calor├¡as, sue├▒o)
+- Gr├ífico de pasos ├║ltimos 7 d├¡as (barras verdes si cumple objetivo, rojas si no)
+- Gr├ífico de sue├▒o apilado por fases (ligero, profundo, REM)
+- M├®tricas avanzadas (VO2 max, HRV, SpO2, Score de recuperaci├│n) con gradientes
+- Lista de entrenamientos recientes con detalles completos
+
+**Datos Mockeados:**
+- 65 clientes con 30 d├¡as de m├®tricas diarias coherentes
+- Variaci├│n realista por d├¡a de semana (m├ís activos entre semana)
+- 5-25 entrenamientos por cliente con tipos variados
+- M├®tricas avanzadas para 60-70% de clientes
+- 6 alertas autom├íticas con diferentes prioridades
+- 8 insights de IA accionables
+
+**Dise├▒o:**
+- Paleta azul-verde salud/fitness
+- Animaciones con framer-motion
+- 10+ tipos de gr├íficos con Recharts
+- Iconos de Lucide React
+- Responsive y hover effects
+- TypeScript estricto
+
+El dashboard est├í listo para analizar m├®tricas de salud y optimizar rendimiento de clientes basado en datos de wearables.

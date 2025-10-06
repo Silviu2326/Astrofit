@@ -1,0 +1,1 @@
+﻿The base structure for the Agente Entrenador module has been created, including all specified folders and empty TypeScript files.

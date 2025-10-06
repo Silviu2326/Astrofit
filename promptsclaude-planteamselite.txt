@@ -1,0 +1,577 @@
+# 🎨 PROMPTS PARA ESTILIZAR MÓDULOS DE PLANTEAMSELITE
+
+**INSTRUCCIONES GENERALES:**
+- Cada prompt debe procesar UN SOLO módulo
+- Seguir estrictamente la guía de estilos en GUIA_ESTILOS_UI.md
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+- Usar rounded-3xl, glassmorphism (bg-white/80 backdrop-blur-xl), gradientes vibrantes
+- Implementar animaciones con framer-motion
+- Agregar decoraciones de fondo (blur orbs) y patrones sutiles
+
+---
+
+## 📋 PROMPT 1: Dashboards de Equipos
+
+**MÓDULO:** src/features/planteamselite/analiticas-avanzadas/dashboards-equipos/
+
+**TAREA:**
+Estiliza el módulo "Dashboards de Equipos" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar DashboardsEquiposPage.tsx** aplicando:
+   - Hero section con gradiente `from-blue-600 via-indigo-600 to-purple-600`
+   - Grid de métricas con cards glassmorphism
+   - Gráficos de rendimiento en containers con backdrop blur
+   - Progress bars con gradientes para indicadores de equipo
+   - Badges de estado del equipo (activo, descanso, competición)
+   - Decoraciones blur orbs en fondos
+   - Animaciones framer-motion (initial, animate, whileHover)
+   - Efectos shimmer en hover para cards interactivos
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 2: Comparativas Longitudinales
+
+**MÓDULO:** src/features/planteamselite/analiticas-avanzadas/comparativas-longitudinales/
+
+**TAREA:**
+Estiliza el módulo "Comparativas Longitudinales" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar ComparativasLongitudinalesPage.tsx** aplicando:
+   - Hero section con gradiente vibrante
+   - Timeline de evolución con líneas verticales estilizadas
+   - Cards de comparación con glassmorphism
+   - Gráficos de líneas/barras en containers backdrop blur
+   - Selector de período con inputs estilizados
+   - Badges de tendencias (mejora, estable, baja)
+   - Animaciones de entrada escalonadas (stagger)
+   - Indicadores visuales con colores (verde=mejora, rojo=baja)
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 3: Reportes de Rendimiento
+
+**MÓDULO:** src/features/planteamselite/analiticas-avanzadas/reportes-rendimiento/
+
+**TAREA:**
+Estiliza el módulo "Reportes de Rendimiento" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar ReportesRendimientoPage.tsx** aplicando:
+   - Hero section con gradiente `from-indigo-500 via-purple-500 to-pink-500`
+   - Cards de reportes con `rounded-3xl` y efectos hover
+   - Grid de métricas con iconos en backdrop blur containers
+   - Gráficos de radar/barras con glassmorphism
+   - Botones de exportar/compartir con gradientes
+   - Progress bars para KPIs
+   - Filtros con selectores estilizados
+   - Animaciones de entrada para cards
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 4: Dispositivos Conectados
+
+**MÓDULO:** src/features/planteamselite/sensores/dispositivos-conectados/
+
+**TAREA:**
+Estiliza el módulo "Dispositivos Conectados" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar DispositivosConectadosPage.tsx** aplicando:
+   - Hero section con gradiente tecnológico `from-cyan-500 via-blue-500 to-indigo-500`
+   - Grid de dispositivos con cards interactivas
+   - Badges de estado de conexión (conectado, desconectado, sincronizando)
+   - Indicadores de batería con progress bars animados
+   - Iconos de dispositivos en containers backdrop blur
+   - Lista de sensores con animaciones de entrada
+   - Efectos pulse para dispositivos activos
+   - Botones de sincronizar/configurar con gradientes
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 5: Datos en Tiempo Real
+
+**MÓDULO:** src/features/planteamselite/sensores/datos-tiempo-real/
+
+**TAREA:**
+Estiliza el módulo "Datos en Tiempo Real" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar DatosTiempoRealPage.tsx** aplicando:
+   - Hero section con gradiente `from-emerald-500 via-teal-500 to-cyan-500`
+   - Cards de métricas en vivo con efectos pulse
+   - Gráficos de líneas animadas en tiempo real
+   - Badges de alertas (normal, advertencia, crítico) con colores
+   - Indicadores de frecuencia cardíaca con progress circles
+   - Stream de datos con animaciones de actualización
+   - Decoraciones blur orbs animadas
+   - Efectos glow en métricas críticas
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 6: Informes de Sensores
+
+**MÓDULO:** src/features/planteamselite/sensores/informes-sensores/
+
+**TAREA:**
+Estiliza el módulo "Informes de Sensores" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar InformesSensoresPage.tsx** aplicando:
+   - Hero section con gradiente vibrante
+   - Cards de resumen con glassmorphism
+   - Gráficos comparativos en containers backdrop blur
+   - Selector de rango de fechas estilizado
+   - Progress bars para promedios y totales
+   - Badges de categorías de sensores
+   - Tabla de datos con rows hover effect
+   - Botones de descarga/exportar con gradientes
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 7: Torneos
+
+**MÓDULO:** src/features/planteamselite/eventos/torneos/
+
+**TAREA:**
+Estiliza el módulo "Torneos" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar TorneosPage.tsx** aplicando:
+   - Hero section con gradiente `from-purple-600 via-pink-600 to-rose-600`
+   - Grid de torneos con cards glassmorphism
+   - Badges de fase (inscripción, en curso, finalizado)
+   - Brackets/llaves de eliminación estilizadas
+   - Cards de equipos participantes con avatares
+   - Progress bars para avance del torneo
+   - Animaciones de entrada para cards
+   - Efectos hover con scale y shadow
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 8: Campeonatos
+
+**MÓDULO:** src/features/planteamselite/eventos/campeonatos/
+
+**TAREA:**
+Estiliza el módulo "Campeonatos" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar CampeonatosPage.tsx** aplicando:
+   - Hero section con gradiente deportivo
+   - Cards de campeonatos con header gradiente
+   - Tabla de posiciones con glassmorphism
+   - Badges de medallería (oro, plata, bronce)
+   - Progress bars para progreso de temporada
+   - Efectos shimmer en cards de campeones
+   - Animaciones de entrada escalonadas
+   - Iconos de trofeos con glow effects
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 9: Resultados de Eventos
+
+**MÓDULO:** src/features/planteamselite/eventos/resultados-eventos/
+
+**TAREA:**
+Estiliza el módulo "Resultados de Eventos" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar ResultadosEventosPage.tsx** aplicando:
+   - Hero section con gradiente vibrante
+   - Cards de resultados con glassmorphism
+   - Tabla de clasificación con hover effects
+   - Badges de posición (1º, 2º, 3º) destacados
+   - Gráficos de estadísticas del evento
+   - Progress bars para métricas de rendimiento
+   - Selector de evento con inputs estilizados
+   - Animaciones de entrada para resultados
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 10: Listado de Jugadores (Scouting)
+
+**MÓDULO:** src/features/planteamselite/scouting/listado-jugadores/
+
+**TAREA:**
+Estiliza el módulo "Listado de Jugadores" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar ListadoJugadoresPage.tsx** aplicando:
+   - Hero section con gradiente `from-blue-500 via-indigo-500 to-purple-500`
+   - Grid de jugadores con cards interactivas
+   - Avatares de jugadores con borders gradiente
+   - Badges de posición y categoría
+   - Rating stars o progress bars para valoración
+   - Filtros avanzados con inputs estilizados
+   - Efectos hover con scale en cards
+   - Animaciones de entrada escalonadas
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 11: Evaluación de Jugador
+
+**MÓDULO:** src/features/planteamselite/scouting/evaluacion-jugador/
+
+**TAREA:**
+Estiliza el módulo "Evaluación de Jugador" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar EvaluacionJugadorPage.tsx** aplicando:
+   - Hero section con perfil del jugador destacado
+   - Cards de categorías de evaluación con glassmorphism
+   - Progress bars/radiales para habilidades
+   - Gráfico de radar para capacidades
+   - Inputs de calificación estilizados (sliders, stars)
+   - Badges de fortalezas y debilidades
+   - Botones de guardar/enviar con gradientes
+   - Animaciones en actualización de ratings
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 12: Historial de Scouting
+
+**MÓDULO:** src/features/planteamselite/scouting/historial-scouting/
+
+**TAREA:**
+Estiliza el módulo "Historial de Scouting" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar HistorialScoutingPage.tsx** aplicando:
+   - Hero section con gradiente
+   - Timeline de evaluaciones con líneas verticales
+   - Cards de reportes con glassmorphism
+   - Badges de evaluadores y fechas
+   - Filtros de búsqueda con inputs estilizados
+   - Progress bars para evolución de ratings
+   - Animaciones de entrada para timeline
+   - Efectos hover en cards de historial
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 13: Equipo A vs B
+
+**MÓDULO:** src/features/planteamselite/comparador-equipos/equipo-a-vs-b/
+
+**TAREA:**
+Estiliza el módulo "Equipo A vs B" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar EquipoAVsBPage.tsx** aplicando:
+   - Hero section con gradiente `from-red-500 via-purple-500 to-blue-500`
+   - Layout de dos columnas (Equipo A | VS | Equipo B)
+   - Cards de estadísticas comparativas con glassmorphism
+   - Progress bars comparativos (uno a la izquierda, otro a la derecha)
+   - Badges de ventaja/desventaja con colores
+   - Iconos de equipos con glow effects
+   - Selector de equipos estilizado
+   - Animaciones de entrada desde lados opuestos
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 14: Análisis por Posición
+
+**MÓDULO:** src/features/planteamselite/comparador-equipos/analisis-posicion/
+
+**TAREA:**
+Estiliza el módulo "Análisis por Posición" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar AnalisisPosicionPage.tsx** aplicando:
+   - Hero section con gradiente deportivo
+   - Grid de posiciones con cards interactivas
+   - Badges de posiciones (delantero, mediocampista, defensa, portero)
+   - Gráficos de heatmap/campo de juego estilizados
+   - Progress bars para métricas por posición
+   - Selector de posición con tabs/pills
+   - Animaciones de entrada por grupos
+   - Efectos hover con scale en cards
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 15: Proyección de Partido
+
+**MÓDULO:** src/features/planteamselite/comparador-equipos/proyeccion-partido/
+
+**TAREA:**
+Estiliza el módulo "Proyección de Partido" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar ProyeccionPartidoPage.tsx** aplicando:
+   - Hero section con gradiente `from-orange-500 via-red-500 to-pink-500`
+   - Cards de pronósticos con glassmorphism
+   - Progress bars de probabilidades (victoria, empate, derrota)
+   - Badges de confianza de predicción
+   - Gráficos de escenarios posibles
+   - Grid de estadísticas clave
+   - Animaciones de contador para porcentajes
+   - Efectos glow en predicción principal
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📝 NOTAS GENERALES
+
+### Elementos Clave a Aplicar en TODOS los Módulos:
+
+1. **Hero Section:**
+   - Gradiente de 3 colores: `from-X via-Y to-Z`
+   - Efectos blur orbs animados con `animate-pulse`
+   - Patrón de fondo (grid o dots) con opacidad baja
+   - Título con icono en container backdrop blur
+   - Border `border-white/20` o `border-white/50`
+
+2. **Cards:**
+   - `rounded-3xl` (principal)
+   - `bg-white/80 backdrop-blur-xl`
+   - `border border-white/50`
+   - Decoración blur orb en esquina
+   - `shadow-xl hover:shadow-2xl`
+   - Efecto shimmer en hover para interactivos
+
+3. **Animaciones:**
+   - Entrada: `initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}`
+   - Hover: `whileHover={{ scale: 1.03, y: -8 }}`
+   - Stagger: usar `delay: index * 0.1` en listas
+
+4. **Componentes:**
+   - Inputs: `rounded-2xl` con `focus:ring-4 focus:ring-indigo-100`
+   - Botones: gradientes con `group` y overlay hover
+   - Badges: `rounded-full` con gradientes sutiles de fondo
+   - Progress bars: gradientes de 3 colores con animación
+
+5. **Iconos:**
+   - Contenedor: `p-2 bg-white/20 rounded-xl backdrop-blur-sm`
+   - Glow effect opcional: div absoluto con blur
+
+### Paleta de Gradientes Sugerida por Tipo:
+
+- **Analíticas/Dashboards:** `from-blue-600 via-indigo-600 to-purple-600`
+- **Sensores/Tecnología:** `from-cyan-500 via-blue-500 to-indigo-500`
+- **Tiempo Real/Live:** `from-emerald-500 via-teal-500 to-cyan-500`
+- **Eventos/Competencias:** `from-purple-600 via-pink-600 to-rose-600`
+- **Scouting/Evaluación:** `from-blue-500 via-indigo-500 to-purple-500`
+- **Comparación/VS:** `from-red-500 via-purple-500 to-blue-500`
+- **Proyecciones/Predicciones:** `from-orange-500 via-red-500 to-pink-500`
+
+### Paleta de Badges por Estado:
+
+- **Conectado/Activo:** `bg-green-500 text-white`
+- **Desconectado/Inactivo:** `bg-gray-400 text-white`
+- **Sincronizando/Proceso:** `bg-blue-500 text-white animate-pulse`
+- **Advertencia:** `bg-yellow-500 text-white`
+- **Crítico/Alerta:** `bg-red-500 text-white`
+- **Excelente/Ganador:** `bg-gradient-to-r from-yellow-400 to-orange-500`
+
+### Elementos Específicos de PlanTeamsElite:
+
+#### Métricas Deportivas:
+```jsx
+{/* Progress bar comparativo */}
+<div className="flex items-center gap-4">
+  <div className="flex-1 bg-blue-200 rounded-full h-3">
+    <motion.div
+      initial={{ width: 0 }}
+      animate={{ width: '75%' }}
+      className="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"
+    />
+  </div>
+  <span className="text-sm font-bold text-blue-600">75%</span>
+</div>
+```
+
+#### Badges de Posición:
+```jsx
+{/* Delantero */}
+<div className="px-3 py-1 bg-gradient-to-r from-red-500 to-orange-500 text-white text-xs font-bold rounded-full">
+  DEL
+</div>
+
+{/* Mediocampista */}
+<div className="px-3 py-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-bold rounded-full">
+  MED
+</div>
+
+{/* Defensa */}
+<div className="px-3 py-1 bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-xs font-bold rounded-full">
+  DEF
+</div>
+
+{/* Portero */}
+<div className="px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold rounded-full">
+  POR
+</div>
+```
+
+#### Timeline de Eventos:
+```jsx
+<div className="relative">
+  {/* Línea vertical */}
+  <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500"></div>
+
+  {events.map((event, index) => (
+    <motion.div
+      key={index}
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: index * 0.1 }}
+      className="relative pl-12 pb-8"
+    >
+      {/* Punto en timeline */}
+      <div className="absolute left-2 w-5 h-5 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full border-4 border-white shadow-lg"></div>
+
+      {/* Card del evento */}
+      <div className="bg-white/80 backdrop-blur-xl rounded-2xl p-4 border border-white/50 shadow-lg">
+        {/* Contenido */}
+      </div>
+    </motion.div>
+  ))}
+</div>
+```
+
+#### Card de Comparación VS:
+```jsx
+<div className="grid grid-cols-3 gap-4 items-center">
+  {/* Equipo A */}
+  <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-3xl p-6 text-white">
+    <div className="text-center">
+      <div className="w-20 h-20 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center">
+        <img src={teamA.logo} alt="Team A" className="w-16 h-16 rounded-full" />
+      </div>
+      <h3 className="text-2xl font-bold">{teamA.name}</h3>
+    </div>
+  </div>
+
+  {/* VS */}
+  <div className="text-center">
+    <div className="inline-block px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full">
+      <span className="text-2xl font-bold text-white">VS</span>
+    </div>
+  </div>
+
+  {/* Equipo B */}
+  <div className="bg-gradient-to-br from-red-500 to-pink-600 rounded-3xl p-6 text-white">
+    <div className="text-center">
+      <div className="w-20 h-20 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center">
+        <img src={teamB.logo} alt="Team B" className="w-16 h-16 rounded-full" />
+      </div>
+      <h3 className="text-2xl font-bold">{teamB.name}</h3>
+    </div>
+  </div>
+</div>
+```
+
+#### Indicador de Estado de Sensor:
+```jsx
+<div className="flex items-center gap-3 p-4 bg-white/80 backdrop-blur-xl rounded-2xl border border-white/50">
+  {/* Icono del sensor */}
+  <div className="relative">
+    <div className="p-3 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-xl">
+      <Sensor className="w-6 h-6 text-white" />
+    </div>
+    {/* Indicador de estado */}
+    <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
+  </div>
+
+  <div className="flex-1">
+    <p className="font-bold text-gray-900">Heart Rate Monitor</p>
+    <p className="text-sm text-gray-600">Conectado - 92% batería</p>
+  </div>
+
+  {/* Progress de batería */}
+  <div className="w-20">
+    <div className="w-full bg-gray-200 rounded-full h-2">
+      <div className="h-full bg-gradient-to-r from-green-500 to-emerald-500 rounded-full" style={{ width: '92%' }}></div>
+    </div>
+  </div>
+</div>
+```
+
+### Recordatorios:
+
+- ✅ Siempre usar `relative z-10` en contenido sobre decoraciones
+- ✅ Agregar `overflow-hidden` a contenedores con blur orbs
+- ✅ Usar `group` y `group-hover:` para efectos hover complejos
+- ✅ Mantener consistencia en espaciados (gap-6 entre cards, gap-4 elementos)
+- ✅ Implementar responsive con `md:` y `lg:` breakpoints
+- ✅ Para módulos de comparación, usar animaciones desde lados opuestos
+- ✅ Para datos en tiempo real, usar `animate-pulse` en indicadores activos
+- ✅ Para scouting, destacar ratings con progress circles/stars
+- ❌ NO crear archivos nuevos
+- ❌ NO eliminar funcionalidad existente
+- ❌ NO cambiar la estructura de datos o lógica

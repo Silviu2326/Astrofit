@@ -1,0 +1,479 @@
+# 🎨 PROMPTS PARA ESTILIZAR MÓDULOS DE PLANTEAMSPRO
+
+**INSTRUCCIONES GENERALES:**
+- Cada prompt debe procesar UN SOLO módulo
+- Seguir estrictamente la guía de estilos en GUIA_ESTILOS_UI.md
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+- Usar rounded-3xl, glassmorphism (bg-white/80 backdrop-blur-xl), gradientes vibrantes
+- Implementar animaciones con framer-motion
+- Agregar decoraciones de fondo (blur orbs) y patrones sutiles
+
+---
+
+## 📋 PROMPT 1: Ficha de Atleta
+
+**MÓDULO:** src/features/planteamspro/perfiles-atletas/ficha-atleta/
+
+**TAREA:**
+Estiliza el módulo "Ficha de Atleta" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar FichaAtletaPage.tsx** aplicando:
+   - Hero section con gradiente `from-indigo-600 via-purple-600 to-pink-600`
+   - Cards con `rounded-3xl`, `bg-white/80 backdrop-blur-xl`
+   - Decoraciones blur orbs en fondos
+   - Animaciones framer-motion (initial, animate, whileHover)
+   - Iconos con backdrop blur containers
+   - Progress bars con gradientes para métricas del atleta
+   - Grid de estadísticas con efectos shimmer en hover
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 2: Historial de Rendimiento
+
+**MÓDULO:** src/features/planteamspro/perfiles-atletas/historial-rendimiento/
+
+**TAREA:**
+Estiliza el módulo "Historial de Rendimiento" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar HistorialRendimientoPage.tsx** aplicando:
+   - Hero section con gradiente y patrones de fondo
+   - Cards de timeline con líneas verticales estilizadas
+   - Gráficos con containers glassmorphism
+   - Badges con `rounded-full` para indicadores de progreso
+   - Animaciones de entrada escalonadas (stagger)
+   - Efectos hover en cards de historial
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 3: Comparador de Atletas
+
+**MÓDULO:** src/features/planteamspro/perfiles-atletas/comparador-atletas/
+
+**TAREA:**
+Estiliza el módulo "Comparador de Atletas" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar ComparadorAtletasPage.tsx** aplicando:
+   - Hero section con gradiente `from-blue-500 via-indigo-500 to-purple-500`
+   - Layout de comparación con cards glassmorphism lado a lado
+   - Progress bars comparativos con animaciones
+   - Badges de diferencias con gradientes (verde para mejor, rojo para peor)
+   - Efectos visuales de vs/comparación
+   - Animaciones de entrada para métricas
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 4: Lista de Convocatorias
+
+**MÓDULO:** src/features/planteamspro/convocatorias/lista-convocatorias/
+
+**TAREA:**
+Estiliza el módulo "Lista de Convocatorias" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar ListaConvocatoriasPage.tsx** aplicando:
+   - Hero section con gradiente vibrante
+   - Cards de convocatorias con `rounded-3xl` y efectos shimmer
+   - Badges de estado (confirmado, pendiente, rechazado) con colores apropiados
+   - Lista con animaciones de entrada escalonadas
+   - Botones de acción con gradientes y efectos hover
+   - Filtros con inputs estilizados
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 5: Asistencia a Eventos
+
+**MÓDULO:** src/features/planteamspro/convocatorias/asistencia-eventos/
+
+**TAREA:**
+Estiliza el módulo "Asistencia a Eventos" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar AsistenciaEventosPage.tsx** aplicando:
+   - Hero section con gradiente y efectos de fondo
+   - Grid de estadísticas de asistencia
+   - Cards de eventos con iconos en backdrop blur
+   - Progress bars para porcentajes de asistencia
+   - Lista de asistentes con avatares estilizados
+   - Badges de estado (presente, ausente, justificado)
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 6: Gestión de Plantillas de Convocatoria
+
+**MÓDULO:** src/features/planteamspro/convocatorias/gestion-plantillas-convocatoria/
+
+**TAREA:**
+Estiliza el módulo "Gestión de Plantillas de Convocatoria" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar GestionPlantillasConvocatoriaPage.tsx** aplicando:
+   - Hero section con gradiente
+   - Grid de plantillas con cards glassmorphism
+   - Botones de crear/editar/eliminar con gradientes
+   - Modal/Form con inputs estilizados (si existe)
+   - Badges para categorías de plantillas
+   - Animaciones hover en cards de plantillas
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 7: Cuestionario Diario
+
+**MÓDULO:** src/features/planteamspro/cuestionarios-wellness/cuestionario-diario/
+
+**TAREA:**
+Estiliza el módulo "Cuestionario Diario" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar CuestionarioDiarioPage.tsx** aplicando:
+   - Hero section con gradiente `from-emerald-500 via-teal-500 to-cyan-500`
+   - Formulario con inputs estilizados `rounded-2xl` con focus rings
+   - Cards de preguntas con glassmorphism
+   - Progress bar del cuestionario con animación
+   - Botones de siguiente/anterior con efectos hover
+   - Badges para indicadores de bienestar
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 8: Informes Semanales
+
+**MÓDULO:** src/features/planteamspro/cuestionarios-wellness/informes-semanales/
+
+**TAREA:**
+Estiliza el módulo "Informes Semanales" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar InformesSemanalesPage.tsx** aplicando:
+   - Hero section con gradiente vibrante
+   - Grid de métricas semanales con animaciones
+   - Gráficos en containers glassmorphism
+   - Timeline de evolución semanal
+   - Cards de resumen con iconos y blur orbs
+   - Selector de período estilizado
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 9: Alertas de Fatiga
+
+**MÓDULO:** src/features/planteamspro/cuestionarios-wellness/alertas-fatiga/
+
+**TAREA:**
+Estiliza el módulo "Alertas de Fatiga" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar AlertasFatigaPage.tsx** aplicando:
+   - Hero section con gradiente `from-orange-500 via-red-500 to-pink-500`
+   - Cards de alertas con bordes y fondos de color según severidad
+   - Badges de nivel de alerta (crítico, alto, medio, bajo)
+   - Lista de atletas en riesgo con avatares y métricas
+   - Indicadores visuales con progress bars
+   - Animaciones de atención (pulse) para alertas críticas
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 10: Pruebas Físicas
+
+**MÓDULO:** src/features/planteamspro/laboratorio-tests/pruebas-fisicas/
+
+**TAREA:**
+Estiliza el módulo "Pruebas Físicas" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar PruebasFisicasPage.tsx** aplicando:
+   - Hero section con gradiente deportivo
+   - Grid de tipos de pruebas con cards interactivas
+   - Formulario de registro de resultados estilizado
+   - Progress bars para rangos de rendimiento
+   - Badges para categorías de pruebas
+   - Animaciones en botones de iniciar/detener prueba
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 11: Resultados Históricos
+
+**MÓDULO:** src/features/planteamspro/laboratorio-tests/resultados-historicos/
+
+**TAREA:**
+Estiliza el módulo "Resultados Históricos" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar ResultadosHistoricosPage.tsx** aplicando:
+   - Hero section con gradiente
+   - Timeline de resultados con líneas verticales estilizadas
+   - Cards de resultados con glassmorphism y efectos hover
+   - Gráficos de evolución en containers con backdrop blur
+   - Filtros de fecha con inputs estilizados
+   - Badges de mejora/empeoramiento con colores apropiados
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 12: Comparador de Resultados
+
+**MÓDULO:** src/features/planteamspro/laboratorio-tests/comparador-resultados/
+
+**TAREA:**
+Estiliza el módulo "Comparador de Resultados" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar ComparadorResultadosPage.tsx** aplicando:
+   - Hero section con gradiente `from-blue-500 via-indigo-500 to-purple-500`
+   - Layout comparativo con dos columnas glassmorphism
+   - Progress bars comparativos con animaciones
+   - Indicadores de diferencia con iconos y colores
+   - Selector de pruebas/períodos estilizado
+   - Efectos visuales de comparación (vs, flechas)
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 13: Calendario de Periodización
+
+**MÓDULO:** src/features/planteamspro/planificacion-mesociclos/calendario-periodizacion/
+
+**TAREA:**
+Estiliza el módulo "Calendario de Periodización" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar CalendarioPeriodizacionPage.tsx** aplicando:
+   - Hero section con gradiente vibrante
+   - Calendario con celdas glassmorphism
+   - Badges de fases (preparación, competición, transición) con colores
+   - Cards de mesociclos con efectos hover
+   - Líneas de tiempo con gradientes
+   - Selector de mes/año estilizado
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 14: Editar Mesociclo
+
+**MÓDULO:** src/features/planteamspro/planificacion-mesociclos/editar-mesociclo/
+
+**TAREA:**
+Estiliza el módulo "Editar Mesociclo" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar EditarMesocicloPage.tsx** aplicando:
+   - Hero section con gradiente
+   - Formulario con inputs estilizados `rounded-2xl`
+   - Cards de secciones del formulario con glassmorphism
+   - Botones de guardar/cancelar con gradientes
+   - Progress indicators para completitud del formulario
+   - Tooltips estilizados para ayuda
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 15: Plantillas de Mesociclos
+
+**MÓDULO:** src/features/planteamspro/planificacion-mesociclos/plantillas-mesociclos/
+
+**TAREA:**
+Estiliza el módulo "Plantillas de Mesociclos" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar PlantillasMesociclosPage.tsx** aplicando:
+   - Hero section con gradiente
+   - Grid de plantillas con cards interactivas
+   - Badges para categorías (fuerza, resistencia, velocidad)
+   - Botones de usar/editar/eliminar con efectos hover
+   - Modal de preview con glassmorphism (si existe)
+   - Efectos shimmer en hover de cards
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 16: Listado de Roles
+
+**MÓDULO:** src/features/planteamspro/roles-equipo/listado-roles/
+
+**TAREA:**
+Estiliza el módulo "Listado de Roles" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar ListadoRolesPage.tsx** aplicando:
+   - Hero section con gradiente
+   - Cards de roles con iconos en backdrop blur
+   - Badges de cantidad de miembros por rol
+   - Lista de miembros con avatares estilizados
+   - Botones de gestión con gradientes
+   - Animaciones de entrada para cards
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 17: Permisos de Entrenadores
+
+**MÓDULO:** src/features/planteamspro/roles-equipo/permisos-entrenadores/
+
+**TAREA:**
+Estiliza el módulo "Permisos de Entrenadores" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar PermisosEntrenadoresPage.tsx** aplicando:
+   - Hero section con gradiente
+   - Tabla de permisos con rows glassmorphism
+   - Toggles/switches estilizados para activar/desactivar permisos
+   - Cards de categorías de permisos
+   - Badges de nivel de acceso (admin, moderador, lectura)
+   - Botones de guardar cambios con efectos
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📋 PROMPT 18: Asignación de Roles
+
+**MÓDULO:** src/features/planteamspro/roles-equipo/asignacion-roles/
+
+**TAREA:**
+Estiliza el módulo "Asignación de Roles" siguiendo las guías de GUIA_ESTILOS_UI.md. Debes:
+
+1. **Revisar GUIA_ESTILOS_UI.md** para aplicar los estilos correctamente
+2. **Editar AsignacionRolesPage.tsx** aplicando:
+   - Hero section con gradiente
+   - Layout de dos columnas (usuarios disponibles / roles) con glassmorphism
+   - Drag & drop areas estilizadas (si aplica)
+   - Cards de usuarios con avatares y badges de rol actual
+   - Selectores estilizados para asignar roles
+   - Botones de confirmación con gradientes
+
+3. **Editar componentes** si existen en la carpeta aplicando los mismos estilos
+
+**RESTRICCIONES:**
+- **NO CREAR NUEVOS ARCHIVOS** - Solo editar archivos existentes en la carpeta
+
+---
+
+## 📝 NOTAS GENERALES
+
+### Elementos Clave a Aplicar en TODOS los Módulos:
+
+1. **Hero Section:**
+   - Gradiente de 3 colores: `from-X via-Y to-Z`
+   - Efectos blur orbs animados con `animate-pulse`
+   - Patrón de fondo (grid o dots) con opacidad baja
+   - Título con icono en container backdrop blur
+   - Border `border-white/20` o `border-white/50`
+
+2. **Cards:**
+   - `rounded-3xl` (principal)
+   - `bg-white/80 backdrop-blur-xl`
+   - `border border-white/50`
+   - Decoración blur orb en esquina
+   - `shadow-xl hover:shadow-2xl`
+   - Efecto shimmer en hover para interactivos
+
+3. **Animaciones:**
+   - Entrada: `initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}`
+   - Hover: `whileHover={{ scale: 1.03, y: -8 }}`
+   - Stagger: usar `delay: index * 0.1` en listas
+
+4. **Componentes:**
+   - Inputs: `rounded-2xl` con `focus:ring-4 focus:ring-indigo-100`
+   - Botones: gradientes con `group` y overlay hover
+   - Badges: `rounded-full` con gradientes sutiles de fondo
+   - Progress bars: gradientes de 3 colores con animación
+
+5. **Iconos:**
+   - Contenedor: `p-2 bg-white/20 rounded-xl backdrop-blur-sm`
+   - Glow effect opcional: div absoluto con blur
+
+### Paleta de Gradientes Sugerida por Tipo:
+
+- **Principal/General:** `from-indigo-600 via-purple-600 to-pink-600`
+- **Atletas/Rendimiento:** `from-blue-500 via-indigo-500 to-purple-500`
+- **Wellness/Salud:** `from-emerald-500 via-teal-500 to-cyan-500`
+- **Alertas/Crítico:** `from-orange-500 via-red-500 to-pink-500`
+- **Planificación:** `from-purple-500 via-pink-500 to-rose-500`
+
+### Recordatorios:
+
+- ✅ Siempre usar `relative z-10` en contenido sobre decoraciones
+- ✅ Agregar `overflow-hidden` a contenedores con blur orbs
+- ✅ Usar `group` y `group-hover:` para efectos hover complejos
+- ✅ Mantener consistencia en espaciados (gap-6 entre cards, gap-4 elementos)
+- ✅ Implementar responsive con `md:` y `lg:` breakpoints
+- ❌ NO crear archivos nuevos
+- ❌ NO eliminar funcionalidad existente
+- ❌ NO cambiar la estructura de datos o lógica

@@ -1,0 +1,30 @@
+﻿
+
+Dashboard completo de an├ílisis de conversiones de upsells implementado en ConversionReportPage.tsx con:
+
+Ô£à **Componentes principales:**
+- Header anal├¡tico con gradiente verde-dorado y selector de per├¡odo
+- 6 KPIs principales con comparativas y mini gr├íficos de tendencia
+- Gr├ífico de evoluci├│n de conversiones de 12 meses con m├║ltiples l├¡neas
+- Funnel de conversi├│n visual con drop-off y sugerencias
+- An├ílisis por tipo de oferta (Upsell, Cross-sell, Bundle, Downsell)
+- Top 5 ofertas por ingresos y por tasa de conversi├│n
+- Peores ofertas con razones y sugerencias de optimizaci├│n
+- An├ílisis por segmento (Membres├¡a, Canal, Actividad) con tabs
+- An├ílisis por punto de contacto (Checkout, Post-compra, Email, etc.)
+- An├ílisis temporal (d├¡a de semana) y valor incremental
+- Resultados de tests A/B con variantes ganadoras
+- Distribuci├│n por producto y descuento (Pie charts)
+- Objetivos vs Real con progress bars
+- Recomendaciones IA con prioridades
+- Benchmarks de industria
+- Proyecci├│n de ingresos (3 escenarios)
+
+Ô£à **Caracter├¡sticas:**
+- Datos mockeados realistas y coherentes
+- Animaciones con framer-motion
+- M├║ltiples tipos de gr├íficos con Recharts
+- Paleta verde-dorado profesional
+- Insights accionables en cada secci├│n
+- TypeScript completo
+- Responsive design

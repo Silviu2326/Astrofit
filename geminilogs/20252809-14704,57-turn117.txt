@@ -1,0 +1,5 @@
+﻿He creado la estructura b├ísica para el m├│dulo "Asistencia a Eventos - Confirmaci├│n de Disponibilidad" y he escrito los siguientes archivos:
+
+1.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/asistencia-eventos/AsistenciaEventosPage.tsx`
+2.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/asistencia-eventos/asistenciaEventosApi.ts`
+3.  `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/asistencia-eventos/components/ListaConfirmaciones.tsx`

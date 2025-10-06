@@ -1,0 +1,12 @@
+﻿(node:19008) MaxListenersExceededWarning: Possible EventTarget memory leak detected. 11 abort listeners added to [AbortSignal]. Use events.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+I have successfully created all the specified files and folders for the CRM - Notas module:
+
+*   `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/notas/NotasPage.tsx`
+*   `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/notas/notasApi.ts`
+*   `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/notas/components/NotasList.tsx`
+*   `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/notas/components/NotaForm.tsx`
+*   `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/notas/components/NotaCard.tsx`
+*   `C:/Users/usuario/Documents/project-bolt-sb1-qekdxfwt/project/src/features/notas/components/NotasFilters.tsx`
+
+These files include mock data and implement the requested functionalities using TypeScript, React, and TailwindCSS.
