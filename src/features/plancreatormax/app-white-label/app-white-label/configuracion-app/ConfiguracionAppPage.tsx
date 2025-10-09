@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Smartphone, 
@@ -10,8 +10,64 @@ import {
   Eye,
   Brush
 } from 'lucide-react';
+import toast from 'react-hot-toast';
+import Modal from '@/components/ui/modal';
+import ConfirmationModal from '@/components/ui/confirmation-modal';
+import InputModal from '@/components/ui/input-modal';
 
 const ConfiguracionAppPage: React.FC = () => {
+  const [isLogoModalOpen, setIsLogoModalOpen] = useState(false);
+  const [isPaletteModalOpen, setIsPaletteModalOpen] = useState(false);
+  const [isTypographyModalOpen, setIsTypographyModalOpen] = useState(false);
+  const [isExportConfirmOpen, setIsExportConfirmOpen] = useState(false);
+
+  const [logoUrl, setLogoUrl] = useState<string>('');
+  const [palette, setPalette] = useState<'indigo' | 'purple' | 'pink'>('indigo');
+  const [fontFamily, setFontFamily] = useState<'Inter' | 'Rubik' | 'Plus Jakarta Sans'>('Inter');
+
+  const gradients = useMemo(() => {
+    switch (palette) {
+      case 'indigo':
+        return {
+          primary: 'from-indigo-500 to-purple-600',
+          header: 'from-indigo-500 via-purple-500 to-pink-500',
+          status: 'from-indigo-500 to-purple-600',
+          blockA: 'from-indigo-50 to-purple-50',
+          blockB: 'from-purple-50 to-pink-50',
+        };
+      case 'purple':
+        return {
+          primary: 'from-purple-500 to-pink-600',
+          header: 'from-purple-500 via-pink-500 to-rose-500',
+          status: 'from-purple-500 to-pink-600',
+          blockA: 'from-purple-50 to-pink-50',
+          blockB: 'from-pink-50 to-rose-50',
+        };
+      case 'pink':
+        return {
+          primary: 'from-pink-500 to-rose-600',
+          header: 'from-pink-500 via-rose-500 to-red-500',
+          status: 'from-pink-500 to-rose-600',
+          blockA: 'from-pink-50 to-rose-50',
+          blockB: 'from-rose-50 to-red-50',
+        };
+    }
+  }, [palette]);
+
+  const handleLogoConfirm = (value: string) => {
+    setLogoUrl(value);
+    setIsLogoModalOpen(false);
+    toast.success('Logo actualizado correctamente');
+  };
+
+  const handleExport = async () => {
+    setIsExportConfirmOpen(false);
+    toast.loading('Exportando configuración...', { id: 'export' });
+    // Simulación de exportación
+    await new Promise((r) => setTimeout(r, 1200));
+    toast.success('Configuración exportada como JSON', { id: 'export' });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 pb-12">
       {/* Hero Section */}
@@ -110,12 +166,19 @@ const ConfiguracionAppPage: React.FC = () => {
                   <h3 className="font-semibold text-gray-900">Logo de la Aplicación</h3>
                 </div>
                 <p className="text-sm text-gray-600 mb-4">Sube tu logo personalizado para la app</p>
-                <div className="w-full h-32 bg-white/60 backdrop-blur-sm border-2 border-dashed border-indigo-300 rounded-xl flex items-center justify-center">
-                  <div className="text-center">
-                    <Upload className="w-8 h-8 text-indigo-400 mx-auto mb-2" />
-                    <p className="text-sm text-indigo-600 font-medium">Arrastra tu logo aquí</p>
-                  </div>
-                </div>
+                <button
+                  onClick={() => setIsLogoModalOpen(true)}
+                  className="w-full h-32 bg-white/60 backdrop-blur-sm border-2 border-dashed border-indigo-300 rounded-xl flex items-center justify-center hover:border-indigo-500 transition-colors"
+                >
+                  {logoUrl ? (
+                    <img src={logoUrl} alt="Logo" className="h-16 object-contain" />
+                  ) : (
+                    <div className="text-center">
+                      <Upload className="w-8 h-8 text-indigo-400 mx-auto mb-2" />
+                      <p className="text-sm text-indigo-600 font-medium">Selecciona tu logo</p>
+                    </div>
+                  )}
+                </button>
               </div>
 
               {/* Sección Colores */}
@@ -126,18 +189,18 @@ const ConfiguracionAppPage: React.FC = () => {
                 </div>
                 <p className="text-sm text-gray-600 mb-4">Personaliza los colores principales de tu app</p>
                 <div className="grid grid-cols-3 gap-3">
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl mx-auto mb-2 shadow-lg"></div>
+                  <button onClick={() => setIsPaletteModalOpen(true)} className="text-center group">
+                    <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl mx-auto mb-2 shadow-lg ring-2 ring-offset-2 ring-indigo-200 group-hover:ring-indigo-300 transition"></div>
                     <p className="text-xs text-gray-600">Primario</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl mx-auto mb-2 shadow-lg"></div>
+                  </button>
+                  <button onClick={() => setIsPaletteModalOpen(true)} className="text-center group">
+                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl mx-auto mb-2 shadow-lg ring-2 ring-offset-2 ring-purple-200 group-hover:ring-purple-300 transition"></div>
                     <p className="text-xs text-gray-600">Secundario</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-red-600 rounded-xl mx-auto mb-2 shadow-lg"></div>
+                  </button>
+                  <button onClick={() => setIsPaletteModalOpen(true)} className="text-center group">
+                    <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-red-600 rounded-xl mx-auto mb-2 shadow-lg ring-2 ring-offset-2 ring-pink-200 group-hover:ring-pink-300 transition"></div>
                     <p className="text-xs text-gray-600">Acento</p>
-                  </div>
+                  </button>
                 </div>
               </div>
 
@@ -149,10 +212,14 @@ const ConfiguracionAppPage: React.FC = () => {
                 </div>
                 <p className="text-sm text-gray-600 mb-4">Selecciona la fuente para tu aplicación</p>
                 <div className="space-y-2">
-                  <div className="p-3 bg-white/60 backdrop-blur-sm rounded-xl border border-blue-200">
-                    <p className="font-semibold text-gray-900">Inter (Recomendada)</p>
+                  <button
+                    onClick={() => setIsTypographyModalOpen(true)}
+                    className="w-full text-left p-3 bg-white/60 backdrop-blur-sm rounded-xl border border-blue-200 hover:border-blue-400 transition"
+                    style={{ fontFamily }}
+                  >
+                    <p className="font-semibold text-gray-900">{fontFamily} (Actual)</p>
                     <p className="text-xs text-gray-600">Moderno y legible</p>
-                  </div>
+                  </button>
                 </div>
               </div>
             </div>
@@ -198,7 +265,7 @@ const ConfiguracionAppPage: React.FC = () => {
                 <div className="w-64 h-[500px] bg-gray-900 rounded-[3rem] p-2 shadow-2xl">
                   <div className="w-full h-full bg-white rounded-[2.5rem] overflow-hidden relative">
                     {/* Status bar */}
-                    <div className="h-8 bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-between px-6 text-white text-xs">
+                    <div className={`h-8 bg-gradient-to-r ${gradients.status} flex items-center justify-between px-6 text-white text-xs`}>
                       <span>9:41</span>
                       <div className="flex items-center gap-1">
                         <div className="w-4 h-2 bg-white/30 rounded-sm"></div>
@@ -210,20 +277,24 @@ const ConfiguracionAppPage: React.FC = () => {
                     {/* App content */}
                     <div className="p-6 h-full">
                       <div className="text-center mb-6">
-                        <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
-                          <Sparkles className="w-8 h-8 text-white" />
-                        </div>
+                        {logoUrl ? (
+                          <img src={logoUrl} alt="Logo" className="w-16 h-16 object-contain rounded-2xl mx-auto mb-4" />
+                        ) : (
+                          <div className={`w-16 h-16 bg-gradient-to-br ${gradients.primary} rounded-2xl mx-auto mb-4 flex items-center justify-center`}>
+                            <Sparkles className="w-8 h-8 text-white" />
+                          </div>
+                        )}
                         <h3 className="text-lg font-bold text-gray-900">Mi App</h3>
                         <p className="text-sm text-gray-600">Vista previa en tiempo real</p>
                       </div>
 
                       {/* Sample content */}
                       <div className="space-y-4">
-                        <div className="p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl">
+                        <div className={`p-4 bg-gradient-to-r ${gradients.blockA} rounded-xl`}>
                           <p className="text-sm font-medium text-gray-900">Bienvenido</p>
                           <p className="text-xs text-gray-600">Contenido personalizado</p>
                         </div>
-                        <div className="p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl">
+                        <div className={`p-4 bg-gradient-to-r ${gradients.blockB} rounded-xl`}>
                           <p className="text-sm font-medium text-gray-900">Funcionalidades</p>
                           <p className="text-xs text-gray-600">Características de la app</p>
                         </div>
@@ -262,6 +333,7 @@ const ConfiguracionAppPage: React.FC = () => {
         <motion.button
           whileHover={{ scale: 1.05, y: -2 }}
           whileTap={{ scale: 0.95 }}
+          onClick={() => setIsExportConfirmOpen(true)}
           className="relative overflow-hidden bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 px-8 py-4 text-white font-bold text-lg group border border-white/20"
         >
           {/* Efecto hover */}
@@ -276,6 +348,96 @@ const ConfiguracionAppPage: React.FC = () => {
           </div>
         </motion.button>
       </motion.div>
+
+      {/* Modales */}
+      <InputModal
+        isOpen={isLogoModalOpen}
+        onClose={() => setIsLogoModalOpen(false)}
+        onConfirm={handleLogoConfirm}
+        title="Subir Logo"
+        message="Pega la URL del logo a utilizar para la vista previa."
+        placeholder="https://.../logo.png"
+        confirmText="Usar logo"
+      />
+
+      <Modal
+        isOpen={isPaletteModalOpen}
+        onClose={() => setIsPaletteModalOpen(false)}
+        title="Seleccionar paleta de colores"
+        size="md"
+      >
+        <div className="grid grid-cols-3 gap-4">
+          <button
+            onClick={() => {
+              setPalette('indigo');
+              setIsPaletteModalOpen(false);
+              toast.success('Paleta Indigo aplicada');
+            }}
+            className={`p-4 rounded-xl border ${palette === 'indigo' ? 'border-indigo-500' : 'border-gray-200'} hover:border-indigo-400 transition bg-white`}
+          >
+            <div className="w-full h-10 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-md mb-2"></div>
+            <p className="text-sm font-medium text-gray-800">Indigo</p>
+          </button>
+          <button
+            onClick={() => {
+              setPalette('purple');
+              setIsPaletteModalOpen(false);
+              toast.success('Paleta Purple aplicada');
+            }}
+            className={`p-4 rounded-xl border ${palette === 'purple' ? 'border-purple-500' : 'border-gray-200'} hover:border-purple-400 transition bg-white`}
+          >
+            <div className="w-full h-10 bg-gradient-to-r from-purple-500 to-pink-600 rounded-md mb-2"></div>
+            <p className="text-sm font-medium text-gray-800">Purple</p>
+          </button>
+          <button
+            onClick={() => {
+              setPalette('pink');
+              setIsPaletteModalOpen(false);
+              toast.success('Paleta Pink aplicada');
+            }}
+            className={`p-4 rounded-xl border ${palette === 'pink' ? 'border-pink-500' : 'border-gray-200'} hover:border-pink-400 transition bg-white`}
+          >
+            <div className="w-full h-10 bg-gradient-to-r from-pink-500 to-rose-600 rounded-md mb-2"></div>
+            <p className="text-sm font-medium text-gray-800">Pink</p>
+          </button>
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={isTypographyModalOpen}
+        onClose={() => setIsTypographyModalOpen(false)}
+        title="Seleccionar tipografía"
+        size="sm"
+      >
+        <div className="space-y-3">
+          {(['Inter', 'Rubik', 'Plus Jakarta Sans'] as const).map((f) => (
+            <button
+              key={f}
+              onClick={() => {
+                setFontFamily(f);
+                setIsTypographyModalOpen(false);
+                toast.success(`Tipografía ${f} aplicada`);
+              }}
+              className={`w-full text-left p-3 rounded-xl border ${fontFamily === f ? 'border-blue-500' : 'border-gray-200'} hover:border-blue-400 transition bg-white`}
+              style={{ fontFamily: f }}
+            >
+              <p className="text-gray-900 font-semibold">{f}</p>
+              <p className="text-xs text-gray-600">Texto de ejemplo con {f}</p>
+            </button>
+          ))}
+        </div>
+      </Modal>
+
+      <ConfirmationModal
+        isOpen={isExportConfirmOpen}
+        onClose={() => setIsExportConfirmOpen(false)}
+        onConfirm={handleExport}
+        title="Exportar configuración"
+        message="Se generará un archivo JSON con la configuración actual. ¿Deseas continuar?"
+        confirmText="Exportar"
+        cancelText="Cancelar"
+        type="info"
+      />
     </div>
   );
 };

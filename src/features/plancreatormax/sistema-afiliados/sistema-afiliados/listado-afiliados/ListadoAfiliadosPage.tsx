@@ -5,10 +5,13 @@ import { Users, TrendingUp, DollarSign, UserPlus } from 'lucide-react';
 import { TablaAfiliados } from './components/TablaAfiliados';
 import { IndicadoresRendimiento } from './components/IndicadoresRendimiento';
 import { AccionesRapidas } from './components/AccionesRapidas';
+import { ToastProvider } from '@/components/ui/toast';
 
 const ListadoAfiliadosPage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 pb-12">
+    <>
+      <ToastProvider />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 pb-12">
       {/* Hero Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -93,7 +96,8 @@ const ListadoAfiliadosPage: React.FC = () => {
       >
         <TablaAfiliados />
       </motion.div>
-    </div>
+      </div>
+    </>
   );
 };
 

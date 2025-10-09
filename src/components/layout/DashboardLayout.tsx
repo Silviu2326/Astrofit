@@ -133,6 +133,7 @@ import CatalogoProductosPage from '../../features/plancreatormax/tienda-merchand
 import ConfiguracionTiendaPage from '../../features/plancreatormax/tienda-merchandising/tienda-merchandising/configuracion-tienda/ConfiguracionTiendaPage';
 import PedidosClientesPage from '../../features/plancreatormax/tienda-merchandising/tienda-merchandising/pedidos-clientes/PedidosClientesPage';
 import InformesVentasPage from '../../features/plancreatormax/tienda-merchandising/tienda-merchandising/informes-ventas/InformesVentasPage';
+import HistorialNotificacionesPage from '../../features/plancreatormax/app-white-label/app-white-label/personalizacion-push/HistorialNotificacionesPage';
 // Plan Studio Pro imports
 import EscanerEntradaPage from '../../features/planstudiopro/check-in-qr/escaner-entrada/EscanerEntradaPage';
 import PasesVirtualesPage from '../../features/planstudiopro/check-in-qr/pases-virtuales/PasesVirtualesPage';
@@ -444,6 +445,8 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onLogout }) =>
         return <VistaPreviewAppPage />;
       case 'personalizacion-push':
         return <PersonalizacionPushPage />;
+      case 'historial-notificaciones':
+        return <HistorialNotificacionesPage />;
       case 'flujos-retencion':
         return <FlujosRetencionPage />;
       case 'mensajes-personalizados':

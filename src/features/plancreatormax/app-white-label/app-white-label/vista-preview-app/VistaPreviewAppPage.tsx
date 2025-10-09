@@ -16,11 +16,16 @@ import MockupInteractivo from './components/MockupInteractivo';
 import NavigadorPantallas from './components/NavigadorPantallas';
 import PreviewTiempoReal from './components/PreviewTiempoReal';
 import SimuladorMovil from './components/SimuladorMovil';
+import toast from 'react-hot-toast';
+import ConfirmationModal from '../../../../../components/ui/confirmation-modal';
+import Modal from '../../../../../components/ui/modal';
 
 const VistaPreviewAppPage: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState('home');
   const [isPlaying, setIsPlaying] = useState(true);
   const [selectedDevice, setSelectedDevice] = useState<'iOS' | 'Android' | 'Tablet' | 'Desktop'>('iOS');
+  const [isResetOpen, setIsResetOpen] = useState(false);
+  const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
   const [appConfig, setAppConfig] = useState({
     appName: 'Mi App',
     primaryColor: '#3B82F6',
@@ -35,6 +40,7 @@ const VistaPreviewAppPage: React.FC = () => {
 
   const handleScreenChange = (screen: string) => {
     setCurrentScreen(screen);
+    toast.success(`Pantalla cambiada a ${screen}`);
   };
 
   const handleConfigChange = (key: string, value: any) => {
@@ -42,6 +48,45 @@ const VistaPreviewAppPage: React.FC = () => {
       ...prevConfig,
       [key]: value,
     }));
+  };
+
+  const handleTogglePlay = () => {
+    setIsPlaying((prev) => {
+      const next = !prev;
+      toast.success(next ? 'Reproducción reanudada' : 'Reproducción pausada');
+      return next;
+    });
+  };
+
+  const handleDeviceSelect = (deviceId: 'iOS' | 'Android' | 'Tablet' | 'Desktop') => {
+    setSelectedDevice(deviceId);
+    toast.success(`Dispositivo: ${deviceId}`);
+  };
+
+  const handleOpenReset = () => setIsResetOpen(true);
+
+  const handleConfirmReset = () => {
+    setIsResetOpen(false);
+    setIsPlaying(true);
+    setSelectedDevice('iOS');
+    setCurrentScreen('home');
+    setAppConfig({
+      appName: 'Mi App',
+      primaryColor: '#3B82F6',
+      secondaryColor: '#60A5FA',
+      icon: 'default-icon',
+      screens: {
+        home: { name: 'Inicio', content: 'Bienvenido a mi app!' },
+        profile: { name: 'Perfil', content: 'Contenido del perfil.' },
+        settings: { name: 'Ajustes', content: 'Configuraciones de la app.' },
+      },
+    });
+    toast.success('Vista restablecida');
+  };
+
+  const handleMaximize = () => {
+    setIsFullscreenOpen(true);
+    toast('Vista ampliada');
   };
 
   const devices = [
@@ -129,7 +174,7 @@ const VistaPreviewAppPage: React.FC = () => {
                     key={device.id}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => setSelectedDevice(device.id as 'iOS' | 'Android' | 'Tablet' | 'Desktop')}
+                    onClick={() => handleDeviceSelect(device.id as 'iOS' | 'Android' | 'Tablet' | 'Desktop')}
                     className={`p-3 rounded-2xl border-2 transition-all duration-300 ${
                       selectedDevice === device.id
                         ? `bg-gradient-to-br ${device.color} text-white border-transparent shadow-lg`
@@ -148,7 +193,7 @@ const VistaPreviewAppPage: React.FC = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => setIsPlaying(!isPlaying)}
+              onClick={handleTogglePlay}
               className="p-3 bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
             >
               {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6" />}
@@ -157,6 +202,7 @@ const VistaPreviewAppPage: React.FC = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={handleOpenReset}
               className="p-3 bg-white/60 backdrop-blur-sm text-gray-600 rounded-2xl border border-gray-200 hover:border-gray-300 transition-all duration-300"
             >
               <RotateCcw className="w-6 h-6" />
@@ -165,6 +211,7 @@ const VistaPreviewAppPage: React.FC = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={handleMaximize}
               className="p-3 bg-white/60 backdrop-blur-sm text-gray-600 rounded-2xl border border-gray-200 hover:border-gray-300 transition-all duration-300"
             >
               <Maximize2 className="w-6 h-6" />
@@ -284,6 +331,30 @@ const VistaPreviewAppPage: React.FC = () => {
           </div>
         </motion.div>
       </div>
+      {/* Reset confirmation */}
+      <ConfirmationModal
+        isOpen={isResetOpen}
+        onClose={() => setIsResetOpen(false)}
+        onConfirm={handleConfirmReset}
+        title="Restablecer vista"
+        message="¿Quieres restablecer el dispositivo, la reproducción, la pantalla actual y la configuración a sus valores predeterminados?"
+        confirmText="Restablecer"
+        cancelText="Cancelar"
+        type="warning"
+      />
+
+      {/* Fullscreen preview */}
+      <Modal isOpen={isFullscreenOpen} onClose={() => setIsFullscreenOpen(false)} title="Vista ampliada" size="xl">
+        <div className="flex justify-center">
+          <MockupInteractivo platform={selectedDevice === 'iOS' || selectedDevice === 'Android' ? selectedDevice : 'iOS'}>
+            <SimuladorMovil
+              currentScreen={currentScreen}
+              appConfig={appConfig}
+              platform={selectedDevice === 'iOS' || selectedDevice === 'Android' ? selectedDevice : 'iOS'}
+            />
+          </MockupInteractivo>
+        </div>
+      </Modal>
     </div>
   );
 };

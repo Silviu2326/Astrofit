@@ -1,12 +1,104 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { BarChart3, TrendingUp, Download, Brain, Target, CheckCircle } from 'lucide-react';
+import { BarChart3, TrendingUp, Download, Brain, Target, FileText, Share2, RefreshCw } from 'lucide-react';
+import toast from 'react-hot-toast';
 import DashboardResultados from './components/DashboardResultados';
 import GraficosComparativos from './components/GraficosComparativos';
 import AnalisisEstadistico from './components/AnalisisEstadistico';
 import RecomendacionesIA from './components/RecomendacionesIA';
+import { exportReport } from './resultadosTestApi';
 
 const ResultadosTestPage: React.FC = () => {
+  const [isExporting, setIsExporting] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  // Función para exportar reporte completo
+  const handleExportFullReport = async () => {
+    setIsExporting(true);
+    try {
+      await exportReport('PDF');
+      toast.success('Reporte completo exportado exitosamente', {
+        duration: 4000,
+        icon: '📊',
+      });
+    } catch (error) {
+      toast.error('Error al exportar el reporte completo', {
+        duration: 4000,
+        icon: '❌',
+      });
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  // Función para exportar resumen
+  const handleExportSummary = async () => {
+    setIsExporting(true);
+    try {
+      await exportReport('Resumen');
+      toast.success('Resumen exportado exitosamente', {
+        duration: 4000,
+        icon: '📋',
+      });
+    } catch (error) {
+      toast.error('Error al exportar el resumen', {
+        duration: 4000,
+        icon: '❌',
+      });
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  // Función para refrescar datos
+  const handleRefreshData = async () => {
+    setIsRefreshing(true);
+    try {
+      // Simular recarga de datos
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      toast.success('Datos actualizados correctamente', {
+        duration: 3000,
+        icon: '🔄',
+      });
+    } catch (error) {
+      toast.error('Error al actualizar los datos', {
+        duration: 4000,
+        icon: '❌',
+      });
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
+  // Función para compartir resultados
+  const handleShareResults = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: 'Resultados Tests A/B - Astrofit',
+          text: 'Revisa los resultados de nuestros experimentos A/B',
+          url: window.location.href,
+        });
+        toast.success('Resultados compartidos exitosamente', {
+          duration: 3000,
+          icon: '🔗',
+        });
+      } else {
+        // Fallback para navegadores que no soportan Web Share API
+        navigator.clipboard.writeText(window.location.href);
+        toast.success('Enlace copiado al portapapeles', {
+          duration: 3000,
+          icon: '📋',
+        });
+      }
+    } catch (error) {
+      toast.error('Error al compartir los resultados', {
+        duration: 4000,
+        icon: '❌',
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 pb-12">
       {/* Hero Section */}
@@ -48,8 +140,8 @@ const ResultadosTestPage: React.FC = () => {
             Analiza el rendimiento de tus <span className="font-bold text-white px-2 py-1 bg-white/20 rounded-lg backdrop-blur-sm">experimentos</span> con métricas detalladas y insights accionables
           </p>
 
-          {/* Indicadores pills */}
-          <div className="flex flex-wrap gap-4">
+          {/* Indicadores pills y botones de acción */}
+          <div className="flex flex-wrap gap-4 items-center">
             <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
               <TrendingUp className="w-5 h-5 text-green-300" />
               <span className="text-sm font-semibold text-white">+23.5% Conversión</span>
@@ -62,6 +154,30 @@ const ResultadosTestPage: React.FC = () => {
               <Brain className="w-5 h-5 text-purple-300" />
               <span className="text-sm font-semibold text-white">IA Insights</span>
             </div>
+            
+            {/* Botones de acción */}
+            <motion.button
+              onClick={handleRefreshData}
+              disabled={isRefreshing}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20 hover:bg-white/20 transition-all duration-300 disabled:opacity-50"
+            >
+              <RefreshCw className={`w-5 h-5 text-white ${isRefreshing ? 'animate-spin' : ''}`} />
+              <span className="text-sm font-semibold text-white">
+                {isRefreshing ? 'Actualizando...' : 'Actualizar'}
+              </span>
+            </motion.button>
+
+            <motion.button
+              onClick={handleShareResults}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20 hover:bg-white/20 transition-all duration-300"
+            >
+              <Share2 className="w-5 h-5 text-white" />
+              <span className="text-sm font-semibold text-white">Compartir</span>
+            </motion.button>
           </div>
         </div>
       </motion.div>
@@ -177,9 +293,11 @@ const ResultadosTestPage: React.FC = () => {
           
           <div className="flex flex-wrap gap-4">
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="relative overflow-hidden bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 px-6 py-3 text-white font-semibold border border-white/20 group"
+              onClick={handleExportFullReport}
+              disabled={isExporting}
+              whileHover={{ scale: isExporting ? 1 : 1.05 }}
+              whileTap={{ scale: isExporting ? 1 : 0.95 }}
+              className="relative overflow-hidden bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 px-6 py-3 text-white font-semibold border border-white/20 group disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {/* Efecto hover */}
               <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
@@ -188,18 +306,28 @@ const ResultadosTestPage: React.FC = () => {
               <div className="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full blur-xl"></div>
               
               <div className="relative z-10 flex items-center gap-2">
-                <Download className="w-5 h-5" />
-                Exportar Reporte Completo
+                {isExporting ? (
+                  <RefreshCw className="w-5 h-5 animate-spin" />
+                ) : (
+                  <Download className="w-5 h-5" />
+                )}
+                {isExporting ? 'Exportando...' : 'Exportar Reporte Completo'}
               </div>
             </motion.button>
 
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-6 py-3 border-2 border-indigo-500 text-indigo-600 rounded-2xl font-semibold hover:bg-indigo-50 transition-colors duration-300 flex items-center gap-2"
+              onClick={handleExportSummary}
+              disabled={isExporting}
+              whileHover={{ scale: isExporting ? 1 : 1.05 }}
+              whileTap={{ scale: isExporting ? 1 : 0.95 }}
+              className="px-6 py-3 border-2 border-indigo-500 text-indigo-600 rounded-2xl font-semibold hover:bg-indigo-50 transition-colors duration-300 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <CheckCircle className="w-5 h-5" />
-              Exportar Resumen
+              {isExporting ? (
+                <RefreshCw className="w-5 h-5 animate-spin" />
+              ) : (
+                <FileText className="w-5 h-5" />
+              )}
+              {isExporting ? 'Exportando...' : 'Exportar Resumen'}
             </motion.button>
           </div>
         </div>

@@ -1,11 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Archive, Search, BookOpen, Clock, Filter, Calendar, TrendingUp, Target } from 'lucide-react';
+import { Archive, Search, BookOpen, Clock, Filter, TrendingUp, Target, Plus, FileText, BarChart3 } from 'lucide-react';
+import toast from 'react-hot-toast';
+import Modal from '../../../../../components/ui/modal';
 import ArchivoExperimentos from './components/ArchivoExperimentos';
 import BuscadorTests from './components/BuscadorTests';
 import LeccionesAprendidas from './components/LeccionesAprendidas';
 
 const HistorialExperimentosPage: React.FC = () => {
+  const [isNewExperimentModalOpen, setIsNewExperimentModalOpen] = useState(false);
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [isLessonsModalOpen, setIsLessonsModalOpen] = useState(false);
+  const [isExperimentDetailsModalOpen, setIsExperimentDetailsModalOpen] = useState(false);
+  const [selectedExperiment, setSelectedExperiment] = useState<any>(null);
+
+  const handleNewExperiment = () => {
+    setIsNewExperimentModalOpen(true);
+    toast.success('Abriendo creador de experimentos');
+  };
+
+  const handleFilterResults = () => {
+    setIsFilterModalOpen(true);
+    toast.success('Aplicando filtros avanzados');
+  };
+
+  const handleViewLessons = () => {
+    setIsLessonsModalOpen(true);
+    toast.success('Mostrando insights detallados');
+  };
+
+  const handleCreateExperiment = (formData: any) => {
+    toast.success(`Experimento "${formData.name}" creado exitosamente`);
+    setIsNewExperimentModalOpen(false);
+  };
+
+  const handleViewExperimentDetails = (experiment: any) => {
+    setSelectedExperiment(experiment);
+    setIsExperimentDetailsModalOpen(true);
+  };
+
+  const handleApplyLearning = (learning: string) => {
+    toast.success(`Aplicando lección: ${learning.substring(0, 50)}...`);
+  };
+
+  const handleDownloadReport = (experiment: any) => {
+    toast.success(`Descargando reporte de: ${experiment.description}`);
+  };
+
+  const handleShareExperiment = (experiment: any) => {
+    navigator.clipboard.writeText(`Experimento: ${experiment.description} - Resultado: ${experiment.winner}`);
+    toast.success('Enlace copiado al portapapeles');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 pb-12">
       {/* Hero Section */}
@@ -112,7 +158,7 @@ const HistorialExperimentosPage: React.FC = () => {
           {/* Decoración de fondo */}
           <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-blue-200 to-indigo-200 rounded-full blur-3xl opacity-20"></div>
           <div className="relative z-10">
-            <ArchivoExperimentos />
+            <ArchivoExperimentos onViewDetails={handleViewExperimentDetails} />
           </div>
         </motion.div>
 
@@ -130,7 +176,7 @@ const HistorialExperimentosPage: React.FC = () => {
           {/* Decoración de fondo */}
           <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-emerald-200 to-teal-200 rounded-full blur-3xl opacity-20"></div>
           <div className="relative z-10">
-            <LeccionesAprendidas />
+            <LeccionesAprendidas onApplyLearning={handleApplyLearning} />
           </div>
         </motion.div>
       </div>
@@ -166,10 +212,11 @@ const HistorialExperimentosPage: React.FC = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={handleNewExperiment}
               className="flex items-center gap-3 p-4 rounded-2xl bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 hover:shadow-md transition-all duration-300 group"
             >
               <div className="p-2 bg-indigo-500 rounded-xl text-white group-hover:scale-110 transition-transform duration-300">
-                <Calendar className="w-5 h-5" />
+                <Plus className="w-5 h-5" />
               </div>
               <div className="text-left">
                 <p className="font-semibold text-gray-900">Nuevo Experimento</p>
@@ -180,6 +227,7 @@ const HistorialExperimentosPage: React.FC = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={handleFilterResults}
               className="flex items-center gap-3 p-4 rounded-2xl bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 hover:shadow-md transition-all duration-300 group"
             >
               <div className="p-2 bg-emerald-500 rounded-xl text-white group-hover:scale-110 transition-transform duration-300">
@@ -194,6 +242,7 @@ const HistorialExperimentosPage: React.FC = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={handleViewLessons}
               className="flex items-center gap-3 p-4 rounded-2xl bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 hover:shadow-md transition-all duration-300 group"
             >
               <div className="p-2 bg-orange-500 rounded-xl text-white group-hover:scale-110 transition-transform duration-300">
@@ -207,6 +256,372 @@ const HistorialExperimentosPage: React.FC = () => {
           </div>
         </div>
       </motion.div>
+
+      {/* Modal para Nuevo Experimento */}
+      <Modal
+        isOpen={isNewExperimentModalOpen}
+        onClose={() => setIsNewExperimentModalOpen(false)}
+        title="Crear Nuevo Experimento A/B"
+        size="lg"
+      >
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Nombre del Experimento
+              </label>
+              <input
+                type="text"
+                placeholder="Ej: Cambio de color en botón CTA"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Tipo de Experimento
+              </label>
+              <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                <option value="">Seleccionar tipo</option>
+                <option value="UI">UI/UX</option>
+                <option value="Content">Contenido</option>
+                <option value="Feature">Funcionalidad</option>
+                <option value="Performance">Rendimiento</option>
+              </select>
+            </div>
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Descripción
+            </label>
+            <textarea
+              rows={3}
+              placeholder="Describe el objetivo y las variantes del experimento..."
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Fecha de Inicio
+              </label>
+              <input
+                type="date"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Duración (días)
+              </label>
+              <input
+                type="number"
+                placeholder="14"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              />
+            </div>
+          </div>
+
+          <div className="flex gap-3 pt-4 border-t border-gray-200">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => handleCreateExperiment({ name: 'Nuevo Experimento' })}
+              className="flex-1 bg-indigo-500 text-white px-4 py-3 rounded-xl hover:bg-indigo-600 transition-colors duration-200 flex items-center justify-center gap-2"
+            >
+              <Plus className="w-4 h-4" />
+              Crear Experimento
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => setIsNewExperimentModalOpen(false)}
+              className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors duration-200"
+            >
+              Cancelar
+            </motion.button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Modal para Filtros Avanzados */}
+      <Modal
+        isOpen={isFilterModalOpen}
+        onClose={() => setIsFilterModalOpen(false)}
+        title="Filtros Avanzados"
+        size="md"
+      >
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Rango de Fechas
+              </label>
+              <div className="space-y-2">
+                <input
+                  type="date"
+                  placeholder="Fecha inicio"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                />
+                <input
+                  type="date"
+                  placeholder="Fecha fin"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Métricas
+              </label>
+              <div className="space-y-2">
+                <label className="flex items-center">
+                  <input type="checkbox" className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                  <span className="ml-2 text-sm text-gray-700">Tasa de Conversión</span>
+                </label>
+                <label className="flex items-center">
+                  <input type="checkbox" className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                  <span className="ml-2 text-sm text-gray-700">Tiempo en Página</span>
+                </label>
+                <label className="flex items-center">
+                  <input type="checkbox" className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                  <span className="ml-2 text-sm text-gray-700">Clics</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Estado del Experimento
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              <label className="flex items-center">
+                <input type="checkbox" className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                <span className="ml-2 text-sm text-gray-700">Completados</span>
+              </label>
+              <label className="flex items-center">
+                <input type="checkbox" className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                <span className="ml-2 text-sm text-gray-700">En Curso</span>
+              </label>
+              <label className="flex items-center">
+                <input type="checkbox" className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                <span className="ml-2 text-sm text-gray-700">Pausados</span>
+              </label>
+              <label className="flex items-center">
+                <input type="checkbox" className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                <span className="ml-2 text-sm text-gray-700">Cancelados</span>
+              </label>
+            </div>
+          </div>
+
+          <div className="flex gap-3 pt-4 border-t border-gray-200">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => {
+                toast.success('Filtros aplicados correctamente');
+                setIsFilterModalOpen(false);
+              }}
+              className="flex-1 bg-emerald-500 text-white px-4 py-3 rounded-xl hover:bg-emerald-600 transition-colors duration-200 flex items-center justify-center gap-2"
+            >
+              <Filter className="w-4 h-4" />
+              Aplicar Filtros
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => setIsFilterModalOpen(false)}
+              className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors duration-200"
+            >
+              Cancelar
+            </motion.button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Modal para Insights Detallados */}
+      <Modal
+        isOpen={isLessonsModalOpen}
+        onClose={() => setIsLessonsModalOpen(false)}
+        title="Insights y Lecciones Detalladas"
+        size="xl"
+      >
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-gradient-to-r from-emerald-50 to-teal-50 p-4 rounded-xl border border-emerald-200">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-emerald-500 rounded-lg">
+                  <TrendingUp className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-emerald-700">127</p>
+                  <p className="text-sm text-emerald-600">Experimentos Totales</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-xl border border-blue-200">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-500 rounded-lg">
+                  <Target className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-blue-700">85%</p>
+                  <p className="text-sm text-blue-600">Tasa de Éxito</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-xl border border-purple-200">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-purple-500 rounded-lg">
+                  <BarChart3 className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-purple-700">+18.3%</p>
+                  <p className="text-sm text-purple-600">Mejora Promedio</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white p-6 rounded-xl border border-gray-200">
+              <h3 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-indigo-600" />
+                Lecciones Clave
+              </h3>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-emerald-500 rounded-full mt-2"></div>
+                  <p className="text-sm text-gray-700">Los colores cálidos generan 15% más conversiones que los fríos</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                  <p className="text-sm text-gray-700">Mensajes claros superan a propuestas complejas en 23%</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-purple-500 rounded-full mt-2"></div>
+                  <p className="text-sm text-gray-700">CTAs prominentes aumentan clics en 31%</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl border border-gray-200">
+              <h3 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
+                <Target className="w-5 h-5 text-emerald-600" />
+                Recomendaciones
+              </h3>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full mt-2"></div>
+                  <p className="text-sm text-gray-700">Priorizar experimentos de UI/UX para mayor impacto</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-red-500 rounded-full mt-2"></div>
+                  <p className="text-sm text-gray-700">Evitar cambios simultáneos en múltiples elementos</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
+                  <p className="text-sm text-gray-700">Documentar contexto para futuros experimentos</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex gap-3 pt-4 border-t border-gray-200">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => {
+                toast.success('Reporte de insights generado');
+                setIsLessonsModalOpen(false);
+              }}
+              className="flex-1 bg-orange-500 text-white px-4 py-3 rounded-xl hover:bg-orange-600 transition-colors duration-200 flex items-center justify-center gap-2"
+            >
+              <FileText className="w-4 h-4" />
+              Generar Reporte
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => setIsLessonsModalOpen(false)}
+              className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors duration-200"
+            >
+              Cerrar
+            </motion.button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Modal de Detalles del Experimento */}
+      <Modal
+        isOpen={isExperimentDetailsModalOpen}
+        onClose={() => setIsExperimentDetailsModalOpen(false)}
+        title="Detalles del Experimento"
+        size="lg"
+      >
+        {selectedExperiment && (
+          <div className="space-y-6">
+            {/* Información básica */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-gray-50 p-4 rounded-xl">
+                <h4 className="font-semibold text-gray-900 mb-2">Descripción</h4>
+                <p className="text-gray-700">{selectedExperiment.description}</p>
+              </div>
+              <div className="bg-gray-50 p-4 rounded-xl">
+                <h4 className="font-semibold text-gray-900 mb-2">Fecha</h4>
+                <p className="text-gray-700">{new Date(selectedExperiment.date).toLocaleDateString()}</p>
+              </div>
+            </div>
+
+            {/* Resultados */}
+            <div className="bg-green-50 p-4 rounded-xl">
+              <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                <TrendingUp className="w-5 h-5 text-green-600" />
+                Resultado
+              </h4>
+              <p className="text-gray-700 font-semibold">{selectedExperiment.winner}</p>
+            </div>
+
+            {/* Notas */}
+            <div className="bg-blue-50 p-4 rounded-xl">
+              <h4 className="font-semibold text-gray-900 mb-2">Notas del Experimento</h4>
+              <p className="text-gray-700">{selectedExperiment.notes}</p>
+            </div>
+
+            {/* Lecciones aprendidas */}
+            <div className="bg-purple-50 p-4 rounded-xl">
+              <h4 className="font-semibold text-gray-900 mb-2">Lecciones Aprendidas</h4>
+              <p className="text-gray-700">{selectedExperiment.learnings}</p>
+            </div>
+
+            {/* Acciones */}
+            <div className="flex gap-3 pt-4 border-t border-gray-200">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => handleDownloadReport(selectedExperiment)}
+                className="flex-1 bg-indigo-500 text-white px-4 py-3 rounded-xl hover:bg-indigo-600 transition-colors duration-200 flex items-center justify-center gap-2"
+              >
+                <FileText className="w-4 h-4" />
+                Descargar Reporte
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => handleShareExperiment(selectedExperiment)}
+                className="flex-1 border border-gray-300 text-gray-700 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors duration-200 flex items-center justify-center gap-2"
+              >
+                <Target className="w-4 h-4" />
+                Compartir
+              </motion.button>
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 };

@@ -1,7 +1,21 @@
 import React, { useState } from 'react';
 import { updateEstadoPedido, Pedido, sendNotificacionCliente, requestDevolucion } from '../pedidosClientesApi';
 
-const GestorEstados: React.FC = () => {
+interface GestorEstadosProps {
+  onUpdateSuccess?: (pedidoId: string, estado: string) => void;
+  onUpdateError?: (error: string) => void;
+  onDevolucionSuccess?: (pedidoId: string) => void;
+  onDevolucionError?: (error: string) => void;
+  onConfirmAction?: (title: string, message: string, action: () => void, type?: 'danger' | 'warning' | 'info') => void;
+}
+
+const GestorEstados: React.FC<GestorEstadosProps> = ({
+  onUpdateSuccess,
+  onUpdateError,
+  onDevolucionSuccess,
+  onDevolucionError,
+  onConfirmAction
+}) => {
   const [pedidoId, setPedidoId] = useState<string>('');
   const [nuevoEstado, setNuevoEstado] = useState<Pedido['estadoEnvio']>('pendiente');
   const [devolucionMotivo, setDevolucionMotivo] = useState<string>('');
@@ -10,42 +24,111 @@ const GestorEstados: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleUpdateEstado = async () => {
-    if (!pedidoId) {
-      setError('Por favor, introduce un ID de pedido.');
+    if (!pedidoId.trim()) {
+      const errorMsg = 'Por favor, introduce un ID de pedido válido.';
+      setError(errorMsg);
+      onUpdateError?.(errorMsg);
       return;
     }
-    setLoading(true);
-    setMessage(null);
-    setError(null);
-    try {
-      await updateEstadoPedido(pedidoId, nuevoEstado);
-      await sendNotificacionCliente(pedidoId, `El estado de tu pedido ha cambiado a: ${nuevoEstado}`);
-      setMessage(`Estado del pedido ${pedidoId} actualizado a "${nuevoEstado}" y cliente notificado.`);
-    } catch (err) {
-      setError('Error al actualizar el estado del pedido.');
-      console.error(err);
-    } finally {
-      setLoading(false);
+
+    if (onConfirmAction) {
+      onConfirmAction(
+        'Actualizar Estado del Pedido',
+        `¿Estás seguro de que deseas cambiar el estado del pedido ${pedidoId} a "${nuevoEstado}"? Esta acción notificará automáticamente al cliente.`,
+        async () => {
+          setLoading(true);
+          setMessage(null);
+          setError(null);
+          try {
+            await updateEstadoPedido(pedidoId, nuevoEstado);
+            await sendNotificacionCliente(pedidoId, `El estado de tu pedido ha cambiado a: ${nuevoEstado}`);
+            setMessage(`Estado del pedido ${pedidoId} actualizado a "${nuevoEstado}" y cliente notificado.`);
+            onUpdateSuccess?.(pedidoId, nuevoEstado);
+          } catch (err) {
+            const errorMsg = 'Error al actualizar el estado del pedido.';
+            setError(errorMsg);
+            onUpdateError?.(errorMsg);
+            console.error(err);
+          } finally {
+            setLoading(false);
+          }
+        },
+        'info'
+      );
+    } else {
+      // Fallback si no hay confirmación disponible
+      setLoading(true);
+      setMessage(null);
+      setError(null);
+      try {
+        await updateEstadoPedido(pedidoId, nuevoEstado);
+        await sendNotificacionCliente(pedidoId, `El estado de tu pedido ha cambiado a: ${nuevoEstado}`);
+        setMessage(`Estado del pedido ${pedidoId} actualizado a "${nuevoEstado}" y cliente notificado.`);
+        onUpdateSuccess?.(pedidoId, nuevoEstado);
+      } catch (err) {
+        const errorMsg = 'Error al actualizar el estado del pedido.';
+        setError(errorMsg);
+        onUpdateError?.(errorMsg);
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   const handleRequestDevolucion = async () => {
-    if (!pedidoId || !devolucionMotivo) {
-      setError('Por favor, introduce el ID del pedido y el motivo de la devolución.');
+    if (!pedidoId.trim() || !devolucionMotivo.trim()) {
+      const errorMsg = 'Por favor, introduce el ID del pedido y el motivo de la devolución.';
+      setError(errorMsg);
+      onDevolucionError?.(errorMsg);
       return;
     }
-    setLoading(true);
-    setMessage(null);
-    setError(null);
-    try {
-      await requestDevolucion(pedidoId, devolucionMotivo);
-      await sendNotificacionCliente(pedidoId, `Hemos recibido tu solicitud de devolución para el pedido. Motivo: ${devolucionMotivo}`);
-      setMessage(`Solicitud de devolución para el pedido ${pedidoId} procesada y cliente notificado.`);
-    } catch (err) {
-      setError('Error al procesar la solicitud de devolución.');
-      console.error(err);
-    } finally {
-      setLoading(false);
+
+    if (onConfirmAction) {
+      onConfirmAction(
+        'Solicitar Devolución',
+        `¿Estás seguro de que deseas procesar la solicitud de devolución para el pedido ${pedidoId}? Motivo: "${devolucionMotivo}". Esta acción notificará automáticamente al cliente.`,
+        async () => {
+          setLoading(true);
+          setMessage(null);
+          setError(null);
+          try {
+            await requestDevolucion(pedidoId, devolucionMotivo);
+            await sendNotificacionCliente(pedidoId, `Hemos recibido tu solicitud de devolución para el pedido. Motivo: ${devolucionMotivo}`);
+            setMessage(`Solicitud de devolución para el pedido ${pedidoId} procesada y cliente notificado.`);
+            onDevolucionSuccess?.(pedidoId);
+            // Limpiar el formulario después del éxito
+            setDevolucionMotivo('');
+          } catch (err) {
+            const errorMsg = 'Error al procesar la solicitud de devolución.';
+            setError(errorMsg);
+            onDevolucionError?.(errorMsg);
+            console.error(err);
+          } finally {
+            setLoading(false);
+          }
+        },
+        'warning'
+      );
+    } else {
+      // Fallback si no hay confirmación disponible
+      setLoading(true);
+      setMessage(null);
+      setError(null);
+      try {
+        await requestDevolucion(pedidoId, devolucionMotivo);
+        await sendNotificacionCliente(pedidoId, `Hemos recibido tu solicitud de devolución para el pedido. Motivo: ${devolucionMotivo}`);
+        setMessage(`Solicitud de devolución para el pedido ${pedidoId} procesada y cliente notificado.`);
+        onDevolucionSuccess?.(pedidoId);
+        setDevolucionMotivo('');
+      } catch (err) {
+        const errorMsg = 'Error al procesar la solicitud de devolución.';
+        setError(errorMsg);
+        onDevolucionError?.(errorMsg);
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -58,7 +141,7 @@ const GestorEstados: React.FC = () => {
         <input
           type="text"
           id="pedidoId"
-          className="border p-2 rounded w-full mt-1"
+          className="border p-2 rounded w-full mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           value={pedidoId}
           onChange={(e) => setPedidoId(e.target.value)}
           placeholder="Ej: 12345"
@@ -72,7 +155,7 @@ const GestorEstados: React.FC = () => {
           <label htmlFor="nuevoEstado" className="mr-2 text-sm font-medium text-gray-700">Nuevo Estado:</label>
           <select
             id="nuevoEstado"
-            className="border p-2 rounded"
+            className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             value={nuevoEstado}
             onChange={(e) => setNuevoEstado(e.target.value as Pedido['estadoEnvio'])}
           >
@@ -82,9 +165,9 @@ const GestorEstados: React.FC = () => {
             <option value="devuelto">Devuelto</option>
           </select>
           <button
-            className="ml-4 bg-green-500 text-white p-2 rounded hover:bg-green-600"
+            className="ml-4 bg-green-500 text-white p-2 rounded hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             onClick={handleUpdateEstado}
-            disabled={loading}
+            disabled={loading || !pedidoId.trim()}
           >
             {loading ? 'Actualizando...' : 'Actualizar Estado'}
           </button>
@@ -98,7 +181,7 @@ const GestorEstados: React.FC = () => {
           <label htmlFor="devolucionMotivo" className="block text-sm font-medium text-gray-700">Motivo de Devolución:</label>
           <textarea
             id="devolucionMotivo"
-            className="border p-2 rounded w-full mt-1"
+            className="border p-2 rounded w-full mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             rows={3}
             value={devolucionMotivo}
             onChange={(e) => setDevolucionMotivo(e.target.value)}
@@ -106,9 +189,9 @@ const GestorEstados: React.FC = () => {
           ></textarea>
         </div>
         <button
-          className="bg-red-500 text-white p-2 rounded hover:bg-red-600"
+          className="bg-red-500 text-white p-2 rounded hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           onClick={handleRequestDevolucion}
-          disabled={loading}
+          disabled={loading || !pedidoId.trim() || !devolucionMotivo.trim()}
         >
           {loading ? 'Procesando...' : 'Solicitar Devolución'}
         </button>

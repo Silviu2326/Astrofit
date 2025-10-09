@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   ShoppingCart, 
@@ -10,12 +10,26 @@ import {
   TrendingUp,
   Users
 } from 'lucide-react';
+import toast from 'react-hot-toast';
 import ListadoPedidos from './components/ListadoPedidos';
 import DetallePedido from './components/DetallePedido';
 import SeguimientoEnvio from './components/SeguimientoEnvio';
 import GestorEstados from './components/GestorEstados';
+import ConfirmationModal from '../../../../../components/ui/confirmation-modal';
+import { ToastProvider } from '../../../../../components/ui/toast';
 
 const PedidosClientesPage: React.FC = () => {
+  // Estados para modales
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [confirmAction, setConfirmAction] = useState<(() => void) | null>(null);
+  const [confirmTitle, setConfirmTitle] = useState('');
+  const [confirmMessage, setConfirmMessage] = useState('');
+  const [confirmType, setConfirmType] = useState<'danger' | 'warning' | 'info'>('info');
+  const [isLoading, setIsLoading] = useState(false);
+  
+  // Estado para pedido seleccionado
+  const [selectedPedidoId, setSelectedPedidoId] = useState<string>('');
+
   const stats = [
     { title: 'Pedidos Totales', value: '1,234', change: '+12.5%', icon: ShoppingCart, color: 'from-blue-500 to-purple-600' },
     { title: 'En Proceso', value: '89', change: '+5.2%', icon: Clock, color: 'from-orange-500 to-red-500' },
@@ -23,8 +37,46 @@ const PedidosClientesPage: React.FC = () => {
     { title: 'Clientes Activos', value: '456', change: '+15.3%', icon: Users, color: 'from-purple-500 to-pink-500' }
   ];
 
+  // Función para mostrar confirmación
+  const showConfirmation = (
+    title: string, 
+    message: string, 
+    action: () => void, 
+    type: 'danger' | 'warning' | 'info' = 'info'
+  ) => {
+    setConfirmTitle(title);
+    setConfirmMessage(message);
+    setConfirmAction(() => action);
+    setConfirmType(type);
+    setShowConfirmModal(true);
+  };
+
+  // Función para confirmar acción
+  const handleConfirm = async () => {
+    if (confirmAction) {
+      setIsLoading(true);
+      try {
+        await confirmAction();
+        setShowConfirmModal(false);
+      } catch (error) {
+        console.error('Error en la acción:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  // Función para cancelar confirmación
+  const handleCancel = () => {
+    setShowConfirmModal(false);
+    setConfirmAction(null);
+    setIsLoading(false);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 pb-12">
+    <>
+      <ToastProvider />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 pb-12">
       {/* Hero Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -153,7 +205,12 @@ const PedidosClientesPage: React.FC = () => {
                 </div>
                 Listado de Pedidos
               </h2>
-              <ListadoPedidos />
+              <ListadoPedidos 
+                onPedidoSelect={(pedido) => {
+                  setSelectedPedidoId(pedido.id);
+                  toast.success(`Pedido ${pedido.id} seleccionado`);
+                }}
+              />
             </div>
           </motion.div>
 
@@ -175,7 +232,7 @@ const PedidosClientesPage: React.FC = () => {
                 </div>
                 Detalle de Pedido
               </h2>
-              <DetallePedido />
+              <DetallePedido pedidoId={selectedPedidoId} />
             </div>
           </motion.div>
 
@@ -197,7 +254,14 @@ const PedidosClientesPage: React.FC = () => {
                 </div>
                 Seguimiento de Envío
               </h2>
-              <SeguimientoEnvio />
+              <SeguimientoEnvio 
+                onTrackingSuccess={(trackingId) => {
+                  toast.success(`Información de seguimiento obtenida para: ${trackingId}`);
+                }}
+                onTrackingError={(error) => {
+                  toast.error(`Error al obtener seguimiento: ${error}`);
+                }}
+              />
             </div>
           </motion.div>
 
@@ -219,12 +283,40 @@ const PedidosClientesPage: React.FC = () => {
                 </div>
                 Gestor de Estados
               </h2>
-              <GestorEstados />
+              <GestorEstados 
+                onUpdateSuccess={(pedidoId, estado) => {
+                  toast.success(`Estado del pedido ${pedidoId} actualizado a "${estado}"`);
+                }}
+                onUpdateError={(error) => {
+                  toast.error(`Error al actualizar estado: ${error}`);
+                }}
+                onDevolucionSuccess={(pedidoId) => {
+                  toast.success(`Solicitud de devolución procesada para pedido ${pedidoId}`);
+                }}
+                onDevolucionError={(error) => {
+                  toast.error(`Error al procesar devolución: ${error}`);
+                }}
+                onConfirmAction={showConfirmation}
+              />
             </div>
           </motion.div>
         </div>
       </div>
+
+      {/* Modal de Confirmación */}
+      <ConfirmationModal
+        isOpen={showConfirmModal}
+        onClose={handleCancel}
+        onConfirm={handleConfirm}
+        title={confirmTitle}
+        message={confirmMessage}
+        type={confirmType}
+        isLoading={isLoading}
+        confirmText="Confirmar"
+        cancelText="Cancelar"
+      />
     </div>
+    </>
   );
 };
 

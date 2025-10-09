@@ -1,12 +1,17 @@
 
 import React, { useState, useEffect } from 'react';
-import { getProductos, updateProducto, Producto } from '../catalogoProductosApi';
-import EditorProducto from './EditorProducto';
+import { getProductos, Producto } from '../catalogoProductosApi';
+import toast from 'react-hot-toast';
 
-const GestorInventario: React.FC = () => {
+interface GestorInventarioProps {
+  onEditProduct?: (producto: Producto) => void;
+  onAddProduct?: () => void;
+  onDeleteProduct?: (producto: Producto) => void;
+}
+
+const GestorInventario: React.FC<GestorInventarioProps> = ({ onEditProduct, onAddProduct, onDeleteProduct }) => {
   const [productos, setProductos] = useState<Producto[]>([]);
-  const [selectedProducto, setSelectedProducto] = useState<Producto | null>(null);
-  const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     fetchProductos();
@@ -14,43 +19,51 @@ const GestorInventario: React.FC = () => {
 
   const fetchProductos = async () => {
     try {
+      setLoading(true);
       const data = await getProductos();
       setProductos(data);
+      toast.success('Productos cargados correctamente');
     } catch (error) {
       console.error('Error fetching products:', error);
+      toast.error('Error al cargar los productos');
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleEdit = (producto: Producto) => {
-    setSelectedProducto(producto);
-    setIsEditorOpen(true);
-  };
-
-  const handleSave = async (updatedProducto: Producto) => {
-    try {
-      await updateProducto(updatedProducto.id, updatedProducto);
-      fetchProductos(); // Refresh the list
-      setIsEditorOpen(false);
-      setSelectedProducto(null);
-    } catch (error) {
-      console.error('Error updating product:', error);
+    if (onEditProduct) {
+      onEditProduct(producto);
+    } else {
+      toast.error('Función de editar no disponible');
     }
   };
 
-  const handleCloseEditor = () => {
-    setIsEditorOpen(false);
-    setSelectedProducto(null);
+  const handleAddProduct = () => {
+    if (onAddProduct) {
+      onAddProduct();
+    } else {
+      toast.error('Función de agregar producto no disponible');
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <div className="flex items-center justify-center py-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+          <span className="ml-2 text-gray-600">Cargando productos...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
       <h2 className="text-2xl font-semibold mb-4">Gestión de Inventario</h2>
       <button
-        className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 mb-4"
-        onClick={() => {
-          setSelectedProducto(null); // For creating a new product
-          setIsEditorOpen(true);
-        }}
+        className="bg-gradient-to-r from-green-600 to-green-700 text-white py-3 px-6 rounded-xl hover:from-green-700 hover:to-green-800 mb-4 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 font-semibold"
+        onClick={handleAddProduct}
       >
         Añadir Nuevo Producto
       </button>
@@ -67,42 +80,48 @@ const GestorInventario: React.FC = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {productos.map((producto) => (
-              <tr key={producto.id}>
-                <td className="px-6 py-4 whitespace-nowrap">{producto.nombre}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{producto.stock}</td>
-                <td className="px-6 py-4 whitespace-nowrap">€{producto.precio.toFixed(2)}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                    producto.estado === 'disponible' ? 'bg-green-100 text-green-800' :
-                    producto.estado === 'agotado' ? 'bg-red-100 text-red-800' :
-                    'bg-blue-100 text-blue-800'
-                  }`}>
-                    {producto.estado}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  <button
-                    className="text-indigo-600 hover:text-indigo-900 mr-3"
-                    onClick={() => handleEdit(producto)}
-                  >
-                    Editar
-                  </button>
-                  {/* Add delete functionality if needed */}
+            {Array.isArray(productos) && productos.length > 0 ? (
+              productos.map((producto) => (
+                <tr key={producto.id}>
+                  <td className="px-6 py-4 whitespace-nowrap">{producto.nombre}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{producto.stock}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">€{producto.precio.toFixed(2)}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      producto.estado === 'disponible' ? 'bg-green-100 text-green-800' :
+                      producto.estado === 'agotado' ? 'bg-red-100 text-red-800' :
+                      'bg-blue-100 text-blue-800'
+                    }`}>
+                      {producto.estado}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <button
+                      className="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white px-4 py-2 rounded-lg hover:from-indigo-700 hover:to-indigo-800 mr-3 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 font-semibold"
+                      onClick={() => handleEdit(producto)}
+                    >
+                      Editar
+                    </button>
+                    <button
+                      className="bg-gradient-to-r from-red-600 to-red-700 text-white px-4 py-2 rounded-lg hover:from-red-700 hover:to-red-800 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 font-semibold"
+                      onClick={() => onDeleteProduct ? onDeleteProduct(producto) : toast.error('Función no disponible')}
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={5} className="px-6 py-4 text-center text-gray-500">
+                  No hay productos disponibles
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
 
-      {isEditorOpen && (
-        <EditorProducto
-          producto={selectedProducto}
-          onSave={handleSave}
-          onClose={handleCloseEditor}
-        />
-      )}
     </div>
   );
 };

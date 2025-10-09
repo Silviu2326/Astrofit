@@ -1,6 +1,10 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
+import Modal from '../../../../../components/ui/modal';
+import ConfirmationModal from '../../../../../components/ui/confirmation-modal';
+import InputModal from '../../../../../components/ui/input-modal';
 import { 
   Users, 
   AlertTriangle, 
@@ -20,8 +24,23 @@ import {
   RefreshCw
 } from 'lucide-react';
 
+type InactiveClient = {
+  id: number;
+  name: string;
+  lastActivity: string;
+  riskLevel: string;
+  plan: string;
+  avatar: string;
+  actions: string[];
+};
+
 const ReactivacionClientesPage: React.FC = () => {
   const [selectedAction, setSelectedAction] = useState<string | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [clientToView, setClientToView] = useState<InactiveClient | null>(null);
+  const [clientToMessage, setClientToMessage] = useState<InactiveClient | null>(null);
+  const [confirmActionId, setConfirmActionId] = useState<string | null>(null);
+  const [settingsActionId, setSettingsActionId] = useState<string | null>(null);
 
   const stats = [
     { title: 'Clientes Inactivos', value: '127', change: '-8.2%', icon: Users, color: 'from-orange-500 to-red-600' },
@@ -30,7 +49,7 @@ const ReactivacionClientesPage: React.FC = () => {
     { title: 'ROI Reactivación', value: '280%', change: '+18.7%', icon: TrendingUp, color: 'from-purple-500 to-pink-600' }
   ];
 
-  const inactiveClients = [
+  const inactiveClients: InactiveClient[] = [
     {
       id: 1,
       name: 'María González',
@@ -135,7 +154,51 @@ const ReactivacionClientesPage: React.FC = () => {
     }
   ];
 
+  const handleRefresh = () => {
+    if (isRefreshing) return;
+    setIsRefreshing(true);
+    const id = toast.loading('Actualizando lista de clientes...');
+    setTimeout(() => {
+      toast.success('Lista actualizada con éxito', { id });
+      setIsRefreshing(false);
+    }, 1200);
+  };
+
+  const handleViewClient = (client: InactiveClient) => {
+    setClientToView(client);
+  };
+
+  const handleSendMessage = (client: InactiveClient) => {
+    setClientToMessage(client);
+  };
+
+  const handleExecuteAction = (actionId: string) => {
+    setConfirmActionId(actionId);
+  };
+
+  const confirmExecuteAction = () => {
+    if (!confirmActionId) return;
+    const action = reactivationActions.find(a => a.id === confirmActionId);
+    const id = toast.loading('Ejecutando acción...');
+    setTimeout(() => {
+      toast.success(`Acción "${action?.title ?? 'Reactivación'}" ejecutada`, { id });
+    }, 900);
+    setConfirmActionId(null);
+  };
+
+  const handleOpenSettings = (actionId: string) => {
+    setSettingsActionId(actionId);
+  };
+
+  const closeAllModals = () => {
+    setClientToView(null);
+    setClientToMessage(null);
+    setConfirmActionId(null);
+    setSettingsActionId(null);
+  };
+
   return (
+    <>
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 pb-12">
       {/* Hero Section */}
       <motion.div
@@ -278,10 +341,12 @@ const ReactivacionClientesPage: React.FC = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-2xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300"
+              onClick={handleRefresh}
+              disabled={isRefreshing}
+              className={`flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-2xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 ${isRefreshing ? 'opacity-80 cursor-not-allowed' : ''}`}
             >
               <RefreshCw className="w-5 h-5" />
-              Actualizar Lista
+              {isRefreshing ? 'Actualizando...' : 'Actualizar Lista'}
             </motion.button>
           </div>
 
@@ -335,6 +400,7 @@ const ReactivacionClientesPage: React.FC = () => {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={() => handleViewClient(client)}
                     className="p-2 text-gray-400 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all duration-300"
                   >
                     <Eye className="w-4 h-4" />
@@ -342,6 +408,7 @@ const ReactivacionClientesPage: React.FC = () => {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={() => handleSendMessage(client)}
                     className="p-2 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all duration-300"
                   >
                     <Send className="w-4 h-4" />
@@ -430,6 +497,7 @@ const ReactivacionClientesPage: React.FC = () => {
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
+                        onClick={() => handleExecuteAction(action.id)}
                         className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-emerald-50 text-emerald-600 rounded-xl font-semibold hover:bg-emerald-100 transition-colors duration-300"
                       >
                         <Play className="w-4 h-4" />
@@ -438,6 +506,7 @@ const ReactivacionClientesPage: React.FC = () => {
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
+                        onClick={() => handleOpenSettings(action.id)}
                         className="px-3 py-2 bg-gray-50 text-gray-600 rounded-xl hover:bg-gray-100 transition-colors duration-300"
                       >
                         <Settings className="w-4 h-4" />
@@ -517,6 +586,113 @@ const ReactivacionClientesPage: React.FC = () => {
         </motion.div>
       </div>
     </div>
+
+    {/* Modal: Ver cliente */}
+    <Modal
+      isOpen={!!clientToView}
+      onClose={() => setClientToView(null)}
+      title={clientToView ? `Cliente: ${clientToView.name}` : 'Cliente'}
+      size="md"
+    >
+      {clientToView && (
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-gray-600">Plan</span>
+            <span className="font-semibold text-gray-900">{clientToView?.plan}</span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-gray-600">Última actividad</span>
+            <span className="font-semibold text-gray-900">{clientToView?.lastActivity}</span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-gray-600">Riesgo</span>
+            <span className="font-semibold text-gray-900">{clientToView?.riskLevel}</span>
+          </div>
+          <div>
+            <span className="text-sm text-gray-600">Acciones sugeridas</span>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {clientToView?.actions.map((a, i) => (
+                <span key={i} className="px-2 py-1 text-xs bg-gray-100 rounded-lg capitalize text-gray-700">{a}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </Modal>
+
+    {/* Modal: Enviar mensaje */}
+    <InputModal
+      isOpen={!!clientToMessage}
+      onClose={() => setClientToMessage(null)}
+      onConfirm={(_value: string) => {
+        toast.success(`Mensaje enviado a ${clientToMessage?.name}`);
+        setClientToMessage(null);
+      }}
+      title={clientToMessage ? `Enviar mensaje a ${clientToMessage.name}` : 'Enviar mensaje'}
+      message="Escribe un mensaje breve para reactivar al cliente."
+      placeholder="Hola, ¿cómo vas? Tenemos una oferta especial para ti..."
+      confirmText="Enviar"
+    />
+
+    {/* Confirmación: Ejecutar acción */}
+    <ConfirmationModal
+      isOpen={!!confirmActionId}
+      onClose={() => setConfirmActionId(null)}
+      onConfirm={confirmExecuteAction}
+      title="Confirmar ejecución"
+      message={
+        reactivationActions.find(a => a.id === confirmActionId)
+          ? `¿Deseas ejecutar la acción "${reactivationActions.find(a => a.id === confirmActionId)!.title}" ahora?`
+          : '¿Deseas ejecutar esta acción ahora?'
+      }
+      confirmText="Ejecutar"
+      type="info"
+    />
+
+    {/* Modal: Configuración de acción */}
+    <Modal
+      isOpen={!!settingsActionId}
+      onClose={() => setSettingsActionId(null)}
+      title={
+        settingsActionId
+          ? `Configurar: ${reactivationActions.find(a => a.id === settingsActionId)?.title ?? 'Acción'}`
+          : 'Configurar acción'
+      }
+      size="sm"
+    >
+      {settingsActionId && (
+        <div className="space-y-4">
+          <div>
+            <label className="text-sm text-gray-600">Demora entre mensajes</label>
+            <select className="mt-1 w-full border rounded-xl px-3 py-2">
+              <option>Inmediato</option>
+              <option>En 1 hora</option>
+              <option>En 24 horas</option>
+            </select>
+          </div>
+          <div>
+            <label className="text-sm text-gray-600">Canal preferido</label>
+            <select className="mt-1 w-full border rounded-xl px-3 py-2">
+              <option>Email</option>
+              <option>Llamada</option>
+              <option>Mensaje personal</option>
+            </select>
+          </div>
+          <div className="flex justify-end">
+            <button
+              onClick={() => {
+                toast.success('Preferencias guardadas');
+                closeAllModals();
+              }}
+              className="px-4 py-2 rounded-xl bg-indigo-600 text-white hover:bg-indigo-700"
+            >
+              Guardar
+            </button>
+          </div>
+        </div>
+      )}
+    </Modal>
+    </>
   );
 };
 
