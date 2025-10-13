@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { LandingPage } from './components/LandingPage';
+import { EugenioOllerLanding } from './components/EugenioOllerLanding';
 import { ProductoPage } from './components/ProductoPage';
 import { PreciosPage } from './components/PreciosPage';
 import { LoginPage } from './features/core/login/LoginPage';
@@ -40,6 +41,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
+      <Route path="/eugenio-oller" element={<EugenioOllerLanding />} />
       <Route path="/producto" element={<ProductoPage />} />
       <Route path="/precios" element={<PreciosPage />} />
       <Route path="/login" element={

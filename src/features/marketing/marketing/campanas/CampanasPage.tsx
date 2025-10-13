@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   Megaphone, TrendingUp, Users, DollarSign, Target,
-  Calendar, BarChart3, History, Plus, Eye
+  Calendar, BarChart3, History, Plus, Eye, Edit, Trash2,
+  Search, Filter, MoreVertical, Mail, Instagram, Facebook,
+  MessageSquare, Youtube, Linkedin, Twitter, Send, Smartphone, Globe, Sparkles
 } from 'lucide-react';
 import { MOCK_CAMPANAS } from './types';
 import CrearCampana from './components/CrearCampana';
@@ -10,22 +12,102 @@ import SeguimientoResultados from './components/SeguimientoResultados';
 import HistorialCampanas from './components/HistorialCampanas';
 import MetricasCampana from './components/MetricasCampana';
 import CalendarioCampanas from './components/CalendarioCampanas';
+import { fetchCampanas, deleteCampana, cambiarEstadoCampana, type Campana, type EstadoCampana, type CanalCampana } from './campanasApi';
 
 const CampanasPage: React.FC = () => {
   const [mostrarCrearCampana, setMostrarCrearCampana] = useState(false);
   const [mostrarCalendario, setMostrarCalendario] = useState(false);
   const [mostrarHistorial, setMostrarHistorial] = useState(false);
   const [mostrarMetricas, setMostrarMetricas] = useState(false);
+  const [campanas, setCampanas] = useState<Campana[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filtroEstado, setFiltroEstado] = useState<EstadoCampana | ''>('');
+  const [filtroCanal, setFiltroCanal] = useState<CanalCampana | ''>('');
+
+  // Cargar campañas
+  useEffect(() => {
+    loadCampanas();
+  }, [filtroEstado, filtroCanal, searchTerm]);
+
+  const loadCampanas = async () => {
+    try {
+      setIsLoading(true);
+      const result = await fetchCampanas({
+        estado: filtroEstado || undefined,
+        canal: filtroCanal || undefined,
+        q: searchTerm || undefined
+      });
+      setCampanas(result.data);
+    } catch (error) {
+      console.error('Error loading campañas:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDeleteCampana = async (id: string) => {
+    if (!confirm('¿Estás seguro de eliminar esta campaña?')) return;
+
+    try {
+      await deleteCampana(id);
+      await loadCampanas();
+    } catch (error) {
+      console.error('Error deleting campaña:', error);
+      alert('Error al eliminar la campaña');
+    }
+  };
+
+  const handleCambiarEstado = async (id: string, nuevoEstado: EstadoCampana) => {
+    try {
+      await cambiarEstadoCampana(id, nuevoEstado);
+      await loadCampanas();
+    } catch (error) {
+      console.error('Error changing estado:', error);
+      alert('Error al cambiar el estado');
+    }
+  };
 
   // Calcular estadísticas globales
-  const campanasActivas = MOCK_CAMPANAS.filter(c => c.estado === 'Activa').length;
-  const totalImpresiones = MOCK_CAMPANAS.reduce((sum, c) => sum + c.impresiones, 0);
-  const totalConversiones = MOCK_CAMPANAS.reduce((sum, c) => sum + c.conversiones, 0);
+  const campanasActivas = campanas.filter(c => c.estado === 'Activa').length;
+  const totalImpresiones = campanas.reduce((sum, c) => sum + c.impresiones, 0);
+  const totalConversiones = campanas.reduce((sum, c) => sum + c.conversiones, 0);
   const roiPromedio = Math.round(
-    MOCK_CAMPANAS.filter(c => c.roi > 0).reduce((sum, c) => sum + c.roi, 0) /
-    MOCK_CAMPANAS.filter(c => c.roi > 0).length
+    campanas.filter(c => c.roi > 0).reduce((sum, c) => sum + c.roi, 0) /
+    (campanas.filter(c => c.roi > 0).length || 1)
   );
-  const tasaConversionPromedio = ((totalConversiones / totalImpresiones) * 100).toFixed(2);
+  const tasaConversionPromedio = totalImpresiones > 0 ? ((totalConversiones / totalImpresiones) * 100).toFixed(2) : '0.00';
+
+  // Iconos de canales
+  const getIconoCanal = (canal: CanalCampana) => {
+    const iconos: Record<CanalCampana, any> = {
+      email: Mail,
+      instagram: Instagram,
+      facebook: Facebook,
+      tiktok: MessageSquare,
+      youtube: Youtube,
+      linkedin: Linkedin,
+      twitter: Twitter,
+      whatsapp: MessageSquare,
+      telegram: Send,
+      SMS: Smartphone,
+      web: Globe,
+      mixto: Sparkles,
+      redes: MessageSquare
+    };
+    return iconos[canal] || Mail;
+  };
+
+  // Colores de estado
+  const getColorEstado = (estado: EstadoCampana) => {
+    const colores: Record<EstadoCampana, string> = {
+      Activa: 'bg-green-100 text-green-700',
+      Programada: 'bg-blue-100 text-blue-700',
+      Completada: 'bg-gray-100 text-gray-700',
+      Pausada: 'bg-yellow-100 text-yellow-700'
+    };
+    return colores[estado];
+  };
 
   const stats = [
     {
@@ -275,7 +357,10 @@ const CampanasPage: React.FC = () => {
       {mostrarCrearCampana && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <CrearCampana onClose={() => setMostrarCrearCampana(false)} />
+            <CrearCampana
+              onClose={() => setMostrarCrearCampana(false)}
+              onSuccess={() => loadCampanas()}
+            />
           </div>
         </div>
       )}
@@ -313,11 +398,204 @@ const CampanasPage: React.FC = () => {
         </motion.div>
       )}
 
-      {/* Seguimiento de Resultados - Siempre visible */}
+      {/* Tabla de Campañas */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7, duration: 0.4 }}
+        className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/50 p-6 mb-8"
+      >
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+          <h2 className="text-2xl font-bold text-gray-900">Todas las Campañas</h2>
+
+          {/* Filtros y búsqueda */}
+          <div className="flex flex-col sm:flex-row gap-3">
+            {/* Búsqueda */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Buscar campañas..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 pr-4 py-2 border-2 border-gray-200 rounded-xl focus:border-violet-500 focus:ring-4 focus:ring-violet-100 transition-all outline-none"
+              />
+            </div>
+
+            {/* Filtro Estado */}
+            <select
+              value={filtroEstado}
+              onChange={(e) => setFiltroEstado(e.target.value as EstadoCampana | '')}
+              className="px-4 py-2 border-2 border-gray-200 rounded-xl focus:border-violet-500 focus:ring-4 focus:ring-violet-100 transition-all outline-none"
+            >
+              <option value="">Todos los estados</option>
+              <option value="Activa">Activa</option>
+              <option value="Programada">Programada</option>
+              <option value="Completada">Completada</option>
+              <option value="Pausada">Pausada</option>
+            </select>
+
+            {/* Filtro Canal */}
+            <select
+              value={filtroCanal}
+              onChange={(e) => setFiltroCanal(e.target.value as CanalCampana | '')}
+              className="px-4 py-2 border-2 border-gray-200 rounded-xl focus:border-violet-500 focus:ring-4 focus:ring-violet-100 transition-all outline-none"
+            >
+              <option value="">Todos los canales</option>
+              <option value="email">Email</option>
+              <option value="instagram">Instagram</option>
+              <option value="facebook">Facebook</option>
+              <option value="tiktok">TikTok</option>
+              <option value="youtube">YouTube</option>
+              <option value="linkedin">LinkedIn</option>
+              <option value="twitter">Twitter</option>
+              <option value="whatsapp">WhatsApp</option>
+              <option value="telegram">Telegram</option>
+              <option value="SMS">SMS</option>
+              <option value="web">Web</option>
+              <option value="mixto">Multicanal</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Tabla */}
+        <div className="overflow-x-auto">
+          {isLoading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="w-12 h-12 border-4 border-violet-500 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          ) : campanas.length === 0 ? (
+            <div className="text-center py-12">
+              <Megaphone className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              <p className="text-gray-500 text-lg">No hay campañas que mostrar</p>
+              <button
+                onClick={() => setMostrarCrearCampana(true)}
+                className="mt-4 px-6 py-2 bg-gradient-to-r from-violet-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
+              >
+                Crear Primera Campaña
+              </button>
+            </div>
+          ) : (
+            <table className="w-full">
+              <thead>
+                <tr className="border-b-2 border-gray-100">
+                  <th className="text-left py-4 px-4 font-bold text-gray-700">Campaña</th>
+                  <th className="text-left py-4 px-4 font-bold text-gray-700">Canal</th>
+                  <th className="text-left py-4 px-4 font-bold text-gray-700">Estado</th>
+                  <th className="text-left py-4 px-4 font-bold text-gray-700">Fechas</th>
+                  <th className="text-left py-4 px-4 font-bold text-gray-700">Presupuesto</th>
+                  <th className="text-left py-4 px-4 font-bold text-gray-700">Métricas</th>
+                  <th className="text-left py-4 px-4 font-bold text-gray-700">ROI</th>
+                  <th className="text-center py-4 px-4 font-bold text-gray-700">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {campanas.map((campana, index) => {
+                  const IconoCanal = getIconoCanal(campana.canal);
+                  return (
+                    <motion.tr
+                      key={campana._id || campana.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.05 }}
+                      className="border-b border-gray-100 hover:bg-violet-50/50 transition-colors"
+                    >
+                      <td className="py-4 px-4">
+                        <div>
+                          <p className="font-semibold text-gray-900">{campana.nombre}</p>
+                          <p className="text-sm text-gray-500">{campana.objetivo}</p>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4">
+                        <div className="flex items-center gap-2">
+                          <div className="p-2 bg-violet-100 rounded-lg">
+                            <IconoCanal className="w-4 h-4 text-violet-600" />
+                          </div>
+                          <span className="text-sm font-medium text-gray-700 capitalize">{campana.canal}</span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getColorEstado(campana.estado)}`}>
+                          {campana.estado}
+                        </span>
+                      </td>
+                      <td className="py-4 px-4">
+                        <div className="text-sm">
+                          <p className="text-gray-700">{new Date(campana.fechaInicio).toLocaleDateString('es-ES')}</p>
+                          <p className="text-gray-500">hasta {new Date(campana.fechaFin).toLocaleDateString('es-ES')}</p>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4">
+                        <div className="text-sm">
+                          <p className="font-semibold text-gray-900">€{campana.presupuesto.toLocaleString()}</p>
+                          <p className="text-gray-500">Usado: €{campana.presupuestoUtilizado.toLocaleString()}</p>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4">
+                        <div className="text-sm space-y-1">
+                          <p className="text-gray-700">
+                            <span className="font-medium">{campana.impresiones.toLocaleString()}</span> impresiones
+                          </p>
+                          <p className="text-gray-700">
+                            <span className="font-medium">{campana.clicks.toLocaleString()}</span> clicks
+                          </p>
+                          <p className="text-gray-700">
+                            <span className="font-medium">{campana.conversiones.toLocaleString()}</span> conversiones
+                          </p>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4">
+                        <div className="flex items-center gap-2">
+                          <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                            campana.roi > 200 ? 'bg-green-100' :
+                            campana.roi > 100 ? 'bg-yellow-100' :
+                            'bg-gray-100'
+                          }`}>
+                            <span className={`text-sm font-bold ${
+                              campana.roi > 200 ? 'text-green-700' :
+                              campana.roi > 100 ? 'text-yellow-700' :
+                              'text-gray-700'
+                            }`}>
+                              {campana.roi}%
+                            </span>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4">
+                        <div className="flex items-center justify-center gap-2">
+                          <button
+                            onClick={() => handleCambiarEstado(
+                              campana._id || campana.id || '',
+                              campana.estado === 'Activa' ? 'Pausada' : 'Activa'
+                            )}
+                            className="p-2 hover:bg-violet-100 rounded-lg transition-colors"
+                            title={campana.estado === 'Activa' ? 'Pausar' : 'Activar'}
+                          >
+                            <Eye className="w-4 h-4 text-violet-600" />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteCampana(campana._id || campana.id || '')}
+                            className="p-2 hover:bg-red-100 rounded-lg transition-colors"
+                            title="Eliminar"
+                          >
+                            <Trash2 className="w-4 h-4 text-red-600" />
+                          </button>
+                        </div>
+                      </td>
+                    </motion.tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
+        </div>
+      </motion.div>
+
+      {/* Seguimiento de Resultados - Siempre visible */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8, duration: 0.4 }}
       >
         <SeguimientoResultados />
       </motion.div>

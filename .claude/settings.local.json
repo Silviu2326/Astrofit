@@ -11,7 +11,15 @@
       "Bash(npm run seed:presupuestos:*)",
       "Bash(npm run seed:impuestos:*)",
       "Bash(npm run seed:impuestos:advanced:*)",
-      "Bash(npm run seed:impuestos:complete:*)"
+      "Bash(npm run seed:impuestos:complete:*)",
+      "Bash(npm run seed:productos-servicios:*)",
+      "Bash(npm run seed:cupones:*)",
+      "Bash(npm run seed:campanas:*)",
+      "Bash(npm run dev:*)",
+      "Bash(mkdir:*)",
+      "Read(//c/Users/usuario/.cursor/**)",
+      "Bash(npx:*)",
+      "Bash(npm cache clean:*)"
     ],
     "deny": [],
     "ask": []

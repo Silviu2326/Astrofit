@@ -27,11 +27,13 @@ import EditorEjercicioPage from '../../features/training/training/editor-ejercic
 import PlantillasEntrenosPage from '../../features/training/training/plantillas-entrenos/PlantillasEntrenosPage';
 import EntrenamientosListadoPage from '../../features/training/training/entrenamientos-listado/EntrenamientosListadoPage';
 import NuevoEntrenamientoPage from '../../features/training/training/nuevo-entrenamiento/NuevoEntrenamientoPage';
+import EntrenamientoEdicionPage from '../../features/training/training/entrenamiento-edicion/EntrenamientoEdicionPage';
 import CalculadorasFuerzaPage from '../../features/training/training/calculadoras-fuerza/CalculadorasFuerzaPage';
 import PlantillasDietasPage from '../../features/nutrition/nutrition/plantillas-dietas/PlantillasDietasPage';
 import DietasListadoPage from '../../features/nutrition/nutrition/dietas-listado/DietasListadoPage';
 import DietaNuevaPage from '../../features/nutrition/nutrition/dieta-nueva/DietaNuevaPage';
 import DietaEditarPage from '../../features/nutrition/nutrition/dieta-editar/DietaEditarPage';
+import DietaEdicionPage from '../../features/nutrition/nutrition/dieta-edicion/DietaEdicionPage';
 import RecetasBibliotecaPage from '../../features/nutrition/nutrition/recetas-biblioteca/RecetasBibliotecaPage';
 import RecetaNuevaPage from '../../features/nutrition/nutrition/receta-nueva/RecetaNuevaPage';
 import RecetaEditarPage from '../../features/nutrition/nutrition/receta-editar/RecetaEditarPage';
@@ -634,6 +636,8 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onLogout }) =>
         <main className="p-6">
           <Routes>
             <Route index element={<Navigate to="inicio" replace />} />
+            <Route path="training/entrenamientos/editar/:id" element={<EntrenamientoEdicionPage />} />
+            <Route path="nutrition/dietas/editar/:id" element={<DietaEdicionPage />} />
             {/* Fallback: usa el renderer existente segun id en URL */}
             <Route path="*" element={renderPage()} />
           </Routes>

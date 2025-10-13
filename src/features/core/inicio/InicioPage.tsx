@@ -5,9 +5,10 @@ import {
   Users, UserCheck, Calendar, DollarSign, TrendingUp, CheckCircle,
   UserPlus, Clock, Dumbbell, Apple, MessageSquare, BarChart, Settings,
   ArrowUpRight, ArrowDownRight, Sparkles, Activity, Target, Gift,
-  AlertCircle, Zap
+  AlertCircle, Zap, FileText, User
 } from 'lucide-react';
 import ClienteFormModal from '../../crm/crm/clientes-listado/components/ClienteFormModal';
+import { useDashboard } from './inicioApi';
 
 // Tipos
 interface StatCardProps {
@@ -38,6 +39,7 @@ interface ActivityItem {
 
 const InicioPage: React.FC = () => {
   const [greeting, setGreeting] = useState('');
+  const { stats, actividades, alertas, ingresos, eventos, leads, isLoading } = useDashboard();
 
   // Determinar saludo según hora del día
   useEffect(() => {
@@ -47,12 +49,17 @@ const InicioPage: React.FC = () => {
     else setGreeting('Buenas noches');
   }, []);
 
-  // Datos mockeados - Estadísticas
-  const stats: StatCardProps[] = [
+  // Debug: Log datos recibidos
+  useEffect(() => {
+    console.log('📊 Dashboard data:', { stats, actividades, alertas, ingresos, eventos });
+  }, [stats, actividades, alertas, ingresos, eventos]);
+
+  // Estadísticas desde el backend
+  const statsCards: StatCardProps[] = [
     {
       icon: <Users className="w-8 h-8" />,
       title: 'Total Clientes',
-      value: 245,
+      value: stats?.totalClientes || 0,
       change: 12.5,
       color: 'from-blue-500 to-blue-600',
       delay: 0.1
@@ -60,7 +67,7 @@ const InicioPage: React.FC = () => {
     {
       icon: <UserCheck className="w-8 h-8" />,
       title: 'Clientes Activos Hoy',
-      value: 187,
+      value: stats?.clientesActivosHoy || 0,
       change: 8.3,
       color: 'from-green-500 to-emerald-600',
       delay: 0.2
@@ -68,23 +75,23 @@ const InicioPage: React.FC = () => {
     {
       icon: <Calendar className="w-8 h-8" />,
       title: 'Entrenamientos Programados',
-      value: 42,
+      value: stats?.entrenamientosProgramadosHoy || 0,
       change: 15.2,
       color: 'from-purple-500 to-purple-600',
       delay: 0.3
     },
     {
       icon: <DollarSign className="w-8 h-8" />,
-      title: 'Ingresos del Mes',
-      value: '€12,450',
-      change: 23.8,
+      title: 'Ingresos Totales',
+      value: `€${(stats?.ingresosTotales || 0).toLocaleString()}`,
+      change: ingresos?.cambioporcentual || 0,
       color: 'from-emerald-500 to-teal-600',
       delay: 0.4
     },
     {
       icon: <TrendingUp className="w-8 h-8" />,
       title: 'Tasa de Retención',
-      value: '94%',
+      value: `${stats?.tasaRetencion || 0}%`,
       change: 5.4,
       color: 'from-orange-500 to-orange-600',
       delay: 0.5
@@ -92,15 +99,15 @@ const InicioPage: React.FC = () => {
     {
       icon: <CheckCircle className="w-8 h-8" />,
       title: 'Sesiones Completadas',
-      value: 1248,
+      value: stats?.sesionesCompletadasMes || 0,
       change: 18.7,
       color: 'from-indigo-500 to-indigo-600',
       delay: 0.6
     },
     {
       icon: <UserPlus className="w-8 h-8" />,
-      title: 'Nuevos Leads',
-      value: 28,
+      title: 'Leads Totales',
+      value: leads?.length || 0,
       change: -3.2,
       color: 'from-pink-500 to-rose-600',
       delay: 0.7
@@ -108,7 +115,7 @@ const InicioPage: React.FC = () => {
     {
       icon: <Clock className="w-8 h-8" />,
       title: 'Citas Pendientes',
-      value: 15,
+      value: stats?.citasPendientesHoy || 0,
       change: 10.1,
       color: 'from-amber-500 to-yellow-600',
       delay: 0.8
@@ -177,109 +184,92 @@ const InicioPage: React.FC = () => {
     }
   ];
 
-  // Actividad reciente
-  const recentActivity: ActivityItem[] = [
-    {
-      id: 1,
-      user: 'Ana García',
-      action: 'completó su entrenamiento de piernas',
-      time: 'hace 15 min',
-      type: 'success',
-      icon: <CheckCircle className="w-4 h-4" />
-    },
-    {
-      id: 2,
-      user: 'Carlos Ruiz',
-      action: 'se inscribió al plan Premium',
-      time: 'hace 1 hora',
-      type: 'info',
-      icon: <UserPlus className="w-4 h-4" />
-    },
-    {
-      id: 3,
-      user: 'María López',
-      action: 'canceló su cita de mañana',
-      time: 'hace 2 horas',
-      type: 'warning',
-      icon: <AlertCircle className="w-4 h-4" />
-    },
-    {
-      id: 4,
-      user: 'Pedro Sánchez',
-      action: 'completó su evaluación inicial',
-      time: 'hace 3 horas',
-      type: 'success',
-      icon: <Target className="w-4 h-4" />
-    },
-    {
-      id: 5,
-      user: 'Laura Martín',
-      action: 'solicitó cambio de rutina',
-      time: 'hace 4 horas',
-      type: 'info',
-      icon: <MessageSquare className="w-4 h-4" />
-    },
-    {
-      id: 6,
-      user: 'Javier Torres',
-      action: 'alcanzó su objetivo de peso',
-      time: 'hace 5 horas',
-      type: 'success',
-      icon: <TrendingUp className="w-4 h-4" />
-    },
-    {
-      id: 7,
-      user: 'Carmen Díaz',
-      action: 'renovó su membresía anual',
-      time: 'hace 6 horas',
-      type: 'success',
-      icon: <DollarSign className="w-4 h-4" />
-    },
-    {
-      id: 8,
-      user: 'Roberto Gómez',
-      action: 'reservó clase de spinning',
-      time: 'hace 8 horas',
-      type: 'info',
-      icon: <Calendar className="w-4 h-4" />
-    },
-    {
-      id: 9,
-      user: 'Elena Fernández',
-      action: 'completó 30 días consecutivos',
-      time: 'hace 10 horas',
-      type: 'success',
-      icon: <Zap className="w-4 h-4" />
-    },
-    {
-      id: 10,
-      user: 'Miguel Ángel',
-      action: 'actualizó sus medidas corporales',
-      time: 'hace 12 horas',
-      type: 'info',
-      icon: <Activity className="w-4 h-4" />
-    }
-  ];
+  // Mapeo de iconos para la actividad reciente
+  const getIconForActivity = (iconName: string) => {
+    const iconMap: Record<string, React.ReactNode> = {
+      'user-plus': <UserPlus className="w-4 h-4" />,
+      'user-check': <UserCheck className="w-4 h-4" />,
+      'dumbbell': <Dumbbell className="w-4 h-4" />,
+      'file-invoice': <FileText className="w-4 h-4" />,
+      'calendar': <Calendar className="w-4 h-4" />,
+      'check-circle': <CheckCircle className="w-4 h-4" />,
+    };
+    return iconMap[iconName] || <Activity className="w-4 h-4" />;
+  };
 
-  // Alertas importantes
-  const alerts = [
-    { text: 'Tienes 3 pagos pendientes de revisar', priority: 'high', icon: <AlertCircle className="w-4 h-4" /> },
-    { text: '5 clientes cumplen años esta semana', priority: 'medium', icon: <Gift className="w-4 h-4" /> },
-    { text: 'Recuerda actualizar el inventario', priority: 'low', icon: <Clock className="w-4 h-4" /> }
-  ];
+  // Función para calcular tiempo relativo
+  const getRelativeTime = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMins / 60);
+    const diffDays = Math.floor(diffHours / 24);
 
-  // Próximas citas (hoy y mañana)
-  const upcomingAppointments = [
-    { client: 'Ana García', time: '10:00', type: 'Entrenamiento Personal', today: true },
-    { client: 'Carlos Ruiz', time: '12:00', type: 'Evaluación Inicial', today: true },
-    { client: 'María López', time: '16:00', type: 'Entrenamiento Funcional', today: true },
-    { client: 'Pedro Sánchez', time: '09:00', type: 'Sesión de Cardio', today: false },
-    { client: 'Laura Martín', time: '11:00', type: 'Yoga & Pilates', today: false }
-  ];
+    if (diffMins < 60) return `hace ${diffMins} min`;
+    if (diffHours < 24) return `hace ${diffHours} hora${diffHours > 1 ? 's' : ''}`;
+    return `hace ${diffDays} día${diffDays > 1 ? 's' : ''}`;
+  };
 
-  // Datos para mini-gráfico de ingresos (últimos 7 días)
-  const incomeData = [850, 920, 780, 1100, 950, 1200, 1050];
+  // Convertir actividades del backend a formato UI
+  const recentActivity: ActivityItem[] = (actividades || []).map((act, index) => ({
+    id: index + 1,
+    user: act.descripcion.split(' - ')[0] || act.titulo,
+    action: act.titulo.toLowerCase(),
+    time: getRelativeTime(act.fecha),
+    type: act.color as 'success' | 'info' | 'warning' | 'error',
+    icon: getIconForActivity(act.icono)
+  }));
+
+  // Mapeo de iconos para alertas
+  const getIconForAlert = (iconName: string) => {
+    const iconMap: Record<string, React.ReactNode> = {
+      'exclamation-triangle': <AlertCircle className="w-4 h-4" />,
+      'clock': <Clock className="w-4 h-4" />,
+      'tasks': <CheckCircle className="w-4 h-4" />,
+      'calendar-day': <Calendar className="w-4 h-4" />,
+      'user-clock': <User className="w-4 h-4" />,
+    };
+    return iconMap[iconName] || <AlertCircle className="w-4 h-4" />;
+  };
+
+  // Convertir alertas del backend a formato UI
+  const alerts = (alertas || []).slice(0, 5).map(alert => ({
+    text: alert.descripcion,
+    priority: alert.prioridad,
+    icon: getIconForAlert(alert.icono)
+  }));
+
+  // Próximas citas desde los eventos del backend
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const dayAfterTomorrow = new Date(today);
+  dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
+
+  const upcomingAppointments = (eventos || []).map(evento => {
+    const eventDate = new Date(evento.fechaInicio);
+    const isToday = eventDate >= today && eventDate < tomorrow;
+    const isTomorrow = eventDate >= tomorrow && eventDate < dayAfterTomorrow;
+
+    return {
+      client: evento.cliente?.nombre || evento.titulo.split(' - ')[1] || 'Evento general',
+      time: new Date(evento.fechaInicio).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
+      type: evento.titulo.split(' - ')[0] || evento.tipo,
+      today: isToday
+    };
+  }).filter(apt => apt.today || !apt.today).slice(0, 6); // Limitar a 6 eventos
+
+  console.log('📅 Upcoming appointments:', upcomingAppointments);
+  console.log('📅 Events TODAY:', upcomingAppointments.filter(a => a.today));
+  console.log('📅 Events TOMORROW:', upcomingAppointments.filter(a => !a.today));
+
+  // Datos para mini-gráfico de ingresos desde el backend
+  const incomeData = ingresos?.dias?.map(d => d.ingresos) || [850, 920, 780, 1100, 950, 1200, 1050];
   const maxIncome = Math.max(...incomeData);
+  const totalSemana = ingresos?.totalSemanaActual || incomeData.reduce((a, b) => a + b, 0);
+  const cambioSemana = ingresos?.cambioporcentual || 15.3;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 pb-12">
@@ -328,7 +318,7 @@ const InicioPage: React.FC = () => {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-xl md:text-2xl text-blue-100 max-w-3xl leading-relaxed"
           >
-            Hoy es un gran día para transformar vidas. Tienes <span className="font-bold text-white px-2 py-1 bg-white/20 rounded-lg backdrop-blur-sm">{upcomingAppointments.filter(a => a.today).length} sesiones</span> programadas y <span className="font-bold text-white px-2 py-1 bg-white/20 rounded-lg backdrop-blur-sm">{stats[1].value} clientes activos</span> esperando tu guía.
+            Hoy es un gran día para transformar vidas. Tienes <span className="font-bold text-white px-2 py-1 bg-white/20 rounded-lg backdrop-blur-sm">{stats?.entrenamientosProgramadosHoy || 0} sesiones</span> programadas y <span className="font-bold text-white px-2 py-1 bg-white/20 rounded-lg backdrop-blur-sm">{stats?.clientesActivos || 0} clientes activos</span> esperando tu guía.
           </motion.p>
 
           {/* Indicadores adicionales en el hero */}
@@ -340,15 +330,15 @@ const InicioPage: React.FC = () => {
           >
             <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
               <TrendingUp className="w-5 h-5 text-green-300" />
-              <span className="text-sm font-semibold text-white">+23.8% ingresos</span>
+              <span className="text-sm font-semibold text-white">{cambioSemana >= 0 ? '+' : ''}{cambioSemana.toFixed(1)}% ingresos</span>
             </div>
             <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
               <CheckCircle className="w-5 h-5 text-emerald-300" />
-              <span className="text-sm font-semibold text-white">94% retención</span>
+              <span className="text-sm font-semibold text-white">{stats?.tasaRetencion || 0}% retención</span>
             </div>
             <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
               <Activity className="w-5 h-5 text-yellow-300" />
-              <span className="text-sm font-semibold text-white">1,248 sesiones completadas</span>
+              <span className="text-sm font-semibold text-white">{(stats?.sesionesCompletadasMes || 0).toLocaleString()} sesiones completadas</span>
             </div>
           </motion.div>
         </div>
@@ -356,7 +346,7 @@ const InicioPage: React.FC = () => {
 
       {/* ESTADÍSTICAS DESTACADAS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {stats.map((stat, index) => (
+        {statsCards.map((stat, index) => (
           <StatCard key={index} {...stat} />
         ))}
       </div>
@@ -606,12 +596,18 @@ const InicioPage: React.FC = () => {
               </div>
               <div className="mt-6 text-center bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-4 border border-emerald-100">
                 <p className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-teal-600">
-                  €{incomeData.reduce((a, b) => a + b, 0).toLocaleString()}
+                  €{totalSemana.toLocaleString()}
                 </p>
                 <p className="text-sm text-gray-600 font-semibold mt-1">Total esta semana</p>
                 <div className="flex items-center justify-center gap-2 mt-2">
-                  <ArrowUpRight className="w-4 h-4 text-green-600" />
-                  <span className="text-xs font-bold text-green-600">+15.3% vs semana anterior</span>
+                  {cambioSemana >= 0 ? (
+                    <ArrowUpRight className="w-4 h-4 text-green-600" />
+                  ) : (
+                    <ArrowDownRight className="w-4 h-4 text-red-600" />
+                  )}
+                  <span className={`text-xs font-bold ${cambioSemana >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                    {cambioSemana >= 0 ? '+' : ''}{cambioSemana.toFixed(1)}% vs semana anterior
+                  </span>
                 </div>
               </div>
             </div>

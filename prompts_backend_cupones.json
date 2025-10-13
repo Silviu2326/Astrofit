@@ -1,0 +1,78 @@
+{
+  "titulo": "Prompts Backend - Módulo Cupones",
+  "descripcion": "Prompts para implementar endpoints faltantes en el backend",
+  "prompts": [
+    {
+      "id": "backend-001",
+      "prompt": "Implementa el endpoint POST /api/cupones/validate-dates en backend/src/controllers/cupon.controller.js. Debe recibir fechaInicio y fechaFin, validar que las fechas sean válidas, que fechaInicio < fechaFin, y que fechaFin sea futura. Usar Joi para validación y retornar {success, data, error}.",
+      "archivos": ["backend/src/controllers/cupon.controller.js"],
+      "accion": "Crear función validateDates"
+    },
+    {
+      "id": "backend-002", 
+      "prompt": "Implementa el endpoint POST /api/cupones/validate-products en backend/src/controllers/cupon.controller.js. Debe recibir array de IDs de productos, verificar que existan en la BD y estén disponibles. Retornar productos válidos e inválidos con detalles.",
+      "archivos": ["backend/src/controllers/cupon.controller.js"],
+      "accion": "Crear función validateProducts"
+    },
+    {
+      "id": "backend-003",
+      "prompt": "Implementa el endpoint POST /api/cupones/validate-customers en backend/src/controllers/cupon.controller.js. Debe recibir array de IDs de clientes, verificar que existan en la BD y estén activos. Retornar clientes válidos e inválidos con detalles.",
+      "archivos": ["backend/src/controllers/cupon.controller.js"],
+      "accion": "Crear función validateCustomers"
+    },
+    {
+      "id": "backend-004",
+      "prompt": "Implementa el endpoint GET /api/clientes/search en backend/src/controllers/cliente.controller.js. Debe recibir parámetro 'q' para búsqueda, buscar por nombre/email/teléfono, implementar paginación, y retornar solo campos necesarios (id, nombre, email, telefono).",
+      "archivos": ["backend/src/controllers/cliente.controller.js"],
+      "accion": "Crear función searchClientes"
+    },
+    {
+      "id": "backend-005",
+      "prompt": "Implementa el endpoint GET /api/productos/search en backend/src/controllers/producto.controller.js. Debe recibir parámetro 'q' para búsqueda, buscar por nombre/descripción/categoría, implementar paginación, y retornar solo campos necesarios (id, nombre, precio, categoria, disponibilidad).",
+      "archivos": ["backend/src/controllers/producto.controller.js"],
+      "accion": "Crear función searchProductos"
+    },
+    {
+      "id": "backend-006",
+      "prompt": "Implementa el endpoint GET /api/clientes/:id en backend/src/controllers/cliente.controller.js. Debe recibir ID del cliente, validar que sea ObjectId válido, retornar información completa del cliente, y manejar caso de cliente no encontrado.",
+      "archivos": ["backend/src/controllers/cliente.controller.js"],
+      "accion": "Crear función getCliente"
+    },
+    {
+      "id": "backend-007",
+      "prompt": "Implementa el endpoint GET /api/productos/:id en backend/src/controllers/producto.controller.js. Debe recibir ID del producto, validar que sea ObjectId válido, retornar información completa del producto, y manejar caso de producto no encontrado.",
+      "archivos": ["backend/src/controllers/producto.controller.js"],
+      "accion": "Crear función getProducto"
+    },
+    {
+      "id": "backend-008",
+      "prompt": "Añade las rutas de validación al archivo backend/src/routes/cupon.routes.js: POST /validate-dates, POST /validate-products, POST /validate-customers. Importar las funciones del controlador y añadir validación Joi para cada ruta.",
+      "archivos": ["backend/src/routes/cupon.routes.js"],
+      "accion": "Añadir rutas de validación"
+    },
+    {
+      "id": "backend-009",
+      "prompt": "Añade la ruta GET /search al archivo backend/src/routes/cliente.routes.js. Importar la función searchClientes del controlador y añadir validación Joi para parámetros de query.",
+      "archivos": ["backend/src/routes/cliente.routes.js"],
+      "accion": "Añadir ruta de búsqueda de clientes"
+    },
+    {
+      "id": "backend-010",
+      "prompt": "Añade la ruta GET /search al archivo backend/src/routes/producto.routes.js. Importar la función searchProductos del controlador y añadir validación Joi para parámetros de query.",
+      "archivos": ["backend/src/routes/producto.routes.js"],
+      "accion": "Añadir ruta de búsqueda de productos"
+    },
+    {
+      "id": "backend-011",
+      "prompt": "Mejora las funciones de utilidad en backend/src/utils/couponUtils.js. Añadir función validateDateRange más robusta, validateProductIds, validateCustomerIds, generateSearchQuery, y mejorar manejo de errores con documentación JSDoc.",
+      "archivos": ["backend/src/utils/couponUtils.js"],
+      "accion": "Mejorar funciones de utilidad"
+    },
+    {
+      "id": "backend-012",
+      "prompt": "Mejora el middleware de validación en backend/src/middleware/couponValidation.js. Añadir validación para fechas, productos, clientes, mejorar mensajes de error, añadir validación de tipos de datos y optimizar rendimiento.",
+      "archivos": ["backend/src/middleware/couponValidation.js"],
+      "accion": "Mejorar middleware de validación"
+    }
+  ]
+}

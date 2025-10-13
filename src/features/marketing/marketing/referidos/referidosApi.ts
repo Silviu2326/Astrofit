@@ -42,6 +42,19 @@ export interface ReferrerStats {
   rewardsEarned: string[];
 }
 
+export interface TrainerReferralSettings {
+  trainerId: string;
+  referralProgramEnabled: boolean; // Activar/desactivar programa de referidos para el entrenador
+  clientReferralEnabled: boolean; // Permitir que sus clientes generen referidos
+  trainerCommissionType: 'percentage' | 'fixed';
+  trainerCommissionValue: number; // Comisión del entrenador por referido convertido
+  clientCommissionType: 'percentage' | 'fixed';
+  clientCommissionValue: number; // Comisión que paga el entrenador a sus clientes por referir
+  autoApproveReferrals: boolean; // Aprobar automáticamente referidos
+  maxReferralsPerClient: number; // Máximo de referidos por cliente (0 = ilimitado)
+  updatedAt: string;
+}
+
 // Mock API functions
 const mockReferralCodes: ReferralCode[] = [
   { id: 'rc1', code: 'INVITE123', referrerId: 'user1', createdAt: '2023-01-01', expiresAt: '2024-01-01' },
@@ -107,5 +120,38 @@ export const sendReferralNotification = async (code: string, refereeEmail: strin
   return new Promise((resolve) => setTimeout(() => {
     console.log(`Notification sent for code ${code} to ${refereeEmail}`);
     resolve(true);
+  }, 500));
+};
+
+// Mock data para configuración de referidos del entrenador
+let mockTrainerSettings: TrainerReferralSettings = {
+  trainerId: 'trainer1',
+  referralProgramEnabled: true,
+  clientReferralEnabled: true,
+  trainerCommissionType: 'percentage',
+  trainerCommissionValue: 10,
+  clientCommissionType: 'fixed',
+  clientCommissionValue: 50,
+  autoApproveReferrals: true,
+  maxReferralsPerClient: 0,
+  updatedAt: new Date().toISOString()
+};
+
+export const getTrainerReferralSettings = async (trainerId: string): Promise<TrainerReferralSettings> => {
+  return new Promise((resolve) => setTimeout(() => resolve(mockTrainerSettings), 500));
+};
+
+export const updateTrainerReferralSettings = async (
+  trainerId: string,
+  settings: Partial<TrainerReferralSettings>
+): Promise<TrainerReferralSettings> => {
+  return new Promise((resolve) => setTimeout(() => {
+    mockTrainerSettings = {
+      ...mockTrainerSettings,
+      ...settings,
+      trainerId,
+      updatedAt: new Date().toISOString()
+    };
+    resolve(mockTrainerSettings);
   }, 500));
 };

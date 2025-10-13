@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useFetchEntrenamientos } from './entrenamientosListadoApi';
 import {
@@ -553,6 +554,7 @@ const mockEntrenamientos: Entrenamiento[] = [
 ];
 
 const EntrenamientosListadoPage: React.FC = () => {
+  const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<'cards' | 'table' | 'calendar'>('cards');
   const [showNewSessionModal, setShowNewSessionModal] = useState(false);
   const [activeTab, setActiveTab] = useState<'todos' | 'pendientes' | 'completados' | 'cancelados'>('todos');
@@ -1453,11 +1455,20 @@ const EntrenamientosListadoPage: React.FC = () => {
 
                     {/* Acciones */}
                     <div className="flex gap-2">
-                      <button className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-orange-500 to-pink-600 text-white rounded-xl hover:shadow-lg transition-all font-semibold">
+                      <button 
+                        onClick={() => navigate(`/dashboard/training/entrenamientos/editar/${entrenamiento.id}`)}
+                        className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-orange-500 to-pink-600 text-white rounded-xl hover:shadow-lg transition-all font-semibold"
+                      >
                         <Eye className="w-4 h-4" />
                         Ver
                       </button>
-                      <button className="px-3 py-2 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-all">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/dashboard/training/entrenamientos/editar/${entrenamiento.id}`);
+                        }}
+                        className="px-3 py-2 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-all"
+                      >
                         <Edit className="w-4 h-4" />
                       </button>
                       <button className="px-3 py-2 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-all">
@@ -1629,10 +1640,19 @@ const EntrenamientosListadoPage: React.FC = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex gap-2">
-                        <button className="p-2 hover:bg-orange-100 rounded-lg transition-all">
+                        <button 
+                          onClick={() => navigate(`/dashboard/training/entrenamientos/editar/${e.id}`)}
+                          className="p-2 hover:bg-orange-100 rounded-lg transition-all"
+                        >
                           <Eye className="w-4 h-4 text-orange-600" />
                         </button>
-                        <button className="p-2 hover:bg-gray-100 rounded-lg transition-all">
+                        <button
+                          onClick={(ev) => {
+                            ev.stopPropagation();
+                            navigate(`/dashboard/training/entrenamientos/editar/${e.id}`);
+                          }}
+                          className="p-2 hover:bg-gray-100 rounded-lg transition-all"
+                        >
                           <Edit className="w-4 h-4 text-gray-600" />
                         </button>
                         <button className="p-2 hover:bg-gray-100 rounded-lg transition-all">
@@ -1828,7 +1848,10 @@ const EntrenamientosListadoPage: React.FC = () => {
 
                 {/* Acciones */}
                 <div className="flex gap-3">
-                  <button className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-orange-500 to-pink-600 text-white rounded-2xl hover:shadow-xl transition-all font-bold text-lg">
+                  <button
+                    onClick={() => navigate(`/dashboard/training/entrenamientos/editar/${selectedEntrenamiento.id}`)}
+                    className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-orange-500 to-pink-600 text-white rounded-2xl hover:shadow-xl transition-all font-bold text-lg"
+                  >
                     <Edit className="w-5 h-5" />
                     Editar Plan
                   </button>

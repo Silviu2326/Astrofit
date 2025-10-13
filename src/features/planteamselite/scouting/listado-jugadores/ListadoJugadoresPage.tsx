@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Users, Search, Filter, TrendingUp, Target, Sparkles } from 'lucide-react';
+import { Users, Search, Filter, TrendingUp, Target, Sparkles, Table, Grid, BarChart3 } from 'lucide-react';
 import TarjetasProspectos from './components/TarjetasProspectos';
+import JugadoresTable from './components/JugadoresTable';
+import JugadoresTableAdvanced from './components/JugadoresTableAdvanced';
+import JugadoresComparison from './components/JugadoresComparison';
+import JugadorDetailsModal from './components/JugadorDetailsModal';
+import AdvancedAnalytics from './components/AdvancedAnalytics';
+import AIRecommendations from './components/AIRecommendations';
+import InteractiveCharts from './components/InteractiveCharts';
+import SemanticSearch from './components/SemanticSearch';
+import MobileOptimizedTable from './components/MobileOptimizedTable';
+import VirtualScrollingTable from './components/VirtualScrollingTable';
+import RealTimeCollaboration from './components/RealTimeCollaboration';
 import MotorRecomendaciones from './components/MotorRecomendaciones';
 import NetworkScouting from './components/NetworkScouting';
 import InteligenciaCompetitiva from './components/InteligenciaCompetitiva';
@@ -10,9 +21,111 @@ import ValoracionAutomatizada from './components/ValoracionAutomatizada';
 import IntegracionTransfermarkt from './components/IntegracionTransfermarkt';
 import ReportsColaborativos from './components/ReportsColaborativos';
 import PrediccionValor from './components/PrediccionValor';
+import { Prospecto, fetchProspectos } from './listadoJugadoresApi';
 
 const ListadoJugadoresPage: React.FC = () => {
-  // Implementar lógicas de estado, filtros y búsqueda aquí
+  const [jugadores, setJugadores] = useState<Prospecto[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [viewMode, setViewMode] = useState<'grid' | 'table' | 'advanced' | 'analytics' | 'ai' | 'charts' | 'search' | 'mobile' | 'virtual' | 'collaboration'>('advanced');
+  const [showComparison, setShowComparison] = useState(false);
+  const [selectedJugador, setSelectedJugador] = useState<Prospecto | null>(null);
+  const [searchResults, setSearchResults] = useState<Prospecto[]>([]);
+  const [currentUser] = useState({
+    id: '1',
+    name: 'Usuario Actual',
+    avatar: 'https://via.placeholder.com/40',
+    role: 'scout' as const
+  });
+  const [filters, setFilters] = useState({
+    posicion: '',
+    edad: '',
+    club: '',
+    nacionalidad: '',
+    nivel: '',
+    potencial: '',
+    estado: ''
+  });
+
+  useEffect(() => {
+    const loadJugadores = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchProspectos();
+        setJugadores(data);
+      } catch (error) {
+        console.error('Error loading jugadores:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadJugadores();
+  }, []);
+
+  const handleView = (id: string) => {
+    const jugador = jugadores.find(j => j.id === id);
+    if (jugador) {
+      setSelectedJugador(jugador);
+    }
+  };
+
+  const handleEdit = (id: string) => {
+    console.log('Edit jugador:', id);
+    // Navigate to edit jugador
+  };
+
+  const handleSelect = (id: string) => {
+    const newSelected = new Set(selected);
+    if (newSelected.has(id)) {
+      newSelected.delete(id);
+    } else {
+      newSelected.add(id);
+    }
+    setSelected(newSelected);
+  };
+
+  const handleSelectAll = () => {
+    if (selected.size === jugadores.length) {
+      setSelected(new Set());
+    } else {
+      setSelected(new Set(jugadores.map(j => j.id)));
+    }
+  };
+
+  const handleFilterChange = (newFilters: any) => {
+    setFilters(newFilters);
+  };
+
+  const handleShowComparison = () => {
+    if (selected.size >= 2) {
+      setShowComparison(true);
+    }
+  };
+
+  const handleSearchResults = (results: Prospecto[]) => {
+    setSearchResults(results);
+  };
+
+  const handleRecommendationClick = (jugadorId: string) => {
+    const jugador = jugadores.find(j => j.id === jugadorId);
+    if (jugador) {
+      setSelectedJugador(jugador);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500 mx-auto"></div>
+          <p className="mt-4 text-lg text-gray-600">Cargando jugadores...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 pb-12">
       <div className="container mx-auto px-4 py-8">
@@ -157,16 +270,248 @@ const ListadoJugadoresPage: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Listado de tarjetas de prospectos */}
+        {/* Listado de jugadores con vista toggle */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-            <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full"></div>
-            Prospectos Destacados
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <TarjetasProspectos />
-            {/* Más TarjetasProspectos se renderizarían aquí dinámicamente */}
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+              <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full"></div>
+              Listado de Jugadores
+            </h2>
+            
+            {/* View Mode Toggle */}
+            <div className="flex items-center gap-2 bg-white/80 backdrop-blur-xl rounded-2xl p-1 border border-white/50">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setViewMode('advanced')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 ${
+                  viewMode === 'advanced' 
+                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg' 
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                <Table className="w-5 h-5" />
+                Avanzada
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setViewMode('table')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 ${
+                  viewMode === 'table' 
+                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg' 
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                <Table className="w-5 h-5" />
+                Tabla
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setViewMode('grid')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 ${
+                  viewMode === 'grid' 
+                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg' 
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                <Grid className="w-5 h-5" />
+                Tarjetas
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setViewMode('analytics')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 ${
+                  viewMode === 'analytics' 
+                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg' 
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                <BarChart3 className="w-5 h-5" />
+                Analytics
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setViewMode('ai')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 ${
+                  viewMode === 'ai' 
+                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg' 
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                <Sparkles className="w-5 h-5" />
+                IA
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setViewMode('charts')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 ${
+                  viewMode === 'charts' 
+                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg' 
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                <BarChart3 className="w-5 h-5" />
+                Gráficos
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setViewMode('search')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 ${
+                  viewMode === 'search' 
+                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg' 
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                <Search className="w-5 h-5" />
+                Búsqueda
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setViewMode('mobile')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 ${
+                  viewMode === 'mobile' 
+                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg' 
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                <Users className="w-5 h-5" />
+                Móvil
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setViewMode('virtual')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 ${
+                  viewMode === 'virtual' 
+                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg' 
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                <TrendingUp className="w-5 h-5" />
+                Virtual
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setViewMode('collaboration')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 ${
+                  viewMode === 'collaboration' 
+                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg' 
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                <Users className="w-5 h-5" />
+                Colaboración
+              </motion.button>
+            </div>
           </div>
+
+          {/* Vista Avanzada */}
+          {viewMode === 'advanced' && (
+            <JugadoresTableAdvanced
+              jugadores={jugadores}
+              onView={handleView}
+              onEdit={handleEdit}
+              onSelect={handleSelect}
+              onSelectAll={handleSelectAll}
+              selected={selected}
+              searchTerm={searchTerm}
+              onSearchChange={setSearchTerm}
+              onFilterChange={handleFilterChange}
+            />
+          )}
+
+          {/* Vista de Tabla */}
+          {viewMode === 'table' && (
+            <JugadoresTable
+              jugadores={jugadores}
+              onView={handleView}
+              onEdit={handleEdit}
+              onSelect={handleSelect}
+              onSelectAll={handleSelectAll}
+              selected={selected}
+              searchTerm={searchTerm}
+              onSearchChange={setSearchTerm}
+              onFilterChange={handleFilterChange}
+            />
+          )}
+
+          {/* Vista de Tarjetas */}
+          {viewMode === 'grid' && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {jugadores.map((jugador) => (
+                <TarjetasProspectos key={jugador.id} jugador={jugador} />
+              ))}
+            </div>
+          )}
+
+          {/* Vista de Analytics */}
+          {viewMode === 'analytics' && (
+            <AdvancedAnalytics jugadores={jugadores} />
+          )}
+
+          {/* Vista de IA */}
+          {viewMode === 'ai' && (
+            <AIRecommendations 
+              jugadores={jugadores}
+              selectedJugadores={selected}
+              onRecommendationClick={handleRecommendationClick}
+            />
+          )}
+
+          {/* Vista de Gráficos */}
+          {viewMode === 'charts' && (
+            <InteractiveCharts jugadores={jugadores} />
+          )}
+
+          {/* Vista de Búsqueda Semántica */}
+          {viewMode === 'search' && (
+            <SemanticSearch 
+              jugadores={jugadores}
+              onSearchResults={handleSearchResults}
+              onSearchChange={setSearchTerm}
+            />
+          )}
+
+          {/* Vista Móvil */}
+          {viewMode === 'mobile' && (
+            <MobileOptimizedTable 
+              jugadores={jugadores}
+              onView={handleView}
+              onEdit={handleEdit}
+              onSelect={handleSelect}
+              selected={selected}
+            />
+          )}
+
+          {/* Vista Virtual Scrolling */}
+          {viewMode === 'virtual' && (
+            <VirtualScrollingTable 
+              jugadores={jugadores}
+              onView={handleView}
+              onEdit={handleEdit}
+              onSelect={handleSelect}
+              onSelectAll={handleSelectAll}
+              selected={selected}
+              searchTerm={searchTerm}
+              onSearchChange={setSearchTerm}
+            />
+          )}
+
+          {/* Vista de Colaboración */}
+          {viewMode === 'collaboration' && (
+            <RealTimeCollaboration 
+              jugadores={jugadores}
+              currentUser={currentUser}
+            />
+          )}
         </div>
 
         {/* Sección de Herramientas de Scouting Avanzado */}
@@ -200,6 +545,19 @@ const ListadoJugadoresPage: React.FC = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* Modales */}
+      <JugadoresComparison
+        jugadores={jugadores}
+        selected={selected}
+        onClose={() => setShowComparison(false)}
+      />
+
+      <JugadorDetailsModal
+        jugador={selectedJugador}
+        onClose={() => setSelectedJugador(null)}
+        onEdit={handleEdit}
+      />
     </div>
   );
 };

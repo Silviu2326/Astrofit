@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Entrenamiento } from '../entrenamientosListadoApi';
 
 interface EntrenamientoCardProps {
@@ -6,6 +7,8 @@ interface EntrenamientoCardProps {
 }
 
 const EntrenamientoCard: React.FC<EntrenamientoCardProps> = ({ entrenamiento }) => {
+  const navigate = useNavigate();
+
   const getStatusClass = (estado: Entrenamiento['estado']) => {
     switch (estado) {
       case 'activo':
@@ -42,7 +45,12 @@ const EntrenamientoCard: React.FC<EntrenamientoCardProps> = ({ entrenamiento }) 
         <p className="text-sm text-gray-500 text-right">Progreso: {entrenamiento.progreso}%</p>
       </div>
       <div className="flex justify-end mt-4">
-        <button className="text-blue-600 hover:text-blue-900 mr-2">Editar</button>
+        <button
+          onClick={() => navigate(`/dashboard/training/entrenamientos/editar/${entrenamiento.id}`)}
+          className="text-blue-600 hover:text-blue-900 mr-2"
+        >
+          Editar
+        </button>
         <button className="text-purple-600 hover:text-purple-900 mr-2">Duplicar</button>
         <button className="text-yellow-600 hover:text-yellow-900 mr-2">Pausar</button>
         <button className="text-red-600 hover:text-red-900">Finalizar</button>

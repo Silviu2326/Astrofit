@@ -116,7 +116,7 @@ const TablaPruebas: React.FC<TablaPruebasProps> = ({ pruebas }) => {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex flex-wrap gap-2">
-                        {prueba.atletasParticipantes.map((atleta: Atleta) => (
+                        {prueba.atletasParticipantes?.map((atleta: Atleta) => (
                           <div
                             key={atleta.id}
                             className="inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-purple-50 to-pink-50 rounded-full border border-purple-200"
@@ -124,7 +124,9 @@ const TablaPruebas: React.FC<TablaPruebasProps> = ({ pruebas }) => {
                             <Users className="w-3 h-3 text-purple-600" />
                             <span className="text-xs font-semibold text-purple-700">{atleta.nombre}</span>
                           </div>
-                        ))}
+                        )) || (
+                          <span className="text-gray-400 text-sm">Sin atletas asignados</span>
+                        )}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -139,13 +141,13 @@ const TablaPruebas: React.FC<TablaPruebasProps> = ({ pruebas }) => {
                       {prueba.resultados ? (
                         <div className="space-y-1">
                           {Object.entries(prueba.resultados).map(([atletaId, resultado]) => {
-                            const atleta = prueba.atletasParticipantes.find(a => a.id === atletaId);
+                            const atleta = prueba.atletasParticipantes?.find(a => a.id === atletaId);
                             return (
                               <div
                                 key={atletaId}
                                 className="flex items-center gap-2 text-sm"
                               >
-                                <span className="font-semibold text-gray-700">{atleta?.nombre}:</span>
+                                <span className="font-semibold text-gray-700">{atleta?.nombre || `Atleta ${atletaId}:`}</span>
                                 <span className="px-2 py-1 bg-green-100 text-green-700 rounded-lg font-bold text-xs">
                                   {resultado}
                                 </span>

@@ -15,7 +15,7 @@ export interface Campaign {
 }
 
 export type EstadoCampana = 'Activa' | 'Programada' | 'Completada' | 'Pausada';
-export type CanalCampana = 'email' | 'redes' | 'SMS' | 'web' | 'mixto';
+export type CanalCampana = 'email' | 'redes' | 'SMS' | 'web' | 'mixto' | 'instagram' | 'facebook' | 'tiktok' | 'youtube' | 'linkedin' | 'twitter' | 'whatsapp' | 'telegram';
 
 export interface Campana {
   id: string;

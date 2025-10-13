@@ -15,6 +15,9 @@ export interface Cliente {
   };
   fechaAlta: string;
   estado: 'Activo' | 'Inactivo' | 'Pendiente';
+  premium?: boolean;
+  ciudad?: string;
+  fechaRegistro: string;
   historial: HistorialItem[];
   archivos: Archivo[];
   notas: Nota[];
@@ -88,23 +91,55 @@ export const useClienteDetalle = (clienteId: string | undefined) => {
           contacto: {
             email: cliente.email || '',
             telefono: cliente.telefono || '',
-            direccion: '', // El modelo actual no tiene dirección
+            direccion: cliente.direccion || '',
           },
           fechaAlta: cliente.fechaAlta || '',
           estado: cliente.estado === 'activo' ? 'Activo' : 'Inactivo',
+          premium: cliente.premium || false,
+          ciudad: cliente.ciudad || '',
+          fechaRegistro: cliente.fechaAlta || new Date().toISOString(),
           // Por ahora, datos mock para historial, archivos, notas y tareas
           // TODO: Implementar endpoints para estos datos
           historial: [
             {
               id: 'h1',
               tipo: 'entrenamiento',
-              descripcion: 'Sin historial disponible',
+              descripcion: 'Primera sesión de entrenamiento',
               fecha: new Date().toISOString()
             },
+            {
+              id: 'h2',
+              tipo: 'pago',
+              descripcion: 'Pago del plan mensual',
+              fecha: new Date(Date.now() - 86400000).toISOString()
+            },
           ],
-          archivos: [],
-          notas: [],
-          tareas: [],
+          archivos: [
+            {
+              id: 'a1',
+              nombre: 'Evaluación inicial.pdf',
+              url: '#',
+              fechaSubida: new Date().toISOString(),
+              tipo: 'PDF'
+            }
+          ],
+          notas: [
+            {
+              id: 'n1',
+              contenido: 'Cliente muy motivado, excelente progreso en la primera semana',
+              timestamp: new Date().toISOString(),
+              autor: 'Entrenador Principal'
+            }
+          ],
+          tareas: [
+            {
+              id: 't1',
+              descripcion: 'Programar evaluación de progreso',
+              fechaVencimiento: new Date(Date.now() + 7 * 86400000).toISOString(),
+              estado: 'Pendiente',
+              asignadoA: 'Entrenador Principal'
+            }
+          ],
         };
 
         setData(transformedCliente);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Users, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Users, ChevronLeft, ChevronRight, Settings } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import ClientesTable from './components/ClientesTable';
 import ClientesFilters from './components/ClientesFilters';
@@ -10,6 +10,7 @@ import ClientesStats from './components/ClientesStats';
 import { useClientes, SortBy, SortDir, ClientesFilters as Filtros } from './clientesListadoApi';
 import ClienteFormModal from './components/ClienteFormModal';
 import ClienteDetailsModal from './components/ClienteDetailsModal';
+import PersonalizarCamposModal from './components/PersonalizarCamposModal';
 import clienteService from '../../../../services/clienteService';
 
 const ClientesListadoPage: React.FC = () => {
@@ -19,6 +20,13 @@ const ClientesListadoPage: React.FC = () => {
   const [sortDir, setSortDir] = useState<SortDir>('desc');
   const [page, setPage] = useState(1);
   const pageSize = 10;
+
+  // Estados para las nuevas funcionalidades (mantenidos para futuras implementaciones)
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchFilters, setSearchFilters] = useState<any>({});
+  const [selectedSegment, setSelectedSegment] = useState<any>(null);
+  const [selectedTarea, setSelectedTarea] = useState<any>(null);
+  const [selectedCanal, setSelectedCanal] = useState<any>(null);
 
   const { data = [], total = 0, pages = 1, stats = { total: 0, activos: 0, inactivos: 0, premium: 0, online: 0 }, isLoading, error } = useClientes({
     ...filters,
@@ -76,6 +84,20 @@ const ClientesListadoPage: React.FC = () => {
   const [selectedCliente, setSelectedCliente] = useState<any>(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [editingCliente, setEditingCliente] = useState<any>(null);
+  const [showPersonalizarCampos, setShowPersonalizarCampos] = useState(false);
+  
+  // Campos personalizables de la tabla
+  const [camposPersonalizados, setCamposPersonalizados] = useState([
+    { id: 'nombre', nombre: 'Nombre', visible: true, orden: 0, ancho: 'md', alineacion: 'left' },
+    { id: 'email', nombre: 'Email', visible: true, orden: 1, ancho: 'lg', alineacion: 'left' },
+    { id: 'telefono', nombre: 'Teléfono', visible: true, orden: 2, ancho: 'sm', alineacion: 'left' },
+    { id: 'estado', nombre: 'Estado', visible: true, orden: 3, ancho: 'sm', alineacion: 'center' },
+    { id: 'etiquetas', nombre: 'Etiquetas', visible: true, orden: 4, ancho: 'md', alineacion: 'left' },
+    { id: 'fechaAlta', nombre: 'Fecha Alta', visible: true, orden: 5, ancho: 'sm', alineacion: 'center' },
+    { id: 'ultimaActividad', nombre: 'Última Actividad', visible: true, orden: 6, ancho: 'sm', alineacion: 'center' },
+    { id: 'acciones', nombre: 'Acciones', visible: true, orden: 7, ancho: 'sm', alineacion: 'center' }
+  ]);
+
   const handleAddCliente = () => setOpenNewModal(true);
   const handleExport = () => {
     if (data.length === 0) {
@@ -193,6 +215,35 @@ const ClientesListadoPage: React.FC = () => {
     }
   };
 
+  // Funciones para futuras implementaciones (mantenidas para referencia)
+  const handleSearch = (query: string, searchFilters: any) => {
+    setSearchQuery(query);
+    setSearchFilters(searchFilters);
+    // Aplicar filtros de búsqueda a la lista de clientes
+    setFilters(prev => ({ ...prev, search: query, ...searchFilters }));
+    setPage(1);
+  };
+
+  const handleSearchClear = () => {
+    setSearchQuery('');
+    setSearchFilters({});
+    setFilters(prev => {
+      const { search, ...rest } = prev;
+      return rest;
+    });
+    setPage(1);
+  };
+
+  const handlePersonalizarCampos = () => {
+    setShowPersonalizarCampos(true);
+  };
+
+  const handleSaveCampos = (nuevosCampos: any[]) => {
+    setCamposPersonalizados(nuevosCampos);
+    // Aquí podrías guardar en localStorage o enviar al servidor
+    localStorage.setItem('camposPersonalizados', JSON.stringify(nuevosCampos));
+  };
+
   // Nota: no hacemos return temprano en carga para no desmontar los filtros y perder su estado local
 
   if (error) {
@@ -213,7 +264,7 @@ const ClientesListadoPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-12">
-      {/* Hero Header - Se mantiene igual */}
+      {/* Hero Header con navegación de pestañas */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -270,7 +321,16 @@ const ClientesListadoPage: React.FC = () => {
             <div className="flex-1 min-w-[300px]">
               <ClientesFilters onFilterChange={handleFilterChange} />
             </div>
-            <VistasPersonalizadas onSelectView={handleViewSelect} />
+            <div className="flex items-center gap-3">
+              <button
+                onClick={handlePersonalizarCampos}
+                className="flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-md text-white rounded-lg hover:bg-white/30 transition-colors border border-white/20"
+              >
+                <Settings className="w-4 h-4" />
+                Personalizar Campos
+              </button>
+              <VistasPersonalizadas onSelectView={handleViewSelect} />
+            </div>
           </div>
         </div>
       </motion.div>
@@ -378,6 +438,14 @@ const ClientesListadoPage: React.FC = () => {
             </div>
           </motion.div>
         </div>
+
+        {/* Modal de Personalización de Campos */}
+        <PersonalizarCamposModal
+          isOpen={showPersonalizarCampos}
+          onClose={() => setShowPersonalizarCampos(false)}
+          onSave={handleSaveCampos}
+          camposIniciales={camposPersonalizados}
+        />
       </div>
     </div>
   );

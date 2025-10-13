@@ -48,43 +48,15 @@ import {
   Tooltip,
   ResponsiveContainer
 } from 'recharts';
-
-// Types
-type CouponType = 'percentage' | 'fixed' | 'free-shipping' | '2x1';
-type CouponStatus = 'active' | 'scheduled' | 'expired' | 'paused';
-type ApplicableTo = 'all' | 'products' | 'categories' | 'plans';
-
-interface CouponUse {
-  id: string;
-  customerName: string;
-  date: string;
-  product: string;
-  discountApplied: number;
-  orderTotal: number;
-  channel: string;
-}
-
-interface Coupon {
-  id: string;
-  code: string;
-  type: CouponType;
-  value: number;
-  status: CouponStatus;
-  description: string;
-  startDate: string;
-  endDate: string | null;
-  usageLimit: number | null;
-  usageCount: number;
-  totalDiscount: number;
-  revenue: number;
-  applicableTo: ApplicableTo;
-  products?: string[];
-  minPurchase?: number;
-  onePerCustomer: boolean;
-  campaign?: string;
-  tags: string[];
-  uses: CouponUse[];
-}
+import {
+  fetchCoupons,
+  deleteCoupon,
+  toggleCouponStatus,
+  type Coupon,
+  type CouponType,
+  type CouponStatus,
+  type ApplicableTo
+} from './cuponesApi';
 
 interface Campaign {
   id: string;
@@ -100,485 +72,7 @@ interface Campaign {
   status: 'active' | 'completed' | 'paused';
 }
 
-// Mock Data
-const mockCoupons: Coupon[] = [
-  {
-    id: '1',
-    code: 'VERANO2025',
-    type: 'percentage',
-    value: 20,
-    status: 'active',
-    description: 'Descuento especial de verano',
-    startDate: '2025-06-01',
-    endDate: '2025-08-31',
-    usageLimit: 500,
-    usageCount: 347,
-    totalDiscount: 8675,
-    revenue: 34700,
-    applicableTo: 'all',
-    onePerCustomer: false,
-    campaign: 'Verano 2025',
-    tags: ['verano', 'temporada'],
-    uses: Array(347).fill(null).map((_, i) => ({
-      id: `use-${i}`,
-      customerName: `Cliente ${i + 1}`,
-      date: '2025-06-15',
-      product: 'Membresía Premium',
-      discountApplied: 25,
-      orderTotal: 125,
-      channel: 'web'
-    }))
-  },
-  {
-    id: '2',
-    code: 'BIENVENIDO',
-    type: 'fixed',
-    value: 15,
-    status: 'active',
-    description: 'Descuento de bienvenida para nuevos clientes',
-    startDate: '2025-01-01',
-    endDate: null,
-    usageLimit: null,
-    usageCount: 892,
-    totalDiscount: 13380,
-    revenue: 89200,
-    applicableTo: 'all',
-    onePerCustomer: true,
-    campaign: 'Captación',
-    tags: ['bienvenida', 'nuevos'],
-    uses: []
-  },
-  {
-    id: '3',
-    code: 'ENVIOGRATIS',
-    type: 'free-shipping',
-    value: 0,
-    status: 'active',
-    description: 'Envío gratuito en todos los pedidos',
-    startDate: '2025-03-01',
-    endDate: '2025-12-31',
-    usageLimit: 1000,
-    usageCount: 654,
-    totalDiscount: 3924,
-    revenue: 39240,
-    applicableTo: 'products',
-    products: ['Productos físicos'],
-    minPurchase: 50,
-    onePerCustomer: false,
-    campaign: 'Logística',
-    tags: ['envío', 'logística'],
-    uses: []
-  },
-  {
-    id: '4',
-    code: '2X1GYM',
-    type: '2x1',
-    value: 50,
-    status: 'active',
-    description: '2x1 en sesiones de entrenamiento',
-    startDate: '2025-05-01',
-    endDate: '2025-05-31',
-    usageLimit: 200,
-    usageCount: 178,
-    totalDiscount: 4450,
-    revenue: 8900,
-    applicableTo: 'products',
-    products: ['Sesiones GYM'],
-    onePerCustomer: true,
-    campaign: 'Fitness Mayo',
-    tags: ['gym', 'fitness', '2x1'],
-    uses: []
-  },
-  {
-    id: '5',
-    code: 'PRIMERAVEZ',
-    type: 'percentage',
-    value: 50,
-    status: 'active',
-    description: '50% de descuento en tu primera compra',
-    startDate: '2025-01-01',
-    endDate: null,
-    usageLimit: null,
-    usageCount: 1247,
-    totalDiscount: 31175,
-    revenue: 62350,
-    applicableTo: 'all',
-    onePerCustomer: true,
-    campaign: 'Captación',
-    tags: ['primera compra', 'nuevos'],
-    uses: []
-  },
-  {
-    id: '6',
-    code: 'BLACK2024',
-    type: 'percentage',
-    value: 40,
-    status: 'expired',
-    description: 'Black Friday 2024',
-    startDate: '2024-11-29',
-    endDate: '2024-11-30',
-    usageLimit: 1000,
-    usageCount: 1000,
-    totalDiscount: 50000,
-    revenue: 125000,
-    applicableTo: 'all',
-    onePerCustomer: false,
-    campaign: 'Black Friday',
-    tags: ['black friday', 'especial'],
-    uses: []
-  },
-  {
-    id: '7',
-    code: 'NAVIDAD25',
-    type: 'percentage',
-    value: 25,
-    status: 'scheduled',
-    description: 'Promoción navideña 2025',
-    startDate: '2025-12-01',
-    endDate: '2025-12-31',
-    usageLimit: 800,
-    usageCount: 0,
-    totalDiscount: 0,
-    revenue: 0,
-    applicableTo: 'all',
-    onePerCustomer: false,
-    campaign: 'Navidad 2025',
-    tags: ['navidad', 'temporada'],
-    uses: []
-  },
-  {
-    id: '8',
-    code: 'PREMIUM10',
-    type: 'percentage',
-    value: 10,
-    status: 'active',
-    description: 'Descuento para plan Premium',
-    startDate: '2025-01-01',
-    endDate: null,
-    usageLimit: null,
-    usageCount: 567,
-    totalDiscount: 5670,
-    revenue: 56700,
-    applicableTo: 'plans',
-    onePerCustomer: false,
-    tags: ['premium', 'planes'],
-    uses: []
-  },
-  {
-    id: '9',
-    code: 'REFERIDO20',
-    type: 'fixed',
-    value: 20,
-    status: 'active',
-    description: 'Bono por referido',
-    startDate: '2025-01-01',
-    endDate: null,
-    usageLimit: null,
-    usageCount: 423,
-    totalDiscount: 8460,
-    revenue: 42300,
-    applicableTo: 'all',
-    onePerCustomer: true,
-    campaign: 'Referidos',
-    tags: ['referido', 'viral'],
-    uses: []
-  },
-  {
-    id: '10',
-    code: 'CUMPLE',
-    type: 'percentage',
-    value: 15,
-    status: 'active',
-    description: 'Regalo de cumpleaños',
-    startDate: '2025-01-01',
-    endDate: null,
-    usageLimit: null,
-    usageCount: 234,
-    totalDiscount: 3510,
-    revenue: 23400,
-    applicableTo: 'all',
-    onePerCustomer: true,
-    campaign: 'Fidelización',
-    tags: ['cumpleaños', 'fidelización'],
-    uses: []
-  },
-  {
-    id: '11',
-    code: 'STUDENT30',
-    type: 'percentage',
-    value: 30,
-    status: 'active',
-    description: 'Descuento para estudiantes',
-    startDate: '2025-01-01',
-    endDate: null,
-    usageLimit: null,
-    usageCount: 156,
-    totalDiscount: 4680,
-    revenue: 15600,
-    applicableTo: 'plans',
-    onePerCustomer: false,
-    tags: ['estudiantes', 'educación'],
-    uses: []
-  },
-  {
-    id: '12',
-    code: 'WEEKEND',
-    type: 'percentage',
-    value: 15,
-    status: 'active',
-    description: 'Descuento de fin de semana',
-    startDate: '2025-01-01',
-    endDate: '2025-12-31',
-    usageLimit: 2000,
-    usageCount: 987,
-    totalDiscount: 14805,
-    revenue: 98700,
-    applicableTo: 'all',
-    onePerCustomer: false,
-    tags: ['weekend', 'fin de semana'],
-    uses: []
-  },
-  {
-    id: '13',
-    code: 'REACTIVATE50',
-    type: 'percentage',
-    value: 50,
-    status: 'active',
-    description: 'Reactivación de clientes inactivos',
-    startDate: '2025-03-01',
-    endDate: '2025-06-30',
-    usageLimit: 300,
-    usageCount: 87,
-    totalDiscount: 4350,
-    revenue: 8700,
-    applicableTo: 'all',
-    onePerCustomer: true,
-    campaign: 'Reactivación',
-    tags: ['reactivación', 'inactivos'],
-    uses: []
-  },
-  {
-    id: '14',
-    code: 'VIP25',
-    type: 'percentage',
-    value: 25,
-    status: 'active',
-    description: 'Descuento exclusivo VIP',
-    startDate: '2025-01-01',
-    endDate: null,
-    usageLimit: null,
-    usageCount: 345,
-    totalDiscount: 8625,
-    revenue: 34500,
-    applicableTo: 'all',
-    onePerCustomer: false,
-    tags: ['vip', 'exclusivo'],
-    uses: []
-  },
-  {
-    id: '15',
-    code: 'FLASH10',
-    type: 'percentage',
-    value: 10,
-    status: 'expired',
-    description: 'Flash sale 24h',
-    startDate: '2025-04-15',
-    endDate: '2025-04-16',
-    usageLimit: 500,
-    usageCount: 456,
-    totalDiscount: 4560,
-    revenue: 45600,
-    applicableTo: 'all',
-    onePerCustomer: false,
-    campaign: 'Flash Sale',
-    tags: ['flash', 'urgente'],
-    uses: []
-  },
-  {
-    id: '16',
-    code: 'FAMILIA20',
-    type: 'fixed',
-    value: 20,
-    status: 'active',
-    description: 'Plan familiar',
-    startDate: '2025-01-01',
-    endDate: null,
-    usageLimit: null,
-    usageCount: 123,
-    totalDiscount: 2460,
-    revenue: 12300,
-    applicableTo: 'plans',
-    onePerCustomer: false,
-    tags: ['familia', 'planes'],
-    uses: []
-  },
-  {
-    id: '17',
-    code: 'EARLYBIRD',
-    type: 'percentage',
-    value: 35,
-    status: 'active',
-    description: 'Madrugadores - Compras antes 10am',
-    startDate: '2025-01-01',
-    endDate: '2025-12-31',
-    usageLimit: 1000,
-    usageCount: 234,
-    totalDiscount: 8190,
-    revenue: 23400,
-    applicableTo: 'all',
-    onePerCustomer: false,
-    tags: ['early bird', 'horario'],
-    uses: []
-  },
-  {
-    id: '18',
-    code: 'BUNDLE3X2',
-    type: '2x1',
-    value: 33,
-    status: 'active',
-    description: 'Compra 3 paga 2',
-    startDate: '2025-05-01',
-    endDate: '2025-07-31',
-    usageLimit: 400,
-    usageCount: 189,
-    totalDiscount: 6237,
-    revenue: 18900,
-    applicableTo: 'products',
-    onePerCustomer: false,
-    tags: ['bundle', 'multi'],
-    uses: []
-  },
-  {
-    id: '19',
-    code: 'LOYALTY100',
-    type: 'fixed',
-    value: 100,
-    status: 'active',
-    description: 'Recompensa por lealtad',
-    startDate: '2025-01-01',
-    endDate: null,
-    usageLimit: 100,
-    usageCount: 67,
-    totalDiscount: 6700,
-    revenue: 67000,
-    applicableTo: 'all',
-    onePerCustomer: true,
-    campaign: 'Fidelización',
-    tags: ['lealtad', 'premium'],
-    uses: []
-  },
-  {
-    id: '20',
-    code: 'INFLUENCER',
-    type: 'percentage',
-    value: 30,
-    status: 'active',
-    description: 'Código de influencer',
-    startDate: '2025-02-01',
-    endDate: '2025-12-31',
-    usageLimit: 500,
-    usageCount: 312,
-    totalDiscount: 9360,
-    revenue: 31200,
-    applicableTo: 'all',
-    onePerCustomer: false,
-    campaign: 'Influencers',
-    tags: ['influencer', 'marketing'],
-    uses: []
-  },
-  {
-    id: '21',
-    code: 'APP15',
-    type: 'percentage',
-    value: 15,
-    status: 'active',
-    description: 'Descuento exclusivo app móvil',
-    startDate: '2025-01-01',
-    endDate: null,
-    usageLimit: null,
-    usageCount: 445,
-    totalDiscount: 6675,
-    revenue: 44500,
-    applicableTo: 'all',
-    onePerCustomer: false,
-    tags: ['app', 'móvil'],
-    uses: []
-  },
-  {
-    id: '22',
-    code: 'SUSCRIBE10',
-    type: 'percentage',
-    value: 10,
-    status: 'active',
-    description: 'Descuento por suscripción newsletter',
-    startDate: '2025-01-01',
-    endDate: null,
-    usageLimit: null,
-    usageCount: 678,
-    totalDiscount: 6780,
-    revenue: 67800,
-    applicableTo: 'all',
-    onePerCustomer: true,
-    tags: ['newsletter', 'captación'],
-    uses: []
-  },
-  {
-    id: '23',
-    code: 'MEGASALE',
-    type: 'percentage',
-    value: 60,
-    status: 'scheduled',
-    description: 'Mega venta aniversario',
-    startDate: '2025-10-01',
-    endDate: '2025-10-07',
-    usageLimit: 2000,
-    usageCount: 0,
-    totalDiscount: 0,
-    revenue: 0,
-    applicableTo: 'all',
-    onePerCustomer: false,
-    campaign: 'Aniversario',
-    tags: ['aniversario', 'mega'],
-    uses: []
-  },
-  {
-    id: '24',
-    code: 'SOCIAL20',
-    type: 'percentage',
-    value: 20,
-    status: 'active',
-    description: 'Por seguirnos en redes sociales',
-    startDate: '2025-01-01',
-    endDate: null,
-    usageLimit: null,
-    usageCount: 534,
-    totalDiscount: 10680,
-    revenue: 53400,
-    applicableTo: 'all',
-    onePerCustomer: true,
-    tags: ['social', 'rrss'],
-    uses: []
-  },
-  {
-    id: '25',
-    code: 'MIDNIGHT',
-    type: 'percentage',
-    value: 25,
-    status: 'paused',
-    description: 'Venta de medianoche (pausado temporalmente)',
-    startDate: '2025-01-01',
-    endDate: '2025-12-31',
-    usageLimit: 500,
-    usageCount: 123,
-    totalDiscount: 3075,
-    revenue: 12300,
-    applicableTo: 'all',
-    onePerCustomer: false,
-    tags: ['nocturno', 'especial'],
-    uses: []
-  }
-];
-
+// Mock Data for campaigns (to be replaced with API later)
 const mockCampaigns: Campaign[] = [
   {
     id: '1',
@@ -671,7 +165,25 @@ const CuponesPage: React.FC = () => {
   const [couponToEmail, setCouponToEmail] = useState<Coupon | null>(null);
   const [couponToQR, setCouponToQR] = useState<Coupon | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [coupons, setCoupons] = useState<Coupon[]>([]);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Cargar cupones desde el backend
+  useEffect(() => {
+    const loadCoupons = async () => {
+      try {
+        setIsLoading(true);
+        const data = await fetchCoupons();
+        setCoupons(data);
+      } catch (error) {
+        console.error('Error loading coupons:', error);
+        toast.error('Error al cargar los cupones');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadCoupons();
+  }, []);
 
   // Cerrar menú desplegable al hacer clic fuera
   useEffect(() => {
@@ -705,7 +217,7 @@ const CuponesPage: React.FC = () => {
 
   // Filter coupons
   const filteredCoupons = useMemo(() => {
-    let filtered = mockCoupons;
+    let filtered = coupons;
 
     // Filter by tab
     if (activeTab === 'active') {
@@ -722,21 +234,21 @@ const CuponesPage: React.FC = () => {
     if (searchTerm) {
       filtered = filtered.filter(c =>
         c.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        c.description.toLowerCase().includes(searchTerm.toLowerCase())
+        (c.description && c.description.toLowerCase().includes(searchTerm.toLowerCase()))
       );
     }
 
     return filtered;
-  }, [activeTab, searchTerm]);
+  }, [activeTab, searchTerm, coupons]);
 
   // Calculate stats
   const stats = useMemo(() => {
-    const activeCoupons = mockCoupons.filter(c => c.status === 'active').length;
-    const totalRedeemed = mockCoupons.reduce((sum, c) => sum + c.usageCount, 0);
-    const totalDiscount = mockCoupons.reduce((sum, c) => sum + c.totalDiscount, 0);
-    const totalRevenue = mockCoupons.reduce((sum, c) => sum + c.revenue, 0);
+    const activeCoupons = coupons.filter(c => c.status === 'active').length;
+    const totalRedeemed = coupons.reduce((sum, c) => sum + c.usageCount, 0);
+    const totalDiscount = coupons.reduce((sum, c) => sum + c.totalDiscount, 0);
+    const totalRevenue = coupons.reduce((sum, c) => sum + c.revenue, 0);
     const usageRate = totalRevenue > 0 ? ((totalDiscount / totalRevenue) * 100) : 0;
-    const topCoupon = [...mockCoupons].sort((a, b) => b.usageCount - a.usageCount)[0];
+    const topCoupon = [...coupons].sort((a, b) => b.usageCount - a.usageCount)[0];
     const avgSavings = totalRedeemed > 0 ? totalDiscount / totalRedeemed : 0;
 
     return {
@@ -747,7 +259,7 @@ const CuponesPage: React.FC = () => {
       topCoupon: topCoupon?.code || '-',
       avgSavings
     };
-  }, []);
+  }, [coupons]);
 
   const getCouponTypeIcon = (type: CouponType) => {
     switch (type) {
@@ -816,12 +328,15 @@ const CuponesPage: React.FC = () => {
 
   const confirmDeleteCoupon = async () => {
     if (!couponToDelete) return;
-    
+
     setIsLoading(true);
     try {
-      // Simular llamada API
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      const id = couponToDelete._id || couponToDelete.id || '';
+      await deleteCoupon(id);
+
+      // Actualizar lista de cupones
+      setCoupons(coupons.filter(c => (c._id || c.id) !== id));
+
       toast.success(`Cupón ${couponToDelete.code} eliminado correctamente`);
       setShowDeleteModal(false);
       setCouponToDelete(null);
@@ -859,11 +374,16 @@ const CuponesPage: React.FC = () => {
   const handleToggleCouponStatus = async (coupon: Coupon) => {
     setIsLoading(true);
     try {
-      // Simular llamada API
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      const newStatus = coupon.status === 'paused' ? 'active' : 'paused';
-      toast.success(`Cupón ${newStatus === 'active' ? 'activado' : 'pausado'} correctamente`);
+      const id = coupon._id || coupon.id || '';
+      const updatedCoupon = await toggleCouponStatus(id);
+
+      // Actualizar cupón en la lista
+      setCoupons(coupons.map(c =>
+        (c._id || c.id) === id ? { ...c, status: updatedCoupon.status } : c
+      ));
+
+      const newStatus = updatedCoupon.status === 'active' ? 'activado' : 'pausado';
+      toast.success(`Cupón ${newStatus} correctamente`);
     } catch (error) {
       toast.error('Error al cambiar el estado del cupón');
     } finally {
@@ -877,12 +397,13 @@ const CuponesPage: React.FC = () => {
       toast.error('Completa todos los campos obligatorios');
       return;
     }
-    
+
     setIsLoading(true);
     try {
-      // Simular llamada API
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      // Recargar la lista de cupones
+      const data = await fetchCoupons();
+      setCoupons(data);
+
       toast.success(`Cupón ${newCoupon.code} creado correctamente`);
       setShowNewCouponModal(false);
       setNewCouponStep(1);
@@ -984,132 +505,202 @@ const CuponesPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-4xl font-bold text-gray-900 flex items-center gap-3">
-              <Ticket className="w-10 h-10 text-green-600" />
-              Cupones y Promociones
-            </h1>
-            <p className="text-gray-600 mt-2">Gestiona códigos de descuento y ofertas especiales</p>
-          </div>
-          <div className="flex gap-3">
-            <select
-              value={selectedPeriod}
-              onChange={(e) => setSelectedPeriod(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg bg-white"
-            >
-              <option value="7d">Últimos 7 días</option>
-              <option value="30d">Últimos 30 días</option>
-              <option value="90d">Últimos 90 días</option>
-              <option value="all">Todo el tiempo</option>
-            </select>
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => setShowCampaignModal(true)}
-              className="px-6 py-2 bg-purple-600 text-white rounded-lg font-medium flex items-center gap-2 hover:bg-purple-700"
-            >
-              <Zap className="w-5 h-5" />
-              Campaña Promocional
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => setShowNewCouponModal(true)}
-              className="px-6 py-2 bg-green-600 text-white rounded-lg font-medium flex items-center gap-2 hover:bg-green-700"
-            >
-              <Plus className="w-5 h-5" />
-              Nuevo Cupón
-            </motion.button>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 p-6">
+      {/* Hero Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="relative overflow-hidden bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-3xl shadow-2xl mb-8 p-8 md:p-12"
+      >
+        {/* Efectos de fondo animados */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        </div>
+
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '50px 50px'
+          }}></div>
+        </div>
+
+        <div className="relative z-10">
+          {/* Título con icono animado */}
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <Ticket className="w-10 h-10 text-yellow-300 animate-pulse" />
+                <div className="absolute inset-0 w-10 h-10 bg-yellow-300 rounded-full blur-lg opacity-50"></div>
+              </div>
+              <div>
+                <h1 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+                  Cupones y <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-yellow-400">Promociones</span>
+                </h1>
+                <p className="text-lg text-blue-100 mt-1">Gestiona códigos de descuento y ofertas especiales</p>
+              </div>
+            </div>
+
+            {/* Controles */}
+            <div className="flex gap-3">
+              <select
+                value={selectedPeriod}
+                onChange={(e) => setSelectedPeriod(e.target.value)}
+                className="px-4 py-2 border-2 border-white/20 rounded-xl bg-white/10 backdrop-blur-md text-white font-semibold focus:outline-none focus:ring-4 focus:ring-white/30 transition-all"
+              >
+                <option value="7d" className="text-gray-900">Últimos 7 días</option>
+                <option value="30d" className="text-gray-900">Últimos 30 días</option>
+                <option value="90d" className="text-gray-900">Últimos 90 días</option>
+                <option value="all" className="text-gray-900">Todo el tiempo</option>
+              </select>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setShowCampaignModal(true)}
+                className="px-4 py-2 bg-white/20 backdrop-blur-md border border-white/20 text-white rounded-xl font-semibold flex items-center gap-2 hover:bg-white/30 transition-all"
+              >
+                <Zap className="w-5 h-5" />
+                Campaña
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setShowNewCouponModal(true)}
+                className="px-6 py-2 bg-white text-indigo-600 rounded-xl font-bold flex items-center gap-2 hover:bg-yellow-50 transition-all shadow-lg"
+              >
+                <Plus className="w-5 h-5" />
+                Nuevo Cupón
+              </motion.button>
+            </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mb-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white p-6 rounded-xl shadow-sm border border-gray-200"
+          whileHover={{ scale: 1.03, y: -8 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
         >
-          <div className="flex items-center justify-between mb-2">
-            <Ticket className="w-8 h-8 text-green-600" />
-            <span className="text-xs text-green-600 font-medium">+12%</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
+          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-emerald-500 to-teal-500 opacity-5 rounded-full blur-2xl"></div>
+          <div className="relative z-10">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white mb-3 shadow-lg group-hover:scale-110 transition-transform">
+              <Ticket className="w-6 h-6" />
+            </div>
+            <p className="text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wider">Cupones Activos</p>
+            <p className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700">{stats.activeCoupons}</p>
+            <div className="mt-2 flex items-center gap-1 text-xs text-green-600 font-bold">
+              <span>+12%</span>
+            </div>
           </div>
-          <div className="text-2xl font-bold text-gray-900">{stats.activeCoupons}</div>
-          <div className="text-sm text-gray-600">Cupones Activos</div>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white p-6 rounded-xl shadow-sm border border-gray-200"
+          whileHover={{ scale: 1.03, y: -8 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
         >
-          <div className="flex items-center justify-between mb-2">
-            <CheckCircle className="w-8 h-8 text-green-600" />
-            <span className="text-xs text-green-600 font-medium">+18%</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
+          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-blue-500 to-indigo-500 opacity-5 rounded-full blur-2xl"></div>
+          <div className="relative z-10">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center text-white mb-3 shadow-lg group-hover:scale-110 transition-transform">
+              <CheckCircle className="w-6 h-6" />
+            </div>
+            <p className="text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wider">Total Canjeados</p>
+            <p className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700">{stats.totalRedeemed.toLocaleString()}</p>
+            <div className="mt-2 flex items-center gap-1 text-xs text-green-600 font-bold">
+              <span>+18%</span>
+            </div>
           </div>
-          <div className="text-2xl font-bold text-gray-900">{stats.totalRedeemed.toLocaleString()}</div>
-          <div className="text-sm text-gray-600">Total Canjeados</div>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white p-6 rounded-xl shadow-sm border border-gray-200"
+          whileHover={{ scale: 1.03, y: -8 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
         >
-          <div className="flex items-center justify-between mb-2">
-            <TrendingDown className="w-8 h-8 text-red-600" />
-            <span className="text-xs text-red-600 font-medium">-8%</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
+          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-red-500 to-pink-500 opacity-5 rounded-full blur-2xl"></div>
+          <div className="relative z-10">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500 to-pink-500 flex items-center justify-center text-white mb-3 shadow-lg group-hover:scale-110 transition-transform">
+              <TrendingDown className="w-6 h-6" />
+            </div>
+            <p className="text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wider">Descuentos Aplicados</p>
+            <p className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700">{formatCurrency(stats.totalDiscount)}</p>
+            <div className="mt-2 flex items-center gap-1 text-xs text-red-600 font-bold">
+              <span>-8%</span>
+            </div>
           </div>
-          <div className="text-2xl font-bold text-gray-900">{formatCurrency(stats.totalDiscount)}</div>
-          <div className="text-sm text-gray-600">Descuentos Aplicados</div>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-white p-6 rounded-xl shadow-sm border border-gray-200"
+          whileHover={{ scale: 1.03, y: -8 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
         >
-          <div className="flex items-center justify-between mb-2">
-            <Target className="w-8 h-8 text-blue-600" />
-            <span className="text-xs text-green-600 font-medium">+5%</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
+          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-cyan-500 to-blue-500 opacity-5 rounded-full blur-2xl"></div>
+          <div className="relative z-10">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-white mb-3 shadow-lg group-hover:scale-110 transition-transform">
+              <Target className="w-6 h-6" />
+            </div>
+            <p className="text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wider">Tasa de Uso</p>
+            <p className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700">{stats.usageRate.toFixed(1)}%</p>
+            <div className="mt-2 flex items-center gap-1 text-xs text-green-600 font-bold">
+              <span>+5%</span>
+            </div>
           </div>
-          <div className="text-2xl font-bold text-gray-900">{stats.usageRate.toFixed(1)}%</div>
-          <div className="text-sm text-gray-600">Tasa de Uso</div>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-white p-6 rounded-xl shadow-sm border border-gray-200"
+          whileHover={{ scale: 1.03, y: -8 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
         >
-          <div className="flex items-center justify-between mb-2">
-            <Star className="w-8 h-8 text-yellow-600" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
+          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-yellow-500 to-amber-500 opacity-5 rounded-full blur-2xl"></div>
+          <div className="relative z-10">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500 to-amber-500 flex items-center justify-center text-white mb-3 shadow-lg group-hover:scale-110 transition-transform">
+              <Star className="w-6 h-6" />
+            </div>
+            <p className="text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wider">Cupón Más Usado</p>
+            <p className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 truncate">{stats.topCoupon}</p>
           </div>
-          <div className="text-lg font-bold text-gray-900 truncate">{stats.topCoupon}</div>
-          <div className="text-sm text-gray-600">Cupón Más Usado</div>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="bg-white p-6 rounded-xl shadow-sm border border-gray-200"
+          whileHover={{ scale: 1.03, y: -8 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
         >
-          <div className="flex items-center justify-between mb-2">
-            <DollarSign className="w-8 h-8 text-green-600" />
-            <span className="text-xs text-green-600 font-medium">+15%</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
+          <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-green-500 to-emerald-500 opacity-5 rounded-full blur-2xl"></div>
+          <div className="relative z-10">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-white mb-3 shadow-lg group-hover:scale-110 transition-transform">
+              <DollarSign className="w-6 h-6" />
+            </div>
+            <p className="text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wider">Ahorro Promedio</p>
+            <p className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700">{formatCurrency(stats.avgSavings)}</p>
+            <div className="mt-2 flex items-center gap-1 text-xs text-green-600 font-bold">
+              <span>+15%</span>
+            </div>
           </div>
-          <div className="text-2xl font-bold text-gray-900">{formatCurrency(stats.avgSavings)}</div>
-          <div className="text-sm text-gray-600">Ahorro Promedio</div>
         </motion.div>
       </div>
 
@@ -1183,7 +774,7 @@ const CuponesPage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredCoupons.map((coupon) => (
             <motion.div
-              key={coupon.id}
+              key={coupon._id || coupon.id}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               whileHover={{ y: -5, boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)' }}
@@ -1314,14 +905,14 @@ const CuponesPage: React.FC = () => {
                     <Share2 className="w-4 h-4" />
                   </button>
                   <div className="relative" ref={dropdownRef}>
-                    <button 
-                      onClick={() => setSelectedCoupon(selectedCoupon?.id === coupon.id ? null : coupon)}
+                    <button
+                      onClick={() => setSelectedCoupon((selectedCoupon?._id || selectedCoupon?.id) === (coupon._id || coupon.id) ? null : coupon)}
                       className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
                       title="Más opciones"
                     >
                       <MoreVertical className="w-4 h-4" />
                     </button>
-                    {selectedCoupon?.id === coupon.id && (
+                    {(selectedCoupon?._id || selectedCoupon?.id) === (coupon._id || coupon.id) && (
                       <div className="absolute right-0 top-full mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
                         <button 
                           onClick={() => handleEditCoupon(coupon)}
@@ -1389,7 +980,7 @@ const CuponesPage: React.FC = () => {
             </thead>
             <tbody className="divide-y divide-gray-200">
               {filteredCoupons.map((coupon) => (
-                <tr key={coupon.id} className="hover:bg-gray-50">
+                <tr key={coupon._id || coupon.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <input type="checkbox" className="rounded" />
                   </td>

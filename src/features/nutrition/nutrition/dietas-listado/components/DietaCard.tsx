@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Edit,
@@ -18,6 +19,7 @@ interface DietaCardProps {
 }
 
 export const DietaCard: React.FC<DietaCardProps> = ({ dieta }) => {
+  const navigate = useNavigate();
   const getEstadoBadge = (estado: string) => {
     const badges = {
       activo: 'bg-green-50 text-green-700 border-green-200',
@@ -241,6 +243,7 @@ export const DietaCard: React.FC<DietaCardProps> = ({ dieta }) => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => navigate(`/dashboard/nutrition/dietas/editar/${dieta.id}`)}
               className="flex-1 px-4 py-3 bg-gradient-to-br from-lime-500 to-green-500 text-white rounded-2xl font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
             >
               <Eye className="w-4 h-4" />
@@ -249,6 +252,7 @@ export const DietaCard: React.FC<DietaCardProps> = ({ dieta }) => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => navigate(`/dashboard/nutrition/dietas/editar/${dieta.id}`)}
               className="px-4 py-3 bg-gray-100 text-gray-700 rounded-2xl font-semibold hover:bg-gray-200 transition-all duration-300 flex items-center justify-center"
             >
               <Edit className="w-4 h-4" />

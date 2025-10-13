@@ -4,10 +4,10 @@ import { Star, MapPin, TrendingUp, Award } from 'lucide-react';
 import { Prospecto } from '../listadoJugadoresApi';
 
 interface TarjetasProspectosProps {
-  prospecto?: Prospecto; // Hacerlo opcional para el placeholder inicial
+  jugador?: Prospecto; // Hacerlo opcional para el placeholder inicial
 }
 
-const TarjetasProspectos: React.FC<TarjetasProspectosProps> = ({ prospecto }) => {
+const TarjetasProspectos: React.FC<TarjetasProspectosProps> = ({ jugador }) => {
   // Datos de ejemplo si no se proporciona un prospecto (para el placeholder)
   const defaultProspecto: Prospecto = {
     id: '0',
@@ -23,7 +23,7 @@ const TarjetasProspectos: React.FC<TarjetasProspectosProps> = ({ prospecto }) =>
     caracteristicas: ['Característica 1', 'Característica 2'],
   };
 
-  const currentProspecto = prospecto || defaultProspecto;
+  const currentProspecto = jugador || defaultProspecto;
 
   const getEstadoConfig = (estado: Prospecto['estado']) => {
     switch (estado) {

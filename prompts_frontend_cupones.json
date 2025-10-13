@@ -1,0 +1,90 @@
+{
+  "titulo": "Prompts Frontend - Módulo Cupones",
+  "descripcion": "Prompts para implementar funcionalidades faltantes en el frontend",
+  "prompts": [
+    {
+      "id": "frontend-001",
+      "prompt": "Añade las funciones buscarClientes y obtenerCliente al archivo src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/crearCuponApi.ts. Implementar búsqueda con paginación, manejo completo de errores HTTP, timeout de 10 segundos, y tipos TypeScript apropiados.",
+      "archivos": ["src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/crearCuponApi.ts"],
+      "accion": "Añadir funciones de búsqueda de clientes"
+    },
+    {
+      "id": "frontend-002",
+      "prompt": "Añade las funciones buscarProductos y obtenerProducto al archivo src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/crearCuponApi.ts. Implementar búsqueda con paginación, manejo completo de errores HTTP, timeout de 10 segundos, y tipos TypeScript apropiados.",
+      "archivos": ["src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/crearCuponApi.ts"],
+      "accion": "Añadir funciones de búsqueda de productos"
+    },
+    {
+      "id": "frontend-003",
+      "prompt": "Añade las funciones validarFechasBackend, validarProductosBackend y validarClientesBackend al archivo src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/crearCuponApi.ts. Implementar validación real con backend, timeout de 5 segundos, y tipos TypeScript apropiados.",
+      "archivos": ["src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/crearCuponApi.ts"],
+      "accion": "Añadir funciones de validación específica"
+    },
+    {
+      "id": "frontend-004",
+      "prompt": "Crea el componente SelectorCliente.tsx en src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/components/. Debe incluir campo de búsqueda con debounce, lista de clientes disponibles, lista de clientes seleccionados, botones para agregar/remover, indicador de carga, manejo de errores, diseño responsive con Tailwind CSS y accesibilidad.",
+      "archivos": ["src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/components/SelectorCliente.tsx"],
+      "accion": "Crear componente SelectorCliente"
+    },
+    {
+      "id": "frontend-005",
+      "prompt": "Crea el componente SelectorProducto.tsx en src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/components/. Debe incluir campo de búsqueda con debounce, lista de productos disponibles con filtros, lista de productos seleccionados, botones para agregar/remover, indicador de carga, manejo de errores, diseño responsive con Tailwind CSS y accesibilidad.",
+      "archivos": ["src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/components/SelectorProducto.tsx"],
+      "accion": "Crear componente SelectorProducto"
+    },
+    {
+      "id": "frontend-006",
+      "prompt": "Crea el componente ValidacionTiempoReal.tsx en src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/components/. Debe incluir validación automática con debounce, indicador visual de estado, mensajes personalizables, iconos de estado, integración con formularios, diseño con Tailwind CSS y accesibilidad completa.",
+      "archivos": ["src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/components/ValidacionTiempoReal.tsx"],
+      "accion": "Crear componente ValidacionTiempoReal"
+    },
+    {
+      "id": "frontend-007",
+      "prompt": "Integra el componente SelectorCliente en src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/components/FormularioCupon.tsx. Añadir estados necesarios, implementar funciones de búsqueda, reemplazar campo de clientes específicos, y añadir validaciones en tiempo real.",
+      "archivos": ["src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/components/FormularioCupon.tsx"],
+      "accion": "Integrar SelectorCliente en FormularioCupon"
+    },
+    {
+      "id": "frontend-008",
+      "prompt": "Integra el componente SelectorProducto en src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/components/ConfiguracionAvanzada.tsx. Añadir estados necesarios, implementar funciones de búsqueda, reemplazar textarea de productos aplicables, y añadir validaciones en tiempo real.",
+      "archivos": ["src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/components/ConfiguracionAvanzada.tsx"],
+      "accion": "Integrar SelectorProducto en ConfiguracionAvanzada"
+    },
+    {
+      "id": "frontend-009",
+      "prompt": "Mejora el componente VistaPreviaCupon.tsx en src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/components/. Integrar generación real de códigos, añadir actualización en tiempo real, mejorar visualización de restricciones, añadir funcionalidades como botón para regenerar código, y mejorar diseño responsive.",
+      "archivos": ["src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/components/VistaPreviaCupon.tsx"],
+      "accion": "Mejorar VistaPreviaCupon con integración real"
+    },
+    {
+      "id": "frontend-010",
+      "prompt": "Integra las nuevas funcionalidades en src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/CrearCuponPage.tsx. Añadir estados para búsquedas, implementar funciones de búsqueda, mejorar validaciones con backend, añadir funcionalidades avanzadas de búsqueda en tiempo real, y mejorar UX con indicadores de carga y mensajes de error específicos.",
+      "archivos": ["src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/CrearCuponPage.tsx"],
+      "accion": "Integrar nuevas funcionalidades en CrearCuponPage"
+    },
+    {
+      "id": "frontend-011",
+      "prompt": "Crea el archivo types.ts en src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/ con todos los tipos necesarios: Cliente, Producto, ValidacionResult, BusquedaResult, ApiResponse. Incluir documentación JSDoc y tipos para validaciones, búsquedas y respuestas de API.",
+      "archivos": ["src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/types.ts"],
+      "accion": "Crear archivo de tipos TypeScript"
+    },
+    {
+      "id": "frontend-012",
+      "prompt": "Crea el hook useBusquedaClientes.ts en src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/hooks/. Implementar búsqueda con debounce, paginación automática, manejo de estados de carga, manejo de errores, limpieza de búsqueda y optimización de re-renders.",
+      "archivos": ["src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/hooks/useBusquedaClientes.ts"],
+      "accion": "Crear hook useBusquedaClientes"
+    },
+    {
+      "id": "frontend-013",
+      "prompt": "Crea el hook useBusquedaProductos.ts en src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/hooks/. Implementar búsqueda con debounce, paginación automática, manejo de estados de carga, manejo de errores, limpieza de búsqueda y optimización de re-renders.",
+      "archivos": ["src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/hooks/useBusquedaProductos.ts"],
+      "accion": "Crear hook useBusquedaProductos"
+    },
+    {
+      "id": "frontend-014",
+      "prompt": "Crea el hook useValidacionTiempoReal.ts en src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/hooks/. Implementar validación con debounce configurable, estados de validación (válido/inválido/cargando), manejo de errores, limpieza de validación y optimización de re-renders.",
+      "archivos": ["src/features/plansolopro/cupones-avanzados/cupones-avanzados/crear-cupon/hooks/useValidacionTiempoReal.ts"],
+      "accion": "Crear hook useValidacionTiempoReal"
+    }
+  ]
+}

@@ -1,142 +1,318 @@
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-import { Coupon } from '../../types'; // Assuming a types file exists at this path
+// Tipos actualizados para coincidir con el backend
+export type CouponType = 'percentage' | 'fixed' | 'free-shipping' | '2x1';
+export type CouponStatus = 'active' | 'scheduled' | 'expired' | 'paused';
+export type ApplicableTo = 'all' | 'products' | 'categories' | 'plans';
 
-// Mock data for coupons
-let mockCoupons: Coupon[] = [
-  {
-    id: 'c1',
-    code: 'WELCOME20',
-    type: 'percentage',
-    value: 20,
-    expiresAt: '2025-12-31',
-    maxUses: 100,
-    currentUses: 10,
-    reusable: true,
-    restrictions: { products: [], clients: [], minPurchase: 50 },
-    campaign: 'Captación Nuevos Clientes',
-    status: 'active',
-  },
-  {
-    id: 'c2',
-    code: 'SAVE10',
-    type: 'fixed',
-    value: 10,
-    expiresAt: '2025-11-15',
-    maxUses: 50,
-    currentUses: 45,
-    reusable: false,
-    restrictions: { products: ['prod1'], clients: [], minPurchase: 0 },
-    campaign: 'Premios Fidelidad',
-    status: 'active',
-  },
-  {
-    id: 'c3',
-    code: 'FREESHIP',
-    type: 'shipping',
-    value: 0,
-    expiresAt: '2025-10-31',
-    maxUses: 200,
-    currentUses: 180,
-    reusable: true,
-    restrictions: { products: [], clients: [], minPurchase: 30 },
-    campaign: 'Promoción Otoño',
-    status: 'expiring',
-  },
-];
+export interface CouponUse {
+  _id?: string;
+  customerName: string;
+  customerId?: string;
+  date: string;
+  product?: string;
+  discountApplied: number;
+  orderTotal: number;
+  channel: string;
+}
 
-// Mock API functions
+export interface Coupon {
+  _id?: string;
+  id?: string;
+  code: string;
+  type: CouponType;
+  value: number;
+  status: CouponStatus;
+  description?: string;
+  startDate: string;
+  endDate: string | null;
+  usageLimit: number | null;
+  usageCount: number;
+  totalDiscount: number;
+  revenue: number;
+  applicableTo: ApplicableTo;
+  products?: string[];
+  categories?: string[];
+  minPurchase?: number;
+  onePerCustomer: boolean;
+  campaign?: string;
+  tags: string[];
+  uses: CouponUse[];
+  active: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
 
-export const fetchCoupons = async (): Promise<Coupon[]> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(mockCoupons);
-    }, 500);
-  });
+export interface CouponStats {
+  totalCoupons: number;
+  activeCoupons: number;
+  expiredCoupons: number;
+  totalUses: number;
+  totalDiscount: number;
+  totalRevenue: number;
+  conversionRate: string;
+  couponEffectiveness: Array<{ code: string; uses: number; effectiveness: string }>;
+}
+
+// API Functions
+
+export const fetchCoupons = async (filters?: {
+  status?: CouponStatus;
+  campaign?: string;
+  type?: CouponType;
+  search?: string;
+  active?: boolean;
+}): Promise<Coupon[]> => {
+  try {
+    const params = new URLSearchParams();
+    if (filters?.status) params.append('status', filters.status);
+    if (filters?.campaign) params.append('campaign', filters.campaign);
+    if (filters?.type) params.append('type', filters.type);
+    if (filters?.search) params.append('search', filters.search);
+    if (filters?.active !== undefined) params.append('active', String(filters.active));
+
+    const response = await fetch(`${API_URL}/cupones?${params.toString()}`);
+    if (!response.ok) throw new Error('Error al obtener cupones');
+
+    const data = await response.json();
+    return data.data || [];
+  } catch (error) {
+    console.error('Error fetching coupons:', error);
+    throw error;
+  }
 };
 
-export const createCoupon = async (newCoupon: Omit<Coupon, 'id' | 'currentUses' | 'status'>): Promise<Coupon> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const coupon: Coupon = {
-        id: `c${mockCoupons.length + 1}`,
-        currentUses: 0,
-        status: 'active',
-        ...newCoupon,
-      };
-      mockCoupons.push(coupon);
-      resolve(coupon);
-    }, 500);
-  });
+export const getCoupon = async (id: string): Promise<Coupon> => {
+  try {
+    const response = await fetch(`${API_URL}/cupones/${id}`);
+    if (!response.ok) throw new Error('Error al obtener el cupón');
+
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching coupon:', error);
+    throw error;
+  }
 };
 
-export const updateCoupon = async (updatedCoupon: Coupon): Promise<Coupon> => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const index = mockCoupons.findIndex((c) => c.id === updatedCoupon.id);
-      if (index !== -1) {
-        mockCoupons[index] = updatedCoupon;
-        resolve(updatedCoupon);
-      } else {
-        reject(new Error('Coupon not found'));
-      }
-    }, 500);
-  });
+export const getCouponByCode = async (code: string): Promise<Coupon> => {
+  try {
+    const response = await fetch(`${API_URL}/cupones/code/${code}`);
+    if (!response.ok) throw new Error('Error al obtener el cupón por código');
+
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching coupon by code:', error);
+    throw error;
+  }
+};
+
+export const createCoupon = async (newCoupon: Partial<Coupon>): Promise<Coupon> => {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${API_URL}/cupones`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(newCoupon)
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Error al crear el cupón');
+    }
+
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error creating coupon:', error);
+    throw error;
+  }
+};
+
+export const updateCoupon = async (id: string, updatedCoupon: Partial<Coupon>): Promise<Coupon> => {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${API_URL}/cupones/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(updatedCoupon)
+    });
+
+    if (!response.ok) throw new Error('Error al actualizar el cupón');
+
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error updating coupon:', error);
+    throw error;
+  }
 };
 
 export const deleteCoupon = async (id: string): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const initialLength = mockCoupons.length;
-      mockCoupons = mockCoupons.filter((c) => c.id !== id);
-      if (mockCoupons.length < initialLength) {
-        resolve();
-      } else {
-        reject(new Error('Coupon not found'));
+  try {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${API_URL}/cupones/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
       }
-    }, 500);
-  });
+    });
+
+    if (!response.ok) throw new Error('Error al eliminar el cupón');
+  } catch (error) {
+    console.error('Error deleting coupon:', error);
+    throw error;
+  }
 };
 
-export const getExpiringCoupons = async (): Promise<Coupon[]> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const today = new Date();
-      const expiringSoon = mockCoupons.filter(coupon => {
-        if (coupon.expiresAt) {
-          const expiryDate = new Date(coupon.expiresAt);
-          const diffTime = Math.abs(expiryDate.getTime() - today.getTime());
-          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-          return diffDays <= 7 && expiryDate >= today; // Expiring within 7 days
-        }
-        return false;
-      });
-      resolve(expiringSoon);
-    }, 500);
-  });
+export const validateCoupon = async (code: string, purchaseAmount: number, customerId?: string): Promise<{
+  success: boolean;
+  data?: {
+    couponId: string;
+    code: string;
+    type: CouponType;
+    discount: number;
+    finalAmount: number;
+    originalAmount: number;
+  };
+  error?: string;
+}> => {
+  try {
+    const response = await fetch(`${API_URL}/cupones/validate`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ code, purchaseAmount, customerId })
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      return { success: false, error: error.error };
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error validating coupon:', error);
+    throw error;
+  }
 };
 
-export const getCouponStats = async (): Promise<any> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const totalCoupons = mockCoupons.length;
-      const activeCoupons = mockCoupons.filter(c => c.status === 'active').length;
-      const expiredCoupons = mockCoupons.filter(c => c.expiresAt && new Date(c.expiresAt) < new Date()).length;
-      const totalUses = mockCoupons.reduce((sum, c) => sum + c.currentUses, 0);
+export const applyCoupon = async (
+  id: string,
+  useData: {
+    customerName: string;
+    customerId?: string;
+    product?: string;
+    discountApplied: number;
+    orderTotal: number;
+    channel: string;
+  }
+): Promise<Coupon> => {
+  try {
+    const response = await fetch(`${API_URL}/cupones/${id}/apply`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(useData)
+    });
 
-      const conversionRate = (totalUses / (totalCoupons * 100)) * 100; // Mock conversion rate
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Error al aplicar el cupón');
+    }
 
-      resolve({
-        totalCoupons,
-        activeCoupons,
-        expiredCoupons,
-        totalUses,
-        conversionRate: conversionRate.toFixed(2) + '%',
-        couponEffectiveness: mockCoupons.map(c => ({
-          code: c.code,
-          uses: c.currentUses,
-          effectiveness: ((c.currentUses / (c.maxUses || 100)) * 100).toFixed(2) + '%',
-        })),
-      });
-    }, 500);
-  });
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error applying coupon:', error);
+    throw error;
+  }
+};
+
+export const getExpiringCoupons = async (days: number = 7): Promise<Coupon[]> => {
+  try {
+    const response = await fetch(`${API_URL}/cupones/expiring/soon?days=${days}`);
+    if (!response.ok) throw new Error('Error al obtener cupones por expirar');
+
+    const data = await response.json();
+    return data.data || [];
+  } catch (error) {
+    console.error('Error fetching expiring coupons:', error);
+    throw error;
+  }
+};
+
+export const getCouponStats = async (): Promise<CouponStats> => {
+  try {
+    const response = await fetch(`${API_URL}/cupones/stats`);
+    if (!response.ok) throw new Error('Error al obtener estadísticas de cupones');
+
+    const result = await response.json();
+    return result.data;
+  } catch (error) {
+    console.error('Error fetching coupon stats:', error);
+    throw error;
+  }
+};
+
+export const getCouponsByCampaign = async (campaign: string): Promise<Coupon[]> => {
+  try {
+    const response = await fetch(`${API_URL}/cupones/campaign/${encodeURIComponent(campaign)}`);
+    if (!response.ok) throw new Error('Error al obtener cupones por campaña');
+
+    const data = await response.json();
+    return data.data || [];
+  } catch (error) {
+    console.error('Error fetching coupons by campaign:', error);
+    throw error;
+  }
+};
+
+export const toggleCouponStatus = async (id: string): Promise<Coupon> => {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${API_URL}/cupones/${id}/toggle-status`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) throw new Error('Error al cambiar el estado del cupón');
+
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error toggling coupon status:', error);
+    throw error;
+  }
+};
+
+export const toggleCouponActive = async (id: string): Promise<Coupon> => {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${API_URL}/cupones/${id}/toggle-active`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) throw new Error('Error al activar/desactivar el cupón');
+
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error toggling coupon active:', error);
+    throw error;
+  }
 };
