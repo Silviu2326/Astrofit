@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchVideos } from '../../contenidos-video/contenidosVideoApi';
+import { getVideos } from '../../contenidos-video/contenidosVideoApi';
 
 interface EtiquetasVideoProps {
   onSelectTag?: (tag: string | null) => void;
@@ -14,7 +14,7 @@ const EtiquetasVideo: React.FC<EtiquetasVideoProps> = ({ onSelectTag }) => {
   useEffect(() => {
     const getTags = async () => {
       try {
-        const videos = await fetchVideos();
+        const videos = await getVideos();
         const tags = Array.from(new Set(videos.flatMap(video => video.tags)));
         setAllTags(tags);
       } catch (err) {

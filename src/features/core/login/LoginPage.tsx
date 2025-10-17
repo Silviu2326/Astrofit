@@ -14,10 +14,10 @@ import {
   Shield,
   UserCircle
 } from 'lucide-react';
-import authService from '../../../services/authService';
+import { validateCredentials, getUserByEmail, User } from './mockUsers';
 
 interface LoginPageProps {
-  onLogin: () => void;
+  onLogin: (user: User) => void;
 }
 
 export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
@@ -77,46 +77,34 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     setIsLoading(true);
 
     try {
-      // Login using backend API
-      const response = await authService.loginTrainer({
-        email,
-        password
-      });
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-      if (response.success && response.data) {
+      // Validate credentials using mock users
+      console.log('Validando credenciales:', { email, password: '***' });
+      const user = validateCredentials(email, password);
+
+      if (user) {
+        console.log('Usuario autenticado:', user);
+        
         // Store user data
-        localStorage.setItem('currentUser', JSON.stringify(response.data.user));
-        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        localStorage.setItem('token', 'mock-token-' + Date.now());
         localStorage.setItem('isAuthenticated', 'true');
 
         // Stop loading before calling onLogin
         setIsLoading(false);
 
-        // Call parent callback to change auth state
-        onLogin();
+        // Call parent callback to change auth state with user data
+        onLogin(user);
       } else {
-        // Handle unexpected response format
-        setError('Error inesperado al iniciar sesión. Por favor, intenta de nuevo.');
+        console.log('Credenciales inválidas');
+        setError('Credenciales incorrectas. Por favor, verifica tu email y contraseña.');
         setIsLoading(false);
       }
     } catch (err: any) {
       console.error('Login error:', err);
-
-      // Extract error message from different possible formats
-      let errorMessage = 'Error al iniciar sesión. Por favor, intenta de nuevo.';
-
-      if (err.response?.data?.error) {
-        errorMessage = err.response.data.error;
-      } else if (err.response?.data?.errors && Array.isArray(err.response.data.errors) && err.response.data.errors.length > 0) {
-        errorMessage = err.response.data.errors[0].message || err.response.data.errors[0].msg;
-      } else if (err.response?.data?.message) {
-        errorMessage = err.response.data.message;
-      } else if (err.message) {
-        errorMessage = err.message;
-      }
-
-      // Set error message and stop loading
-      setError(errorMessage);
+      setError('Error al iniciar sesión. Por favor, intenta de nuevo.');
       setIsLoading(false);
     }
 

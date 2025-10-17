@@ -1,0 +1,35 @@
+{
+  "nombre": "Generador de Componentes Frontend",
+  "version": "1.0",
+  "descripcion": "Prompts especializados para generar componentes React/TypeScript desde especificaciones",
+  "prompts": [
+    {
+      "id": "component_from_md",
+      "nombre": "Generar Componentes desde MD",
+      "prompt": "**INPUT REQUERIDO**: Recibirás dos parámetros:\n1. **Archivo MD**: Contenido del archivo markdown con especificaciones de componentes\n2. **Path del src**: Ruta del directorio src/components\n\n**PROCESO**: Analiza el archivo MD y genera componentes React/TypeScript:\n\n1. **Identifica componentes**: Lista de componentes a crear\n2. **Define props**: Interfaces TypeScript para props\n3. **Implementa funcionalidad**: Lógica de cada componente\n4. **Aplica estilos**: CSS/Tailwind según especificaciones\n5. **Genera hooks**: Hooks personalizados si es necesario\n6. **Crea tests**: Tests unitarios básicos\n\n**OUTPUT**: Genera archivos de componentes en el path especificado con:\n- Componentes React funcionales\n- Interfaces TypeScript\n- Estilos CSS/Tailwind\n- Hooks personalizados\n- Tests unitarios",
+      "contexto": "Generación de componentes React desde documentación"
+    },
+    {
+      "id": "component_styling",
+      "nombre": "Aplicar Estilos a Componentes",
+      "prompt": "**INPUT**: Componentes generados\n\n**PROCESO**: Aplica estilos modernos y responsive:\n\n1. **Responsive Design**: Mobile-first approach\n2. **Design System**: Colores, tipografías, espaciados\n3. **Animaciones**: Transiciones suaves\n4. **Accesibilidad**: ARIA labels, focus management\n5. **Dark Mode**: Soporte para tema oscuro\n6. **Performance**: Optimización de renders\n\n**OUTPUT**: Componentes con estilos aplicados:\n- Estilos responsive\n- Design system consistente\n- Animaciones fluidas\n- Accesibilidad completa",
+      "contexto": "Aplicación de estilos a componentes"
+    },
+    {
+      "id": "component_optimization",
+      "nombre": "Optimizar Componentes",
+      "prompt": "**INPUT**: Componentes con estilos aplicados\n\n**PROCESO**: Optimiza los componentes para rendimiento:\n\n1. **Memoización**: React.memo, useMemo, useCallback\n2. **Lazy Loading**: Componentes bajo demanda\n3. **Code Splitting**: División de código\n4. **Bundle Size**: Optimización del tamaño\n5. **Performance**: Métricas de rendimiento\n6. **Testing**: Tests de rendimiento\n\n**OUTPUT**: Componentes optimizados:\n- Memoización aplicada\n- Lazy loading implementado\n- Bundle optimizado\n- Tests de rendimiento",
+      "contexto": "Optimización de componentes"
+    }
+  ],
+  "configuracion": {
+    "framework": "React 18+",
+    "lenguaje": "TypeScript",
+    "styling": "Tailwind CSS",
+    "testing": "Jest + React Testing Library"
+  }
+}
+
+
+
+

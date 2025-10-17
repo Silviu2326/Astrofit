@@ -8,9 +8,9 @@ export const fetchLeaderboardData = async () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve([
-        { id: 1, name: 'UsuarioEjemplo1', posts: 120, comments: 300, points: 1500, avatar: 'https://via.placeholder.com/50' },
-        { id: 2, name: 'UsuarioEjemplo2', posts: 100, comments: 250, points: 1200, avatar: 'https://via.placeholder.com/50' },
-        { id: 3, name: 'UsuarioEjemplo3', posts: 90, comments: 200, points: 1000, avatar: 'https://via.placeholder.com/50' },
+        { id: 1, name: 'UsuarioEjemplo1', posts: 120, comments: 300, points: 1500, avatar: '🏆' },
+        { id: 2, name: 'UsuarioEjemplo2', posts: 100, comments: 250, points: 1200, avatar: '🥇' },
+        { id: 3, name: 'UsuarioEjemplo3', posts: 90, comments: 200, points: 1000, avatar: '🥈' },
       ]);
     }, 500);
   });

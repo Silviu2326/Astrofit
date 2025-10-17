@@ -1,0 +1,320 @@
+{
+  "meta": {
+    "module": "app-white-label",
+    "side": "frontend",
+    "run_id": "2024-01-15T10:00:00Z",
+    "base_path": "/api/app-white-label"
+  },
+  "prompts": [
+    {
+      "id": "P1",
+      "order": 1,
+      "title": "Crear tipos TypeScript para DTOs del módulo app-white-label",
+      "files_hint": [
+        "src/features/plancreatormax/app-white-label/app-white-label/types/AppWhiteLabelTypes.ts"
+      ],
+      "preconditions": [
+        "Directorio types/ existe o se creará",
+        "BASE_PATH definido como /api/app-white-label"
+      ],
+      "content": "Actúa como desarrollador TypeScript. 1) Crea el archivo src/features/plancreatormax/app-white-label/app-white-label/types/AppWhiteLabelTypes.ts. 2) Define las interfaces TypeScript exactas según el documento de interconexión: AppConfigRequest, AppConfigResponse, SplashScreenConfig, CreateNotificationRequest, UpdateNotificationRequest, NotificationResponse, NotificationStats, PreviewConfigRequest, PreviewResponse. 3) Incluye todos los campos, tipos y propiedades opcionales según la especificación. 4) Exporta todas las interfaces. 5) Muestra el diff del archivo creado y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "AppWhiteLabelTypes.ts: interfaces TypeScript creadas con todos los DTOs"
+      ],
+      "acceptance_criteria": [
+        "Todas las interfaces están definidas con tipos correctos",
+        "Propiedades opcionales marcadas con ?",
+        "Enums para status y deviceType están definidos",
+        "Archivo exporta todas las interfaces"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Eliminar AppWhiteLabelTypes.ts si no cumple los criterios."
+    },
+    {
+      "id": "P2",
+      "order": 2,
+      "title": "Implementar configuracionAppApi.ts con llamadas reales a la API",
+      "files_hint": [
+        "src/features/plancreatormax/app-white-label/app-white-label/configuracion-app/configuracionAppApi.ts"
+      ],
+      "preconditions": [
+        "Existe configuracionAppApi.ts con estructura básica",
+        "Tipos TypeScript definidos en AppWhiteLabelTypes.ts",
+        "VITE_API_URL configurado en .env"
+      ],
+      "content": "Actúa como desarrollador de servicios API. 1) Abre src/features/plancreatormax/app-white-label/app-white-label/configuracion-app/configuracionAppApi.ts. 2) Importa los tipos desde AppWhiteLabelTypes.ts. 3) Configura axios con baseURL desde import.meta.env.VITE_API_URL y headers de Authorization Bearer. 4) Implementa getAppConfig(): Promise<AppConfigResponse> que hace GET /api/app-white-label/config. 5) Implementa updateAppConfig(config: AppConfigRequest): Promise<AppConfigResponse> que hace POST /api/app-white-label/config. 6) Implementa uploadLogo(file: File): Promise<{logoUrl: string}> que hace POST /api/app-white-label/config/upload-logo con FormData. 7) Maneja errores 4xx/5xx mapeándolos a Result<Error>. 8) Muestra diffs de cada función y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "configuracionAppApi.ts: imports de tipos",
+        "configuracionAppApi.ts: configuración de axios con baseURL y headers",
+        "configuracionAppApi.ts: función getAppConfig implementada",
+        "configuracionAppApi.ts: función updateAppConfig implementada",
+        "configuracionAppApi.ts: función uploadLogo implementada",
+        "configuracionAppApi.ts: manejo de errores implementado"
+      ],
+      "acceptance_criteria": [
+        "getAppConfig hace GET al endpoint correcto",
+        "updateAppConfig hace POST con datos correctos",
+        "uploadLogo maneja FormData correctamente",
+        "Errores HTTP se mapean a Result<Error>",
+        "No hay URLs hardcodeadas, usa VITE_API_URL"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en configuracionAppApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P3",
+      "order": 3,
+      "title": "Implementar personalizacionPushApi.ts con llamadas reales a la API",
+      "files_hint": [
+        "src/features/plancreatormax/app-white-label/app-white-label/personalizacion-push/personalizacionPushApi.ts"
+      ],
+      "preconditions": [
+        "Existe personalizacionPushApi.ts con estructura básica",
+        "Tipos TypeScript definidos en AppWhiteLabelTypes.ts",
+        "VITE_API_URL configurado en .env"
+      ],
+      "content": "Actúa como desarrollador de servicios API. 1) Abre src/features/plancreatormax/app-white-label/app-white-label/personalizacion-push/personalizacionPushApi.ts. 2) Importa los tipos desde AppWhiteLabelTypes.ts. 3) Configura axios con baseURL desde import.meta.env.VITE_API_URL y headers de Authorization Bearer. 4) Implementa createNotification(data: CreateNotificationRequest): Promise<NotificationResponse> que hace POST /api/app-white-label/notifications. 5) Implementa getNotifications(): Promise<NotificationResponse[]> que hace GET /api/app-white-label/notifications. 6) Implementa updateNotification(id: string, data: UpdateNotificationRequest): Promise<NotificationResponse> que hace PUT /api/app-white-label/notifications/:id. 7) Implementa deleteNotification(id: string): Promise<void> que hace DELETE /api/app-white-label/notifications/:id. 8) Implementa getNotificationStats(): Promise<NotificationStats> que hace GET /api/app-white-label/notifications/stats. 9) Maneja errores 4xx/5xx mapeándolos a Result<Error>. 10) Muestra diffs de cada función y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "personalizacionPushApi.ts: imports de tipos",
+        "personalizacionPushApi.ts: configuración de axios",
+        "personalizacionPushApi.ts: función createNotification implementada",
+        "personalizacionPushApi.ts: función getNotifications implementada",
+        "personalizacionPushApi.ts: función updateNotification implementada",
+        "personalizacionPushApi.ts: función deleteNotification implementada",
+        "personalizacionPushApi.ts: función getNotificationStats implementada",
+        "personalizacionPushApi.ts: manejo de errores implementado"
+      ],
+      "acceptance_criteria": [
+        "createNotification hace POST al endpoint correcto",
+        "getNotifications hace GET al endpoint correcto",
+        "updateNotification hace PUT con ID en la URL",
+        "deleteNotification hace DELETE con ID en la URL",
+        "getNotificationStats hace GET al endpoint de estadísticas",
+        "Errores HTTP se mapean a Result<Error>",
+        "No hay URLs hardcodeadas, usa VITE_API_URL"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en personalizacionPushApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P4",
+      "order": 4,
+      "title": "Implementar vistaPreviewAppApi.ts con llamadas reales a la API",
+      "files_hint": [
+        "src/features/plancreatormax/app-white-label/app-white-label/vista-preview-app/vistaPreviewAppApi.ts"
+      ],
+      "preconditions": [
+        "Existe vistaPreviewAppApi.ts con estructura básica",
+        "Tipos TypeScript definidos en AppWhiteLabelTypes.ts",
+        "VITE_API_URL configurado en .env"
+      ],
+      "content": "Actúa como desarrollador de servicios API. 1) Abre src/features/plancreatormax/app-white-label/app-white-label/vista-preview-app/vistaPreviewAppApi.ts. 2) Importa los tipos desde AppWhiteLabelTypes.ts. 3) Configura axios con baseURL desde import.meta.env.VITE_API_URL y headers de Authorization Bearer. 4) Implementa createPreview(config: PreviewConfigRequest): Promise<PreviewResponse> que hace POST /api/app-white-label/preview. 5) Implementa getPreview(id: string): Promise<PreviewResponse> que hace GET /api/app-white-label/preview/:id. 6) Implementa updatePreview(id: string, config: PreviewConfigRequest): Promise<PreviewResponse> que hace PUT /api/app-white-label/preview/:id. 7) Maneja errores 4xx/5xx mapeándolos a Result<Error>. 8) Muestra diffs de cada función y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "vistaPreviewAppApi.ts: imports de tipos",
+        "vistaPreviewAppApi.ts: configuración de axios",
+        "vistaPreviewAppApi.ts: función createPreview implementada",
+        "vistaPreviewAppApi.ts: función getPreview implementada",
+        "vistaPreviewAppApi.ts: función updatePreview implementada",
+        "vistaPreviewAppApi.ts: manejo de errores implementado"
+      ],
+      "acceptance_criteria": [
+        "createPreview hace POST al endpoint correcto",
+        "getPreview hace GET con ID en la URL",
+        "updatePreview hace PUT con ID en la URL",
+        "Errores HTTP se mapean a Result<Error>",
+        "No hay URLs hardcodeadas, usa VITE_API_URL"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en vistaPreviewAppApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P5",
+      "order": 5,
+      "title": "Integrar configuracionAppApi en ConfiguracionAppPage.tsx con estados UI",
+      "files_hint": [
+        "src/features/plancreatormax/app-white-label/app-white-label/configuracion-app/ConfiguracionAppPage.tsx",
+        "src/features/plancreatormax/app-white-label/app-white-label/configuracion-app/configuracionAppApi.ts"
+      ],
+      "preconditions": [
+        "Existe ConfiguracionAppPage.tsx con UI básica",
+        "configuracionAppApi.ts implementado con todas las funciones",
+        "Tipos TypeScript definidos"
+      ],
+      "content": "Actúa como desarrollador React. 1) Abre src/features/plancreatormax/app-white-label/app-white-label/configuracion-app/ConfiguracionAppPage.tsx. 2) Importa las funciones del servicio desde configuracionAppApi.ts. 3) Importa los tipos desde AppWhiteLabelTypes.ts. 4) Implementa estados locales: loading, error, data (AppConfigResponse), isUploading. 5) En useEffect, llama a getAppConfig() y actualiza estados. 6) Implementa handleUpdateConfig que llama a updateAppConfig y actualiza estados. 7) Implementa handleUploadLogo que llama a uploadLogo y actualiza estados. 8) Renderiza: (a) spinner cuando loading, (b) mensaje de error cuando error, (c) formulario con datos cuando data existe. 9) Maneja error mostrando toast notifications. 10) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "ConfiguracionAppPage.tsx: imports del servicio y tipos",
+        "ConfiguracionAppPage.tsx: estados loading, error, data, isUploading",
+        "ConfiguracionAppPage.tsx: useEffect para cargar configuración",
+        "ConfiguracionAppPage.tsx: handleUpdateConfig implementado",
+        "ConfiguracionAppPage.tsx: handleUploadLogo implementado",
+        "ConfiguracionAppPage.tsx: renderizado condicional según estados"
+      ],
+      "acceptance_criteria": [
+        "Al cargar la página se muestra loading y desaparece con la respuesta",
+        "Si la API devuelve datos, se muestran en el formulario",
+        "Si la API falla, aparece toast de error",
+        "Al actualizar configuración se muestra loading y toast de éxito",
+        "Al subir logo se muestra loading y toast de éxito",
+        "La página no contiene mocks ni URLs hardcodeadas"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en ConfiguracionAppPage.tsx si falla cualquier criterio."
+    },
+    {
+      "id": "P6",
+      "order": 6,
+      "title": "Integrar personalizacionPushApi en PersonalizacionPushPage.tsx con estados UI",
+      "files_hint": [
+        "src/features/plancreatormax/app-white-label/app-white-label/personalizacion-push/PersonalizacionPushPage.tsx",
+        "src/features/plancreatormax/app-white-label/app-white-label/personalizacion-push/personalizacionPushApi.ts"
+      ],
+      "preconditions": [
+        "Existe PersonalizacionPushPage.tsx con UI básica",
+        "personalizacionPushApi.ts implementado con todas las funciones",
+        "Tipos TypeScript definidos"
+      ],
+      "content": "Actúa como desarrollador React. 1) Abre src/features/plancreatormax/app-white-label/app-white-label/personalizacion-push/PersonalizacionPushPage.tsx. 2) Importa las funciones del servicio desde personalizacionPushApi.ts. 3) Importa los tipos desde AppWhiteLabelTypes.ts. 4) Implementa estados locales: loading, error, notifications (NotificationResponse[]), stats (NotificationStats), isCreating, isUpdating, isDeleting. 5) En useEffect, llama a getNotifications() y getNotificationStats() y actualiza estados. 6) Implementa handleCreateNotification que llama a createNotification y actualiza estados. 7) Implementa handleUpdateNotification que llama a updateNotification y actualiza estados. 8) Implementa handleDeleteNotification que llama a deleteNotification y actualiza estados. 9) Renderiza: (a) spinner cuando loading, (b) mensaje de error cuando error, (c) lista de notificaciones cuando data existe. 10) Maneja error mostrando toast notifications. 11) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "PersonalizacionPushPage.tsx: imports del servicio y tipos",
+        "PersonalizacionPushPage.tsx: estados loading, error, notifications, stats, isCreating, isUpdating, isDeleting",
+        "PersonalizacionPushPage.tsx: useEffect para cargar datos",
+        "PersonalizacionPushPage.tsx: handleCreateNotification implementado",
+        "PersonalizacionPushPage.tsx: handleUpdateNotification implementado",
+        "PersonalizacionPushPage.tsx: handleDeleteNotification implementado",
+        "PersonalizacionPushPage.tsx: renderizado condicional según estados"
+      ],
+      "acceptance_criteria": [
+        "Al cargar la página se muestra loading y desaparece con la respuesta",
+        "Si la API devuelve notificaciones, se muestran en la lista",
+        "Si la API falla, aparece toast de error",
+        "Al crear notificación se muestra loading y toast de éxito",
+        "Al actualizar notificación se muestra loading y toast de éxito",
+        "Al eliminar notificación se muestra loading y toast de éxito",
+        "Las estadísticas se cargan y muestran correctamente",
+        "La página no contiene mocks ni URLs hardcodeadas"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en PersonalizacionPushPage.tsx si falla cualquier criterio."
+    },
+    {
+      "id": "P7",
+      "order": 7,
+      "title": "Integrar vistaPreviewAppApi en VistaPreviewAppPage.tsx con estados UI",
+      "files_hint": [
+        "src/features/plancreatormax/app-white-label/app-white-label/vista-preview-app/VistaPreviewAppPage.tsx",
+        "src/features/plancreatormax/app-white-label/app-white-label/vista-preview-app/vistaPreviewAppApi.ts"
+      ],
+      "preconditions": [
+        "Existe VistaPreviewAppPage.tsx con UI básica",
+        "vistaPreviewAppApi.ts implementado con todas las funciones",
+        "Tipos TypeScript definidos"
+      ],
+      "content": "Actúa como desarrollador React. 1) Abre src/features/plancreatormax/app-white-label/app-white-label/vista-preview-app/VistaPreviewAppPage.tsx. 2) Importa las funciones del servicio desde vistaPreviewAppApi.ts. 3) Importa los tipos desde AppWhiteLabelTypes.ts. 4) Implementa estados locales: loading, error, preview (PreviewResponse), isCreating, isUpdating. 5) En useEffect, si hay previewId, llama a getPreview(previewId) y actualiza estados. 6) Implementa handleCreatePreview que llama a createPreview y actualiza estados. 7) Implementa handleUpdatePreview que llama a updatePreview y actualiza estados. 8) Renderiza: (a) spinner cuando loading, (b) mensaje de error cuando error, (c) simulador con datos cuando preview existe. 9) Maneja error mostrando toast notifications. 10) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "VistaPreviewAppPage.tsx: imports del servicio y tipos",
+        "VistaPreviewAppPage.tsx: estados loading, error, preview, isCreating, isUpdating",
+        "VistaPreviewAppPage.tsx: useEffect para cargar preview",
+        "VistaPreviewAppPage.tsx: handleCreatePreview implementado",
+        "VistaPreviewAppPage.tsx: handleUpdatePreview implementado",
+        "VistaPreviewAppPage.tsx: renderizado condicional según estados"
+      ],
+      "acceptance_criteria": [
+        "Al cargar la página se muestra loading y desaparece con la respuesta",
+        "Si la API devuelve preview, se muestra en el simulador",
+        "Si la API falla, aparece toast de error",
+        "Al crear preview se muestra loading y toast de éxito",
+        "Al actualizar preview se muestra loading y toast de éxito",
+        "La página no contiene mocks ni URLs hardcodeadas"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en VistaPreviewAppPage.tsx si falla cualquier criterio."
+    },
+    {
+      "id": "P8",
+      "order": 8,
+      "title": "Configurar variables de entorno para el frontend",
+      "files_hint": [
+        ".env",
+        "vite.config.ts"
+      ],
+      "preconditions": [
+        "Proyecto usa Vite como bundler",
+        "Archivo .env existe o se creará"
+      ],
+      "content": "Actúa como desarrollador de configuración. 1) Abre/crea el archivo .env en la raíz del proyecto. 2) Agrega VITE_API_URL=http://localhost:5000 (o la URL del backend). 3) Verifica que vite.config.ts tenga la configuración correcta para variables de entorno. 4) Si no existe vite.config.ts, créalo con la configuración básica. 5) Asegúrate de que las variables de entorno estén disponibles en el código. 6) Muestra diffs de .env y vite.config.ts y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        ".env: VITE_API_URL configurado",
+        "vite.config.ts: configuración de variables de entorno"
+      ],
+      "acceptance_criteria": [
+        "VITE_API_URL está definido en .env",
+        "import.meta.env.VITE_API_URL es accesible en el código",
+        "No hay URLs hardcodeadas en los servicios API"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en .env y vite.config.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P9",
+      "order": 9,
+      "title": "Crear tests unitarios para los servicios API",
+      "files_hint": [
+        "src/features/plancreatormax/app-white-label/app-white-label/__tests__/configuracionAppApi.test.ts",
+        "src/features/plancreatormax/app-white-label/app-white-label/__tests__/personalizacionPushApi.test.ts",
+        "src/features/plancreatormax/app-white-label/app-white-label/__tests__/vistaPreviewAppApi.test.ts"
+      ],
+      "preconditions": [
+        "Servicios API implementados completamente",
+        "Tipos TypeScript definidos",
+        "Jest/Vitest configurado en el proyecto"
+      ],
+      "content": "Actúa como desarrollador de testing. 1) Crea el directorio __tests__ en src/features/plancreatormax/app-white-label/app-white-label/. 2) Crea configuracionAppApi.test.ts con tests para getAppConfig, updateAppConfig, uploadLogo. 3) Crea personalizacionPushApi.test.ts con tests para createNotification, getNotifications, updateNotification, deleteNotification, getNotificationStats. 4) Crea vistaPreviewAppApi.test.ts con tests para createPreview, getPreview, updatePreview. 5) Cada test debe verificar: llamada correcta al endpoint, manejo de errores, tipos de respuesta. 6) Usa mocks de axios para simular respuestas. 7) Muestra diffs de cada archivo de test y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "__tests__/configuracionAppApi.test.ts: tests para configuración",
+        "__tests__/personalizacionPushApi.test.ts: tests para notificaciones",
+        "__tests__/vistaPreviewAppApi.test.ts: tests para preview"
+      ],
+      "acceptance_criteria": [
+        "Tests cubren todas las funciones de cada servicio",
+        "Tests verifican llamadas correctas a endpoints",
+        "Tests verifican manejo de errores",
+        "Tests usan mocks de axios",
+        "Todos los tests pasan"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Eliminar archivos de test si fallan los criterios."
+    },
+    {
+      "id": "P10",
+      "order": 10,
+      "title": "Verificar integración end-to-end del módulo app-white-label",
+      "files_hint": [
+        "src/features/plancreatormax/app-white-label/app-white-label/**"
+      ],
+      "preconditions": [
+        "Todos los servicios API implementados",
+        "Todas las páginas integradas con servicios",
+        "Variables de entorno configuradas",
+        "Backend funcionando en /api/app-white-label"
+      ],
+      "content": "Actúa como desarrollador de integración. 1) Verifica que todos los servicios API estén funcionando correctamente. 2) Verifica que todas las páginas estén integradas con los servicios. 3) Verifica que no haya mocks ni URLs hardcodeadas. 4) Verifica que los tipos TypeScript estén correctos. 5) Verifica que el manejo de errores funcione en todas las páginas. 6) Verifica que los estados de loading/error/empty se muestren correctamente. 7) Ejecuta los tests unitarios y verifica que pasen. 8) Muestra un resumen de la verificación y espera confirmación.",
+      "expected_changes": [
+        "Verificación completa del módulo",
+        "Tests pasando",
+        "Integración funcionando"
+      ],
+      "acceptance_criteria": [
+        "Todos los servicios API funcionan correctamente",
+        "Todas las páginas se integran con los servicios",
+        "No hay mocks ni URLs hardcodeadas",
+        "Tipos TypeScript son correctos",
+        "Manejo de errores funciona en todas las páginas",
+        "Estados de loading/error/empty se muestran correctamente",
+        "Tests unitarios pasan",
+        "Módulo está completamente interconectado"
+      ],
+      "timeout_sec": 600,
+      "rollback_plan": "Identificar y corregir problemas específicos según los criterios fallidos."
+    }
+  ]
+}

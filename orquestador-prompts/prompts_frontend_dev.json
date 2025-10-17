@@ -1,0 +1,47 @@
+{
+  "nombre": "Desarrollador Frontend - React/TypeScript",
+  "version": "1.0",
+  "descripcion": "Prompts especializados para desarrollo frontend con React, TypeScript y mejores prácticas",
+  "prompts": [
+    {
+      "id": "frontend_analyze_requirements",
+      "nombre": "Analizar Requisitos Frontend",
+      "prompt": "Analiza los requisitos de user stories y crea un plan de desarrollo frontend que incluya:\n\n## 🎨 COMPONENTES UI NECESARIOS\n[Lista de componentes React requeridos]\n\n## 📱 PÁGINAS/VISTAS\n[Estructura de páginas y routing]\n\n## 🔧 ESTADO GLOBAL\n[Estado de aplicación y gestión de datos]\n\n## 🎯 HOOKS PERSONALIZADOS\n[Hooks específicos para la funcionalidad]\n\n## 📦 DEPENDENCIAS\n[Librerías y paquetes necesarios]\n\n## 🎨 DISEÑO Y UX\n[Consideraciones de diseño y experiencia de usuario]",
+      "contexto": "Análisis de requisitos para desarrollo frontend"
+    },
+    {
+      "id": "frontend_create_components",
+      "nombre": "Crear Componentes React",
+      "prompt": "Crea componentes React con TypeScript siguiendo estas mejores prácticas:\n\n- Usar TypeScript con tipos estrictos\n- Componentes funcionales con hooks\n- Props interfaces bien definidas\n- Manejo de estado con useState/useReducer\n- Efectos con useEffect\n- Memoización con useMemo/useCallback\n- Accesibilidad (a11y)\n- Responsive design\n- Testing con Jest/React Testing Library\n\nIncluye ejemplos de código completos y comentados.",
+      "contexto": "Desarrollo de componentes React"
+    },
+    {
+      "id": "frontend_state_management",
+      "nombre": "Gestión de Estado",
+      "prompt": "Diseña la arquitectura de estado para la aplicación considerando:\n\n- **Estado Local**: useState para componentes simples\n- **Estado Compartido**: Context API o Redux Toolkit\n- **Estado del Servidor**: React Query/TanStack Query\n- **Formularios**: React Hook Form con validación\n- **Cache**: Estrategias de caché y sincronización\n- **Persistencia**: LocalStorage/SessionStorage\n\nProporciona ejemplos de implementación para cada caso.",
+      "contexto": "Arquitectura de estado en React"
+    },
+    {
+      "id": "frontend_routing_navigation",
+      "nombre": "Routing y Navegación",
+      "prompt": "Configura el sistema de routing con React Router v6 incluyendo:\n\n- Rutas públicas y privadas\n- Lazy loading de componentes\n- Protección de rutas\n- Navegación programática\n- Parámetros de URL\n- Query parameters\n- Nested routes\n- Breadcrumbs\n- 404 handling\n\nIncluye configuración completa y ejemplos de uso.",
+      "contexto": "Sistema de navegación en React"
+    },
+    {
+      "id": "frontend_performance_optimization",
+      "nombre": "Optimización de Rendimiento",
+      "prompt": "Implementa optimizaciones de rendimiento para la aplicación:\n\n- **Code Splitting**: Lazy loading de componentes\n- **Bundle Optimization**: Análisis y optimización del bundle\n- **Memoization**: React.memo, useMemo, useCallback\n- **Virtual Scrolling**: Para listas grandes\n- **Image Optimization**: Lazy loading de imágenes\n- **Caching**: Estrategias de caché\n- **Lighthouse**: Optimización de métricas\n\nProporciona métricas antes/después y herramientas de medición.",
+      "contexto": "Optimización de rendimiento frontend"
+    }
+  ],
+  "configuracion": {
+    "framework": "React 18+",
+    "lenguaje": "TypeScript",
+    "styling": "Tailwind CSS",
+    "testing": "Jest + React Testing Library"
+  }
+}
+
+
+
+

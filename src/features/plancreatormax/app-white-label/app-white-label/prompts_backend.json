@@ -1,0 +1,383 @@
+{
+  "meta": {
+    "module": "app-white-label",
+    "side": "backend",
+    "run_id": "2024-01-15T10:00:00Z",
+    "base_path": "/api/app-white-label"
+  },
+  "prompts": [
+    {
+      "id": "P1",
+      "order": 1,
+      "title": "Crear modelo AppConfig para configuración de aplicaciones",
+      "files_hint": [
+        "backend/src/models/AppConfig.model.js"
+      ],
+      "preconditions": [
+        "Directorio models/ existe",
+        "Mongoose configurado en el proyecto",
+        "Esquema de base de datos definido"
+      ],
+      "content": "Actúa como desarrollador de modelos. 1) Crea el archivo backend/src/models/AppConfig.model.js. 2) Define el esquema de AppConfig con campos: appName (String, required), primaryColor (String, required), secondaryColor (String, required), icon (String), logo (String), typography (String, required), splashScreen (Object con backgroundColor, logoUrl, duration), timestamps (createdAt, updatedAt). 3) Agrega validaciones: appName mínimo 3 caracteres, colores en formato hex, typography debe ser una de las opciones válidas. 4) Agrega índices para búsquedas por appName. 5) Exporta el modelo. 6) Muestra el diff del archivo creado y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "AppConfig.model.js: esquema de AppConfig creado",
+        "AppConfig.model.js: validaciones implementadas",
+        "AppConfig.model.js: índices agregados",
+        "AppConfig.model.js: modelo exportado"
+      ],
+      "acceptance_criteria": [
+        "Esquema AppConfig creado con todos los campos requeridos",
+        "Validaciones funcionan correctamente",
+        "Índices están definidos",
+        "Modelo se exporta correctamente",
+        "No hay errores de sintaxis"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Eliminar AppConfig.model.js si no cumple los criterios."
+    },
+    {
+      "id": "P2",
+      "order": 2,
+      "title": "Crear modelo Notification para notificaciones push",
+      "files_hint": [
+        "backend/src/models/Notification.model.js"
+      ],
+      "preconditions": [
+        "Directorio models/ existe",
+        "Mongoose configurado en el proyecto",
+        "Esquema de base de datos definido"
+      ],
+      "content": "Actúa como desarrollador de modelos. 1) Crea el archivo backend/src/models/Notification.model.js. 2) Define el esquema de Notification con campos: title (String, required), message (String, required), status (String, enum: ['draft', 'scheduled', 'sent', 'failed'], default: 'draft'), sentAt (Date), openRate (Number, default: 0), clickRate (Number, default: 0), segmentFilters (Object con activeUsers, inactiveUsers, ios, android, minSessions), timestamps (createdAt, updatedAt). 3) Agrega validaciones: title mínimo 5 caracteres, message mínimo 10 caracteres, openRate y clickRate entre 0 y 100. 4) Agrega índices para búsquedas por status y sentAt. 5) Exporta el modelo. 6) Muestra el diff del archivo creado y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "Notification.model.js: esquema de Notification creado",
+        "Notification.model.js: validaciones implementadas",
+        "Notification.model.js: índices agregados",
+        "Notification.model.js: modelo exportado"
+      ],
+      "acceptance_criteria": [
+        "Esquema Notification creado con todos los campos requeridos",
+        "Validaciones funcionan correctamente",
+        "Índices están definidos",
+        "Modelo se exporta correctamente",
+        "No hay errores de sintaxis"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Eliminar Notification.model.js si no cumple los criterios."
+    },
+    {
+      "id": "P3",
+      "order": 3,
+      "title": "Crear modelo Preview para vistas previas de aplicaciones",
+      "files_hint": [
+        "backend/src/models/Preview.model.js"
+      ],
+      "preconditions": [
+        "Directorio models/ existe",
+        "Mongoose configurado en el proyecto",
+        "Esquema de base de datos definido"
+      ],
+      "content": "Actúa como desarrollador de modelos. 1) Crea el archivo backend/src/models/Preview.model.js. 2) Define el esquema de Preview con campos: appConfig (Object, required), deviceType (String, enum: ['iOS', 'Android', 'Tablet', 'Desktop'], required), currentScreen (String, required), previewUrl (String, required), isLive (Boolean, default: false), timestamps (createdAt, updatedAt). 3) Agrega validaciones: deviceType debe ser una de las opciones válidas, currentScreen no puede estar vacío, previewUrl debe ser una URL válida. 4) Agrega índices para búsquedas por deviceType y isLive. 5) Exporta el modelo. 6) Muestra el diff del archivo creado y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "Preview.model.js: esquema de Preview creado",
+        "Preview.model.js: validaciones implementadas",
+        "Preview.model.js: índices agregados",
+        "Preview.model.js: modelo exportado"
+      ],
+      "acceptance_criteria": [
+        "Esquema Preview creado con todos los campos requeridos",
+        "Validaciones funcionan correctamente",
+        "Índices están definidos",
+        "Modelo se exporta correctamente",
+        "No hay errores de sintaxis"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Eliminar Preview.model.js si no cumple los criterios."
+    },
+    {
+      "id": "P4",
+      "order": 4,
+      "title": "Crear controlador appWhiteLabel con lógica de negocio",
+      "files_hint": [
+        "backend/src/controllers/appWhiteLabel.controller.js"
+      ],
+      "preconditions": [
+        "Directorio controllers/ existe",
+        "Modelos AppConfig, Notification, Preview creados",
+        "Middleware de autenticación disponible"
+      ],
+      "content": "Actúa como desarrollador de controladores. 1) Crea el archivo backend/src/controllers/appWhiteLabel.controller.js. 2) Importa los modelos AppConfig, Notification, Preview. 3) Implementa getAppConfig: async (req, res) que busca la configuración de la app del usuario autenticado. 4) Implementa updateAppConfig: async (req, res) que actualiza la configuración de la app. 5) Implementa uploadLogo: async (req, res) que maneja la subida de logos. 6) Implementa getNotifications: async (req, res) que lista las notificaciones del usuario. 7) Implementa createNotification: async (req, res) que crea una nueva notificación. 8) Implementa updateNotification: async (req, res) que actualiza una notificación. 9) Implementa deleteNotification: async (req, res) que elimina una notificación. 10) Implementa getNotificationStats: async (req, res) que devuelve estadísticas de notificaciones. 11) Implementa createPreview: async (req, res) que crea una vista previa. 12) Implementa getPreview: async (req, res) que obtiene una vista previa. 13) Implementa updatePreview: async (req, res) que actualiza una vista previa. 14) Maneja errores con try-catch y respuestas consistentes. 15) Muestra diffs de cada función y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "appWhiteLabel.controller.js: imports de modelos",
+        "appWhiteLabel.controller.js: función getAppConfig implementada",
+        "appWhiteLabel.controller.js: función updateAppConfig implementada",
+        "appWhiteLabel.controller.js: función uploadLogo implementada",
+        "appWhiteLabel.controller.js: función getNotifications implementada",
+        "appWhiteLabel.controller.js: función createNotification implementada",
+        "appWhiteLabel.controller.js: función updateNotification implementada",
+        "appWhiteLabel.controller.js: función deleteNotification implementada",
+        "appWhiteLabel.controller.js: función getNotificationStats implementada",
+        "appWhiteLabel.controller.js: función createPreview implementada",
+        "appWhiteLabel.controller.js: función getPreview implementada",
+        "appWhiteLabel.controller.js: función updatePreview implementada",
+        "appWhiteLabel.controller.js: manejo de errores implementado"
+      ],
+      "acceptance_criteria": [
+        "Todas las funciones del controlador están implementadas",
+        "Manejo de errores funciona correctamente",
+        "Respuestas son consistentes",
+        "No hay errores de sintaxis",
+        "Funciones usan los modelos correctos"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en appWhiteLabel.controller.js si falla cualquier criterio."
+    },
+    {
+      "id": "P5",
+      "order": 5,
+      "title": "Crear rutas appWhiteLabel con endpoints REST",
+      "files_hint": [
+        "backend/src/routes/appWhiteLabel.routes.js"
+      ],
+      "preconditions": [
+        "Directorio routes/ existe",
+        "Controlador appWhiteLabel creado",
+        "Middleware de autenticación disponible",
+        "Middleware de validación disponible"
+      ],
+      "content": "Actúa como desarrollador de rutas. 1) Crea el archivo backend/src/routes/appWhiteLabel.routes.js. 2) Importa express y el controlador appWhiteLabel. 3) Importa middleware de autenticación y validación. 4) Define router.get('/config', auth, ctrl.getAppConfig) para obtener configuración. 5) Define router.post('/config', auth, validate(AppConfigRequest), ctrl.updateAppConfig) para actualizar configuración. 6) Define router.post('/config/upload-logo', auth, upload.single('logo'), ctrl.uploadLogo) para subir logo. 7) Define router.get('/notifications', auth, ctrl.getNotifications) para listar notificaciones. 8) Define router.post('/notifications', auth, validate(CreateNotificationRequest), ctrl.createNotification) para crear notificación. 9) Define router.put('/notifications/:id', auth, validate(UpdateNotificationRequest), ctrl.updateNotification) para actualizar notificación. 10) Define router.delete('/notifications/:id', auth, ctrl.deleteNotification) para eliminar notificación. 11) Define router.get('/notifications/stats', auth, ctrl.getNotificationStats) para obtener estadísticas. 12) Define router.post('/preview', auth, validate(PreviewConfigRequest), ctrl.createPreview) para crear vista previa. 13) Define router.get('/preview/:id', auth, ctrl.getPreview) para obtener vista previa. 14) Define router.put('/preview/:id', auth, validate(PreviewConfigRequest), ctrl.updatePreview) para actualizar vista previa. 15) Exporta el router. 16) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "appWhiteLabel.routes.js: imports de express y controlador",
+        "appWhiteLabel.routes.js: imports de middleware",
+        "appWhiteLabel.routes.js: ruta GET /config",
+        "appWhiteLabel.routes.js: ruta POST /config",
+        "appWhiteLabel.routes.js: ruta POST /config/upload-logo",
+        "appWhiteLabel.routes.js: ruta GET /notifications",
+        "appWhiteLabel.routes.js: ruta POST /notifications",
+        "appWhiteLabel.routes.js: ruta PUT /notifications/:id",
+        "appWhiteLabel.routes.js: ruta DELETE /notifications/:id",
+        "appWhiteLabel.routes.js: ruta GET /notifications/stats",
+        "appWhiteLabel.routes.js: ruta POST /preview",
+        "appWhiteLabel.routes.js: ruta GET /preview/:id",
+        "appWhiteLabel.routes.js: ruta PUT /preview/:id",
+        "appWhiteLabel.routes.js: router exportado"
+      ],
+      "acceptance_criteria": [
+        "Todas las rutas están definidas correctamente",
+        "Middleware de autenticación está aplicado",
+        "Middleware de validación está aplicado",
+        "Rutas usan el controlador correcto",
+        "Router se exporta correctamente",
+        "No hay errores de sintaxis"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Eliminar appWhiteLabel.routes.js si falla cualquier criterio."
+    },
+    {
+      "id": "P6",
+      "order": 6,
+      "title": "Montar rutas appWhiteLabel en la API principal",
+      "files_hint": [
+        "backend/src/routes/api.routes.js"
+      ],
+      "preconditions": [
+        "Existe api.routes.js",
+        "appWhiteLabel.routes.js creado",
+        "Estructura de rutas definida"
+      ],
+      "content": "Actúa como desarrollador de integración. 1) Abre backend/src/routes/api.routes.js. 2) Importa appWhiteLabelRoutes desde './appWhiteLabel.routes.js'. 3) Agrega router.use('/app-white-label', appWhiteLabelRoutes) para montar las rutas. 4) Verifica que la importación sea correcta. 5) Verifica que el montaje de rutas sea correcto. 6) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "api.routes.js: import de appWhiteLabelRoutes",
+        "api.routes.js: montaje de rutas en /app-white-label"
+      ],
+      "acceptance_criteria": [
+        "appWhiteLabelRoutes se importa correctamente",
+        "Rutas se montan en /app-white-label",
+        "No hay errores de sintaxis",
+        "Rutas son accesibles en /api/app-white-label"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en api.routes.js si falla cualquier criterio."
+    },
+    {
+      "id": "P7",
+      "order": 7,
+      "title": "Implementar middleware de autenticación para app-white-label",
+      "files_hint": [
+        "backend/src/middleware/auth.js"
+      ],
+      "preconditions": [
+        "Directorio middleware/ existe",
+        "JWT configurado en el proyecto",
+        "Modelo User disponible"
+      ],
+      "content": "Actúa como desarrollador de middleware. 1) Abre/crea backend/src/middleware/auth.js. 2) Implementa middleware de autenticación que verifica JWT tokens. 3) Extrae el token del header Authorization Bearer. 4) Verifica el token con JWT_SECRET. 5) Extrae el userId del token y lo agrega a req.user. 6) Maneja errores de token inválido, expirado o faltante. 7) Devuelve 401 para tokens inválidos. 8) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "auth.js: middleware de autenticación implementado",
+        "auth.js: verificación de JWT tokens",
+        "auth.js: extracción de userId",
+        "auth.js: manejo de errores de autenticación"
+      ],
+      "acceptance_criteria": [
+        "Middleware verifica JWT tokens correctamente",
+        "Extrae userId del token",
+        "Maneja errores de autenticación",
+        "Devuelve 401 para tokens inválidos",
+        "No hay errores de sintaxis"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en auth.js si falla cualquier criterio."
+    },
+    {
+      "id": "P8",
+      "order": 8,
+      "title": "Implementar middleware de validación para DTOs",
+      "files_hint": [
+        "backend/src/middleware/validation.js"
+      ],
+      "preconditions": [
+        "Directorio middleware/ existe",
+        "Joi o celebrate configurado en el proyecto",
+        "DTOs definidos en el documento de interconexión"
+      ],
+      "content": "Actúa como desarrollador de middleware. 1) Abre/crea backend/src/middleware/validation.js. 2) Implementa validadores para AppConfigRequest con campos: appName (string, min 3), primaryColor (string, pattern hex), secondaryColor (string, pattern hex), icon (string, optional), logo (string, optional), typography (string, enum). 3) Implementa validadores para CreateNotificationRequest con campos: title (string, min 5), message (string, min 10), scheduledAt (date, optional), segmentFilters (object, optional). 4) Implementa validadores para UpdateNotificationRequest con campos opcionales. 5) Implementa validadores para PreviewConfigRequest con campos: appConfig (object), deviceType (string, enum), currentScreen (string, min 1). 6) Maneja errores de validación y devuelve 400 con mensajes claros. 7) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "validation.js: validadores para AppConfigRequest",
+        "validation.js: validadores para CreateNotificationRequest",
+        "validation.js: validadores para UpdateNotificationRequest",
+        "validation.js: validadores para PreviewConfigRequest",
+        "validation.js: manejo de errores de validación"
+      ],
+      "acceptance_criteria": [
+        "Validadores funcionan correctamente",
+        "Maneja errores de validación",
+        "Devuelve 400 con mensajes claros",
+        "No hay errores de sintaxis",
+        "Validaciones cubren todos los DTOs"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en validation.js si falla cualquier criterio."
+    },
+    {
+      "id": "P9",
+      "order": 9,
+      "title": "Configurar middleware de upload para archivos",
+      "files_hint": [
+        "backend/src/middleware/upload.js"
+      ],
+      "preconditions": [
+        "Directorio middleware/ existe",
+        "Multer configurado en el proyecto",
+        "Directorio de uploads definido"
+      ],
+      "content": "Actúa como desarrollador de middleware. 1) Abre/crea backend/src/middleware/upload.js. 2) Configura multer para upload de archivos con destino en UPLOAD_PATH. 3) Implementa validaciones: solo archivos de imagen (jpeg, png, gif), tamaño máximo 5MB. 4) Genera nombres únicos para archivos subidos. 5) Maneja errores de upload y devuelve 400 con mensajes claros. 6) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "upload.js: configuración de multer",
+        "upload.js: validaciones de archivos",
+        "upload.js: generación de nombres únicos",
+        "upload.js: manejo de errores de upload"
+      ],
+      "acceptance_criteria": [
+        "Multer configurado correctamente",
+        "Validaciones de archivos funcionan",
+        "Nombres únicos generados",
+        "Manejo de errores funciona",
+        "No hay errores de sintaxis"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en upload.js si falla cualquier criterio."
+    },
+    {
+      "id": "P10",
+      "order": 10,
+      "title": "Configurar variables de entorno para el backend",
+      "files_hint": [
+        ".env",
+        "backend/src/config/db.js"
+      ],
+      "preconditions": [
+        "Archivo .env existe o se creará",
+        "Configuración de base de datos definida"
+      ],
+      "content": "Actúa como desarrollador de configuración. 1) Abre/crea el archivo .env en la raíz del proyecto. 2) Agrega CORS_ORIGIN=http://localhost:5173 (o la URL del frontend). 3) Agrega JWT_SECRET=tu_clave_secreta_aqui. 4) Agrega DB_URI=mongodb://localhost:27017/tu_base_de_datos. 5) Agrega UPLOAD_PATH=uploads/. 6) Verifica que backend/src/config/db.js use DB_URI. 7) Muestra diffs de .env y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        ".env: CORS_ORIGIN configurado",
+        ".env: JWT_SECRET configurado",
+        ".env: DB_URI configurado",
+        ".env: UPLOAD_PATH configurado"
+      ],
+      "acceptance_criteria": [
+        "CORS_ORIGIN está definido",
+        "JWT_SECRET está definido",
+        "DB_URI está definido",
+        "UPLOAD_PATH está definido",
+        "Variables son accesibles en el código"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en .env si falla cualquier criterio."
+    },
+    {
+      "id": "P11",
+      "order": 11,
+      "title": "Crear tests de integración para endpoints app-white-label",
+      "files_hint": [
+        "backend/src/__tests__/appWhiteLabel.test.js"
+      ],
+      "preconditions": [
+        "Directorio __tests__ existe",
+        "Supertest configurado en el proyecto",
+        "Endpoints app-white-label implementados"
+      ],
+      "content": "Actúa como desarrollador de testing. 1) Crea el archivo backend/src/__tests__/appWhiteLabel.test.js. 2) Importa supertest, app y los modelos necesarios. 3) Crea tests para GET /api/app-white-label/config que verifique respuesta 200 y estructura de datos. 4) Crea tests para POST /api/app-white-label/config que verifique creación de configuración. 5) Crea tests para GET /api/app-white-label/notifications que verifique respuesta 200 y array de notificaciones. 6) Crea tests para POST /api/app-white-label/notifications que verifique creación de notificación. 7) Crea tests para GET /api/app-white-label/preview que verifique respuesta 200 y estructura de preview. 8) Crea tests para POST /api/app-white-label/preview que verifique creación de preview. 9) Verifica que todos los tests pasen. 10) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "appWhiteLabel.test.js: tests para endpoints de configuración",
+        "appWhiteLabel.test.js: tests para endpoints de notificaciones",
+        "appWhiteLabel.test.js: tests para endpoints de preview",
+        "appWhiteLabel.test.js: verificación de respuestas y estructuras"
+      ],
+      "acceptance_criteria": [
+        "Tests cubren todos los endpoints principales",
+        "Tests verifican respuestas 200",
+        "Tests verifican estructuras de datos",
+        "Todos los tests pasan",
+        "No hay errores de sintaxis"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Eliminar appWhiteLabel.test.js si fallan los criterios."
+    },
+    {
+      "id": "P12",
+      "order": 12,
+      "title": "Verificar integración end-to-end del backend app-white-label",
+      "files_hint": [
+        "backend/src/**"
+      ],
+      "preconditions": [
+        "Todos los modelos creados",
+        "Controlador implementado",
+        "Rutas definidas y montadas",
+        "Middleware configurado",
+        "Variables de entorno configuradas"
+      ],
+      "content": "Actúa como desarrollador de integración. 1) Verifica que todos los modelos estén funcionando correctamente. 2) Verifica que el controlador esté implementado completamente. 3) Verifica que las rutas estén definidas y montadas correctamente. 4) Verifica que el middleware de autenticación funcione. 5) Verifica que el middleware de validación funcione. 6) Verifica que el middleware de upload funcione. 7) Verifica que las variables de entorno estén configuradas. 8) Ejecuta los tests de integración y verifica que pasen. 9) Verifica que los endpoints sean accesibles en /api/app-white-label. 10) Muestra un resumen de la verificación y espera confirmación.",
+      "expected_changes": [
+        "Verificación completa del backend",
+        "Tests pasando",
+        "Integración funcionando"
+      ],
+      "acceptance_criteria": [
+        "Todos los modelos funcionan correctamente",
+        "Controlador está implementado completamente",
+        "Rutas están definidas y montadas correctamente",
+        "Middleware de autenticación funciona",
+        "Middleware de validación funciona",
+        "Middleware de upload funciona",
+        "Variables de entorno están configuradas",
+        "Tests de integración pasan",
+        "Endpoints son accesibles en /api/app-white-label",
+        "Backend está completamente interconectado"
+      ],
+      "timeout_sec": 600,
+      "rollback_plan": "Identificar y corregir problemas específicos según los criterios fallidos."
+    }
+  ]
+}

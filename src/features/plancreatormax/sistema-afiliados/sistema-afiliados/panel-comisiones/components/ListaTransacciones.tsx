@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Search, Download, Filter, Eye, CheckCircle, Clock, AlertCircle } from 'lucide-react';
+import toast from 'react-hot-toast';
+import Modal from '@/components/ui/modal';
 
 interface Transaccion {
   id: string;
@@ -55,6 +58,11 @@ const mockTransacciones: Transaccion[] = [
 ];
 
 const ListaTransacciones: React.FC = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterEstado, setFilterEstado] = useState<string>('todos');
+  const [selectedTransaccion, setSelectedTransaccion] = useState<Transaccion | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const getEstadoColor = (estado: Transaccion['estado']) => {
     switch (estado) {
       case 'pagado':
@@ -68,9 +76,87 @@ const ListaTransacciones: React.FC = () => {
     }
   };
 
+  const getEstadoIcon = (estado: Transaccion['estado']) => {
+    switch (estado) {
+      case 'pagado':
+        return <CheckCircle className="w-4 h-4" />;
+      case 'pendiente':
+        return <Clock className="w-4 h-4" />;
+      case 'procesando':
+        return <AlertCircle className="w-4 h-4" />;
+      default:
+        return null;
+    }
+  };
+
+  const filteredTransacciones = mockTransacciones.filter(transaccion => {
+    const matchesSearch = transaccion.nombreAfiliado.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         transaccion.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         transaccion.afiliadoId.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesFilter = filterEstado === 'todos' || transaccion.estado === filterEstado;
+    
+    return matchesSearch && matchesFilter;
+  });
+
+  const handleVerDetalles = (transaccion: Transaccion) => {
+    setSelectedTransaccion(transaccion);
+    setIsModalOpen(true);
+  };
+
+  const handleExportar = () => {
+    toast.success('Exportando transacciones...');
+    // Aquí se implementaría la lógica de exportación
+    setTimeout(() => {
+      toast.success('Archivo exportado correctamente');
+    }, 2000);
+  };
+
+  const handleCambiarEstado = (id: string, nuevoEstado: Transaccion['estado']) => {
+    toast.success(`Estado de transacción ${id} cambiado a ${nuevoEstado}`);
+    // Aquí se implementaría la lógica para cambiar el estado
+  };
+
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-semibold text-gray-700 mb-4">Transacciones Recientes</h2>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-semibold text-gray-700">Transacciones Recientes</h2>
+        <button
+          onClick={handleExportar}
+          className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+        >
+          <Download className="w-4 h-4" />
+          Exportar
+        </button>
+      </div>
+
+      {/* Barra de búsqueda y filtros */}
+      <div className="flex flex-col sm:flex-row gap-4 mb-6">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <input
+            type="text"
+            placeholder="Buscar por afiliado, ID o transacción..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <Filter className="w-4 h-4 text-gray-400" />
+          <select
+            value={filterEstado}
+            onChange={(e) => setFilterEstado(e.target.value)}
+            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="todos">Todos los estados</option>
+            <option value="pendiente">Pendiente</option>
+            <option value="procesando">Procesando</option>
+            <option value="pagado">Pagado</option>
+          </select>
+        </div>
+      </div>
+
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
@@ -96,10 +182,13 @@ const ListaTransacciones: React.FC = () => {
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Fecha
               </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Acciones
+              </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {mockTransacciones.map((transaccion) => (
+            {filteredTransacciones.map((transaccion) => (
               <tr key={transaccion.id}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   {transaccion.id}
@@ -117,18 +206,102 @@ const ListaTransacciones: React.FC = () => {
                   {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(transaccion.montoComision)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm">
-                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getEstadoColor(transaccion.estado)}`}>
+                  <span className={`px-2 inline-flex items-center gap-1 text-xs leading-5 font-semibold rounded-full ${getEstadoColor(transaccion.estado)}`}>
+                    {getEstadoIcon(transaccion.estado)}
                     {transaccion.estado.charAt(0).toUpperCase() + transaccion.estado.slice(1)}
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {transaccion.fecha}
                 </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => handleVerDetalles(transaccion)}
+                      className="p-1 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded"
+                      title="Ver detalles"
+                    >
+                      <Eye className="w-4 h-4" />
+                    </button>
+                    {transaccion.estado === 'pendiente' && (
+                      <button
+                        onClick={() => handleCambiarEstado(transaccion.id, 'procesando')}
+                        className="p-1 text-yellow-600 hover:text-yellow-800 hover:bg-yellow-50 rounded"
+                        title="Marcar como procesando"
+                      >
+                        <Clock className="w-4 h-4" />
+                      </button>
+                    )}
+                    {transaccion.estado === 'procesando' && (
+                      <button
+                        onClick={() => handleCambiarEstado(transaccion.id, 'pagado')}
+                        className="p-1 text-green-600 hover:text-green-800 hover:bg-green-50 rounded"
+                        title="Marcar como pagado"
+                      >
+                        <CheckCircle className="w-4 h-4" />
+                      </button>
+                    )}
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      {/* Modal de detalles de transacción */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Detalles de Transacción"
+        size="md"
+      >
+        {selectedTransaccion && (
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">ID Transacción</label>
+                <p className="mt-1 text-sm text-gray-900">{selectedTransaccion.id}</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">ID Afiliado</label>
+                <p className="mt-1 text-sm text-gray-900">{selectedTransaccion.afiliadoId}</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Nombre Afiliado</label>
+                <p className="mt-1 text-sm text-gray-900">{selectedTransaccion.nombreAfiliado}</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Estado</label>
+                <span className={`mt-1 inline-flex items-center gap-1 px-2 py-1 text-xs font-semibold rounded-full ${getEstadoColor(selectedTransaccion.estado)}`}>
+                  {getEstadoIcon(selectedTransaccion.estado)}
+                  {selectedTransaccion.estado.charAt(0).toUpperCase() + selectedTransaccion.estado.slice(1)}
+                </span>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Monto de Venta</label>
+                <p className="mt-1 text-sm text-gray-900">
+                  {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(selectedTransaccion.montoVenta)}
+                </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Porcentaje de Comisión</label>
+                <p className="mt-1 text-sm text-gray-900">{(selectedTransaccion.porcentajeComision * 100).toFixed(2)}%</p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Monto de Comisión</label>
+                <p className="mt-1 text-lg font-semibold text-green-600">
+                  {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(selectedTransaccion.montoComision)}
+                </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Fecha</label>
+                <p className="mt-1 text-sm text-gray-900">{selectedTransaccion.fecha}</p>
+              </div>
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 };

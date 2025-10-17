@@ -1,0 +1,307 @@
+{
+  "meta": {
+    "module": "src/features/plancreatorpro/comunidad/comunidad",
+    "side": "frontend",
+    "run_id": "2025-01-27T10:00:00Z",
+    "base_path": "/api/comunidad"
+  },
+  "prompts": [
+    {
+      "id": "P1",
+      "order": 1,
+      "title": "Crear tipos TypeScript compartidos para el módulo de comunidad",
+      "files_hint": [
+        "src/features/plancreatorpro/comunidad/comunidad/types/index.ts"
+      ],
+      "preconditions": [
+        "Módulo de comunidad existe con estructura de carpetas",
+        "BASE_PATH definido como /api/comunidad"
+      ],
+      "content": "Crea el archivo src/features/plancreatorpro/comunidad/comunidad/types/index.ts. Define todas las interfaces TypeScript según los DTOs del MD: CreatePostDto, CommentDto, PostResponse, UserResponse, CommentResponse, CreateGroupDto, GroupResponse, ReportDto, ReportResponse, UserActivityResponse, MedalResponse. Incluye también interfaces para Media y PollOption. Exporta todas las interfaces. Muestra el diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "types/index.ts creado con todas las interfaces TypeScript",
+        "Interfaces exportadas para uso en otros archivos"
+      ],
+      "acceptance_criteria": [
+        "Archivo types/index.ts existe con todas las interfaces definidas",
+        "Todas las interfaces coinciden con los DTOs del MD",
+        "Interfaces están correctamente exportadas"
+      ],
+      "timeout_sec": 120,
+      "rollback_plan": "Eliminar types/index.ts si las interfaces no coinciden con el MD."
+    },
+    {
+      "id": "P2",
+      "order": 2,
+      "title": "Implementar API completa de feed de comunidad con axios",
+      "files_hint": [
+        "src/features/plancreatorpro/comunidad/comunidad/feed-comunidad/feedComunidadApi.ts"
+      ],
+      "preconditions": [
+        "Existe feedComunidadApi.ts con datos simulados",
+        "Tipos TypeScript definidos en types/index.ts",
+        "VITE_API_URL configurado en variables de entorno"
+      ],
+      "content": "Abre src/features/plancreatorpro/comunidad/comunidad/feed-comunidad/feedComunidadApi.ts. 1) Importa axios y los tipos desde types/index.ts. 2) Configura API_BASE_URL usando `${import.meta.env.VITE_API_URL}/comunidad/feed`. 3) Crea instancia de axios con baseURL, timeout 10000ms, headers Content-Type application/json. 4) Agrega interceptor de request para Authorization Bearer token desde localStorage. 5) Agrega interceptor de response para manejo de errores 4xx/5xx. 6) Reemplaza TODAS las funciones simuladas con llamadas HTTP reales: getPosts(filter), getFixedPosts(), createPost(newPost), toggleLike(postId, userId), addComment(postId, comment), sharePost(postId), voteOnPoll(postId, optionId, userId). 7) Usa tipos TypeScript correctos para parámetros y respuestas. 8) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "feedComunidadApi.ts: configuración de axios con baseURL",
+        "feedComunidadApi.ts: interceptors de auth y error handling",
+        "feedComunidadApi.ts: todas las funciones reemplazadas con HTTP calls",
+        "feedComunidadApi.ts: tipos TypeScript aplicados correctamente"
+      ],
+      "acceptance_criteria": [
+        "API_BASE_URL usa VITE_API_URL correctamente",
+        "Interceptor de auth funciona con token del localStorage",
+        "Todas las funciones hacen llamadas HTTP reales (no mocks)",
+        "Manejo de errores 4xx/5xx implementado",
+        "Tipos TypeScript coinciden con interfaces del MD"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en feedComunidadApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P3",
+      "order": 3,
+      "title": "Implementar API completa de grupos de comunidad",
+      "files_hint": [
+        "src/features/plancreatorpro/comunidad/comunidad/grupos-comunidad/gruposComunidadApi.ts"
+      ],
+      "preconditions": [
+        "Existe gruposComunidadApi.ts con TODOs",
+        "Tipos TypeScript definidos en types/index.ts",
+        "VITE_API_URL configurado"
+      ],
+      "content": "Abre src/features/plancreatorpro/comunidad/comunidad/grupos-comunidad/gruposComunidadApi.ts. 1) Importa axios y tipos desde types/index.ts. 2) Configura API_BASE_URL usando `${import.meta.env.VITE_API_URL}/comunidad/grupos`. 3) Crea instancia de axios con configuración estándar (baseURL, timeout, headers). 4) Agrega interceptors de auth y error handling. 5) Implementa funciones: getGroups(), createGroup(group), joinGroup(groupId), leaveGroup(groupId), getGroupMembers(groupId), updateGroup(groupId, updates), deleteGroup(groupId). 6) Usa tipos TypeScript correctos: CreateGroupDto, GroupResponse, UserResponse. 7) Implementa manejo de errores para cada función. 8) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "gruposComunidadApi.ts: configuración completa de axios",
+        "gruposComunidadApi.ts: todas las funciones implementadas",
+        "gruposComunidadApi.ts: tipos TypeScript aplicados",
+        "gruposComunidadApi.ts: manejo de errores implementado"
+      ],
+      "acceptance_criteria": [
+        "Todas las funciones están implementadas (no TODOs)",
+        "API_BASE_URL configurado correctamente",
+        "Tipos TypeScript coinciden con interfaces del MD",
+        "Manejo de errores implementado en todas las funciones",
+        "Interceptors de auth funcionan correctamente"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en gruposComunidadApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P4",
+      "order": 4,
+      "title": "Implementar API completa de moderación de comunidad",
+      "files_hint": [
+        "src/features/plancreatorpro/comunidad/comunidad/moderacion-comunidad/moderacionComunidadApi.ts"
+      ],
+      "preconditions": [
+        "Existe moderacionComunidadApi.ts con funciones básicas",
+        "Tipos TypeScript definidos en types/index.ts",
+        "VITE_API_URL configurado"
+      ],
+      "content": "Abre src/features/plancreatorpro/comunidad/comunidad/moderacion-comunidad/moderacionComunidadApi.ts. 1) Importa axios y tipos desde types/index.ts. 2) Configura API_BASE_URL usando `${import.meta.env.VITE_API_URL}/comunidad/moderacion`. 3) Crea instancia de axios con configuración estándar. 4) Agrega interceptors de auth y error handling. 5) Implementa funciones: getReports(), createReport(report), markPost(postId, status), blockUser(userId), unblockUser(userId), deletePost(postId), approveRequest(requestId), rejectRequest(requestId), getFlaggedContent(), resolveReport(reportId). 6) Usa tipos TypeScript: ReportDto, ReportResponse, UserResponse. 7) Implementa manejo de errores específico para moderación. 8) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "moderacionComunidadApi.ts: configuración completa de axios",
+        "moderacionComunidadApi.ts: todas las funciones de moderación implementadas",
+        "moderacionComunidadApi.ts: tipos TypeScript aplicados",
+        "moderacionComunidadApi.ts: manejo de errores específico para moderación"
+      ],
+      "acceptance_criteria": [
+        "Todas las funciones de moderación están implementadas",
+        "API_BASE_URL configurado correctamente",
+        "Tipos TypeScript coinciden con interfaces del MD",
+        "Manejo de errores implementado en todas las funciones",
+        "Funciones específicas de moderación (block, delete, approve) implementadas"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en moderacionComunidadApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P5",
+      "order": 5,
+      "title": "Implementar API completa de ranking y actividad",
+      "files_hint": [
+        "src/features/plancreatorpro/comunidad/comunidad/ranking-actividad/rankingActividadApi.ts"
+      ],
+      "preconditions": [
+        "Existe rankingActividadApi.ts con funciones básicas",
+        "Tipos TypeScript definidos en types/index.ts",
+        "VITE_API_URL configurado"
+      ],
+      "content": "Abre src/features/plancreatorpro/comunidad/comunidad/ranking-actividad/rankingActividadApi.ts. 1) Importa axios y tipos desde types/index.ts. 2) Configura API_BASE_URL usando `${import.meta.env.VITE_API_URL}/comunidad/ranking`. 3) Crea instancia de axios con configuración estándar. 4) Agrega interceptors de auth y error handling. 5) Implementa funciones: getLeaderboard(page, limit), getUserMedals(userId), updateUserPoints(userId, points), getActivityStats(userId), getTopUsers(limit), getUserRank(userId), awardMedal(userId, medalId). 6) Usa tipos TypeScript: UserActivityResponse, MedalResponse. 7) Implementa paginación para leaderboard. 8) Implementa manejo de errores específico para ranking. 9) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "rankingActividadApi.ts: configuración completa de axios",
+        "rankingActividadApi.ts: todas las funciones de ranking implementadas",
+        "rankingActividadApi.ts: tipos TypeScript aplicados",
+        "rankingActividadApi.ts: paginación implementada",
+        "rankingActividadApi.ts: manejo de errores específico para ranking"
+      ],
+      "acceptance_criteria": [
+        "Todas las funciones de ranking están implementadas",
+        "API_BASE_URL configurado correctamente",
+        "Tipos TypeScript coinciden con interfaces del MD",
+        "Paginación implementada para leaderboard",
+        "Manejo de errores implementado en todas las funciones",
+        "Funciones específicas de ranking (medals, points, rank) implementadas"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en rankingActividadApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P6",
+      "order": 6,
+      "title": "Integrar API de feed en FeedComunidadPage con estados UI",
+      "files_hint": [
+        "src/features/plancreatorpro/comunidad/comunidad/feed-comunidad/FeedComunidadPage.tsx",
+        "src/features/plancreatorpro/comunidad/comunidad/feed-comunidad/feedComunidadApi.ts"
+      ],
+      "preconditions": [
+        "Existe FeedComunidadPage.tsx con UI implementada",
+        "feedComunidadApi.ts implementado con funciones HTTP",
+        "Tipos TypeScript definidos"
+      ],
+      "content": "Abre src/features/plancreatorpro/comunidad/comunidad/feed-comunidad/FeedComunidadPage.tsx. 1) Importa las funciones del servicio desde feedComunidadApi.ts. 2) Importa tipos desde types/index.ts. 3) Implementa estados locales: loading, error, posts, fixedPosts. 4) En useEffect, llama a getPosts(filter) y getFixedPosts() al cargar. 5) Implementa manejo de errores con try/catch. 6) Renderiza: (a) spinner cuando loading, (b) mensaje cuando posts.length===0, (c) lista de posts cuando hay datos. 7) Implementa funciones para crear post, dar like, comentar, compartir. 8) Agrega feedback visual para acciones del usuario. 9) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "FeedComunidadPage.tsx: imports del servicio y tipos",
+        "FeedComunidadPage.tsx: estados de loading, error, posts",
+        "FeedComunidadPage.tsx: lógica de carga de datos en useEffect",
+        "FeedComunidadPage.tsx: manejo de errores implementado",
+        "FeedComunidadPage.tsx: render condicional para estados UI"
+      ],
+      "acceptance_criteria": [
+        "Al cargar la página se muestra loading y desaparece con la respuesta",
+        "Si la API devuelve [], se muestra el estado empty",
+        "Si la API falla, aparece el mensaje de error",
+        "Las acciones de like, comentar, compartir funcionan",
+        "La página no contiene mocks ni datos simulados"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en FeedComunidadPage.tsx si falla cualquier criterio."
+    },
+    {
+      "id": "P7",
+      "order": 7,
+      "title": "Integrar API de grupos en GruposComunidadPage con estados UI",
+      "files_hint": [
+        "src/features/plancreatorpro/comunidad/comunidad/grupos-comunidad/GruposComunidadPage.tsx",
+        "src/features/plancreatorpro/comunidad/comunidad/grupos-comunidad/gruposComunidadApi.ts"
+      ],
+      "preconditions": [
+        "Existe GruposComunidadPage.tsx con UI implementada",
+        "gruposComunidadApi.ts implementado con funciones HTTP",
+        "Tipos TypeScript definidos"
+      ],
+      "content": "Abre src/features/plancreatorpro/comunidad/comunidad/grupos-comunidad/GruposComunidadPage.tsx. 1) Importa las funciones del servicio desde gruposComunidadApi.ts. 2) Importa tipos desde types/index.ts. 3) Implementa estados locales: loading, error, groups, selectedGroup. 4) En useEffect, llama a getGroups() al cargar. 5) Implementa manejo de errores con try/catch. 6) Renderiza: (a) spinner cuando loading, (b) mensaje cuando groups.length===0, (c) lista de grupos cuando hay datos. 7) Implementa funciones para crear grupo, unirse, salirse, ver detalles. 8) Agrega feedback visual para acciones del usuario. 9) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "GruposComunidadPage.tsx: imports del servicio y tipos",
+        "GruposComunidadPage.tsx: estados de loading, error, groups",
+        "GruposComunidadPage.tsx: lógica de carga de datos en useEffect",
+        "GruposComunidadPage.tsx: manejo de errores implementado",
+        "GruposComunidadPage.tsx: render condicional para estados UI"
+      ],
+      "acceptance_criteria": [
+        "Al cargar la página se muestra loading y desaparece con la respuesta",
+        "Si la API devuelve [], se muestra el estado empty",
+        "Si la API falla, aparece el mensaje de error",
+        "Las acciones de crear, unirse, salirse funcionan",
+        "La página no contiene mocks ni datos simulados"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en GruposComunidadPage.tsx si falla cualquier criterio."
+    },
+    {
+      "id": "P8",
+      "order": 8,
+      "title": "Integrar API de moderación en ModeracionComunidadPage con estados UI",
+      "files_hint": [
+        "src/features/plancreatorpro/comunidad/comunidad/moderacion-comunidad/ModeracionComunidadPage.tsx",
+        "src/features/plancreatorpro/comunidad/comunidad/moderacion-comunidad/moderacionComunidadApi.ts"
+      ],
+      "preconditions": [
+        "Existe ModeracionComunidadPage.tsx con UI implementada",
+        "moderacionComunidadApi.ts implementado con funciones HTTP",
+        "Tipos TypeScript definidos"
+      ],
+      "content": "Abre src/features/plancreatorpro/comunidad/comunidad/moderacion-comunidad/ModeracionComunidadPage.tsx. 1) Importa las funciones del servicio desde moderacionComunidadApi.ts. 2) Importa tipos desde types/index.ts. 3) Implementa estados locales: loading, error, reports, flaggedContent. 4) En useEffect, llama a getReports() y getFlaggedContent() al cargar. 5) Implementa manejo de errores con try/catch. 6) Renderiza: (a) spinner cuando loading, (b) mensaje cuando reports.length===0, (c) lista de reportes cuando hay datos. 7) Implementa funciones para marcar posts, bloquear usuarios, eliminar contenido, aprobar solicitudes. 8) Agrega feedback visual para acciones del moderador. 9) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "ModeracionComunidadPage.tsx: imports del servicio y tipos",
+        "ModeracionComunidadPage.tsx: estados de loading, error, reports",
+        "ModeracionComunidadPage.tsx: lógica de carga de datos en useEffect",
+        "ModeracionComunidadPage.tsx: manejo de errores implementado",
+        "ModeracionComunidadPage.tsx: render condicional para estados UI"
+      ],
+      "acceptance_criteria": [
+        "Al cargar la página se muestra loading y desaparece con la respuesta",
+        "Si la API devuelve [], se muestra el estado empty",
+        "Si la API falla, aparece el mensaje de error",
+        "Las acciones de moderación (marcar, bloquear, eliminar) funcionan",
+        "La página no contiene mocks ni datos simulados"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en ModeracionComunidadPage.tsx si falla cualquier criterio."
+    },
+    {
+      "id": "P9",
+      "order": 9,
+      "title": "Integrar API de ranking en RankingActividadPage con estados UI",
+      "files_hint": [
+        "src/features/plancreatorpro/comunidad/comunidad/ranking-actividad/RankingActividadPage.tsx",
+        "src/features/plancreatorpro/comunidad/comunidad/ranking-actividad/rankingActividadApi.ts"
+      ],
+      "preconditions": [
+        "Existe RankingActividadPage.tsx con UI implementada",
+        "rankingActividadApi.ts implementado con funciones HTTP",
+        "Tipos TypeScript definidos"
+      ],
+      "content": "Abre src/features/plancreatorpro/comunidad/comunidad/ranking-actividad/RankingActividadPage.tsx. 1) Importa las funciones del servicio desde rankingActividadApi.ts. 2) Importa tipos desde types/index.ts. 3) Implementa estados locales: loading, error, leaderboard, userMedals, userRank. 4) En useEffect, llama a getLeaderboard(), getUserMedals(userId), getUserRank(userId) al cargar. 5) Implementa manejo de errores con try/catch. 6) Renderiza: (a) spinner cuando loading, (b) mensaje cuando leaderboard.length===0, (c) tabla de ranking cuando hay datos. 7) Implementa funciones para actualizar puntos, ver medallas, ver estadísticas. 8) Agrega feedback visual para acciones del usuario. 9) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "RankingActividadPage.tsx: imports del servicio y tipos",
+        "RankingActividadPage.tsx: estados de loading, error, leaderboard",
+        "RankingActividadPage.tsx: lógica de carga de datos en useEffect",
+        "RankingActividadPage.tsx: manejo de errores implementado",
+        "RankingActividadPage.tsx: render condicional para estados UI"
+      ],
+      "acceptance_criteria": [
+        "Al cargar la página se muestra loading y desaparece con la respuesta",
+        "Si la API devuelve [], se muestra el estado empty",
+        "Si la API falla, aparece el mensaje de error",
+        "Las acciones de ranking (ver medallas, estadísticas) funcionan",
+        "La página no contiene mocks ni datos simulados"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en RankingActividadPage.tsx si falla cualquier criterio."
+    },
+    {
+      "id": "P10",
+      "order": 10,
+      "title": "Prueba de integración completa del módulo de comunidad",
+      "files_hint": [
+        "src/features/plancreatorpro/comunidad/comunidad/**"
+      ],
+      "preconditions": [
+        "Todas las APIs implementadas y conectadas",
+        "Todas las páginas integradas con servicios",
+        "Tipos TypeScript definidos",
+        "VITE_API_URL configurado"
+      ],
+      "content": "Realiza una prueba completa del módulo de comunidad. 1) Verifica que todas las páginas cargan sin errores. 2) Prueba la funcionalidad de feed: crear post, dar like, comentar, compartir. 3) Prueba la funcionalidad de grupos: crear grupo, unirse, salirse. 4) Prueba la funcionalidad de moderación: ver reportes, marcar posts, bloquear usuarios. 5) Prueba la funcionalidad de ranking: ver leaderboard, medallas, estadísticas. 6) Verifica que no hay mocks ni datos simulados en ninguna parte. 7) Verifica que el manejo de errores funciona correctamente. 8) Verifica que los estados de loading/error/empty se muestran apropiadamente. 9) Documenta cualquier problema encontrado.",
+      "expected_changes": [
+        "Módulo de comunidad completamente funcional",
+        "Todas las funcionalidades probadas y funcionando",
+        "No hay mocks ni datos simulados",
+        "Manejo de errores funcionando correctamente"
+      ],
+      "acceptance_criteria": [
+        "Todas las páginas cargan sin errores",
+        "Todas las funcionalidades principales funcionan",
+        "No hay mocks ni datos simulados en ninguna parte",
+        "Manejo de errores funciona en todas las páginas",
+        "Estados de loading/error/empty se muestran correctamente"
+      ],
+      "timeout_sec": 600,
+      "rollback_plan": "Identificar y corregir problemas específicos encontrados en las pruebas."
+    }
+  ]
+}
+

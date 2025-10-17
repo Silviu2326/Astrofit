@@ -1,0 +1,48 @@
+{
+  "nombre": "Desarrollador E-commerce Frontend",
+  "version": "1.0",
+  "descripcion": "Prompts especializados para desarrollo de frontend de tiendas online",
+  "prompts": [
+    {
+      "id": "ecommerce_product_catalog",
+      "nombre": "Catálogo de Productos",
+      "prompt": "Crea un catálogo de productos completo para e-commerce:\n\n## 🛍️ COMPONENTES DEL CATÁLOGO\n- Product grid con filtros\n- Product cards con imágenes\n- Search functionality\n- Category navigation\n- Pagination\n- Sorting options\n\n## 🎨 DISEÑO Y UX\n- Responsive design (mobile-first)\n- Image lazy loading\n- Skeleton loading states\n- Infinite scroll\n- Quick view modal\n\n## 🔍 FILTROS Y BÚSQUEDA\n- Price range filters\n- Brand filters\n- Color/size filters\n- Search suggestions\n- Search history\n- Advanced search\n\n## 📱 MOBILE OPTIMIZATION\n- Touch gestures\n- Swipe to view\n- Mobile-friendly filters\n- Thumb-friendly buttons\n\nIncluye componentes React/TypeScript completos y optimizados.",
+      "contexto": "Desarrollo de catálogo de productos"
+    },
+    {
+      "id": "ecommerce_shopping_cart",
+      "nombre": "Carrito de Compras",
+      "prompt": "Implementa un carrito de compras robusto:\n\n## 🛒 FUNCIONALIDADES DEL CARRITO\n- Add/remove products\n- Quantity updates\n- Price calculations\n- Tax calculations\n- Shipping estimates\n- Discount codes\n\n## 💾 PERSISTENCIA\n- LocalStorage backup\n- Session management\n- Cross-device sync\n- Guest cart support\n\n## 🎨 UI/UX\n- Mini cart dropdown\n- Cart page design\n- Progress indicators\n- Save for later\n- Recently viewed\n\n## 🔄 ESTADO GLOBAL\n- Redux/Zustand state\n- Optimistic updates\n- Error handling\n- Loading states\n\nProporciona implementación completa con manejo de errores.",
+      "contexto": "Sistema de carrito de compras"
+    },
+    {
+      "id": "ecommerce_checkout_process",
+      "nombre": "Proceso de Checkout",
+      "prompt": "Crea un proceso de checkout optimizado:\n\n## 📋 PASOS DEL CHECKOUT\n- Cart review\n- Shipping information\n- Payment method\n- Order confirmation\n- Progress indicator\n\n## 🔐 SEGURIDAD\n- Form validation\n- PCI compliance\n- SSL requirements\n- Data encryption\n- Fraud detection\n\n## 💳 MÉTODOS DE PAGO\n- Credit cards\n- PayPal integration\n- Digital wallets\n- Bank transfers\n- Cryptocurrency\n\n## 📱 MOBILE CHECKOUT\n- One-page checkout\n- Auto-fill forms\n- Touch ID/Face ID\n- Mobile payments\n\n## 🎯 CONVERSIÓN\n- Guest checkout\n- Save payment info\n- Express checkout\n- Abandoned cart recovery\n\nIncluye validaciones, seguridad y optimización de conversión.",
+      "contexto": "Proceso de checkout optimizado"
+    },
+    {
+      "id": "ecommerce_user_account",
+      "nombre": "Cuenta de Usuario",
+      "prompt": "Desarrolla sistema de cuentas de usuario completo:\n\n## 👤 GESTIÓN DE USUARIO\n- Registration/Login\n- Profile management\n- Password reset\n- Email verification\n- Social login\n\n## 📦 ÓRDENES Y PEDIDOS\n- Order history\n- Order tracking\n- Invoice download\n- Return requests\n- Refund status\n\n## ❤️ WISHLIST Y FAVORITOS\n- Add to wishlist\n- Share wishlist\n- Price alerts\n- Stock notifications\n- Wishlist management\n\n## 🔔 NOTIFICACIONES\n- Email notifications\n- Push notifications\n- SMS alerts\n- In-app notifications\n- Preference settings\n\n## 🎁 LOYALTY PROGRAM\n- Points system\n- Rewards tracking\n- Referral program\n- VIP benefits\n- Coupon management\n\nProporciona implementación completa con todas las funcionalidades.",
+      "contexto": "Sistema de cuentas de usuario"
+    },
+    {
+      "id": "ecommerce_admin_dashboard",
+      "nombre": "Dashboard Administrativo",
+      "prompt": "Crea dashboard administrativo para gestión de e-commerce:\n\n## 📊 ANALYTICS DASHBOARD\n- Sales metrics\n- Customer analytics\n- Product performance\n- Revenue tracking\n- Conversion rates\n\n## 🛍️ GESTIÓN DE PRODUCTOS\n- Product CRUD operations\n- Inventory management\n- Bulk operations\n- Product variants\n- SEO optimization\n\n## 📦 GESTIÓN DE ÓRDENES\n- Order management\n- Status updates\n- Fulfillment tracking\n- Return processing\n- Refund management\n\n## 👥 GESTIÓN DE CLIENTES\n- Customer database\n- Customer support\n- Communication tools\n- Customer segmentation\n- Marketing campaigns\n\n## 🎨 DISEÑO RESPONSIVE\n- Mobile admin interface\n- Touch-friendly controls\n- Data visualization\n- Export functionality\n- Real-time updates\n\nIncluye gráficos, tablas y herramientas de gestión completas.",
+      "contexto": "Dashboard administrativo de e-commerce"
+    }
+  ],
+  "configuracion": {
+    "framework": "React/Next.js",
+    "lenguaje": "TypeScript",
+    "styling": "Tailwind CSS",
+    "estado": "Redux Toolkit",
+    "pagos": "Stripe/PayPal"
+  }
+}
+
+
+
+

@@ -683,6 +683,16 @@ const ConfiguracionUpsellsPage: React.FC = () => {
   const [logs, setLogs] = useState<ExecutionLog[]>(MOCK_LOGS);
   const [view, setView] = useState<'list' | 'templates' | 'logs' | 'analytics'>('list');
   const [selectedRule, setSelectedRule] = useState<Rule | null>(null);
+
+  const handleFilter = () => {
+    console.log('Filtrando upsells...');
+    // Lógica para filtrar
+  };
+
+  const handleExport = () => {
+    console.log('Exportando upsells...');
+    // Lógica para exportar
+  };
   const [showRuleBuilder, setShowRuleBuilder] = useState(false);
   const [showTestModal, setShowTestModal] = useState(false);
   const [showLogDetail, setShowLogDetail] = useState<ExecutionLog | null>(null);
@@ -965,11 +975,17 @@ const ConfiguracionUpsellsPage: React.FC = () => {
                   </p>
                 </div>
                 <div className="flex gap-2">
-                  <button className="px-4 py-2 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-2">
+                  <button 
+                    onClick={handleFilter}
+                    className="px-4 py-2 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-2"
+                  >
                     <Filter className="w-4 h-4" />
                     Filtrar
                   </button>
-                  <button className="px-4 py-2 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-2">
+                  <button 
+                    onClick={handleExport}
+                    className="px-4 py-2 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-2"
+                  >
                     <Download className="w-4 h-4" />
                     Exportar
                   </button>

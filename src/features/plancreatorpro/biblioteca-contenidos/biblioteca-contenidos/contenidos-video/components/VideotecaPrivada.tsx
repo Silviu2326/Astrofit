@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchVideos, toggleFavorite } from '../../contenidos-video/contenidosVideoApi';
+import { getVideos, toggleFavorite } from '../../contenidos-video/contenidosVideoApi';
 import ReproductorIntegrado from './ReproductorIntegrado';
 
 interface Video {
@@ -23,7 +23,7 @@ const VideotecaPrivada: React.FC = () => {
   useEffect(() => {
     const getVideos = async () => {
       try {
-        const data = await fetchVideos();
+        const data = await getVideos();
         setVideos(data.filter(video => video.isFavorite)); // Example: show favorites in private library
       } catch (err) {
         setError('Failed to load videos.');

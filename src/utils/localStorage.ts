@@ -34,14 +34,7 @@ export function safeSetJSON<T>(key: string, value: T): void {
 /**
  * Get current user from localStorage
  */
-export interface User {
-  id?: string;
-  name?: string;
-  email?: string;
-  plan?: string;
-  role?: string;
-  avatar?: string;
-}
+import type { User } from '../features/core/login/mockUsers';
 
 export function getCurrentUser(): User | null {
   return safeGetJSON<User>('currentUser');

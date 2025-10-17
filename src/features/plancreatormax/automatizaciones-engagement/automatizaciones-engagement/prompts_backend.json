@@ -1,0 +1,226 @@
+{
+  "meta": {
+    "module": "automatizaciones-engagement",
+    "side": "backend", 
+    "run_id": "2024-01-15T10:00:00Z",
+    "base_path": "/api/automatizaciones-engagement"
+  },
+  "prompts": [
+    {
+      "id": "P1",
+      "order": 1,
+      "title": "Crear modelos de base de datos para los tres dominios",
+      "files_hint": [
+        "backend/src/models/FlujoRetencion.model.js",
+        "backend/src/models/MensajePersonalizado.model.js", 
+        "backend/src/models/ClienteInactivo.model.js"
+      ],
+      "preconditions": [
+        "Directorio backend/src/models/ existe",
+        "Mongoose configurado en el proyecto",
+        "BASE_PATH definido como /api/automatizaciones-engagement"
+      ],
+      "content": "Actúa como editor multi-archivo. 1) Crea backend/src/models/FlujoRetencion.model.js con esquema que incluya: name (String, required), status (String, enum: ['active', 'paused', 'draft']), nodes (Array de objetos con id, type, position, data), edges (Array de objetos con id, source, target), triggers (Array), actions (Array), metrics (Object con retentionRate, reactivated, roi, totalSent, openRate, conversionRate), createdAt (Date), updatedAt (Date). 2) Crea backend/src/models/MensajePersonalizado.model.js con esquema que incluya: title (String, required), description (String), content (String, required), channel (String, enum: ['email', 'push', 'sms']), template (String), variables (Object), targetSegment (String), status (String, enum: ['active', 'paused']), sent (Number, default: 0), openRate (Number, default: 0), conversionRate (Number, default: 0), createdAt (Date), updatedAt (Date). 3) Crea backend/src/models/ClienteInactivo.model.js con esquema que incluya: name (String, required), email (String, required), lastActivity (Date), riskLevel (String, enum: ['low', 'medium', 'high', 'critical']), plan (String), suggestedActions (Array), metrics (Object con daysInactive, previousEngagement, riskScore, lastPurchase), createdAt (Date), updatedAt (Date). 4) Agrega índices apropiados para consultas frecuentes. 5) Muestra diffs de cada archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "FlujoRetencion.model.js creado con esquema completo",
+        "MensajePersonalizado.model.js creado con esquema completo",
+        "ClienteInactivo.model.js creado con esquema completo",
+        "Índices agregados para optimizar consultas"
+      ],
+      "acceptance_criteria": [
+        "Todos los modelos se pueden importar sin errores",
+        "Esquemas incluyen todos los campos definidos en los DTOs",
+        "Validaciones de enum funcionan correctamente",
+        "Índices están configurados para campos de consulta frecuente",
+        "Timestamps automáticos funcionan (createdAt, updatedAt)"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Eliminar archivos de modelos creados si falla cualquier criterio."
+    },
+    {
+      "id": "P2",
+      "order": 2,
+      "title": "Crear middleware de validación específico para automatizaciones",
+      "files_hint": [
+        "backend/src/middleware/automatizacionesValidation.js"
+      ],
+      "preconditions": [
+        "Directorio backend/src/middleware/ existe",
+        "Middleware de validación base configurado en el proyecto"
+      ],
+      "content": "Actúa como editor. Crea backend/src/middleware/automatizacionesValidation.js. 1) Importa express-validator. 2) Crea validadores para CreateFlujoRequest: validateCreateFlujo con reglas para name (notEmpty), nodes (isArray), edges (isArray). 3) Crea validadores para CreateMensajeRequest: validateCreateMensaje con reglas para title (notEmpty), content (notEmpty), channel (isIn: ['email', 'push', 'sms']). 4) Crea validadores para ReactivationActionRequest: validateReactivationAction con reglas para clientId (isMongoId), actionType (isIn: ['email', 'call', 'offer', 'personal']). 5) Crea validadores para ABTestRequest: validateABTest con reglas para name (notEmpty), variants (isObject), audiencePercent (isInt, min: 1, max: 100). 6) Agrega función handleValidationErrors que retorne errores formateados. 7) Exporta todos los validadores y la función de manejo de errores. 8) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "automatizacionesValidation.js creado con validadores completos",
+        "Validadores para todos los DTOs del módulo implementados",
+        "Función de manejo de errores de validación agregada",
+        "Exportaciones configuradas correctamente"
+      ],
+      "acceptance_criteria": [
+        "Todos los validadores se pueden importar sin errores",
+        "Validaciones cubren todos los campos requeridos de los DTOs",
+        "Mensajes de error son descriptivos y útiles",
+        "Función handleValidationErrors formatea errores correctamente",
+        "Validadores manejan casos edge (valores nulos, tipos incorrectos)"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Eliminar automatizacionesValidation.js si falla cualquier criterio."
+    },
+    {
+      "id": "P3",
+      "order": 3,
+      "title": "Crear controlador principal con lógica de negocio para todos los endpoints",
+      "files_hint": [
+        "backend/src/controllers/automatizacionesEngagement.controller.js"
+      ],
+      "preconditions": [
+        "Modelos creados en P1",
+        "Middleware de validación creado en P2",
+        "Directorio backend/src/controllers/ existe"
+      ],
+      "content": "Actúa como editor. Crea backend/src/controllers/automatizacionesEngagement.controller.js. 1) Importa los tres modelos: FlujoRetencion, MensajePersonalizado, ClienteInactivo. 2) Implementa controladores para Flujos de Retención: getFlujos (GET /flujos-retencion), getFlujoById (GET /flujos-retencion/:id), createFlujo (POST /flujos-retencion), updateFlujo (PUT /flujos-retencion/:id), deleteFlujo (DELETE /flujos-retencion/:id), getFlujoMetrics (GET /flujos-retencion/:id/metrics), startABTest (POST /flujos-retencion/:id/ab-test). 3) Implementa controladores para Mensajes Personalizados: getMensajes (GET /mensajes-personalizados), getMensajeById (GET /mensajes-personalizados/:id), createMensaje (POST /mensajes-personalizados), updateMensaje (PUT /mensajes-personalizados/:id), deleteMensaje (DELETE /mensajes-personalizados/:id). 4) Implementa controladores para Reactivación: getInactiveClients (GET /reactivacion-clientes/inactivos), executeReactivationAction (POST /reactivacion-clientes/acciones), getReactivationSuggestions (GET /reactivacion-clientes/sugerencias). 5) Agrega manejo de errores consistente en todos los controladores. 6) Agrega documentación JSDoc a cada función. 7) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "automatizacionesEngagement.controller.js creado con controladores completos",
+        "CRUD completo para Flujos de Retención implementado",
+        "CRUD completo para Mensajes Personalizados implementado", 
+        "Funciones de Reactivación de Clientes implementadas",
+        "Manejo de errores consistente agregado",
+        "Documentación JSDoc agregada"
+      ],
+      "acceptance_criteria": [
+        "Todos los controladores se pueden importar sin errores",
+        "Cada función maneja casos de éxito y error correctamente",
+        "Respuestas siguen formato consistente (success: boolean, data/error)",
+        "Validaciones de entrada funcionan en todos los endpoints",
+        "Documentación JSDoc está completa y clara",
+        "Manejo de errores 4xx/5xx es consistente"
+      ],
+      "timeout_sec": 360,
+      "rollback_plan": "Eliminar automatizacionesEngagement.controller.js si falla cualquier criterio."
+    },
+    {
+      "id": "P4",
+      "order": 4,
+      "title": "Crear rutas del módulo con middleware de autenticación y validación",
+      "files_hint": [
+        "backend/src/routes/automatizacionesEngagement.routes.js"
+      ],
+      "preconditions": [
+        "Controlador creado en P3",
+        "Middleware de validación creado en P2",
+        "Middleware de autenticación existe en el proyecto"
+      ],
+      "content": "Actúa como editor. Crea backend/src/routes/automatizacionesEngagement.routes.js. 1) Importa express y crea router. 2) Importa controlador desde ../controllers/automatizacionesEngagement.controller.js. 3) Importa middleware de auth desde ../middleware/auth.middleware.js. 4) Importa validadores desde ../middleware/automatizacionesValidation.js. 5) Define rutas para Flujos de Retención: GET /flujos-retencion (auth, ctrl.getFlujos), POST /flujos-retencion (auth, validateCreateFlujo, ctrl.createFlujo), GET /flujos-retencion/:id (auth, ctrl.getFlujoById), PUT /flujos-retencion/:id (auth, validateCreateFlujo, ctrl.updateFlujo), DELETE /flujos-retencion/:id (auth, ctrl.deleteFlujo), GET /flujos-retencion/:id/metrics (auth, ctrl.getFlujoMetrics), POST /flujos-retencion/:id/ab-test (auth, validateABTest, ctrl.startABTest). 6) Define rutas para Mensajes Personalizados: GET /mensajes-personalizados (auth, ctrl.getMensajes), POST /mensajes-personalizados (auth, validateCreateMensaje, ctrl.createMensaje), GET /mensajes-personalizados/:id (auth, ctrl.getMensajeById), PUT /mensajes-personalizados/:id (auth, validateCreateMensaje, ctrl.updateMensaje), DELETE /mensajes-personalizados/:id (auth, ctrl.deleteMensaje). 7) Define rutas para Reactivación: GET /reactivacion-clientes/inactivos (auth, ctrl.getInactiveClients), POST /reactivacion-clientes/acciones (auth, validateReactivationAction, ctrl.executeReactivationAction), GET /reactivacion-clientes/sugerencias (auth, ctrl.getReactivationSuggestions). 8) Exporta router por defecto. 9) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "automatizacionesEngagement.routes.js creado con rutas completas",
+        "Todas las rutas protegidas con middleware de autenticación",
+        "Validaciones aplicadas a rutas que requieren datos de entrada",
+        "Rutas organizadas por dominio (flujos, mensajes, reactivación)",
+        "Router exportado correctamente"
+      ],
+      "acceptance_criteria": [
+        "Todas las rutas están definidas y protegidas con auth",
+        "Validaciones se aplican correctamente a rutas POST/PUT",
+        "Rutas siguen el patrón REST estándar",
+        "No hay rutas duplicadas o conflictivas",
+        "Router se puede importar sin errores",
+        "Middleware de auth funciona en todas las rutas"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Eliminar automatizacionesEngagement.routes.js si falla cualquier criterio."
+    },
+    {
+      "id": "P5",
+      "order": 5,
+      "title": "Integrar rutas en el servidor principal y configurar CORS",
+      "files_hint": [
+        "backend/src/routes/api.routes.js",
+        "backend/src/server.js"
+      ],
+      "preconditions": [
+        "Rutas del módulo creadas en P4",
+        "Archivos api.routes.js y server.js existen",
+        "CORS configurado en el proyecto"
+      ],
+      "content": "Actúa como editor multi-archivo. 1) Abre backend/src/routes/api.routes.js. 2) Importa automatizacionesEngagementRoutes desde './automatizacionesEngagement.routes.js'. 3) Agrega router.use('/automatizaciones-engagement', automatizacionesEngagementRoutes) después de las otras rutas. 4) Abre backend/src/server.js. 5) Verifica que CORS esté configurado para permitir el frontend (http://localhost:5173). 6) Verifica que el middleware de autenticación esté configurado globalmente. 7) Confirma que las rutas de automatizaciones-engagement estén accesibles en /api/automatizaciones-engagement. 8) Muestra diffs de ambos archivos y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "api.routes.js: import de automatizacionesEngagementRoutes agregado",
+        "api.routes.js: montaje de rutas en /automatizaciones-engagement agregado",
+        "server.js: configuración CORS verificada para frontend",
+        "server.js: middleware de auth verificado"
+      ],
+      "acceptance_criteria": [
+        "Rutas de automatizaciones-engagement están montadas correctamente",
+        "CORS permite requests desde http://localhost:5173",
+        "Middleware de autenticación está activo",
+        "Rutas son accesibles en /api/automatizaciones-engagement",
+        "No hay conflictos con otras rutas existentes"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en api.routes.js y server.js si falla cualquier criterio."
+    },
+    {
+      "id": "P6",
+      "order": 6,
+      "title": "Crear tests de integración para endpoints críticos",
+      "files_hint": [
+        "backend/src/__tests__/automatizacionesEngagement.integration.test.js"
+      ],
+      "preconditions": [
+        "Rutas integradas en servidor principal (P5)",
+        "Modelos y controladores creados (P1, P3)",
+        "Framework de testing configurado en el proyecto"
+      ],
+      "content": "Actúa como editor. Crea backend/src/__tests__/automatizacionesEngagement.integration.test.js. 1) Importa supertest, express app, y modelos necesarios. 2) Configura setup/teardown para base de datos de testing. 3) Crea tests para Flujos de Retención: GET /api/automatizaciones-engagement/flujos-retencion (debe retornar 200 y array), POST /api/automatizaciones-engagement/flujos-retencion (debe crear flujo y retornar 201), GET /api/automatizaciones-engagement/flujos-retencion/:id (debe retornar flujo específico). 4) Crea tests para Mensajes Personalizados: GET /api/automatizaciones-engagement/mensajes-personalizados (debe retornar 200 y array), POST /api/automatizaciones-engagement/mensajes-personalizados (debe crear mensaje y retornar 201). 5) Crea tests para Reactivación: GET /api/automatizaciones-engagement/reactivacion-clientes/inactivos (debe retornar 200 y array). 6) Agrega tests de autenticación (debe retornar 401 sin token). 7) Agrega tests de validación (debe retornar 400 con datos inválidos). 8) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "automatizacionesEngagement.integration.test.js creado con tests completos",
+        "Tests para todos los endpoints críticos implementados",
+        "Tests de autenticación agregados",
+        "Tests de validación agregados",
+        "Setup/teardown de base de datos configurado"
+      ],
+      "acceptance_criteria": [
+        "Todos los tests pasan sin errores",
+        "Tests cubren casos de éxito y error",
+        "Tests de autenticación funcionan correctamente",
+        "Tests de validación funcionan correctamente",
+        "Base de datos se limpia entre tests",
+        "Tests son determinísticos y repetibles"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Eliminar archivo de tests si falla cualquier criterio."
+    },
+    {
+      "id": "P7",
+      "order": 7,
+      "title": "Validación completa del backend y smoke tests",
+      "files_hint": [
+        "backend/src/**/*.js"
+      ],
+      "preconditions": [
+        "Todos los componentes del backend creados (P1-P6)",
+        "Servidor configurado y rutas montadas",
+        "Tests de integración implementados"
+      ],
+      "content": "Actúa como validador. 1) Verifica que el servidor se inicia sin errores. 2) Confirma que todas las rutas de automatizaciones-engagement responden correctamente. 3) Prueba autenticación en todas las rutas protegidas. 4) Verifica que las validaciones funcionan con datos inválidos. 5) Confirma que los modelos se conectan correctamente a la base de datos. 6) Prueba que los controladores manejan errores apropiadamente. 7) Verifica que CORS permite requests desde el frontend. 8) Ejecuta tests de integración y confirma que pasan. 9) Documenta cualquier problema encontrado y su solución. 10) Muestra resumen de validación y espera confirmación.",
+      "expected_changes": [
+        "Validación completa del backend automatizaciones-engagement",
+        "Verificación de todas las rutas y endpoints",
+        "Confirmación de autenticación y validaciones",
+        "Documentación de problemas encontrados"
+      ],
+      "acceptance_criteria": [
+        "Servidor se inicia sin errores",
+        "Todas las rutas responden correctamente",
+        "Autenticación funciona en todas las rutas protegidas",
+        "Validaciones rechazan datos inválidos apropiadamente",
+        "Modelos se conectan correctamente a la base de datos",
+        "Tests de integración pasan completamente",
+        "CORS permite requests desde frontend",
+        "No hay errores de sintaxis o importación"
+      ],
+      "timeout_sec": 360,
+      "rollback_plan": "Identificar y corregir problemas específicos encontrados durante la validación."
+    }
+  ]
+}
+

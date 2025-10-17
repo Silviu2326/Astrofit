@@ -1,15 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { 
+  Settings, 
+  Euro, 
+  Package, 
+  Target, 
+  Calendar,
+  Users,
+  Clock,
+  AlertCircle,
+  CheckCircle,
+  Info
+} from 'lucide-react';
 
 interface CuponData {
   minimoCompra?: number;
   productosAplicables?: string[];
-}
-
-interface ProductoInfo {
-  id: string;
-  nombre: string;
-  precio: number;
-  disponible: boolean;
 }
 
 interface ConfiguracionAvanzadaProps {
@@ -18,192 +24,218 @@ interface ConfiguracionAvanzadaProps {
 }
 
 const ConfiguracionAvanzada: React.FC<ConfiguracionAvanzadaProps> = ({ cuponData, onFormChange }) => {
-  // Estados para validación de productos
-  const [productosValidos, setProductosValidos] = useState<boolean | null>(null);
-  const [validandoProductos, setValidandoProductos] = useState(false);
-  const [productosInfo, setProductosInfo] = useState<ProductoInfo[]>([]);
-  const [errorValidacion, setErrorValidacion] = useState<string | null>(null);
-
-  // Función para validar productos aplicables
-  const validarProductosAplicables = async (productos: string[]) => {
-    if (!productos || productos.length === 0) {
-      setProductosValidos(null);
-      setProductosInfo([]);
-      setErrorValidacion(null);
-      return;
-    }
-
-    try {
-      setValidandoProductos(true);
-      setErrorValidacion(null);
-      console.log('Validando productos aplicables:', productos);
-      
-      // Llamada a la API para validar productos
-      const response = await fetch('/api/cupones/validate-products', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ productos }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      setProductosValidos(data.isValid);
-      setProductosInfo(data.productos || []);
-      
-      console.log('Resultado validación productos:', data);
-    } catch (error) {
-      console.error('Error validating products:', error);
-      setProductosValidos(false);
-      setErrorValidacion('Error al validar los productos. Verifique su conexión.');
-    } finally {
-      setValidandoProductos(false);
-    }
-  };
-
-  // Debounce para validación de productos
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (cuponData.productosAplicables && cuponData.productosAplicables.length > 0) {
-        validarProductosAplicables(cuponData.productosAplicables);
-      } else {
-        setProductosValidos(null);
-        setProductosInfo([]);
-        setErrorValidacion(null);
-      }
-    }, 800); // Debounce de 800ms para productos
-
-    return () => clearTimeout(timeoutId);
-  }, [cuponData.productosAplicables]);
-
-  // Función para obtener clases CSS según validación
-  const getProductosClasses = () => {
-    const baseClasses = "mt-1 block w-full border rounded-md shadow-sm p-2";
-    
-    if (productosValidos === null) {
-      return `${baseClasses} border-gray-300`;
-    } else if (productosValidos === true) {
-      return `${baseClasses} border-green-500 bg-green-50`;
-    } else {
-      return `${baseClasses} border-red-500 bg-red-50`;
-    }
-  };
-
-  // Función para obtener icono de validación
-  const getValidationIcon = () => {
-    if (validandoProductos) {
-      return (
-        <svg className="animate-spin w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24">
-          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-      );
-    } else if (productosValidos === true) {
-      return (
-        <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-        </svg>
-      );
-    } else if (productosValidos === false) {
-      return (
-        <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-        </svg>
-      );
-    }
-    return null;
-  };
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     if (name === 'productosAplicables') {
       onFormChange({ [name]: value.split(',').map(s => s.trim()).filter(s => s !== '') });
     } else {
-      onFormChange({ [name]: value });
+      onFormChange({ [name]: parseFloat(value) || 0 });
     }
   };
 
-  return (
-    <div className="bg-white p-6 rounded-lg shadow-md mt-6">
-      <h2 className="text-2xl font-semibold mb-4">Configuración Avanzada</h2>
-      <div className="mb-4">
-        <label htmlFor="minimoCompra" className="block text-sm font-medium text-gray-700">Mínimo de Compra</label>
-        <input
-          type="number"
-          id="minimoCompra"
-          name="minimoCompra"
-          value={cuponData.minimoCompra || ''}
-          onChange={handleChange}
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-          min="0"
-        />
-      </div>
+  const productosDisponibles = [
+    { id: '1', nombre: 'Membresía Básica', precio: 29.99 },
+    { id: '2', nombre: 'Membresía Premium', precio: 49.99 },
+    { id: '3', nombre: 'Membresía Elite', precio: 79.99 },
+    { id: '4', nombre: 'Sesión Personal', precio: 35.00 },
+    { id: '5', nombre: 'Plan Nutricional', precio: 25.00 },
+  ];
 
-      <div className="mb-4">
-        <label htmlFor="productosAplicables" className="block text-sm font-medium text-gray-700">Productos Aplicables (IDs separados por comas)</label>
-        <div className="relative">
-          <textarea
-            id="productosAplicables"
-            name="productosAplicables"
-            value={cuponData.productosAplicables?.join(',') || ''}
-            onChange={handleChange}
-            rows={3}
-            className={getProductosClasses()}
-          ></textarea>
-          <div className="absolute top-2 right-2 flex items-center pointer-events-none">
-            {getValidationIcon()}
+  const toggleProducto = (productoId: string) => {
+    const productosActuales = cuponData.productosAplicables || [];
+    const nuevosProductos = productosActuales.includes(productoId)
+      ? productosActuales.filter(id => id !== productoId)
+      : [...productosActuales, productoId];
+    
+    onFormChange({ productosAplicables: nuevosProductos });
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-6"
+    >
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg shadow-lg">
+            <Settings className="w-5 h-5 text-white" />
           </div>
+          <h2 className="text-xl font-semibold text-gray-900">Configuración Avanzada</h2>
         </div>
         
-        {/* Mensajes de validación */}
-        {errorValidacion && (
-          <p className="mt-1 text-sm text-red-600">{errorValidacion}</p>
-        )}
-        
-        {productosValidos === false && !errorValidacion && (
-          <p className="mt-1 text-sm text-red-600">Algunos productos no son válidos o no están disponibles</p>
-        )}
-        
-        {productosValidos === true && (
-          <p className="mt-1 text-sm text-green-600">Todos los productos son válidos y aplicables</p>
-        )}
-        
-        {/* Información detallada de productos */}
-        {productosInfo.length > 0 && (
-          <div className="mt-3 p-3 bg-gray-50 rounded-md">
-            <h4 className="text-sm font-medium text-gray-700 mb-2">Información de Productos:</h4>
-            <div className="space-y-1">
-              {productosInfo.map((producto, index) => (
-                <div key={index} className="flex items-center justify-between text-sm">
-                  <span className="font-medium">{producto.nombre}</span>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-gray-600">€{producto.precio}</span>
-                    <span className={`px-2 py-1 rounded-full text-xs ${
-                      producto.disponible 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                      {producto.disponible ? 'Disponible' : 'No disponible'}
-                    </span>
-                  </div>
+        <button
+          onClick={() => setShowAdvanced(!showAdvanced)}
+          className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors"
+        >
+          {showAdvanced ? 'Ocultar' : 'Mostrar'} Opciones
+        </button>
+      </div>
+
+      {showAdvanced && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          className="space-y-6"
+        >
+          {/* Mínimo de Compra */}
+          <div>
+            <label htmlFor="minimoCompra" className="block text-sm font-semibold text-gray-700 mb-2">
+              Compra Mínima Requerida
+            </label>
+            <div className="relative">
+              <input
+                type="number"
+                id="minimoCompra"
+                name="minimoCompra"
+                value={cuponData.minimoCompra || ''}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                min="0"
+                step="0.01"
+                placeholder="0.00"
+              />
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                <Euro className="w-5 h-5 text-gray-400" />
+              </div>
+            </div>
+            <p className="text-sm text-gray-600 mt-1">
+              El cliente debe gastar al menos esta cantidad para usar el cupón
+            </p>
+          </div>
+
+          {/* Productos Aplicables */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-3">
+              Productos/Servicios Aplicables
+            </label>
+            
+            <div className="space-y-3">
+              {productosDisponibles.map((producto) => {
+                const isSelected = cuponData.productosAplicables?.includes(producto.id) || false;
+                return (
+                  <motion.div
+                    key={producto.id}
+                    whileHover={{ scale: 1.02 }}
+                    className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                      isSelected
+                        ? 'border-blue-500 bg-blue-50'
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                    onClick={() => toggleProducto(producto.id)}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                          isSelected
+                            ? 'border-blue-500 bg-blue-500'
+                            : 'border-gray-300'
+                        }`}>
+                          {isSelected && <CheckCircle className="w-3 h-3 text-white" />}
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-gray-900">{producto.nombre}</h4>
+                          <p className="text-sm text-gray-600">€{producto.precio}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Package className="w-4 h-4 text-gray-400" />
+                        <span className="text-sm text-gray-600">ID: {producto.id}</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+            
+            <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="flex items-start gap-2">
+                <Info className="w-4 h-4 text-blue-600 mt-0.5" />
+                <div>
+                  <p className="text-sm text-blue-800 font-medium">Información</p>
+                  <p className="text-xs text-blue-700 mt-1">
+                    Si no seleccionas ningún producto, el cupón se aplicará a todos los productos/servicios.
+                  </p>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
-        )}
-        
-        {/* Contador de productos */}
-        {cuponData.productosAplicables && cuponData.productosAplicables.length > 0 && (
-          <p className="mt-1 text-xs text-gray-500">
-            {cuponData.productosAplicables.length} producto(s) seleccionado(s)
-          </p>
-        )}
-      </div>
-    </div>
+
+          {/* Resumen de Configuración */}
+          <div className="bg-gray-50 rounded-lg p-4">
+            <h3 className="text-sm font-semibold text-gray-700 mb-3">Resumen de Configuración</h3>
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span className="text-gray-600">Compra mínima:</span>
+                <span className="font-medium">
+                  {cuponData.minimoCompra ? `€${cuponData.minimoCompra}` : 'Sin restricción'}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Productos aplicables:</span>
+                <span className="font-medium">
+                  {cuponData.productosAplicables?.length || 0} de {productosDisponibles.length} seleccionados
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Restricciones:</span>
+                <span className="font-medium text-green-600">
+                  {cuponData.minimoCompra || cuponData.productosAplicables?.length ? 'Configuradas' : 'Ninguna'}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Alertas y Recomendaciones */}
+          <div className="space-y-3">
+            {cuponData.minimoCompra && cuponData.minimoCompra > 100 && (
+              <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <div className="flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 text-yellow-600 mt-0.5" />
+                  <div>
+                    <p className="text-sm text-yellow-800 font-medium">Compra mínima alta</p>
+                    <p className="text-xs text-yellow-700 mt-1">
+                      Una compra mínima de €{cuponData.minimoCompra} puede reducir la conversión del cupón.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {cuponData.productosAplicables?.length === 1 && (
+              <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="flex items-start gap-2">
+                  <Info className="w-4 h-4 text-blue-600 mt-0.5" />
+                  <div>
+                    <p className="text-sm text-blue-800 font-medium">Cupón específico</p>
+                    <p className="text-xs text-blue-700 mt-1">
+                      Este cupón solo se aplicará a 1 producto específico.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {!cuponData.minimoCompra && !cuponData.productosAplicables?.length && (
+              <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-600 mt-0.5" />
+                  <div>
+                    <p className="text-sm text-green-800 font-medium">Cupón sin restricciones</p>
+                    <p className="text-xs text-green-700 mt-1">
+                      Este cupón se puede aplicar a cualquier compra sin restricciones.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </motion.div>
+      )}
+    </motion.div>
   );
 };
 

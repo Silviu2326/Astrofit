@@ -1,0 +1,308 @@
+{
+  "meta": {
+    "module": "email-broadcast",
+    "side": "backend",
+    "run_id": "2024-01-20T10:00:00Z",
+    "base_path": "/api/email-broadcast"
+  },
+  "prompts": [
+    {
+      "id": "P1",
+      "order": 1,
+      "title": "Crear modelos MongoDB para EmailCampaign y EmailTemplate",
+      "files_hint": [
+        "backend/src/models/EmailCampaign.model.js",
+        "backend/src/models/EmailTemplate.model.js"
+      ],
+      "preconditions": [
+        "MongoDB configurado y funcionando",
+        "Estructura backend/src/models/ existe"
+      ],
+      "content": "Actúa como desarrollador backend. 1) Crea backend/src/models/EmailCampaign.model.js con schema mongoose: trainerId (ObjectId, ref Trainer, required), subject (String, required), content (String, required), recipients ([String], required), scheduledDate (Date), templateId (ObjectId, ref EmailTemplate), segmentId (ObjectId, ref Segment), senderName (String, required), senderEmail (String, required), replyTo (String), tags ([String]), status (enum: sent/draft/scheduled/failed, default draft), performance (enum: good/average/bad), revenue (Number, default 0), openRate (Number, default 0), clickRate (Number, default 0), unsubscribeRate (Number, default 0), bounceRate (Number, default 0), isDeleted (Boolean, default false), timestamps. 2) Crea backend/src/models/EmailTemplate.model.js con schema: trainerId (ObjectId, ref Trainer, required), name (String, required), category (String, required), content (String, required), thumbnail (String), isFavorite (Boolean, default false), isDeleted (Boolean, default false), timestamps. 3) Agrega índices para optimizar consultas: trainerId+status, trainerId+fechaInicio, trainerId+canal. 4) Agrega validaciones pre-save y métodos estáticos. 5) Muestra diffs de ambos archivos y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "models/EmailCampaign.model.js: archivo creado con schema completo",
+        "models/EmailTemplate.model.js: archivo creado con schema completo"
+      ],
+      "acceptance_criteria": [
+        "EmailCampaign.model.js existe con todos los campos definidos",
+        "EmailTemplate.model.js existe con todos los campos definidos",
+        "Índices creados para optimizar consultas",
+        "Validaciones pre-save funcionando",
+        "Métodos estáticos implementados"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Eliminar ambos archivos de modelos si falla cualquier criterio."
+    },
+    {
+      "id": "P2",
+      "order": 2,
+      "title": "Crear controlador emailBroadcast.controller.js con todas las operaciones CRUD",
+      "files_hint": [
+        "backend/src/controllers/emailBroadcast.controller.js"
+      ],
+      "preconditions": [
+        "Modelos EmailCampaign y EmailTemplate creados",
+        "Estructura backend/src/controllers/ existe"
+      ],
+      "content": "Actúa como desarrollador backend. Crea backend/src/controllers/emailBroadcast.controller.js. 1) Importa EmailCampaign y EmailTemplate desde los modelos. 2) Implementa controladores para campañas: getCampaigns (con filtros, paginación), getCampaignById, createCampaign (validación de datos), updateCampaign, deleteCampaign (soft delete), duplicateCampaign, archiveCampaign, getCampaignAnalytics (métricas agregadas), exportCampaignReport (CSV/PDF). 3) Implementa controladores para plantillas: getTemplates, getTemplateById, createTemplate, updateTemplate, deleteTemplate, toggleFavorite. 4) Implementa controladores para reportes: getEmailMetrics, getConversionFunnel, getRevenueAnalysis, getCampaignComparison, exportMetricsReport. 5) Agrega manejo de errores con try-catch, respuestas consistentes, y logging. 6) Filtra todos los resultados por trainerId del usuario autenticado. 7) Muestra diff del archivo completo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "controllers/emailBroadcast.controller.js: archivo creado con todos los controladores"
+      ],
+      "acceptance_criteria": [
+        "Archivo emailBroadcast.controller.js existe con todos los controladores",
+        "Controladores de campañas implementados (CRUD completo)",
+        "Controladores de plantillas implementados (CRUD completo)",
+        "Controladores de reportes implementados",
+        "Manejo de errores implementado en todos los controladores",
+        "Filtrado por trainerId implementado"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Eliminar archivo emailBroadcast.controller.js si falla cualquier criterio."
+    },
+    {
+      "id": "P3",
+      "order": 3,
+      "title": "Crear rutas emailBroadcast.routes.js con todas las rutas del módulo",
+      "files_hint": [
+        "backend/src/routes/emailBroadcast.routes.js"
+      ],
+      "preconditions": [
+        "Controlador emailBroadcast.controller.js creado con todos los métodos",
+        "Estructura backend/src/routes/ existe"
+      ],
+      "content": "Actúa como desarrollador backend. Crea backend/src/routes/emailBroadcast.routes.js. 1) Importa express y todos los controladores desde emailBroadcast.controller.js. 2) Importa middleware protect desde auth.middleware.js. 3) Crea router con express.Router(). 4) Aplica middleware protect a todas las rutas con router.use(protect). 5) Define rutas de campañas: GET /campaigns (listar), GET /campaigns/:id (detalle), POST /campaigns (crear), PUT /campaigns/:id (actualizar), DELETE /campaigns/:id (eliminar), POST /campaigns/:id/duplicate (duplicar), PATCH /campaigns/:id/archive (archivar), GET /campaigns/:id/analytics (analíticas), GET /campaigns/:id/export (exportar). 6) Define rutas de plantillas: GET /templates (listar), GET /templates/:id (detalle), POST /templates (crear), PUT /templates/:id (actualizar), DELETE /templates/:id (eliminar), PATCH /templates/:id/favorite (favorito). 7) Define rutas de reportes: GET /metrics (métricas), GET /metrics/conversion-funnel (embudo), GET /metrics/revenue-analysis (ingresos), GET /metrics/campaign-comparison (comparativa), GET /metrics/export (exportar). 8) Exporta router por defecto. 9) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "routes/emailBroadcast.routes.js: archivo creado con todas las rutas del módulo"
+      ],
+      "acceptance_criteria": [
+        "Archivo emailBroadcast.routes.js existe con todas las rutas",
+        "Middleware protect aplicado a todas las rutas",
+        "Rutas de campañas definidas correctamente",
+        "Rutas de plantillas definidas correctamente",
+        "Rutas de reportes definidas correctamente",
+        "Router exportado por defecto"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Eliminar archivo emailBroadcast.routes.js si falla cualquier criterio."
+    },
+    {
+      "id": "P4",
+      "order": 4,
+      "title": "Montar rutas emailBroadcast en el router principal y servidor",
+      "files_hint": [
+        "backend/src/routes/api.routes.js",
+        "backend/src/server.js"
+      ],
+      "preconditions": [
+        "Rutas emailBroadcast.routes.js creadas",
+        "Archivos api.routes.js y server.js existen"
+      ],
+      "content": "Actúa como desarrollador backend. 1) Abre backend/src/routes/api.routes.js. 2) Importa emailBroadcastRoutes desde './emailBroadcast.routes.js'. 3) Agrega router.use('/email-broadcast', emailBroadcastRoutes) después de las otras rutas. 4) Actualiza el objeto endpoints para incluir email-broadcast: '/api/email-broadcast'. 5) Abre backend/src/server.js. 6) Verifica que las rutas estén montadas correctamente (deben estar en api.routes.js, no directamente en server.js). 7) Verifica que CORS esté configurado para el frontend. 8) Muestra diffs de ambos archivos y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "routes/api.routes.js: importa emailBroadcastRoutes y monta en /email-broadcast",
+        "routes/api.routes.js: actualiza objeto endpoints con email-broadcast"
+      ],
+      "acceptance_criteria": [
+        "emailBroadcastRoutes importado en api.routes.js",
+        "Ruta /email-broadcast montada correctamente",
+        "Objeto endpoints actualizado con email-broadcast",
+        "CORS configurado para frontend",
+        "No hay errores de sintaxis en los archivos"
+      ],
+      "timeout_sec": 120,
+      "rollback_plan": "Revertir cambios en api.routes.js si falla cualquier criterio."
+    },
+    {
+      "id": "P5",
+      "order": 5,
+      "title": "Crear middleware de validación específico para email-broadcast",
+      "files_hint": [
+        "backend/src/middleware/emailBroadcastValidation.js"
+      ],
+      "preconditions": [
+        "Rutas emailBroadcast montadas en el router principal",
+        "Estructura backend/src/middleware/ existe"
+      ],
+      "content": "Actúa como desarrollador backend. Crea backend/src/middleware/emailBroadcastValidation.js. 1) Importa express-validator (body, param, query, validationResult). 2) Crea validaciones para CreateCampaign: subject (required, trim), content (required, trim), recipients (required, array), scheduledDate (optional, ISO date), templateId (optional, MongoDB ObjectId), segmentId (optional, MongoDB ObjectId), senderName (required, trim), senderEmail (required, email), replyTo (optional, email), tags (optional, array). 3) Crea validaciones para CreateTemplate: name (required, trim), category (required, trim), content (required, trim), thumbnail (optional, URL), isFavorite (optional, boolean). 4) Crea validaciones para filtros de consulta: page (optional, integer, min 1), pageSize (optional, integer, min 1, max 100), status (optional, enum), dateFrom (optional, ISO date), dateTo (optional, ISO date). 5) Implementa handleValidationErrors para manejar errores de validación. 6) Exporta todas las validaciones. 7) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "middleware/emailBroadcastValidation.js: archivo creado con validaciones completas"
+      ],
+      "acceptance_criteria": [
+        "Archivo emailBroadcastValidation.js existe con todas las validaciones",
+        "Validaciones para CreateCampaign implementadas",
+        "Validaciones para CreateTemplate implementadas",
+        "Validaciones para filtros de consulta implementadas",
+        "handleValidationErrors implementado",
+        "Todas las validaciones exportadas correctamente"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Eliminar archivo emailBroadcastValidation.js si falla cualquier criterio."
+    },
+    {
+      "id": "P6",
+      "order": 6,
+      "title": "Aplicar validaciones a las rutas emailBroadcast",
+      "files_hint": [
+        "backend/src/routes/emailBroadcast.routes.js"
+      ],
+      "preconditions": [
+        "Middleware emailBroadcastValidation.js creado",
+        "Rutas emailBroadcast.routes.js existen"
+      ],
+      "content": "Actúa como desarrollador backend. Abre backend/src/routes/emailBroadcast.routes.js. 1) Importa todas las validaciones desde emailBroadcastValidation.js. 2) Aplica validaciones a cada ruta: (a) POST /campaigns con validaciones de CreateCampaign, (b) PUT /campaigns/:id con validaciones de CreateCampaign, (c) POST /templates con validaciones de CreateTemplate, (d) PUT /templates/:id con validaciones de CreateTemplate, (e) GET /campaigns con validaciones de filtros de consulta, (f) GET /templates con validaciones de filtros de consulta. 3) Aplica validaciones de MongoDB ObjectId para rutas con :id. 4) Aplica validaciones de filtros para rutas de reportes. 5) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "routes/emailBroadcast.routes.js: validaciones aplicadas a todas las rutas"
+      ],
+      "acceptance_criteria": [
+        "Validaciones importadas correctamente",
+        "Validaciones aplicadas a rutas POST /campaigns",
+        "Validaciones aplicadas a rutas PUT /campaigns/:id",
+        "Validaciones aplicadas a rutas POST /templates",
+        "Validaciones aplicadas a rutas PUT /templates/:id",
+        "Validaciones de ObjectId aplicadas a rutas con :id",
+        "Validaciones de filtros aplicadas a rutas de consulta"
+      ],
+      "timeout_sec": 120,
+      "rollback_plan": "Revertir cambios en emailBroadcast.routes.js si falla cualquier criterio."
+    },
+    {
+      "id": "P7",
+      "order": 7,
+      "title": "Implementar middleware de autorización para filtrar por trainerId",
+      "files_hint": [
+        "backend/src/middleware/emailBroadcastAuth.js"
+      ],
+      "preconditions": [
+        "Validaciones aplicadas a las rutas",
+        "Estructura backend/src/middleware/ existe"
+      ],
+      "content": "Actúa como desarrollador backend. Crea backend/src/middleware/emailBroadcastAuth.js. 1) Implementa middleware verifyOwnership que verifica que el recurso pertenece al trainer autenticado. 2) Implementa middleware filterByTrainer que agrega trainerId a las consultas automáticamente. 3) Implementa middleware checkPermissions que verifica permisos específicos (crear, leer, actualizar, eliminar). 4) Implementa middleware rateLimit que limita el número de requests por trainer. 5) Implementa middleware auditLog que registra todas las operaciones para auditoría. 6) Exporta todos los middlewares. 7) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "middleware/emailBroadcastAuth.js: archivo creado con middlewares de autorización"
+      ],
+      "acceptance_criteria": [
+        "Archivo emailBroadcastAuth.js existe con todos los middlewares",
+        "verifyOwnership implementado correctamente",
+        "filterByTrainer implementado correctamente",
+        "checkPermissions implementado correctamente",
+        "rateLimit implementado correctamente",
+        "auditLog implementado correctamente",
+        "Todos los middlewares exportados correctamente"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Eliminar archivo emailBroadcastAuth.js si falla cualquier criterio."
+    },
+    {
+      "id": "P8",
+      "order": 8,
+      "title": "Aplicar middlewares de autorización a las rutas emailBroadcast",
+      "files_hint": [
+        "backend/src/routes/emailBroadcast.routes.js"
+      ],
+      "preconditions": [
+        "Middleware emailBroadcastAuth.js creado",
+        "Rutas emailBroadcast.routes.js existen con validaciones"
+      ],
+      "content": "Actúa como desarrollador backend. Abre backend/src/routes/emailBroadcast.routes.js. 1) Importa todos los middlewares desde emailBroadcastAuth.js. 2) Aplica filterByTrainer a todas las rutas GET para filtrar automáticamente por trainerId. 3) Aplica verifyOwnership a todas las rutas con :id para verificar ownership. 4) Aplica checkPermissions a rutas específicas según el tipo de operación. 5) Aplica rateLimit a rutas de creación y envío para prevenir spam. 6) Aplica auditLog a todas las rutas para registro de auditoría. 7) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "routes/emailBroadcast.routes.js: middlewares de autorización aplicados a todas las rutas"
+      ],
+      "acceptance_criteria": [
+        "Middlewares importados correctamente",
+        "filterByTrainer aplicado a todas las rutas GET",
+        "verifyOwnership aplicado a todas las rutas con :id",
+        "checkPermissions aplicado según el tipo de operación",
+        "rateLimit aplicado a rutas de creación y envío",
+        "auditLog aplicado a todas las rutas"
+      ],
+      "timeout_sec": 120,
+      "rollback_plan": "Revertir cambios en emailBroadcast.routes.js si falla cualquier criterio."
+    },
+    {
+      "id": "P9",
+      "order": 9,
+      "title": "Optimizar consultas y agregaciones en los controladores",
+      "files_hint": [
+        "backend/src/controllers/emailBroadcast.controller.js"
+      ],
+      "preconditions": [
+        "Middlewares de autorización aplicados a las rutas",
+        "Controlador emailBroadcast.controller.js existe"
+      ],
+      "content": "Actúa como desarrollador backend. Abre backend/src/controllers/emailBroadcast.controller.js. 1) Optimiza getCampaigns con agregaciones eficientes para métricas. 2) Implementa paginación eficiente con skip/limit y conteo total. 3) Agrega índices compuestos para consultas frecuentes. 4) Implementa caché para métricas agregadas (Redis o memoria). 5) Optimiza getCampaignAnalytics con agregaciones de MongoDB. 6) Implementa consultas paralelas para reportes complejos. 7) Agrega proyección de campos para reducir transferencia de datos. 8) Implementa streaming para exportaciones grandes. 9) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "controllers/emailBroadcast.controller.js: consultas optimizadas y agregaciones eficientes"
+      ],
+      "acceptance_criteria": [
+        "getCampaigns optimizado con agregaciones eficientes",
+        "Paginación eficiente implementada",
+        "Índices compuestos agregados",
+        "Caché para métricas implementado",
+        "getCampaignAnalytics optimizado con agregaciones",
+        "Consultas paralelas implementadas",
+        "Proyección de campos implementada",
+        "Streaming para exportaciones implementado"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en emailBroadcast.controller.js si falla cualquier criterio."
+    },
+    {
+      "id": "P10",
+      "order": 10,
+      "title": "Crear tests de integración para endpoints emailBroadcast",
+      "files_hint": [
+        "backend/src/__tests__/emailBroadcast.test.js"
+      ],
+      "preconditions": [
+        "Consultas optimizadas en los controladores",
+        "Estructura backend/src/__tests__/ existe"
+      ],
+      "content": "Actúa como desarrollador backend. Crea backend/src/__tests__/emailBroadcast.test.js. 1) Importa supertest, express, y todas las dependencias necesarias. 2) Configura base de datos de prueba (MongoDB Memory Server). 3) Crea tests para endpoints de campañas: (a) GET /api/email-broadcast/campaigns retorna 200 y array, (b) POST /api/email-broadcast/campaigns crea campaña correctamente, (c) GET /api/email-broadcast/campaigns/:id retorna campaña específica, (d) PUT /api/email-broadcast/campaigns/:id actualiza campaña, (e) DELETE /api/email-broadcast/campaigns/:id elimina campaña. 4) Crea tests para endpoints de plantillas: (a) GET /api/email-broadcast/templates retorna 200 y array, (b) POST /api/email-broadcast/templates crea plantilla correctamente. 5) Crea tests para endpoints de reportes: (a) GET /api/email-broadcast/metrics retorna 200 y métricas, (b) GET /api/email-broadcast/metrics/conversion-funnel retorna 200 y embudo. 6) Ejecuta tests y verifica que pasen. 7) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "__tests__/emailBroadcast.test.js: archivo creado con tests de integración completos"
+      ],
+      "acceptance_criteria": [
+        "Tests de endpoints de campañas pasan al 100%",
+        "Tests de endpoints de plantillas pasan al 100%",
+        "Tests de endpoints de reportes pasan al 100%",
+        "Cobertura de tests >80% en endpoints críticos",
+        "Tests verifican autenticación y autorización",
+        "Tests verifican validaciones de datos",
+        "Tests verifican manejo de errores"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Eliminar archivo emailBroadcast.test.js si falla cualquier criterio."
+    },
+    {
+      "id": "P11",
+      "order": 11,
+      "title": "Verificar funcionamiento completo del módulo emailBroadcast",
+      "files_hint": [
+        "backend/src/server.js",
+        "backend/src/routes/api.routes.js"
+      ],
+      "preconditions": [
+        "Tests de integración creados y pasando",
+        "Todos los componentes del módulo implementados"
+      ],
+      "content": "Actúa como desarrollador backend. 1) Verifica que el servidor se inicie sin errores. 2) Verifica que todas las rutas estén montadas correctamente en /api/email-broadcast. 3) Verifica que CORS esté configurado para el frontend. 4) Verifica que la autenticación funcione en todas las rutas. 5) Verifica que las validaciones funcionen correctamente. 6) Verifica que los middlewares de autorización funcionen. 7) Verifica que las consultas optimizadas funcionen. 8) Ejecuta un smoke test completo del módulo. 9) Muestra resultados de todas las verificaciones y espera confirmación.",
+      "expected_changes": [
+        "Verificación completa del funcionamiento del módulo emailBroadcast"
+      ],
+      "acceptance_criteria": [
+        "Servidor se inicia sin errores",
+        "Todas las rutas /api/email-broadcast funcionan correctamente",
+        "CORS configurado correctamente para frontend",
+        "Autenticación funciona en todas las rutas",
+        "Validaciones funcionan correctamente",
+        "Middlewares de autorización funcionan",
+        "Consultas optimizadas funcionan",
+        "Smoke test completo pasa al 100%"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revisar logs de error y corregir problemas identificados."
+    }
+  ]
+}
+
+

@@ -1,0 +1,248 @@
+{
+  "meta": {
+    "module": "biblioteca-contenidos",
+    "side": "frontend",
+    "run_id": "2024-01-20T10:00:00Z",
+    "base_path": "/api/biblioteca-contenidos"
+  },
+  "prompts": [
+    {
+      "id": "P1",
+      "order": 1,
+      "title": "Crear tipos TypeScript para DTOs de biblioteca-contenidos",
+      "files_hint": [
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/types/Articulo.ts",
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/types/Video.ts",
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/types/Archivo.ts",
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/types/Search.ts",
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/types/index.ts"
+      ],
+      "preconditions": [
+        "Directorio types/ no existe o está vacío",
+        "BASE_PATH definido como /api/biblioteca-contenidos"
+      ],
+      "content": "Actúa como creador de tipos TypeScript. 1) Crea el directorio src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/types/ si no existe. 2) Crea Articulo.ts con interfaces: CreateArticuloDto, UpdateArticuloDto, ArticuloResponse basadas en los DTOs del MD (titulo, extracto, contenido, categoria, autor?, tags?, esPublico?, imagen?). 3) Crea Video.ts con interfaces: CreateVideoDto, VideoResponse (titulo, descripcion, url, thumbnail, tags, dificultad, topico, esFavorito?). 4) Crea Archivo.ts con interfaces: CreateArchivoDto, ArchivoResponse (nombre, tipo, tamaño, urlArchivo, urlPreview?, descargas). 5) Crea Search.ts con interfaces: SearchRequest, SearchResponse, SearchFilters. 6) Crea index.ts que exporte todas las interfaces. 7) Muestra diffs de cada archivo creado y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "types/Articulo.ts: interfaces para artículos creadas",
+        "types/Video.ts: interfaces para videos creadas", 
+        "types/Archivo.ts: interfaces para archivos creadas",
+        "types/Search.ts: interfaces para búsqueda creadas",
+        "types/index.ts: exportaciones centralizadas"
+      ],
+      "acceptance_criteria": [
+        "Todas las interfaces están correctamente tipadas según los DTOs del MD",
+        "Las interfaces incluyen campos required y optional según especificación",
+        "El archivo index.ts exporta todas las interfaces correctamente",
+        "No hay errores de TypeScript en los archivos creados"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Eliminar el directorio types/ completo si falla cualquier criterio."
+    },
+    {
+      "id": "P2",
+      "order": 2,
+      "title": "Crear API centralizada de biblioteca con axios",
+      "files_hint": [
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/bibliotecaContenidosApi.ts"
+      ],
+      "preconditions": [
+        "Tipos TypeScript creados en P1",
+        "BASE_PATH definido como /api/biblioteca-contenidos",
+        "Variable de entorno VITE_API_URL configurada"
+      ],
+      "content": "Actúa como desarrollador de API. 1) Crea src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/bibliotecaContenidosApi.ts. 2) Configura axios con baseURL desde process.env.VITE_API_URL + '/biblioteca-contenidos'. 3) Implementa interceptor para headers Authorization Bearer. 4) Crea funciones: getArticulos(filters?), getArticuloById(id), createArticulo(data), updateArticulo(id, data), deleteArticulo(id). 5) Crea funciones: getVideos(filters?), getVideoById(id), createVideo(data), updateVideo(id, data), deleteVideo(id), toggleFavorite(id, isFavorite). 6) Crea funciones: getArchivos(), getArchivoById(id), createArchivo(data), recordDownload(id). 7) Crea funciones: searchContent(query, filters), getSearchSuggestions(query). 8) Implementa manejo de errores con try/catch y mapeo a tipos de error consistentes. 9) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "bibliotecaContenidosApi.ts: API centralizada con axios creada",
+        "bibliotecaContenidosApi.ts: funciones CRUD para artículos, videos, archivos",
+        "bibliotecaContenidosApi.ts: funciones de búsqueda implementadas",
+        "bibliotecaContenidosApi.ts: manejo de errores y headers configurados"
+      ],
+      "acceptance_criteria": [
+        "Todas las funciones están correctamente tipadas con TypeScript",
+        "El baseURL usa la variable de entorno VITE_API_URL",
+        "Los headers Authorization Bearer están configurados",
+        "El manejo de errores es consistente en todas las funciones",
+        "No hay mocks o datos hardcodeados en el archivo"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Eliminar bibliotecaContenidosApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P3",
+      "order": 3,
+      "title": "Migrar API de artículos de RTK Query a axios real",
+      "files_hint": [
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-articulos/contenidosArticulosApi.ts"
+      ],
+      "preconditions": [
+        "API centralizada creada en P2",
+        "Archivo contenidosArticulosApi.ts existe con RTK Query",
+        "Tipos TypeScript disponibles"
+      ],
+      "content": "Actúa como migrador de API. 1) Abre src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-articulos/contenidosArticulosApi.ts. 2) Elimina la configuración de RTK Query (createApi, fetchBaseQuery). 3) Importa las funciones de bibliotecaContenidosApi.ts. 4) Reemplaza los hooks RTK Query (useGetArticlesQuery, etc.) con funciones que llamen a la API centralizada. 5) Mantén la misma interfaz de hooks pero usando axios internamente. 6) Elimina todos los queryFn mocks y delays simulados. 7) Actualiza el baseUrl para usar '/articulos' como subpath. 8) Mantén el manejo de estados loading/error pero usando la API real. 9) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "contenidosArticulosApi.ts: RTK Query eliminado",
+        "contenidosArticulosApi.ts: funciones axios implementadas",
+        "contenidosArticulosApi.ts: mocks y delays eliminados",
+        "contenidosArticulosApi.ts: baseUrl actualizado a /articulos"
+      ],
+      "acceptance_criteria": [
+        "No quedan referencias a RTK Query en el archivo",
+        "Todas las funciones usan la API centralizada",
+        "Los mocks y delays simulados han sido eliminados",
+        "La funcionalidad de hooks se mantiene idéntica",
+        "El baseUrl apunta a /api/biblioteca-contenidos/articulos"
+      ],
+      "timeout_sec": 200,
+      "rollback_plan": "Revertir cambios en contenidosArticulosApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P4",
+      "order": 4,
+      "title": "Migrar API de videos de mocks a axios real",
+      "files_hint": [
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-video/contenidosVideoApi.ts"
+      ],
+      "preconditions": [
+        "API centralizada creada en P2",
+        "Archivo contenidosVideoApi.ts existe con mocks",
+        "Tipos TypeScript disponibles"
+      ],
+      "content": "Actúa como migrador de API. 1) Abre src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-video/contenidosVideoApi.ts. 2) Elimina el array mockVideos y toda la lógica de mocks. 3) Reemplaza fetchVideos() para usar axios.get() con la API centralizada. 4) Actualiza uploadVideo() para usar axios.post() con FormData. 5) Actualiza toggleFavorite() para usar axios.put(). 6) Actualiza fetchVideoById() para usar axios.get() con ID. 7) Implementa manejo de errores consistente con try/catch. 8) Mantén los filtros (tags, difficulty, topic, search) pero aplicándolos en la llamada axios. 9) Actualiza API_BASE_URL para usar process.env.VITE_API_URL + '/biblioteca-contenidos/videos'. 10) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "contenidosVideoApi.ts: mockVideos eliminado",
+        "contenidosVideoApi.ts: funciones axios implementadas",
+        "contenidosVideoApi.ts: manejo de errores mejorado",
+        "contenidosVideoApi.ts: API_BASE_URL actualizado"
+      ],
+      "acceptance_criteria": [
+        "No quedan mocks o datos hardcodeados",
+        "Todas las funciones usan axios con la API centralizada",
+        "Los filtros funcionan correctamente con parámetros de query",
+        "El manejo de errores es consistente",
+        "API_BASE_URL usa la variable de entorno correcta"
+      ],
+      "timeout_sec": 200,
+      "rollback_plan": "Revertir cambios en contenidosVideoApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P5",
+      "order": 5,
+      "title": "Implementar API real para archivos descargables",
+      "files_hint": [
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-descargables/contenidosDescargablesApi.ts"
+      ],
+      "preconditions": [
+        "API centralizada creada en P2",
+        "Archivo contenidosDescargablesApi.ts existe con funciones básicas",
+        "Tipos TypeScript disponibles"
+      ],
+      "content": "Actúa como implementador de API. 1) Abre src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-descargables/contenidosDescargablesApi.ts. 2) Reemplaza fetchDownloadableContent() para usar axios.get() con la API centralizada. 3) Implementa recordDownload() para usar axios.post() con el ID del archivo. 4) Agrega función getArchivoById(id) usando axios.get(). 5) Agrega función createArchivo(data) usando axios.post() con FormData. 6) Agrega función updateArchivo(id, data) usando axios.put(). 7) Agrega función deleteArchivo(id) usando axios.delete(). 8) Implementa manejo de errores con try/catch. 9) Configura baseURL para usar '/archivos' como subpath. 10) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "contenidosDescargablesApi.ts: funciones axios implementadas",
+        "contenidosDescargablesApi.ts: CRUD completo para archivos",
+        "contenidosDescargablesApi.ts: manejo de errores implementado",
+        "contenidosDescargablesApi.ts: baseURL configurado"
+      ],
+      "acceptance_criteria": [
+        "Todas las funciones CRUD están implementadas",
+        "fetchDownloadableContent() usa axios real",
+        "recordDownload() registra descargas correctamente",
+        "El manejo de errores es consistente",
+        "No hay mocks o datos hardcodeados"
+      ],
+      "timeout_sec": 200,
+      "rollback_plan": "Revertir cambios en contenidosDescargablesApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P6",
+      "order": 6,
+      "title": "Implementar búsqueda centralizada real",
+      "files_hint": [
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/buscador-contenidos/buscadorContenidosApi.ts"
+      ],
+      "preconditions": [
+        "API centralizada creada en P2",
+        "Archivo buscadorContenidosApi.ts existe con mocks",
+        "Tipos TypeScript disponibles"
+      ],
+      "content": "Actúa como implementador de búsqueda. 1) Abre src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/buscador-contenidos/buscadorContenidosApi.ts. 2) Elimina todos los mocks y datos hardcodeados. 3) Reemplaza searchContent() para usar axios.get() con '/search' endpoint y parámetros de query. 4) Implementa getSearchSuggestions() usando axios.get() con '/search/suggestions' endpoint. 5) Agrega función getSearchFilters() para obtener filtros disponibles. 6) Implementa manejo de errores con try/catch y mapeo a tipos de error. 7) Configura baseURL para usar '/search' como subpath. 8) Mantén la misma interfaz de funciones pero usando axios internamente. 9) Agrega tipos TypeScript para parámetros y respuestas. 10) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "buscadorContenidosApi.ts: mocks eliminados",
+        "buscadorContenidosApi.ts: funciones axios implementadas",
+        "buscadorContenidosApi.ts: búsqueda centralizada real",
+        "buscadorContenidosApi.ts: manejo de errores mejorado"
+      ],
+      "acceptance_criteria": [
+        "No quedan mocks o datos hardcodeados",
+        "searchContent() usa axios con endpoint real",
+        "getSearchSuggestions() funciona con API real",
+        "El manejo de errores es consistente",
+        "Los tipos TypeScript están correctamente aplicados"
+      ],
+      "timeout_sec": 200,
+      "rollback_plan": "Revertir cambios en buscadorContenidosApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P7",
+      "order": 7,
+      "title": "Integrar servicios en páginas del módulo con estados UI",
+      "files_hint": [
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-articulos/ContenidosArticulosPage.tsx",
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-video/ContenidosVideoPage.tsx",
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-descargables/ContenidosDescargablesPage.tsx",
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/buscador-contenidos/BuscadorContenidosPage.tsx"
+      ],
+      "preconditions": [
+        "APIs migradas a axios real (P3-P6)",
+        "Páginas del módulo existen",
+        "Estados UI necesarios identificados"
+      ],
+      "content": "Actúa como integrador de UI. 1) Para cada página del módulo (ContenidosArticulosPage, ContenidosVideoPage, ContenidosDescargablesPage, BuscadorContenidosPage): a) Importa las funciones de la API correspondiente, b) Implementa estados locales: loading, error, data, c) En useEffect, llama a las funciones de API y actualiza estados, d) Renderiza: spinner cuando loading, mensaje vacío cuando data.length===0, lista con componentes para cada item, e) Maneja errores mostrando banner descriptivo, f) No hardcodees URLs, usa variables de entorno. 2) Asegúrate de que cada página maneje estados loading/error/empty correctamente. 3) Implementa funciones de callback para acciones CRUD (crear, editar, eliminar). 4) Muestra diffs de cada página modificada y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "ContenidosArticulosPage.tsx: integración con API real",
+        "ContenidosVideoPage.tsx: integración con API real",
+        "ContenidosDescargablesPage.tsx: integración con API real",
+        "BuscadorContenidosPage.tsx: integración con API real"
+      ],
+      "acceptance_criteria": [
+        "Al cargar cada página se muestra loading y desaparece con la respuesta",
+        "Si la API devuelve [], se muestra el estado empty",
+        "Si la API falla, aparece el banner de error",
+        "Las páginas no contienen mocks ni URLs hardcodeadas",
+        "Los estados UI funcionan correctamente en todas las páginas"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en las páginas modificadas si falla cualquier criterio."
+    },
+    {
+      "id": "P8",
+      "order": 8,
+      "title": "Pruebas de integración del módulo frontend",
+      "files_hint": [
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/__tests__/bibliotecaContenidos.test.ts"
+      ],
+      "preconditions": [
+        "Módulo completamente integrado (P1-P7)",
+        "APIs funcionando con axios real",
+        "Páginas integradas con estados UI"
+      ],
+      "content": "Actúa como tester de integración. 1) Crea directorio __tests__ en el módulo si no existe. 2) Crea bibliotecaContenidos.test.ts con tests básicos. 3) Implementa tests para: a) API de artículos (getArticulos, createArticulo, updateArticulo, deleteArticulo), b) API de videos (getVideos, createVideo, toggleFavorite), c) API de archivos (getArchivos, recordDownload), d) API de búsqueda (searchContent, getSearchSuggestions). 4) Cada test debe verificar: llamada correcta a axios, manejo de errores, tipos de respuesta. 5) Agrega tests de render para las páginas principales. 6) Verifica que no hay mocks activos en producción. 7) Ejecuta los tests y verifica que pasan. 8) Muestra diffs del archivo de test y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "__tests__/bibliotecaContenidos.test.ts: tests de integración creados",
+        "Tests para todas las APIs del módulo",
+        "Tests de render para páginas principales",
+        "Verificación de ausencia de mocks"
+      ],
+      "acceptance_criteria": [
+        "Todos los tests pasan correctamente",
+        "Las APIs responden con los tipos esperados",
+        "El manejo de errores funciona en todos los casos",
+        "No hay mocks activos en el código de producción",
+        "Las páginas renderizan correctamente"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Eliminar archivos de test si fallan los criterios."
+    }
+  ]
+}

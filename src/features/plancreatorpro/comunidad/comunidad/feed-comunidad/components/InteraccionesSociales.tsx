@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { Comment, User } from '../../feed-comunidad/types';
 
 interface InteraccionesSocialesProps {
@@ -25,11 +26,16 @@ const InteraccionesSociales: React.FC<InteraccionesSocialesProps> = ({
 
   const hasLiked = likes.includes(currentUser.id);
 
-  const handleCommentSubmit = (e: React.FormEvent) => {
+  const handleCommentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newCommentText.trim()) {
-      onAddComment(newCommentText);
-      setNewCommentText('');
+      try {
+        await onAddComment(newCommentText);
+        setNewCommentText('');
+        toast.success('Comentario agregado');
+      } catch (error) {
+        toast.error('Error al agregar comentario');
+      }
     }
   };
 

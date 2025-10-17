@@ -207,9 +207,10 @@ import DashboardEstadisticasPage from '../../features/core/dashboard-estadistica
 
 interface DashboardLayoutProps {
   onLogout: () => void;
+  currentUser?: any;
 }
 
-export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onLogout }) => {
+export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ onLogout, currentUser }) => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true); // Siempre inicia colapsada
   const location = useLocation();
 

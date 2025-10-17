@@ -1,0 +1,343 @@
+/* Contenedor principal de paginación */
+.pagination-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 0;
+  margin-top: 32px;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Información de elementos */
+.pagination-info {
+  display: flex;
+  align-items: center;
+}
+
+.pagination-text {
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Selector de elementos por página */
+.items-per-page {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.items-per-page label {
+  color: #374151;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.items-per-page-select {
+  padding: 6px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.items-per-page-select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.items-per-page-select:hover {
+  border-color: #9ca3af;
+}
+
+/* Navegación de páginas */
+.pagination-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Botones de navegación */
+.pagination-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.pagination-btn:hover:not(.disabled) {
+  background: #f9fafb;
+  border-color: #9ca3af;
+  color: #1f2937;
+}
+
+.pagination-btn:active:not(.disabled) {
+  transform: translateY(1px);
+}
+
+.pagination-btn.disabled {
+  background: #f9fafb;
+  color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.pagination-btn svg {
+  flex-shrink: 0;
+}
+
+/* Números de página */
+.pagination-numbers {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pagination-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pagination-number:hover:not(.active) {
+  background: #f9fafb;
+  border-color: #9ca3af;
+  color: #1f2937;
+}
+
+.pagination-number.active {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.pagination-number:active:not(.active) {
+  transform: translateY(1px);
+}
+
+/* Elipsis */
+.pagination-ellipsis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: #9ca3af;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Información de página actual */
+.pagination-current {
+  display: flex;
+  align-items: center;
+}
+
+.current-page-info {
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .pagination-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  
+  .pagination-nav {
+    justify-content: center;
+    order: 1;
+  }
+  
+  .pagination-info {
+    order: 2;
+    justify-content: center;
+  }
+  
+  .items-per-page {
+    order: 3;
+    justify-content: center;
+  }
+  
+  .pagination-current {
+    order: 4;
+    justify-content: center;
+  }
+  
+  .pagination-btn {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+  
+  .pagination-number {
+    width: 36px;
+    height: 36px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination-container {
+    padding: 16px 0;
+  }
+  
+  .pagination-nav {
+    gap: 4px;
+  }
+  
+  .pagination-numbers {
+    gap: 2px;
+  }
+  
+  .pagination-btn {
+    padding: 6px 8px;
+    font-size: 0.75rem;
+  }
+  
+  .pagination-number {
+    width: 32px;
+    height: 32px;
+    font-size: 0.75rem;
+  }
+  
+  .pagination-ellipsis {
+    width: 32px;
+    height: 32px;
+    font-size: 0.75rem;
+  }
+  
+  .items-per-page {
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .items-per-page label {
+    font-size: 0.8rem;
+  }
+  
+  .items-per-page-select {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+  }
+}
+
+/* Estados de focus para accesibilidad */
+.pagination-btn:focus,
+.pagination-number:focus,
+.items-per-page-select:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Animaciones suaves */
+.pagination-btn,
+.pagination-number {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover effects mejorados */
+.pagination-btn:hover:not(.disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-number:hover:not(.active) {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estados de carga */
+.pagination-container.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Modo oscuro (opcional) */
+@media (prefers-color-scheme: dark) {
+  .pagination-container {
+    border-top-color: #374151;
+  }
+  
+  .pagination-text,
+  .current-page-info {
+    color: #9ca3af;
+  }
+  
+  .pagination-btn {
+    background: #1f2937;
+    border-color: #374151;
+    color: #d1d5db;
+  }
+  
+  .pagination-btn:hover:not(.disabled) {
+    background: #374151;
+    border-color: #4b5563;
+  }
+  
+  .pagination-number {
+    background: #1f2937;
+    border-color: #374151;
+    color: #d1d5db;
+  }
+  
+  .pagination-number:hover:not(.active) {
+    background: #374151;
+    border-color: #4b5563;
+  }
+  
+  .pagination-number.active {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: #ffffff;
+  }
+  
+  .items-per-page-select {
+    background: #1f2937;
+    border-color: #374151;
+    color: #d1d5db;
+  }
+  
+  .items-per-page-select:focus {
+    border-color: #3b82f6;
+  }
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,48 @@
+{
+  "nombre": "Desarrollador React Native",
+  "version": "1.0",
+  "descripcion": "Prompts especializados para desarrollo de aplicaciones móviles con React Native",
+  "prompts": [
+    {
+      "id": "rn_setup_project",
+      "nombre": "Configurar Proyecto React Native",
+      "prompt": "Configura un proyecto React Native desde cero incluyendo:\n\n## 🚀 CONFIGURACIÓN INICIAL\n- React Native CLI o Expo CLI\n- TypeScript configuration\n- ESLint y Prettier\n- Metro bundler configuration\n\n## 📱 PLATAFORMAS\n- iOS setup (Xcode, CocoaPods)\n- Android setup (Android Studio, SDK)\n- Cross-platform compatibility\n\n## 📦 DEPENDENCIAS ESENCIALES\n- Navigation (React Navigation)\n- State management (Redux Toolkit)\n- HTTP client (Axios)\n- UI components (NativeBase/React Native Elements)\n- Icons (React Native Vector Icons)\n- AsyncStorage para persistencia\n\n## 🎨 CONFIGURACIÓN UI/UX\n- Responsive design\n- Dark/Light theme\n- Platform-specific styling\n- Accessibility (a11y)\n\nProporciona comandos de instalación y configuración paso a paso.",
+      "contexto": "Configuración inicial de proyectos React Native"
+    },
+    {
+      "id": "rn_navigation_setup",
+      "nombre": "Configurar Navegación",
+      "prompt": "Configura un sistema de navegación completo para React Native:\n\n## 🧭 TIPOS DE NAVEGACIÓN\n- Stack Navigator (pantallas principales)\n- Tab Navigator (navegación por pestañas)\n- Drawer Navigator (menú lateral)\n- Modal Navigator (ventanas modales)\n\n## 🔐 AUTENTICACIÓN Y RUTAS\n- Rutas públicas y privadas\n- Login/Logout flow\n- Deep linking\n- Navigation guards\n\n## 📱 NAVEGACIÓN ESPECÍFICA\n- iOS: Gestos nativos, back button\n- Android: Hardware back button\n- Gesture handling\n- Animation transitions\n\n## 🎨 CUSTOMIZACIÓN\n- Custom headers\n- Tab bar styling\n- Drawer content\n- Modal presentations\n\nIncluye ejemplos de código completos y mejores prácticas.",
+      "contexto": "Sistema de navegación en React Native"
+    },
+    {
+      "id": "rn_state_management",
+      "nombre": "Gestión de Estado",
+      "prompt": "Implementa gestión de estado robusta para React Native:\n\n## 🔄 ESTADO GLOBAL\n- Redux Toolkit setup\n- Slices y reducers\n- Async thunks\n- DevTools integration\n\n## 📱 ESTADO LOCAL\n- useState para componentes simples\n- useReducer para lógica compleja\n- Custom hooks\n- Context API para estado compartido\n\n## 💾 PERSISTENCIA\n- AsyncStorage para datos locales\n- Redux Persist para estado global\n- Secure storage para datos sensibles\n- Offline-first approach\n\n## 🔄 SINCRONIZACIÓN\n- API integration\n- Real-time updates\n- Conflict resolution\n- Background sync\n\nProporciona ejemplos de implementación y patrones de uso.",
+      "contexto": "Gestión de estado en aplicaciones móviles"
+    },
+    {
+      "id": "rn_performance_optimization",
+      "nombre": "Optimización de Rendimiento",
+      "prompt": "Optimiza el rendimiento de la aplicación React Native:\n\n## 🚀 OPTIMIZACIONES GENERALES\n- Bundle size optimization\n- Code splitting\n- Lazy loading\n- Image optimization\n\n## 📱 OPTIMIZACIONES MÓVILES\n- FlatList optimization\n- Memory management\n- Background processing\n- Battery optimization\n\n## 🎨 UI PERFORMANCE\n- React.memo para componentes\n- useMemo y useCallback\n- Virtual scrolling\n- Animation optimization\n\n## 🔧 HERRAMIENTAS DE DEBUGGING\n- Flipper integration\n- Performance monitoring\n- Memory profiling\n- Network debugging\n\nIncluye métricas de rendimiento y herramientas de medición.",
+      "contexto": "Optimización de rendimiento en React Native"
+    },
+    {
+      "id": "rn_native_modules",
+      "nombre": "Módulos Nativos",
+      "prompt": "Integra y crea módulos nativos para React Native:\n\n## 📱 MÓDULOS NATIVOS COMUNES\n- Camera y Image Picker\n- Push notifications\n- Biometric authentication\n- File system access\n- Device sensors\n\n## 🔧 CREACIÓN DE MÓDULOS\n- Bridge entre JS y nativo\n- iOS (Objective-C/Swift)\n- Android (Java/Kotlin)\n- TypeScript definitions\n\n## 📦 INTEGRACIÓN DE LIBRERÍAS\n- CocoaPods (iOS)\n- Gradle (Android)\n- Auto-linking\n- Manual linking\n\n## 🧪 TESTING\n- Unit tests\n- Integration tests\n- E2E testing con Detox\n- Performance testing\n\nProporciona ejemplos de implementación y troubleshooting.",
+      "contexto": "Integración de módulos nativos"
+    }
+  ],
+  "configuracion": {
+    "framework": "React Native",
+    "lenguaje": "TypeScript",
+    "navegacion": "React Navigation",
+    "estado": "Redux Toolkit",
+    "testing": "Jest + Detox"
+  }
+}
+
+
+
+

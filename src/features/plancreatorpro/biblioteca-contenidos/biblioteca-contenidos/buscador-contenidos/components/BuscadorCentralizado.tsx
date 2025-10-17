@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { getSearchSuggestions } from '../buscadorContenidosApi';
 
-const BuscadorCentralizado: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+interface BuscadorCentralizadoProps {
+  onSearch?: (query: string) => void;
+  isSearching?: boolean;
+  searchQuery?: string;
+}
+
+const BuscadorCentralizado: React.FC<BuscadorCentralizadoProps> = ({ onSearch, isSearching = false, searchQuery = '' }) => {
+  const [searchTerm, setSearchTerm] = useState(searchQuery);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
+
+  // Sincronizar con el searchQuery del padre
+  useEffect(() => {
+    setSearchTerm(searchQuery);
+  }, [searchQuery]);
 
   useEffect(() => {
     if (searchTerm.length > 2) {
@@ -23,8 +34,9 @@ const BuscadorCentralizado: React.FC = () => {
     if (searchTerm && !searchHistory.includes(searchTerm)) {
       setSearchHistory([searchTerm, ...searchHistory.slice(0, 4)]); // Keep last 5 searches
     }
-    console.log('Searching for:', searchTerm);
-    // Here you would trigger the actual search in the parent component or a global state
+    if (onSearch) {
+      onSearch(searchTerm);
+    }
   };
 
   return (
@@ -39,9 +51,10 @@ const BuscadorCentralizado: React.FC = () => {
         />
         <button
           type="submit"
-          className="bg-blue-600 text-white px-6 py-2 rounded-r-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          disabled={isSearching}
+          className="bg-blue-600 text-white px-6 py-2 rounded-r-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Buscar
+          {isSearching ? 'Buscando...' : 'Buscar'}
         </button>
       </form>
 
@@ -54,6 +67,9 @@ const BuscadorCentralizado: React.FC = () => {
               onClick={() => {
                 setSearchTerm(suggestion);
                 setSuggestions([]);
+                if (onSearch) {
+                  onSearch(suggestion);
+                }
               }}
             >
               {suggestion}
@@ -70,7 +86,12 @@ const BuscadorCentralizado: React.FC = () => {
               <span
                 key={index}
                 className="bg-gray-200 text-gray-700 text-sm px-3 py-1 rounded-full cursor-pointer hover:bg-gray-300"
-                onClick={() => setSearchTerm(item)}
+                onClick={() => {
+                  setSearchTerm(item);
+                  if (onSearch) {
+                    onSearch(item);
+                  }
+                }}
               >
                 {item}
               </span>

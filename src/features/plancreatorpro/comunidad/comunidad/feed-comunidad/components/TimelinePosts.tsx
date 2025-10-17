@@ -28,6 +28,17 @@ const TimelinePosts: React.FC<TimelinePostsProps> = ({ filter }) => {
     };
 
     fetchPosts();
+
+    // Listen for new posts created
+    const handlePostCreated = () => {
+      fetchPosts();
+    };
+
+    window.addEventListener('postCreated', handlePostCreated);
+    
+    return () => {
+      window.removeEventListener('postCreated', handlePostCreated);
+    };
   }, [filter]);
 
   if (loading) {

@@ -12,7 +12,10 @@ interface SidebarProps {
 
 // Helper function to check if user has access to a module
 const hasModuleAccess = (moduleId: string, userPlan: PlanType | null): boolean => {
-  if (!userPlan) return true; // Show all if no user logged in (fallback)
+  // If no user is logged in, only show core modules
+  if (!userPlan) {
+    return moduleId === 'core';
+  }
 
   // Core modules - available to everyone
   if (['core', 'crm', 'training', 'nutrition', 'finance', 'marketing', 'agents'].includes(moduleId)) {
@@ -627,15 +630,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
   // Load current user from localStorage
   useEffect(() => {
     const user = getSafeCurrentUser() as User | null;
-    if (user) {
+    console.log('Usuario obtenido del localStorage:', user); // Debug log
+    if (user && user.plan) {
       setCurrentUser(user);
+    } else {
+      console.log('No se encontró usuario o plan válido');
+      setCurrentUser(null);
     }
   }, []);
 
   // Filter modules based on user plan
-  const visibleModules = menuModules.filter(module =>
-    hasModuleAccess(module.id, currentUser?.plan || null)
-  );
+  const visibleModules = menuModules.filter(module => {
+    const hasAccess = hasModuleAccess(module.id, currentUser?.plan || null);
+    console.log(`Módulo ${module.id} (${module.label}): ${hasAccess ? 'VISIBLE' : 'OCULTO'} - Plan usuario: ${currentUser?.plan || 'null'}`);
+    return hasAccess;
+  });
 
   const toggleModule = (moduleId: string) => {
     setExpandedModules(prev =>

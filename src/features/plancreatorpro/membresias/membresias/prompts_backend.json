@@ -1,0 +1,293 @@
+{
+  "meta": {
+    "module": "membresias/",
+    "side": "backend",
+    "run_id": "2024-12-19T10:30:00Z",
+    "base_path": "/api/membresias"
+  },
+  "prompts": [
+    {
+      "id": "P1",
+      "order": 1,
+      "title": "Crear modelo Membresia con esquema Mongoose",
+      "files_hint": [
+        "backend/src/models/Membresia.model.js"
+      ],
+      "preconditions": [
+        "Directorio models/ existe en backend",
+        "Mongoose está instalado y configurado",
+        "BASE_PATH definido como /api/membresias"
+      ],
+      "content": "Actúa como desarrollador backend. Crea el archivo backend/src/models/Membresia.model.js. 1) Importa mongoose. 2) Define el schema de Membresia con campos: nivel (String, enum: ['Bronce', 'Plata', 'Oro', 'Premium'], required), nombre (String, required), descripcion (String, required), precio (Number, required, min: 0), periodicidad (String, enum: ['mensual', 'anual'], required), beneficios (Array of Strings, default: []), testimonios (Array of Objects con id, name, feedback), faq (Array of Objects con question, answer), miembrosActivos (Number, default: 0), ingresosGenerados (Number, default: 0), estado (String, enum: ['activo', 'pausado'], default: 'activo'), createdAt (Date, default: Date.now), updatedAt (Date, default: Date.now). 3) Agrega índices: nivel, estado, createdAt. 4) Agrega middleware pre('save') para actualizar updatedAt. 5) Exporta el modelo. 6) Muestra el diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "Membresia.model.js creado con schema completo",
+        "Índices configurados para nivel, estado, createdAt",
+        "Middleware pre('save') implementado"
+      ],
+      "acceptance_criteria": [
+        "Archivo Membresia.model.js existe y exporta modelo válido",
+        "Schema contiene todos los campos requeridos",
+        "Enums están correctamente definidos",
+        "Índices están configurados",
+        "Middleware pre('save') está implementado"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Eliminar el archivo Membresia.model.js si no cumple los criterios."
+    },
+    {
+      "id": "P2",
+      "order": 2,
+      "title": "Crear controlador de membresías con CRUD completo",
+      "files_hint": [
+        "backend/src/controllers/membresia.controller.js"
+      ],
+      "preconditions": [
+        "Directorio controllers/ existe en backend",
+        "Membresia.model.js está creado",
+        "Middleware de auth existe"
+      ],
+      "content": "Actúa como desarrollador backend. Crea el archivo backend/src/controllers/membresia.controller.js. 1) Importa el modelo Membresia. 2) Implementa list() que hace Membresia.find() y retorna { success: true, data: membresias, total: membresias.length }. 3) Implementa getById(id) que hace Membresia.findById(id) y retorna { success: true, data: membresia } o error 404. 4) Implementa create(data) que crea nueva membresía con Membresia.create(data) y retorna { success: true, data: membresia }. 5) Implementa update(id, data) que hace Membresia.findByIdAndUpdate(id, data, { new: true }) y retorna { success: true, data: membresia }. 6) Implementa remove(id) que hace Membresia.findByIdAndDelete(id) y retorna { success: true, message: 'Membresía eliminada' }. 7) Implementa getPagos() que retorna datos mock de pagos recurrentes. 8) Implementa getIngresos() que retorna datos mock de ingresos mensuales. 9) Implementa getMetricas() que retorna datos mock de métricas de cancelación. 10) Agrega manejo de errores con try/catch en cada función. 11) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "membresia.controller.js creado con todas las funciones CRUD",
+        "Funciones getPagos, getIngresos, getMetricas implementadas",
+        "Manejo de errores agregado en cada función"
+      ],
+      "acceptance_criteria": [
+        "Archivo membresia.controller.js existe y exporta todas las funciones",
+        "Funciones CRUD están implementadas correctamente",
+        "Manejo de errores está presente en cada función",
+        "Funciones retornan respuestas consistentes",
+        "Funciones de pagos, ingresos y métricas están implementadas"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Eliminar el archivo membresia.controller.js si no cumple los criterios."
+    },
+    {
+      "id": "P3",
+      "order": 3,
+      "title": "Crear rutas de membresías con middleware de auth",
+      "files_hint": [
+        "backend/src/routes/membresia.routes.js"
+      ],
+      "preconditions": [
+        "Directorio routes/ existe en backend",
+        "membresia.controller.js está creado",
+        "Middleware de auth existe"
+      ],
+      "content": "Actúa como desarrollador backend. Crea el archivo backend/src/routes/membresia.routes.js. 1) Importa express y Router. 2) Importa el controlador membresiaController. 3) Importa middleware de auth (asumiendo que existe). 4) Crea router con express.Router(). 5) Define rutas: router.get('/', auth, membresiaController.list), router.get('/:id', auth, membresiaController.getById), router.post('/', auth, membresiaController.create), router.put('/:id', auth, membresiaController.update), router.delete('/:id', auth, membresiaController.remove), router.get('/pagos', auth, membresiaController.getPagos), router.get('/ingresos', auth, membresiaController.getIngresos), router.get('/metricas', auth, membresiaController.getMetricas). 6) Exporta el router por defecto. 7) Agrega comentarios descriptivos para cada ruta. 8) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "membresia.routes.js creado con todas las rutas CRUD",
+        "Rutas especiales para pagos, ingresos y métricas implementadas",
+        "Middleware de auth aplicado a todas las rutas"
+      ],
+      "acceptance_criteria": [
+        "Archivo membresia.routes.js existe y exporta router",
+        "Todas las rutas CRUD están definidas",
+        "Middleware de auth está aplicado a todas las rutas",
+        "Rutas especiales están implementadas",
+        "Comentarios descriptivos están presentes"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Eliminar el archivo membresia.routes.js si no cumple los criterios."
+    },
+    {
+      "id": "P4",
+      "order": 4,
+      "title": "Integrar rutas de membresías en servidor principal",
+      "files_hint": [
+        "backend/src/server.js",
+        "backend/src/routes/api.routes.js"
+      ],
+      "preconditions": [
+        "membresia.routes.js está creado",
+        "server.js existe y está configurado",
+        "api.routes.js existe"
+      ],
+      "content": "Actúa como desarrollador backend. 1) Abre backend/src/server.js. 2) Importa membresiaRoutes desde './routes/membresia.routes.js'. 3) Agrega app.use('/api/membresias', membresiaRoutes) después de las otras rutas. 4) Abre backend/src/routes/api.routes.js. 5) Importa membresiaRoutes desde './membresia.routes.js'. 6) Agrega router.use('/membresias', membresiaRoutes) en la sección de rutas. 7) Agrega 'membresias: /api/membresias' en el objeto endpoints del GET '/'. 8) Verifica que no haya conflictos con otras rutas. 9) Muestra diffs de ambos archivos y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "server.js: importación y montaje de membresiaRoutes",
+        "api.routes.js: importación y montaje de membresiaRoutes",
+        "api.routes.js: endpoint documentado en GET /"
+      ],
+      "acceptance_criteria": [
+        "Rutas de membresías están montadas en el servidor",
+        "Rutas están documentadas en el endpoint principal",
+        "No hay conflictos con otras rutas",
+        "Importaciones están correctas"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en server.js y api.routes.js si falla cualquier criterio."
+    },
+    {
+      "id": "P5",
+      "order": 5,
+      "title": "Implementar validación con Zod para membresías",
+      "files_hint": [
+        "backend/src/middleware/validation.js",
+        "backend/src/controllers/membresia.controller.js"
+      ],
+      "preconditions": [
+        "Directorio middleware/ existe en backend",
+        "Zod está instalado o se puede instalar",
+        "membresia.controller.js está creado"
+      ],
+      "content": "Actúa como desarrollador backend. 1) Crea/abre backend/src/middleware/validation.js. 2) Importa zod. 3) Define schema CreateMembresiaDto con validaciones: nivel (z.enum(['Bronce', 'Plata', 'Oro', 'Premium'])), nombre (z.string().min(1)), descripcion (z.string().min(1)), precio (z.number().positive()), periodicidad (z.enum(['mensual', 'anual'])), beneficios (z.array(z.string())). 4) Define schema UpdateMembresiaDto con todos los campos opcionales. 5) Crea función validateCreateMembresia que valida el body de la request. 6) Crea función validateUpdateMembresia que valida el body de la request. 7) Agrega manejo de errores de validación. 8) Exporta las funciones de validación. 9) Actualiza membresia.controller.js para usar las validaciones. 10) Muestra diffs de ambos archivos y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "validation.js: schemas de validación creados",
+        "validation.js: funciones de validación implementadas",
+        "membresia.controller.js: validaciones integradas"
+      ],
+      "acceptance_criteria": [
+        "Schemas de validación están definidos correctamente",
+        "Funciones de validación están implementadas",
+        "Validaciones están integradas en el controlador",
+        "Manejo de errores de validación está presente"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en validation.js y membresia.controller.js si falla cualquier criterio."
+    },
+    {
+      "id": "P6",
+      "order": 6,
+      "title": "Implementar autenticación JWT para rutas de membresías",
+      "files_hint": [
+        "backend/src/middleware/auth.js",
+        "backend/src/routes/membresia.routes.js"
+      ],
+      "preconditions": [
+        "Directorio middleware/ existe en backend",
+        "JWT está instalado y configurado",
+        "membresia.routes.js está creado"
+      ],
+      "content": "Actúa como desarrollador backend. 1) Crea/abre backend/src/middleware/auth.js. 2) Importa jwt y el modelo User (si existe). 3) Implementa función auth que extrae el token del header Authorization. 4) Verifica el token con jwt.verify usando JWT_SECRET. 5) Busca el usuario en la base de datos usando el ID del token. 6) Agrega el usuario a req.user. 7) Maneja errores de token inválido, expirado o usuario no encontrado. 8) Retorna 401 para errores de autenticación. 9) Verifica que membresia.routes.js esté usando el middleware auth correctamente. 10) Muestra diffs de ambos archivos y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "auth.js: middleware de autenticación JWT implementado",
+        "auth.js: manejo de errores de autenticación",
+        "membresia.routes.js: verificación de uso correcto del middleware"
+      ],
+      "acceptance_criteria": [
+        "Middleware de autenticación está implementado",
+        "Manejo de errores de autenticación está presente",
+        "Rutas de membresías están protegidas",
+        "Usuario se agrega a req.user correctamente"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en auth.js si falla cualquier criterio."
+    },
+    {
+      "id": "P7",
+      "order": 7,
+      "title": "Implementar funciones de pagos, ingresos y métricas",
+      "files_hint": [
+        "backend/src/controllers/membresia.controller.js"
+      ],
+      "preconditions": [
+        "membresia.controller.js está creado",
+        "Membresia.model.js está creado",
+        "Funciones básicas CRUD están implementadas"
+      ],
+      "content": "Actúa como desarrollador backend. Abre backend/src/controllers/membresia.controller.js. 1) Implementa getPagos() que retorna datos mock de pagos recurrentes con estructura: { success: true, data: { pagosRecurrentes: [{ id, membresiaId, usuarioId, monto, fechaProximoPago, estado }] } }. 2) Implementa getIngresos() que retorna datos mock de ingresos mensuales con estructura: { success: true, data: { ingresosMensuales: [{ mes, total, membresiaId, membresiaNombre }] } }. 3) Implementa getMetricas() que retorna datos mock de métricas de cancelación con estructura: { success: true, data: { tasaCancelacion, totalCancelaciones, periodo } }. 4) Agrega manejo de errores con try/catch en cada función. 5) Agrega comentarios descriptivos para cada función. 6) Asegúrate de que las funciones retornen respuestas consistentes. 7) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "membresia.controller.js: getPagos implementada con datos mock",
+        "membresia.controller.js: getIngresos implementada con datos mock",
+        "membresia.controller.js: getMetricas implementada con datos mock"
+      ],
+      "acceptance_criteria": [
+        "Función getPagos está implementada y retorna datos mock",
+        "Función getIngresos está implementada y retorna datos mock",
+        "Función getMetricas está implementada y retorna datos mock",
+        "Manejo de errores está presente en cada función",
+        "Respuestas tienen estructura consistente"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en membresia.controller.js si falla cualquier criterio."
+    },
+    {
+      "id": "P8",
+      "order": 8,
+      "title": "Configurar CORS y variables de entorno",
+      "files_hint": [
+        "backend/src/server.js",
+        ".env"
+      ],
+      "preconditions": [
+        "server.js existe y está configurado",
+        "Archivo .env existe en backend"
+      ],
+      "content": "Actúa como desarrollador backend. 1) Abre backend/src/server.js. 2) Verifica que CORS esté configurado para permitir requests desde http://localhost:5173. 3) Abre .env en la raíz del backend. 4) Agrega JWT_SECRET=tu_secreto_jwt_aqui si no existe. 5) Agrega DB_URI=mongodb://localhost:27017/tu_base_de_datos si no existe. 6) Agrega FRONTEND_URL=http://localhost:5173 si no existe. 7) Verifica que las variables de entorno se carguen correctamente con dotenv.config(). 8) Agrega console.log para verificar que las variables se cargan. 9) Muestra diffs de ambos archivos y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "server.js: configuración de CORS verificada",
+        ".env: variables de entorno configuradas",
+        "server.js: verificación de carga de variables"
+      ],
+      "acceptance_criteria": [
+        "CORS está configurado correctamente",
+        "Variables de entorno están configuradas",
+        "Variables se cargan correctamente",
+        "Configuración es consistente"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en server.js y .env si falla cualquier criterio."
+    },
+    {
+      "id": "P9",
+      "order": 9,
+      "title": "Crear tests de integración para endpoints de membresías",
+      "files_hint": [
+        "backend/src/__tests__/membresia.test.js"
+      ],
+      "preconditions": [
+        "Directorio __tests__/ existe en backend",
+        "Jest o supertest está instalado",
+        "Rutas de membresías están implementadas"
+      ],
+      "content": "Actúa como desarrollador backend. Crea el archivo backend/src/__tests__/membresia.test.js. 1) Importa supertest, express y las rutas de membresías. 2) Crea tests para GET /api/membresias que verifique que retorna 200 y array. 3) Crea tests para POST /api/membresias que verifique creación de membresía. 4) Crea tests para GET /api/membresias/:id que verifique que retorna membresía específica. 5) Crea tests para PUT /api/membresias/:id que verifique actualización. 6) Crea tests para DELETE /api/membresias/:id que verifique eliminación. 7) Crea tests para GET /api/membresias/pagos que verifique que retorna datos de pagos. 8) Crea tests para GET /api/membresias/ingresos que verifique que retorna datos de ingresos. 9) Crea tests para GET /api/membresias/metricas que verifique que retorna métricas. 10) Agrega tests de autenticación que verifiquen que las rutas requieren token. 11) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "membresia.test.js creado con tests de integración",
+        "Tests para todas las rutas CRUD implementados",
+        "Tests para rutas especiales implementados",
+        "Tests de autenticación implementados"
+      ],
+      "acceptance_criteria": [
+        "Archivo de tests existe y contiene tests completos",
+        "Tests para rutas CRUD están implementados",
+        "Tests para rutas especiales están implementados",
+        "Tests de autenticación están implementados",
+        "Tests cubren casos de éxito y error"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Eliminar el archivo membresia.test.js si no cumple los criterios."
+    },
+    {
+      "id": "P10",
+      "order": 10,
+      "title": "Testing de conectividad y documentación de API",
+      "files_hint": [
+        "backend/src/server.js",
+        "README.md"
+      ],
+      "preconditions": [
+        "Servidor está configurado y funcionando",
+        "Rutas de membresías están implementadas",
+        "Tests están creados"
+      ],
+      "content": "Actúa como desarrollador backend. 1) Abre backend/src/server.js. 2) Agrega endpoint de health check específico para membresías: app.get('/api/membresias/health', (req, res) => { res.json({ status: 'OK', module: 'membresias', timestamp: new Date().toISOString() }) }). 3) Abre README.md en la raíz del backend. 4) Agrega sección 'API de Membresías' con documentación de endpoints: GET /api/membresias, POST /api/membresias, GET /api/membresias/:id, PUT /api/membresias/:id, DELETE /api/membresias/:id, GET /api/membresias/pagos, GET /api/membresias/ingresos, GET /api/membresias/metricas. 5) Incluye ejemplos de request/response para cada endpoint. 6) Documenta los códigos de error y sus significados. 7) Incluye información sobre autenticación requerida. 8) Muestra diffs de ambos archivos y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "server.js: endpoint de health check para membresías",
+        "README.md: documentación completa de API de membresías",
+        "README.md: ejemplos de request/response",
+        "README.md: documentación de errores y autenticación"
+      ],
+      "acceptance_criteria": [
+        "Endpoint de health check está implementado",
+        "Documentación de API está completa",
+        "Ejemplos de request/response están incluidos",
+        "Información sobre errores y autenticación está documentada",
+        "Documentación es clara y útil"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en server.js y README.md si falla cualquier criterio."
+    }
+  ]
+}
+

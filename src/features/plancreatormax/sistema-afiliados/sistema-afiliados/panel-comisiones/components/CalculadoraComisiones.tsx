@@ -1,13 +1,28 @@
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 
 const CalculadoraComisiones: React.FC = () => {
-  const [montoVenta, setMontoVenta] = useState<number>(0);
-  const [porcentajeComision, setPorcentajeComision] = useState<number>(10); // Default 10%
+  const [montoVenta, setMontoVenta] = useState<string>('');
+  const [porcentajeComision, setPorcentajeComision] = useState<string>('10'); // Default 10%
   const [montoComision, setMontoComision] = useState<number>(0);
 
   const calcularComision = () => {
-    const comision = (montoVenta * (porcentajeComision / 100));
+    const montoVentaNum = parseFloat(montoVenta);
+    const porcentajeComisionNum = parseFloat(porcentajeComision);
+
+    if (isNaN(montoVentaNum) || montoVentaNum <= 0) {
+      toast.error('Por favor ingresa un monto de venta válido');
+      return;
+    }
+    
+    if (isNaN(porcentajeComisionNum) || porcentajeComisionNum < 0 || porcentajeComisionNum > 100) {
+      toast.error('El porcentaje de comisión debe estar entre 0% y 100%');
+      return;
+    }
+
+    const comision = (montoVentaNum * (porcentajeComisionNum / 100));
     setMontoComision(comision);
+    toast.success(`Comisión calculada: ${formatCurrency(comision)}`);
   };
 
   const formatCurrency = (amount: number) => {
@@ -27,7 +42,7 @@ const CalculadoraComisiones: React.FC = () => {
             id="montoVenta"
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
             value={montoVenta}
-            onChange={(e) => setMontoVenta(parseFloat(e.target.value))}
+            onChange={(e) => setMontoVenta(e.target.value)}
             min="0"
           />
         </div>
@@ -40,7 +55,7 @@ const CalculadoraComisiones: React.FC = () => {
             id="porcentajeComision"
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
             value={porcentajeComision}
-            onChange={(e) => setPorcentajeComision(parseFloat(e.target.value))}
+            onChange={(e) => setPorcentajeComision(e.target.value)}
             min="0"
             max="100"
           />

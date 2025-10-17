@@ -1,0 +1,61 @@
+{
+  "nombre": "API REST para Gestión de Usuarios - Cursos Online",
+  "descripcion": "API REST desarrollada con Express.js para gestionar usuarios en una plataforma de cursos online",
+  "version": "1.0.0",
+  "tecnologias": [
+    "Express.js",
+    "MongoDB",
+    "Mongoose",
+    "Joi",
+    "Winston",
+    "bcryptjs",
+    "jsonwebtoken",
+    "cors",
+    "helmet",
+    "express-rate-limit"
+  ],
+  "caracteristicas": [
+    "API REST completa con operaciones CRUD",
+    "Modelo de Usuario con validaciones robustas",
+    "Sistema de logging con Winston",
+    "Validación de datos con Joi",
+    "Rate limiting para protección",
+    "Manejo centralizado de errores",
+    "Documentación completa con ejemplos",
+    "Scripts de prueba automatizados"
+  ],
+  "endpoints": {
+    "usuarios": {
+      "POST /api/users": "Crear nuevo usuario",
+      "GET /api/users": "Obtener usuarios con filtros y paginación",
+      "GET /api/users/:id": "Obtener usuario por ID",
+      "PUT /api/users/:id": "Actualizar usuario",
+      "PATCH /api/users/:id/password": "Cambiar contraseña",
+      "DELETE /api/users/:id": "Desactivar usuario",
+      "DELETE /api/users/:id/permanente": "Eliminar permanentemente",
+      "GET /api/users/estadisticas": "Obtener estadísticas"
+    },
+    "sistema": {
+      "GET /health": "Estado del servidor",
+      "GET /": "Información de la API"
+    }
+  },
+  "estructura": {
+    "controllers/": "Controladores de la API",
+    "middleware/": "Middleware personalizado",
+    "models/": "Modelos de Mongoose",
+    "routes/": "Definición de rutas",
+    "utils/": "Utilidades (logger, etc.)",
+    "validators/": "Validaciones con Joi",
+    "ejemplos/": "Scripts de prueba y ejemplos",
+    "logs/": "Archivos de log"
+  },
+  "instalacion": {
+    "dependencias": "npm install",
+    "configuracion": "cp env.example .env",
+    "desarrollo": "npm run dev",
+    "produccion": "npm start"
+  },
+  "documentacion": "README.md",
+  "ejemplos": "ejemplos/test-api.js"
+}

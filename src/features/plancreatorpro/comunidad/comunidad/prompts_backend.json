@@ -1,0 +1,325 @@
+{
+  "meta": {
+    "module": "src/features/plancreatorpro/comunidad/comunidad",
+    "side": "backend",
+    "run_id": "2025-01-27T10:00:00Z",
+    "base_path": "/api/comunidad"
+  },
+  "prompts": [
+    {
+      "id": "P1",
+      "order": 1,
+      "title": "Crear modelos de MongoDB para el módulo de comunidad",
+      "files_hint": [
+        "backend/src/models/Post.model.js",
+        "backend/src/models/Group.model.js",
+        "backend/src/models/Report.model.js",
+        "backend/src/models/UserActivity.model.js"
+      ],
+      "preconditions": [
+        "Estructura de backend existe con carpeta models",
+        "Mongoose configurado en el proyecto",
+        "BASE_PATH definido como /api/comunidad"
+      ],
+      "content": "Crea los modelos de MongoDB para el módulo de comunidad. 1) Crea backend/src/models/Post.model.js con esquema: author (ObjectId ref User), content (String), media (Array), type (String enum), likes (Array ObjectId), comments (Array con author, content, timestamp), shares (Number), timestamp (Date), isPinned (Boolean), pollOptions (Array). 2) Crea backend/src/models/Group.model.js con esquema: name (String), description (String), coverImage (String), isPrivate (Boolean), tags (Array), members (Array ObjectId), admins (Array ObjectId), createdAt (Date), updatedAt (Date). 3) Crea backend/src/models/Report.model.js con esquema: postId (ObjectId ref Post), reporter (ObjectId ref User), reason (String), description (String), status (String enum), createdAt (Date). 4) Crea backend/src/models/UserActivity.model.js con esquema: userId (ObjectId ref User), posts (Number), comments (Number), points (Number), rank (Number), medals (Array), lastActivity (Date). 5) Agrega índices apropiados para cada modelo. 6) Muestra diffs de cada archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "Post.model.js creado con esquema completo",
+        "Group.model.js creado con esquema completo",
+        "Report.model.js creado con esquema completo",
+        "UserActivity.model.js creado con esquema completo",
+        "Índices agregados a todos los modelos"
+      ],
+      "acceptance_criteria": [
+        "Todos los modelos existen con esquemas correctos",
+        "Referencias entre modelos configuradas correctamente",
+        "Índices agregados para optimizar consultas",
+        "Validaciones de campos implementadas",
+        "Modelos exportados correctamente"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Eliminar todos los archivos de modelos creados si falla cualquier criterio."
+    },
+    {
+      "id": "P2",
+      "order": 2,
+      "title": "Crear controlador completo para el módulo de comunidad",
+      "files_hint": [
+        "backend/src/controllers/comunidad.controller.js"
+      ],
+      "preconditions": [
+        "Modelos de MongoDB creados",
+        "Estructura de controladores existe",
+        "BASE_PATH definido como /api/comunidad"
+      ],
+      "content": "Crea backend/src/controllers/comunidad.controller.js. 1) Importa todos los modelos: Post, Group, Report, UserActivity. 2) Implementa controladores para feed: getPosts (con filtros y paginación), createPost, toggleLike, addComment, sharePost, voteOnPoll. 3) Implementa controladores para grupos: getGroups, createGroup, joinGroup, leaveGroup, getGroupMembers, updateGroup, deleteGroup. 4) Implementa controladores para moderación: getReports, createReport, markPost, blockUser, unblockUser, deletePost, approveRequest, rejectRequest, getFlaggedContent, resolveReport. 5) Implementa controladores para ranking: getLeaderboard, getUserMedals, updateUserPoints, getActivityStats, getTopUsers, getUserRank, awardMedal. 6) Agrega manejo de errores con try/catch en cada función. 7) Implementa validaciones de entrada. 8) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "comunidad.controller.js creado con todos los controladores",
+        "Controladores para feed implementados",
+        "Controladores para grupos implementados",
+        "Controladores para moderación implementados",
+        "Controladores para ranking implementados",
+        "Manejo de errores implementado en todas las funciones"
+      ],
+      "acceptance_criteria": [
+        "Todos los controladores están implementados",
+        "Manejo de errores implementado en todas las funciones",
+        "Validaciones de entrada implementadas",
+        "Funciones de paginación implementadas donde corresponde",
+        "Controladores exportados correctamente"
+      ],
+      "timeout_sec": 480,
+      "rollback_plan": "Eliminar comunidad.controller.js si falla cualquier criterio."
+    },
+    {
+      "id": "P3",
+      "order": 3,
+      "title": "Crear rutas REST para el módulo de comunidad",
+      "files_hint": [
+        "backend/src/routes/comunidad.routes.js"
+      ],
+      "preconditions": [
+        "Controlador de comunidad creado",
+        "Estructura de rutas existe",
+        "Middleware de auth disponible",
+        "BASE_PATH definido como /api/comunidad"
+      ],
+      "content": "Crea backend/src/routes/comunidad.routes.js. 1) Importa express y el controlador de comunidad. 2) Importa middleware de auth y validación. 3) Crea router con express.Router(). 4) Define rutas para feed: GET /feed/posts, POST /feed/posts, PUT /feed/posts/:id/like, POST /feed/posts/:id/comments, POST /feed/posts/:id/share, POST /feed/posts/:id/vote. 5) Define rutas para grupos: GET /grupos, POST /grupos, POST /grupos/:id/join, POST /grupos/:id/leave, GET /grupos/:id/members, PUT /grupos/:id, DELETE /grupos/:id. 6) Define rutas para moderación: GET /moderacion/reports, POST /moderacion/reports, PUT /moderacion/posts/:id/status, POST /moderacion/users/:id/block, POST /moderacion/users/:id/unblock, DELETE /moderacion/posts/:id, GET /moderacion/flagged, PUT /moderacion/reports/:id/resolve. 7) Define rutas para ranking: GET /ranking/leaderboard, GET /ranking/users/:id/medals, PUT /ranking/users/:id/points, GET /ranking/users/:id/stats, GET /ranking/top, GET /ranking/users/:id/rank, POST /ranking/users/:id/medals. 8) Aplica middleware de auth a todas las rutas. 9) Aplica middleware de validación donde corresponde. 10) Exporta el router. 11) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "comunidad.routes.js creado con todas las rutas",
+        "Rutas para feed definidas",
+        "Rutas para grupos definidas",
+        "Rutas para moderación definidas",
+        "Rutas para ranking definidas",
+        "Middleware de auth aplicado a todas las rutas",
+        "Middleware de validación aplicado donde corresponde"
+      ],
+      "acceptance_criteria": [
+        "Todas las rutas están definidas correctamente",
+        "Middleware de auth aplicado a todas las rutas",
+        "Middleware de validación aplicado donde corresponde",
+        "Rutas siguen convenciones REST",
+        "Router exportado correctamente"
+      ],
+      "timeout_sec": 360,
+      "rollback_plan": "Eliminar comunidad.routes.js si falla cualquier criterio."
+    },
+    {
+      "id": "P4",
+      "order": 4,
+      "title": "Integrar rutas de comunidad en API principal",
+      "files_hint": [
+        "backend/src/routes/api.routes.js"
+      ],
+      "preconditions": [
+        "Rutas de comunidad creadas",
+        "API principal existe",
+        "BASE_PATH definido como /api/comunidad"
+      ],
+      "content": "Abre backend/src/routes/api.routes.js. 1) Importa comunidadRoutes desde './comunidad.routes.js'. 2) Agrega router.use('/comunidad', comunidadRoutes) en la sección de rutas. 3) Actualiza la documentación de endpoints en el objeto endpoints para incluir: comunidad: '/api/comunidad'. 4) Verifica que el orden de las rutas sea correcto. 5) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "api.routes.js: import de comunidadRoutes",
+        "api.routes.js: router.use('/comunidad', comunidadRoutes) agregado",
+        "api.routes.js: documentación de endpoints actualizada"
+      ],
+      "acceptance_criteria": [
+        "Rutas de comunidad montadas correctamente",
+        "Documentación de endpoints actualizada",
+        "Import de comunidadRoutes funciona",
+        "Rutas accesibles en /api/comunidad"
+      ],
+      "timeout_sec": 120,
+      "rollback_plan": "Revertir cambios en api.routes.js si falla cualquier criterio."
+    },
+    {
+      "id": "P5",
+      "order": 5,
+      "title": "Agregar validaciones para DTOs de comunidad",
+      "files_hint": [
+        "backend/src/middleware/validate.middleware.js"
+      ],
+      "preconditions": [
+        "Middleware de validación existe",
+        "express-validator configurado",
+        "DTOs definidos en el MD"
+      ],
+      "content": "Abre backend/src/middleware/validate.middleware.js. 1) Agrega validaciones para CreatePostDto: content (required, min 1, max 1000), type (required, enum), media (optional array), pollOptions (optional array). 2) Agrega validaciones para CommentDto: content (required, min 1, max 500). 3) Agrega validaciones para CreateGroupDto: name (required, min 2, max 100), description (required, min 10, max 500), coverImage (optional URL), isPrivate (required boolean), tags (optional array). 4) Agrega validaciones para ReportDto: postId (required ObjectId), reason (required, min 5, max 100), description (required, min 10, max 500). 5) Agrega validaciones para UserActivityDto: userId (required ObjectId), points (required number, min 0). 6) Exporta todas las validaciones. 7) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "validate.middleware.js: validaciones para CreatePostDto",
+        "validate.middleware.js: validaciones para CommentDto",
+        "validate.middleware.js: validaciones para CreateGroupDto",
+        "validate.middleware.js: validaciones para ReportDto",
+        "validate.middleware.js: validaciones para UserActivityDto",
+        "validate.middleware.js: todas las validaciones exportadas"
+      ],
+      "acceptance_criteria": [
+        "Todas las validaciones están implementadas",
+        "Validaciones coinciden con los DTOs del MD",
+        "Validaciones exportadas correctamente",
+        "Validaciones incluyen mensajes de error apropiados",
+        "Validaciones incluyen sanitización de datos"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en validate.middleware.js si falla cualquier criterio."
+    },
+    {
+      "id": "P6",
+      "order": 6,
+      "title": "Implementar middleware de autenticación para rutas de comunidad",
+      "files_hint": [
+        "backend/src/middleware/auth.middleware.js"
+      ],
+      "preconditions": [
+        "Middleware de auth existe o se creará",
+        "JWT configurado en el proyecto",
+        "Rutas de comunidad creadas"
+      ],
+      "content": "Crea o actualiza backend/src/middleware/auth.middleware.js. 1) Implementa middleware de autenticación que verifique JWT token en headers. 2) Implementa middleware de autorización para acciones de moderación (solo admins/moderadores). 3) Implementa middleware de rate limiting para acciones frecuentes (likes, comentarios). 4) Implementa logging de actividades para auditoría. 5) Agrega middleware para verificar permisos de usuario en grupos. 6) Implementa middleware para validar ownership de recursos. 7) Exporta todos los middlewares. 8) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "auth.middleware.js: middleware de autenticación implementado",
+        "auth.middleware.js: middleware de autorización implementado",
+        "auth.middleware.js: middleware de rate limiting implementado",
+        "auth.middleware.js: logging de actividades implementado",
+        "auth.middleware.js: middleware de permisos implementado",
+        "auth.middleware.js: middleware de ownership implementado"
+      ],
+      "acceptance_criteria": [
+        "Middleware de autenticación funciona correctamente",
+        "Middleware de autorización funciona para moderación",
+        "Rate limiting implementado para acciones frecuentes",
+        "Logging de actividades funciona",
+        "Permisos de usuario validados correctamente",
+        "Ownership de recursos validado correctamente"
+      ],
+      "timeout_sec": 360,
+      "rollback_plan": "Revertir cambios en auth.middleware.js si falla cualquier criterio."
+    },
+    {
+      "id": "P7",
+      "order": 7,
+      "title": "Crear tests de integración para endpoints de comunidad",
+      "files_hint": [
+        "backend/src/__tests__/comunidad.integration.test.js"
+      ],
+      "preconditions": [
+        "Rutas de comunidad implementadas",
+        "Controladores implementados",
+        "Modelos implementados",
+        "Supertest configurado en el proyecto"
+      ],
+      "content": "Crea backend/src/__tests__/comunidad.integration.test.js. 1) Importa supertest, app, y modelos necesarios. 2) Configura setup y teardown para tests. 3) Crea tests para endpoints de feed: GET /api/comunidad/feed/posts, POST /api/comunidad/feed/posts, PUT /api/comunidad/feed/posts/:id/like, POST /api/comunidad/feed/posts/:id/comments. 4) Crea tests para endpoints de grupos: GET /api/comunidad/grupos, POST /api/comunidad/grupos, POST /api/comunidad/grupos/:id/join. 5) Crea tests para endpoints de moderación: GET /api/comunidad/moderacion/reports, PUT /api/comunidad/moderacion/posts/:id/status. 6) Crea tests para endpoints de ranking: GET /api/comunidad/ranking/leaderboard, GET /api/comunidad/ranking/users/:id/medals. 7) Incluye tests de autenticación, validación, y manejo de errores. 8) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "comunidad.integration.test.js creado con tests completos",
+        "Tests para endpoints de feed implementados",
+        "Tests para endpoints de grupos implementados",
+        "Tests para endpoints de moderación implementados",
+        "Tests para endpoints de ranking implementados",
+        "Tests de autenticación y validación implementados"
+      ],
+      "acceptance_criteria": [
+        "Todos los endpoints principales tienen tests",
+        "Tests de autenticación funcionan",
+        "Tests de validación funcionan",
+        "Tests de manejo de errores funcionan",
+        "Tests pueden ejecutarse sin errores"
+      ],
+      "timeout_sec": 480,
+      "rollback_plan": "Eliminar comunidad.integration.test.js si falla cualquier criterio."
+    },
+    {
+      "id": "P8",
+      "order": 8,
+      "title": "Configurar variables de entorno para el módulo de comunidad",
+      "files_hint": [
+        "backend/.env",
+        "backend/src/config/db.js"
+      ],
+      "preconditions": [
+        "Variables de entorno configuradas en el proyecto",
+        "Base de datos configurada",
+        "JWT configurado"
+      ],
+      "content": "Verifica y configura las variables de entorno necesarias para el módulo de comunidad. 1) Verifica que VITE_API_URL esté configurado en el frontend. 2) Verifica que CORS_ORIGIN esté configurado para permitir el frontend. 3) Verifica que JWT_SECRET esté configurado para autenticación. 4) Verifica que DB_URI esté configurado para MongoDB. 5) Agrega variables específicas para el módulo de comunidad si es necesario (ej: RATE_LIMIT_WINDOW, RATE_LIMIT_MAX). 6) Documenta las variables requeridas en un comentario o README. 7) Verifica que todas las variables estén disponibles en el entorno de desarrollo. 8) Muestra diffs de los archivos modificados y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "Variables de entorno verificadas y configuradas",
+        "Variables específicas para comunidad agregadas si es necesario",
+        "Documentación de variables actualizada",
+        "Configuración de base de datos verificada"
+      ],
+      "acceptance_criteria": [
+        "Todas las variables de entorno están configuradas",
+        "CORS configurado correctamente para el frontend",
+        "JWT configurado correctamente",
+        "Base de datos configurada correctamente",
+        "Variables específicas del módulo configuradas si es necesario"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en variables de entorno si falla cualquier criterio."
+    },
+    {
+      "id": "P9",
+      "order": 9,
+      "title": "Prueba de smoke para verificar funcionamiento del módulo",
+      "files_hint": [
+        "backend/src/__tests__/comunidad.smoke.test.js"
+      ],
+      "preconditions": [
+        "Todos los endpoints implementados",
+        "Modelos creados",
+        "Controladores implementados",
+        "Rutas configuradas"
+      ],
+      "content": "Crea backend/src/__tests__/comunidad.smoke.test.js. 1) Importa supertest y app. 2) Crea un test básico que verifique que el servidor responde. 3) Crea un test que verifique que las rutas de comunidad están montadas correctamente. 4) Crea un test que verifique que la autenticación funciona. 5) Crea un test que verifique que la base de datos está conectada. 6) Crea un test que verifique que los modelos están funcionando. 7) Ejecuta los tests para verificar que todo funciona. 8) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "comunidad.smoke.test.js creado con tests básicos",
+        "Test de respuesta del servidor implementado",
+        "Test de rutas montadas implementado",
+        "Test de autenticación implementado",
+        "Test de base de datos implementado",
+        "Test de modelos implementado"
+      ],
+      "acceptance_criteria": [
+        "Servidor responde correctamente",
+        "Rutas de comunidad están montadas",
+        "Autenticación funciona",
+        "Base de datos está conectada",
+        "Modelos están funcionando",
+        "Todos los tests pasan"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Identificar y corregir problemas específicos encontrados en los tests."
+    },
+    {
+      "id": "P10",
+      "order": 10,
+      "title": "Verificación final del módulo de comunidad",
+      "files_hint": [
+        "backend/src/**"
+      ],
+      "preconditions": [
+        "Todos los componentes del módulo implementados",
+        "Tests creados y funcionando",
+        "Variables de entorno configuradas"
+      ],
+      "content": "Realiza una verificación final completa del módulo de comunidad. 1) Verifica que todos los archivos necesarios existen. 2) Verifica que todas las rutas están montadas correctamente. 3) Verifica que todos los controladores están implementados. 4) Verifica que todos los modelos están creados. 5) Verifica que todas las validaciones están implementadas. 6) Verifica que todos los tests pasan. 7) Verifica que las variables de entorno están configuradas. 8) Verifica que la documentación está actualizada. 9) Ejecuta una prueba manual de los endpoints principales. 10) Documenta cualquier problema encontrado.",
+      "expected_changes": [
+        "Módulo de comunidad completamente funcional",
+        "Todos los componentes verificados",
+        "Tests pasando correctamente",
+        "Documentación actualizada"
+      ],
+      "acceptance_criteria": [
+        "Todos los archivos necesarios existen",
+        "Todas las rutas están montadas",
+        "Todos los controladores están implementados",
+        "Todos los modelos están creados",
+        "Todas las validaciones están implementadas",
+        "Todos los tests pasan",
+        "Variables de entorno configuradas",
+        "Documentación actualizada"
+      ],
+      "timeout_sec": 600,
+      "rollback_plan": "Identificar y corregir problemas específicos encontrados en la verificación."
+    }
+  ]
+}
+

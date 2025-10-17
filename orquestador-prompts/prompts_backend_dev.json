@@ -1,0 +1,47 @@
+{
+  "nombre": "Desarrollador Backend - Node.js/Express",
+  "version": "1.0",
+  "descripcion": "Prompts especializados para desarrollo backend con Node.js, Express y mejores prácticas",
+  "prompts": [
+    {
+      "id": "backend_analyze_requirements",
+      "nombre": "Analizar Requisitos Backend",
+      "prompt": "Analiza los requisitos de user stories y crea un plan de desarrollo backend que incluya:\n\n## 🏗️ ARQUITECTURA DE API\n[Estructura de endpoints y servicios]\n\n## 🗄️ MODELOS DE DATOS\n[Esquemas de base de datos y relaciones]\n\n## 🔐 AUTENTICACIÓN Y AUTORIZACIÓN\n[Sistema de seguridad y permisos]\n\n## 📡 INTEGRACIONES EXTERNAS\n[APIs de terceros y servicios]\n\n## 🚀 DESPLIEGUE Y DEVOPS\n[Configuración de producción]\n\n## 📊 MONITOREO Y LOGS\n[Sistema de observabilidad]",
+      "contexto": "Análisis de requisitos para desarrollo backend"
+    },
+    {
+      "id": "backend_create_api_endpoints",
+      "nombre": "Crear Endpoints de API",
+      "prompt": "Crea endpoints de API RESTful con Express.js siguiendo estas mejores prácticas:\n\n- Estructura de carpetas organizada\n- Middleware de autenticación\n- Validación de datos con Joi/Zod\n- Manejo de errores centralizado\n- Logging estructurado\n- Rate limiting\n- CORS configuration\n- Documentación con Swagger\n- Testing con Jest/Supertest\n\nIncluye ejemplos de código completos con manejo de errores.",
+      "contexto": "Desarrollo de APIs REST"
+    },
+    {
+      "id": "backend_database_design",
+      "nombre": "Diseño de Base de Datos",
+      "prompt": "Diseña la estructura de base de datos considerando:\n\n- **Modelos de datos**: Entidades y relaciones\n- **Índices**: Para optimización de consultas\n- **Migraciones**: Control de versiones de esquema\n- **Seeding**: Datos iniciales y de prueba\n- **Backup**: Estrategias de respaldo\n- **Escalabilidad**: Particionado y sharding\n- **Seguridad**: Encriptación y permisos\n\nProporciona esquemas SQL y diagramas de relaciones.",
+      "contexto": "Diseño de base de datos"
+    },
+    {
+      "id": "backend_authentication_security",
+      "nombre": "Autenticación y Seguridad",
+      "prompt": "Implementa sistema de autenticación y seguridad incluyendo:\n\n- **JWT Tokens**: Generación y validación\n- **Password Hashing**: bcrypt con salt\n- **Rate Limiting**: Protección contra ataques\n- **Input Validation**: Sanitización de datos\n- **CORS**: Configuración de orígenes\n- **Helmet**: Headers de seguridad\n- **Session Management**: Manejo de sesiones\n- **OAuth**: Integración con proveedores\n\nIncluye middleware de seguridad y ejemplos de implementación.",
+      "contexto": "Seguridad en APIs"
+    },
+    {
+      "id": "backend_testing_strategy",
+      "nombre": "Estrategia de Testing",
+      "prompt": "Diseña una estrategia de testing completa para el backend:\n\n- **Unit Tests**: Funciones y métodos individuales\n- **Integration Tests**: APIs y base de datos\n- **E2E Tests**: Flujos completos de usuario\n- **Load Testing**: Rendimiento bajo carga\n- **Security Testing**: Vulnerabilidades\n- **Mocking**: Servicios externos\n- **Coverage**: Cobertura de código\n- **CI/CD**: Automatización de tests\n\nProporciona configuración de testing y ejemplos de casos de prueba.",
+      "contexto": "Testing de aplicaciones backend"
+    }
+  ],
+  "configuracion": {
+    "framework": "Node.js + Express",
+    "lenguaje": "JavaScript/TypeScript",
+    "base_datos": "MongoDB/PostgreSQL",
+    "testing": "Jest + Supertest"
+  }
+}
+
+
+
+

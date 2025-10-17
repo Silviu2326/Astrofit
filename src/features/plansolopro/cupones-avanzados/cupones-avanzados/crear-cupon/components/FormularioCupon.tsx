@@ -1,4 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { 
+  Tag, 
+  Percent, 
+  Euro, 
+  Calendar, 
+  Users, 
+  Hash,
+  Target,
+  Clock,
+  UserCheck
+} from 'lucide-react';
 
 interface CuponData {
   nombre: string;
@@ -9,17 +21,6 @@ interface CuponData {
   usosPermitidos: number;
   clientesValidos: 'todos' | 'especificos';
   clientesEspecificos?: string[];
-  codigo?: string;
-}
-
-interface CamposValidos {
-  nombre: boolean | null;
-  codigo: boolean | null;
-  valor: boolean | null;
-  fechaInicio: boolean | null;
-  fechaFin: boolean | null;
-  usosPermitidos: boolean | null;
-  clientesEspecificos: boolean | null;
 }
 
 interface FormularioCuponProps {
@@ -28,272 +29,270 @@ interface FormularioCuponProps {
 }
 
 const FormularioCupon: React.FC<FormularioCuponProps> = ({ cuponData, onFormChange }) => {
-  // Estado para validación de campos
-  const [camposValidos, setCamposValidos] = useState<CamposValidos>({
-    nombre: null,
-    codigo: null,
-    valor: null,
-    fechaInicio: null,
-    fechaFin: null,
-    usosPermitidos: null,
-    clientesEspecificos: null
-  });
-
-  const [validando, setValidando] = useState<string | null>(null);
-
-  // Función para validar campo en tiempo real
-  const validarCampoEnTiempoReal = async (campo: string, valor: any) => {
-    if (!valor || valor.toString().trim() === '') {
-      setCamposValidos(prev => ({ ...prev, [campo]: null }));
-      return;
-    }
-
-    try {
-      setValidando(campo);
-      console.log(`Validando campo ${campo}:`, valor);
-      
-      // Simulación de validación con API (ajustar URL según backend real)
-      const response = await fetch(`/api/cupones/validate/${campo}?value=${encodeURIComponent(valor)}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      setCamposValidos(prev => ({ ...prev, [campo]: data.isValid }));
-      
-      console.log(`Resultado validación ${campo}:`, data.isValid);
-    } catch (error) {
-      console.error(`Error validating ${campo}:`, error);
-      setCamposValidos(prev => ({ ...prev, [campo]: false }));
-    } finally {
-      setValidando(null);
-    }
-  };
-
-  // Función para actualizar estado de campo válido
-  const setCampoValido = (campo: string, isValid: boolean) => {
-    setCamposValidos(prev => ({ ...prev, [campo]: isValid }));
-  };
-
-  // Debounce para validaciones
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (cuponData.nombre && cuponData.nombre.trim()) {
-        validarCampoEnTiempoReal('nombre', cuponData.nombre);
-      }
-    }, 500);
-
-    return () => clearTimeout(timeoutId);
-  }, [cuponData.nombre]);
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (cuponData.codigo && cuponData.codigo.trim()) {
-        validarCampoEnTiempoReal('codigo', cuponData.codigo);
-      }
-    }, 500);
-
-    return () => clearTimeout(timeoutId);
-  }, [cuponData.codigo]);
-
-  // Función para obtener clases CSS según validación
-  const getFieldClasses = (campo: string) => {
-    const baseClasses = "mt-1 block w-full border rounded-md shadow-sm p-2";
-    const validation = camposValidos[campo as keyof CamposValidos];
-    
-    if (validation === null) {
-      return `${baseClasses} border-gray-300`;
-    } else if (validation === true) {
-      return `${baseClasses} border-green-500 bg-green-50`;
-    } else {
-      return `${baseClasses} border-red-500 bg-red-50`;
-    }
-  };
-
-  // Función para obtener icono de validación
-  const getValidationIcon = (campo: string) => {
-    const validation = camposValidos[campo as keyof CamposValidos];
-    
-    if (validando === campo) {
-      return (
-        <svg className="animate-spin w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24">
-          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-      );
-    } else if (validation === true) {
-      return (
-        <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-        </svg>
-      );
-    } else if (validation === false) {
-      return (
-        <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-        </svg>
-      );
-    }
-    return null;
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     onFormChange({ [name]: value });
   };
 
+  const handleNumericChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    onFormChange({ [name]: parseFloat(value) || 0 });
+  };
+
+  const handleUsosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    onFormChange({ [name]: parseInt(value) || 1 });
+  };
+
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-      <h2 className="text-2xl font-semibold mb-4">Detalles del Cupón</h2>
-      <div className="mb-4">
-        <label htmlFor="nombre" className="block text-sm font-medium text-gray-700">Nombre del Cupón</label>
-        <div className="relative">
-          <input
-            type="text"
-            id="nombre"
-            name="nombre"
-            value={cuponData.nombre}
-            onChange={handleChange}
-            className={getFieldClasses('nombre')}
-            required
-          />
-          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-            {getValidationIcon('nombre')}
-          </div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-6 mb-6"
+    >
+      <div className="flex items-center gap-3 mb-6">
+        <div className="p-2 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-lg shadow-lg">
+          <Tag className="w-5 h-5 text-white" />
         </div>
-        {camposValidos.nombre === false && (
-          <p className="mt-1 text-sm text-red-600">Este nombre ya está en uso</p>
-        )}
-        {camposValidos.nombre === true && (
-          <p className="mt-1 text-sm text-green-600">Nombre disponible</p>
-        )}
+        <h2 className="text-xl font-semibold text-gray-900">Detalles del Cupón</h2>
       </div>
 
-      <div className="mb-4">
-        <label htmlFor="tipo" className="block text-sm font-medium text-gray-700">Tipo de Descuento</label>
-        <select
-          id="tipo"
-          name="tipo"
-          value={cuponData.tipo}
-          onChange={handleChange}
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-        >
-          <option value="porcentaje">Porcentaje</option>
-          <option value="cantidadFija">Cantidad Fija</option>
-        </select>
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="valor" className="block text-sm font-medium text-gray-700">Valor</label>
-        <div className="relative">
-          <input
-            type="number"
-            id="valor"
-            name="valor"
-            value={cuponData.valor}
-            onChange={handleChange}
-            className={getFieldClasses('valor')}
-            min="0"
-            required
-          />
-          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-            {getValidationIcon('valor')}
-          </div>
-        </div>
-        {camposValidos.valor === false && (
-          <p className="mt-1 text-sm text-red-600">El valor debe ser mayor a 0</p>
-        )}
-        {camposValidos.valor === true && (
-          <p className="mt-1 text-sm text-green-600">Valor válido</p>
-        )}
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      <div className="space-y-6">
+        {/* Nombre del Cupón */}
         <div>
-          <label htmlFor="fechaInicio" className="block text-sm font-medium text-gray-700">Fecha de Inicio</label>
-          <input
-            type="date"
-            id="fechaInicio"
-            name="fechaInicio"
-            value={cuponData.fechaInicio}
-            onChange={handleChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="fechaFin" className="block text-sm font-medium text-gray-700">Fecha de Fin</label>
-          <input
-            type="date"
-            id="fechaFin"
-            name="fechaFin"
-            value={cuponData.fechaFin}
-            onChange={handleChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-            required
-          />
-        </div>
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="usosPermitidos" className="block text-sm font-medium text-gray-700">Número de Usos Permitidos</label>
-        <input
-          type="number"
-          id="usosPermitidos"
-          name="usosPermitidos"
-          value={cuponData.usosPermitidos}
-          onChange={handleChange}
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-          min="1"
-          required
-        />
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="clientesValidos" className="block text-sm font-medium text-gray-700">Clientes Válidos</label>
-        <select
-          id="clientesValidos"
-          name="clientesValidos"
-          value={cuponData.clientesValidos}
-          onChange={handleChange}
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-        >
-          <option value="todos">Todos los clientes</option>
-          <option value="especificos">Clientes específicos</option>
-        </select>
-      </div>
-
-      {cuponData.clientesValidos === 'especificos' && (
-        <div className="mb-4">
-          <label htmlFor="clientesEspecificos" className="block text-sm font-medium text-gray-700">IDs de Clientes Específicos (separados por comas)</label>
+          <label htmlFor="nombre" className="block text-sm font-semibold text-gray-700 mb-2">
+            Nombre del Cupón
+          </label>
           <div className="relative">
             <input
               type="text"
-              id="clientesEspecificos"
-              name="clientesEspecificos"
-              value={cuponData.clientesEspecificos?.join(',') || ''}
-              onChange={(e) => onFormChange({ clientesEspecificos: e.target.value.split(',').map(s => s.trim()) })}
-              className={getFieldClasses('clientesEspecificos')}
+              id="nombre"
+              name="nombre"
+              value={cuponData.nombre}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+              placeholder="Ej: Descuento de Verano 2024"
+              required
             />
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-              {getValidationIcon('clientesEspecificos')}
+              <Tag className="w-5 h-5 text-gray-400" />
             </div>
           </div>
-          {camposValidos.clientesEspecificos === false && (
-            <p className="mt-1 text-sm text-red-600">Algunos IDs de clientes no son válidos</p>
-          )}
-          {camposValidos.clientesEspecificos === true && (
-            <p className="mt-1 text-sm text-green-600">Todos los IDs son válidos</p>
+        </div>
+
+        {/* Tipo de Descuento */}
+        <div>
+          <label htmlFor="tipo" className="block text-sm font-semibold text-gray-700 mb-2">
+            Tipo de Descuento
+          </label>
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() => onFormChange({ tipo: 'porcentaje' })}
+              className={`p-4 rounded-lg border-2 transition-all ${
+                cuponData.tipo === 'porcentaje'
+                  ? 'border-blue-500 bg-blue-50 text-blue-700'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <Percent className="w-5 h-5" />
+                <span className="font-medium">Porcentaje</span>
+              </div>
+              <p className="text-sm text-gray-600 mt-1">Ej: 20% de descuento</p>
+            </button>
+            
+            <button
+              type="button"
+              onClick={() => onFormChange({ tipo: 'cantidadFija' })}
+              className={`p-4 rounded-lg border-2 transition-all ${
+                cuponData.tipo === 'cantidadFija'
+                  ? 'border-blue-500 bg-blue-50 text-blue-700'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <Euro className="w-5 h-5" />
+                <span className="font-medium">Cantidad Fija</span>
+              </div>
+              <p className="text-sm text-gray-600 mt-1">Ej: €10 de descuento</p>
+            </button>
+          </div>
+        </div>
+
+        {/* Valor */}
+        <div>
+          <label htmlFor="valor" className="block text-sm font-semibold text-gray-700 mb-2">
+            {cuponData.tipo === 'porcentaje' ? 'Porcentaje de Descuento' : 'Cantidad de Descuento'}
+          </label>
+          <div className="relative">
+            <input
+              type="number"
+              id="valor"
+              name="valor"
+              value={cuponData.valor}
+              onChange={handleNumericChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+              min="0"
+              max={cuponData.tipo === 'porcentaje' ? 100 : undefined}
+              step={cuponData.tipo === 'porcentaje' ? 0.1 : 0.01}
+              required
+            />
+            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+              {cuponData.tipo === 'porcentaje' ? (
+                <Percent className="w-5 h-5 text-gray-400" />
+              ) : (
+                <Euro className="w-5 h-5 text-gray-400" />
+              )}
+            </div>
+          </div>
+          {cuponData.tipo === 'porcentaje' && cuponData.valor > 0 && (
+            <p className="text-sm text-gray-600 mt-1">
+              El cliente pagará {100 - cuponData.valor}% del precio original
+            </p>
           )}
         </div>
-      )}
-    </div>
+
+        {/* Fechas */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="fechaInicio" className="block text-sm font-semibold text-gray-700 mb-2">
+              Fecha de Inicio
+            </label>
+            <div className="relative">
+              <input
+                type="date"
+                id="fechaInicio"
+                name="fechaInicio"
+                value={cuponData.fechaInicio}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                required
+              />
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                <Calendar className="w-5 h-5 text-gray-400" />
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <label htmlFor="fechaFin" className="block text-sm font-semibold text-gray-700 mb-2">
+              Fecha de Fin
+            </label>
+            <div className="relative">
+              <input
+                type="date"
+                id="fechaFin"
+                name="fechaFin"
+                value={cuponData.fechaFin}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                required
+              />
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                <Calendar className="w-5 h-5 text-gray-400" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Usos Permitidos */}
+        <div>
+          <label htmlFor="usosPermitidos" className="block text-sm font-semibold text-gray-700 mb-2">
+            Número de Usos Permitidos
+          </label>
+          <div className="relative">
+            <input
+              type="number"
+              id="usosPermitidos"
+              name="usosPermitidos"
+              value={cuponData.usosPermitidos}
+              onChange={handleUsosChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+              min="1"
+              required
+            />
+            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+              <Hash className="w-5 h-5 text-gray-400" />
+            </div>
+          </div>
+          <p className="text-sm text-gray-600 mt-1">
+            Número de veces que se puede usar este cupón
+          </p>
+        </div>
+
+        {/* Clientes Válidos */}
+        <div>
+          <label htmlFor="clientesValidos" className="block text-sm font-semibold text-gray-700 mb-2">
+            Clientes Válidos
+          </label>
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() => onFormChange({ clientesValidos: 'todos' })}
+              className={`p-4 rounded-lg border-2 transition-all ${
+                cuponData.clientesValidos === 'todos'
+                  ? 'border-green-500 bg-green-50 text-green-700'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <Users className="w-5 h-5" />
+                <span className="font-medium">Todos los Clientes</span>
+              </div>
+              <p className="text-sm text-gray-600 mt-1">Cualquier cliente puede usar</p>
+            </button>
+            
+            <button
+              type="button"
+              onClick={() => onFormChange({ clientesValidos: 'especificos' })}
+              className={`p-4 rounded-lg border-2 transition-all ${
+                cuponData.clientesValidos === 'especificos'
+                  ? 'border-green-500 bg-green-50 text-green-700'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <UserCheck className="w-5 h-5" />
+                <span className="font-medium">Clientes Específicos</span>
+              </div>
+              <p className="text-sm text-gray-600 mt-1">Solo clientes seleccionados</p>
+            </button>
+          </div>
+        </div>
+
+        {/* Clientes Específicos */}
+        {cuponData.clientesValidos === 'especificos' && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden"
+          >
+            <label htmlFor="clientesEspecificos" className="block text-sm font-semibold text-gray-700 mb-2">
+              IDs de Clientes Específicos
+            </label>
+            <div className="relative">
+              <input
+                type="text"
+                id="clientesEspecificos"
+                name="clientesEspecificos"
+                value={cuponData.clientesEspecificos?.join(', ') || ''}
+                onChange={(e) => onFormChange({ clientesEspecificos: e.target.value.split(',').map(s => s.trim()).filter(s => s) })}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                placeholder="Ej: 123, 456, 789"
+              />
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                <Target className="w-5 h-5 text-gray-400" />
+              </div>
+            </div>
+            <p className="text-sm text-gray-600 mt-1">
+              Separa los IDs con comas (ej: 123, 456, 789)
+            </p>
+          </motion.div>
+        )}
+      </div>
+    </motion.div>
   );
 };
 

@@ -1,0 +1,239 @@
+{
+  "meta": {
+    "module": "biblioteca-contenidos",
+    "side": "backend",
+    "run_id": "2024-01-20T10:00:00Z",
+    "base_path": "/api/biblioteca-contenidos"
+  },
+  "prompts": [
+    {
+      "id": "P1",
+      "order": 1,
+      "title": "Crear modelos MongoDB para videos y archivos",
+      "files_hint": [
+        "backend/src/models/ContenidoVideo.model.js",
+        "backend/src/models/ContenidoArchivo.model.js"
+      ],
+      "preconditions": [
+        "Directorio models/ existe en backend/src",
+        "Mongoose configurado en el proyecto",
+        "BASE_PATH definido como /api/biblioteca-contenidos"
+      ],
+      "content": "Actúa como creador de modelos MongoDB. 1) Crea backend/src/models/ContenidoVideo.model.js con schema que incluya: titulo (String, required), descripcion (String, required), url (String, required, URL), thumbnail (String, required, URL), tags (Array of Strings), dificultad (String, enum: ['easy', 'medium', 'hard'], required), topico (String, required), esFavorito (Boolean, default false), vistas (Number, default 0), isDeleted (Boolean, default false), timestamps. 2) Crea backend/src/models/ContenidoArchivo.model.js con schema que incluya: nombre (String, required), tipo (String, required), tamaño (String, required), urlArchivo (String, required, URL), urlPreview (String, optional, URL), descargas (Number, default 0), isDeleted (Boolean, default false), timestamps. 3) Agrega índices para optimizar consultas: categoria, esPublico, isDeleted, createdAt. 4) Configura virtuals para toJSON. 5) Muestra diffs de cada modelo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "ContenidoVideo.model.js: schema completo para videos creado",
+        "ContenidoArchivo.model.js: schema completo para archivos creado",
+        "Índices de optimización agregados",
+        "Virtuals configurados para JSON"
+      ],
+      "acceptance_criteria": [
+        "Los schemas incluyen todos los campos según DTOs del MD",
+        "Las validaciones están correctamente configuradas",
+        "Los índices están optimizados para consultas frecuentes",
+        "Los modelos exportan correctamente",
+        "No hay errores de sintaxis en los archivos"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Eliminar los archivos de modelos si falla cualquier criterio."
+    },
+    {
+      "id": "P2",
+      "order": 2,
+      "title": "Crear controladores para biblioteca de contenidos",
+      "files_hint": [
+        "backend/src/controllers/bibliotecaContenidos.controller.js"
+      ],
+      "preconditions": [
+        "Modelos creados en P1",
+        "Middleware de auth existe",
+        "BASE_PATH definido como /api/biblioteca-contenidos"
+      ],
+      "content": "Actúa como creador de controladores. 1) Crea backend/src/controllers/bibliotecaContenidos.controller.js. 2) Implementa controladores para artículos: getArticulos (con filtros, paginación, búsqueda), getArticuloById, createArticulo, updateArticulo, deleteArticulo (soft delete). 3) Implementa controladores para videos: getVideos (con filtros), getVideoById, createVideo, updateVideo, deleteVideo, toggleFavorite. 4) Implementa controladores para archivos: getArchivos, getArchivoById, createArchivo, updateArchivo, deleteArchivo, recordDownload. 5) Implementa controladores para búsqueda: searchContenidos (búsqueda unificada), getSearchSuggestions. 6) Cada controlador debe incluir: validación de entrada, manejo de errores, respuestas consistentes, logging. 7) Usa try/catch en todas las funciones. 8) Implementa paginación para listados. 9) Muestra diff del controlador y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "bibliotecaContenidos.controller.js: controladores completos creados",
+        "CRUD implementado para artículos, videos, archivos",
+        "Búsqueda centralizada implementada",
+        "Manejo de errores y logging agregado"
+      ],
+      "acceptance_criteria": [
+        "Todos los controladores están implementados según el MD",
+        "El manejo de errores es consistente en todas las funciones",
+        "Las respuestas siguen el formato estándar del proyecto",
+        "La paginación funciona correctamente",
+        "Los logs están configurados apropiadamente"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Eliminar bibliotecaContenidos.controller.js si falla cualquier criterio."
+    },
+    {
+      "id": "P3",
+      "order": 3,
+      "title": "Crear rutas de biblioteca con validación",
+      "files_hint": [
+        "backend/src/routes/bibliotecaContenidos.routes.js"
+      ],
+      "preconditions": [
+        "Controladores creados en P2",
+        "Middleware de validación existe",
+        "BASE_PATH definido como /api/biblioteca-contenidos"
+      ],
+      "content": "Actúa como creador de rutas. 1) Crea backend/src/routes/bibliotecaContenidos.routes.js. 2) Importa express, controladores, middleware de auth y validación. 3) Define rutas para artículos: GET /articulos (con filtros), POST /articulos, GET /articulos/:id, PUT /articulos/:id, DELETE /articulos/:id. 4) Define rutas para videos: GET /videos (con filtros), POST /videos, GET /videos/:id, PUT /videos/:id, DELETE /videos/:id, PUT /videos/:id/favorite. 5) Define rutas para archivos: GET /archivos, POST /archivos, GET /archivos/:id, PUT /archivos/:id, DELETE /archivos/:id, POST /archivos/:id/download. 6) Define rutas para búsqueda: GET /search, GET /search/suggestions. 7) Aplica middleware de auth a todas las rutas. 8) Aplica validación con express-validator según DTOs del MD. 9) Configura manejo de errores de validación. 10) Muestra diff de las rutas y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "bibliotecaContenidos.routes.js: rutas completas creadas",
+        "Middleware de auth aplicado a todas las rutas",
+        "Validación configurada según DTOs",
+        "Manejo de errores de validación implementado"
+      ],
+      "acceptance_criteria": [
+        "Todas las rutas están definidas según el MD",
+        "El middleware de auth está aplicado correctamente",
+        "Las validaciones coinciden con los DTOs del frontend",
+        "El manejo de errores funciona correctamente",
+        "Las rutas siguen convenciones RESTful"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Eliminar bibliotecaContenidos.routes.js si falla cualquier criterio."
+    },
+    {
+      "id": "P4",
+      "order": 4,
+      "title": "Integrar rutas en API principal",
+      "files_hint": [
+        "backend/src/routes/api.routes.js"
+      ],
+      "preconditions": [
+        "Rutas creadas en P3",
+        "Archivo api.routes.js existe",
+        "BASE_PATH definido como /api/biblioteca-contenidos"
+      ],
+      "content": "Actúa como integrador de rutas. 1) Abre backend/src/routes/api.routes.js. 2) Importa bibliotecaContenidosRoutes desde './bibliotecaContenidos.routes.js'. 3) Agrega router.use('/biblioteca-contenidos', bibliotecaContenidosRoutes) en la sección de rutas. 4) Actualiza la sección de endpoints en el GET / para incluir bibliotecaContenidos: '/api/biblioteca-contenidos'. 5) Verifica que el orden de las rutas sea correcto (después de auth, antes de 404). 6) Asegúrate de que no haya conflictos con rutas existentes. 7) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "api.routes.js: import de bibliotecaContenidosRoutes agregado",
+        "api.routes.js: router.use para biblioteca-contenidos agregado",
+        "api.routes.js: endpoint documentado en GET /"
+      ],
+      "acceptance_criteria": [
+        "Las rutas están correctamente montadas en /api/biblioteca-contenidos",
+        "No hay conflictos con rutas existentes",
+        "El endpoint está documentado en la respuesta de GET /",
+        "El orden de las rutas es correcto",
+        "La importación funciona sin errores"
+      ],
+      "timeout_sec": 120,
+      "rollback_plan": "Revertir cambios en api.routes.js si falla cualquier criterio."
+    },
+    {
+      "id": "P5",
+      "order": 5,
+      "title": "Verificar compatibilidad del modelo BlogArticulo existente",
+      "files_hint": [
+        "backend/src/models/BlogArticulo.model.js"
+      ],
+      "preconditions": [
+        "Modelo BlogArticulo existe",
+        "DTOs del frontend definidos",
+        "BASE_PATH definido como /api/biblioteca-contenidos"
+      ],
+      "content": "Actúa como verificador de compatibilidad. 1) Abre backend/src/models/BlogArticulo.model.js. 2) Verifica que el schema incluya todos los campos necesarios según los DTOs del MD: titulo, extracto, contenido, categoria, autor, tags, esPublico, imagen, vistas. 3) Verifica que las validaciones coincidan con los DTOs (longitudes, tipos, required/optional). 4) Verifica que los índices estén optimizados para consultas frecuentes. 5) Verifica que el soft delete (isDeleted) esté implementado. 6) Verifica que los timestamps estén configurados. 7) Si falta algún campo o validación, agrégalo. 8) Muestra diff de los cambios necesarios y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "BlogArticulo.model.js: campos faltantes agregados (si aplica)",
+        "BlogArticulo.model.js: validaciones actualizadas (si aplica)",
+        "BlogArticulo.model.js: índices optimizados (si aplica)"
+      ],
+      "acceptance_criteria": [
+        "El schema incluye todos los campos según DTOs del MD",
+        "Las validaciones coinciden con los DTOs del frontend",
+        "Los índices están optimizados para consultas",
+        "El soft delete está implementado correctamente",
+        "No hay errores de sintaxis en el modelo"
+      ],
+      "timeout_sec": 120,
+      "rollback_plan": "Revertir cambios en BlogArticulo.model.js si falla cualquier criterio."
+    },
+    {
+      "id": "P6",
+      "order": 6,
+      "title": "Implementar middleware de validación específico para biblioteca",
+      "files_hint": [
+        "backend/src/middleware/bibliotecaContenidosValidation.js"
+      ],
+      "preconditions": [
+        "Middleware de validación base existe",
+        "DTOs definidos en el MD",
+        "express-validator configurado"
+      ],
+      "content": "Actúa como creador de middleware. 1) Crea backend/src/middleware/bibliotecaContenidosValidation.js. 2) Implementa validaciones para artículos: titulo (required, 5-200 chars), extracto (required, 10-500 chars), contenido (required, min 50 chars), categoria (required, 2-50 chars), autor (optional, 2-100 chars), tags (optional array), esPublico (optional boolean), imagen (optional URL). 3) Implementa validaciones para videos: titulo (required), descripcion (required), url (required URL), thumbnail (required URL), tags (required array), dificultad (required enum), topico (required). 4) Implementa validaciones para archivos: nombre (required), tipo (required), tamaño (required), urlArchivo (required URL), urlPreview (optional URL). 5) Implementa validaciones para búsqueda: query (required), tipo (optional enum), categoria (optional), topico (optional), dificultad (optional), page (optional number), limit (optional number). 6) Exporta todas las validaciones como arrays de express-validator. 7) Muestra diff del middleware y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "bibliotecaContenidosValidation.js: validaciones específicas creadas",
+        "Validaciones para artículos, videos, archivos y búsqueda",
+        "Exportaciones de validaciones configuradas"
+      ],
+      "acceptance_criteria": [
+        "Todas las validaciones coinciden con los DTOs del MD",
+        "Las validaciones están correctamente configuradas con express-validator",
+        "Los mensajes de error son descriptivos",
+        "Las validaciones están exportadas correctamente",
+        "No hay errores de sintaxis en el middleware"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Eliminar bibliotecaContenidosValidation.js si falla cualquier criterio."
+    },
+    {
+      "id": "P7",
+      "order": 7,
+      "title": "Crear tests de integración para endpoints de biblioteca",
+      "files_hint": [
+        "backend/src/__tests__/bibliotecaContenidos.integration.test.js"
+      ],
+      "preconditions": [
+        "Rutas y controladores implementados (P1-P4)",
+        "Middleware de validación creado (P6)",
+        "Supertest configurado en el proyecto"
+      ],
+      "content": "Actúa como creador de tests. 1) Crea backend/src/__tests__/bibliotecaContenidos.integration.test.js. 2) Configura supertest con la app de Express. 3) Implementa tests para endpoints de artículos: GET /api/biblioteca-contenidos/articulos, POST /api/biblioteca-contenidos/articulos, GET /api/biblioteca-contenidos/articulos/:id, PUT /api/biblioteca-contenidos/articulos/:id, DELETE /api/biblioteca-contenidos/articulos/:id. 4) Implementa tests para endpoints de videos: GET /api/biblioteca-contenidos/videos, POST /api/biblioteca-contenidos/videos, PUT /api/biblioteca-contenidos/videos/:id/favorite. 5) Implementa tests para endpoints de archivos: GET /api/biblioteca-contenidos/archivos, POST /api/biblioteca-contenidos/archivos, POST /api/biblioteca-contenidos/archivos/:id/download. 6) Implementa tests para búsqueda: GET /api/biblioteca-contenidos/search, GET /api/biblioteca-contenidos/search/suggestions. 7) Cada test debe verificar: status code, estructura de respuesta, validaciones. 8) Agrega tests de autenticación (sin token, token inválido). 9) Muestra diff del archivo de test y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "bibliotecaContenidos.integration.test.js: tests de integración creados",
+        "Tests para todos los endpoints del módulo",
+        "Tests de autenticación implementados",
+        "Verificación de respuestas y validaciones"
+      ],
+      "acceptance_criteria": [
+        "Todos los tests pasan correctamente",
+        "Los endpoints responden con los códigos de estado esperados",
+        "Las validaciones funcionan correctamente",
+        "La autenticación está verificada",
+        "Las respuestas tienen la estructura esperada"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Eliminar archivo de test si fallan los criterios."
+    },
+    {
+      "id": "P8",
+      "order": 8,
+      "title": "Smoke test completo del módulo biblioteca-contenidos",
+      "files_hint": [
+        "backend/src/scripts/test-biblioteca-contenidos.js"
+      ],
+      "preconditions": [
+        "Módulo completamente implementado (P1-P7)",
+        "Tests de integración pasando",
+        "Base de datos configurada"
+      ],
+      "content": "Actúa como ejecutor de smoke test. 1) Crea backend/src/scripts/test-biblioteca-contenidos.js. 2) Implementa script que: a) Verifica que el servidor esté corriendo, b) Hace peticiones a todos los endpoints principales, c) Verifica respuestas básicas (status 200/201), d) Verifica estructura de respuestas, e) Verifica que no hay errores 500, f) Verifica que la autenticación funciona, g) Verifica que las validaciones funcionan. 3) Incluye endpoints: GET /api/biblioteca-contenidos/articulos, GET /api/biblioteca-contenidos/videos, GET /api/biblioteca-contenidos/archivos, GET /api/biblioteca-contenidos/search. 4) Ejecuta el script y verifica que todos los checks pasan. 5) Si algún check falla, identifica el problema y sugiere solución. 6) Muestra output del script y espera confirmación de que todo funciona.",
+      "expected_changes": [
+        "test-biblioteca-contenidos.js: script de smoke test creado",
+        "Verificación completa del módulo",
+        "Identificación de problemas si los hay"
+      ],
+      "acceptance_criteria": [
+        "El servidor responde correctamente",
+        "Todos los endpoints principales funcionan",
+        "Las respuestas tienen la estructura esperada",
+        "No hay errores 500 en ningún endpoint",
+        "La autenticación y validaciones funcionan"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Identificar y corregir problemas encontrados en el smoke test."
+    }
+  ]
+}

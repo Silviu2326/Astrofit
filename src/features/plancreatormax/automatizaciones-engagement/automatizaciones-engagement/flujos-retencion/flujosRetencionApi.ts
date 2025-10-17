@@ -21,16 +21,38 @@ export const flujosRetencionApi = {
   },
 
   /**
+   * Crea una nueva secuencia automática de retención.
+   */
+  createSecuencia: async (secuencia: any) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/sequences`, secuencia);
+      return response.data;
+    } catch (error) {
+      console.error('Error al crear secuencia de retención:', error);
+      throw error;
+    }
+  },
+
+  /**
    * Crea un nuevo flujo de retención.
    * @param flujo Los datos del nuevo flujo de retención.
    * @returns Una promesa con el flujo de retención creado.
    */
   createFlujo: async (flujo: any) => { // Considerar definir una interfaz para 'flujo'
     try {
+      console.log('🔍 [DEBUG] flujosRetencionApi.createFlujo called with:', flujo);
+      console.log('🔍 [DEBUG] API_BASE_URL:', API_BASE_URL);
+      
       const response = await axios.post(`${API_BASE_URL}/`, flujo);
+      console.log('✅ [SUCCESS] createFlujo response:', response.data);
       return response.data;
-    } catch (error) {
-      console.error('Error al crear flujo de retención:', error);
+    } catch (error: any) {
+      console.error('❌ [ERROR] Error al crear flujo de retención:', error);
+      console.error('❌ [ERROR] Error details:', {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data
+      });
       throw error;
     }
   },

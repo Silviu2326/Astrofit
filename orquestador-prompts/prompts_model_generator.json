@@ -1,0 +1,35 @@
+{
+  "nombre": "Generador de Modelos Backend",
+  "version": "1.0",
+  "descripcion": "Prompts especializados para generar modelos de datos desde documentación MD",
+  "prompts": [
+    {
+      "id": "model_from_md",
+      "nombre": "Generar Modelos desde MD",
+      "prompt": "**INPUT REQUERIDO**: Recibirás dos parámetros:\n1. **Archivo MD**: Contenido del archivo markdown con especificaciones de entidades\n2. **Path del src**: Ruta del directorio src del backend (ej: 'src/models')\n\n**PROCESO**: Analiza el archivo MD y extrae todas las entidades y sus propiedades. Para cada entidad:\n\n1. **Identifica campos**: Nombre, tipo, validaciones, relaciones\n2. **Define tipos de datos**: String, Number, Date, Boolean, ObjectId, etc.\n3. **Establece relaciones**: One-to-One, One-to-Many, Many-to-Many\n4. **Aplica validaciones**: Required, unique, min/max, regex\n5. **Genera índices**: Para campos de búsqueda frecuente\n\n**OUTPUT**: Genera archivos de modelos en el path especificado con:\n- Modelos Mongoose/Sequelize/TypeORM\n- Esquemas de validación\n- Relaciones entre modelos\n- Métodos de instancia y estáticos\n- Documentación JSDoc",
+      "contexto": "Generación de modelos de datos desde documentación"
+    },
+    {
+      "id": "model_relationships",
+      "nombre": "Definir Relaciones entre Modelos",
+      "prompt": "**INPUT**: Modelos generados anteriormente\n\n**PROCESO**: Analiza los modelos y define las relaciones entre ellos:\n\n1. **One-to-One**: Relaciones directas entre dos entidades\n2. **One-to-Many**: Una entidad padre con múltiples hijos\n3. **Many-to-Many**: Relaciones complejas con tablas intermedias\n4. **Foreign Keys**: Claves foráneas y referencias\n5. **Cascading**: Eliminación en cascada y actualizaciones\n\n**OUTPUT**: Actualiza los modelos con:\n- Referencias entre modelos\n- Métodos de población\n- Validaciones de integridad referencial\n- Hooks de pre/post operaciones",
+      "contexto": "Definición de relaciones entre modelos"
+    },
+    {
+      "id": "model_validation",
+      "nombre": "Aplicar Validaciones a Modelos",
+      "prompt": "**INPUT**: Modelos con relaciones definidas\n\n**PROCESO**: Aplica validaciones robustas a cada modelo:\n\n1. **Validaciones de campo**: Required, unique, format, length\n2. **Validaciones de negocio**: Reglas específicas del dominio\n3. **Validaciones de integridad**: Consistencia de datos\n4. **Mensajes de error**: Personalizados y descriptivos\n5. **Validaciones asíncronas**: Para campos únicos en BD\n\n**OUTPUT**: Modelos con validaciones completas:\n- Esquemas de validación Joi/Yup\n- Middleware de validación\n- Mensajes de error personalizados\n- Tests de validación",
+      "contexto": "Aplicación de validaciones a modelos"
+    }
+  ],
+  "configuracion": {
+    "framework": "Node.js",
+    "orm": "Mongoose/Sequelize/TypeORM",
+    "validacion": "Joi/Yup",
+    "documentacion": "JSDoc"
+  }
+}
+
+
+
+

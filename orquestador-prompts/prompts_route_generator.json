@@ -1,0 +1,35 @@
+{
+  "nombre": "Generador de Rutas Backend",
+  "version": "1.0",
+  "descripcion": "Prompts especializados para generar rutas RESTful desde controladores",
+  "prompts": [
+    {
+      "id": "route_restful",
+      "nombre": "Generar Rutas RESTful",
+      "prompt": "**INPUT REQUERIDO**: Recibirás dos parámetros:\n1. **Controladores generados**: Archivos de controladores existentes\n2. **Path del src**: Ruta del directorio src/routes\n\n**PROCESO**: Para cada controlador, genera rutas RESTful completas:\n\n1. **GET /**: Listar todos los recursos (con paginación)\n2. **GET /:id**: Obtener recurso específico\n3. **POST /**: Crear nuevo recurso\n4. **PUT /:id**: Actualizar recurso completo\n5. **PATCH /:id**: Actualizar recurso parcial\n6. **DELETE /:id**: Eliminar recurso\n7. **GET /search**: Búsqueda y filtrado\n\n**OUTPUT**: Genera archivos de rutas en el path especificado con:\n- Rutas RESTful estándar\n- Middleware de autenticación\n- Validación de parámetros\n- Manejo de errores\n- Documentación de endpoints",
+      "contexto": "Generación de rutas RESTful"
+    },
+    {
+      "id": "route_middleware",
+      "nombre": "Aplicar Middleware a Rutas",
+      "prompt": "**INPUT**: Rutas RESTful generadas\n\n**PROCESO**: Aplica middleware específico a cada ruta:\n\n1. **Autenticación**: Verificación de tokens en rutas protegidas\n2. **Autorización**: Control de acceso por roles\n3. **Validación**: Validación de parámetros y body\n4. **Rate Limiting**: Limitación por IP/usuario\n5. **CORS**: Configuración de CORS\n6. **Compression**: Compresión de respuestas\n7. **Helmet**: Headers de seguridad\n\n**OUTPUT**: Rutas con middleware aplicado:\n- Middleware de seguridad\n- Validación de entrada\n- Control de acceso\n- Optimización de rendimiento",
+      "contexto": "Aplicación de middleware a rutas"
+    },
+    {
+      "id": "route_documentation",
+      "nombre": "Generar Documentación de Rutas",
+      "prompt": "**INPUT**: Rutas con middleware aplicado\n\n**PROCESO**: Genera documentación completa de las rutas:\n\n1. **Swagger/OpenAPI**: Documentación automática\n2. **Ejemplos de uso**: Requests y responses\n3. **Códigos de error**: Documentación de errores\n4. **Autenticación**: Guía de autenticación\n5. **Rate Limits**: Límites y políticas\n6. **SDKs**: Código de ejemplo en diferentes lenguajes\n\n**OUTPUT**: Documentación completa de API:\n- Especificación OpenAPI\n- Ejemplos de requests/responses\n- Guías de integración\n- SDKs en múltiples lenguajes",
+      "contexto": "Generación de documentación de rutas"
+    }
+  ],
+  "configuracion": {
+    "framework": "Express.js",
+    "documentacion": "Swagger/OpenAPI",
+    "middleware": "Express middleware",
+    "validacion": "Express-validator"
+  }
+}
+
+
+
+

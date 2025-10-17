@@ -1,0 +1,157 @@
+{
+  "meta": {
+    "module": "biblioteca-contenidos",
+    "side": "backend",
+    "run_id": "2024-01-20T15:00:00Z",
+    "base_path": "/api/biblioteca-contenidos",
+    "purpose": "Corrección de problemas identificados en auditoría"
+  },
+  "prompts": [
+    {
+      "id": "P1",
+      "order": 1,
+      "title": "Alinear enum de dificultad en modelo ContenidoVideo",
+      "files_hint": [
+        "backend/src/models/ContenidoVideo.model.js"
+      ],
+      "preconditions": [
+        "Modelo ContenidoVideo existe",
+        "Frontend usa 'principiante'/'intermedio'/'avanzado'",
+        "Backend actualmente usa 'easy'/'medium'/'hard'"
+      ],
+      "content": "Actúa como corrector de compatibilidad. 1) Abre backend/src/models/ContenidoVideo.model.js. 2) Cambia el enum de dificultad de ['easy', 'medium', 'hard'] a ['principiante', 'intermedio', 'avanzado'] para alinearse con el frontend. 3) Actualiza el mensaje de error para reflejar los nuevos valores. 4) Verifica que no haya datos existentes que usen los valores antiguos. 5) Muestra diff del cambio y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "ContenidoVideo.model.js: enum dificultad actualizado a valores en español",
+        "Mensaje de error actualizado para nuevos valores",
+        "Compatibilidad con frontend restaurada"
+      ],
+      "acceptance_criteria": [
+        "El enum dificultad usa 'principiante', 'intermedio', 'avanzado'",
+        "El mensaje de error refleja los nuevos valores",
+        "No hay errores de sintaxis en el modelo",
+        "La validación funciona correctamente con los nuevos valores"
+      ],
+      "timeout_sec": 120,
+      "rollback_plan": "Revertir cambios en ContenidoVideo.model.js si falla cualquier criterio."
+    },
+    {
+      "id": "P2",
+      "order": 2,
+      "title": "Agregar mapeo de campos en respuestas del controlador",
+      "files_hint": [
+        "backend/src/controllers/bibliotecaContenidos.controller.js"
+      ],
+      "preconditions": [
+        "Controlador bibliotecaContenidos existe",
+        "Frontend espera 'id' pero backend devuelve '_id'",
+        "Frontend espera 'fechaCreacion/fechaActualizacion' pero backend devuelve 'createdAt/updatedAt'"
+      ],
+      "content": "Actúa como mapeador de respuestas. 1) Abre backend/src/controllers/bibliotecaContenidos.controller.js. 2) Crea función helper mapResponse() que mapee: _id -> id, createdAt -> fechaCreacion, updatedAt -> fechaActualizacion. 3) Aplica el mapeo en todas las respuestas de artículos (getArticulos, getArticuloById, createArticulo, updateArticulo). 4) Aplica el mapeo en todas las respuestas de videos (getVideos, getVideoById, createVideo, updateVideo, toggleFavorite). 5) Aplica el mapeo en todas las respuestas de archivos (getArchivos, getArchivoById, createArchivo, updateArchivo). 6) Aplica el mapeo en respuestas de búsqueda (searchContenidos). 7) Muestra diff de los cambios y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "bibliotecaContenidos.controller.js: función mapResponse() creada",
+        "Todas las respuestas de artículos mapeadas",
+        "Todas las respuestas de videos mapeadas",
+        "Todas las respuestas de archivos mapeadas",
+        "Respuestas de búsqueda mapeadas"
+      ],
+      "acceptance_criteria": [
+        "Todas las respuestas devuelven 'id' en lugar de '_id'",
+        "Todas las respuestas devuelven 'fechaCreacion/fechaActualizacion' en lugar de 'createdAt/updatedAt'",
+        "La función mapResponse() es reutilizable",
+        "No se rompe la funcionalidad existente",
+        "Las respuestas mantienen la estructura esperada por el frontend"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en bibliotecaContenidos.controller.js si falla cualquier criterio."
+    },
+    {
+      "id": "P3",
+      "order": 3,
+      "title": "Actualizar validaciones para alinearse con tipos del frontend",
+      "files_hint": [
+        "backend/src/middleware/validate.middleware.js"
+      ],
+      "preconditions": [
+        "Middleware de validación existe",
+        "Validaciones actuales no coinciden con tipos del frontend",
+        "Necesidad de alinear validaciones con DTOs actualizados"
+      ],
+      "content": "Actúa como actualizador de validaciones. 1) Abre backend/src/middleware/validate.middleware.js. 2) Actualiza validateArticulo para incluir validaciones faltantes: autor (optional, 2-100 chars), tags (optional array), esPublico (optional boolean), imagen (optional URL). 3) Crea validateVideo con validaciones: titulo (required), descripcion (required), url (required URL), thumbnail (required URL), tags (optional array), dificultad (required enum: 'principiante'/'intermedio'/'avanzado'), topico (required). 4) Crea validateArchivo con validaciones: nombre (required), tipo (required), tamaño (required), urlArchivo (required URL), urlPreview (optional URL). 5) Crea validateSearch con validaciones: query (required, min 2 chars), tipo (optional enum), categoria (optional), topico (optional), dificultad (optional), page (optional number), limit (optional number). 6) Muestra diff de las validaciones y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "validate.middleware.js: validateArticulo actualizado",
+        "validate.middleware.js: validateVideo creado",
+        "validate.middleware.js: validateArchivo creado",
+        "validate.middleware.js: validateSearch creado",
+        "Validaciones alineadas con tipos del frontend"
+      ],
+      "acceptance_criteria": [
+        "Todas las validaciones coinciden con los DTOs del frontend",
+        "Los mensajes de error son descriptivos",
+        "Las validaciones están correctamente configuradas con express-validator",
+        "No hay errores de sintaxis en el middleware",
+        "Las validaciones están exportadas correctamente"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en validate.middleware.js si falla cualquier criterio."
+    },
+    {
+      "id": "P4",
+      "order": 4,
+      "title": "Actualizar rutas para usar nuevas validaciones",
+      "files_hint": [
+        "backend/src/routes/bibliotecaContenidos.routes.js"
+      ],
+      "preconditions": [
+        "Rutas bibliotecaContenidos existen",
+        "Nuevas validaciones creadas en P3",
+        "Rutas actuales usan validaciones desactualizadas"
+      ],
+      "content": "Actúa como actualizador de rutas. 1) Abre backend/src/routes/bibliotecaContenidos.routes.js. 2) Importa las nuevas validaciones: validateVideo, validateArchivo, validateSearch desde validate.middleware.js. 3) Actualiza rutas de videos para usar validateVideo en POST y PUT. 4) Actualiza rutas de archivos para usar validateArchivo en POST y PUT. 5) Actualiza ruta de búsqueda para usar validateSearch en GET /search. 6) Verifica que todas las rutas tengan las validaciones apropiadas. 7) Muestra diff de las rutas actualizadas y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "bibliotecaContenidos.routes.js: import de nuevas validaciones",
+        "Rutas de videos actualizadas con validateVideo",
+        "Rutas de archivos actualizadas con validateArchivo",
+        "Ruta de búsqueda actualizada con validateSearch",
+        "Todas las rutas tienen validaciones apropiadas"
+      ],
+      "acceptance_criteria": [
+        "Todas las rutas POST/PUT tienen validaciones apropiadas",
+        "Las validaciones coinciden con los DTOs del frontend",
+        "No hay errores de sintaxis en las rutas",
+        "Las importaciones funcionan correctamente",
+        "El middleware de validación se aplica correctamente"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en bibliotecaContenidos.routes.js si falla cualquier criterio."
+    },
+    {
+      "id": "P5",
+      "order": 5,
+      "title": "Crear tests para verificar mapeo de campos y validaciones",
+      "files_hint": [
+        "backend/src/__tests__/bibliotecaContenidos-fixes.test.js"
+      ],
+      "preconditions": [
+        "Correcciones aplicadas (P1-P4)",
+        "Supertest configurado en el proyecto",
+        "Base de datos de test configurada"
+      ],
+      "content": "Actúa como creador de tests de corrección. 1) Crea backend/src/__tests__/bibliotecaContenidos-fixes.test.js. 2) Implementa tests para verificar mapeo de campos: a) GET /articulos devuelve 'id' en lugar de '_id', b) GET /articulos devuelve 'fechaCreacion/fechaActualizacion' en lugar de 'createdAt/updatedAt', c) Lo mismo para videos y archivos. 3) Implementa tests para validaciones: a) POST /videos con dificultad='principiante' debe ser válido, b) POST /videos con dificultad='easy' debe fallar, c) Validaciones de campos requeridos/opcionales. 4) Implementa tests para respuestas consistentes: a) Todas las respuestas tienen la estructura esperada, b) Los campos mapeados están presentes, c) No hay campos no esperados. 5) Ejecuta los tests y verifica que pasan. 6) Muestra diff del archivo de test y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "bibliotecaContenidos-fixes.test.js: tests de mapeo de campos creados",
+        "Tests de validaciones actualizadas",
+        "Tests de respuestas consistentes",
+        "Verificación de correcciones implementadas"
+      ],
+      "acceptance_criteria": [
+        "Todos los tests de mapeo de campos pasan",
+        "Todos los tests de validaciones pasan",
+        "Todos los tests de respuestas consistentes pasan",
+        "No hay errores en los tests",
+        "Las correcciones están verificadas"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Eliminar archivo de test si fallan los criterios."
+    }
+  ]
+}

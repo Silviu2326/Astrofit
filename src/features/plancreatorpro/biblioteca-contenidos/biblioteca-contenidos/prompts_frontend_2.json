@@ -1,0 +1,169 @@
+{
+  "meta": {
+    "module": "biblioteca-contenidos",
+    "side": "frontend",
+    "run_id": "2024-01-20T15:00:00Z",
+    "base_path": "/api/biblioteca-contenidos",
+    "purpose": "Corrección de problemas identificados en auditoría"
+  },
+  "prompts": [
+    {
+      "id": "P1",
+      "order": 1,
+      "title": "Alinear tipos DTO entre frontend y backend",
+      "files_hint": [
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/types/Video.ts",
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/types/Articulo.ts",
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/types/Archivo.ts"
+      ],
+      "preconditions": [
+        "Tipos TypeScript existen",
+        "Inconsistencias identificadas en auditoría",
+        "Backend actualizado con mapeo de campos"
+      ],
+      "content": "Actúa como alineador de tipos. 1) Abre types/Video.ts y cambia dificultad de 'principiante'/'intermedio'/'avanzado' a 'easy'/'medium'/'hard' para coincidir con el backend. 2) Abre types/Articulo.ts y actualiza ArticuloResponse para usar 'id' en lugar de 'id' (ya correcto), 'fechaCreacion/fechaActualizacion' en lugar de 'fechaCreacion/fechaActualizacion' (ya correcto). 3) Abre types/Archivo.ts y verifica que ArchivoResponse use 'id' y 'fechaCreacion/fechaActualizacion'. 4) Agrega campos faltantes: 'isDeleted' (boolean) en todos los Response types. 5) Actualiza las interfaces para incluir campos que el backend devuelve pero el frontend no maneja. 6) Muestra diff de cada archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "types/Video.ts: dificultad alineada con backend",
+        "types/Articulo.ts: campos actualizados",
+        "types/Archivo.ts: campos actualizados",
+        "Campos faltantes agregados a Response types",
+        "Tipos completamente alineados con backend"
+      ],
+      "acceptance_criteria": [
+        "El enum dificultad usa 'easy'/'medium'/'hard'",
+        "Todos los Response types incluyen campos del backend",
+        "No hay errores de TypeScript",
+        "Las interfaces coinciden exactamente con las respuestas del backend",
+        "Los campos opcionales están marcados correctamente"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en types/ si falla cualquier criterio."
+    },
+    {
+      "id": "P2",
+      "order": 2,
+      "title": "Eliminar APIs específicas y usar solo API centralizada",
+      "files_hint": [
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-articulos/contenidosArticulosApi.ts",
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-video/contenidosVideoApi.ts",
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-descargables/contenidosDescargablesApi.ts",
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/buscador-contenidos/buscadorContenidosApi.ts"
+      ],
+      "preconditions": [
+        "API centralizada bibliotecaContenidosApi.ts existe",
+        "APIs específicas existen y funcionan",
+        "Necesidad de consolidar en una sola API"
+      ],
+      "content": "Actúa como consolidador de APIs. 1) Abre contenidosArticulosApi.ts y elimina todas las funciones, reemplazándolas con imports directos de bibliotecaContenidosApi.ts. 2) Abre contenidosVideoApi.ts y elimina todas las funciones, reemplazándolas con imports directos de bibliotecaContenidosApi.ts. 3) Abre contenidosDescargablesApi.ts y elimina todas las funciones, reemplazándolas con imports directos de bibliotecaContenidosApi.ts. 4) Abre buscadorContenidosApi.ts y elimina todas las funciones, reemplazándolas con imports directos de bibliotecaContenidosApi.ts. 5) Mantén solo las interfaces de compatibilidad (Article, Video, DownloadableContent) si son necesarias. 6) Actualiza todos los imports en las páginas para usar bibliotecaContenidosApi.ts directamente. 7) Muestra diff de cada archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "contenidosArticulosApi.ts: funciones eliminadas, imports agregados",
+        "contenidosVideoApi.ts: funciones eliminadas, imports agregados",
+        "contenidosDescargablesApi.ts: funciones eliminadas, imports agregados",
+        "buscadorContenidosApi.ts: funciones eliminadas, imports agregados",
+        "Páginas actualizadas para usar API centralizada"
+      ],
+      "acceptance_criteria": [
+        "No hay duplicación de funciones entre APIs",
+        "Todas las páginas usan bibliotecaContenidosApi.ts",
+        "Las interfaces de compatibilidad se mantienen si son necesarias",
+        "No hay errores de importación",
+        "La funcionalidad se mantiene idéntica"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en APIs específicas si falla cualquier criterio."
+    },
+    {
+      "id": "P3",
+      "order": 3,
+      "title": "Actualizar páginas para usar API centralizada directamente",
+      "files_hint": [
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-articulos/ContenidosArticulosPage.tsx",
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-video/ContenidosVideoPage.tsx",
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/contenidos-descargables/ContenidosDescargablesPage.tsx",
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/buscador-contenidos/BuscadorContenidosPage.tsx"
+      ],
+      "preconditions": [
+        "APIs específicas eliminadas en P2",
+        "Páginas usan APIs específicas",
+        "API centralizada disponible"
+      ],
+      "content": "Actúa como actualizador de páginas. 1) Para ContenidosArticulosPage.tsx: a) Cambia import de contenidosArticulosApi a bibliotecaContenidosApi, b) Actualiza useGetArticlesQuery para usar getArticulos directamente, c) Actualiza hooks de mutación para usar createArticulo, updateArticulo, deleteArticulo directamente. 2) Para ContenidosVideoPage.tsx: a) Cambia import de contenidosVideoApi a bibliotecaContenidosApi, b) Actualiza fetchVideos para usar getVideos directamente, c) Actualiza otras funciones para usar la API centralizada. 3) Para ContenidosDescargablesPage.tsx: a) Cambia import de contenidosDescargablesApi a bibliotecaContenidosApi, b) Actualiza fetchDownloadableContent para usar getArchivos directamente. 4) Para BuscadorContenidosPage.tsx: a) Cambia import de buscadorContenidosApi a bibliotecaContenidosApi, b) Actualiza searchContent para usar la función centralizada. 5) Muestra diff de cada página y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "ContenidosArticulosPage.tsx: imports y funciones actualizadas",
+        "ContenidosVideoPage.tsx: imports y funciones actualizadas",
+        "ContenidosDescargablesPage.tsx: imports y funciones actualizadas",
+        "BuscadorContenidosPage.tsx: imports y funciones actualizadas",
+        "Todas las páginas usan API centralizada"
+      ],
+      "acceptance_criteria": [
+        "Todas las páginas importan de bibliotecaContenidosApi.ts",
+        "Las funciones de API se llaman directamente",
+        "No hay errores de importación",
+        "La funcionalidad se mantiene idéntica",
+        "Los estados UI funcionan correctamente"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en las páginas si falla cualquier criterio."
+    },
+    {
+      "id": "P4",
+      "order": 4,
+      "title": "Agregar mapeo de campos en bibliotecaContenidosApi.ts",
+      "files_hint": [
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/bibliotecaContenidosApi.ts"
+      ],
+      "preconditions": [
+        "API centralizada existe",
+        "Backend devuelve campos mapeados",
+        "Frontend necesita manejar campos del backend"
+      ],
+      "content": "Actúa como mapeador de campos. 1) Abre bibliotecaContenidosApi.ts. 2) Crea función helper mapResponse() que mapee campos del backend al frontend: _id -> id, createdAt -> fechaCreacion, updatedAt -> fechaActualizacion. 3) Aplica el mapeo en todas las funciones que devuelven datos: getArticulos, getArticuloById, createArticulo, updateArticulo, getVideos, getVideoById, createVideo, updateVideo, getArchivos, getArchivoById, createArchivo, updateArchivo, searchContent. 4) Asegúrate de que el mapeo funcione tanto para arrays como para objetos individuales. 5) Maneja casos especiales como respuestas de búsqueda que pueden tener diferentes estructuras. 6) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "bibliotecaContenidosApi.ts: función mapResponse() creada",
+        "Todas las funciones de artículos mapeadas",
+        "Todas las funciones de videos mapeadas",
+        "Todas las funciones de archivos mapeadas",
+        "Función de búsqueda mapeada"
+      ],
+      "acceptance_criteria": [
+        "La función mapResponse() mapea todos los campos necesarios",
+        "Todas las funciones devuelven campos mapeados",
+        "El mapeo funciona para arrays y objetos individuales",
+        "No se rompe la funcionalidad existente",
+        "Los tipos TypeScript coinciden con los campos mapeados"
+      ],
+      "timeout_sec": 200,
+      "rollback_plan": "Revertir cambios en bibliotecaContenidosApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P5",
+      "order": 5,
+      "title": "Crear tests para verificar correcciones del frontend",
+      "files_hint": [
+        "src/features/plancreatorpro/biblioteca-contenidos/biblioteca-contenidos/__tests__/bibliotecaContenidos-fixes.test.ts"
+      ],
+      "preconditions": [
+        "Correcciones aplicadas (P1-P4)",
+        "Jest configurado en el proyecto",
+        "Mocks de axios disponibles"
+      ],
+      "content": "Actúa como creador de tests de corrección. 1) Crea __tests__/bibliotecaContenidos-fixes.test.ts. 2) Implementa tests para verificar mapeo de campos: a) getArticulos devuelve objetos con 'id' en lugar de '_id', b) getArticulos devuelve 'fechaCreacion/fechaActualizacion' en lugar de 'createdAt/updatedAt', c) Lo mismo para videos y archivos. 3) Implementa tests para tipos alineados: a) CreateVideoDto acepta dificultad='easy'/'medium'/'hard', b) VideoResponse incluye todos los campos del backend, c) No hay errores de TypeScript. 4) Implementa tests para API centralizada: a) Todas las funciones están disponibles, b) No hay duplicación de funciones, c) Los imports funcionan correctamente. 5) Implementa tests para páginas: a) Las páginas importan de bibliotecaContenidosApi.ts, b) Los hooks funcionan correctamente, c) Los estados UI se manejan apropiadamente. 6) Ejecuta los tests y verifica que pasan. 7) Muestra diff del archivo de test y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "bibliotecaContenidos-fixes.test.ts: tests de mapeo de campos creados",
+        "Tests de tipos alineados implementados",
+        "Tests de API centralizada implementados",
+        "Tests de páginas implementados",
+        "Verificación de correcciones completas"
+      ],
+      "acceptance_criteria": [
+        "Todos los tests de mapeo de campos pasan",
+        "Todos los tests de tipos alineados pasan",
+        "Todos los tests de API centralizada pasan",
+        "Todos los tests de páginas pasan",
+        "No hay errores en los tests"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Eliminar archivo de test si fallan los criterios."
+    }
+  ]
+}

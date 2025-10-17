@@ -156,6 +156,21 @@ const distributionByChannel = [
 
 const AnaliticaIngresosPage: React.FC = () => {
   const [period, setPeriod] = useState<Period>('12months');
+
+  const handleExportReport = () => {
+    console.log('Exportando reporte de ingresos...');
+    // Lógica para exportar reporte
+  };
+
+  const handleProjections = () => {
+    console.log('Abriendo proyecciones...');
+    // Lógica para mostrar proyecciones
+  };
+
+  const handleConfigureGoals = () => {
+    console.log('Configurando objetivos...');
+    // Lógica para configurar objetivos
+  };
   const [hoveredKPI, setHoveredKPI] = useState<string | null>(null);
 
   const revenueData = useMemo(() => generateRevenueData(), []);
@@ -251,7 +266,9 @@ const AnaliticaIngresosPage: React.FC = () => {
             <h1 className="text-4xl font-bold bg-gradient-to-r from-green-600 via-green-500 to-yellow-500 bg-clip-text text-transparent">
               Analítica de Ingresos
             </h1>
-            <p className="text-gray-600 mt-1">Análisis completo de ingresos y proyecciones financieras</p>
+            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl leading-relaxed">
+          Análisis completo de ingresos y proyecciones financieras para tu negocio de entrenamiento
+        </p>
           </div>
         </div>
 
@@ -274,15 +291,24 @@ const AnaliticaIngresosPage: React.FC = () => {
           </div>
 
           {/* Botones de acción */}
-          <button className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-50 rounded-lg shadow-sm transition-colors">
+          <button 
+            onClick={handleExportReport}
+            className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-50 rounded-lg shadow-sm transition-colors"
+          >
             <Download className="w-4 h-4 text-gray-600" />
             <span className="text-sm font-medium text-gray-700">Exportar Reporte</span>
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-50 rounded-lg shadow-sm transition-colors">
+          <button 
+            onClick={handleProjections}
+            className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-50 rounded-lg shadow-sm transition-colors"
+          >
             <LineChart className="w-4 h-4 text-gray-600" />
             <span className="text-sm font-medium text-gray-700">Proyecciones</span>
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-yellow-500 hover:from-green-600 hover:to-yellow-600 text-white rounded-lg shadow-md transition-all">
+          <button 
+            onClick={handleConfigureGoals}
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-yellow-500 hover:from-green-600 hover:to-yellow-600 text-white rounded-lg shadow-md transition-all"
+          >
             <Target className="w-4 h-4" />
             <span className="text-sm font-medium">Configurar Objetivos</span>
           </button>

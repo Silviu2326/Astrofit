@@ -1,0 +1,179 @@
+{
+  "meta": {
+    "module": "cursos-online",
+    "side": "backend",
+    "run_id": "2024-12-19T10:00:00Z",
+    "base_path": "/api/cursos"
+  },
+  "prompts": [
+    {
+      "id": "P1",
+      "order": 1,
+      "title": "Crear modelos MongoDB para cursos, módulos, lecciones y quizzes",
+      "files_hint": [
+        "backend/src/models/Curso.model.js",
+        "backend/src/models/Modulo.model.js", 
+        "backend/src/models/Leccion.model.js",
+        "backend/src/models/Quiz.model.js",
+        "backend/src/models/QuizResult.model.js"
+      ],
+      "preconditions": [
+        "MongoDB configurado y funcionando",
+        "Mongoose instalado en el proyecto"
+      ],
+      "content": "Crea los modelos MongoDB para el sistema de cursos online. 1) Crea backend/src/models/Curso.model.js con esquema que incluya: titulo (String, required), descripcion (String, required), imagenPortada (String), precio (Number, required), estado (String, enum: ['borrador', 'activo', 'pausado', 'archivado'], default: 'borrador'), categoria (String, required), duracion (String), instructorId (ObjectId, ref: 'Trainer', required), fechaCreacion (Date, default: Date.now), fechaActualizacion (Date, default: Date.now). 2) Crea backend/src/models/Modulo.model.js con: titulo (String, required), descripcion (String), orden (Number, required), cursoId (ObjectId, ref: 'Curso', required). 3) Crea backend/src/models/Leccion.model.js con: titulo (String, required), descripcion (String), tipo (String, enum: ['video', 'texto', 'quiz', 'archivo'], required), contenido (String), duracion (Number), orden (Number, required), bloqueada (Boolean, default: false), moduloId (ObjectId, ref: 'Modulo', required). 4) Crea backend/src/models/Quiz.model.js con: titulo (String, required), descripcion (String), duracion (Number, required), intentosPermitidos (Number, default: 1), puntuacionMinima (Number, required), estado (String, enum: ['borrador', 'activo', 'pausado'], default: 'borrador'), preguntas (Array de objetos con: pregunta, tipo, opciones, respuestaCorrecta, puntos, orden), fechaCreacion (Date, default: Date.now), cursoId (ObjectId, ref: 'Curso', required), leccionId (ObjectId, ref: 'Leccion', optional). 5) Crea backend/src/models/QuizResult.model.js con: quizId (ObjectId, ref: 'Quiz', required), estudianteId (String, required), estudianteNombre (String, required), puntuacion (Number, required), puntuacionMaxima (Number, required), porcentaje (Number, required), aprobado (Boolean, required), fechaCompletado (Date, default: Date.now), tiempoUtilizado (Number), respuestas (Array de objetos con: questionId, answerText, esCorrecta, puntosObtenidos). 6) Agrega índices apropiados: cursoId en Modulo, moduloId en Leccion, cursoId en Quiz, quizId en QuizResult. 7) Muestra diffs de cada archivo creado y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "Curso.model.js creado con esquema completo",
+        "Modulo.model.js creado con referencia a Curso",
+        "Leccion.model.js creado con referencia a Modulo",
+        "Quiz.model.js creado con preguntas y configuraciones",
+        "QuizResult.model.js creado para almacenar respuestas"
+      ],
+      "acceptance_criteria": [
+        "Todos los modelos se crean sin errores de sintaxis",
+        "Las referencias entre modelos están correctamente definidas",
+        "Los índices están configurados apropiadamente",
+        "Los enums tienen los valores correctos según el MD"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Eliminar todos los archivos de modelos creados si falla cualquier criterio."
+    },
+    {
+      "id": "P2", 
+      "order": 2,
+      "title": "Crear controlador de cursos con operaciones CRUD completas",
+      "files_hint": [
+        "backend/src/controllers/cursos.controller.js"
+      ],
+      "preconditions": [
+        "Modelos de cursos creados (P1)",
+        "Middleware de autenticación disponible"
+      ],
+      "content": "Crea el controlador principal para gestión de cursos. 1) Crea backend/src/controllers/cursos.controller.js. 2) Implementa listarCursos: GET /api/cursos con paginación (page, limit), filtros (estado, categoria, instructorId), búsqueda (titulo, descripcion), ordenamiento (fechaCreacion, titulo). 3) Implementa obtenerCurso: GET /api/cursos/:id que devuelve curso completo con módulos y lecciones pobladas. 4) Implementa crearCurso: POST /api/cursos que valida datos requeridos, asigna instructorId del usuario autenticado, crea curso en estado 'borrador'. 5) Implementa actualizarCurso: PUT /api/cursos/:id que permite actualizar campos permitidos, actualiza fechaActualizacion. 6) Implementa eliminarCurso: DELETE /api/cursos/:id que verifica permisos del instructor, elimina curso y referencias relacionadas. 7) Implementa subirArchivo: POST /api/cursos/upload que maneja upload de archivos (portadas, videos, documentos), valida tipos y tamaños, devuelve URL del archivo. 8) Implementa obtenerLecciones: GET /api/cursos/:id/lecciones que devuelve lecciones del curso ordenadas. 9) Implementa crearLeccion: POST /api/cursos/:id/lecciones que crea lección en módulo específico. 10) Implementa obtenerQuizzes: GET /api/cursos/:id/quizzes que devuelve quizzes del curso. 11) Implementa crearQuiz: POST /api/cursos/:id/quizzes que crea quiz asociado al curso. 12) Implementa enviarQuiz: POST /api/quizzes/:id/submit que procesa respuestas, calcula puntuación, guarda resultado. 13) Agrega manejo de errores consistente con try/catch, respuestas JSON estandarizadas. 14) Muestra diff del controlador y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "cursos.controller.js creado con todas las funciones CRUD",
+        "Implementación de paginación y filtros en listarCursos",
+        "Manejo de archivos en subirArchivo",
+        "Gestión de lecciones y quizzes integrada"
+      ],
+      "acceptance_criteria": [
+        "Todas las funciones del controlador están implementadas",
+        "Manejo de errores consistente en todas las funciones",
+        "Respuestas JSON estandarizadas con success/error",
+        "Validación de permisos del instructor en operaciones de modificación"
+      ],
+      "timeout_sec": 360,
+      "rollback_plan": "Eliminar el archivo cursos.controller.js si falla cualquier criterio."
+    },
+    {
+      "id": "P3",
+      "order": 3,
+      "title": "Crear validaciones específicas para cursos con express-validator",
+      "files_hint": [
+        "backend/src/middleware/cursosValidation.js"
+      ],
+      "preconditions": [
+        "express-validator instalado y configurado",
+        "Middleware de validación base disponible"
+      ],
+      "content": "Crea validaciones específicas para el módulo de cursos. 1) Crea backend/src/middleware/cursosValidation.js. 2) Implementa validateCreateCurso con validaciones: titulo (required, min 5, max 200 caracteres), descripcion (required, min 10, max 1000 caracteres), precio (required, number, min 0), categoria (required, min 2, max 50 caracteres), imagenPortada (optional, URL válida). 3) Implementa validateUpdateCurso con validaciones opcionales: titulo (min 5, max 200), descripcion (min 10, max 1000), precio (number, min 0), estado (enum: ['borrador', 'activo', 'pausado', 'archivado']), imagenPortada (URL válida). 4) Implementa validateLeccion con: titulo (required, min 3, max 200), descripcion (optional, max 500), tipo (required, enum: ['video', 'texto', 'quiz', 'archivo']), contenido (required si tipo no es 'quiz'), duracion (number, min 1), orden (number, min 0). 5) Implementa validateQuiz con: titulo (required, min 5, max 200), descripcion (required, min 10, max 500), duracion (required, number, min 1), intentosPermitidos (number, min 1, max 10), puntuacionMinima (number, min 0, max 100), estado (enum: ['borrador', 'activo', 'pausado']), preguntas (array, min 1, max 50). 6) Implementa validatePregunta para validar cada pregunta del quiz: pregunta (required, min 10, max 500), tipo (required, enum: ['opcion-multiple', 'verdadero-falso', 'texto-libre']), opciones (required si tipo es 'opcion-multiple', array min 2, max 6), respuestaCorrecta (required si tipo no es 'texto-libre'), puntos (required, number, min 1, max 100). 7) Implementa validateSubmitQuiz para envío de respuestas: respuestas (array, required), respuestas[].questionId (required, string), respuestas[].answerText (required). 8) Agrega mensajes de error en español para todas las validaciones. 9) Muestra diff del archivo de validaciones y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "cursosValidation.js creado con todas las validaciones",
+        "Validaciones para crear y actualizar cursos",
+        "Validaciones para lecciones y quizzes",
+        "Mensajes de error en español"
+      ],
+      "acceptance_criteria": [
+        "Todas las validaciones están implementadas correctamente",
+        "Mensajes de error son descriptivos y en español",
+        "Validaciones cubren todos los campos requeridos",
+        "Validaciones de arrays y objetos anidados funcionan correctamente"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Eliminar el archivo cursosValidation.js si falla cualquier criterio."
+    },
+    {
+      "id": "P4",
+      "order": 4,
+      "title": "Crear rutas REST para cursos con middleware de autenticación",
+      "files_hint": [
+        "backend/src/routes/cursos.routes.js"
+      ],
+      "preconditions": [
+        "Controlador de cursos creado (P2)",
+        "Validaciones de cursos creadas (P3)",
+        "Middleware de autenticación disponible"
+      ],
+      "content": "Crea las rutas REST para el módulo de cursos. 1) Crea backend/src/routes/cursos.routes.js. 2) Importa express, el controlador de cursos, middleware de autenticación (protect), validaciones de cursos, y multer para upload de archivos. 3) Configura multer para upload de archivos con límites: fileSize (10MB), fileFilter (imágenes, videos, PDFs). 4) Define rutas principales: GET / (listarCursos con protect), POST / (crearCurso con protect + validateCreateCurso), GET /:id (obtenerCurso con protect), PUT /:id (actualizarCurso con protect + validateUpdateCurso), DELETE /:id (eliminarCurso con protect). 5) Define ruta de upload: POST /upload (subirArchivo con protect + multer.single('file')). 6) Define rutas de lecciones: GET /:id/lecciones (obtenerLecciones con protect), POST /:id/lecciones (crearLeccion con protect + validateLeccion), PUT /:id/lecciones/:leccionId (actualizarLeccion con protect + validateLeccion), DELETE /:id/lecciones/:leccionId (eliminarLeccion con protect). 7) Define rutas de quizzes: GET /:id/quizzes (obtenerQuizzes con protect), POST /:id/quizzes (crearQuiz con protect + validateQuiz), GET /quizzes/:quizId (obtenerQuiz con protect), PUT /quizzes/:quizId (actualizarQuiz con protect + validateQuiz), DELETE /quizzes/:quizId (eliminarQuiz con protect). 8) Define ruta de envío de quiz: POST /quizzes/:quizId/submit (enviarQuiz con protect + validateSubmitQuiz). 9) Define ruta de resultados: GET /quizzes/:quizId/results (obtenerResultados con protect), GET /quizzes/:quizId/statistics (obtenerEstadisticas con protect). 10) Exporta el router por defecto. 11) Muestra diff del archivo de rutas y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "cursos.routes.js creado con todas las rutas REST",
+        "Middleware de autenticación aplicado a todas las rutas",
+        "Validaciones aplicadas a rutas que requieren datos",
+        "Configuración de multer para upload de archivos"
+      ],
+      "acceptance_criteria": [
+        "Todas las rutas están definidas correctamente",
+        "Middleware de autenticación está aplicado",
+        "Validaciones están aplicadas donde corresponde",
+        "Configuración de multer funciona correctamente"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Eliminar el archivo cursos.routes.js si falla cualquier criterio."
+    },
+    {
+      "id": "P5",
+      "order": 5,
+      "title": "Integrar rutas de cursos en la API principal",
+      "files_hint": [
+        "backend/src/routes/api.routes.js",
+        "backend/src/server.js"
+      ],
+      "preconditions": [
+        "Rutas de cursos creadas (P4)",
+        "API principal configurada y funcionando"
+      ],
+      "content": "Integra las rutas de cursos en la API principal. 1) Abre backend/src/routes/api.routes.js. 2) Importa las rutas de cursos: import cursosRoutes from './cursos.routes.js'. 3) Agrega la ruta de cursos en la sección de route modules: router.use('/cursos', cursosRoutes). 4) Actualiza la documentación de endpoints en la respuesta del GET / para incluir: cursos: '/api/cursos'. 5) Abre backend/src/server.js y verifica que las rutas de la API estén montadas correctamente con app.use('/api', apiRoutes). 6) Verifica que el middleware de CORS esté configurado para permitir el origen del frontend. 7) Verifica que el middleware de autenticación esté disponible globalmente. 8) Muestra diffs de ambos archivos y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "api.routes.js actualizado con import de cursosRoutes",
+        "api.routes.js actualizado con router.use('/cursos', cursosRoutes)",
+        "Documentación de endpoints actualizada",
+        "Verificación de configuración en server.js"
+      ],
+      "acceptance_criteria": [
+        "Las rutas de cursos están montadas en /api/cursos",
+        "No hay conflictos con rutas existentes",
+        "La documentación de endpoints incluye cursos",
+        "La configuración del servidor es correcta"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en api.routes.js si falla cualquier criterio."
+    },
+    {
+      "id": "P6",
+      "order": 6,
+      "title": "Crear tests de integración para endpoints críticos",
+      "files_hint": [
+        "backend/src/__tests__/cursos.integration.test.js"
+      ],
+      "preconditions": [
+        "Rutas de cursos integradas (P5)",
+        "Jest y supertest configurados para testing"
+      ],
+      "content": "Crea tests de integración para verificar que los endpoints de cursos funcionan correctamente. 1) Crea backend/src/__tests__/cursos.integration.test.js. 2) Configura el test con supertest, importa la app de server.js, y configura base de datos de test. 3) Crea test para GET /api/cursos que verifique: respuesta 200, estructura de respuesta con cursos array, paginación funciona. 4) Crea test para POST /api/cursos que verifique: creación exitosa con datos válidos, validación de campos requeridos, respuesta 201 con curso creado. 5) Crea test para GET /api/cursos/:id que verifique: respuesta 200 con curso específico, respuesta 404 para ID inexistente. 6) Crea test para PUT /api/cursos/:id que verifique: actualización exitosa, respuesta 200 con curso actualizado. 7) Crea test para DELETE /api/cursos/:id que verifique: eliminación exitosa, respuesta 200. 8) Crea test para POST /api/cursos/upload que verifique: upload de archivo exitoso, respuesta con URL del archivo. 9) Crea test para autenticación que verifique: rutas protegidas requieren token, respuesta 401 sin token. 10) Ejecuta los tests y verifica que todos pasen. 11) Muestra resultados de los tests y espera confirmación.",
+      "expected_changes": [
+        "cursos.integration.test.js creado con tests completos",
+        "Tests para todas las operaciones CRUD",
+        "Tests de autenticación y autorización",
+        "Tests de upload de archivos"
+      ],
+      "acceptance_criteria": [
+        "Todos los tests pasan exitosamente",
+        "Cobertura de endpoints críticos del 100%",
+        "Tests de autenticación funcionan correctamente",
+        "Tests de validación de datos funcionan correctamente"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Eliminar el archivo de tests si falla cualquier criterio."
+    }
+  ]
+}

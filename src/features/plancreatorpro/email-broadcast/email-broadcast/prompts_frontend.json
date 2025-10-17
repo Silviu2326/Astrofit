@@ -1,0 +1,290 @@
+{
+  "meta": {
+    "module": "email-broadcast",
+    "side": "frontend",
+    "run_id": "2024-01-20T10:00:00Z",
+    "base_path": "/api/email-broadcast"
+  },
+  "prompts": [
+    {
+      "id": "P1",
+      "order": 1,
+      "title": "Crear API centralizada emailBroadcastApi.ts con todas las funciones HTTP",
+      "files_hint": [
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/shared/emailBroadcastApi.ts"
+      ],
+      "preconditions": [
+        "BASE_PATH /api/email-broadcast definido en interconexion.md",
+        "VITE_API_URL configurado en .env"
+      ],
+      "content": "Actúa como desarrollador frontend. Crea el archivo src/features/plancreatorpro/email-broadcast/email-broadcast/shared/emailBroadcastApi.ts. 1) Importa axios y configura baseURL desde import.meta.env.VITE_API_URL. 2) Define interfaces TypeScript: CreateCampaign, Campaign, CreateTemplate, EmailTemplate, EmailMetrics, CampaignAnalytics, MetricsFilters, AdvancedMetrics. 3) Crea clase EmailBroadcastApi con métodos: sendEmail(data: CreateCampaign), saveDraft(data: CreateCampaign), getCampaigns(filters?), getCampaignById(id), updateCampaign(id, data), deleteCampaign(id), duplicateCampaign(id), archiveCampaign(id), getCampaignAnalytics(id), exportReport(id), getTemplates(), getTemplateById(id), createTemplate(data: CreateTemplate), updateTemplate(id, data), deleteTemplate(id), toggleFavorite(id), getEmailMetrics(), getConversionFunnel(), getRevenueAnalysis(), getCampaignComparison(), getAdvancedMetrics(filters), exportMetricsReport(format). 4) Implementa manejo de errores con try-catch, mapeo de códigos HTTP a mensajes de usuario, y headers Authorization Bearer. 5) Exporta instancia singleton emailBroadcastApi. 6) Muestra diff del archivo completo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "shared/emailBroadcastApi.ts: archivo creado con clase completa y todas las funciones HTTP"
+      ],
+      "acceptance_criteria": [
+        "Archivo emailBroadcastApi.ts existe con todas las interfaces definidas",
+        "Clase EmailBroadcastApi tiene todos los métodos especificados",
+        "Manejo de errores implementado con try-catch",
+        "Headers Authorization configurados correctamente",
+        "Exportación singleton funcionando"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Eliminar archivo shared/emailBroadcastApi.ts si no cumple criterios."
+    },
+    {
+      "id": "P2",
+      "order": 2,
+      "title": "Migrar crear-email API para usar emailBroadcastApi centralizada",
+      "files_hint": [
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/crear-email/crearEmailApi.ts"
+      ],
+      "preconditions": [
+        "shared/emailBroadcastApi.ts existe con todas las funciones",
+        "crear-email/crearEmailApi.ts actual tiene mocks"
+      ],
+      "content": "Actúa como desarrollador frontend. Abre src/features/plancreatorpro/email-broadcast/email-broadcast/crear-email/crearEmailApi.ts. 1) Importa emailBroadcastApi desde '../shared/emailBroadcastApi'. 2) Reemplaza sendEmail() para usar emailBroadcastApi.sendEmail(). 3) Reemplaza saveEmailDraft() para usar emailBroadcastApi.saveDraft(). 4) Agrega getTemplates(): Promise<EmailTemplate[]> usando emailBroadcastApi.getTemplates(). 5) Agrega getSegments(): Promise<Segment[]> (puede retornar array vacío por ahora). 6) Mantén la misma interfaz pública pero internamente usa la API centralizada. 7) Elimina mocks y URLs hardcodeadas. 8) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "crear-email/crearEmailApi.ts: importa emailBroadcastApi",
+        "crear-email/crearEmailApi.ts: reemplaza implementaciones con llamadas reales",
+        "crear-email/crearEmailApi.ts: elimina mocks y URLs hardcodeadas"
+      ],
+      "acceptance_criteria": [
+        "crearEmailApi usa emailBroadcastApi internamente",
+        "No hay mocks ni URLs hardcodeadas en el archivo",
+        "Funciones getTemplates y getSegments agregadas",
+        "Interfaz pública mantenida para compatibilidad"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en crearEmailApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P3",
+      "order": 3,
+      "title": "Migrar listado-emails API para usar emailBroadcastApi centralizada",
+      "files_hint": [
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/listado-emails/listadoEmailsApi.ts"
+      ],
+      "preconditions": [
+        "shared/emailBroadcastApi.ts existe con todas las funciones",
+        "listado-emails/listadoEmailsApi.ts actual usa mocks"
+      ],
+      "content": "Actúa como desarrollador frontend. Abre src/features/plancreatorpro/email-broadcast/email-broadcast/listado-emails/listadoEmailsApi.ts. 1) Importa emailBroadcastApi desde '../shared/emailBroadcastApi'. 2) Reemplaza fetchCampaigns() para usar emailBroadcastApi.getCampaigns(). 3) Reemplaza duplicateCampaign() para usar emailBroadcastApi.duplicateCampaign(). 4) Reemplaza archiveCampaign() para usar emailBroadcastApi.archiveCampaign(). 5) Agrega deleteCampaign(id: string): Promise<void> usando emailBroadcastApi.deleteCampaign(). 6) Agrega getCampaignStats(): Promise<CampaignStats> usando emailBroadcastApi.getAdvancedMetrics(). 7) Elimina todos los mocks y datos hardcodeados. 8) Mantén la misma interfaz pública. 9) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "listado-emails/listadoEmailsApi.ts: importa emailBroadcastApi",
+        "listado-emails/listadoEmailsApi.ts: reemplaza todas las funciones con llamadas reales",
+        "listado-emails/listadoEmailsApi.ts: elimina mocks y datos hardcodeados"
+      ],
+      "acceptance_criteria": [
+        "listadoEmailsApi usa emailBroadcastApi internamente",
+        "No hay mocks ni datos hardcodeados en el archivo",
+        "Funciones deleteCampaign y getCampaignStats agregadas",
+        "Interfaz pública mantenida para compatibilidad"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en listadoEmailsApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P4",
+      "order": 4,
+      "title": "Migrar plantillas-email API para usar emailBroadcastApi centralizada",
+      "files_hint": [
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/plantillas-email/plantillasEmailApi.ts"
+      ],
+      "preconditions": [
+        "shared/emailBroadcastApi.ts existe con todas las funciones",
+        "plantillas-email/plantillasEmailApi.ts actual usa mocks"
+      ],
+      "content": "Actúa como desarrollador frontend. Abre src/features/plancreatorpro/email-broadcast/email-broadcast/plantillas-email/plantillasEmailApi.ts. 1) Importa emailBroadcastApi desde '../shared/emailBroadcastApi'. 2) Reemplaza getEmailTemplates() para usar emailBroadcastApi.getTemplates(). 3) Reemplaza getEmailTemplateById() para usar emailBroadcastApi.getTemplateById(). 4) Reemplaza updateEmailTemplate() para usar emailBroadcastApi.updateTemplate(). 5) Reemplaza toggleFavoriteTemplate() para usar emailBroadcastApi.toggleFavorite(). 6) Agrega createTemplate(template: CreateTemplate): Promise<EmailTemplate> usando emailBroadcastApi.createTemplate(). 7) Agrega deleteTemplate(id: string): Promise<void> usando emailBroadcastApi.deleteTemplate(). 8) Elimina todos los mocks y datos hardcodeados. 9) Mantén la misma interfaz pública. 10) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "plantillas-email/plantillasEmailApi.ts: importa emailBroadcastApi",
+        "plantillas-email/plantillasEmailApi.ts: reemplaza todas las funciones con llamadas reales",
+        "plantillas-email/plantillasEmailApi.ts: elimina mocks y datos hardcodeados"
+      ],
+      "acceptance_criteria": [
+        "plantillasEmailApi usa emailBroadcastApi internamente",
+        "No hay mocks ni datos hardcodeados en el archivo",
+        "Funciones createTemplate y deleteTemplate agregadas",
+        "Interfaz pública mantenida para compatibilidad"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en plantillasEmailApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P5",
+      "order": 5,
+      "title": "Migrar campaign-detail API para usar emailBroadcastApi centralizada",
+      "files_hint": [
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/campaign-detail/campaignDetailApi.ts"
+      ],
+      "preconditions": [
+        "shared/emailBroadcastApi.ts existe con todas las funciones",
+        "campaign-detail/campaignDetailApi.ts actual usa mocks"
+      ],
+      "content": "Actúa como desarrollador frontend. Abre src/features/plancreatorpro/email-broadcast/email-broadcast/campaign-detail/campaignDetailApi.ts. 1) Importa emailBroadcastApi desde '../shared/emailBroadcastApi'. 2) Reemplaza fetchCampaignDetail() para usar emailBroadcastApi.getCampaignDetail(). 3) Reemplaza fetchCampaignAnalytics() para usar emailBroadcastApi.getCampaignAnalytics(). 4) Reemplaza exportCampaignReport() para usar emailBroadcastApi.exportReport(). 5) Agrega updateCampaignStatus(id: string, status: string): Promise<void> usando emailBroadcastApi.updateCampaign(). 6) Agrega resendCampaign(id: string): Promise<void> usando emailBroadcastApi.sendEmail() con datos existentes. 7) Elimina todos los mocks y datos hardcodeados. 8) Mantén la misma interfaz pública. 9) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "campaign-detail/campaignDetailApi.ts: importa emailBroadcastApi",
+        "campaign-detail/campaignDetailApi.ts: reemplaza todas las funciones con llamadas reales",
+        "campaign-detail/campaignDetailApi.ts: elimina mocks y datos hardcodeados"
+      ],
+      "acceptance_criteria": [
+        "campaignDetailApi usa emailBroadcastApi internamente",
+        "No hay mocks ni datos hardcodeados en el archivo",
+        "Funciones updateCampaignStatus y resendCampaign agregadas",
+        "Interfaz pública mantenida para compatibilidad"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en campaignDetailApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P6",
+      "order": 6,
+      "title": "Migrar historial-completo API para usar emailBroadcastApi centralizada",
+      "files_hint": [
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/historial-completo/historialCompletoApi.ts"
+      ],
+      "preconditions": [
+        "shared/emailBroadcastApi.ts existe con todas las funciones",
+        "historial-completo/historialCompletoApi.ts actual usa mocks"
+      ],
+      "content": "Actúa como desarrollador frontend. Abre src/features/plancreatorpro/email-broadcast/email-broadcast/historial-completo/historialCompletoApi.ts. 1) Importa emailBroadcastApi desde '../shared/emailBroadcastApi'. 2) Reemplaza fetchAllCampaigns() para usar emailBroadcastApi.getAllCampaigns(). 3) Reemplaza exportCampaigns() para usar emailBroadcastApi.exportCampaigns(). 4) Reemplaza deleteCampaign() para usar emailBroadcastApi.deleteCampaign(). 5) Reemplaza duplicateCampaign() para usar emailBroadcastApi.duplicateCampaign(). 6) Agrega getCampaignsByDateRange(start: string, end: string): Promise<Campaign[]> usando emailBroadcastApi.getCampaigns() con filtros. 7) Agrega getCampaignsByStatus(status: string): Promise<Campaign[]> usando emailBroadcastApi.getCampaigns() con filtros. 8) Elimina todos los mocks y datos hardcodeados. 9) Mantén la misma interfaz pública. 10) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "historial-completo/historialCompletoApi.ts: importa emailBroadcastApi",
+        "historial-completo/historialCompletoApi.ts: reemplaza todas las funciones con llamadas reales",
+        "historial-completo/historialCompletoApi.ts: elimina mocks y datos hardcodeados"
+      ],
+      "acceptance_criteria": [
+        "historialCompletoApi usa emailBroadcastApi internamente",
+        "No hay mocks ni datos hardcodeados en el archivo",
+        "Funciones getCampaignsByDateRange y getCampaignsByStatus agregadas",
+        "Interfaz pública mantenida para compatibilidad"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en historialCompletoApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P7",
+      "order": 7,
+      "title": "Migrar reportes-envio API para usar emailBroadcastApi centralizada",
+      "files_hint": [
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/reportes-envio/reportesEnvioApi.ts"
+      ],
+      "preconditions": [
+        "shared/emailBroadcastApi.ts existe con todas las funciones",
+        "reportes-envio/reportesEnvioApi.ts actual usa mocks"
+      ],
+      "content": "Actúa como desarrollador frontend. Abre src/features/plancreatorpro/email-broadcast/email-broadcast/reportes-envio/reportesEnvioApi.ts. 1) Importa emailBroadcastApi desde '../shared/emailBroadcastApi'. 2) Reemplaza fetchMetricasEmail() para usar emailBroadcastApi.getEmailMetrics(). 3) Reemplaza fetchEmbudoConversion() para usar emailBroadcastApi.getConversionFunnel(). 4) Reemplaza fetchAnalisisIngresos() para usar emailBroadcastApi.getRevenueAnalysis(). 5) Reemplaza fetchComparativaCampanas() para usar emailBroadcastApi.getCampaignComparison(). 6) Agrega getAdvancedMetrics(filters: MetricsFilters): Promise<AdvancedMetrics> usando emailBroadcastApi.getAdvancedMetrics(). 7) Agrega exportMetricsReport(format: 'csv' | 'pdf'): Promise<Blob> usando emailBroadcastApi.exportMetricsReport(). 8) Elimina todos los mocks y datos hardcodeados. 9) Mantén la misma interfaz pública. 10) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "reportes-envio/reportesEnvioApi.ts: importa emailBroadcastApi",
+        "reportes-envio/reportesEnvioApi.ts: reemplaza todas las funciones con llamadas reales",
+        "reportes-envio/reportesEnvioApi.ts: elimina mocks y datos hardcodeados"
+      ],
+      "acceptance_criteria": [
+        "reportesEnvioApi usa emailBroadcastApi internamente",
+        "No hay mocks ni datos hardcodeados en el archivo",
+        "Funciones getAdvancedMetrics y exportMetricsReport agregadas",
+        "Interfaz pública mantenida para compatibilidad"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en reportesEnvioApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P8",
+      "order": 8,
+      "title": "Integrar estados UI (loading/error/empty) en todas las páginas del módulo",
+      "files_hint": [
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/crear-email/CrearEmailPage.tsx",
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/listado-emails/ListadoEmailsPage.tsx",
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/plantillas-email/PlantillasEmailPage.tsx",
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/campaign-detail/CampaignDetailPage.tsx",
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/historial-completo/HistorialCompletoPage.tsx",
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/reportes-envio/ReportesEnvioPage.tsx"
+      ],
+      "preconditions": [
+        "Todas las APIs migradas a emailBroadcastApi",
+        "Páginas del módulo existen y funcionan"
+      ],
+      "content": "Actúa como desarrollador frontend. Para cada página del módulo email-broadcast: 1) Abre cada *Page.tsx del módulo. 2) Implementa estados locales: loading (boolean), error (string | null), data (array | object | null). 3) En useEffect, llama a las funciones API correspondientes y actualiza estados. 4) Renderiza condicionalmente: (a) Spinner/Loading cuando loading=true, (b) Mensaje/Componente vacío cuando data está vacío, (c) Contenido principal cuando data tiene datos, (d) Banner de error cuando error no es null. 5) Maneja errores mostrando mensaje descriptivo con código y mensaje del error. 6) No hardcodees baseURL; las APIs ya lo toman de VITE_API_URL. 7) Muestra diffs de cada archivo modificado y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "CrearEmailPage.tsx: estados loading/error/data implementados",
+        "ListadoEmailsPage.tsx: estados loading/error/data implementados",
+        "PlantillasEmailPage.tsx: estados loading/error/data implementados",
+        "CampaignDetailPage.tsx: estados loading/error/data implementados",
+        "HistorialCompletoPage.tsx: estados loading/error/data implementados",
+        "ReportesEnvioPage.tsx: estados loading/error/data implementados"
+      ],
+      "acceptance_criteria": [
+        "Todas las páginas muestran loading al cargar datos",
+        "Todas las páginas muestran estado empty cuando no hay datos",
+        "Todas las páginas muestran banner de error cuando falla la API",
+        "No hay URLs hardcodeadas en ninguna página",
+        "Estados UI consistentes en todo el módulo"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en todas las páginas si falla cualquier criterio."
+    },
+    {
+      "id": "P9",
+      "order": 9,
+      "title": "Implementar manejo de errores consistente en todas las APIs del módulo",
+      "files_hint": [
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/shared/emailBroadcastApi.ts",
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/crear-email/crearEmailApi.ts",
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/listado-emails/listadoEmailsApi.ts",
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/plantillas-email/plantillasEmailApi.ts",
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/campaign-detail/campaignDetailApi.ts",
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/historial-completo/historialCompletoApi.ts",
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/reportes-envio/reportesEnvioApi.ts"
+      ],
+      "preconditions": [
+        "Todas las APIs migradas a emailBroadcastApi",
+        "Estados UI implementados en todas las páginas"
+      ],
+      "content": "Actúa como desarrollador frontend. 1) Abre shared/emailBroadcastApi.ts y mejora el manejo de errores: (a) Mapea códigos HTTP 4xx/5xx a mensajes de usuario claros, (b) Implementa retry automático para errores 5xx, (c) Agrega logging de errores para debugging, (d) Crea tipos de error personalizados. 2) Para cada *Api.ts del módulo: (a) Implementa try-catch uniforme, (b) Mapea errores a mensajes de usuario, (c) Agrega validación de parámetros, (d) Implementa fallbacks para errores de red. 3) Crea archivo shared/errorHandler.ts con funciones: mapHttpError(), logError(), showUserError(). 4) Muestra diffs de todos los archivos modificados y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "shared/emailBroadcastApi.ts: manejo de errores mejorado",
+        "shared/errorHandler.ts: archivo creado con funciones de manejo de errores",
+        "Todos los *Api.ts: manejo de errores consistente implementado"
+      ],
+      "acceptance_criteria": [
+        "Errores HTTP mapeados a mensajes de usuario claros",
+        "Retry automático implementado para errores 5xx",
+        "Logging de errores funcionando para debugging",
+        "Validación de parámetros en todas las funciones",
+        "Fallbacks para errores de red implementados"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en todos los archivos si falla cualquier criterio."
+    },
+    {
+      "id": "P10",
+      "order": 10,
+      "title": "Crear tests de unidad para servicios y verificar funcionamiento del módulo",
+      "files_hint": [
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/__tests__/emailBroadcastApi.test.ts",
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/__tests__/crearEmailApi.test.ts",
+        "src/features/plancreatorpro/email-broadcast/email-broadcast/__tests__/listadoEmailsApi.test.ts"
+      ],
+      "preconditions": [
+        "Todas las APIs migradas y funcionando",
+        "Manejo de errores implementado"
+      ],
+      "content": "Actúa como desarrollador frontend. 1) Crea directorio __tests__ en el módulo email-broadcast. 2) Crea emailBroadcastApi.test.ts con tests para: (a) Configuración de baseURL, (b) Headers Authorization, (c) Manejo de errores 4xx/5xx, (d) Retry automático. 3) Crea crearEmailApi.test.ts con tests para: (a) sendEmail() con datos válidos, (b) saveDraft() con datos válidos, (c) Manejo de errores de validación. 4) Crea listadoEmailsApi.test.ts con tests para: (a) fetchCampaigns() retorna array, (b) duplicateCampaign() funciona, (c) Manejo de errores de red. 5) Ejecuta tests y verifica que pasen. 6) Muestra diffs de todos los archivos de test y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "__tests__/emailBroadcastApi.test.ts: archivo creado con tests completos",
+        "__tests__/crearEmailApi.test.ts: archivo creado con tests completos",
+        "__tests__/listadoEmailsApi.test.ts: archivo creado con tests completos"
+      ],
+      "acceptance_criteria": [
+        "Tests de emailBroadcastApi pasan al 100%",
+        "Tests de crearEmailApi pasan al 100%",
+        "Tests de listadoEmailsApi pasan al 100%",
+        "Cobertura de tests >80% en servicios críticos",
+        "Tests verifican manejo de errores correctamente"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Eliminar directorio __tests__ si falla cualquier criterio."
+    }
+  ]
+}
+
+

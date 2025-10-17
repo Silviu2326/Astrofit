@@ -1,0 +1,48 @@
+{
+  "nombre": "Desarrollador SaaS Frontend",
+  "version": "1.0",
+  "descripcion": "Prompts especializados para desarrollo de frontend de aplicaciones SaaS",
+  "prompts": [
+    {
+      "id": "saas_dashboard_design",
+      "nombre": "Diseño de Dashboard",
+      "prompt": "Crea un dashboard SaaS moderno y funcional:\n\n## 📊 COMPONENTES DEL DASHBOARD\n- Key metrics widgets\n- Charts y gráficos interactivos\n- Data tables con filtros\n- Real-time updates\n- Customizable layouts\n\n## 🎨 DISEÑO MODERNO\n- Clean, minimal design\n- Consistent color scheme\n- Typography hierarchy\n- Icon system\n- Animation transitions\n\n## 📱 RESPONSIVE DESIGN\n- Mobile-first approach\n- Tablet optimization\n- Desktop layouts\n- Touch interactions\n- Adaptive components\n\n## 🔧 FUNCIONALIDADES\n- Drag & drop widgets\n- Customizable views\n- Export data\n- Print functionality\n- Dark/light theme\n\n## 🚀 PERFORMANCE\n- Lazy loading\n- Virtual scrolling\n- Optimized rendering\n- Caching strategies\n- Bundle optimization\n\nProporciona componentes React/TypeScript completos y modernos.",
+      "contexto": "Desarrollo de dashboards SaaS"
+    },
+    {
+      "id": "saas_user_management",
+      "nombre": "Gestión de Usuarios",
+      "prompt": "Implementa sistema completo de gestión de usuarios para SaaS:\n\n## 👥 GESTIÓN DE USUARIOS\n- User registration/login\n- Profile management\n- Role-based access control\n- User invitations\n- Bulk user operations\n\n## 🔐 AUTENTICACIÓN\n- Multi-factor authentication\n- SSO integration\n- Password policies\n- Session management\n- Security audit logs\n\n## 👤 PERFILES Y ROLES\n- User profiles\n- Role assignment\n- Permission management\n- Team organization\n- Department structure\n\n## 📧 COMUNICACIÓN\n- Email notifications\n- In-app messaging\n- User onboarding\n- Feature announcements\n- Support tickets\n\n## 🎯 ONBOARDING\n- Welcome flow\n- Feature tutorials\n- Progress tracking\n- Help documentation\n- Interactive guides\n\nIncluye flujos completos de usuario y seguridad.",
+      "contexto": "Sistema de gestión de usuarios SaaS"
+    },
+    {
+      "id": "saas_subscription_management",
+      "nombre": "Gestión de Suscripciones",
+      "prompt": "Desarrolla sistema de gestión de suscripciones:\n\n## 💳 PLANES Y PRECIOS\n- Plan comparison\n- Pricing tiers\n- Feature limitations\n- Upgrade/downgrade\n- Custom plans\n\n## 🔄 CICLO DE SUSCRIPCIÓN\n- Subscription creation\n- Plan changes\n- Billing cycles\n- Renewal management\n- Cancellation flow\n\n## 💰 FACTURACIÓN\n- Invoice generation\n- Payment processing\n- Tax calculations\n- Discount codes\n- Refund handling\n\n## 📊 ANALYTICS\n- Revenue tracking\n- Churn analysis\n- MRR/ARR metrics\n- Customer lifetime value\n- Conversion funnels\n\n## 🎯 RETENCIÓN\n- Usage analytics\n- Feature adoption\n- Engagement metrics\n- Churn prediction\n- Retention campaigns\n\nProporciona implementación completa con métricas y analytics.",
+      "contexto": "Sistema de suscripciones SaaS"
+    },
+    {
+      "id": "saas_feature_flags",
+      "nombre": "Feature Flags y A/B Testing",
+      "prompt": "Implementa sistema de feature flags y A/B testing:\n\n## 🚩 FEATURE FLAGS\n- Toggle features on/off\n- User segmentation\n- Gradual rollouts\n- Environment-specific flags\n- Real-time updates\n\n## 🧪 A/B TESTING\n- Experiment setup\n- Traffic allocation\n- Statistical significance\n- Results analysis\n- Winner selection\n\n## 📊 ANALYTICS\n- Feature usage tracking\n- Conversion metrics\n- User behavior analysis\n- Performance impact\n- ROI measurement\n\n## 🎯 SEGMENTACIÓN\n- User attributes\n- Geographic targeting\n- Behavioral segments\n- Custom criteria\n- Dynamic rules\n\n## 🔧 ADMINISTRACIÓN\n- Flag management UI\n- Experiment dashboard\n- Results visualization\n- Alert system\n- Audit logs\n\nIncluye dashboard de administración y analytics completos.",
+      "contexto": "Feature flags y experimentación"
+    },
+    {
+      "id": "saas_integrations",
+      "nombre": "Integraciones y APIs",
+      "prompt": "Desarrolla sistema de integraciones para SaaS:\n\n## 🔌 INTEGRACIONES COMUNES\n- CRM systems (Salesforce, HubSpot)\n- Email marketing (Mailchimp, SendGrid)\n- Analytics (Google Analytics, Mixpanel)\n- Payment processors (Stripe, PayPal)\n- Cloud storage (AWS, Google Cloud)\n\n## 📡 API MANAGEMENT\n- API documentation\n- Rate limiting\n- Authentication\n- Webhook handling\n- SDK generation\n\n## 🔄 DATA SYNCHRONIZATION\n- Real-time sync\n- Batch processing\n- Conflict resolution\n- Data mapping\n- Error handling\n\n## 🛡️ SEGURIDAD\n- OAuth 2.0/OpenID Connect\n- API key management\n- Encryption\n- Audit trails\n- Compliance (GDPR, SOC2)\n\n## 📊 MONITOREO\n- Integration health\n- Performance metrics\n- Error tracking\n- Usage analytics\n- Alert system\n\nProporciona implementación completa con monitoreo y seguridad.",
+      "contexto": "Sistema de integraciones SaaS"
+    }
+  ],
+  "configuracion": {
+    "framework": "React/Next.js",
+    "lenguaje": "TypeScript",
+    "styling": "Tailwind CSS",
+    "estado": "Redux Toolkit",
+    "analytics": "Mixpanel/Amplitude"
+  }
+}
+
+
+
+

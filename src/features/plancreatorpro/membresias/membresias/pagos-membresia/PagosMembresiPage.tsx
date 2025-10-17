@@ -1,11 +1,688 @@
 
-import React from 'react';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
+import { 
+  CreditCard, 
+  DollarSign, 
+  TrendingUp, 
+  Calendar,
+  CheckCircle,
+  Clock,
+  AlertCircle,
+  Download,
+  Filter,
+  Eye,
+  MoreVertical,
+  RefreshCw,
+  Trash2,
+  Send
+} from 'lucide-react';
+import Modal from '../../../../../components/ui/modal';
+import ConfirmationModal from '../../../../../components/ui/confirmation-modal';
+
+interface Pago {
+  id: string;
+  miembro: string;
+  email: string;
+  membresia: string;
+  monto: number;
+  fecha: string;
+  estado: 'completado' | 'pendiente' | 'fallido' | 'reembolsado';
+  metodo: 'tarjeta' | 'paypal' | 'transferencia';
+}
 
 const PagosMembresiPage: React.FC = () => {
+  const [filtroEstado, setFiltroEstado] = useState<string>('todos');
+  const [filtroMembresia, setFiltroMembresia] = useState<string>('todos');
+  const [modalDetallePago, setModalDetallePago] = useState<{ isOpen: boolean; pago: Pago | null }>({ isOpen: false, pago: null });
+  const [modalAcciones, setModalAcciones] = useState<{ isOpen: boolean; pago: Pago | null }>({ isOpen: false, pago: null });
+  const [modalConfirmacion, setModalConfirmacion] = useState<{ isOpen: boolean; action: string; pago: Pago | null }>({ isOpen: false, action: '', pago: null });
+  const [isLoading, setIsLoading] = useState(false);
+
+  const pagos: Pago[] = [
+    {
+      id: '1',
+      miembro: 'Ana García',
+      email: 'ana@email.com',
+      membresia: 'Premium',
+      monto: 99.99,
+      fecha: '2024-01-15',
+      estado: 'completado',
+      metodo: 'tarjeta'
+    },
+    {
+      id: '2',
+      miembro: 'Carlos López',
+      email: 'carlos@email.com',
+      membresia: 'Oro',
+      monto: 79.99,
+      fecha: '2024-01-14',
+      estado: 'pendiente',
+      metodo: 'paypal'
+    },
+    {
+      id: '3',
+      miembro: 'María Rodríguez',
+      email: 'maria@email.com',
+      membresia: 'Plata',
+      monto: 49.99,
+      fecha: '2024-01-13',
+      estado: 'completado',
+      metodo: 'transferencia'
+    },
+    {
+      id: '4',
+      miembro: 'Juan Pérez',
+      email: 'juan@email.com',
+      membresia: 'Bronce',
+      monto: 29.99,
+      fecha: '2024-01-12',
+      estado: 'fallido',
+      metodo: 'tarjeta'
+    },
+    {
+      id: '5',
+      miembro: 'Laura Martín',
+      email: 'laura@email.com',
+      membresia: 'Premium',
+      monto: 99.99,
+      fecha: '2024-01-11',
+      estado: 'reembolsado',
+      metodo: 'paypal'
+    }
+  ];
+
+  const getEstadoColor = (estado: string) => {
+    switch (estado) {
+      case 'completado': return 'from-green-500 to-emerald-500';
+      case 'pendiente': return 'from-yellow-500 to-orange-500';
+      case 'fallido': return 'from-red-500 to-pink-500';
+      case 'reembolsado': return 'from-blue-500 to-indigo-500';
+      default: return 'from-gray-500 to-gray-600';
+    }
+  };
+
+  const getEstadoIcon = (estado: string) => {
+    switch (estado) {
+      case 'completado': return <CheckCircle className="w-4 h-4" />;
+      case 'pendiente': return <Clock className="w-4 h-4" />;
+      case 'fallido': return <AlertCircle className="w-4 h-4" />;
+      case 'reembolsado': return <DollarSign className="w-4 h-4" />;
+      default: return <Clock className="w-4 h-4" />;
+    }
+  };
+
+  const getMetodoIcon = (metodo: string) => {
+    switch (metodo) {
+      case 'tarjeta': return <CreditCard className="w-4 h-4" />;
+      case 'paypal': return <DollarSign className="w-4 h-4" />;
+      case 'transferencia': return <TrendingUp className="w-4 h-4" />;
+      default: return <CreditCard className="w-4 h-4" />;
+    }
+  };
+
+  const pagosFiltrados = pagos.filter(pago => {
+    const estadoMatch = filtroEstado === 'todos' || pago.estado === filtroEstado;
+    const membresiaMatch = filtroMembresia === 'todos' || pago.membresia.toLowerCase() === filtroMembresia;
+    return estadoMatch && membresiaMatch;
+  });
+
+  const estadisticas = {
+    totalIngresos: pagos.filter(p => p.estado === 'completado').reduce((sum, p) => sum + p.monto, 0),
+    pagosCompletados: pagos.filter(p => p.estado === 'completado').length,
+    pagosPendientes: pagos.filter(p => p.estado === 'pendiente').length,
+    tasaConversion: 87.5
+  };
+
+  // Funciones para manejar acciones
+  const handleExportar = async () => {
+    setIsLoading(true);
+    try {
+      // Simular exportación
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Crear CSV
+      const csvContent = [
+        ['ID', 'Miembro', 'Email', 'Membresía', 'Monto', 'Fecha', 'Estado', 'Método'],
+        ...pagosFiltrados.map(pago => [
+          pago.id,
+          pago.miembro,
+          pago.email,
+          pago.membresia,
+          pago.monto.toString(),
+          pago.fecha,
+          pago.estado,
+          pago.metodo
+        ])
+      ].map(row => row.join(',')).join('\n');
+
+      // Descargar archivo
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `pagos-membresias-${new Date().toISOString().split('T')[0]}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+
+      toast.success('Datos exportados exitosamente');
+    } catch (error) {
+      toast.error('Error al exportar los datos');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleVerDetalle = (pago: Pago) => {
+    setModalDetallePago({ isOpen: true, pago });
+  };
+
+  const handleAcciones = (pago: Pago) => {
+    setModalAcciones({ isOpen: true, pago });
+  };
+
+  const handleAccionPago = (action: string, pago: Pago) => {
+    setModalAcciones({ isOpen: false, pago: null });
+    setModalConfirmacion({ isOpen: true, action, pago });
+  };
+
+  const confirmarAccion = async () => {
+    if (!modalConfirmacion.pago) return;
+    
+    setIsLoading(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      switch (modalConfirmacion.action) {
+        case 'reembolsar':
+          toast.success(`Reembolso procesado para ${modalConfirmacion.pago.miembro}`);
+          break;
+        case 'marcar_pagado':
+          toast.success(`Pago marcado como completado para ${modalConfirmacion.pago.miembro}`);
+          break;
+        case 'reenviar_factura':
+          toast.success(`Factura reenviada a ${modalConfirmacion.pago.email}`);
+          break;
+        case 'eliminar':
+          toast.success(`Pago eliminado exitosamente`);
+          break;
+        default:
+          toast.success('Acción completada exitosamente');
+      }
+    } catch (error) {
+      toast.error('Error al procesar la acción');
+    } finally {
+      setIsLoading(false);
+      setModalConfirmacion({ isOpen: false, action: '', pago: null });
+    }
+  };
+
+  const getAccionTexto = (action: string) => {
+    switch (action) {
+      case 'reembolsar': return 'Procesar Reembolso';
+      case 'marcar_pagado': return 'Marcar como Pagado';
+      case 'reenviar_factura': return 'Reenviar Factura';
+      case 'eliminar': return 'Eliminar Pago';
+      default: return 'Confirmar Acción';
+    }
+  };
+
+  const getAccionMensaje = (action: string, pago: Pago) => {
+    switch (action) {
+      case 'reembolsar': 
+        return `¿Estás seguro de que deseas procesar el reembolso de $${pago.monto.toFixed(2)} para ${pago.miembro}?`;
+      case 'marcar_pagado': 
+        return `¿Marcar el pago de $${pago.monto.toFixed(2)} de ${pago.miembro} como completado?`;
+      case 'reenviar_factura': 
+        return `¿Reenviar la factura a ${pago.email}?`;
+      case 'eliminar': 
+        return `¿Eliminar permanentemente el registro de pago de ${pago.miembro}? Esta acción no se puede deshacer.`;
+      default: 
+        return '¿Confirmar esta acción?';
+    }
+  };
+
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Pagos de Membresía</h1>
-      {/* Aquí se integrarían los componentes del dashboard */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 pb-12">
+      {/* Hero Section */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="relative overflow-hidden bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-3xl shadow-2xl mb-8 p-8 md:p-12"
+      >
+        {/* Efectos de fondo animados */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        </div>
+
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '50px 50px'
+          }}></div>
+        </div>
+
+        <div className="relative z-10">
+          {/* Título con icono animado */}
+          <div className="flex items-center gap-3 mb-4">
+            <div className="relative">
+              <DollarSign className="w-10 h-10 text-yellow-300 animate-pulse" />
+              <div className="absolute inset-0 w-10 h-10 bg-yellow-300 rounded-full blur-lg opacity-50"></div>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
+              Gestión de <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-yellow-400">Pagos</span>
+            </h1>
+          </div>
+
+          {/* Descripción */}
+          <p className="text-xl md:text-2xl text-blue-100 max-w-3xl leading-relaxed">
+            Supervisa y administra todos los <span className="font-bold text-white px-2 py-1 bg-white/20 rounded-lg backdrop-blur-sm">pagos de membresías</span> en tiempo real
+          </p>
+        </div>
+      </motion.div>
+
+      <div className="container mx-auto px-4">
+        {/* Estadísticas */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.5 }}
+            whileHover={{ scale: 1.03, y: -8 }}
+            className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
+          >
+            <div className="relative z-10">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <DollarSign className="w-8 h-8" />
+              </div>
+              <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">Ingresos Totales</p>
+              <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700">
+                ${estadisticas.totalIngresos.toFixed(2)}
+              </p>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            whileHover={{ scale: 1.03, y: -8 }}
+            className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
+          >
+            <div className="relative z-10">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <CheckCircle className="w-8 h-8" />
+              </div>
+              <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">Completados</p>
+              <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700">
+                {estadisticas.pagosCompletados}
+              </p>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            whileHover={{ scale: 1.03, y: -8 }}
+            className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
+          >
+            <div className="relative z-10">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <Clock className="w-8 h-8" />
+              </div>
+              <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">Pendientes</p>
+              <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700">
+                {estadisticas.pagosPendientes}
+              </p>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+            whileHover={{ scale: 1.03, y: -8 }}
+            className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
+          >
+            <div className="relative z-10">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <TrendingUp className="w-8 h-8" />
+              </div>
+              <p className="text-sm font-semibold text-gray-600 mb-2 tracking-wide uppercase">Conversión</p>
+              <p className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700">
+                {estadisticas.tasaConversion}%
+              </p>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Filtros y controles */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.6 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 mb-8 border border-white/50"
+        >
+          <div className="flex flex-wrap gap-4 items-center">
+            <div className="flex items-center gap-2">
+              <Filter className="w-5 h-5 text-gray-600" />
+              <span className="text-sm font-semibold text-gray-600">Filtros:</span>
+            </div>
+            <select 
+              value={filtroEstado} 
+              onChange={(e) => setFiltroEstado(e.target.value)}
+              className="px-3 py-2 rounded-xl border-2 border-gray-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 transition-all duration-300 outline-none bg-white/80 backdrop-blur-sm"
+            >
+              <option value="todos">Todos los estados</option>
+              <option value="completado">Completado</option>
+              <option value="pendiente">Pendiente</option>
+              <option value="fallido">Fallido</option>
+              <option value="reembolsado">Reembolsado</option>
+            </select>
+            <select 
+              value={filtroMembresia} 
+              onChange={(e) => setFiltroMembresia(e.target.value)}
+              className="px-3 py-2 rounded-xl border-2 border-gray-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 transition-all duration-300 outline-none bg-white/80 backdrop-blur-sm"
+            >
+              <option value="todos">Todas las membresías</option>
+              <option value="bronce">Bronce</option>
+              <option value="plata">Plata</option>
+              <option value="oro">Oro</option>
+              <option value="premium">Premium</option>
+            </select>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleExportar}
+              disabled={isLoading}
+              className="ml-auto px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? (
+                <RefreshCw className="w-4 h-4 animate-spin" />
+              ) : (
+                <Download className="w-4 h-4" />
+              )}
+              {isLoading ? 'Exportando...' : 'Exportar'}
+            </motion.button>
+          </div>
+        </motion.div>
+
+        {/* Lista de Pagos */}
+        <div className="space-y-4">
+          {pagosFiltrados.map((pago, index) => (
+            <motion.div
+              key={pago.id}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.05, duration: 0.4 }}
+              className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 border border-white/50 relative overflow-hidden group"
+            >
+              {/* Shimmer effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-30 transform -skew-x-12 group-hover:translate-x-full transition-all duration-1000"></div>
+
+              {/* Decoración de fondo */}
+              <div className={`absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br ${getEstadoColor(pago.estado)} opacity-5 rounded-full blur-2xl`}></div>
+
+              <div className="relative z-10 flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  {/* Avatar */}
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-xl group-hover:scale-110 transition-transform duration-300">
+                    {pago.miembro.charAt(0)}
+                  </div>
+
+                  {/* Información del pago */}
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-xl font-bold text-gray-900">{pago.miembro}</h3>
+                      <div className={`px-3 py-1 bg-gradient-to-r ${getEstadoColor(pago.estado)} text-white text-xs font-bold rounded-full flex items-center gap-1`}>
+                        {getEstadoIcon(pago.estado)}
+                        {pago.estado.toUpperCase()}
+                      </div>
+                    </div>
+                    <p className="text-gray-600 mb-1">{pago.email}</p>
+                    <div className="flex items-center gap-4 text-sm text-gray-500">
+                      <span className="flex items-center gap-1">
+                        <Calendar className="w-4 h-4" />
+                        {pago.fecha}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        {getMetodoIcon(pago.metodo)}
+                        {pago.metodo}
+                      </span>
+                      <span className="font-semibold text-gray-700">{pago.membresia}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Monto y acciones */}
+                <div className="flex items-center gap-4">
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-gray-900">${pago.monto.toFixed(2)}</p>
+                    <p className="text-sm text-gray-500">USD</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => handleVerDetalle(pago)}
+                      className="p-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-colors duration-300"
+                      title="Ver detalles del pago"
+                    >
+                      <Eye className="w-4 h-4" />
+                    </motion.button>
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => handleAcciones(pago)}
+                      className="p-2 text-gray-600 hover:bg-gray-50 rounded-xl transition-colors duration-300"
+                      title="Más opciones"
+                    >
+                      <MoreVertical className="w-4 h-4" />
+                    </motion.button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Modal de Detalle del Pago */}
+      <Modal
+        isOpen={modalDetallePago.isOpen}
+        onClose={() => setModalDetallePago({ isOpen: false, pago: null })}
+        title="Detalles del Pago"
+        size="lg"
+      >
+        {modalDetallePago.pago && (
+          <div className="space-y-6">
+            {/* Información del miembro */}
+            <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-6">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl">
+                  {modalDetallePago.pago.miembro.charAt(0)}
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900">{modalDetallePago.pago.miembro}</h3>
+                  <p className="text-gray-600">{modalDetallePago.pago.email}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Detalles del pago */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <div className="bg-white rounded-xl p-4 border border-gray-200">
+                  <h4 className="font-semibold text-gray-700 mb-2">Información del Pago</h4>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">ID:</span>
+                      <span className="font-mono text-sm">{modalDetallePago.pago.id}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Monto:</span>
+                      <span className="font-bold text-lg">${modalDetallePago.pago.monto.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Fecha:</span>
+                      <span>{modalDetallePago.pago.fecha}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Método:</span>
+                      <span className="capitalize">{modalDetallePago.pago.metodo}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="bg-white rounded-xl p-4 border border-gray-200">
+                  <h4 className="font-semibold text-gray-700 mb-2">Estado y Membresía</h4>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-600">Estado:</span>
+                      <div className={`px-3 py-1 bg-gradient-to-r ${getEstadoColor(modalDetallePago.pago.estado)} text-white text-xs font-bold rounded-full flex items-center gap-1`}>
+                        {getEstadoIcon(modalDetallePago.pago.estado)}
+                        {modalDetallePago.pago.estado.toUpperCase()}
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Membresía:</span>
+                      <span className="font-semibold">{modalDetallePago.pago.membresia}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Acciones rápidas */}
+            <div className="bg-gray-50 rounded-xl p-4">
+              <h4 className="font-semibold text-gray-700 mb-3">Acciones Rápidas</h4>
+              <div className="flex gap-2 flex-wrap">
+                <button
+                  onClick={() => {
+                    if (modalDetallePago.pago) {
+                      setModalDetallePago({ isOpen: false, pago: null });
+                      handleAccionPago('reenviar_factura', modalDetallePago.pago);
+                    }
+                  }}
+                  className="px-3 py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors flex items-center gap-1"
+                >
+                  <Send className="w-4 h-4" />
+                  Reenviar Factura
+                </button>
+                <button
+                  onClick={() => {
+                    if (modalDetallePago.pago) {
+                      setModalDetallePago({ isOpen: false, pago: null });
+                      handleAccionPago('marcar_pagado', modalDetallePago.pago);
+                    }
+                  }}
+                  className="px-3 py-2 bg-green-500 text-white rounded-lg text-sm hover:bg-green-600 transition-colors flex items-center gap-1"
+                >
+                  <CheckCircle className="w-4 h-4" />
+                  Marcar como Pagado
+                </button>
+                <button
+                  onClick={() => {
+                    if (modalDetallePago.pago) {
+                      setModalDetallePago({ isOpen: false, pago: null });
+                      handleAccionPago('reembolsar', modalDetallePago.pago);
+                    }
+                  }}
+                  className="px-3 py-2 bg-orange-500 text-white rounded-lg text-sm hover:bg-orange-600 transition-colors flex items-center gap-1"
+                >
+                  <RefreshCw className="w-4 h-4" />
+                  Procesar Reembolso
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </Modal>
+
+      {/* Modal de Acciones */}
+      <Modal
+        isOpen={modalAcciones.isOpen}
+        onClose={() => setModalAcciones({ isOpen: false, pago: null })}
+        title="Acciones Disponibles"
+        size="md"
+      >
+        {modalAcciones.pago && (
+          <div className="space-y-4">
+            <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-4 mb-6">
+              <h3 className="font-bold text-gray-900">{modalAcciones.pago.miembro}</h3>
+              <p className="text-gray-600">${modalAcciones.pago.monto.toFixed(2)} - {modalAcciones.pago.membresia}</p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-3">
+              <button
+                onClick={() => handleAccionPago('reenviar_factura', modalAcciones.pago!)}
+                className="flex items-center gap-3 p-4 bg-blue-50 hover:bg-blue-100 rounded-xl transition-colors text-left"
+              >
+                <Send className="w-5 h-5 text-blue-600" />
+                <div>
+                  <p className="font-semibold text-gray-900">Reenviar Factura</p>
+                  <p className="text-sm text-gray-600">Enviar factura por email</p>
+                </div>
+              </button>
+
+              <button
+                onClick={() => handleAccionPago('marcar_pagado', modalAcciones.pago!)}
+                className="flex items-center gap-3 p-4 bg-green-50 hover:bg-green-100 rounded-xl transition-colors text-left"
+              >
+                <CheckCircle className="w-5 h-5 text-green-600" />
+                <div>
+                  <p className="font-semibold text-gray-900">Marcar como Pagado</p>
+                  <p className="text-sm text-gray-600">Confirmar pago recibido</p>
+                </div>
+              </button>
+
+              <button
+                onClick={() => handleAccionPago('reembolsar', modalAcciones.pago!)}
+                className="flex items-center gap-3 p-4 bg-orange-50 hover:bg-orange-100 rounded-xl transition-colors text-left"
+              >
+                <RefreshCw className="w-5 h-5 text-orange-600" />
+                <div>
+                  <p className="font-semibold text-gray-900">Procesar Reembolso</p>
+                  <p className="text-sm text-gray-600">Devolver el pago al cliente</p>
+                </div>
+              </button>
+
+              <button
+                onClick={() => handleAccionPago('eliminar', modalAcciones.pago!)}
+                className="flex items-center gap-3 p-4 bg-red-50 hover:bg-red-100 rounded-xl transition-colors text-left"
+              >
+                <Trash2 className="w-5 h-5 text-red-600" />
+                <div>
+                  <p className="font-semibold text-gray-900">Eliminar Pago</p>
+                  <p className="text-sm text-gray-600">Eliminar registro permanentemente</p>
+                </div>
+              </button>
+            </div>
+          </div>
+        )}
+      </Modal>
+
+      {/* Modal de Confirmación */}
+      <ConfirmationModal
+        isOpen={modalConfirmacion.isOpen}
+        onClose={() => setModalConfirmacion({ isOpen: false, action: '', pago: null })}
+        onConfirm={confirmarAccion}
+        title={getAccionTexto(modalConfirmacion.action)}
+        message={modalConfirmacion.pago ? getAccionMensaje(modalConfirmacion.action, modalConfirmacion.pago) : ''}
+        confirmText={getAccionTexto(modalConfirmacion.action)}
+        type={modalConfirmacion.action === 'eliminar' ? 'danger' : 'warning'}
+        isLoading={isLoading}
+      />
     </div>
   );
 };

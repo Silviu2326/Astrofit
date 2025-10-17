@@ -5,38 +5,19 @@ import { getArticuloById, Articulo } from '../blogNoticiasApi';
 const ArticuloCompleto: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [articulo, setArticulo] = useState<Articulo | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchArticulo = async () => {
       if (id) {
-        try {
-          setLoading(true);
-          setError(null);
-          const response = await getArticuloById(id);
-          setArticulo(response.data || null);
-        } catch (err) {
-          setError('Error al cargar el artículo');
-          console.error('Error fetching article:', err);
-        } finally {
-          setLoading(false);
-        }
+        const data = await getArticuloById(id);
+        setArticulo(data || null);
       }
     };
     fetchArticulo();
   }, [id]);
 
-  if (loading) {
-    return <div className='text-center p-4'>Cargando artículo...</div>;
-  }
-
-  if (error) {
-    return <div className='text-red-500 text-center p-4'>Error: {error}</div>;
-  }
-
   if (!articulo) {
-    return <div className='text-gray-500 text-center p-4'>Artículo no encontrado</div>;
+    return <div className="text-center text-gray-500">Cargando artículo o artículo no encontrado...</div>;
   }
 
   return (

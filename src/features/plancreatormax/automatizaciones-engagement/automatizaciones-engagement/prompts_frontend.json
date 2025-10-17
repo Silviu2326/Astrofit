@@ -1,0 +1,261 @@
+{
+  "meta": {
+    "module": "automatizaciones-engagement",
+    "side": "frontend",
+    "run_id": "2024-01-15T10:00:00Z",
+    "base_path": "/api/automatizaciones-engagement"
+  },
+  "prompts": [
+    {
+      "id": "P1",
+      "order": 1,
+      "title": "Crear tipos TypeScript para DTOs del módulo",
+      "files_hint": [
+        "src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/types/FlujoRetencion.ts",
+        "src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/types/MensajePersonalizado.ts",
+        "src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/types/ClienteInactivo.ts",
+        "src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/types/index.ts"
+      ],
+      "preconditions": [
+        "Directorio types/ no existe en el módulo",
+        "BASE_PATH definido como /api/automatizaciones-engagement"
+      ],
+      "content": "Actúa como editor multi-archivo. 1) Crea el directorio src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/types/. 2) Crea FlujoRetencion.ts con interfaces: CreateFlujoRequest, FlowNode, FlowEdge, FlujoResponse, FlujoMetrics, TriggerConfig, ActionConfig, ABTestRequest, ABTestResponse. 3) Crea MensajePersonalizado.ts con interfaces: CreateMensajeRequest, MensajeResponse, UpdateMensajeRequest. 4) Crea ClienteInactivo.ts con interfaces: ReactivationActionRequest, InactiveClientResponse, ClientMetrics, ActionResponse. 5) Crea index.ts que exporte todas las interfaces. 6) Añade documentación JSDoc a cada interfaz. 7) Muestra diffs de cada archivo creado y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "types/FlujoRetencion.ts creado con interfaces completas",
+        "types/MensajePersonalizado.ts creado con interfaces completas", 
+        "types/ClienteInactivo.ts creado con interfaces completas",
+        "types/index.ts creado exportando todas las interfaces"
+      ],
+      "acceptance_criteria": [
+        "Todas las interfaces están exportables desde types/index.ts",
+        "Cada interfaz tiene documentación JSDoc completa",
+        "Los tipos coinciden exactamente con los DTOs del MD de interconexión",
+        "No hay errores de TypeScript en los archivos creados"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Eliminar directorio types/ completo si falla cualquier criterio."
+    },
+    {
+      "id": "P2", 
+      "order": 2,
+      "title": "Implementar API de Flujos de Retención con baseURL y auth",
+      "files_hint": [
+        "src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/flujos-retencion/flujosRetencionApi.ts"
+      ],
+      "preconditions": [
+        "Existe flujosRetencionApi.ts con funciones básicas",
+        "BASE_PATH definido como /api/automatizaciones-engagement",
+        "Tipos TypeScript creados en P1"
+      ],
+      "content": "Actúa como editor. Abre src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/flujos-retencion/flujosRetencionApi.ts. 1) Importa tipos desde ../types. 2) Reemplaza const API_BASE_URL = '/api/retencion-flujos' por const API_BASE_URL = `${import.meta.env.VITE_API_URL}/automatizaciones-engagement/flujos-retencion`. 3) Agrega función getAuthHeaders() que retorne { Authorization: `Bearer ${localStorage.getItem('token')}` }. 4) Modifica todas las funciones para usar getAuthHeaders() en las peticiones. 5) Implementa manejo de errores consistente: mapea 4xx a Error con mensaje, 5xx a Error genérico. 6) Agrega funciones faltantes: getFlujoById(id), updateFlujo(id, data), deleteFlujo(id), getFlujoMetrics(id), startABTest(id, config). 7) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "flujosRetencionApi.ts: imports de tipos agregados",
+        "flujosRetencionApi.ts: API_BASE_URL actualizado a base path correcto",
+        "flujosRetencionApi.ts: getAuthHeaders() implementada",
+        "flujosRetencionApi.ts: manejo de errores 4xx/5xx agregado",
+        "flujosRetencionApi.ts: funciones CRUD completas implementadas"
+      ],
+      "acceptance_criteria": [
+        "Todas las funciones usan baseURL desde VITE_API_URL",
+        "Headers de autenticación se agregan automáticamente",
+        "Errores 4xx/5xx se mapean correctamente a Error con mensaje",
+        "No quedan URLs hardcodeadas en el archivo",
+        "Todas las funciones tienen tipado TypeScript correcto"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en flujosRetencionApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P3",
+      "order": 3, 
+      "title": "Completar API de Mensajes Personalizados reemplazando mocks",
+      "files_hint": [
+        "src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/mensajes-personalizados/mensajesPersonalizadosApi.ts"
+      ],
+      "preconditions": [
+        "Existe mensajesPersonalizadosApi.ts con mocks básicos",
+        "Tipos TypeScript creados en P1",
+        "BASE_PATH definido como /api/automatizaciones-engagement"
+      ],
+      "content": "Actúa como editor. Abre src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/mensajes-personalizados/mensajesPersonalizadosApi.ts. 1) Importa tipos desde ../types. 2) Define const API_BASE_URL = `${import.meta.env.VITE_API_URL}/automatizaciones-engagement/mensajes-personalizados`. 3) Agrega función getAuthHeaders() que retorne { Authorization: `Bearer ${localStorage.getItem('token')}` }. 4) Reemplaza getMensajes() mock por llamada real GET con headers auth. 5) Reemplaza createMensaje() mock por llamada real POST con headers auth. 6) Agrega funciones: getMensajeById(id), updateMensaje(id, data), deleteMensaje(id), getMensajesByChannel(channel), getMensajesBySegment(segment). 7) Implementa manejo de errores 4xx/5xx consistente. 8) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "mensajesPersonalizadosApi.ts: imports de tipos agregados",
+        "mensajesPersonalizadosApi.ts: API_BASE_URL definido correctamente",
+        "mensajesPersonalizadosApi.ts: getAuthHeaders() implementada",
+        "mensajesPersonalizadosApi.ts: mocks reemplazados por llamadas reales",
+        "mensajesPersonalizadosApi.ts: CRUD completo implementado",
+        "mensajesPersonalizadosApi.ts: manejo de errores agregado"
+      ],
+      "acceptance_criteria": [
+        "getMensajes() hace llamada real a GET /api/automatizaciones-engagement/mensajes-personalizados",
+        "createMensaje() hace llamada real a POST con datos del mensaje",
+        "Todas las funciones CRUD están implementadas",
+        "Headers de autenticación se agregan en todas las peticiones",
+        "Manejo de errores 4xx/5xx es consistente",
+        "No quedan mocks o return [] en el archivo"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en mensajesPersonalizadosApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P4",
+      "order": 4,
+      "title": "Mejorar API de Reactivación de Clientes con funciones faltantes",
+      "files_hint": [
+        "src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/reactivacion-clientes/reactivacionClientesApi.ts"
+      ],
+      "preconditions": [
+        "Existe reactivacionClientesApi.ts con funciones básicas",
+        "Tipos TypeScript creados en P1",
+        "BASE_PATH definido como /api/automatizaciones-engagement"
+      ],
+      "content": "Actúa como editor. Abre src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/reactivacion-clientes/reactivacionClientesApi.ts. 1) Importa tipos desde ../types. 2) Actualiza const API_BASE_URL = `${import.meta.env.VITE_API_URL}/automatizaciones-engagement/reactivacion-clientes`. 3) Agrega función getAuthHeaders() que retorne { Authorization: `Bearer ${localStorage.getItem('token')}` }. 4) Modifica funciones existentes para usar getAuthHeaders(). 5) Agrega funciones faltantes: getClientMetrics(clientId), updateClientStatus(clientId, status), getReactivationHistory(clientId), getReactivationSuggestions(). 6) Implementa manejo de errores 4xx/5xx consistente en todas las funciones. 7) Agrega documentación JSDoc a cada función. 8) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "reactivacionClientesApi.ts: imports de tipos agregados",
+        "reactivacionClientesApi.ts: API_BASE_URL actualizado",
+        "reactivacionClientesApi.ts: getAuthHeaders() implementada",
+        "reactivacionClientesApi.ts: funciones existentes actualizadas con auth",
+        "reactivacionClientesApi.ts: nuevas funciones agregadas",
+        "reactivacionClientesApi.ts: manejo de errores mejorado",
+        "reactivacionClientesApi.ts: documentación JSDoc agregada"
+      ],
+      "acceptance_criteria": [
+        "Todas las funciones usan headers de autenticación",
+        "getClientMetrics() está implementada y tipada correctamente",
+        "updateClientStatus() está implementada y tipada correctamente", 
+        "getReactivationHistory() está implementada y tipada correctamente",
+        "Manejo de errores es consistente en todas las funciones",
+        "Cada función tiene documentación JSDoc completa"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en reactivacionClientesApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P5",
+      "order": 5,
+      "title": "Integrar servicios en FlujosRetencionPage con estados UI",
+      "files_hint": [
+        "src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/flujos-retencion/FlujosRetencionPage.tsx"
+      ],
+      "preconditions": [
+        "Existe FlujosRetencionPage.tsx con UI completa",
+        "flujosRetencionApi.ts actualizado en P2",
+        "Tipos TypeScript creados en P1"
+      ],
+      "content": "Actúa como editor. Abre src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/flujos-retencion/FlujosRetencionPage.tsx. 1) Importa flujosRetencionApi desde ./flujosRetencionApi. 2) Importa tipos desde ../types. 3) Agrega estados: const [flujos, setFlujos] = useState<FlujoResponse[]>([]), const [loading, setLoading] = useState(false), const [error, setError] = useState<string | null>(null). 4) Crea useEffect que llame a flujosRetencionApi.getFlujos() al montar el componente, manejando loading/error. 5) Modifica handleViewMetrics para usar flujosRetencionApi.getMetrics(flujoId) real. 6) Modifica handleConfirmRunTest para usar flujosRetencionApi.startABTest() real. 7) Agrega render condicional: mostrar spinner cuando loading, mensaje de error cuando error, lista de flujos cuando data. 8) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "FlujosRetencionPage.tsx: imports de API y tipos agregados",
+        "FlujosRetencionPage.tsx: estados loading/error/data agregados",
+        "FlujosRetencionPage.tsx: useEffect para cargar flujos implementado",
+        "FlujosRetencionPage.tsx: funciones de métricas conectadas a API real",
+        "FlujosRetencionPage.tsx: render condicional para estados UI agregado"
+      ],
+      "acceptance_criteria": [
+        "Al cargar la página se muestra loading y desaparece con datos reales",
+        "Si la API falla, se muestra mensaje de error descriptivo",
+        "handleViewMetrics() usa API real y muestra métricas correctas",
+        "handleConfirmRunTest() usa API real para A/B testing",
+        "No quedan datos mock o hardcodeados en la página"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en FlujosRetencionPage.tsx si falla cualquier criterio."
+    },
+    {
+      "id": "P6",
+      "order": 6,
+      "title": "Integrar servicios en MensajesPersonalizadosPage con estados UI",
+      "files_hint": [
+        "src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/mensajes-personalizados/MensajesPersonalizadosPage.tsx"
+      ],
+      "preconditions": [
+        "Existe MensajesPersonalizadosPage.tsx con UI completa",
+        "mensajesPersonalizadosApi.ts actualizado en P3",
+        "Tipos TypeScript creados en P1"
+      ],
+      "content": "Actúa como editor. Abre src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/mensajes-personalizados/MensajesPersonalizadosPage.tsx. 1) Importa mensajesPersonalizadosApi desde ./mensajesPersonalizadosApi. 2) Importa tipos desde ../types. 3) Reemplaza useState de templates por: const [mensajes, setMensajes] = useState<MensajeResponse[]>([]), const [loading, setLoading] = useState(false), const [error, setError] = useState<string | null>(null). 4) Crea useEffect que llame a mensajesPersonalizadosApi.getMensajes() al montar, manejando loading/error. 5) Modifica saveCreateTemplate para usar mensajesPersonalizadosApi.createMensaje() real. 6) Modifica saveEditTemplate para usar mensajesPersonalizadosApi.updateMensaje() real. 7) Agrega función deleteMensaje que use mensajesPersonalizadosApi.deleteMensaje() real. 8) Agrega render condicional: loading spinner, error banner, lista de mensajes. 9) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "MensajesPersonalizadosPage.tsx: imports de API y tipos agregados",
+        "MensajesPersonalizadosPage.tsx: estados actualizados para usar API real",
+        "MensajesPersonalizadosPage.tsx: useEffect para cargar mensajes implementado",
+        "MensajesPersonalizadosPage.tsx: funciones CRUD conectadas a API real",
+        "MensajesPersonalizadosPage.tsx: render condicional para estados UI agregado"
+      ],
+      "acceptance_criteria": [
+        "Al cargar la página se muestran mensajes reales desde la API",
+        "Crear mensaje funciona con API real y actualiza la lista",
+        "Editar mensaje funciona con API real y actualiza la lista",
+        "Eliminar mensaje funciona con API real y actualiza la lista",
+        "Estados de loading/error se manejan correctamente",
+        "No quedan datos mock en la página"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en MensajesPersonalizadosPage.tsx si falla cualquier criterio."
+    },
+    {
+      "id": "P7",
+      "order": 7,
+      "title": "Integrar servicios en ReactivacionClientesPage con estados UI",
+      "files_hint": [
+        "src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/reactivacion-clientes/ReactivacionClientesPage.tsx"
+      ],
+      "preconditions": [
+        "Existe ReactivacionClientesPage.tsx con UI completa",
+        "reactivacionClientesApi.ts actualizado en P4",
+        "Tipos TypeScript creados en P1"
+      ],
+      "content": "Actúa como editor. Abre src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/reactivacion-clientes/ReactivacionClientesPage.tsx. 1) Importa reactivacionClientesApi desde ./reactivacionClientesApi. 2) Importa tipos desde ../types. 3) Reemplaza useState de inactiveClients por: const [clientes, setClientes] = useState<InactiveClientResponse[]>([]), const [loading, setLoading] = useState(false), const [error, setError] = useState<string | null>(null). 4) Crea useEffect que llame a reactivacionClientesApi.getInactiveClients() al montar, manejando loading/error. 5) Modifica handleRefresh para usar API real. 6) Modifica confirmExecuteAction para usar reactivacionClientesApi.executeReactivationAction() real. 7) Agrega función para cargar métricas de clientes usando reactivacionClientesApi.getClientMetrics(). 8) Agrega render condicional: loading spinner, error banner, lista de clientes. 9) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "ReactivacionClientesPage.tsx: imports de API y tipos agregados",
+        "ReactivacionClientesPage.tsx: estados actualizados para usar API real",
+        "ReactivacionClientesPage.tsx: useEffect para cargar clientes implementado",
+        "ReactivacionClientesPage.tsx: funciones de reactivación conectadas a API real",
+        "ReactivacionClientesPage.tsx: render condicional para estados UI agregado"
+      ],
+      "acceptance_criteria": [
+        "Al cargar la página se muestran clientes inactivos reales desde la API",
+        "handleRefresh() actualiza la lista con datos reales",
+        "confirmExecuteAction() ejecuta acciones reales de reactivación",
+        "Métricas de clientes se cargan correctamente",
+        "Estados de loading/error se manejan correctamente",
+        "No quedan datos mock en la página"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en ReactivacionClientesPage.tsx si falla cualquier criterio."
+    },
+    {
+      "id": "P8",
+      "order": 8,
+      "title": "Pruebas de integración y validación del módulo completo",
+      "files_hint": [
+        "src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/**/*.ts",
+        "src/features/plancreatormax/automatizaciones-engagement/automatizaciones-engagement/**/*.tsx"
+      ],
+      "preconditions": [
+        "Todos los servicios API implementados (P2, P3, P4)",
+        "Todas las páginas integradas con APIs reales (P5, P6, P7)",
+        "Tipos TypeScript creados (P1)",
+        "BASE_PATH configurado como /api/automatizaciones-engagement"
+      ],
+      "content": "Actúa como validador. 1) Verifica que todas las páginas del módulo se cargan sin errores de TypeScript. 2) Prueba que las llamadas a API usan el BASE_PATH correcto (/api/automatizaciones-engagement). 3) Verifica que los headers de autenticación se agregan correctamente. 4) Confirma que el manejo de errores 4xx/5xx funciona en todas las páginas. 5) Prueba que los estados de loading/error/empty se muestran correctamente. 6) Verifica que no quedan mocks, datos hardcodeados o URLs incorrectas. 7) Confirma que todas las funciones CRUD están implementadas y tipadas. 8) Documenta cualquier problema encontrado y su solución. 9) Muestra resumen de validación y espera confirmación.",
+      "expected_changes": [
+        "Validación completa del módulo automatizaciones-engagement",
+        "Verificación de integración FE-BE",
+        "Confirmación de estados UI correctos",
+        "Documentación de problemas encontrados"
+      ],
+      "acceptance_criteria": [
+        "Todas las páginas se cargan sin errores de TypeScript",
+        "Todas las llamadas API usan BASE_PATH correcto",
+        "Headers de autenticación funcionan en todas las peticiones",
+        "Manejo de errores funciona consistentemente",
+        "Estados UI (loading/error/empty) se muestran correctamente",
+        "No quedan mocks o datos hardcodeados",
+        "Todas las funciones CRUD están implementadas y funcionan"
+      ],
+      "timeout_sec": 360,
+      "rollback_plan": "Identificar y corregir problemas específicos encontrados durante la validación."
+    }
+  ]
+}
+

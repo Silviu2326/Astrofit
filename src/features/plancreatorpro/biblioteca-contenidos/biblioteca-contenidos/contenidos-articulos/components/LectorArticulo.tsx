@@ -9,7 +9,11 @@ interface LectorArticuloProps {
     attachments?: { name: string; url: string }[];
     categories: string[];
     tags: string[];
-    comments: any[]; // Assuming comments will be handled
+    comments: any[];
+    author: string;
+    publishedAt: string;
+    readTime: number;
+    views: number;
   };
 }
 

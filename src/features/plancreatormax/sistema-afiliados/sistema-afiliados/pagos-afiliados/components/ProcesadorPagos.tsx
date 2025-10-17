@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
+import { CreditCard, User, DollarSign } from 'lucide-react';
 import { pagosAfiliadosApi } from '../pagosAfiliadosApi';
 
 interface Afiliado {
@@ -13,6 +15,7 @@ const ProcesadorPagos: React.FC = () => {
   const [monto, setMonto] = useState<number>(0);
   const [metodoPagoId, setMetodoPagoId] = useState<string>('');
   const [mensaje, setMensaje] = useState<string>('');
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
   // Simulación de una lista de afiliados
   const afiliados: Afiliado[] = [
@@ -55,11 +58,12 @@ const ProcesadorPagos: React.FC = () => {
   const handleSubmitPago = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!afiliadoSeleccionado || monto <= 0 || !metodoPagoId) {
-      setMensaje('Por favor, complete todos los campos.');
+      toast.error('Por favor, completa todos los campos correctamente');
       return;
     }
 
-    setMensaje('Procesando pago...');
+    setIsProcessing(true);
+    const loadingToast = toast.loading('Procesando pago...');
     try {
       const pagoData = {
         afiliadoId: afiliadoSeleccionado.id,
@@ -69,40 +73,74 @@ const ProcesadorPagos: React.FC = () => {
         estado: 'procesado', // O 'pendiente' si requiere aprobación
       };
       await pagosAfiliadosApi.registrarPago(pagoData);
-      setMensaje('Pago procesado con éxito.');
+      toast.dismiss(loadingToast);
+      toast.success(`Pago de $${monto.toFixed(2)} procesado exitosamente para ${afiliadoSeleccionado.nombre}`);
+      
+      // Reset form
+      setAfiliadoSeleccionado(null);
+      setMonto(0);
+      setMetodoPagoId('');
+      setMensaje('');
+      
       // Aquí podrías actualizar el saldo pendiente del afiliado o recargar el historial de pagos
     } catch (error) {
-      setMensaje('Error al procesar el pago.');
+      toast.dismiss(loadingToast);
+      toast.error('Error al procesar el pago. Por favor, inténtalo de nuevo');
+      console.error('Error al procesar pago:', error);
+    } finally {
+      setIsProcessing(false);
     }
   };
 
   return (
-    <div className="bg-white shadow rounded-lg p-6">
-      <h3 className="text-xl font-semibold mb-4">Enviar Nuevo Pago</h3>
-      <form onSubmit={handleSubmitPago} className="space-y-4">
-        <div>
-          <label htmlFor="afiliado" className="block text-sm font-medium text-gray-700">Seleccionar Afiliado</label>
-          <select
-            id="afiliado"
-            name="afiliado"
-            onChange={handleAfiliadoChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            defaultValue=""
-            required
-          >
-            <option value="" disabled>Selecciona un afiliado</option>
-            {afiliados.map((afiliado) => (
-              <option key={afiliado.id} value={afiliado.id}>
-                {afiliado.nombre} (Saldo: ${afiliado.saldoPendiente.toFixed(2)})
-              </option>
-            ))}
-          </select>
+    <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/50 relative overflow-hidden">
+      {/* Decoración de fondo */}
+      <div className="absolute -right-8 -top-8 w-32 h-32 bg-gradient-to-br from-blue-200 to-purple-200 rounded-full blur-3xl opacity-20"></div>
+      
+      <div className="relative z-10 p-6">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl shadow-lg">
+            <CreditCard className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+              Procesar Pagos
+            </h3>
+            <p className="text-sm text-gray-500">Envía pagos a tus afiliados de forma segura</p>
+          </div>
         </div>
+        <div className="bg-gradient-to-r from-slate-50 to-blue-50/30 rounded-2xl p-6 border border-slate-200/50">
+          <h4 className="text-lg font-semibold text-gray-800 mb-4">Enviar Nuevo Pago</h4>
+          <form onSubmit={handleSubmitPago} className="space-y-4">
+            <div>
+              <label htmlFor="afiliado" className="block text-sm font-medium text-gray-700 mb-2">
+                <User className="inline w-4 h-4 mr-1" />
+                Seleccionar Afiliado
+              </label>
+              <select
+                id="afiliado"
+                name="afiliado"
+                onChange={handleAfiliadoChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors bg-white"
+                defaultValue=""
+                required
+              >
+                <option value="" disabled>Selecciona un afiliado</option>
+                {afiliados.map((afiliado) => (
+                  <option key={afiliado.id} value={afiliado.id}>
+                    {afiliado.nombre} (Saldo: ${afiliado.saldoPendiente.toFixed(2)})
+                  </option>
+                ))}
+              </select>
+            </div>
 
         {afiliadoSeleccionado && (
           <>
             <div>
-              <label htmlFor="monto" className="block text-sm font-medium text-gray-700">Monto a Pagar</label>
+              <label htmlFor="monto" className="block text-sm font-medium text-gray-700 mb-2">
+                <DollarSign className="inline w-4 h-4 mr-1" />
+                Monto a Pagar
+              </label>
               <input
                 type="number"
                 id="monto"
@@ -111,19 +149,22 @@ const ProcesadorPagos: React.FC = () => {
                 onChange={handleMontoChange}
                 min="0.01"
                 step="0.01"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors bg-white"
                 required
               />
             </div>
 
             <div>
-              <label htmlFor="metodoPago" className="block text-sm font-medium text-gray-700">Método de Pago</label>
+              <label htmlFor="metodoPago" className="block text-sm font-medium text-gray-700 mb-2">
+                <CreditCard className="inline w-4 h-4 mr-1" />
+                Método de Pago
+              </label>
               <select
                 id="metodoPago"
                 name="metodoPago"
                 value={metodoPagoId}
                 onChange={handleMetodoPagoChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors bg-white"
                 required
               >
                 <option value="" disabled>Selecciona un método de pago</option>
@@ -137,14 +178,22 @@ const ProcesadorPagos: React.FC = () => {
 
             <button
               type="submit"
-              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+              disabled={isProcessing}
+              className="w-full inline-flex items-center justify-center py-3 px-6 border border-transparent shadow-sm text-sm font-medium rounded-xl text-white bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
-              Procesar Pago
+              <CreditCard className={`w-4 h-4 mr-2 ${isProcessing ? 'animate-pulse' : ''}`} />
+              {isProcessing ? 'Procesando...' : 'Procesar Pago'}
             </button>
           </>
         )}
-        {mensaje && <p className="mt-4 text-sm text-center text-gray-600">{mensaje}</p>}
-      </form>
+        {mensaje && (
+          <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+            <p className="text-sm text-blue-800">{mensaje}</p>
+          </div>
+        )}
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

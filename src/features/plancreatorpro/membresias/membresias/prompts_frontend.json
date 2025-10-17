@@ -1,0 +1,316 @@
+{
+  "meta": {
+    "module": "membresias/",
+    "side": "frontend",
+    "run_id": "2024-12-19T10:30:00Z",
+    "base_path": "/api/membresias"
+  },
+  "prompts": [
+    {
+      "id": "P1",
+      "order": 1,
+      "title": "Crear tipos TypeScript para membresías",
+      "files_hint": [
+        "src/features/plancreatorpro/membresias/membresias/types/Membresia.ts"
+      ],
+      "preconditions": [
+        "Directorio types/ no existe en el módulo",
+        "BASE_PATH definido como /api/membresias"
+      ],
+      "content": "Actúa como desarrollador TypeScript. Crea el archivo src/features/plancreatorpro/membresias/membresias/types/Membresia.ts. 1) Define la interfaz Membresia con todos los campos: id, nivel ('Bronce' | 'Plata' | 'Oro' | 'Premium'), miembrosActivos, ingresosGenerados, estado ('activo' | 'pausado'), nombre, descripcion, precio, periodicidad ('mensual' | 'anual'), beneficios (string[]), testimonios (Testimonio[]), faq (FAQ[]), createdAt, updatedAt. 2) Define interfaces Testimonio { id: number, name: string, feedback: string } y FAQ { question: string, answer: string }. 3) Define DTOs: GetMembresiasResponse, CreateMembresiaRequest, UpdateMembresiaRequest, PagosResponse, PagoRecurrente, IngresoMensual, MetricasCancelacion. 4) Exporta todas las interfaces. 5) Muestra el diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "Membresia.ts creado con todas las interfaces y tipos"
+      ],
+      "acceptance_criteria": [
+        "Archivo Membresia.ts existe y contiene todas las interfaces",
+        "Interfaces Membresia, Testimonio, FAQ están definidas",
+        "DTOs de request/response están definidos",
+        "Todos los tipos están exportados correctamente"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Eliminar el archivo Membresia.ts si no cumple los criterios."
+    },
+    {
+      "id": "P2",
+      "order": 2,
+      "title": "Crear cliente HTTP centralizado con configuración",
+      "files_hint": [
+        "src/features/plancreatorpro/membresias/membresias/utils/apiClient.ts"
+      ],
+      "preconditions": [
+        "Directorio utils/ no existe en el módulo",
+        "VITE_API_URL configurado en .env"
+      ],
+      "content": "Actúa como desarrollador frontend. Crea el archivo src/features/plancreatorpro/membresias/membresias/utils/apiClient.ts. 1) Importa axios. 2) Crea instancia de axios con baseURL desde import.meta.env.VITE_API_URL. 3) Configura headers por defecto: 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` (obtener token del localStorage). 4) Agrega interceptor de request para incluir token automáticamente. 5) Agrega interceptor de response para manejar errores 4xx/5xx y mapear a errores consistentes. 6) Exporta la instancia como apiClient. 7) Muestra el diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "apiClient.ts creado con configuración de axios",
+        "Interceptores configurados para auth y errores"
+      ],
+      "acceptance_criteria": [
+        "Archivo apiClient.ts existe y exporta instancia configurada",
+        "baseURL se obtiene de VITE_API_URL",
+        "Headers de auth se configuran automáticamente",
+        "Manejo de errores está implementado",
+        "Interceptores están configurados correctamente"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Eliminar el archivo apiClient.ts si no cumple los criterios."
+    },
+    {
+      "id": "P3",
+      "order": 3,
+      "title": "Actualizar API de listado de membresías - reemplazar mocks",
+      "files_hint": [
+        "src/features/plancreatorpro/membresias/membresias/listado-membresias/listadoMembresiasApi.ts"
+      ],
+      "preconditions": [
+        "Archivo listadoMembresiasApi.ts existe con mocks",
+        "apiClient.ts está creado y configurado",
+        "Tipos Membresia están definidos"
+      ],
+      "content": "Actúa como desarrollador frontend. Abre src/features/plancreatorpro/membresias/membresias/listado-membresias/listadoMembresiasApi.ts. 1) Importa apiClient desde '../utils/apiClient'. 2) Importa tipos Membresia desde '../types/Membresia'. 3) Reemplaza mockMembresias y delay() con llamadas reales usando apiClient. 4) Implementa getMembresias(): Promise<Membresia[]> que hace GET /api/membresias. 5) Implementa createMembresia(data: CreateMembresiaRequest): Promise<Membresia> que hace POST /api/membresias. 6) Implementa updateMembresia(id: string, data: UpdateMembresiaRequest): Promise<Membresia> que hace PUT /api/membresias/:id. 7) Implementa deleteMembresia(id: string): Promise<void> que hace DELETE /api/membresias/:id. 8) Agrega manejo de errores con try/catch en cada función. 9) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "listadoMembresiasApi.ts: mocks reemplazados por llamadas reales",
+        "listadoMembresiasApi.ts: funciones CRUD implementadas",
+        "listadoMembresiasApi.ts: manejo de errores agregado"
+      ],
+      "acceptance_criteria": [
+        "No quedan mocks ni datos hardcodeados",
+        "Todas las funciones CRUD están implementadas",
+        "Manejo de errores está presente en cada función",
+        "Funciones usan apiClient para las llamadas HTTP",
+        "Tipos TypeScript están correctamente aplicados"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en listadoMembresiasApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P4",
+      "order": 4,
+      "title": "Actualizar API de página de membresía - conectar con backend",
+      "files_hint": [
+        "src/features/plancreatorpro/membresias/membresias/pagina-membresia/paginaMembresiapApi.ts"
+      ],
+      "preconditions": [
+        "Archivo paginaMembresiapApi.ts existe con mock data",
+        "apiClient.ts está creado y configurado",
+        "Tipos Membresia están definidos"
+      ],
+      "content": "Actúa como desarrollador frontend. Abre src/features/plancreatorpro/membresias/membresias/pagina-membresia/paginaMembresiapApi.ts. 1) Importa apiClient desde '../utils/apiClient'. 2) Importa tipos Membresia desde '../types/Membresia'. 3) Reemplaza el mock data en fetchMembershipDetails con llamada real GET /api/membresias/:id usando apiClient. 4) Implementa fetchMembershipDetails(id: string): Promise<Membresia> que hace GET /api/membresias/:id. 5) Agrega manejo de errores con try/catch. 6) Elimina el setTimeout y Promise mock. 7) Asegúrate de que la función retorne el tipo Membresia correcto. 8) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "paginaMembresiapApi.ts: mock data reemplazado por llamada real",
+        "paginaMembresiapApi.ts: fetchMembershipDetails implementada correctamente",
+        "paginaMembresiapApi.ts: manejo de errores agregado"
+      ],
+      "acceptance_criteria": [
+        "No queda mock data ni setTimeout",
+        "fetchMembershipDetails hace llamada real al backend",
+        "Manejo de errores está implementado",
+        "Función retorna tipo Membresia correcto",
+        "Usa apiClient para la llamada HTTP"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en paginaMembresiapApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P5",
+      "order": 5,
+      "title": "Actualizar API de beneficios de membresía - usar env variables",
+      "files_hint": [
+        "src/features/plancreatorpro/membresias/membresias/beneficios-membresia/beneficiosMembresiApi.ts"
+      ],
+      "preconditions": [
+        "Archivo beneficiosMembresiApi.ts existe con URL hardcodeada",
+        "apiClient.ts está creado y configurado",
+        "VITE_API_URL configurado en .env"
+      ],
+      "content": "Actúa como desarrollador frontend. Abre src/features/plancreatorpro/membresias/membresias/beneficios-membresia/beneficiosMembresiApi.ts. 1) Importa apiClient desde '../utils/apiClient'. 2) Reemplaza la URL hardcodeada '/api/membresias/beneficios' con construcción dinámica usando apiClient. 3) Actualiza getBeneficiosMembresia() para usar apiClient.get('/api/membresias/beneficios'). 4) Actualiza updateBeneficiosMembresia() para usar apiClient.put('/api/membresias/beneficios', data). 5) Agrega manejo de errores consistente con try/catch. 6) Elimina la importación directa de axios. 7) Asegúrate de que las funciones manejen estados de carga. 8) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "beneficiosMembresiApi.ts: URL hardcodeada reemplazada por apiClient",
+        "beneficiosMembresiApi.ts: funciones actualizadas para usar apiClient",
+        "beneficiosMembresiApi.ts: manejo de errores mejorado"
+      ],
+      "acceptance_criteria": [
+        "No hay URLs hardcodeadas",
+        "Todas las funciones usan apiClient",
+        "Manejo de errores está implementado",
+        "No hay importación directa de axios",
+        "Funciones están correctamente tipadas"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en beneficiosMembresiApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P6",
+      "order": 6,
+      "title": "Actualizar API de pagos de membresía - implementar funciones reales",
+      "files_hint": [
+        "src/features/plancreatorpro/membresias/membresias/pagos-membresia/pagosMembresiApi.ts"
+      ],
+      "preconditions": [
+        "Archivo pagosMembresiApi.ts existe con funciones vacías",
+        "apiClient.ts está creado y configurado",
+        "Tipos PagosResponse, PagoRecurrente, IngresoMensual, MetricasCancelacion están definidos"
+      ],
+      "content": "Actúa como desarrollador frontend. Abre src/features/plancreatorpro/membresias/membresias/pagos-membresia/pagosMembresiApi.ts. 1) Importa apiClient desde '../utils/apiClient'. 2) Importa tipos PagosResponse, PagoRecurrente, IngresoMensual, MetricasCancelacion desde '../types/Membresia'. 3) Implementa fetchPagosRecurrentes(): Promise<PagoRecurrente[]> que hace GET /api/membresias/pagos. 4) Implementa fetchIngresosMensuales(): Promise<IngresoMensual[]> que hace GET /api/membresias/ingresos. 5) Implementa fetchMetricasCancelacion(): Promise<MetricasCancelacion> que hace GET /api/membresias/metricas. 6) Agrega manejo de errores con try/catch en cada función. 7) Elimina los comentarios placeholder y implementa la lógica real. 8) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "pagosMembresiApi.ts: funciones vacías implementadas con llamadas reales",
+        "pagosMembresiApi.ts: fetchPagosRecurrentes, fetchIngresosMensuales, fetchMetricasCancelacion implementadas",
+        "pagosMembresiApi.ts: manejo de errores agregado"
+      ],
+      "acceptance_criteria": [
+        "Todas las funciones están implementadas con lógica real",
+        "Funciones hacen llamadas HTTP al backend correcto",
+        "Manejo de errores está presente en cada función",
+        "Tipos de retorno están correctamente definidos",
+        "No quedan comentarios placeholder"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en pagosMembresiApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P7",
+      "order": 7,
+      "title": "Integrar servicios en ListadoMembresiasPage con estados UI",
+      "files_hint": [
+        "src/features/plancreatorpro/membresias/membresias/listado-membresias/ListadoMembresiasPage.tsx"
+      ],
+      "preconditions": [
+        "ListadoMembresiasPage.tsx existe y usa mocks",
+        "listadoMembresiasApi.ts está actualizado con llamadas reales",
+        "Tipos Membresia están definidos"
+      ],
+      "content": "Actúa como desarrollador frontend. Abre src/features/plancreatorpro/membresias/membresias/listado-membresias/ListadoMembresiasPage.tsx. 1) Verifica que las importaciones de getMembresias, createMembresia, updateMembresia, deleteMembresia estén actualizadas. 2) Implementa estados de loading, error y data para cada operación. 3) En useEffect, maneja el estado de loading al cargar membresías. 4) Agrega manejo de errores con try/catch y muestra mensajes de error al usuario. 5) Implementa estados de loading para operaciones de crear, editar y eliminar. 6) Agrega indicadores visuales de loading (spinners) en los botones durante operaciones. 7) Maneja el estado empty cuando no hay membresías. 8) Asegúrate de que los estados se actualicen correctamente después de cada operación. 9) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "ListadoMembresiasPage.tsx: estados de loading implementados",
+        "ListadoMembresiasPage.tsx: manejo de errores agregado",
+        "ListadoMembresiasPage.tsx: indicadores visuales de loading agregados"
+      ],
+      "acceptance_criteria": [
+        "Estados de loading se muestran durante operaciones",
+        "Manejo de errores está implementado y funcional",
+        "Indicadores visuales de loading están presentes",
+        "Estado empty se maneja correctamente",
+        "Estados se actualizan después de cada operación"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en ListadoMembresiasPage.tsx si falla cualquier criterio."
+    },
+    {
+      "id": "P8",
+      "order": 8,
+      "title": "Integrar servicios en PaginaMembresiaPage con estados UI",
+      "files_hint": [
+        "src/features/plancreatorpro/membresias/membresias/pagina-membresia/PaginaMembresiaPage.tsx"
+      ],
+      "preconditions": [
+        "PaginaMembresiaPage.tsx existe",
+        "paginaMembresiapApi.ts está actualizado con llamadas reales",
+        "Tipos Membresia están definidos"
+      ],
+      "content": "Actúa como desarrollador frontend. Abre src/features/plancreatorpro/membresias/membresias/pagina-membresia/PaginaMembresiaPage.tsx. 1) Importa fetchMembershipDetails desde './paginaMembresiapApi'. 2) Implementa estados de loading, error y data para los detalles de membresía. 3) En useEffect, llama a fetchMembershipDetails con un ID de membresía (puedes usar un ID hardcodeado para testing). 4) Maneja el estado de loading mientras se cargan los datos. 5) Implementa manejo de errores con try/catch y muestra mensajes de error al usuario. 6) Pasa los datos de membresía a los componentes hijos (LandingMembresia, ListaBeneficios, etc.). 7) Agrega indicadores visuales de loading en la página. 8) Maneja el estado empty cuando no hay datos. 9) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "PaginaMembresiaPage.tsx: estados de loading implementados",
+        "PaginaMembresiaPage.tsx: manejo de errores agregado",
+        "PaginaMembresiaPage.tsx: integración con fetchMembershipDetails"
+      ],
+      "acceptance_criteria": [
+        "Estados de loading se muestran durante la carga",
+        "Manejo de errores está implementado",
+        "Datos de membresía se pasan a componentes hijos",
+        "Indicadores visuales de loading están presentes",
+        "Estado empty se maneja correctamente"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en PaginaMembresiaPage.tsx si falla cualquier criterio."
+    },
+    {
+      "id": "P9",
+      "order": 9,
+      "title": "Integrar servicios en BeneficiosMembresiPage con estados UI",
+      "files_hint": [
+        "src/features/plancreatorpro/membresias/membresias/beneficios-membresia/BeneficiosMembresiPage.tsx"
+      ],
+      "preconditions": [
+        "BeneficiosMembresiPage.tsx existe",
+        "beneficiosMembresiApi.ts está actualizado con llamadas reales",
+        "Tipos Membresia están definidos"
+      ],
+      "content": "Actúa como desarrollador frontend. Abre src/features/plancreatorpro/membresias/membresias/beneficios-membresia/BeneficiosMembresiPage.tsx. 1) Importa getBeneficiosMembresia y updateBeneficiosMembresia desde './beneficiosMembresiApi'. 2) Implementa estados de loading, error y data para los beneficios. 3) En useEffect, llama a getBeneficiosMembresia() para cargar los beneficios. 4) Maneja el estado de loading mientras se cargan los datos. 5) Implementa manejo de errores con try/catch y muestra mensajes de error al usuario. 6) Implementa función para actualizar beneficios que llame a updateBeneficiosMembresia. 7) Agrega indicadores visuales de loading durante operaciones. 8) Maneja el estado empty cuando no hay beneficios. 9) Pasa los datos y funciones a los componentes hijos. 10) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "BeneficiosMembresiPage.tsx: estados de loading implementados",
+        "BeneficiosMembresiPage.tsx: manejo de errores agregado",
+        "BeneficiosMembresiPage.tsx: integración con servicios de beneficios"
+      ],
+      "acceptance_criteria": [
+        "Estados de loading se muestran durante operaciones",
+        "Manejo de errores está implementado",
+        "Funciones de actualización están implementadas",
+        "Indicadores visuales de loading están presentes",
+        "Datos se pasan correctamente a componentes hijos"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en BeneficiosMembresiPage.tsx si falla cualquier criterio."
+    },
+    {
+      "id": "P10",
+      "order": 10,
+      "title": "Integrar servicios en PagosMembresiPage con estados UI",
+      "files_hint": [
+        "src/features/plancreatorpro/membresias/membresias/pagos-membresia/PagosMembresiPage.tsx"
+      ],
+      "preconditions": [
+        "PagosMembresiPage.tsx existe",
+        "pagosMembresiApi.ts está actualizado con llamadas reales",
+        "Tipos PagosResponse, PagoRecurrente, IngresoMensual, MetricasCancelacion están definidos"
+      ],
+      "content": "Actúa como desarrollador frontend. Abre src/features/plancreatorpro/membresias/membresias/pagos-membresia/PagosMembresiPage.tsx. 1) Importa fetchPagosRecurrentes, fetchIngresosMensuales, fetchMetricasCancelacion desde './pagosMembresiApi'. 2) Implementa estados de loading, error y data para cada tipo de datos (pagos, ingresos, métricas). 3) En useEffect, llama a las tres funciones para cargar todos los datos. 4) Maneja el estado de loading mientras se cargan los datos. 5) Implementa manejo de errores con try/catch y muestra mensajes de error al usuario. 6) Pasa los datos a los componentes hijos (DashboardPagos, GraficoIngresos, MetricasCancelacion, TablaPagosRecurrentes). 7) Agrega indicadores visuales de loading durante la carga. 8) Maneja el estado empty cuando no hay datos. 9) Implementa función de refresh para recargar datos. 10) Muestra diffs del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "PagosMembresiPage.tsx: estados de loading implementados",
+        "PagosMembresiPage.tsx: manejo de errores agregado",
+        "PagosMembresiPage.tsx: integración con servicios de pagos",
+        "PagosMembresiPage.tsx: función de refresh implementada"
+      ],
+      "acceptance_criteria": [
+        "Estados de loading se muestran durante la carga",
+        "Manejo de errores está implementado",
+        "Datos se pasan correctamente a componentes hijos",
+        "Indicadores visuales de loading están presentes",
+        "Función de refresh está implementada",
+        "Estado empty se maneja correctamente"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en PagosMembresiPage.tsx si falla cualquier criterio."
+    },
+    {
+      "id": "P11",
+      "order": 11,
+      "title": "Configurar variables de entorno y testing básico",
+      "files_hint": [
+        ".env",
+        "vite.config.ts",
+        "src/features/plancreatorpro/membresias/membresias/utils/apiClient.ts"
+      ],
+      "preconditions": [
+        "Archivo .env existe en la raíz del proyecto",
+        "vite.config.ts existe",
+        "apiClient.ts está creado"
+      ],
+      "content": "Actúa como desarrollador frontend. 1) Abre el archivo .env en la raíz del proyecto. 2) Agrega VITE_API_URL=http://localhost:5000/api si no existe. 3) Verifica que vite.config.ts tenga la configuración correcta para variables de entorno. 4) Abre src/features/plancreatorpro/membresias/membresias/utils/apiClient.ts. 5) Agrega console.log para verificar que la configuración se carga correctamente. 6) Implementa una función de test que haga una llamada GET a /api/membresias para verificar conectividad. 7) Agrega manejo de errores específico para cuando el backend no esté disponible. 8) Muestra diffs de los archivos modificados y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        ".env: VITE_API_URL configurado",
+        "apiClient.ts: función de test agregada",
+        "apiClient.ts: manejo de errores mejorado"
+      ],
+      "acceptance_criteria": [
+        "VITE_API_URL está configurado en .env",
+        "Función de test está implementada",
+        "Manejo de errores para backend no disponible está presente",
+        "Configuración se carga correctamente"
+      ],
+      "timeout_sec": 180,
+      "rollback_plan": "Revertir cambios en .env y apiClient.ts si falla cualquier criterio."
+    }
+  ]
+}
+

@@ -1,0 +1,42 @@
+{
+  "nombre": "Analista de Notion - Extracción de User Stories",
+  "version": "1.0",
+  "descripcion": "Prompts especializados para extraer y estructurar user stories desde páginas de Notion",
+  "prompts": [
+    {
+      "id": "notion_extract_stories",
+      "nombre": "Extraer User Stories de Notion",
+      "prompt": "**INPUT REQUERIDO**: Recibirás dos parámetros:\n1. **URL de página Notion**: Enlace directo a la página de Notion con user stories\n2. **Path del módulo**: Ruta donde guardar el archivo MD generado (ej: 'src/modules/user-management')\n\n**PROCESO**: Analiza la página de Notion y extrae todas las user stories. Para cada user story, identifica:\n\n1. **Título/Descripción**: El nombre o descripción principal\n2. **Como [rol]**: El tipo de usuario\n3. **Quiero [funcionalidad]**: La funcionalidad deseada\n4. **Para [beneficio]**: El beneficio o valor\n5. **Criterios de aceptación**: Los criterios específicos\n6. **Prioridad**: Alta/Media/Baja\n7. **Epic/Feature**: A qué epic o feature pertenece\n8. **Dependencias**: Otras user stories relacionadas\n\n**OUTPUT**: Genera un archivo MD estructurado en el path especificado con:\n- Tabla de user stories extraídas\n- Criterios de aceptación detallados\n- Mapa de dependencias\n- Estimaciones de complejidad",
+      "contexto": "Análisis de páginas de Notion para extracción de requisitos"
+    },
+    {
+      "id": "notion_structure_requirements",
+      "nombre": "Estructurar Requisitos",
+      "prompt": "Toma las user stories extraídas y organízalas de la siguiente manera:\n\n## 📋 EPICS IDENTIFICADOS\n[Lista de epics principales]\n\n## 🎯 USER STORIES POR PRIORIDAD\n\n### 🔴 ALTA PRIORIDAD\n[User stories críticas]\n\n### 🟡 MEDIA PRIORIDAD\n[User stories importantes]\n\n### 🟢 BAJA PRIORIDAD\n[User stories opcionales]\n\n## 🔗 DEPENDENCIAS\n[Mapa de dependencias entre user stories]\n\n## 📊 MÉTRICAS DE COMPLEJIDAD\n[Estimación de esfuerzo por user story]",
+      "contexto": "Organización y priorización de requisitos"
+    },
+    {
+      "id": "notion_validate_stories",
+      "nombre": "Validar User Stories",
+      "prompt": "Revisa las user stories extraídas y valida que cumplan con los criterios INVEST:\n\n- **I**ndependiente: ¿Puede desarrollarse independientemente?\n- **N**egociable: ¿Permite flexibilidad en la implementación?\n- **V**aliosa: ¿Proporciona valor al usuario?\n- **E**stimable: ¿Se puede estimar el esfuerzo?\n- **S**mall: ¿Es lo suficientemente pequeña?\n- **T**estable: ¿Se puede probar?\n\nPara cada user story que no cumpla, sugiere mejoras específicas.",
+      "contexto": "Validación de calidad de user stories"
+    },
+    {
+      "id": "notion_create_acceptance_criteria",
+      "nombre": "Crear Criterios de Aceptación",
+      "prompt": "Para cada user story, desarrolla criterios de aceptación detallados siguiendo el formato Given-When-Then:\n\n**Given** [condición inicial]\n**When** [acción del usuario]\n**Then** [resultado esperado]\n\nIncluye también:\n- Casos edge\n- Validaciones de datos\n- Comportamientos de error\n- Requisitos de UI/UX",
+      "contexto": "Definición de criterios de aceptación"
+    },
+    {
+      "id": "notion_technical_breakdown",
+      "nombre": "Desglose Técnico",
+      "prompt": "Analiza cada user story desde una perspectiva técnica y identifica:\n\n1. **Componentes Frontend** necesarios\n2. **APIs Backend** requeridas\n3. **Base de datos** cambios necesarios\n4. **Integraciones** externas\n5. **Consideraciones de seguridad**\n6. **Rendimiento** y escalabilidad\n7. **Testing** requerido\n\nProporciona un desglose técnico detallado para cada user story.",
+      "contexto": "Análisis técnico de requisitos"
+    }
+  ],
+  "configuracion": {
+    "tiempo_esperado": "5-10 minutos por página",
+    "formato_salida": "Markdown estructurado",
+    "herramientas_requeridas": ["Notion API", "Análisis de texto"]
+  }
+}

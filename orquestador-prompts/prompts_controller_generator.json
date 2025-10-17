@@ -1,0 +1,35 @@
+{
+  "nombre": "Generador de Controladores Backend",
+  "version": "1.0",
+  "descripcion": "Prompts especializados para generar controladores CRUD desde modelos",
+  "prompts": [
+    {
+      "id": "controller_crud",
+      "nombre": "Generar Controladores CRUD",
+      "prompt": "**INPUT REQUERIDO**: Recibirás dos parámetros:\n1. **Modelos generados**: Archivos de modelos existentes\n2. **Path del src**: Ruta del directorio src/controllers\n\n**PROCESO**: Para cada modelo, genera un controlador completo con operaciones CRUD:\n\n1. **CREATE**: Crear nuevos registros con validación\n2. **READ**: Leer registros individuales y listados\n3. **UPDATE**: Actualizar registros existentes\n4. **DELETE**: Eliminar registros con validaciones\n5. **SEARCH**: Búsqueda y filtrado avanzado\n6. **PAGINATION**: Paginación para listados grandes\n\n**OUTPUT**: Genera controladores en el path especificado con:\n- Métodos CRUD completos\n- Manejo de errores robusto\n- Validaciones de entrada\n- Respuestas estandarizadas\n- Documentación JSDoc",
+      "contexto": "Generación de controladores CRUD"
+    },
+    {
+      "id": "controller_middleware",
+      "nombre": "Aplicar Middleware a Controladores",
+      "prompt": "**INPUT**: Controladores CRUD generados\n\n**PROCESO**: Aplica middleware necesario a cada controlador:\n\n1. **Autenticación**: Verificación de tokens JWT\n2. **Autorización**: Permisos por rol de usuario\n3. **Validación**: Validación de datos de entrada\n4. **Rate Limiting**: Limitación de requests\n5. **Logging**: Registro de operaciones\n6. **Error Handling**: Manejo centralizado de errores\n\n**OUTPUT**: Controladores con middleware aplicado:\n- Middleware de autenticación\n- Middleware de autorización\n- Validadores de entrada\n- Manejo de errores\n- Logging de operaciones",
+      "contexto": "Aplicación de middleware a controladores"
+    },
+    {
+      "id": "controller_business_logic",
+      "nombre": "Implementar Lógica de Negocio",
+      "prompt": "**INPUT**: Controladores con middleware aplicado\n\n**PROCESO**: Implementa lógica de negocio específica:\n\n1. **Reglas de negocio**: Validaciones específicas del dominio\n2. **Transacciones**: Operaciones atómicas complejas\n3. **Notificaciones**: Envío de emails, SMS, push\n4. **Auditoría**: Registro de cambios importantes\n5. **Caching**: Optimización de consultas frecuentes\n6. **Background Jobs**: Tareas asíncronas\n\n**OUTPUT**: Controladores con lógica de negocio:\n- Métodos de negocio específicos\n- Transacciones de base de datos\n- Sistema de notificaciones\n- Auditoría de cambios\n- Optimizaciones de rendimiento",
+      "contexto": "Implementación de lógica de negocio"
+    }
+  ],
+  "configuracion": {
+    "framework": "Express.js",
+    "autenticacion": "JWT",
+    "validacion": "Joi/Yup",
+    "logging": "Winston/Morgan"
+  }
+}
+
+
+
+

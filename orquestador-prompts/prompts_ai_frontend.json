@@ -1,0 +1,48 @@
+{
+  "nombre": "Desarrollador AI Frontend",
+  "version": "1.0",
+  "descripcion": "Prompts especializados para desarrollo de frontend con integración de IA",
+  "prompts": [
+    {
+      "id": "ai_chat_interface",
+      "nombre": "Interfaz de Chat con IA",
+      "prompt": "Crea una interfaz de chat moderna para integración con IA:\n\n## 💬 COMPONENTES DEL CHAT\n- Message bubbles\n- Typing indicators\n- Message status\n- File attachments\n- Voice messages\n- Emoji reactions\n\n## 🤖 FUNCIONALIDADES DE IA\n- Auto-complete suggestions\n- Smart replies\n- Context awareness\n- Conversation memory\n- Multi-turn conversations\n\n## 🎨 DISEÑO MODERNO\n- Clean, minimal interface\n- Smooth animations\n- Dark/light themes\n- Responsive design\n- Accessibility features\n\n## 📱 MOBILE OPTIMIZATION\n- Touch gestures\n- Swipe actions\n- Mobile keyboard\n- Voice input\n- Camera integration\n\n## 🔄 REAL-TIME FEATURES\n- Live typing indicators\n- Message delivery status\n- Real-time updates\n- Connection status\n- Error handling\n\nProporciona componentes React/TypeScript completos y optimizados.",
+      "contexto": "Interfaz de chat con IA"
+    },
+    {
+      "id": "ai_data_visualization",
+      "nombre": "Visualización de Datos IA",
+      "prompt": "Desarrolla dashboards de visualización para datos de IA:\n\n## 📊 TIPOS DE GRÁFICOS\n- Line charts para trends\n- Bar charts para comparaciones\n- Pie charts para distribuciones\n- Heatmaps para correlaciones\n- Scatter plots para relaciones\n- Network graphs para conexiones\n\n## 🎯 MÉTRICAS DE IA\n- Model performance\n- Accuracy metrics\n- Training progress\n- Prediction confidence\n- Error analysis\n- Feature importance\n\n## 🔄 INTERACTIVIDAD\n- Zoom y pan\n- Filter controls\n- Time range selection\n- Drill-down capabilities\n- Export functionality\n- Real-time updates\n\n## 📱 RESPONSIVE CHARTS\n- Mobile-optimized\n- Touch interactions\n- Adaptive sizing\n- Performance optimization\n- Accessibility support\n\n## 🎨 CUSTOMIZACIÓN\n- Color schemes\n- Chart themes\n- Custom tooltips\n- Legend management\n- Animation controls\n\nIncluye librerías como D3.js, Chart.js o Recharts.",
+      "contexto": "Visualización de datos de IA"
+    },
+    {
+      "id": "ai_form_intelligence",
+      "nombre": "Formularios Inteligentes",
+      "prompt": "Crea formularios inteligentes con capacidades de IA:\n\n## 🧠 FUNCIONALIDADES INTELIGENTES\n- Auto-complete con IA\n- Smart validation\n- Dynamic field generation\n- Context-aware suggestions\n- Predictive text\n- Form optimization\n\n## 📝 TIPOS DE FORMULARIOS\n- Multi-step wizards\n- Dynamic forms\n- Conditional fields\n- File upload forms\n- Signature capture\n- Voice input forms\n\n## ✅ VALIDACIÓN INTELIGENTE\n- Real-time validation\n- AI-powered suggestions\n- Error correction\n- Format assistance\n- Duplicate detection\n- Data quality checks\n\n## 🎨 UX OPTIMIZADA\n- Progress indicators\n- Auto-save functionality\n- Smart defaults\n- Contextual help\n- Accessibility features\n- Mobile optimization\n\n## 🔄 INTEGRACIÓN\n- API connections\n- Data synchronization\n- Error handling\n- Offline support\n- Performance optimization\n\nProporciona implementación completa con validación inteligente.",
+      "contexto": "Formularios inteligentes con IA"
+    },
+    {
+      "id": "ai_recommendation_engine",
+      "nombre": "Motor de Recomendaciones",
+      "prompt": "Implementa sistema de recomendaciones con IA:\n\n## 🎯 TIPOS DE RECOMENDACIONES\n- Content recommendations\n- Product suggestions\n- User matching\n- Similar items\n- Trending content\n- Personalized feeds\n\n## 🧠 ALGORITMOS\n- Collaborative filtering\n- Content-based filtering\n- Hybrid approaches\n- Deep learning models\n- Real-time recommendations\n- A/B testing\n\n## 🎨 INTERFACES\n- Recommendation cards\n- Carousel components\n- Grid layouts\n- List views\n- Modal presentations\n- Infinite scroll\n\n## 📊 ANALYTICS\n- Click-through rates\n- Conversion metrics\n- User engagement\n- Recommendation performance\n- A/B test results\n- User feedback\n\n## 🔄 PERSONALIZACIÓN\n- User preferences\n- Behavioral tracking\n- Feedback loops\n- Learning algorithms\n- Privacy controls\n- Opt-out options\n\nIncluye dashboard de analytics y sistema de feedback.",
+      "contexto": "Sistema de recomendaciones con IA"
+    },
+    {
+      "id": "ai_content_generation",
+      "nombre": "Generación de Contenido",
+      "prompt": "Desarrolla herramientas de generación de contenido con IA:\n\n## ✍️ TIPOS DE CONTENIDO\n- Text generation\n- Image generation\n- Code generation\n- Email templates\n- Social media posts\n- Documentation\n\n## 🎨 INTERFACES DE GENERACIÓN\n- Text editors con IA\n- Image upload/processing\n- Template selection\n- Style customization\n- Output preview\n- Export options\n\n## 🔧 HERRAMIENTAS\n- Prompt engineering\n- Style transfer\n- Content optimization\n- Plagiarism detection\n- Quality scoring\n- Version control\n\n## 📊 WORKFLOW\n- Batch processing\n- Queue management\n- Progress tracking\n- Error handling\n- Retry mechanisms\n- Result validation\n\n## 🎯 PERSONALIZACIÓN\n- User preferences\n- Brand guidelines\n- Tone settings\n- Language options\n- Quality levels\n- Custom prompts\n\nProporciona interfaz completa con herramientas de edición.",
+      "contexto": "Herramientas de generación de contenido"
+    }
+  ],
+  "configuracion": {
+    "framework": "React/Next.js",
+    "lenguaje": "TypeScript",
+    "styling": "Tailwind CSS",
+    "ai_integration": "OpenAI/Anthropic",
+    "visualization": "D3.js/Chart.js"
+  }
+}
+
+
+
+

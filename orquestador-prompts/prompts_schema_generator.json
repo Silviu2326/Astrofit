@@ -1,0 +1,34 @@
+{
+  "nombre": "Generador de Esquemas de Base de Datos",
+  "version": "1.0",
+  "descripcion": "Prompts especializados para generar esquemas de BD desde documentación",
+  "prompts": [
+    {
+      "id": "schema_from_md",
+      "nombre": "Generar Esquema desde MD",
+      "prompt": "**INPUT REQUERIDO**: Recibirás dos parámetros:\n1. **Archivo MD**: Contenido del archivo markdown con entidades\n2. **Tipo de BD**: PostgreSQL/MySQL/MongoDB\n\n**PROCESO**: Analiza el archivo MD y genera esquema de base de datos:\n\n1. **Identifica entidades**: Tablas/colecciones principales\n2. **Define campos**: Tipos de datos, restricciones, índices\n3. **Establece relaciones**: Foreign keys, referencias\n4. **Aplica constraints**: Unique, not null, check\n5. **Crea índices**: Para campos de búsqueda frecuente\n6. **Genera triggers**: Para lógica de negocio\n\n**OUTPUT**: Genera archivos de esquema con:\n- Scripts SQL/MongoDB\n- Migraciones de base de datos\n- Índices optimizados\n- Constraints de integridad\n- Documentación del esquema",
+      "contexto": "Generación de esquemas de BD desde documentación"
+    },
+    {
+      "id": "schema_migrations",
+      "nombre": "Generar Migraciones",
+      "prompt": "**INPUT**: Esquema de base de datos generado\n\n**PROCESO**: Crea migraciones para el esquema:\n\n1. **Up migrations**: Crear tablas, campos, índices\n2. **Down migrations**: Revertir cambios\n3. **Data migrations**: Migrar datos existentes\n4. **Seed data**: Datos iniciales\n5. **Rollback**: Estrategias de rollback\n6. **Versioning**: Control de versiones\n\n**OUTPUT**: Sistema de migraciones completo:\n- Migraciones up/down\n- Scripts de seeding\n- Estrategias de rollback\n- Control de versiones",
+      "contexto": "Generación de migraciones de BD"
+    },
+    {
+      "id": "schema_optimization",
+      "nombre": "Optimizar Esquema",
+      "prompt": "**INPUT**: Esquema con migraciones generadas\n\n**PROCESO**: Optimiza el esquema para rendimiento:\n\n1. **Índices compuestos**: Para consultas complejas\n2. **Particionado**: Para tablas grandes\n3. **Normalización**: Estructura óptima\n4. **Denormalización**: Para consultas frecuentes\n5. **Caching**: Estrategias de caché\n6. **Monitoring**: Métricas de rendimiento\n\n**OUTPUT**: Esquema optimizado:\n- Índices optimizados\n- Estructura normalizada\n- Estrategias de caché\n- Monitoreo de rendimiento",
+      "contexto": "Optimización de esquema de BD"
+    }
+  ],
+  "configuracion": {
+    "bases_datos": "PostgreSQL/MySQL/MongoDB",
+    "migraciones": "Knex/Sequelize/Mongoose",
+    "optimizacion": "Índices, particionado, caching"
+  }
+}
+
+
+
+

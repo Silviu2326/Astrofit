@@ -1,0 +1,323 @@
+{
+  "meta": {
+    "module": "cursos-online",
+    "side": "frontend",
+    "run_id": "2024-12-19T10:00:00Z",
+    "base_path": "/api/cursos"
+  },
+  "prompts": [
+    {
+      "id": "P1",
+      "order": 1,
+      "title": "Crear tipos TypeScript centralizados para el módulo de cursos",
+      "files_hint": [
+        "src/features/plancreatorpro/cursos-online/cursos-online/types/Curso.ts",
+        "src/features/plancreatorpro/cursos-online/cursos-online/types/Quiz.ts",
+        "src/features/plancreatorpro/cursos-online/cursos-online/types/Leccion.ts",
+        "src/features/plancreatorpro/cursos-online/cursos-online/types/Api.ts",
+        "src/features/plancreatorpro/cursos-online/cursos-online/types/index.ts"
+      ],
+      "preconditions": [
+        "Directorio types/ no existe o está vacío",
+        "TypeScript configurado en el proyecto"
+      ],
+      "content": "Crea los tipos TypeScript centralizados para el módulo de cursos. 1) Crea el directorio src/features/plancreatorpro/cursos-online/cursos-online/types/. 2) Crea Curso.ts con interfaces: Curso (id, titulo, descripcion, imagenPortada, precio, estado, categoria, duracion, modulos, alumnos, progresoMedio, fechaCreacion, fechaActualizacion, instructorId), Modulo (id, titulo, descripcion, orden, lecciones), Alumno (id, nombre, avatar). 3) Crea Leccion.ts con interfaces: Leccion (id, titulo, descripcion, tipo, contenido, duracion, orden, bloqueada), ContentBlock (id, type, content, order, metadata). 4) Crea Quiz.ts con interfaces: Quiz (id, titulo, descripcion, duracion, intentosPermitidos, puntuacionMinima, estado, preguntas, fechaCreacion, cursoId, leccionId), Pregunta (id, pregunta, tipo, opciones, respuestaCorrecta, puntos, orden), QuizResult (id, quizId, estudianteId, estudianteNombre, puntuacion, puntuacionMaxima, porcentaje, aprobado, fechaCompletado, tiempoUtilizado, respuestas), Answer (questionId, answerText, esCorrecta, puntosObtenidos), QuizStatistics (quizId, totalIntentos, promedioGeneral, tasaAprobacion, distribucionCalificaciones, tiempoPromedio, preguntasMasFalladas). 5) Crea Api.ts con interfaces de requests/responses: CreateCursoRequest, UpdateCursoRequest, ListCursosResponse, UploadFileResponse, CreateLeccionRequest, CreateQuizRequest, SubmitQuizRequest, ListCursosQuery. 6) Crea index.ts que exporte todos los tipos desde los archivos individuales. 7) Muestra diffs de cada archivo creado y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "types/Curso.ts creado con interfaces de curso y módulos",
+        "types/Leccion.ts creado con interfaces de lecciones",
+        "types/Quiz.ts creado con interfaces de quizzes y resultados",
+        "types/Api.ts creado con interfaces de requests/responses",
+        "types/index.ts creado exportando todos los tipos"
+      ],
+      "acceptance_criteria": [
+        "Todos los tipos están definidos correctamente",
+        "Las interfaces coinciden con el esquema del backend",
+        "Los tipos están exportados correctamente desde index.ts",
+        "No hay errores de TypeScript en los archivos creados"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Eliminar el directorio types/ completo si falla cualquier criterio."
+    },
+    {
+      "id": "P2",
+      "order": 2,
+      "title": "Crear servicio API centralizado para cursos",
+      "files_hint": [
+        "src/features/plancreatorpro/cursos-online/cursos-online/cursosApi.ts"
+      ],
+      "preconditions": [
+        "Tipos TypeScript creados (P1)",
+        "Axios instalado en el proyecto",
+        "Variables de entorno configuradas"
+      ],
+      "content": "Crea el servicio API centralizado para todas las operaciones de cursos. 1) Crea src/features/plancreatorpro/cursos-online/cursos-online/cursosApi.ts. 2) Importa axios y todos los tipos desde ./types. 3) Configura axios con baseURL desde import.meta.env.VITE_API_URL, timeout de 30 segundos, y interceptor para headers de autenticación (Bearer token desde localStorage). 4) Implementa función listarCursos(query?: ListCursosQuery): Promise<ListCursosResponse> que hace GET /api/cursos con parámetros de paginación, filtros y búsqueda. 5) Implementa función obtenerCurso(id: string): Promise<Curso> que hace GET /api/cursos/:id. 6) Implementa función crearCurso(data: CreateCursoRequest): Promise<Curso> que hace POST /api/cursos. 7) Implementa función actualizarCurso(id: string, data: UpdateCursoRequest): Promise<Curso> que hace PUT /api/cursos/:id. 8) Implementa función eliminarCurso(id: string): Promise<void> que hace DELETE /api/cursos/:id. 9) Implementa función subirArchivo(file: File): Promise<UploadFileResponse> que hace POST /api/cursos/upload con FormData. 10) Implementa función obtenerLecciones(cursoId: string): Promise<Leccion[]> que hace GET /api/cursos/:id/lecciones. 11) Implementa función crearLeccion(cursoId: string, data: CreateLeccionRequest): Promise<Leccion> que hace POST /api/cursos/:id/lecciones. 12) Implementa función obtenerQuizzes(cursoId: string): Promise<Quiz[]> que hace GET /api/cursos/:id/quizzes. 13) Implementa función crearQuiz(cursoId: string, data: CreateQuizRequest): Promise<Quiz> que hace POST /api/cursos/:id/quizzes. 14) Implementa función enviarQuiz(quizId: string, respuestas: Answer[]): Promise<QuizResult> que hace POST /api/quizzes/:id/submit. 15) Agrega manejo de errores con try/catch que mapea códigos HTTP a mensajes descriptivos. 16) Exporta todas las funciones como un objeto cursosApi. 17) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "cursosApi.ts creado con todas las funciones CRUD",
+        "Configuración de axios con autenticación",
+        "Implementación de upload de archivos",
+        "Manejo de errores consistente"
+      ],
+      "acceptance_criteria": [
+        "Todas las funciones están implementadas correctamente",
+        "La configuración de axios funciona correctamente",
+        "El manejo de errores es robusto",
+        "Los tipos TypeScript están correctamente aplicados"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Eliminar el archivo cursosApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P3",
+      "order": 3,
+      "title": "Actualizar crearCursoApi reemplazando mocks con llamadas reales",
+      "files_hint": [
+        "src/features/plancreatorpro/cursos-online/cursos-online/crear-curso/crearCursoApi.ts"
+      ],
+      "preconditions": [
+        "Servicio API centralizado creado (P2)",
+        "Archivo crearCursoApi.ts existe con mocks"
+      ],
+      "content": "Actualiza crearCursoApi para usar el servicio real en lugar de mocks. 1) Abre src/features/plancreatorpro/cursos-online/cursos-online/crear-curso/crearCursoApi.ts. 2) Importa el servicio cursosApi desde ../cursosApi.ts. 3) Importa los tipos CreateCursoRequest, Curso, UploadFileResponse desde ../types. 4) Reemplaza la función guardarConfiguracion para que use cursosApi.crearCurso(data) en lugar del mock. 5) Reemplaza la función guardarContenido para que use cursosApi.actualizarCurso(id, data) en lugar del mock. 6) Reemplaza la función publicarCurso para que use cursosApi.actualizarCurso(id, { estado: 'activo' }) en lugar del mock. 7) Reemplaza la función subirArchivo para que use cursosApi.subirArchivo(file) en lugar del mock. 8) Mantén la misma interfaz de funciones para no romper los componentes que las usan. 9) Agrega manejo de errores que capture excepciones y las re-lance con mensajes descriptivos. 10) Agrega loading states opcionales si es necesario para la UX. 11) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "crearCursoApi.ts actualizado para usar servicio real",
+        "Mocks reemplazados por llamadas HTTP reales",
+        "Manejo de errores mejorado",
+        "Interfaz de funciones mantenida"
+      ],
+      "acceptance_criteria": [
+        "Todas las funciones mock han sido reemplazadas",
+        "Las funciones mantienen la misma interfaz",
+        "El manejo de errores funciona correctamente",
+        "No hay referencias a datos mock en el código"
+      ],
+      "timeout_sec": 240,
+      "rollback_plan": "Revertir cambios en crearCursoApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P4",
+      "order": 4,
+      "title": "Actualizar cursoDetalleApi con RTK Query y autenticación",
+      "files_hint": [
+        "src/features/plancreatorpro/cursos-online/cursos-online/curso-detalle/cursoDetalleApi.ts"
+      ],
+      "preconditions": [
+        "Servicio API centralizado creado (P2)",
+        "RTK Query configurado en el proyecto"
+      ],
+      "content": "Actualiza cursoDetalleApi para usar RTK Query con autenticación real. 1) Abre src/features/plancreatorpro/cursos-online/cursos-online/curso-detalle/cursoDetalleApi.ts. 2) Importa los tipos Curso, Leccion, Alumno desde ../types. 3) Actualiza la configuración de baseQuery para usar import.meta.env.VITE_API_URL + '/api/cursos/' como baseUrl. 4) Configura prepareHeaders para incluir el token de autenticación desde localStorage: const token = localStorage.getItem('token'); if (token) headers.set('authorization', `Bearer ${token}`); return headers. 5) Actualiza el endpoint getCursoById para usar la ruta correcta y manejar errores. 6) Agrega nuevos endpoints: getLecciones: builder.query<Leccion[], string>({ query: (cursoId) => `${cursoId}/lecciones` }), getAlumnos: builder.query<Alumno[], string>({ query: (cursoId) => `${cursoId}/alumnos` }), getQuizzes: builder.query<Quiz[], string>({ query: (cursoId) => `${cursoId}/quizzes` }). 7) Exporta los hooks: useGetCursoByIdQuery, useGetLeccionesQuery, useGetAlumnosQuery, useGetQuizzesQuery. 8) Agrega manejo de errores en los endpoints que muestre mensajes descriptivos. 9) Configura cache y refetch apropiados para cada endpoint. 10) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "cursoDetalleApi.ts actualizado con RTK Query",
+        "Configuración de autenticación implementada",
+        "Nuevos endpoints para lecciones, alumnos y quizzes",
+        "Manejo de errores mejorado"
+      ],
+      "acceptance_criteria": [
+        "RTK Query está configurado correctamente",
+        "La autenticación funciona en todos los endpoints",
+        "Los nuevos endpoints están implementados",
+        "El manejo de errores es robusto"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en cursoDetalleApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P5",
+      "order": 5,
+      "title": "Actualizar gestionLeccionesApi conectando con backend real",
+      "files_hint": [
+        "src/features/plancreatorpro/cursos-online/cursos-online/gestion-lecciones/gestionLeccionesApi.ts"
+      ],
+      "preconditions": [
+        "Servicio API centralizado creado (P2)",
+        "Archivo gestionLeccionesApi.ts existe con mocks"
+      ],
+      "content": "Actualiza gestionLeccionesApi para conectar con el backend real. 1) Abre src/features/plancreatorpro/cursos-online/cursos-online/gestion-lecciones/gestionLeccionesApi.ts. 2) Importa el servicio cursosApi desde ../cursosApi.ts. 3) Importa los tipos Leccion, ContentBlock, CreateLeccionRequest desde ../types. 4) Reemplaza la función uploadVideo para que use cursosApi.subirArchivo(file) y mapee la respuesta a VideoUploadResponse. 5) Reemplaza la función uploadFiles para que use cursosApi.subirArchivo(file) para cada archivo y devuelva array de respuestas. 6) Reemplaza la función saveLessonContent para que use cursosApi.crearLeccion(cursoId, data) o cursosApi.actualizarLeccion si existe. 7) Reemplaza la función fetchLessonContent para que use cursosApi.obtenerLecciones(cursoId) y filtre por leccionId. 8) Reemplaza las funciones deleteFile y deleteVideo para que usen cursosApi.eliminarArchivo(fileId). 9) Reemplaza las funciones getLessonFiles y getLessonVideos para que usen cursosApi.obtenerArchivos(leccionId). 10) Mantén la misma interfaz de funciones para no romper los componentes. 11) Agrega manejo de errores consistente. 12) Elimina todos los datos mock y funciones de simulación. 13) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "gestionLeccionesApi.ts actualizado para usar backend real",
+        "Mocks eliminados y reemplazados por llamadas HTTP",
+        "Funciones de upload y gestión de archivos conectadas",
+        "Manejo de errores implementado"
+      ],
+      "acceptance_criteria": [
+        "Todas las funciones mock han sido reemplazadas",
+        "Las funciones mantienen la misma interfaz",
+        "No hay datos mock en el código",
+        "El manejo de errores funciona correctamente"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en gestionLeccionesApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P6",
+      "order": 6,
+      "title": "Actualizar listadoCursosApi con paginación y filtros reales",
+      "files_hint": [
+        "src/features/plancreatorpro/cursos-online/cursos-online/listado-cursos/listadoCursosApi.ts"
+      ],
+      "preconditions": [
+        "Servicio API centralizado creado (P2)",
+        "Archivo listadoCursosApi.ts existe con mocks"
+      ],
+      "content": "Actualiza listadoCursosApi para implementar paginación y filtros reales. 1) Abre src/features/plancreatorpro/cursos-online/cursos-online/listado-cursos/listadoCursosApi.ts. 2) Importa el servicio cursosApi desde ../cursosApi.ts. 3) Importa los tipos Curso, ListCursosQuery, ListCursosResponse desde ../types. 4) Reemplaza la función fetchCursos para que use cursosApi.listarCursos(query) con parámetros de paginación (page, limit), filtros (estado, categoria, instructorId), búsqueda (query), y ordenamiento (sortBy, sortOrder). 5) Implementa función fetchCursosConFiltros(filtros: ListCursosQuery): Promise<ListCursosResponse> que permite filtrar por estado, categoría, rango de precios, fecha de creación. 6) Implementa función buscarCursos(termino: string): Promise<ListCursosResponse> que hace búsqueda por título y descripción. 7) Reemplaza la función updateCursoStatus para que use cursosApi.actualizarCurso(id, { estado: newStatus }). 8) Reemplaza la función deleteCurso para que use cursosApi.eliminarCurso(id). 9) Agrega función obtenerEstadisticasCursos(): Promise<{ total: number, activos: number, borradores: number, archivados: number }> que consolida estadísticas. 10) Implementa cache local para optimizar llamadas repetidas. 11) Agrega manejo de errores con mensajes descriptivos. 12) Elimina todos los datos mock. 13) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "listadoCursosApi.ts actualizado con paginación real",
+        "Filtros y búsqueda implementados",
+        "Funciones de estadísticas agregadas",
+        "Cache local implementado"
+      ],
+      "acceptance_criteria": [
+        "La paginación funciona correctamente",
+        "Los filtros están implementados",
+        "La búsqueda funciona por título y descripción",
+        "No hay datos mock en el código"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en listadoCursosApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P7",
+      "order": 7,
+      "title": "Actualizar quizzesEvaluacionesApi conectando con sistema de quizzes",
+      "files_hint": [
+        "src/features/plancreatorpro/cursos-online/cursos-online/quizzes-evaluaciones/quizzesEvaluacionesApi.ts"
+      ],
+      "preconditions": [
+        "Servicio API centralizado creado (P2)",
+        "Archivo quizzesEvaluacionesApi.ts existe con mocks"
+      ],
+      "content": "Actualiza quizzesEvaluacionesApi para conectar con el sistema de quizzes del backend. 1) Abre src/features/plancreatorpro/cursos-online/cursos-online/quizzes-evaluaciones/quizzesEvaluacionesApi.ts. 2) Importa el servicio cursosApi desde ../cursosApi.ts. 3) Importa todos los tipos de Quiz desde ../types. 4) Reemplaza la función getQuizzes para que use cursosApi.obtenerQuizzes(cursoId) en lugar de datos mock. 5) Reemplaza la función getQuizById para que use cursosApi.obtenerQuiz(quizId). 6) Reemplaza la función createQuiz para que use cursosApi.crearQuiz(cursoId, quizData). 7) Reemplaza la función updateQuiz para que use cursosApi.actualizarQuiz(quizId, quizData). 8) Reemplaza la función deleteQuiz para que use cursosApi.eliminarQuiz(quizId). 9) Reemplaza la función submitQuiz para que use cursosApi.enviarQuiz(quizId, respuestas). 10) Implementa función getQuizResults(quizId: string): Promise<QuizResult[]> que use cursosApi.obtenerResultados(quizId). 11) Implementa función getQuizStatistics(quizId: string): Promise<QuizStatistics> que use cursosApi.obtenerEstadisticas(quizId). 12) Implementa función getGeneralStatistics(): Promise<{ totalQuizzes: number, totalIntentos: number, promedioGeneral: number, tasaAprobacion: number }> que consolida estadísticas generales. 13) Elimina todos los datos mock y arrays de simulación. 14) Agrega manejo de errores consistente. 15) Mantén la misma interfaz de funciones para no romper los componentes. 16) Muestra diff del archivo y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "quizzesEvaluacionesApi.ts actualizado para usar backend real",
+        "Sistema de quizzes completamente conectado",
+        "Funciones de estadísticas implementadas",
+        "Mocks eliminados completamente"
+      ],
+      "acceptance_criteria": [
+        "Todas las funciones mock han sido reemplazadas",
+        "El sistema de quizzes está completamente funcional",
+        "Las estadísticas se calculan correctamente",
+        "No hay datos mock en el código"
+      ],
+      "timeout_sec": 360,
+      "rollback_plan": "Revertir cambios en quizzesEvaluacionesApi.ts si falla cualquier criterio."
+    },
+    {
+      "id": "P8",
+      "order": 8,
+      "title": "Crear custom hooks para manejo de estado de cursos",
+      "files_hint": [
+        "src/features/plancreatorpro/cursos-online/cursos-online/hooks/useCursos.ts",
+        "src/features/plancreatorpro/cursos-online/cursos-online/hooks/useCurso.ts",
+        "src/features/plancreatorpro/cursos-online/cursos-online/hooks/useLecciones.ts",
+        "src/features/plancreatorpro/cursos-online/cursos-online/hooks/useQuizzes.ts",
+        "src/features/plancreatorpro/cursos-online/cursos-online/hooks/index.ts"
+      ],
+      "preconditions": [
+        "Servicios API actualizados (P2-P7)",
+        "React hooks disponibles"
+      ],
+      "content": "Crea custom hooks para manejo de estado de cursos. 1) Crea el directorio src/features/plancreatorpro/cursos-online/cursos-online/hooks/. 2) Crea useCursos.ts con hook useCursos que maneje listado de cursos con estados: loading, error, data, pagination, filters. Implementa funciones: fetchCursos, setFilters, setPagination, refresh. 3) Crea useCurso.ts con hook useCurso(id) que maneje un curso específico con estados: loading, error, data, lecciones, alumnos. Implementa funciones: fetchCurso, updateCurso, deleteCurso. 4) Crea useLecciones.ts con hook useLecciones(cursoId) que maneje lecciones de un curso con estados: loading, error, data. Implementa funciones: fetchLecciones, createLeccion, updateLeccion, deleteLeccion, reorderLecciones. 5) Crea useQuizzes.ts con hook useQuizzes(cursoId) que maneje quizzes de un curso con estados: loading, error, data, results, statistics. Implementa funciones: fetchQuizzes, createQuiz, updateQuiz, deleteQuiz, submitQuiz, getResults, getStatistics. 6) Implementa en todos los hooks: manejo de loading states, error handling con mensajes descriptivos, cache local para optimizar llamadas, funciones de refresh y invalidate. 7) Crea index.ts que exporte todos los hooks. 8) Muestra diffs de cada archivo creado y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "hooks/useCursos.ts creado con hook para listado",
+        "hooks/useCurso.ts creado con hook para curso individual",
+        "hooks/useLecciones.ts creado con hook para lecciones",
+        "hooks/useQuizzes.ts creado con hook para quizzes",
+        "hooks/index.ts creado exportando todos los hooks"
+      ],
+      "acceptance_criteria": [
+        "Todos los hooks están implementados correctamente",
+        "El manejo de estados es consistente",
+        "Los hooks manejan errores apropiadamente",
+        "La funcionalidad de cache funciona correctamente"
+      ],
+      "timeout_sec": 360,
+      "rollback_plan": "Eliminar el directorio hooks/ completo si falla cualquier criterio."
+    },
+    {
+      "id": "P9",
+      "order": 9,
+      "title": "Integrar servicios en componentes de listado de cursos",
+      "files_hint": [
+        "src/features/plancreatorpro/cursos-online/cursos-online/listado-cursos/ListadoCursosPage.tsx",
+        "src/features/plancreatorpro/cursos-online/cursos-online/listado-cursos/components/GridCursos.tsx",
+        "src/features/plancreatorpro/cursos-online/cursos-online/listado-cursos/components/FiltrosCursos.tsx"
+      ],
+      "preconditions": [
+        "Custom hooks creados (P8)",
+        "Componentes de listado existen"
+      ],
+      "content": "Integra los servicios reales en los componentes de listado de cursos. 1) Abre src/features/plancreatorpro/cursos-online/cursos-online/listado-cursos/ListadoCursosPage.tsx. 2) Importa el hook useCursos desde ../hooks. 3) Reemplaza el estado local y useEffect con el hook useCursos. 4) Implementa estados de loading, error y empty: mostrar spinner cuando loading, mensaje de error cuando error, mensaje de 'No hay cursos' cuando data.length === 0. 5) Implementa funciones de filtros y búsqueda usando las funciones del hook. 6) Abre GridCursos.tsx y actualiza para usar los datos del hook en lugar de props estáticas. 7) Implementa manejo de errores en cada tarjeta de curso. 8) Abre FiltrosCursos.tsx y conecta los filtros con las funciones del hook. 9) Implementa búsqueda en tiempo real con debounce. 10) Agrega indicadores de loading en los filtros. 11) Implementa paginación con botones anterior/siguiente y selector de página. 12) Agrega función de refresh para recargar datos. 13) Muestra diffs de cada componente actualizado y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "ListadoCursosPage.tsx integrado con useCursos hook",
+        "GridCursos.tsx actualizado para usar datos reales",
+        "FiltrosCursos.tsx conectado con funciones de filtrado",
+        "Estados de loading, error y empty implementados"
+      ],
+      "acceptance_criteria": [
+        "El listado de cursos se carga correctamente",
+        "Los filtros funcionan en tiempo real",
+        "La paginación está implementada",
+        "Los estados de loading y error se muestran apropiadamente"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en los componentes de listado si falla cualquier criterio."
+    },
+    {
+      "id": "P10",
+      "order": 10,
+      "title": "Integrar servicios en componentes de detalle de curso",
+      "files_hint": [
+        "src/features/plancreatorpro/cursos-online/cursos-online/curso-detalle/CursoDetallePage.tsx",
+        "src/features/plancreatorpro/cursos-online/cursos-online/curso-detalle/components/PortadaCurso.tsx",
+        "src/features/plancreatorpro/cursos-online/cursos-online/curso-detalle/components/IndiceTemario.tsx"
+      ],
+      "preconditions": [
+        "Custom hooks creados (P8)",
+        "Componentes de detalle existen"
+      ],
+      "content": "Integra los servicios reales en los componentes de detalle de curso. 1) Abre src/features/plancreatorpro/cursos-online/cursos-online/curso-detalle/CursoDetallePage.tsx. 2) Importa los hooks useCurso y useLecciones desde ../hooks. 3) Reemplaza el estado local con los hooks, pasando el cursoId desde los parámetros de la URL. 4) Implementa estados de loading, error y empty: mostrar skeleton cuando loading, mensaje de error cuando error, mensaje de 'Curso no encontrado' cuando !data. 5) Implementa funciones de actualización usando las funciones del hook useCurso. 6) Abre PortadaCurso.tsx y actualiza para usar los datos del hook en lugar de props estáticas. 7) Implementa subida de archivos usando la función del hook. 8) Abre IndiceTemario.tsx y conecta con el hook useLecciones. 9) Implementa navegación entre lecciones. 10) Agrega indicadores de progreso de lecciones. 11) Implementa reordenamiento de lecciones si el usuario es instructor. 12) Agrega función de refresh para recargar datos del curso. 13) Muestra diffs de cada componente actualizado y espera confirmación antes de aplicar.",
+      "expected_changes": [
+        "CursoDetallePage.tsx integrado con hooks de curso y lecciones",
+        "PortadaCurso.tsx actualizado para usar datos reales",
+        "IndiceTemario.tsx conectado con lecciones reales",
+        "Estados de loading, error y empty implementados"
+      ],
+      "acceptance_criteria": [
+        "El detalle del curso se carga correctamente",
+        "Las lecciones se muestran en el índice",
+        "La navegación entre lecciones funciona",
+        "Los estados de loading y error se muestran apropiadamente"
+      ],
+      "timeout_sec": 300,
+      "rollback_plan": "Revertir cambios en los componentes de detalle si falla cualquier criterio."
+    },
+    {
+      "id": "P11",
+      "order": 11,
+      "title": "Realizar pruebas de integración del módulo completo",
+      "files_hint": [
+        "src/features/plancreatorpro/cursos-online/cursos-online/**/*.tsx",
+        "src/features/plancreatorpro/cursos-online/cursos-online/**/*.ts"
+      ],
+      "preconditions": [
+        "Todos los servicios y hooks integrados (P1-P10)",
+        "Backend funcionando con endpoints de cursos"
+      ],
+      "content": "Realiza pruebas de integración completas del módulo de cursos. 1) Verifica que todas las páginas del módulo se cargan sin errores: ListadoCursosPage, CursoDetallePage, CrearCursoPage, GestionLeccionesPage, QuizzesEvaluacionesPage. 2) Prueba el flujo completo de creación de curso: navegar a crear curso, llenar formulario, subir portada, guardar configuración, agregar contenido, publicar curso. 3) Prueba el flujo de gestión de lecciones: abrir curso, agregar módulo, agregar lección, subir video/archivo, guardar contenido. 4) Prueba el flujo de quizzes: crear quiz, agregar preguntas, configurar opciones, publicar quiz, enviar respuestas, ver resultados. 5) Prueba filtros y búsqueda en listado: filtrar por estado, categoría, buscar por título. 6) Prueba paginación: navegar entre páginas, cambiar límite de resultados. 7) Prueba manejo de errores: simular errores de red, verificar mensajes de error. 8) Prueba estados de loading: verificar que se muestran spinners apropiadamente. 9) Prueba autenticación: verificar que las rutas protegidas requieren login. 10) Verifica que no hay datos mock en ningún componente. 11) Documenta cualquier problema encontrado. 12) Muestra resumen de pruebas y espera confirmación.",
+      "expected_changes": [
+        "Todas las páginas del módulo funcionan correctamente",
+        "Flujos completos de usuario funcionan",
+        "Manejo de errores verificado",
+        "Estados de loading verificados"
+      ],
+      "acceptance_criteria": [
+        "Todas las páginas se cargan sin errores",
+        "Los flujos completos de usuario funcionan",
+        "El manejo de errores es robusto",
+        "No hay datos mock en el módulo"
+      ],
+      "timeout_sec": 600,
+      "rollback_plan": "Identificar y corregir problemas específicos encontrados en las pruebas."
+    }
+  ]
+}

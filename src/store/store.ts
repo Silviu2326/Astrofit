@@ -6,7 +6,9 @@ export const store = configureStore({
     [impuestosApi.reducerPath]: impuestosApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(impuestosApi.middleware),
+    getDefaultMiddleware().concat(
+      impuestosApi.middleware
+    ),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

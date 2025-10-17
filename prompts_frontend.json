@@ -1,0 +1,10 @@
+{
+  "prompts": [
+    "Crear un componente React para mostrar una lista de productos con filtros",
+    "Implementar un hook personalizado para manejar el estado del carrito de compras",
+    "Crear un formulario de registro con validación usando React Hook Form",
+    "Implementar un sistema de notificaciones toast con Context API",
+    "Crear una página de dashboard con gráficos usando Chart.js"
+  ]
+}
+
